@@ -304,9 +304,50 @@ We are now ready to build, test, and install Ceres.
 Windows
 =======
 
-`Vckpg <https://github.com/microsoft/vcpkg>`_ is the homebrew
-equivalent on Microsoft Windows and can be used to install Ceres
-Solver.
+Using a Library Manager
+-----------------------
+
+`vcpkg <https://github.com/microsoft/vcpkg>`_ is a library manager for Microsoft
+Windows that can be used to install Ceres Solver and all its dependencies.
+
+#. Install the library manager into a top-level directory ``vcpkg/`` on Windows
+   following the `guide
+   <https://github.com/microsoft/vcpkg#quick-start-windows>`_, e.g., using
+   Visual Studio 2022 community edition, or simply run
+
+    .. code:: bat
+
+        git clone https://github.com/Microsoft/vcpkg.git
+        cd vcpkg
+        .\bootstrap-vcpkg.bat
+        .\vcpkg integrate install
+
+#. Use vcpkg to install and build Ceres and all its dependencies, e.g., for 64
+   bit Windows
+
+   .. code:: bat
+
+      vcpkg\vcpkg.exe install ceres:x64-windows
+
+   Or with optional components, e.g., SuiteSparse, using
+
+   .. code:: bat
+
+      vcpkg\vcpkg.exe install ceres[suitesparse]:x64-windows
+
+#. Integrate vcpkg packages with Visual Studio to allow it to automatically
+   find all the libraries installed by vcpkg.
+
+   .. code:: bat
+
+      vcpkg\vcpkg.exe integrate install
+
+#. To use Ceres in a CMake project, follow our :ref:`instructions
+   <section-using-ceres>`.
+
+
+Building from Source
+--------------------
 
 Ceres Solver can also be built from source. For this purpose, we support Visual
 Studio 2019 and newer.
