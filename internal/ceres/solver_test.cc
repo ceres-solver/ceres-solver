@@ -33,6 +33,7 @@
 #include <cmath>
 #include <limits>
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "ceres/autodiff_cost_function.h"

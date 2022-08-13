@@ -95,7 +95,7 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
   reduced_linear_system_solution_.setZero();
 
   CreatePreconditioner(A);
-  if (preconditioner_.get() != nullptr) {
+  if (preconditioner_ != nullptr) {
     if (!preconditioner_->Update(*A, per_solve_options.D)) {
       LinearSolver::Summary summary;
       summary.num_iterations = 0;
@@ -141,7 +141,7 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
 
 void IterativeSchurComplementSolver::CreatePreconditioner(
     BlockSparseMatrix* A) {
-  if (preconditioner_.get() != nullptr) {
+  if (preconditioner_ != nullptr) {
     return;
   }
 

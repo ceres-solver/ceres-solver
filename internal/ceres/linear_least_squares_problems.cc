@@ -88,8 +88,7 @@ x_D = [1.78448275;
        2.82327586;]
  */
 std::unique_ptr<LinearLeastSquaresProblem> LinearLeastSquaresProblem0() {
-  std::unique_ptr<LinearLeastSquaresProblem> problem =
-      std::make_unique<LinearLeastSquaresProblem>();
+  auto problem = std::make_unique<LinearLeastSquaresProblem>();
 
   auto A = std::make_unique<TripletSparseMatrix>(3, 2, 6);
   problem->b = std::make_unique<double[]>(3);
@@ -190,8 +189,8 @@ std::unique_ptr<LinearLeastSquaresProblem> LinearLeastSquaresProblem1() {
   int num_rows = 6;
   int num_cols = 5;
 
-  std::unique_ptr<LinearLeastSquaresProblem> problem =
-      std::make_unique<LinearLeastSquaresProblem>();
+  auto problem = std::make_unique<LinearLeastSquaresProblem>();
+
   auto A = std::make_unique<TripletSparseMatrix>(
       num_rows, num_cols, num_rows * num_cols);
   problem->b = std::make_unique<double[]>(num_rows);
@@ -302,8 +301,7 @@ std::unique_ptr<LinearLeastSquaresProblem> LinearLeastSquaresProblem2() {
   int num_rows = 6;
   int num_cols = 5;
 
-  std::unique_ptr<LinearLeastSquaresProblem> problem =
-      std::make_unique<LinearLeastSquaresProblem>();
+  auto problem = std::make_unique<LinearLeastSquaresProblem>();
 
   problem->b = std::make_unique<double[]>(num_rows);
   problem->D = std::make_unique<double[]>(num_cols);
@@ -317,8 +315,7 @@ std::unique_ptr<LinearLeastSquaresProblem> LinearLeastSquaresProblem2() {
   problem->x[4] = 0.1388;
 
   auto* bs = new CompressedRowBlockStructure;
-  std::unique_ptr<double[]> values =
-      std::make_unique<double[]>(num_rows * num_cols);
+  auto values = std::make_unique<double[]>(num_rows * num_cols);
 
   for (int c = 0; c < num_cols; ++c) {
     bs->cols.emplace_back();
@@ -444,16 +441,14 @@ std::unique_ptr<LinearLeastSquaresProblem> LinearLeastSquaresProblem3() {
   int num_rows = 5;
   int num_cols = 2;
 
-  std::unique_ptr<LinearLeastSquaresProblem> problem =
-      std::make_unique<LinearLeastSquaresProblem>();
+  auto problem = std::make_unique<LinearLeastSquaresProblem>();
 
   problem->b = std::make_unique<double[]>(num_rows);
   problem->D = std::make_unique<double[]>(num_cols);
   problem->num_eliminate_blocks = 2;
 
   auto* bs = new CompressedRowBlockStructure;
-  std::unique_ptr<double[]> values =
-      std::make_unique<double[]>(num_rows * num_cols);
+  auto values = std::make_unique<double[]>(num_rows * num_cols);
 
   for (int c = 0; c < num_cols; ++c) {
     bs->cols.emplace_back();
@@ -553,16 +548,14 @@ std::unique_ptr<LinearLeastSquaresProblem> LinearLeastSquaresProblem4() {
   int num_rows = 3;
   int num_cols = 7;
 
-  std::unique_ptr<LinearLeastSquaresProblem> problem =
-      std::make_unique<LinearLeastSquaresProblem>();
+  auto problem = std::make_unique<LinearLeastSquaresProblem>();
 
   problem->b = std::make_unique<double[]>(num_rows);
   problem->D = std::make_unique<double[]>(num_cols);
   problem->num_eliminate_blocks = 1;
 
   auto* bs = new CompressedRowBlockStructure;
-  std::unique_ptr<double[]> values =
-      std::make_unique<double[]>(num_rows * num_cols);
+  auto values = std::make_unique<double[]>(num_rows * num_cols);
 
   // Column block structure
   bs->cols.emplace_back();
@@ -685,9 +678,7 @@ std::unique_ptr<LinearLeastSquaresProblem> LinearLeastSquaresProblem5() {
   int num_rows = 6;
   int num_cols = 5;
 
-  std::unique_ptr<LinearLeastSquaresProblem> problem =
-      std::make_unique<LinearLeastSquaresProblem>();
-
+  auto problem = std::make_unique<LinearLeastSquaresProblem>();
   problem->b = std::make_unique<double[]>(num_rows);
   problem->D = std::make_unique<double[]>(num_cols);
   problem->num_eliminate_blocks = 2;
@@ -701,8 +692,7 @@ std::unique_ptr<LinearLeastSquaresProblem> LinearLeastSquaresProblem5() {
   problem->x[4] = 0.1;
 
   auto* bs = new CompressedRowBlockStructure;
-  std::unique_ptr<double[]> values =
-      std::make_unique<double[]>(num_rows * num_cols);
+  auto values = std::make_unique<double[]>(num_rows * num_cols);
 
   for (int c = 0; c < num_cols; ++c) {
     bs->cols.emplace_back();
