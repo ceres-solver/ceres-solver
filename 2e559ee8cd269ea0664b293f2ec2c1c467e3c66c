@@ -140,6 +140,30 @@
       },
       "revId": "2e559ee8cd269ea0664b293f2ec2c1c467e3c66c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e99a57f2_af8af1eb",
+        "filename": "internal/ceres/eigensparse.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T18:23:48Z",
+      "side": 1,
+      "message": "ah okay!",
+      "parentUuid": "a9397ee8_4ba1fce5",
+      "range": {
+        "startLine": 103,
+        "startChar": 11,
+        "endLine": 103,
+        "endChar": 21
+      },
+      "revId": "2e559ee8cd269ea0664b293f2ec2c1c467e3c66c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
