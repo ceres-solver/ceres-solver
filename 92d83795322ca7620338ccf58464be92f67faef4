@@ -88,6 +88,24 @@
       "tag": "mailMessageId\u003d\u003cCABqdRUDTkze30ZehgiJDpiCuh8OxPn6o4Gwhkkxup\u003dAi8uu+Fg@mail.gmail.com\u003e",
       "revId": "92d83795322ca7620338ccf58464be92f67faef4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87073922_3428c078",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2022-08-13T18:56:39Z",
+      "side": 1,
+      "message": "Currently, other then being just interested in the field, i am kinda thinking of \"using\" ceres solver to \"find a work\" 😊. Nevertheless, i believe that i will be using ceres solver in my future work, so i think investing some time getting to know the internals might be profitable.\n\nRegarding the ideas for a change, today i spent some time trying get rid of \"...Multiply...AndAccumulate\" at places where no accumulation actually needed (we can save memory/cache bandwidth by not setting the left side to zero and also not fetching values for summation), but i stuck with PartitionedMatrixView multiplication routines updating the same memory locations regardless of what type of multiplications we are actually interested in. Still, this might be interesting to investigate further.\n\nAnother (a bit random, so no proofs about \"how much\" this is an issue will be presented) thought, is to minimize locking contention by upgrading std::unordered_map\u0027s under the mutexes to something faster (i saw abseil is coming?).",
+      "parentUuid": "0d3bb604_a5afc571",
+      "revId": "92d83795322ca7620338ccf58464be92f67faef4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
