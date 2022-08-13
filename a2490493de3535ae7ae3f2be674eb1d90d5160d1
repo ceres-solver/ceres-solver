@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bcf54c83_a11c2ca6",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T21:30:03Z",
+      "side": 1,
+      "message": "Resize",
+      "range": {
+        "startLine": 70,
+        "startChar": 13,
+        "endLine": 70,
+        "endChar": 14
+      },
+      "revId": "a2490493de3535ae7ae3f2be674eb1d90d5160d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b5b367c_b63a68c1",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T21:30:03Z",
+      "side": 1,
+      "message": "Dot",
+      "range": {
+        "startLine": 76,
+        "startChar": 9,
+        "endLine": 76,
+        "endChar": 12
+      },
+      "revId": "a2490493de3535ae7ae3f2be674eb1d90d5160d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b593448_97739aad",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T21:30:03Z",
+      "side": 1,
+      "message": "Norm",
+      "range": {
+        "startLine": 79,
+        "startChar": 9,
+        "endLine": 79,
+        "endChar": 13
+      },
+      "revId": "a2490493de3535ae7ae3f2be674eb1d90d5160d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "512d396e_c3dc4c51",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T21:30:03Z",
+      "side": 1,
+      "message": "SetZero",
+      "range": {
+        "startLine": 82,
+        "startChar": 7,
+        "endLine": 82,
+        "endChar": 14
+      },
+      "revId": "a2490493de3535ae7ae3f2be674eb1d90d5160d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7dea569c_5e7426e7",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T21:30:03Z",
+      "side": 1,
+      "message": "do you need both the variants, vector and raw pointer?",
+      "range": {
+        "startLine": 87,
+        "startChar": 15,
+        "endLine": 87,
+        "endChar": 20
+      },
+      "revId": "a2490493de3535ae7ae3f2be674eb1d90d5160d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7997b3ce_3a73fe08",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T21:30:03Z",
+      "side": 1,
+      "message": "do you actually need both the variants? vector and raw memory?",
+      "revId": "a2490493de3535ae7ae3f2be674eb1d90d5160d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d0a9bb4_7beb9cd5",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T21:30:03Z",
+      "side": 1,
+      "message": "just have Axpby?",
+      "range": {
+        "startLine": 101,
+        "startChar": 7,
+        "endLine": 101,
+        "endChar": 11
+      },
+      "revId": "a2490493de3535ae7ae3f2be674eb1d90d5160d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0da5bd56_ed81c37b",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T21:30:03Z",
+      "side": 1,
+      "message": "so this is always column major? why do you have a num_rows and num_cols at all? why not just a Size() method?",
+      "range": {
+        "startLine": 112,
+        "startChar": 6,
+        "endLine": 112,
+        "endChar": 14
+      },
+      "revId": "a2490493de3535ae7ae3f2be674eb1d90d5160d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2b1a92d_31b8c493",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T21:30:03Z",
+      "side": 1,
+      "message": "drop comment.",
+      "range": {
+        "startLine": 115,
+        "startChar": 31,
+        "endLine": 115,
+        "endChar": 34
+      },
+      "revId": "a2490493de3535ae7ae3f2be674eb1d90d5160d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4c6b936_dc531c27",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T21:30:03Z",
+      "side": 1,
+      "message": "just descr_?",
+      "range": {
+        "startLine": 129,
+        "startChar": 23,
+        "endLine": 129,
+        "endChar": 38
+      },
+      "revId": "a2490493de3535ae7ae3f2be674eb1d90d5160d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
