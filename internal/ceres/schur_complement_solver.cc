@@ -68,8 +68,6 @@ class BlockRandomAccessSparseMatrixAdapter final
       const BlockRandomAccessSparseMatrix& m)
       : m_(m) {}
 
-  virtual ~BlockRandomAccessSparseMatrixAdapter() {}
-
   void RightMultiplyAndAccumulate(const Vector& x, Vector& y) final {
     m_.SymmetricRightMultiplyAndAccumulate(x.data(), y.data());
   }
@@ -84,8 +82,6 @@ class BlockRandomAccessDiagonalMatrixAdapter final
   explicit BlockRandomAccessDiagonalMatrixAdapter(
       const BlockRandomAccessDiagonalMatrix& m)
       : m_(m) {}
-
-  virtual ~BlockRandomAccessDiagonalMatrixAdapter() final {}
 
   // y = y + Ax;
   void RightMultiplyAndAccumulate(const Vector& x, Vector& y) final {
