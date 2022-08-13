@@ -69,6 +69,24 @@
       "tag": "mailMessageId\u003d\u003cCAK0oyEq\u003dtEOhvQqRHaj0wvXN0FsSCK_nhNAF000FuJ4mEKcWOg@mail.gmail.com\u003e",
       "revId": "9c968d40667b9eb0cda467dd56c37276e3e2390e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d11069fd_257980f2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-13T19:52:52Z",
+      "side": 1,
+      "message": "I see, thanks. Do you want me to submit a CL for this?",
+      "parentUuid": "4fc4c374_94f287e1",
+      "revId": "9c968d40667b9eb0cda467dd56c37276e3e2390e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
