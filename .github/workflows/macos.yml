@@ -17,6 +17,7 @@ jobs:
       matrix:
         os:
           - macos-11
+          - macos-12
         build_type:
           - Release
         lib:
