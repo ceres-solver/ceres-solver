@@ -41,6 +41,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfb5382f_403ea4fd",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-13T17:13:06Z",
+      "side": 1,
+      "message": "Indeed, I do! :)",
+      "parentUuid": "c2bbca06_38fabcbf",
+      "range": {
+        "startLine": 438,
+        "startChar": 7,
+        "endLine": 438,
+        "endChar": 17
+      },
+      "revId": "ac4edce17f6f41d0a978f8738bc134bee6e2db11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e09eabbe_a102ba46",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-08-13T16:50:16Z",
       "side": 1,
       "message": "why the rvalueref?\nalso why can\u0027t I just pass a function object?",
+      "range": {
+        "startLine": 127,
+        "startChar": 20,
+        "endLine": 127,
+        "endChar": 39
+      },
+      "revId": "ac4edce17f6f41d0a978f8738bc134bee6e2db11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4df38983_ce198e68",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-13T17:13:06Z",
+      "side": 1,
+      "message": "An r-value reference is basically a universal reference: it does not matter whether I pass a reference or a temporary. It works in either case.\n\nAn `std::function` is useful only if you want to allow type erasure which is not necessary here and only introduces code bloat.",
+      "parentUuid": "e09eabbe_a102ba46",
       "range": {
         "startLine": 127,
         "startChar": 20,
@@ -87,6 +135,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac2c674b_aed78ac2",
+        "filename": "internal/ceres/gradient_checker_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-13T17:13:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cd219c2_05840232",
+      "range": {
+        "startLine": 61,
+        "startChar": 18,
+        "endLine": 61,
+        "endChar": 38
+      },
+      "revId": "ac4edce17f6f41d0a978f8738bc134bee6e2db11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a78a99ee_f527449b",
@@ -100,6 +172,30 @@
       "writtenOn": "2022-08-13T16:50:16Z",
       "side": 1,
       "message": "RandomUniformFunctor -\u003e UniformRandomFunctor",
+      "range": {
+        "startLine": 72,
+        "startChar": 18,
+        "endLine": 72,
+        "endChar": 38
+      },
+      "revId": "ac4edce17f6f41d0a978f8738bc134bee6e2db11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8da860e3_af57bf1a",
+        "filename": "internal/ceres/gradient_checking_cost_function_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-13T17:13:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a78a99ee_f527449b",
       "range": {
         "startLine": 72,
         "startChar": 18,
