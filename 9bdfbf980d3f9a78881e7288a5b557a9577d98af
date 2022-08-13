@@ -69,6 +69,24 @@
       "parentUuid": "b563e0c7_2e9ce9e2",
       "revId": "9bdfbf980d3f9a78881e7288a5b557a9577d98af",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d8338a0_af8b7fcc",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-13T08:50:19Z",
+      "side": 1,
+      "message": "Not necessarily: you can explicitly call `.c_str()` on the `string_view` instance.",
+      "parentUuid": "826f81fd_b5f7dedf",
+      "revId": "9bdfbf980d3f9a78881e7288a5b557a9577d98af",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
