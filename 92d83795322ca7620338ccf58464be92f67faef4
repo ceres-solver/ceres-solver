@@ -16,6 +16,24 @@
       "message": "Thank you for your patience Mark! I am going to run some experiments myself. I am curious if your experiments will reveal something different now that the preconditioner behaviour has become fixed. ",
       "revId": "92d83795322ca7620338ccf58464be92f67faef4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1376fdb2_91bc602e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2022-08-13T18:10:58Z",
+      "side": 1,
+      "message": "Sameer, thanks for guidance! Regarding the experiments results i shared earlier, there were already only fixed number of iterations used for preconditioning case.",
+      "parentUuid": "99f610e1_20f06038",
+      "revId": "92d83795322ca7620338ccf58464be92f67faef4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
