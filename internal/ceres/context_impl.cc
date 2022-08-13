@@ -72,26 +72,26 @@ bool ContextImpl::InitCUDA(std::string* message) {
   }
   EventLogger event_logger("InitCuda");
   if (cublasCreate(&cublas_handle_) != CUBLAS_STATUS_SUCCESS) {
-    *message = "cuBLAS::cublasCreate failed.";
+    if (message) *message = "cuBLAS::cublasCreate failed.";
     cublas_handle_ = nullptr;
     return false;
   }
   event_logger.AddEvent("cublasCreate");
   if (cusolverDnCreate(&cusolver_handle_) != CUSOLVER_STATUS_SUCCESS) {
-    *message = "cuSolverDN::cusolverDnCreate failed.";
+    if (message) *message = "cuSolverDN::cusolverDnCreate failed.";
     TearDown();
     return false;
   }
   event_logger.AddEvent("cusolverDnCreate");
   if (cusparseCreate(&cusparse_handle_) != CUSPARSE_STATUS_SUCCESS) {
-    *message = "cuSPARSE::cusparseCreate failed.";
+    if (message) *message = "cuSPARSE::cusparseCreate failed.";
     TearDown();
     return false;
   }
   event_logger.AddEvent("cusparseCreate");
   if (cudaStreamCreateWithFlags(&stream_, cudaStreamNonBlocking) !=
       cudaSuccess) {
-    *message = "CUDA::cudaStreamCreateWithFlags failed.";
+    if (message) *message = "CUDA::cudaStreamCreateWithFlags failed.";
     TearDown();
     return false;
   }
@@ -100,7 +100,7 @@ bool ContextImpl::InitCUDA(std::string* message) {
           CUSOLVER_STATUS_SUCCESS ||
       cublasSetStream(cublas_handle_, stream_) != CUBLAS_STATUS_SUCCESS ||
       cusparseSetStream(cusparse_handle_, stream_) != CUSPARSE_STATUS_SUCCESS) {
-    *message = "CUDA [Solver|BLAS|Sparse] SetStream failed.";
+    if (message) *message = "CUDA [Solver|BLAS|Sparse] SetStream failed.";
     TearDown();
     return false;
   }
