@@ -106,6 +106,24 @@
       "parentUuid": "0d3bb604_a5afc571",
       "revId": "92d83795322ca7620338ccf58464be92f67faef4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "942ae029_ba98c9a2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T19:03:13Z",
+      "side": 1,
+      "message": "Good to know.\n\nI am not sure the zero setting is really a problem IMO. In the cases where this vector is large enough to matter, the actual cost of the left/right multiply is substantial enough to wash it away. This is why I have not spent anytime worrying about it.\n\nyes I would like to start using abseil, sooner rather than later. \n\nI wonder if you would be interesting in working with joydeep to get iterative_schur working on GPUs.",
+      "parentUuid": "87073922_3428c078",
+      "revId": "92d83795322ca7620338ccf58464be92f67faef4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
