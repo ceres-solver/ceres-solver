@@ -142,6 +142,24 @@
       "parentUuid": "942ae029_ba98c9a2",
       "revId": "92d83795322ca7620338ccf58464be92f67faef4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4794c3d_bbb8568e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T20:41:29Z",
+      "side": 1,
+      "message": "let me start a separate thread about this with you and joydeep.\n\nDmitriy\u0027s thread lines up with what we are observing with just pure CGNR also. its just that back in 2020 I did not have or incentive to work on GPUs, and now that joydeep has added the basic GPU support it is much easier to work on it.",
+      "parentUuid": "d6c0e7aa_7d8d810f",
+      "revId": "92d83795322ca7620338ccf58464be92f67faef4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
