@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d9867f3_db203f6c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6220
+      },
+      "writtenOn": "2022-08-13T15:47:59Z",
+      "side": 1,
+      "message": "A few small suggestions.",
+      "revId": "f57df00069af91086148427497313a7dba05035e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c567cec_55ad6089",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 6220
+      },
+      "writtenOn": "2022-08-13T15:47:59Z",
+      "side": 1,
+      "message": "typo \"vckpg\"",
+      "range": {
+        "startLine": 310,
+        "startChar": 1,
+        "endLine": 310,
+        "endChar": 7
+      },
+      "revId": "f57df00069af91086148427497313a7dba05035e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05b8a6cc_fd477682",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 6220
+      },
+      "writtenOn": "2022-08-13T15:47:59Z",
+      "side": 1,
+      "message": "I don\u0027t think you\u0027d run the .sh script on Windows typically. This should be .\\bootstrap-vcpkg.bat.",
+      "range": {
+        "startLine": 320,
+        "startChar": 6,
+        "endLine": 320,
+        "endChar": 15
+      },
+      "revId": "f57df00069af91086148427497313a7dba05035e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e29a617_22bfa1a4",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 6220
+      },
+      "writtenOn": "2022-08-13T15:47:59Z",
+      "side": 1,
+      "message": "For this and the above command, the ./ syntax only works on PowerShell, not on cmd, as far as I know. The more \"universal\" syntax on Windows is \".\\\", which is also what the vcpkg Readme uses.",
+      "revId": "f57df00069af91086148427497313a7dba05035e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf19e1e2_d2206d0b",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 6220
+      },
+      "writtenOn": "2022-08-13T15:47:59Z",
+      "side": 1,
+      "message": "I\u0027d probably add :x64-windows here (like below). x64 is a reasonable default nowadays and it might catch people off guard if they get the 32-bit version following the instructions here.",
+      "revId": "f57df00069af91086148427497313a7dba05035e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c6e48cf_69924f29",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 6220
+      },
+      "writtenOn": "2022-08-13T15:47:59Z",
+      "side": 1,
+      "message": "typo again \"vckpkg\" :-)",
+      "range": {
+        "startLine": 326,
+        "startChar": 42,
+        "endLine": 326,
+        "endChar": 49
+      },
+      "revId": "f57df00069af91086148427497313a7dba05035e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
