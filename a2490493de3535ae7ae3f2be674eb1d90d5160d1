@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a7a09ad7_a621e568",
+        "filename": "internal/ceres/context_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T21:36:04Z",
+      "side": 1,
+      "message": "also why is message now optional?",
+      "range": {
+        "startLine": 69,
+        "startChar": 5,
+        "endLine": 69,
+        "endChar": 16
+      },
+      "revId": "a2490493de3535ae7ae3f2be674eb1d90d5160d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bcf54c83_a11c2ca6",
         "filename": "internal/ceres/cuda_vector.h",
         "patchSetId": 2
