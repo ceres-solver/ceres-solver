@@ -174,10 +174,10 @@ class CERES_NO_EXPORT LinearSolver {
     // Use SCHUR_POWER_SERIES_EXPANSION to initialize the solution for
     // ITERATIVE_SCHUR. This option can be set true regardless of what
     // preconditioner is being used.
-    bool use_power_series_expansion_initialization = false;
+    bool use_spse_initialization = false;
 
-    // When use_power_series_expansion_initialization is true, this parameter
-    // along with max_num_spse_iterations controls the number of
+    // When use_spse_initialization is true, this parameter along with
+    // max_num_spse_iterations controls the number of
     // SCHUR_POWER_SERIES_EXPANSION iterations performed for initialization. It
     // is not used to control the preconditioner.
     double spse_tolerance = 0.1;

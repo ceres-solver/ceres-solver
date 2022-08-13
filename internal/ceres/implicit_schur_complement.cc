@@ -57,7 +57,7 @@ void ImplicitSchurComplement::Init(const BlockSparseMatrix& A,
   b_ = b;
 
   compute_ftf_inverse_ =
-      options_.use_power_series_expansion_initialization ||
+      options_.use_spse_initialization ||
       options_.preconditioner_type == JACOBI ||
       options_.preconditioner_type == SCHUR_POWER_SERIES_EXPANSION;
 

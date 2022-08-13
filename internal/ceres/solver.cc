@@ -266,15 +266,15 @@ bool OptionsAreValidForIterativeSchur(const Solver::Options& options,
           "SCHUR_JACOBI as the preconditioner.";
       return false;
     }
-    if (options.use_power_series_expansion_initialization) {
+    if (options.use_spse_initialization) {
       *error =
           "use_explicit_schur_complement does not support "
-          "use_power_series_expansion_initialization.";
+          "use_spse_initialization.";
       return false;
     }
   }
 
-  if (options.use_power_series_expansion_initialization ||
+  if (options.use_spse_initialization ||
       options.preconditioner_type == SCHUR_POWER_SERIES_EXPANSION) {
     OPTION_GE(max_num_spse_iterations, 1)
     OPTION_GE(spse_tolerance, 0.0)

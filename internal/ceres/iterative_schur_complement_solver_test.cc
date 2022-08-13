@@ -76,7 +76,7 @@ class IterativeSchurComplementSolverTest : public ::testing::Test {
 
   AssertionResult TestSolver(double* D,
                              PreconditionerType preconditioner_type,
-                             bool use_power_series_expansion_initialization) {
+                             bool use_spse_initialization) {
     TripletSparseMatrix triplet_A(
         A_->num_rows(), A_->num_cols(), A_->num_nonzeros());
     A_->ToTripletSparseMatrix(&triplet_A);
@@ -98,8 +98,7 @@ class IterativeSchurComplementSolverTest : public ::testing::Test {
     options.elimination_groups.push_back(0);
     options.max_num_iterations = num_cols_;
     options.max_num_spse_iterations = 1;
-    options.use_power_series_expansion_initialization =
-        use_power_series_expansion_initialization;
+    options.use_spse_initialization = use_spse_initialization;
     options.preconditioner_type = preconditioner_type;
     IterativeSchurComplementSolver isc(options);
 

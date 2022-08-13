@@ -94,7 +94,7 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
   // Initialize the solution to the Schur complement system.
   reduced_linear_system_solution_.resize(schur_complement_->num_rows());
   reduced_linear_system_solution_.setZero();
-  if (options_.use_power_series_expansion_initialization) {
+  if (options_.use_spse_initialization) {
     PowerSeriesExpansionPreconditioner pse_solver(
         schur_complement_.get(),
         options_.max_num_spse_iterations,

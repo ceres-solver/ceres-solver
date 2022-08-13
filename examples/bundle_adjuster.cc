@@ -90,7 +90,7 @@ DEFINE_string(preconditioner, "jacobi", "Options are: "
               "cluster_tridiagonal.");
 DEFINE_string(visibility_clustering, "canonical_views",
               "single_linkage, canonical_views");
-DEFINE_bool(use_power_series_expansion_initialization, false,
+DEFINE_bool(use_spse_initialization, false,
             "Use power series expansion to initialize the solution in ITERATIVE_SCHUR linear solver.");
 
 DEFINE_string(sparse_linear_algebra_library, "suite_sparse",
@@ -111,7 +111,7 @@ DEFINE_double(eta, 1e-2, "Default value for eta. Eta determines the "
 
 DEFINE_int32(num_threads, 1, "Number of threads.");
 DEFINE_int32(num_iterations, 5, "Number of iterations.");
-DEFINE_int32(max_linear_solve_iterations, 500, "Maximum number of iterations"
+DEFINE_int32(max_linear_solver_iterations, 500, "Maximum number of iterations"
             " for solution of linear system.");
 DEFINE_double(spse_tolerance, 0.1,
              "Tolerance to reach during the iterations of power series expansion initialization or preconditioning.");
@@ -166,9 +166,9 @@ void SetLinearSolver(Solver::Options* options) {
   options->max_num_refinement_iterations =
       CERES_GET_FLAG(FLAGS_max_num_refinement_iterations);
   options->max_linear_solver_iterations =
-      CERES_GET_FLAG(FLAGS_max_linear_solve_iterations);
-  options->use_power_series_expansion_initialization =
-      CERES_GET_FLAG(FLAGS_use_power_series_expansion_initialization);
+      CERES_GET_FLAG(FLAGS_max_linear_solver_iterations);
+  options->use_spse_initialization =
+      CERES_GET_FLAG(FLAGS_use_spse_initialization);
   options->spse_tolerance = CERES_GET_FLAG(FLAGS_spse_tolerance);
   options->max_num_spse_iterations =
       CERES_GET_FLAG(FLAGS_max_num_spse_iterations);
