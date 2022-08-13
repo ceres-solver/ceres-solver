@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "42fb95ad_5351328e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-13T16:02:21Z",
+      "side": 1,
+      "message": "Thanks Patrik!",
+      "parentUuid": "5d9867f3_db203f6c",
+      "revId": "f57df00069af91086148427497313a7dba05035e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5c567cec_55ad6089",
@@ -31,6 +49,30 @@
       "writtenOn": "2022-08-13T15:47:59Z",
       "side": 1,
       "message": "typo \"vckpg\"",
+      "range": {
+        "startLine": 310,
+        "startChar": 1,
+        "endLine": 310,
+        "endChar": 7
+      },
+      "revId": "f57df00069af91086148427497313a7dba05035e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d2395c5_de37bc1f",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-13T16:02:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c567cec_55ad6089",
       "range": {
         "startLine": 310,
         "startChar": 1,
@@ -64,6 +106,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "17979ef2_0e88139d",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-13T16:02:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05b8a6cc_fd477682",
+      "range": {
+        "startLine": 320,
+        "startChar": 6,
+        "endLine": 320,
+        "endChar": 15
+      },
+      "revId": "f57df00069af91086148427497313a7dba05035e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7e29a617_22bfa1a4",
@@ -77,6 +143,24 @@
       "writtenOn": "2022-08-13T15:47:59Z",
       "side": 1,
       "message": "For this and the above command, the ./ syntax only works on PowerShell, not on cmd, as far as I know. The more \"universal\" syntax on Windows is \".\\\", which is also what the vcpkg Readme uses.",
+      "revId": "f57df00069af91086148427497313a7dba05035e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4d2d425_161f680e",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-13T16:02:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e29a617_22bfa1a4",
       "revId": "f57df00069af91086148427497313a7dba05035e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -98,6 +182,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5942716b_e90846ae",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-13T16:02:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf19e1e2_d2206d0b",
+      "revId": "f57df00069af91086148427497313a7dba05035e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0c6e48cf_69924f29",
@@ -111,6 +213,30 @@
       "writtenOn": "2022-08-13T15:47:59Z",
       "side": 1,
       "message": "typo again \"vckpkg\" :-)",
+      "range": {
+        "startLine": 326,
+        "startChar": 42,
+        "endLine": 326,
+        "endChar": 49
+      },
+      "revId": "f57df00069af91086148427497313a7dba05035e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db373e76_499c3089",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-13T16:02:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c6e48cf_69924f29",
       "range": {
         "startLine": 326,
         "startChar": 42,
