@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e4914ca_71128cfe",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T00:39:11Z",
+      "side": 1,
+      "message": "Expand this comment to explain that this value only matters for use_power_series_expansion_initialization.",
+      "range": {
+        "startLine": 698,
+        "startChar": 17,
+        "endLine": 698,
+        "endChar": 19
+      },
+      "revId": "d4dad02e7078ed38af9f0107a48a02bb1fa8e079",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6905b81_57c444a2",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T00:39:11Z",
+      "side": 1,
+      "message": "Explain the interaction between this and spse_tolerance.",
+      "range": {
+        "startLine": 701,
+        "startChar": 39,
+        "endLine": 701,
+        "endChar": 48
+      },
+      "revId": "d4dad02e7078ed38af9f0107a48a02bb1fa8e079",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad4aef05_107731b4",
+        "filename": "internal/ceres/iterative_schur_complement_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T00:39:11Z",
+      "side": 1,
+      "message": "explicitly pass zero here and add a comment why.",
+      "range": {
+        "startLine": 183,
+        "startChar": 44,
+        "endLine": 183,
+        "endChar": 67
+      },
+      "revId": "d4dad02e7078ed38af9f0107a48a02bb1fa8e079",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bef1907d_d9b73006",
+        "filename": "internal/ceres/iterative_schur_complement_solver_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T00:39:11Z",
+      "side": 1,
+      "message": "also add a test for power series expansion when used with a different preconditioner.",
+      "range": {
+        "startLine": 130,
+        "startChar": 7,
+        "endLine": 130,
+        "endChar": 41
+      },
+      "revId": "d4dad02e7078ed38af9f0107a48a02bb1fa8e079",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb1e3b21_b000d3de",
+        "filename": "internal/ceres/linear_solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T00:39:11Z",
+      "side": 1,
+      "message": "replicate docs here.",
+      "range": {
+        "startLine": 172,
+        "startChar": 26,
+        "endLine": 172,
+        "endChar": 31
+      },
+      "revId": "d4dad02e7078ed38af9f0107a48a02bb1fa8e079",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d449a905_6a67a729",
+        "filename": "internal/ceres/power_series_expansion_preconditioner.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T00:39:11Z",
+      "side": 1,
+      "message": "don\u0027t use defaults.",
+      "range": {
+        "startLine": 50,
+        "startChar": 66,
+        "endLine": 50,
+        "endChar": 67
+      },
+      "revId": "d4dad02e7078ed38af9f0107a48a02bb1fa8e079",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b39067bc_6eb161f4",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T00:39:11Z",
+      "side": 1,
+      "message": "let me merge my linear solver options CL and then this check should move into the function that validates iterative_schur.",
+      "range": {
+        "startLine": 180,
+        "startChar": 14,
+        "endLine": 180,
+        "endChar": 32
+      },
+      "revId": "d4dad02e7078ed38af9f0107a48a02bb1fa8e079",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
