@@ -33,6 +33,24 @@
       "message": "clang-tidy generally complains about the use of C-style arrays. I\u0027d rather use `std::string_view` which supports `constexpr`. Something along the lines should work:\n```\nconstexpr std::string_view \u003d \"...\";\n```",
       "revId": "9bdfbf980d3f9a78881e7288a5b557a9577d98af",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b563e0c7_2e9ce9e2",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T00:43:42Z",
+      "side": 1,
+      "message": "that would require StringPrintf to support string_view no?",
+      "parentUuid": "beee07ef_13042ff3",
+      "revId": "9bdfbf980d3f9a78881e7288a5b557a9577d98af",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
