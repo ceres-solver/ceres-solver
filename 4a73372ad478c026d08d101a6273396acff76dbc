@@ -17,6 +17,24 @@
       "tag": "mailMessageId\u003d\u003cCABqdRUA10tvpOAvAs4MEOUP1wkdrEBjTyzfJF+\u003d9mJMOK3iPFA@mail.gmail.com\u003e",
       "revId": "4a73372ad478c026d08d101a6273396acff76dbc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd943e0f_24575eaa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-13T22:29:50Z",
+      "side": 1,
+      "message": "Sounds good. Thanks.",
+      "parentUuid": "2038bed8_5927124b",
+      "revId": "4a73372ad478c026d08d101a6273396acff76dbc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
