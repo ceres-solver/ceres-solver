@@ -78,13 +78,13 @@ class CERES_NO_EXPORT ContextImpl final : public Context {
   // returned.
   bool InitCUDA(std::string* message);
   void TearDown();
+  inline bool IsCUDAInitialized() const { return is_cuda_initialized_; }
 
   cusolverDnHandle_t cusolver_handle_ = nullptr;
   cublasHandle_t cublas_handle_ = nullptr;
   cudaStream_t stream_ = nullptr;
   cusparseHandle_t cusparse_handle_ = nullptr;
-  // Indicates whether all the CUDA resources have been initialized.
-  bool cuda_initialized_ = false;
+  bool is_cuda_initialized_ = false;
 #endif  // CERES_NO_CUDA
 };
 

@@ -63,11 +63,11 @@ void ContextImpl::TearDown() {
     cudaStreamDestroy(stream_);
     stream_ = nullptr;
   }
-  cuda_initialized_ = false;
+  is_cuda_initialized_ = false;
 }
 
 bool ContextImpl::InitCUDA(std::string* message) {
-  if (cuda_initialized_) {
+  if (is_cuda_initialized_) {
     return true;
   }
   EventLogger event_logger("InitCuda");
@@ -105,7 +105,7 @@ bool ContextImpl::InitCUDA(std::string* message) {
     return false;
   }
   event_logger.AddEvent("SetStream");
-  cuda_initialized_ = true;
+  is_cuda_initialized_ = true;
   return true;
 }
 #endif  // CERES_NO_CUDA
