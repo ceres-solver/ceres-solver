@@ -24,6 +24,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "be0554bc_80bbf48f",
+        "filename": "internal/ceres/eigensparse.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-13T18:21:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a1b1344_5542d6dd",
+      "range": {
+        "startLine": 93,
+        "startChar": 32,
+        "endLine": 93,
+        "endChar": 34
+      },
+      "revId": "2e559ee8cd269ea0664b293f2ec2c1c467e3c66c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dfed5b9f_baf522b2",
@@ -47,6 +71,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "faaf7003_3800a716",
+        "filename": "internal/ceres/eigensparse.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-13T18:21:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfed5b9f_baf522b2",
+      "range": {
+        "startLine": 100,
+        "startChar": 11,
+        "endLine": 100,
+        "endChar": 26
+      },
+      "revId": "2e559ee8cd269ea0664b293f2ec2c1c467e3c66c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d0e00bb0_33e5b540",
@@ -60,6 +108,30 @@
       "writtenOn": "2022-08-13T18:05:30Z",
       "side": 1,
       "message": "you are creating two allocations here no? isn\u0027t it better to allocate them once and reuse them.",
+      "range": {
+        "startLine": 103,
+        "startChar": 11,
+        "endLine": 103,
+        "endChar": 21
+      },
+      "revId": "2e559ee8cd269ea0664b293f2ec2c1c467e3c66c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9397ee8_4ba1fce5",
+        "filename": "internal/ceres/eigensparse.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-13T18:21:43Z",
+      "side": 1,
+      "message": "The `auto` resolves to an expression template type which is why I use type deduction instead of specifying the actual type. Consequently, no copy is actually performed at this point but only later during the evaluation within the `.solve` call. `ConstVectorRef` also only maps the memory but does not copy it. I don\u0027t believe this code block can get more efficient than that.",
+      "parentUuid": "d0e00bb0_33e5b540",
       "range": {
         "startLine": 103,
         "startChar": 11,
