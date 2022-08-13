@@ -41,6 +41,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d7ffd9c_939e20a5",
+        "filename": "internal/ceres/eigensparse.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-13T17:54:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6b7d874_a1989f1f",
+      "range": {
+        "startLine": 53,
+        "startChar": 7,
+        "endLine": 53,
+        "endChar": 11
+      },
+      "revId": "797cb3b3beab8cf4ed42f25390dca71c647f334b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0768d14b_e39f151e",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-08-13T16:55:59Z",
       "side": 1,
       "message": "and this cast can be guarded by an if constrexpr? and a regular equality in the double case.",
+      "range": {
+        "startLine": 95,
+        "startChar": 18,
+        "endLine": 95,
+        "endChar": 32
+      },
+      "revId": "797cb3b3beab8cf4ed42f25390dca71c647f334b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e90581c3_53f340d1",
+        "filename": "internal/ceres/eigensparse.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-13T17:54:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0768d14b_e39f151e",
       "range": {
         "startLine": 95,
         "startChar": 18,
@@ -87,6 +135,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f1f5e92_1be07973",
+        "filename": "internal/ceres/eigensparse.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-13T17:54:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95781e9e_98574e7f",
+      "range": {
+        "startLine": 121,
+        "startChar": 26,
+        "endLine": 121,
+        "endChar": 27
+      },
+      "revId": "797cb3b3beab8cf4ed42f25390dca71c647f334b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2c61ebb9_eb0d92d1",
@@ -100,6 +172,30 @@
       "writtenOn": "2022-08-13T16:55:59Z",
       "side": 1,
       "message": "why const? the matrix gets destroyed no?",
+      "range": {
+        "startLine": 131,
+        "startChar": 15,
+        "endLine": 131,
+        "endChar": 20
+      },
+      "revId": "797cb3b3beab8cf4ed42f25390dca71c647f334b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3601769a_1009a481",
+        "filename": "internal/ceres/eigensparse.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-13T17:54:29Z",
+      "side": 1,
+      "message": "`Factorize` expects a `const SparseMatrix` instance. Therefore, the mapped memory does not need to be mutable. Hopefully the optimizer can use this as a hint.",
+      "parentUuid": "2c61ebb9_eb0d92d1",
       "range": {
         "startLine": 131,
         "startChar": 15,
