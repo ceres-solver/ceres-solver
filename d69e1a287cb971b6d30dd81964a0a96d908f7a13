@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d5ef5e2_9669db46",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T17:11:22Z",
+      "side": 1,
+      "message": "almost there.",
+      "revId": "d69e1a287cb971b6d30dd81964a0a96d908f7a13",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc83edca_c6ffb8b0",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T17:11:22Z",
+      "side": 1,
+      "message": "Sorry for the churn, but I think the following will be clearer.\n\n// Maximum number of iterations performed by SCHUR_POWER_SERIES_EXPANSION. This value controls the maximum number of iterations whether it is used a preconditioner or just to initialize the solution for ITERATIVE_SCHUR.\nint max_num_spse_iterations \u003d 5;\n\n// Use SCHUR_POWER_SERIES_EXPANSION to initialize the solution for ITERATIVE_SCHUR. This option can be set true regardless of what preconditioner is being used.\nbool use_power_series_expansion_initialization \u003d false;\n\n// When use_power_series_expansion_initialization is true, this parameter along with max_num_spse_iterations controls the number of SCHUR_POWER_SERIES_EXPANSION iterations are performed. \ndouble spse_tolerance.\n\nIt is not clear to me if the exact expression for the termination matters here since the user can\u0027t really interpret series_term_0 without knowing the full details of the preconditioner.",
+      "range": {
+        "startLine": 694,
+        "startChar": 11,
+        "endLine": 694,
+        "endChar": 16
+      },
+      "revId": "d69e1a287cb971b6d30dd81964a0a96d908f7a13",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a3a1b80_118d66d5",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T17:11:22Z",
+      "side": 1,
+      "message": "you should also add a check inside solver.cc for value bounds on this tolerance.",
+      "range": {
+        "startLine": 704,
+        "startChar": 25,
+        "endLine": 704,
+        "endChar": 26
+      },
+      "revId": "d69e1a287cb971b6d30dd81964a0a96d908f7a13",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "292b03cc_be8e3ab9",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T17:11:22Z",
+      "side": 1,
+      "message": "add a check inside solver.cc for this to be at least 1 right? if its use is requested.",
+      "range": {
+        "startLine": 705,
+        "startChar": 8,
+        "endLine": 705,
+        "endChar": 31
+      },
+      "revId": "d69e1a287cb971b6d30dd81964a0a96d908f7a13",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb3c68d2_a4cb5f24",
+        "filename": "internal/ceres/linear_solver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T17:11:22Z",
+      "side": 1,
+      "message": "update based on solver.h",
+      "range": {
+        "startLine": 168,
+        "startChar": 6,
+        "endLine": 168,
+        "endChar": 7
+      },
+      "revId": "d69e1a287cb971b6d30dd81964a0a96d908f7a13",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbbbb173_529e32f9",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T17:11:22Z",
+      "side": 1,
+      "message": "\"use_explicit_schur_complement does not support use_power_series_expansion_initialization.\".",
+      "range": {
+        "startLine": 271,
+        "startChar": 11,
+        "endLine": 271,
+        "endChar": 25
+      },
+      "revId": "d69e1a287cb971b6d30dd81964a0a96d908f7a13",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b6bdcfc_0a921d3c",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T17:11:22Z",
+      "side": 1,
+      "message": "if initialization or preconditioner is set, add checks for the two spse variables.",
+      "revId": "d69e1a287cb971b6d30dd81964a0a96d908f7a13",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
