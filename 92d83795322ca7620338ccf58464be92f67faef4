@@ -124,6 +124,24 @@
       "parentUuid": "87073922_3428c078",
       "revId": "92d83795322ca7620338ccf58464be92f67faef4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6c0e7aa_7d8d810f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2022-08-13T19:23:13Z",
+      "side": 1,
+      "message": "Yes, i think implementing iterative_schur for cuda capable gpus is an interesting task. I will look closer at current state of this work and think about the way i can help.\n\nBtw, my ex-coworker Dmitriy Korchemkin spend some time on this task (and i think he even shared some performance numbers over here https://groups.google.com/g/ceres-solver/c/-AC_9wsYrW0/m/24HeccY8BAAJ ), so it might be helpful to bring his attention to currently on-going work.",
+      "parentUuid": "942ae029_ba98c9a2",
+      "revId": "92d83795322ca7620338ccf58464be92f67faef4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
