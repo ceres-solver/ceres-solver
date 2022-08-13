@@ -35,6 +35,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "07819362_738c7680",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2022-08-13T18:06:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c56346e8_6fd54393",
+      "revId": "6a307a141906cfe40250b249fb0b70c3be0a3491",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f5116dd5_3053c07f",
@@ -48,6 +66,24 @@
       "writtenOn": "2022-08-13T18:01:16Z",
       "side": 1,
       "message": "performed for initialization. It is not used to control the preconditioner.",
+      "revId": "6a307a141906cfe40250b249fb0b70c3be0a3491",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ced07fbc_14b27da3",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2022-08-13T18:06:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5116dd5_3053c07f",
       "revId": "6a307a141906cfe40250b249fb0b70c3be0a3491",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
