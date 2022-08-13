@@ -1,5 +1,23 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13b9fb0e_3fef0be2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T17:21:15Z",
+      "side": 1,
+      "message": "okay I can use c_str, though inside google using constexpr char [] is also part of the official guidance.\n\nhttps://abseil.io/tips/140\n\n",
+      "revId": "07d333fb6870eada8f02c4beb0e8383b5e91dcc9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
