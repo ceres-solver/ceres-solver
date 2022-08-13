@@ -78,6 +78,7 @@ class CERES_NO_EXPORT ContextImpl final : public Context {
   // returned.
   bool InitCUDA(std::string* message);
   void TearDown();
+  inline bool IsCUDAInitialized() const { return cuda_initialized_; }
 
   cusolverDnHandle_t cusolver_handle_ = nullptr;
   cublasHandle_t cublas_handle_ = nullptr;
