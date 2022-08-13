@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68a81c38_15a92a5e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-13T19:35:27Z",
+      "side": 1,
+      "message": "After seeing the warning, I\u0027m also confused about the destructor being `virtual` (but not overridden) in the first place. I guess the idea was that either the base class destructor should be `virtual` or a `default` destructor is necessary.",
+      "revId": "9c968d40667b9eb0cda467dd56c37276e3e2390e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
