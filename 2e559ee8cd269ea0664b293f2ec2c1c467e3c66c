@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a1b1344_5542d6dd",
+        "filename": "internal/ceres/eigensparse.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T18:05:30Z",
+      "side": 1,
+      "message": "update comment.",
+      "range": {
+        "startLine": 93,
+        "startChar": 32,
+        "endLine": 93,
+        "endChar": 34
+      },
+      "revId": "2e559ee8cd269ea0664b293f2ec2c1c467e3c66c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfed5b9f_baf522b2",
+        "filename": "internal/ceres/eigensparse.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T18:05:30Z",
+      "side": 1,
+      "message": "this branch you can just say\nVectorRef(solution_ptr, solver_.cols()) \u003d solver_.solve(scalar_rhs) no?\nthis will save an allocation.",
+      "range": {
+        "startLine": 100,
+        "startChar": 11,
+        "endLine": 100,
+        "endChar": 26
+      },
+      "revId": "2e559ee8cd269ea0664b293f2ec2c1c467e3c66c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0e00bb0_33e5b540",
+        "filename": "internal/ceres/eigensparse.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T18:05:30Z",
+      "side": 1,
+      "message": "you are creating two allocations here no? isn\u0027t it better to allocate them once and reuse them.",
+      "range": {
+        "startLine": 103,
+        "startChar": 11,
+        "endLine": 103,
+        "endChar": 21
+      },
+      "revId": "2e559ee8cd269ea0664b293f2ec2c1c467e3c66c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
