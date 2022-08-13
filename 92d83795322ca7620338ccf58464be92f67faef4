@@ -70,6 +70,24 @@
       "parentUuid": "19f4f46e_3e58dcef",
       "revId": "92d83795322ca7620338ccf58464be92f67faef4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d3bb604_a5afc571",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T18:19:33Z",
+      "side": 1,
+      "message": "ah okay.\n\nI am going to look at what is happening in the CG loop more carefully, I feel like we are doing too many iterations.\n\nalso in conjunction with the work that joydeep is doing, this is a good preconditioner to port to the GPU, where it should run blazing fast.  so thats also on my agenda in parallel.\n\nare you using ceres solver in your own work? do you have any other features/bug reports/annoyances in mind?\n\nSameer",
+      "tag": "mailMessageId\u003d\u003cCABqdRUDTkze30ZehgiJDpiCuh8OxPn6o4Gwhkkxup\u003dAi8uu+Fg@mail.gmail.com\u003e",
+      "revId": "92d83795322ca7620338ccf58464be92f67faef4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
