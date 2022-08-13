@@ -33,6 +33,24 @@
       "message": "ty.",
       "revId": "9c968d40667b9eb0cda467dd56c37276e3e2390e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6e5bef0_b26febb8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-13T19:49:38Z",
+      "side": 1,
+      "message": "Sameer, can you clarify what is the purpose of the `virtual` destructor in adapters? I believe this is not right.",
+      "parentUuid": "a4c841d8_ed3b8883",
+      "revId": "9c968d40667b9eb0cda467dd56c37276e3e2390e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
