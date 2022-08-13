@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca642d46_c81f0869",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T16:43:40Z",
+      "side": 1,
+      "message": "I am wondering if we should have this paragraph at all? the same is true for anyone doing the same on ubuntu or via homebrew, you are always on the mercy of the people maintaining it. So it seems odd to single out the vcpkg maintainers about this.",
+      "range": {
+        "startLine": 328,
+        "startChar": 28,
+        "endLine": 328,
+        "endChar": 38
+      },
+      "revId": "b360a4ad0030f7e74b05fee911581736e1417bd9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f8fb57f_05591c2f",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T16:43:40Z",
+      "side": 1,
+      "message": "I think this step by step guide should just be merged with the quick start, I had to read carefully to see why you had two sections and for a moment I thought it was somehow different outcomes.. but its just the details of the quick start guide.",
+      "range": {
+        "startLine": 335,
+        "startChar": 11,
+        "endLine": 335,
+        "endChar": 12
+      },
+      "revId": "b360a4ad0030f7e74b05fee911581736e1417bd9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
