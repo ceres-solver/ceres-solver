@@ -840,52 +840,43 @@ TEST(Solver, CgnrOptionsIdentityPreconditioner) {
   EXPECT_FALSE(options.IsValid(&message));
 
   options.sparse_linear_algebra_library_type = EIGEN_SPARSE;
-  if (IsSparseLinearAlgebraLibraryTypeAvailable(
-          options.sparse_linear_algebra_library_type)) {
-    options.dynamic_sparsity = false;
-    options.use_mixed_precision_solves = false;
-    EXPECT_TRUE(options.IsValid(&message));
+  options.dynamic_sparsity = false;
+  options.use_mixed_precision_solves = false;
+  EXPECT_TRUE(options.IsValid(&message));
 
-    options.dynamic_sparsity = true;
-    options.use_mixed_precision_solves = false;
-    EXPECT_FALSE(options.IsValid(&message));
+  options.dynamic_sparsity = true;
+  options.use_mixed_precision_solves = false;
+  EXPECT_FALSE(options.IsValid(&message));
 
-    options.dynamic_sparsity = false;
-    options.use_mixed_precision_solves = true;
-    EXPECT_FALSE(options.IsValid(&message));
-  }
+  options.dynamic_sparsity = false;
+  options.use_mixed_precision_solves = true;
+  EXPECT_FALSE(options.IsValid(&message));
 
   options.sparse_linear_algebra_library_type = SUITE_SPARSE;
-  if (IsSparseLinearAlgebraLibraryTypeAvailable(
-          options.sparse_linear_algebra_library_type)) {
-    options.dynamic_sparsity = false;
-    options.use_mixed_precision_solves = false;
-    EXPECT_TRUE(options.IsValid(&message));
+  options.dynamic_sparsity = false;
+  options.use_mixed_precision_solves = false;
+  EXPECT_TRUE(options.IsValid(&message));
 
-    options.dynamic_sparsity = true;
-    options.use_mixed_precision_solves = false;
-    EXPECT_FALSE(options.IsValid(&message));
+  options.dynamic_sparsity = true;
+  options.use_mixed_precision_solves = false;
+  EXPECT_FALSE(options.IsValid(&message));
 
-    options.dynamic_sparsity = false;
-    options.use_mixed_precision_solves = true;
-    EXPECT_FALSE(options.IsValid(&message));
-  }
+  options.dynamic_sparsity = false;
+  options.use_mixed_precision_solves = true;
+  EXPECT_FALSE(options.IsValid(&message));
 
   options.sparse_linear_algebra_library_type = ACCELERATE_SPARSE;
-  if (IsSparseLinearAlgebraLibraryTypeAvailable(
-          options.sparse_linear_algebra_library_type)) {
-    options.dynamic_sparsity = false;
-    options.use_mixed_precision_solves = false;
-    EXPECT_TRUE(options.IsValid(&message));
+  options.dynamic_sparsity = false;
+  options.use_mixed_precision_solves = false;
+  EXPECT_TRUE(options.IsValid(&message));
 
-    options.dynamic_sparsity = true;
-    options.use_mixed_precision_solves = false;
-    EXPECT_FALSE(options.IsValid(&message));
+  options.dynamic_sparsity = true;
+  options.use_mixed_precision_solves = false;
+  EXPECT_FALSE(options.IsValid(&message));
 
-    options.dynamic_sparsity = false;
-    options.use_mixed_precision_solves = true;
-    EXPECT_FALSE(options.IsValid(&message));
-  }
+  options.dynamic_sparsity = false;
+  options.use_mixed_precision_solves = true;
+  EXPECT_FALSE(options.IsValid(&message));
 }
 
 TEST(Solver, CgnrOptionsJacobiPreconditioner) {
@@ -974,46 +965,52 @@ TEST(Solver, CgnrOptionsSubsetPreconditioner) {
   EXPECT_FALSE(options.IsValid(&message));
 
   options.sparse_linear_algebra_library_type = EIGEN_SPARSE;
+  if (IsSparseLinearAlgebraLibraryTypeAvailable(
+          options.sparse_linear_algebra_library_type)) {
+    options.dynamic_sparsity = false;
+    options.use_mixed_precision_solves = false;
+    EXPECT_TRUE(options.IsValid(&message));
 
-  options.dynamic_sparsity = false;
-  options.use_mixed_precision_solves = false;
-  EXPECT_TRUE(options.IsValid(&message));
+    options.dynamic_sparsity = true;
+    options.use_mixed_precision_solves = false;
+    EXPECT_FALSE(options.IsValid(&message));
 
-  options.dynamic_sparsity = true;
-  options.use_mixed_precision_solves = false;
-  EXPECT_FALSE(options.IsValid(&message));
-
-  options.dynamic_sparsity = false;
-  options.use_mixed_precision_solves = true;
-  EXPECT_FALSE(options.IsValid(&message));
+    options.dynamic_sparsity = false;
+    options.use_mixed_precision_solves = true;
+    EXPECT_FALSE(options.IsValid(&message));
+  }
 
   options.sparse_linear_algebra_library_type = SUITE_SPARSE;
+  if (IsSparseLinearAlgebraLibraryTypeAvailable(
+          options.sparse_linear_algebra_library_type)) {
+    options.dynamic_sparsity = false;
+    options.use_mixed_precision_solves = false;
+    EXPECT_TRUE(options.IsValid(&message));
 
-  options.dynamic_sparsity = false;
-  options.use_mixed_precision_solves = false;
-  EXPECT_TRUE(options.IsValid(&message));
+    options.dynamic_sparsity = true;
+    options.use_mixed_precision_solves = false;
+    EXPECT_FALSE(options.IsValid(&message));
 
-  options.dynamic_sparsity = true;
-  options.use_mixed_precision_solves = false;
-  EXPECT_FALSE(options.IsValid(&message));
-
-  options.dynamic_sparsity = false;
-  options.use_mixed_precision_solves = true;
-  EXPECT_FALSE(options.IsValid(&message));
+    options.dynamic_sparsity = false;
+    options.use_mixed_precision_solves = true;
+    EXPECT_FALSE(options.IsValid(&message));
+  }
 
   options.sparse_linear_algebra_library_type = ACCELERATE_SPARSE;
+  if (IsSparseLinearAlgebraLibraryTypeAvailable(
+          options.sparse_linear_algebra_library_type)) {
+    options.dynamic_sparsity = false;
+    options.use_mixed_precision_solves = false;
+    EXPECT_TRUE(options.IsValid(&message));
 
-  options.dynamic_sparsity = false;
-  options.use_mixed_precision_solves = false;
-  EXPECT_TRUE(options.IsValid(&message));
+    options.dynamic_sparsity = true;
+    options.use_mixed_precision_solves = false;
+    EXPECT_FALSE(options.IsValid(&message));
 
-  options.dynamic_sparsity = true;
-  options.use_mixed_precision_solves = false;
-  EXPECT_FALSE(options.IsValid(&message));
-
-  options.dynamic_sparsity = false;
-  options.use_mixed_precision_solves = true;
-  EXPECT_FALSE(options.IsValid(&message));
+    options.dynamic_sparsity = false;
+    options.use_mixed_precision_solves = true;
+    EXPECT_FALSE(options.IsValid(&message));
+  }
 }
 
 TEST(Solver, CgnrOptionsSchurPreconditioners) {
