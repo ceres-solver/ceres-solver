@@ -52,6 +52,24 @@
       "tag": "mailMessageId\u003d\u003cCABqdRUAGEUnw45H0_5Bkw8wu791NY2H5BMzp0N-UpgSN9pjVZw@mail.gmail.com\u003e",
       "revId": "92d83795322ca7620338ccf58464be92f67faef4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42ea1103_8df43d9d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2022-08-13T18:14:18Z",
+      "side": 1,
+      "message": "Yes, but it was essentially ignored due to equality of min_num_iterations with max_num_iterations.",
+      "parentUuid": "19f4f46e_3e58dcef",
+      "revId": "92d83795322ca7620338ccf58464be92f67faef4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
