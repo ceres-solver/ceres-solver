@@ -160,6 +160,24 @@
       "parentUuid": "d6c0e7aa_7d8d810f",
       "revId": "92d83795322ca7620338ccf58464be92f67faef4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b947f2ee_4c07dbe9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T20:47:53Z",
+      "side": 1,
+      "message": "I revived the thread from earlier, we can just continue talking there.",
+      "parentUuid": "a4794c3d_bbb8568e",
+      "revId": "92d83795322ca7620338ccf58464be92f67faef4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
