@@ -24,6 +24,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "53d87639_d00ed152",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-13T17:04:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca642d46_c81f0869",
+      "range": {
+        "startLine": 328,
+        "startChar": 28,
+        "endLine": 328,
+        "endChar": 38
+      },
+      "revId": "b360a4ad0030f7e74b05fee911581736e1417bd9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3f8fb57f_05591c2f",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-08-13T16:43:40Z",
       "side": 1,
       "message": "I think this step by step guide should just be merged with the quick start, I had to read carefully to see why you had two sections and for a moment I thought it was somehow different outcomes.. but its just the details of the quick start guide.",
+      "range": {
+        "startLine": 335,
+        "startChar": 11,
+        "endLine": 335,
+        "endChar": 12
+      },
+      "revId": "b360a4ad0030f7e74b05fee911581736e1417bd9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f2412d9_6fd8e3c1",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-13T17:04:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f8fb57f_05591c2f",
       "range": {
         "startLine": 335,
         "startChar": 11,
