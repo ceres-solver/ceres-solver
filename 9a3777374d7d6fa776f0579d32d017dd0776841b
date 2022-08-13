@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49b0f857_b3fbfa2a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T22:13:26Z",
+      "side": 1,
+      "message": "I need to think a bit more carefully about this CL since on one hand it simplifies a bunch of stuff, on the other hand it will break API.",
+      "revId": "9a3777374d7d6fa776f0579d32d017dd0776841b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24c2be2c_2c160dfc",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T22:13:26Z",
+      "side": 1,
+      "message": "drop this comment because this is a short but complicated ifdef block anyways.",
+      "range": {
+        "startLine": 94,
+        "startChar": 9,
+        "endLine": 94,
+        "endChar": 10
+      },
+      "revId": "9a3777374d7d6fa776f0579d32d017dd0776841b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fa5f389_fadd1610",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T22:13:26Z",
+      "side": 1,
+      "message": "same here.",
+      "range": {
+        "startLine": 100,
+        "startChar": 19,
+        "endLine": 100,
+        "endChar": 31
+      },
+      "revId": "9a3777374d7d6fa776f0579d32d017dd0776841b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a9fcb19_ee7e98f7",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T22:13:26Z",
+      "side": 1,
+      "message": "should we consider defining CERES_HAS_BESSEL_FUNCTIONS as the or of these two macros? or is that not worth it?",
+      "revId": "9a3777374d7d6fa776f0579d32d017dd0776841b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
