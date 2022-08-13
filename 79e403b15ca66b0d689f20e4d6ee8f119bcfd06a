@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6324f63_14701bef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T17:13:17Z",
+      "side": 1,
+      "message": "Thanks Sergiu.",
+      "revId": "79e403b15ca66b0d689f20e4d6ee8f119bcfd06a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26cea0ce_e3e86980",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T17:13:17Z",
+      "side": 1,
+      "message": "its been so long since I saw back slashes :)",
+      "range": {
+        "startLine": 322,
+        "startChar": 9,
+        "endLine": 322,
+        "endChar": 10
+      },
+      "revId": "79e403b15ca66b0d689f20e4d6ee8f119bcfd06a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
