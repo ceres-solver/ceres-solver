@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c91449c_833e8429",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T18:01:16Z",
+      "side": 1,
+      "message": "two more nitpicks and its ready to go. ",
+      "revId": "6a307a141906cfe40250b249fb0b70c3be0a3491",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c56346e8_6fd54393",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T18:01:16Z",
+      "side": 1,
+      "message": "as a",
+      "revId": "6a307a141906cfe40250b249fb0b70c3be0a3491",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5116dd5_3053c07f",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-13T18:01:16Z",
+      "side": 1,
+      "message": "performed for initialization. It is not used to control the preconditioner.",
+      "revId": "6a307a141906cfe40250b249fb0b70c3be0a3491",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
