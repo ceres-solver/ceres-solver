@@ -150,11 +150,11 @@ if (USE_CUDA)
     add_test(
         NAME cuda_memcheck_dense_qr_test
         COMMAND ${CUDA_TOOLKIT_ROOT_DIR}/bin/cuda-memcheck --leak-check full
-            $<TARGET_FILE:cuda_dense_qr_test>)
+            $<TARGET_FILE:cuda_dense_qr_test> --num_randomized_trials 1)
     add_test(
         NAME cuda_memcheck_dense_cholesky_test
         COMMAND ${CUDA_TOOLKIT_ROOT_DIR}/bin/cuda-memcheck --leak-check full
-            $<TARGET_FILE:cuda_dense_cholesky_test>)
+            $<TARGET_FILE:cuda_dense_cholesky_test> --num_randomized_trials 1)
   endif (BUILD_TESTING AND GFLAGS)
   set_source_files_properties(ceres_cuda_kernels.cu PROPERTIES LANGUAGE CUDA)
   add_library(ceres_cuda_kernels ceres_cuda_kernels.cu)

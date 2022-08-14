@@ -35,6 +35,8 @@
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
+DEFINE_uint32(num_randomized_trials, 20, "Number of randomized tests to run.");
+
 namespace ceres::internal {
 
 #ifndef CERES_NO_CUDA
@@ -133,8 +135,7 @@ TEST(CUDADenseQR, Randomized1600x100Tests) {
   options.dense_linear_algebra_library_type = ceres::CUDA;
   std::unique_ptr<DenseQR> dense_qr = CUDADenseQR::Create(options);
 
-  const int kNumTrials = 100;
-  for (int i = 0; i < kNumTrials; ++i) {
+  for (int i = 0; i < FLAGS_num_randomized_trials; ++i) {
     LhsType lhs = LhsType::Random(kNumRows, kNumCols);
     SolutionType x_expected = SolutionType::Random(kNumCols);
     RhsType rhs = lhs * x_expected;

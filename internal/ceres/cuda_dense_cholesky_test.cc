@@ -36,8 +36,9 @@
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+DEFINE_uint32(num_randomized_trials, 20, "Number of randomized tests to run.");
+
+namespace ceres::internal {
 
 #ifndef CERES_NO_CUDA
 
@@ -144,8 +145,7 @@ TEST(CUDADenseCholesky, Randomized1600x1600Tests) {
   std::unique_ptr<DenseCholesky> dense_cholesky =
       CUDADenseCholesky::Create(options);
 
-  const int kNumTrials = 20;
-  for (int i = 0; i < kNumTrials; ++i) {
+  for (int i = 0; i < FLAGS_num_randomized_trials; ++i) {
     LhsType lhs = LhsType::Random(kNumCols, kNumCols);
     lhs = lhs.transpose() * lhs;
     lhs += 1e-3 * LhsType::Identity(kNumCols, kNumCols);
@@ -273,8 +273,7 @@ TEST(CUDADenseCholeskyMixedPrecision, Randomized1600x1600Tests) {
   std::unique_ptr<CUDADenseCholeskyMixedPrecision> dense_cholesky =
       CUDADenseCholeskyMixedPrecision::Create(options);
 
-  const int kNumTrials = 20;
-  for (int i = 0; i < kNumTrials; ++i) {
+  for (int i = 0; i < FLAGS_num_randomized_trials; ++i) {
     LhsType lhs = LhsType::Random(kNumCols, kNumCols);
     lhs = lhs.transpose() * lhs;
     lhs += 1e-3 * LhsType::Identity(kNumCols, kNumCols);
@@ -302,5 +301,4 @@ TEST(CUDADenseCholeskyMixedPrecision, Randomized1600x1600Tests) {
 
 #endif  // CERES_NO_CUDA
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
