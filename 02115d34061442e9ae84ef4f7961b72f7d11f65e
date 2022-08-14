@@ -85,6 +85,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "96cc3339_4cd32f58",
+        "filename": "internal/ceres/block_jacobian_writer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-14T23:06:45Z",
+      "side": 1,
+      "message": "https://google.github.io/styleguide/cppguide.html#Integer_Types\n\nThe google style guide does not recommend using unsigned numbers for tasks like this.\nAlso this is not particularly performance sensitive code these allocations happen once in the life cycle of a problem, so I am not at all worried about compiler optimizations here.\n\nso my recommendation is to keep the function signatures the same and fix the issue in the implementation by static casting as needed.",
+      "parentUuid": "0b019950_5db9b20a",
+      "revId": "02115d34061442e9ae84ef4f7961b72f7d11f65e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "534e8316_13289ad8",
         "filename": "internal/ceres/program_evaluator.h",
         "patchSetId": 2
