@@ -60,7 +60,7 @@ class CERES_NO_EXPORT BlockJacobianWriter {
   // Create evaluate prepareres that point directly into the final jacobian.
   // This makes the final Write() a nop.
   std::unique_ptr<BlockEvaluatePreparer[]> CreateEvaluatePreparers(
-      int num_threads);
+      unsigned num_threads);
 
   std::unique_ptr<SparseMatrix> CreateJacobian() const;
 
