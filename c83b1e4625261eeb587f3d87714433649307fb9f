@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8691cee5_a34d9d5b",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-14T16:03:25Z",
+      "side": 1,
+      "message": "I would change this to is_cuda_initialized_ also.",
+      "revId": "c83b1e4625261eeb587f3d87714433649307fb9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3bc97c8_27eeb270",
+        "filename": "internal/ceres/cuda_vector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-14T16:03:25Z",
+      "side": 1,
+      "message": "why not check if you actually need to resize?",
+      "range": {
+        "startLine": 69,
+        "startChar": 8,
+        "endLine": 69,
+        "endChar": 15
+      },
+      "revId": "c83b1e4625261eeb587f3d87714433649307fb9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bbd4757_3391da4d",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-14T16:03:25Z",
+      "side": 1,
+      "message": "can the constructor fail when it is not the user\u0027s fault?",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 12
+      },
+      "revId": "c83b1e4625261eeb587f3d87714433649307fb9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "066533ae_370ee1a7",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-14T16:03:25Z",
+      "side": 1,
+      "message": "why bother?",
+      "range": {
+        "startLine": 68,
+        "startChar": 3,
+        "endLine": 68,
+        "endChar": 13
+      },
+      "revId": "c83b1e4625261eeb587f3d87714433649307fb9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aaaef1e6_82101685",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-14T16:03:25Z",
+      "side": 1,
+      "message": "I am a bit surprised by the handling here, why not do all this in the axpby method and have this be a completely dumb method that offloads to it? right now you have some special handling (!\u003d 1 happening inside the cudavector  and some happening here).",
+      "range": {
+        "startLine": 131,
+        "startChar": 9,
+        "endLine": 131,
+        "endChar": 10
+      },
+      "revId": "c83b1e4625261eeb587f3d87714433649307fb9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

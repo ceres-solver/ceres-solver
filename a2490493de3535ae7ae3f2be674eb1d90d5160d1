@@ -598,6 +598,30 @@
       },
       "revId": "a2490493de3535ae7ae3f2be674eb1d90d5160d1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef301793_cc5a379d",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-14T16:03:25Z",
+      "side": 1,
+      "message": "but within the context of this class you could get away with just descr_ no? or are you planning on adding stuff to this vector?",
+      "parentUuid": "87db9dbf_2731b02d",
+      "range": {
+        "startLine": 129,
+        "startChar": 23,
+        "endLine": 129,
+        "endChar": 38
+      },
+      "revId": "a2490493de3535ae7ae3f2be674eb1d90d5160d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
