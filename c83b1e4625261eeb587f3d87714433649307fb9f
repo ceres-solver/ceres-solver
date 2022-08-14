@@ -130,6 +130,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3bd6519_3b83c8a4",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-14T23:04:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d3cb1026_528a2ddd",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 12
+      },
+      "revId": "c83b1e4625261eeb587f3d87714433649307fb9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "066533ae_370ee1a7",
