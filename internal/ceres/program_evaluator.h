@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -129,8 +129,8 @@ class ProgramEvaluator final : public Evaluator {
 #endif  // CERES_NO_THREADS
 
     BuildResidualLayout(*program, &residual_layout_);
-    evaluate_scratch_ =
-        std::move(CreateEvaluatorScratch(*program, options.num_threads));
+    evaluate_scratch_ = std::move(CreateEvaluatorScratch(
+        *program, static_cast<unsigned>(options.num_threads)));
   }
 
   // Implementation of Evaluator interface.
@@ -345,7 +345,7 @@ class ProgramEvaluator final : public Evaluator {
 
   // Create scratch space for each thread evaluating the program.
   static std::unique_ptr<EvaluateScratch[]> CreateEvaluatorScratch(
-      const Program& program, int num_threads) {
+      const Program& program, unsigned num_threads) {
     int max_parameters_per_residual_block =
         program.MaxParametersPerResidualBlock();
     int max_scratch_doubles_needed_for_evaluate =

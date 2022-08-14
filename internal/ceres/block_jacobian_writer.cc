@@ -138,12 +138,12 @@ BlockJacobianWriter::BlockJacobianWriter(const Evaluator::Options& options,
 // Create evaluate prepareres that point directly into the final jacobian. This
 // makes the final Write() a nop.
 std::unique_ptr<BlockEvaluatePreparer[]>
-BlockJacobianWriter::CreateEvaluatePreparers(int num_threads) {
+BlockJacobianWriter::CreateEvaluatePreparers(unsigned num_threads) {
   int max_derivatives_per_residual_block =
       program_->MaxDerivativesPerResidualBlock();
 
   auto preparers = std::make_unique<BlockEvaluatePreparer[]>(num_threads);
-  for (int i = 0; i < num_threads; i++) {
+  for (unsigned i = 0; i < num_threads; i++) {
     preparers[i].Init(&jacobian_layout_[0], max_derivatives_per_residual_block);
   }
   return preparers;
