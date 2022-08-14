@@ -53,6 +53,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "41279f65_154f406b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-14T15:27:14Z",
+      "side": 1,
+      "message": "there is a consistent policy. generally speaking you use FooBar() naming. \n\nThe num_rows/num_cols story is more complicated. Its mostly history.\nthe style guide allows for accessor\u0027s to be named lower case, \n\nhttps://google.github.io/styleguide/cppguide.html#Function_Names\n\nand initially there was no linear operator just some concrete matrix classes and then we added some base classes and were lazy about renaming and ended up with num_rows() num_cols() being lower case. it has nothing to do with eigen, which uses rows() and cols() as the corresponding method names.",
+      "parentUuid": "51c61c22_5207a1c6",
+      "revId": "a2490493de3535ae7ae3f2be674eb1d90d5160d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a7a09ad7_a621e568",
