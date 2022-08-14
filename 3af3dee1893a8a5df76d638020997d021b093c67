@@ -39,6 +39,30 @@
       },
       "revId": "3af3dee1893a8a5df76d638020997d021b093c67",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a26d29c3_845fc3f1",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-14T16:19:43Z",
+      "side": 1,
+      "message": "This is not used in any GPU code at the moment. If we need to, we can use the cusparse accelerated versions in the future.",
+      "parentUuid": "3e529c81_e9eba980",
+      "range": {
+        "startLine": 171,
+        "startChar": 5,
+        "endLine": 171,
+        "endChar": 22
+      },
+      "revId": "3af3dee1893a8a5df76d638020997d021b093c67",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
