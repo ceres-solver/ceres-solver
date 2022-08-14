@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "534e8316_13289ad8",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-14T11:11:23Z",
+      "side": 1,
+      "message": "Don\u0027t we need an `#else` with a `num_threads \u003c 1` check here?",
+      "revId": "02115d34061442e9ae84ef4f7961b72f7d11f65e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
