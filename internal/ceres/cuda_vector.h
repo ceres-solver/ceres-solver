@@ -39,17 +39,18 @@
 // clang-format on
 
 #include <math.h>
+
 #include <memory>
 #include <string>
 
+#include "ceres/context_impl.h"
 #include "ceres/internal/export.h"
 #include "ceres/types.h"
-#include "ceres/context_impl.h"
 
 #ifndef CERES_NO_CUDA
 
-#include "ceres/cuda_buffer.h"
 #include "ceres/ceres_cuda_kernels.h"
+#include "ceres/cuda_buffer.h"
 #include "ceres/internal/eigen.h"
 #include "cublas_v2.h"
 #include "cusparse.h"
@@ -59,7 +60,6 @@ namespace ceres::internal {
 // An Nx1 vector, denoted y hosted on the GPU, with CUDA-accelerated operations.
 class CERES_NO_EXPORT CudaVector {
  public:
-
   // Create a pre-allocated vector of size N and return a pointer to it. The
   // caller must ensure that InitCuda() has already been successfully called on
   // context before calling this method.
@@ -123,12 +123,11 @@ class CERES_NO_EXPORT CudaVector {
 // object in the conjugate gradients linear solver.
 inline double Norm(const CudaVector& x) { return x.Norm(); }
 inline void SetZero(CudaVector& x) { x.SetZero(); }
-inline void Axpby(
-    double a,
-    const CudaVector& x,
-    double b,
-    const CudaVector& y,
-    CudaVector& z) {
+inline void Axpby(double a,
+                  const CudaVector& x,
+                  double b,
+                  const CudaVector& y,
+                  CudaVector& z) {
   if (&x == &y && &y == &z) {
     // z = (a + b) * z;
     z.Scale(a + b);

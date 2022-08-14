@@ -37,15 +37,15 @@
 
 #include <math.h>
 
+#include "ceres/context_impl.h"
 #include "ceres/internal/export.h"
 #include "ceres/types.h"
-#include "ceres/context_impl.h"
 
 #ifndef CERES_NO_CUDA
 
+#include "ceres/ceres_cuda_kernels.h"
 #include "ceres/cuda_buffer.h"
 #include "ceres/cuda_vector.h"
-#include "ceres/ceres_cuda_kernels.h"
 #include "cublas_v2.h"
 
 namespace ceres::internal {
@@ -72,18 +72,14 @@ void CudaVector::DestroyDescriptor() {
   }
 }
 
-CudaVector::~CudaVector() {
-  DestroyDescriptor();
-}
+CudaVector::~CudaVector() { DestroyDescriptor(); }
 
 void CudaVector::Resize(int size) {
   data_.Reserve(size);
   num_rows_ = size;
   DestroyDescriptor();
-  CHECK_EQ(cusparseCreateDnVec(&descr_,
-                               num_rows_,
-                               data_.data(),
-                               CUDA_R_64F), CUSPARSE_STATUS_SUCCESS);
+  CHECK_EQ(cusparseCreateDnVec(&descr_, num_rows_, data_.data(), CUDA_R_64F),
+           CUSPARSE_STATUS_SUCCESS);
 }
 
 double CudaVector::Dot(const CudaVector& x) const {
@@ -93,19 +89,19 @@ double CudaVector::Dot(const CudaVector& x) const {
                       data_.data(),
                       1,
                       x.data().data(),
-                      1, &result),
-           CUBLAS_STATUS_SUCCESS) << "CuBLAS cublasDdot failed.";
+                      1,
+                      &result),
+           CUBLAS_STATUS_SUCCESS)
+      << "CuBLAS cublasDdot failed.";
   return result;
 }
 
 double CudaVector::Norm() const {
   double result = 0;
-  CHECK_EQ(cublasDnrm2(context_->cublas_handle_,
-                       num_rows_,
-                       data_.data(),
-                       1,
-                       &result),
-           CUBLAS_STATUS_SUCCESS) << "CuBLAS cublasDnrm2 failed.";
+  CHECK_EQ(cublasDnrm2(
+               context_->cublas_handle_, num_rows_, data_.data(), 1, &result),
+           CUBLAS_STATUS_SUCCESS)
+      << "CuBLAS cublasDnrm2 failed.";
   return result;
 }
 
@@ -114,10 +110,8 @@ void CudaVector::CopyFromCpu(const Vector& x) {
   data_.CopyFromCpu(x.data(), x.rows(), context_->stream_);
   num_rows_ = x.rows();
   DestroyDescriptor();
-  CHECK_EQ(cusparseCreateDnVec(&descr_,
-                               num_rows_,
-                               data_.data(),
-                               CUDA_R_64F), CUSPARSE_STATUS_SUCCESS);
+  CHECK_EQ(cusparseCreateDnVec(&descr_, num_rows_, data_.data(), CUDA_R_64F),
+           CUSPARSE_STATUS_SUCCESS);
 }
 
 void CudaVector::CopyTo(Vector* x) const {
@@ -150,12 +144,10 @@ void CudaVector::Axpby(double a, const CudaVector& x, double b) {
   CHECK_EQ(num_rows_, x.num_rows_);
   if (b != 1.0) {
     // First scale y by b.
-    CHECK_EQ(cublasDscal(context_->cublas_handle_,
-                        num_rows_,
-                        &b,
-                        data_.data(),
-                        1),
-            CUBLAS_STATUS_SUCCESS) << "CuBLAS cublasDscal failed.";
+    CHECK_EQ(
+        cublasDscal(context_->cublas_handle_, num_rows_, &b, data_.data(), 1),
+        CUBLAS_STATUS_SUCCESS)
+        << "CuBLAS cublasDscal failed.";
   }
   // Then add a * x to y.
   CHECK_EQ(cublasDaxpy(context_->cublas_handle_,
@@ -165,7 +157,8 @@ void CudaVector::Axpby(double a, const CudaVector& x, double b) {
                        1,
                        data_.data(),
                        1),
-           CUBLAS_STATUS_SUCCESS) << "CuBLAS cublasDaxpy failed.";
+           CUBLAS_STATUS_SUCCESS)
+      << "CuBLAS cublasDaxpy failed.";
 }
 
 void CudaVector::DtDxpy(const CudaVector& D, const CudaVector& x) {
@@ -177,12 +170,10 @@ void CudaVector::DtDxpy(const CudaVector& D, const CudaVector& x) {
 }
 
 void CudaVector::Scale(double s) {
-  CHECK_EQ(cublasDscal(context_->cublas_handle_,
-                       num_rows_,
-                       &s,
-                       data_.data(),
-                       1),
-           CUBLAS_STATUS_SUCCESS) << "CuBLAS cublasDscal failed.";
+  CHECK_EQ(
+      cublasDscal(context_->cublas_handle_, num_rows_, &s, data_.data(), 1),
+      CUBLAS_STATUS_SUCCESS)
+      << "CuBLAS cublasDscal failed.";
 }
 
 }  // namespace ceres::internal

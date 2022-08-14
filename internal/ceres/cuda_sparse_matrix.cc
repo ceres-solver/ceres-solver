@@ -38,41 +38,37 @@
 #include "ceres/cuda_sparse_matrix.h"
 
 #include <math.h>
+
 #include <memory>
 
-#include "ceres/internal/export.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/compressed_row_sparse_matrix.h"
-#include "ceres/crs_matrix.h"
-#include "ceres/types.h"
 #include "ceres/context_impl.h"
+#include "ceres/crs_matrix.h"
+#include "ceres/internal/export.h"
+#include "ceres/types.h"
 #include "ceres/wall_time.h"
 
 #ifndef CERES_NO_CUDA
 
+#include "ceres/ceres_cuda_kernels.h"
 #include "ceres/cuda_buffer.h"
 #include "ceres/cuda_vector.h"
-#include "ceres/ceres_cuda_kernels.h"
 #include "cusparse.h"
-
 
 namespace ceres::internal {
 
 CudaSparseMatrix::CudaSparseMatrix(
-      ContextImpl* context,
-      const CompressedRowSparseMatrix& crs_matrix) {
+    ContextImpl* context, const CompressedRowSparseMatrix& crs_matrix) {
   DCHECK_NE(context, nullptr);
   CHECK(context->IsCUDAInitialized());
   context_ = context;
   num_rows_ = crs_matrix.num_rows();
   num_cols_ = crs_matrix.num_cols();
   num_nonzeros_ = crs_matrix.num_nonzeros();
-  rows_.CopyFromCpu(
-      crs_matrix.rows(), num_rows_ + 1, context_->stream_);
-  cols_.CopyFromCpu(
-      crs_matrix.cols(), num_nonzeros_, context_->stream_);
-  values_.CopyFromCpu(
-      crs_matrix.values(), num_nonzeros_, context_->stream_);
+  rows_.CopyFromCpu(crs_matrix.rows(), num_rows_ + 1, context_->stream_);
+  cols_.CopyFromCpu(crs_matrix.cols(), num_nonzeros_, context_->stream_);
+  values_.CopyFromCpu(crs_matrix.values(), num_nonzeros_, context_->stream_);
   cusparseCreateCsr(&descr_,
                     num_rows_,
                     num_cols_,
@@ -99,8 +95,7 @@ void CudaSparseMatrix::CopyValuesFromCpu(
   CHECK_EQ(num_rows_, crs_matrix.num_rows());
   CHECK_EQ(num_cols_, crs_matrix.num_cols());
   CHECK_EQ(num_nonzeros_, crs_matrix.num_nonzeros());
-  values_.CopyFromCpu(
-      crs_matrix.values(), num_nonzeros_, context_->stream_);
+  values_.CopyFromCpu(crs_matrix.values(), num_nonzeros_, context_->stream_);
 }
 
 void CudaSparseMatrix::SpMv(cusparseOperation_t op,
@@ -135,11 +130,13 @@ void CudaSparseMatrix::SpMv(cusparseOperation_t op,
            CUSPARSE_STATUS_SUCCESS);
 }
 
-void CudaSparseMatrix::RightMultiplyAndAccumulate(const CudaVector& x, CudaVector* y) {
+void CudaSparseMatrix::RightMultiplyAndAccumulate(const CudaVector& x,
+                                                  CudaVector* y) {
   SpMv(CUSPARSE_OPERATION_NON_TRANSPOSE, x, y);
 }
 
-void CudaSparseMatrix::LeftMultiplyAndAccumulate(const CudaVector& x, CudaVector* y) {
+void CudaSparseMatrix::LeftMultiplyAndAccumulate(const CudaVector& x,
+                                                 CudaVector* y) {
   // TODO(Joydeep Biswas): We should consider storing a transposed copy of the
   // matrix by converting CSR to CSC. From the cuSPARSE documentation:
   // "In general, opA == CUSPARSE_OPERATION_NON_TRANSPOSE is 3x faster than opA

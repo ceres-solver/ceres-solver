@@ -28,15 +28,16 @@
 //
 // Author: joydeepb@cs.utexas.edu (Joydeep Biswas)
 
+#include "ceres/cuda_sparse_matrix.h"
+
 #include <string>
 
+#include "ceres/block_sparse_matrix.h"
 #include "ceres/casts.h"
+#include "ceres/cuda_vector.h"
 #include "ceres/internal/config.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
-#include "ceres/block_sparse_matrix.h"
-#include "ceres/cuda_vector.h"
-#include "ceres/cuda_sparse_matrix.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "glog/logging.h"
 #include "gtest/gtest.h"
@@ -113,23 +114,10 @@ TEST(CudaSparseMatrix, CopyValuesFromCpu) {
   // b: [1 2 3 4]'
   // A1 * b = [3 5]'
   // A2 * b = [5 18]'
-  TripletSparseMatrix A1(
-    2,
-    4,
-    {0, 0, 1, 1},
-    {0, 1, 1, 2},
-    {1, 1, 1, 1}
-  );
-  TripletSparseMatrix A2(
-    2,
-    4,
-    {0, 0, 1, 1},
-    {0, 1, 1, 2},
-    {1, 2, 3, 4}
-  );
+  TripletSparseMatrix A1(2, 4, {0, 0, 1, 1}, {0, 1, 1, 2}, {1, 1, 1, 1});
+  TripletSparseMatrix A2(2, 4, {0, 0, 1, 1}, {0, 1, 1, 2}, {1, 2, 3, 4});
   Vector b(4);
   b << 1, 2, 3, 4;
-
 
   ContextImpl context;
   std::string message;
@@ -163,13 +151,7 @@ TEST(CudaSparseMatrix, RightMultiplyAndAccumulate) {
   //   0 3 4 0]
   // b: [1 2 3 4]'
   // A * b = [5 18]'
-  TripletSparseMatrix A(
-    2,
-    4,
-    {0, 0, 1, 1},
-    {0, 1, 1, 2},
-    {1, 2, 3, 4}
-  );
+  TripletSparseMatrix A(2, 4, {0, 0, 1, 1}, {0, 1, 1, 2}, {1, 2, 3, 4});
   Vector b(4);
   b << 1, 2, 3, 4;
   Vector x_expected(2);
@@ -199,13 +181,7 @@ TEST(CudaSparseMatrix, LeftMultiplyAndAccumulate) {
   //   0 3 4 0]
   // b: [1 2]'
   // A'* b = [1 8 8 0]'
-  TripletSparseMatrix A(
-    2,
-    4,
-    {0, 0, 1, 1},
-    {0, 1, 1, 2},
-    {1, 2, 3, 4}
-  );
+  TripletSparseMatrix A(2, 4, {0, 0, 1, 1}, {0, 1, 1, 2}, {1, 2, 3, 4});
   Vector b(2);
   b << 1, 2;
   Vector x_expected(4);
@@ -213,8 +189,7 @@ TEST(CudaSparseMatrix, LeftMultiplyAndAccumulate) {
 
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCUDA(&message))
-      << "InitCUDA() failed because: " << message;
+  CHECK(context.InitCUDA(&message)) << "InitCUDA() failed because: " << message;
   auto A_crs = CompressedRowSparseMatrix::FromTripletSparseMatrix(A);
   CudaSparseMatrix A_gpu(&context, *A_crs);
   CudaVector b_gpu(&context, A.num_rows());
@@ -269,14 +244,12 @@ TEST(CudaSparseMatrix, LargeMultiplyAndAccumulate) {
 
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCUDA(&message))
-      << "InitCUDA() failed because: " << message;
+  CHECK(context.InitCUDA(&message)) << "InitCUDA() failed because: " << message;
   auto A_crs = CompressedRowSparseMatrix::FromTripletSparseMatrix(A);
   CudaSparseMatrix A_gpu(&context, *A_crs);
   CudaVector b_gpu(&context, N);
   CudaVector x_gpu(&context, N);
   x_gpu.CopyFromCpu(x);
-
 
   // First check RightMultiply.
   {

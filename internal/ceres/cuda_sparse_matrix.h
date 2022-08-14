@@ -43,9 +43,9 @@
 #include <string>
 
 #include "ceres/compressed_row_sparse_matrix.h"
+#include "ceres/context_impl.h"
 #include "ceres/internal/export.h"
 #include "ceres/types.h"
-#include "ceres/context_impl.h"
 
 #ifndef CERES_NO_CUDA
 #include "ceres/cuda_buffer.h"
@@ -58,7 +58,6 @@ namespace ceres::internal {
 // CUDA-accelerated operations.
 class CERES_NO_EXPORT CudaSparseMatrix {
  public:
-
   // Create a GPU copy of the matrix provided. The caller must ensure that
   // InitCuda() has already been successfully called on context before calling
   // this constructor.
@@ -86,7 +85,6 @@ class CERES_NO_EXPORT CudaSparseMatrix {
   const cusparseSpMatDescr_t& descr() const { return descr_; }
 
  private:
-
   // Disable copy and assignment.
   CudaSparseMatrix(const CudaSparseMatrix&) = delete;
   CudaSparseMatrix& operator=(const CudaSparseMatrix&) = delete;

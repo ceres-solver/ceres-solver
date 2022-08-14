@@ -155,8 +155,8 @@ class ImplicitSchurComplementTest : public ::testing::Test {
     // Here, assuming that block_diagonal(F'F) == diagonal(F'F)
     Matrix Z_reference =
         (F.transpose() * F + DF).diagonal().asDiagonal().inverse() *
-        F.transpose() * E * (E.transpose() * E + DE).inverse() *
-        E.transpose() * F;
+        F.transpose() * E * (E.transpose() * E + DE).inverse() * E.transpose() *
+        F;
 
     for (int i = 0; i < num_f_cols; ++i) {
       Vector x(num_f_cols);
@@ -165,7 +165,6 @@ class ImplicitSchurComplementTest : public ::testing::Test {
 
       Vector y(num_f_cols);
       y = lhs * x;
-
 
       Vector z(num_f_cols);
       isc.RightMultiplyAndAccumulate(x.data(), z.data());
