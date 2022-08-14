@@ -3,6 +3,46 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b2370228_9f0742e1",
+        "filename": "internal/ceres/block_jacobian_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-14T13:32:51Z",
+      "side": 1,
+      "message": "why would this loop create a warning?",
+      "range": {
+        "startLine": 146,
+        "startChar": 7,
+        "endLine": 146,
+        "endChar": 15
+      },
+      "revId": "02115d34061442e9ae84ef4f7961b72f7d11f65e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ccfe11a_83d3fd1d",
+        "filename": "internal/ceres/block_jacobian_writer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-14T13:32:51Z",
+      "side": 1,
+      "message": "isn\u0027t it better to fix the problem by just localizing the change to when make_unique is called? instead of changing function signatures?\n\nsince we used signed ints everywhere it makes the function signatures appear insconsistent.",
+      "revId": "02115d34061442e9ae84ef4f7961b72f7d11f65e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "534e8316_13289ad8",
         "filename": "internal/ceres/program_evaluator.h",
         "patchSetId": 2
@@ -14,6 +54,58 @@
       "writtenOn": "2022-08-14T11:11:23Z",
       "side": 1,
       "message": "Don\u0027t we need an `#else` with a `num_threads \u003c 1` check here?",
+      "revId": "02115d34061442e9ae84ef4f7961b72f7d11f65e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83e316f7_53c89d96",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-14T13:32:51Z",
+      "side": 1,
+      "message": "num_threads is guaranteed to be \u003e\u003d1.",
+      "parentUuid": "534e8316_13289ad8",
+      "revId": "02115d34061442e9ae84ef4f7961b72f7d11f65e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "925e59ac_c481e831",
+        "filename": "internal/ceres/scratch_evaluate_preparer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-14T13:32:51Z",
+      "side": 1,
+      "message": "I am confused. you seem to be fixing two things here.\n\n1. num_threads\n2. max_derivatives_per_residual_block which should be size_t and not an int.\n\nisn\u0027t the warning just caused by the latter?",
+      "revId": "02115d34061442e9ae84ef4f7961b72f7d11f65e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a835d1f8_e51db5ea",
+        "filename": "internal/ceres/scratch_evaluate_preparer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-14T13:32:51Z",
+      "side": 1,
+      "message": "why not just static_cast here?",
       "revId": "02115d34061442e9ae84ef4f7961b72f7d11f65e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
