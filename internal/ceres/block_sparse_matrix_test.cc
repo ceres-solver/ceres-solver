@@ -45,13 +45,6 @@ namespace ceres {
 namespace internal {
 
 namespace {
-template <typename T>
-void CheckVectorEq(const std::vector<T>& a, const std::vector<T>& b) {
-  EXPECT_EQ(a.size(), b.size());
-  for (int i = 0; i < a.size(); ++i) {
-    EXPECT_EQ(a[i], b[i]);
-  }
-}
 
 std::unique_ptr<BlockSparseMatrix> CreateTestMatrixFromId(int id) {
   if (id == 0) {
@@ -321,25 +314,39 @@ TEST(BlockSparseMatrix, ToDenseMatrix) {
 TEST(BlockSparseMatrix, ToCRSMatrix) {
   {
     std::unique_ptr<BlockSparseMatrix> m = CreateTestMatrixFromId(0);
-    CRSMatrix m_crs;
-    m->ToCRSMatrix(&m_crs);
+    CompressedRowSparseMatrix m_crs(
+        m->num_rows(), m->num_cols(), m->num_nonzeros());
+    m->ToCompressedRowSparseMatrix(&m_crs);
     std::vector<int> rows_expected = {0, 2, 4, 7, 10};
     std::vector<int> cols_expected = {0, 1, 0, 1, 2, 3, 4, 2, 3, 4};
     std::vector<double> values_expected = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-    CheckVectorEq(rows_expected, m_crs.rows);
-    CheckVectorEq(cols_expected, m_crs.cols);
-    CheckVectorEq(values_expected, m_crs.values);
+    for (int i = 0; i < rows_expected.size(); ++i) {
+      EXPECT_EQ(m_crs.rows()[i], rows_expected[i]);
+    }
+    for (int i = 0; i < cols_expected.size(); ++i) {
+      EXPECT_EQ(m_crs.cols()[i], cols_expected[i]);
+    }
+    for (int i = 0; i < values_expected.size(); ++i) {
+      EXPECT_EQ(m_crs.values()[i], values_expected[i]);
+    }
   }
   {
     std::unique_ptr<BlockSparseMatrix> m = CreateTestMatrixFromId(1);
-    CRSMatrix m_crs;
-    m->ToCRSMatrix(&m_crs);
+    CompressedRowSparseMatrix m_crs(
+        m->num_rows(), m->num_cols(), m->num_nonzeros());
+    m->ToCompressedRowSparseMatrix(&m_crs);
     std::vector<int> rows_expected = {0, 4, 8, 9};
     std::vector<int> cols_expected = {0, 1, 3, 4, 0, 1, 3, 4, 2};
     std::vector<double> values_expected = {1, 2, 5, 6, 3, 4, 7, 8, 9};
-    CheckVectorEq(rows_expected, m_crs.rows);
-    CheckVectorEq(cols_expected, m_crs.cols);
-    CheckVectorEq(values_expected, m_crs.values);
+    for (int i = 0; i < rows_expected.size(); ++i) {
+      EXPECT_EQ(m_crs.rows()[i], rows_expected[i]);
+    }
+    for (int i = 0; i < cols_expected.size(); ++i) {
+      EXPECT_EQ(m_crs.cols()[i], cols_expected[i]);
+    }
+    for (int i = 0; i < values_expected.size(); ++i) {
+      EXPECT_EQ(m_crs.values()[i], values_expected[i]);
+    }
   }
 }
 
