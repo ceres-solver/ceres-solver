@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "65ccfe03_0fded805",
+        "filename": "internal/ceres/block_jacobian_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-14T17:23:29Z",
+      "side": 1,
+      "message": "It does not. My goal was to propagate the correctly constrained type without unnecessary sign conversions. A signed integer is not meaningful here anyway.",
+      "parentUuid": "b2370228_9f0742e1",
+      "range": {
+        "startLine": 146,
+        "startChar": 7,
+        "endLine": 146,
+        "endChar": 15
+      },
+      "revId": "02115d34061442e9ae84ef4f7961b72f7d11f65e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9ccfe11a_83d3fd1d",
         "filename": "internal/ceres/block_jacobian_writer.h",
         "patchSetId": 2
@@ -37,6 +61,24 @@
       "writtenOn": "2022-08-14T13:32:51Z",
       "side": 1,
       "message": "isn\u0027t it better to fix the problem by just localizing the change to when make_unique is called? instead of changing function signatures?\n\nsince we used signed ints everywhere it makes the function signatures appear insconsistent.",
+      "revId": "02115d34061442e9ae84ef4f7961b72f7d11f65e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b019950_5db9b20a",
+        "filename": "internal/ceres/block_jacobian_writer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-14T17:23:29Z",
+      "side": 1,
+      "message": "Signed integers actually cause the problems but their use is generally unjustified as their negative range is often unused/not meaningful which only confuses the optimizer.\n\nIn my experience, the better approach is to use the signedness that generate the least number of implicit/explicit conversions instead of sticking to a specific type.",
+      "parentUuid": "9ccfe11a_83d3fd1d",
       "revId": "02115d34061442e9ae84ef4f7961b72f7d11f65e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -76,6 +118,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d837f19_eb486d96",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-14T17:23:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "83e316f7_53c89d96",
+      "revId": "02115d34061442e9ae84ef4f7961b72f7d11f65e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "925e59ac_c481e831",
@@ -95,6 +155,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4c488af5_2ff017c5",
+        "filename": "internal/ceres/scratch_evaluate_preparer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-14T17:23:29Z",
+      "side": 1,
+      "message": "Correct. However, `num_threads` basically involves very similar code (i.e., passing a signed integer to `make_unique` to allocate an array) and it would make sense to avoid such combinations altogether.",
+      "parentUuid": "925e59ac_c481e831",
+      "revId": "02115d34061442e9ae84ef4f7961b72f7d11f65e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a835d1f8_e51db5ea",
         "filename": "internal/ceres/scratch_evaluate_preparer.cc",
         "patchSetId": 2
@@ -106,6 +184,24 @@
       "writtenOn": "2022-08-14T13:32:51Z",
       "side": 1,
       "message": "why not just static_cast here?",
+      "revId": "02115d34061442e9ae84ef4f7961b72f7d11f65e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23d5e1a0_5cbb63ee",
+        "filename": "internal/ceres/scratch_evaluate_preparer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-14T17:23:29Z",
+      "side": 1,
+      "message": "This is the subpar approach because it requires casting at all `make_unique` call sites instead somewhere centrally followed by propagation of the correctly constrained type.\n\nI\u0027m aware that I\u0027ve mixed both variants. However, I also wanted to avoid too many changes.",
+      "parentUuid": "a835d1f8_e51db5ea",
       "revId": "02115d34061442e9ae84ef4f7961b72f7d11f65e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
