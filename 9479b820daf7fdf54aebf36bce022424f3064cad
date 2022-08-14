@@ -24,6 +24,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "551636ab_0514c68d",
+        "filename": "internal/ceres/cuda_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-14T23:40:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ccd7924_d29a2c4b",
+      "range": {
+        "startLine": 74,
+        "startChar": 22,
+        "endLine": 74,
+        "endChar": 23
+      },
+      "revId": "9479b820daf7fdf54aebf36bce022424f3064cad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a7c16583_9757e53b",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-08-14T23:28:42Z",
       "side": 1,
       "message": "why do you need to make this query everytime you call spmv?",
+      "range": {
+        "startLine": 124,
+        "startChar": 11,
+        "endLine": 124,
+        "endChar": 34
+      },
+      "revId": "9479b820daf7fdf54aebf36bce022424f3064cad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22e5e83d_6b6485b4",
+        "filename": "internal/ceres/cuda_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-14T23:40:18Z",
+      "side": 1,
+      "message": "I have no idea what the buffer size depends on. The SDK docs don\u0027t mention. It\u0027s probably the same for the same structure, but removing this is a risky optimization without much benefit. If the buffer size is the same, the reserve operation will be a no-op.",
+      "parentUuid": "a7c16583_9757e53b",
       "range": {
         "startLine": 124,
         "startChar": 11,
@@ -70,6 +118,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c2ec984_e7e1f454",
+        "filename": "internal/ceres/cuda_sparse_matrix.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-14T23:40:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "712f307c_c9d537d7",
+      "range": {
+        "startLine": 79,
+        "startChar": 16,
+        "endLine": 79,
+        "endChar": 21
+      },
+      "revId": "9479b820daf7fdf54aebf36bce022424f3064cad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1b24dde1_f58e66f1",
@@ -83,6 +155,30 @@
       "writtenOn": "2022-08-14T23:28:42Z",
       "side": 1,
       "message": "you do not need to delete the default constructor since the class has a two argument constructor.",
+      "range": {
+        "startLine": 91,
+        "startChar": 22,
+        "endLine": 91,
+        "endChar": 23
+      },
+      "revId": "9479b820daf7fdf54aebf36bce022424f3064cad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ffb87b9_f6e91759",
+        "filename": "internal/ceres/cuda_sparse_matrix.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-14T23:40:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1b24dde1_f58e66f1",
       "range": {
         "startLine": 91,
         "startChar": 22,
@@ -116,6 +212,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "211efec4_d73b90e1",
+        "filename": "internal/ceres/cuda_sparse_matrix.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-14T23:40:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a050f7c0_dde658f7",
+      "range": {
+        "startLine": 109,
+        "startChar": 22,
+        "endLine": 109,
+        "endChar": 38
+      },
+      "revId": "9479b820daf7fdf54aebf36bce022424f3064cad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0c77c697_56220c9f",
@@ -129,6 +249,30 @@
       "writtenOn": "2022-08-14T23:28:42Z",
       "side": 1,
       "message": "more useful name?",
+      "range": {
+        "startLine": 120,
+        "startChar": 22,
+        "endLine": 120,
+        "endChar": 29
+      },
+      "revId": "9479b820daf7fdf54aebf36bce022424f3064cad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8929457c_7110f844",
+        "filename": "internal/ceres/cuda_sparse_matrix.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-14T23:40:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c77c697_56220c9f",
       "range": {
         "startLine": 120,
         "startChar": 22,
