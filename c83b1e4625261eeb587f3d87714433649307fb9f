@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2713d652_7fc2f1d7",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-14T17:25:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8691cee5_a34d9d5b",
+      "revId": "c83b1e4625261eeb587f3d87714433649307fb9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e3bc97c8_27eeb270",
@@ -31,6 +49,30 @@
       "writtenOn": "2022-08-14T16:03:25Z",
       "side": 1,
       "message": "why not check if you actually need to resize?",
+      "range": {
+        "startLine": 69,
+        "startChar": 8,
+        "endLine": 69,
+        "endChar": 15
+      },
+      "revId": "c83b1e4625261eeb587f3d87714433649307fb9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "efc89485_3239aa27",
+        "filename": "internal/ceres/cuda_vector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-14T17:25:06Z",
+      "side": 1,
+      "message": "No need - CudaBuffer already does that.",
+      "parentUuid": "e3bc97c8_27eeb270",
       "range": {
         "startLine": 69,
         "startChar": 8,
@@ -66,6 +108,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d3cb1026_528a2ddd",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-14T17:25:06Z",
+      "side": 1,
+      "message": "It can fail for two reasons:\n* GPU Memory allocation fails for the buffer, but this is handled by `CudaBuffer`.\n* Creation of the descriptor fails, but the only realistic cases for this are either user error (e.g. passing in a negative size or uninitialized context), or GPU memory allocation failure.\n \nIn both of the above, the behavior (program termination) is analogous to when CPU memory allocation fails in other Ceres objects (e.g. https://github.com/ceres-solver/ceres-solver/blob/3af3dee1893a8a5df76d638020997d021b093c67/internal/ceres/block_sparse_matrix.cc#L84).",
+      "parentUuid": "3bbd4757_3391da4d",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 12
+      },
+      "revId": "c83b1e4625261eeb587f3d87714433649307fb9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "066533ae_370ee1a7",
         "filename": "internal/ceres/cuda_vector.h",
         "patchSetId": 4
@@ -77,6 +143,30 @@
       "writtenOn": "2022-08-14T16:03:25Z",
       "side": 1,
       "message": "why bother?",
+      "range": {
+        "startLine": 68,
+        "startChar": 3,
+        "endLine": 68,
+        "endChar": 13
+      },
+      "revId": "c83b1e4625261eeb587f3d87714433649307fb9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6030aeda_6278e4ec",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-14T17:25:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "066533ae_370ee1a7",
       "range": {
         "startLine": 68,
         "startChar": 3,
@@ -158,6 +248,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "61fc7e2e_2c009e0f",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-14T17:25:06Z",
+      "side": 1,
+      "message": "Yes, that is why there are so many tests for `Axpby`. :-)\nI\u0027m breaking them up to document the different cases.",
+      "parentUuid": "60fccf19_6a40d2b3",
+      "range": {
+        "startLine": 131,
+        "startChar": 9,
+        "endLine": 131,
+        "endChar": 10
+      },
+      "revId": "c83b1e4625261eeb587f3d87714433649307fb9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a5e4d676_eefaca08",
@@ -171,6 +285,30 @@
       "writtenOn": "2022-08-14T16:07:50Z",
       "side": 1,
       "message": "break this into individual tests.",
+      "range": {
+        "startLine": 183,
+        "startChar": 15,
+        "endLine": 183,
+        "endChar": 16
+      },
+      "revId": "c83b1e4625261eeb587f3d87714433649307fb9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "714895ad_83904dab",
+        "filename": "internal/ceres/cuda_vector_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-14T17:25:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5e4d676_eefaca08",
       "range": {
         "startLine": 183,
         "startChar": 15,
