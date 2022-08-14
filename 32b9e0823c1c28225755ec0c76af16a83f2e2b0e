@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8489c3b_6e6af24b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-14T16:04:33Z",
+      "side": 1,
+      "message": "can we do this without flags?",
+      "revId": "32b9e0823c1c28225755ec0c76af16a83f2e2b0e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36244ff0_d747e81e",
+        "filename": "internal/ceres/cuda_dense_cholesky_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-14T16:04:33Z",
+      "side": 1,
+      "message": "why do this via flags?",
+      "range": {
+        "startLine": 39,
+        "startChar": 14,
+        "endLine": 39,
+        "endChar": 35
+      },
+      "revId": "32b9e0823c1c28225755ec0c76af16a83f2e2b0e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edeaf0c4_a409d5d9",
+        "filename": "internal/ceres/cuda_dense_cholesky_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-14T16:04:33Z",
+      "side": 1,
+      "message": "flags in tests are a bad idea.",
+      "range": {
+        "startLine": 276,
+        "startChar": 22,
+        "endLine": 276,
+        "endChar": 49
+      },
+      "revId": "32b9e0823c1c28225755ec0c76af16a83f2e2b0e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
