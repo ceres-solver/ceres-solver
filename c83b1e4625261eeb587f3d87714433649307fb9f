@@ -108,6 +108,29 @@
       },
       "revId": "c83b1e4625261eeb587f3d87714433649307fb9f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5e4d676_eefaca08",
+        "filename": "internal/ceres/cuda_vector_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-14T16:07:50Z",
+      "side": 1,
+      "message": "break this into individual tests.",
+      "range": {
+        "startLine": 183,
+        "startChar": 15,
+        "endLine": 183,
+        "endChar": 16
+      },
+      "revId": "c83b1e4625261eeb587f3d87714433649307fb9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
