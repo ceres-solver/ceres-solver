@@ -34,16 +34,19 @@
 #include <string>
 
 #include "Eigen/Dense"
-#include "gflags/gflags.h"
 #include "benchmark/benchmark.h"
-#include "ceres/context_impl.h"
 #include "ceres/block_sparse_matrix.h"
+#include "ceres/context_impl.h"
 #include "ceres/cuda_sparse_matrix.h"
 #include "ceres/cuda_vector.h"
 #include "ceres/internal/config.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
+#include "gflags/gflags.h"
+
+#ifndef CERES_NO_CUDA
 #include "cuda_runtime.h"
+#endif
 
 namespace ceres::internal {
 
@@ -153,6 +156,10 @@ static void BM_CpuLeftMultiplyAndAccumulate(benchmark::State& state) {
   CHECK_NE(sum, 0.0);
 }
 
+BENCHMARK(BM_CpuRightMultiplyAndAccumulate);
+BENCHMARK(BM_CpuLeftMultiplyAndAccumulate);
+
+#ifndef CERES_NO_CUDA
 static void BM_CudaRightMultiplyAndAccumulate(benchmark::State& state) {
   // Perform setup here
   std::unique_ptr<BlockSparseMatrix> jacobian =
@@ -165,9 +172,7 @@ static void BM_CudaRightMultiplyAndAccumulate(benchmark::State& state) {
   std::string message;
   context.InitCUDA(&message);
   CompressedRowSparseMatrix jacobian_crs(
-      jacobian->num_rows(),
-      jacobian->num_cols(),
-      jacobian->num_nonzeros());
+      jacobian->num_rows(), jacobian->num_cols(), jacobian->num_nonzeros());
   jacobian->ToCompressedRowSparseMatrix(&jacobian_crs);
   CudaSparseMatrix cuda_jacobian(&context, jacobian_crs);
   CudaVector cuda_x(&context, 0);
@@ -202,9 +207,7 @@ static void BM_CudaLeftMultiplyAndAccumulate(benchmark::State& state) {
   std::string message;
   context.InitCUDA(&message);
   CompressedRowSparseMatrix jacobian_crs(
-      jacobian->num_rows(),
-      jacobian->num_cols(),
-      jacobian->num_nonzeros());
+      jacobian->num_rows(), jacobian->num_cols(), jacobian->num_nonzeros());
   jacobian->ToCompressedRowSparseMatrix(&jacobian_crs);
   CudaSparseMatrix cuda_jacobian(&context, jacobian_crs);
   CudaVector cuda_x(&context, 0);
@@ -227,10 +230,9 @@ static void BM_CudaLeftMultiplyAndAccumulate(benchmark::State& state) {
   CHECK_NE(sum, 0.0);
 }
 
-BENCHMARK(BM_CpuRightMultiplyAndAccumulate);
-BENCHMARK(BM_CpuLeftMultiplyAndAccumulate);
 BENCHMARK(BM_CudaRightMultiplyAndAccumulate);
 BENCHMARK(BM_CudaLeftMultiplyAndAccumulate);
+#endif
 
 BENCHMARK_MAIN();
 
