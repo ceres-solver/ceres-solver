@@ -18,6 +18,41 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "51c61c22_5207a1c6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-14T14:43:02Z",
+      "side": 1,
+      "message": "I\u0027ll resolve the naming issues, but is there a consistent policy for when interface names should match standard implementations from stdlib and Eigen (e.g. num_rows(), size(), data(), etc.), vs. when the names should follow the Google style guide?\nFor example, `internal/ceres/linear_operator.h` uses `num_rows()`, which is not style-guide compliant presumably for consistency with Eigen.\n\nI just thought of a different approach to initialization that will be simpler than what\u0027s going on now, please hold on.",
+      "revId": "a2490493de3535ae7ae3f2be674eb1d90d5160d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ec9a14e_4e12236c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-14T14:43:02Z",
+      "side": 1,
+      "message": "Indeed! It\u0027s been hard to keep up with the flurry of activity! :-)",
+      "parentUuid": "556d61d2_e73f03eb",
+      "revId": "a2490493de3535ae7ae3f2be674eb1d90d5160d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a7a09ad7_a621e568",
@@ -31,6 +66,30 @@
       "writtenOn": "2022-08-13T21:36:04Z",
       "side": 1,
       "message": "also why is message now optional?",
+      "range": {
+        "startLine": 69,
+        "startChar": 5,
+        "endLine": 69,
+        "endChar": 16
+      },
+      "revId": "a2490493de3535ae7ae3f2be674eb1d90d5160d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e0bf995_3c94f2c0",
+        "filename": "internal/ceres/context_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-14T14:43:02Z",
+      "side": 1,
+      "message": "Let me try a different approach, hold on.",
+      "parentUuid": "a7a09ad7_a621e568",
       "range": {
         "startLine": 69,
         "startChar": 5,
