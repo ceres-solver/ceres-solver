@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ccd7924_d29a2c4b",
+        "filename": "internal/ceres/cuda_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-14T23:28:42Z",
+      "side": 1,
+      "message": "why do we need this method, if we do not have this method we do not have to worry about having a destroydescriptor method either, just a destructor.",
+      "range": {
+        "startLine": 74,
+        "startChar": 22,
+        "endLine": 74,
+        "endChar": 23
+      },
+      "revId": "9479b820daf7fdf54aebf36bce022424f3064cad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7c16583_9757e53b",
+        "filename": "internal/ceres/cuda_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-14T23:28:42Z",
+      "side": 1,
+      "message": "why do you need to make this query everytime you call spmv?",
+      "range": {
+        "startLine": 124,
+        "startChar": 11,
+        "endLine": 124,
+        "endChar": 34
+      },
+      "revId": "9479b820daf7fdf54aebf36bce022424f3064cad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "712f307c_c9d537d7",
+        "filename": "internal/ceres/cuda_sparse_matrix.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-14T23:28:42Z",
+      "side": 1,
+      "message": "why do you need this if the constructor is already taking a crs_matrix as input?",
+      "range": {
+        "startLine": 79,
+        "startChar": 16,
+        "endLine": 79,
+        "endChar": 21
+      },
+      "revId": "9479b820daf7fdf54aebf36bce022424f3064cad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b24dde1_f58e66f1",
+        "filename": "internal/ceres/cuda_sparse_matrix.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-14T23:28:42Z",
+      "side": 1,
+      "message": "you do not need to delete the default constructor since the class has a two argument constructor.",
+      "range": {
+        "startLine": 91,
+        "startChar": 22,
+        "endLine": 91,
+        "endChar": 23
+      },
+      "revId": "9479b820daf7fdf54aebf36bce022424f3064cad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a050f7c0_dde658f7",
+        "filename": "internal/ceres/cuda_sparse_matrix.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-14T23:28:42Z",
+      "side": 1,
+      "message": "how about just rows_, cols_, values_ like the rest of the matrix stuff in ceres.",
+      "range": {
+        "startLine": 109,
+        "startChar": 22,
+        "endLine": 109,
+        "endChar": 38
+      },
+      "revId": "9479b820daf7fdf54aebf36bce022424f3064cad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c77c697_56220c9f",
+        "filename": "internal/ceres/cuda_sparse_matrix.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-14T23:28:42Z",
+      "side": 1,
+      "message": "more useful name?",
+      "range": {
+        "startLine": 120,
+        "startChar": 22,
+        "endLine": 120,
+        "endChar": 29
+      },
+      "revId": "9479b820daf7fdf54aebf36bce022424f3064cad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
