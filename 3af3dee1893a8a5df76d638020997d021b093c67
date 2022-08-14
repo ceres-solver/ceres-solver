@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "17314526_faea918f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-14T16:06:49Z",
+      "side": 1,
+      "message": "Merging for now, we can come back and deal with making this faster later on.",
+      "revId": "3af3dee1893a8a5df76d638020997d021b093c67",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e529c81_e9eba980",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-14T16:06:49Z",
+      "side": 1,
+      "message": "this is fine for testing purposes but it doubles the memory usage.\nalso why not just use the tripletsparsematrix and COO format on the gpu?",
+      "range": {
+        "startLine": 171,
+        "startChar": 5,
+        "endLine": 171,
+        "endChar": 22
+      },
+      "revId": "3af3dee1893a8a5df76d638020997d021b093c67",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
