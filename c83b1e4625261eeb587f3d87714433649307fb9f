@@ -112,6 +112,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "88869408_3784ff5e",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-14T16:17:57Z",
+      "side": 1,
+      "message": "Some of this could be moved, but this non-member Axpby function can be called in ways that the member function cannot. For example, the member function always assumes z and y are the same, which is the \"standard\" way to implement axpby (the way other libraries like MKL and Cuda do it).",
+      "parentUuid": "aaaef1e6_82101685",
+      "range": {
+        "startLine": 131,
+        "startChar": 9,
+        "endLine": 131,
+        "endChar": 10
+      },
+      "revId": "c83b1e4625261eeb587f3d87714433649307fb9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a5e4d676_eefaca08",
         "filename": "internal/ceres/cuda_vector_test.cc",
         "patchSetId": 4
