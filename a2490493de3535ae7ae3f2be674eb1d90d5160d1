@@ -118,6 +118,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca8f6790_9c89e267",
+        "filename": "internal/ceres/context_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-14T15:37:56Z",
+      "side": 1,
+      "message": "Okay, this is fixed.",
+      "parentUuid": "9e0bf995_3c94f2c0",
+      "range": {
+        "startLine": 69,
+        "startChar": 5,
+        "endLine": 69,
+        "endChar": 16
+      },
+      "revId": "a2490493de3535ae7ae3f2be674eb1d90d5160d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bcf54c83_a11c2ca6",
@@ -131,6 +155,30 @@
       "writtenOn": "2022-08-13T21:30:03Z",
       "side": 1,
       "message": "Resize",
+      "range": {
+        "startLine": 70,
+        "startChar": 13,
+        "endLine": 70,
+        "endChar": 14
+      },
+      "revId": "a2490493de3535ae7ae3f2be674eb1d90d5160d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43eb8826_b71c503a",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-14T15:37:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcf54c83_a11c2ca6",
       "range": {
         "startLine": 70,
         "startChar": 13,
@@ -164,6 +212,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "385d1113_94b48278",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-14T15:37:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b5b367c_b63a68c1",
+      "range": {
+        "startLine": 76,
+        "startChar": 9,
+        "endLine": 76,
+        "endChar": 12
+      },
+      "revId": "a2490493de3535ae7ae3f2be674eb1d90d5160d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2b593448_97739aad",
@@ -177,6 +249,30 @@
       "writtenOn": "2022-08-13T21:30:03Z",
       "side": 1,
       "message": "Norm",
+      "range": {
+        "startLine": 79,
+        "startChar": 9,
+        "endLine": 79,
+        "endChar": 13
+      },
+      "revId": "a2490493de3535ae7ae3f2be674eb1d90d5160d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4383b99_c979c30d",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-14T15:37:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b593448_97739aad",
       "range": {
         "startLine": 79,
         "startChar": 9,
@@ -210,6 +306,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "01b44c8f_41c075a0",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-14T15:37:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "512d396e_c3dc4c51",
+      "range": {
+        "startLine": 82,
+        "startChar": 7,
+        "endLine": 82,
+        "endChar": 14
+      },
+      "revId": "a2490493de3535ae7ae3f2be674eb1d90d5160d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7dea569c_5e7426e7",
@@ -223,6 +343,30 @@
       "writtenOn": "2022-08-13T21:30:03Z",
       "side": 1,
       "message": "do you need both the variants, vector and raw pointer?",
+      "range": {
+        "startLine": 87,
+        "startChar": 15,
+        "endLine": 87,
+        "endChar": 20
+      },
+      "revId": "a2490493de3535ae7ae3f2be674eb1d90d5160d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6a2c045_e0084b32",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-14T15:37:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dea569c_5e7426e7",
       "range": {
         "startLine": 87,
         "startChar": 15,
@@ -250,6 +394,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed5ffe10_0ca95db8",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-14T15:37:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7997b3ce_3a73fe08",
+      "revId": "a2490493de3535ae7ae3f2be674eb1d90d5160d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1d0a9bb4_7beb9cd5",
@@ -263,6 +425,30 @@
       "writtenOn": "2022-08-13T21:30:03Z",
       "side": 1,
       "message": "just have Axpby?",
+      "range": {
+        "startLine": 101,
+        "startChar": 7,
+        "endLine": 101,
+        "endChar": 11
+      },
+      "revId": "a2490493de3535ae7ae3f2be674eb1d90d5160d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2ba8360_793db432",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-14T15:37:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d0a9bb4_7beb9cd5",
       "range": {
         "startLine": 101,
         "startChar": 7,
@@ -296,6 +482,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "72f9d393_b9713e8d",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-14T15:37:56Z",
+      "side": 1,
+      "message": "While the documentation in CudaVector.h explicitly states that this is a column vector, I would like this to be reflected in the api, similar to Eigen interfaces. This is helpful for downstream error checking of math operations. Several downstream operations such as SpMV will require that this be a column vector.",
+      "parentUuid": "0da5bd56_ed81c37b",
+      "range": {
+        "startLine": 112,
+        "startChar": 6,
+        "endLine": 112,
+        "endChar": 14
+      },
+      "revId": "a2490493de3535ae7ae3f2be674eb1d90d5160d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f2b1a92d_31b8c493",
@@ -319,6 +529,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3badc6d1_b9369ec0",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-14T15:37:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2b1a92d_31b8c493",
+      "range": {
+        "startLine": 115,
+        "startChar": 31,
+        "endLine": 115,
+        "endChar": 34
+      },
+      "revId": "a2490493de3535ae7ae3f2be674eb1d90d5160d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b4c6b936_dc531c27",
@@ -332,6 +566,30 @@
       "writtenOn": "2022-08-13T21:30:03Z",
       "side": 1,
       "message": "just descr_?",
+      "range": {
+        "startLine": 129,
+        "startChar": 23,
+        "endLine": 129,
+        "endChar": 38
+      },
+      "revId": "a2490493de3535ae7ae3f2be674eb1d90d5160d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87db9dbf_2731b02d",
+        "filename": "internal/ceres/cuda_vector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-14T15:37:56Z",
+      "side": 1,
+      "message": "I\u0027ll be adding support for dense operations in the not too distant future, and CUDA distinguishes between the cusparse and cublas descriptors.",
+      "parentUuid": "b4c6b936_dc531c27",
       "range": {
         "startLine": 129,
         "startChar": 23,
