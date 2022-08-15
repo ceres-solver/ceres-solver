@@ -41,6 +41,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7623694c_e92f2121",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-15T01:57:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d9d1991_fe89a5ac",
+      "range": {
+        "startLine": 98,
+        "startChar": 42,
+        "endLine": 98,
+        "endChar": 51
+      },
+      "revId": "d5ff10f21d6a39b1d86d4bfb348004c17de31438",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "735ac1d0_08d33360",
@@ -66,6 +90,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "32d0ea26_247f8da9",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-15T01:57:04Z",
+      "side": 1,
+      "message": "On the larger problems, it seems to terminate prematurely, for example with problem-1778-993923-pre.txt:\n```\niter      cost      cost_change  |gradient|   |step|    tr_ratio  tr_radius  ls_iter  iter_time  total_time\n   0  2.563973e+08    0.00e+00    3.19e+15   0.00e+00   0.00e+00  1.00e+04        0    1.76e+00    5.93e+00\n   1  5.043504e+06    2.51e+08    3.15e+14   3.84e+02   9.97e-01  3.00e+04        7    2.41e+00    8.34e+00\n\nSolver Summary (v 2.2.0-eigen-(3.3.7)-lapack-suitesparse-(5.7.1)-metis-(5.1.0)-eigensparse-no_openmp-cuda-(11070))\n\n                                     Original                  Reduced\nParameter blocks                       995701                   995701\nParameters                            2997771                  2997771\nResidual blocks                       5001946                  5001946\nResiduals                            10003892                 10003892\n\nMinimizer                        TRUST_REGION\nTrust region strategy     LEVENBERG_MARQUARDT\nSparse linear algebra library     CUDA_SPARSE \n\n                                        Given                     Used\nLinear solver                            CGNR                     CGNR\nPreconditioner                       IDENTITY                 IDENTITY\nThreads                                    24                       24\nLinear solver ordering              AUTOMATIC                   995701\n\nCost:\nInitial                          2.563973e+08\nFinal                            5.043504e+06\nChange                           2.513538e+08\n\nMinimizer iterations                        2\nSuccessful steps                            2\nUnsuccessful steps                          0\n\nTime (in seconds):\nPreprocessor                         4.171510\n\n  Residual only evaluation           0.316752 (2)\n  Jacobian \u0026 residual evaluation     2.370868 (2)\n  Linear solver                      4.615735 (2)\nMinimizer                            9.136558\n\nPostprocessor                        0.360852\nTotal                               13.668920\n\nTermination:                      CONVERGENCE (Parameter tolerance reached. Relative step_norm: 6.858617e-09 \u003c\u003d 1.000000e-08.)\n\n```\n\nAnd with problem-13682-4456117-pre.txt:\n```\niter      cost      cost_change  |gradient|   |step|    tr_ratio  tr_radius  ls_iter  iter_time  total_time\n   0  1.126372e+09    0.00e+00    3.02e+15   0.00e+00   0.00e+00  1.00e+04        0    9.05e+00    2.80e+01\n   1  3.812793e+07    1.09e+09    4.34e+14   6.39e+03   9.95e-01  3.00e+04       48    1.53e+01    4.33e+01\n   2  1.315842e+10   -1.31e+10    4.34e+14   1.86e+04  -8.33e+02  1.50e+04      456    3.50e+01    7.83e+01\n   3  9.650320e+09   -9.61e+09    4.34e+14   1.68e+04  -6.18e+02  3.75e+03      415    3.17e+01    1.10e+02\n   4  1.324263e+09   -1.29e+09    4.34e+14   1.18e+04  -8.83e+01  4.69e+02      312    2.48e+01    1.35e+02\n\nSolver Summary (v 2.2.0-eigen-(3.3.7)-lapack-suitesparse-(5.7.1)-metis-(5.1.0)-eigensparse-no_openmp-cuda-(11070))\n\n                                     Original                  Reduced\nParameter blocks                      4469799                  4469799\nParameters                           13491489                 13491489\nResidual blocks                      28987644                 28987644\nResiduals                            57975288                 57975288\n\nMinimizer                        TRUST_REGION\nTrust region strategy     LEVENBERG_MARQUARDT\nSparse linear algebra library     CUDA_SPARSE \n\n                                        Given                     Used\nLinear solver                            CGNR                     CGNR\nPreconditioner                       IDENTITY                 IDENTITY\nThreads                                    24                       24\nLinear solver ordering              AUTOMATIC                  4469799\n\nCost:\nInitial                          1.126372e+09\nFinal                            3.812793e+07\nChange                           1.088244e+09\n\nMinimizer iterations                        5\nSuccessful steps                            2\nUnsuccessful steps                          3\n\nTime (in seconds):\nPreprocessor                        18.941795\n\n  Residual only evaluation           4.075208 (5)\n  Jacobian \u0026 residual evaluation    11.932086 (2)\n  Linear solver                     99.653223 (5)\nMinimizer                          129.860844\n\nPostprocessor                        1.998564\nTotal                              150.801204\n\nTermination:                      CONVERGENCE (Parameter tolerance reached. Relative step_norm: 7.071339e-09 \u003c\u003d 1.000000e-08.)\n```",
+      "parentUuid": "735ac1d0_08d33360",
+      "range": {
+        "startLine": 357,
+        "startChar": 10,
+        "endLine": 357,
+        "endChar": 29
+      },
+      "revId": "d5ff10f21d6a39b1d86d4bfb348004c17de31438",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c6526ddf_1a5118a0",
         "filename": "internal/ceres/cgnr_solver.cc",
         "patchSetId": 3
@@ -77,6 +125,30 @@
       "writtenOn": "2022-08-15T00:43:01Z",
       "side": 1,
       "message": "why copy it separately, especially since down below you are calling options.context-\u003eInitCUDA.",
+      "range": {
+        "startLine": 240,
+        "startChar": 13,
+        "endLine": 240,
+        "endChar": 20
+      },
+      "revId": "d5ff10f21d6a39b1d86d4bfb348004c17de31438",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f302189_54211ad5",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-15T01:57:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6526ddf_1a5118a0",
       "range": {
         "startLine": 240,
         "startChar": 13,
@@ -112,6 +184,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "13c7c370_cf380cd2",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-15T01:57:04Z",
+      "side": 1,
+      "message": "This is the first place that Cuda initialization hits. To have it be initialized before this, we\u0027ll need to add Cuda initialization to solver.cc or something.",
+      "parentUuid": "89d137c4_30388a0f",
+      "range": {
+        "startLine": 252,
+        "startChar": 24,
+        "endLine": 252,
+        "endChar": 32
+      },
+      "revId": "d5ff10f21d6a39b1d86d4bfb348004c17de31438",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "564164ac_f5a0fee9",
         "filename": "internal/ceres/cgnr_solver.cc",
         "patchSetId": 3
@@ -123,6 +219,30 @@
       "writtenOn": "2022-08-15T00:43:01Z",
       "side": 1,
       "message": "pull this if block into its own function.",
+      "range": {
+        "startLine": 274,
+        "startChar": 4,
+        "endLine": 274,
+        "endChar": 5
+      },
+      "revId": "d5ff10f21d6a39b1d86d4bfb348004c17de31438",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71dfa7bd_cbfe7ebd",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-15T01:57:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "564164ac_f5a0fee9",
       "range": {
         "startLine": 274,
         "startChar": 4,
@@ -156,6 +276,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "01fe8148_05930e4c",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-15T01:57:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0b425af_439a1695",
+      "range": {
+        "startLine": 303,
+        "startChar": 0,
+        "endLine": 303,
+        "endChar": 4
+      },
+      "revId": "d5ff10f21d6a39b1d86d4bfb348004c17de31438",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e7e8fb68_f5093deb",
@@ -169,6 +313,30 @@
       "writtenOn": "2022-08-15T00:43:01Z",
       "side": 1,
       "message": "use LOG(ERROR)/VLOG or something do not add printf.",
+      "range": {
+        "startLine": 312,
+        "startChar": 6,
+        "endLine": 312,
+        "endChar": 12
+      },
+      "revId": "d5ff10f21d6a39b1d86d4bfb348004c17de31438",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a943b70_783671b1",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-15T01:57:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7e8fb68_f5093deb",
       "range": {
         "startLine": 312,
         "startChar": 6,
@@ -202,6 +370,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4b9f1fb_c9dd3f69",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-15T01:57:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c2ab162_bdf5e198",
+      "range": {
+        "startLine": 335,
+        "startChar": 2,
+        "endLine": 335,
+        "endChar": 28
+      },
+      "revId": "d5ff10f21d6a39b1d86d4bfb348004c17de31438",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5dce63b7_0e53b345",
@@ -219,6 +411,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a3d7e74_3374e2dc",
+        "filename": "internal/ceres/cgnr_solver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-15T01:57:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dce63b7_0e53b345",
+      "revId": "d5ff10f21d6a39b1d86d4bfb348004c17de31438",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a86e64ce_b25b57d2",
@@ -232,6 +442,30 @@
       "writtenOn": "2022-08-15T00:43:01Z",
       "side": 1,
       "message": "I do not think you need any of these deleted things, since you have unique_ptrs as members and they prevent this from happening anyways.",
+      "range": {
+        "startLine": 85,
+        "startChar": 37,
+        "endLine": 85,
+        "endChar": 38
+      },
+      "revId": "d5ff10f21d6a39b1d86d4bfb348004c17de31438",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b795a70f_1bdf42bb",
+        "filename": "internal/ceres/cgnr_solver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-15T01:57:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a86e64ce_b25b57d2",
       "range": {
         "startLine": 85,
         "startChar": 37,
@@ -265,6 +499,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c759259_fbed0fd1",
+        "filename": "internal/ceres/conjugate_gradients_solver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-15T01:57:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c223e19d_03e31896",
+      "range": {
+        "startLine": 104,
+        "startChar": 44,
+        "endLine": 104,
+        "endChar": 49
+      },
+      "revId": "d5ff10f21d6a39b1d86d4bfb348004c17de31438",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e012d68c_73f2aaa4",
@@ -278,6 +536,30 @@
       "writtenOn": "2022-08-15T00:43:01Z",
       "side": 1,
       "message": "now is a good time to simplify this into a bool which determines whether a sparse linear algebra library was needed or not.",
+      "range": {
+        "startLine": 869,
+        "startChar": 6,
+        "endLine": 869,
+        "endChar": 7
+      },
+      "revId": "d5ff10f21d6a39b1d86d4bfb348004c17de31438",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8aac13ce_03d7111f",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-15T01:57:04Z",
+      "side": 1,
+      "message": "Not sure I understood, could you give an example output?",
+      "parentUuid": "e012d68c_73f2aaa4",
       "range": {
         "startLine": 869,
         "startChar": 6,
