@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "792eef76_a93f5d9e",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-15T02:05:55Z",
+      "side": 1,
+      "message": "We need to define what sparse linear algebra library this is, for consistency. I\u0027d  call the existing CPU CGNR implementation a NO_SPARSE implementation since it uses no external sparse linear algebra library. What do you think?",
+      "range": {
+        "startLine": 327,
+        "startChar": 33,
+        "endLine": 327,
+        "endChar": 37
+      },
+      "revId": "d56faf846b4fca25eaca6f366cd82451c6201771",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
