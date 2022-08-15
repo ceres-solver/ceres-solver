@@ -109,16 +109,16 @@ LinearSolver::Summary ConjugateGradientsSolver(
     ConjugateGradientsLinearOperator<DenseVectorType>& lhs,
     const DenseVectorType& rhs,
     ConjugateGradientsLinearOperator<DenseVectorType>& preconditioner,
-    DenseVectorType scratch[4],
+    DenseVectorType* scratch[4],
     DenseVectorType& solution) {
   auto IsZeroOrInfinity = [](double x) {
     return ((x == 0.0) || std::isinf(x));
   };
 
-  DenseVectorType& p = scratch[0];
-  DenseVectorType& r = scratch[1];
-  DenseVectorType& z = scratch[2];
-  DenseVectorType& tmp = scratch[3];
+  DenseVectorType& p = *scratch[0];
+  DenseVectorType& r = *scratch[1];
+  DenseVectorType& z = *scratch[2];
+  DenseVectorType& tmp = *scratch[3];
 
   LinearSolver::Summary summary;
   summary.termination_type = LinearSolverTerminationType::NO_CONVERGENCE;
@@ -160,7 +160,7 @@ LinearSolver::Summary ConjugateGradientsSolver(
     SetZero(z);
     preconditioner.RightMultiplyAndAccumulate(r, z);
 
-    double last_rho = rho;
+    const double last_rho = rho;
     // rho = r.dot(z);
     rho = Dot(r, z);
     if (IsZeroOrInfinity(rho)) {
@@ -172,7 +172,7 @@ LinearSolver::Summary ConjugateGradientsSolver(
     if (summary.num_iterations == 1) {
       Copy(z, p);
     } else {
-      double beta = rho / last_rho;
+      const double beta = rho / last_rho;
       if (IsZeroOrInfinity(beta)) {
         summary.termination_type = LinearSolverTerminationType::FAILURE;
         summary.message = StringPrintf(

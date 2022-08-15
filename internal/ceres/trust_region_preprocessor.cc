@@ -261,6 +261,8 @@ bool SetupEvaluator(PreprocessedProblem* pp) {
   const Solver::Options& options = pp->options;
   pp->evaluator_options = Evaluator::Options();
   pp->evaluator_options.linear_solver_type = options.linear_solver_type;
+  pp->evaluator_options.sparse_linear_algebra_library_type =
+      options.sparse_linear_algebra_library_type;
   pp->evaluator_options.num_eliminate_blocks = 0;
   if (IsSchurType(options.linear_solver_type)) {
     pp->evaluator_options.num_eliminate_blocks =
