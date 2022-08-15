@@ -188,7 +188,7 @@ class CERES_NO_EXPORT SparseSchurComplementSolver final
   std::unique_ptr<SparseCholesky> sparse_cholesky_;
   std::unique_ptr<BlockRandomAccessDiagonalMatrix> preconditioner_;
   Vector cg_solution_;
-  Vector scratch_[4];
+  Vector* scratch_[4] = {nullptr, nullptr, nullptr, nullptr};
 };
 
 }  // namespace ceres::internal
