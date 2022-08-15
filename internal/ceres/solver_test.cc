@@ -878,6 +878,20 @@ TEST(Solver, CgnrOptionsIdentityPreconditioner) {
   options.dynamic_sparsity = false;
   options.use_mixed_precision_solves = true;
   EXPECT_FALSE(options.IsValid(&message));
+
+  options.sparse_linear_algebra_library_type = CUDA_SPARSE;
+  options.dynamic_sparsity = false;
+  options.use_mixed_precision_solves = false;
+  EXPECT_EQ(options.IsValid(&message),
+      IsSparseLinearAlgebraLibraryTypeAvailable(CUDA_SPARSE));
+
+  options.dynamic_sparsity = true;
+  options.use_mixed_precision_solves = false;
+  EXPECT_FALSE(options.IsValid(&message));
+
+  options.dynamic_sparsity = false;
+  options.use_mixed_precision_solves = true;
+  EXPECT_FALSE(options.IsValid(&message));
 }
 
 TEST(Solver, CgnrOptionsJacobiPreconditioner) {
@@ -932,6 +946,20 @@ TEST(Solver, CgnrOptionsJacobiPreconditioner) {
   options.dynamic_sparsity = false;
   options.use_mixed_precision_solves = false;
   EXPECT_TRUE(options.IsValid(&message));
+
+  options.dynamic_sparsity = true;
+  options.use_mixed_precision_solves = false;
+  EXPECT_FALSE(options.IsValid(&message));
+
+  options.dynamic_sparsity = false;
+  options.use_mixed_precision_solves = true;
+  EXPECT_FALSE(options.IsValid(&message));
+
+  options.sparse_linear_algebra_library_type = CUDA_SPARSE;
+
+  options.dynamic_sparsity = false;
+  options.use_mixed_precision_solves = false;
+  EXPECT_FALSE(options.IsValid(&message));
 
   options.dynamic_sparsity = true;
   options.use_mixed_precision_solves = false;
@@ -1012,6 +1040,19 @@ TEST(Solver, CgnrOptionsSubsetPreconditioner) {
     options.use_mixed_precision_solves = true;
     EXPECT_FALSE(options.IsValid(&message));
   }
+
+  options.sparse_linear_algebra_library_type = CUDA_SPARSE;
+  options.dynamic_sparsity = false;
+  options.use_mixed_precision_solves = false;
+  EXPECT_FALSE(options.IsValid(&message));
+
+  options.dynamic_sparsity = true;
+  options.use_mixed_precision_solves = false;
+  EXPECT_FALSE(options.IsValid(&message));
+
+  options.dynamic_sparsity = false;
+  options.use_mixed_precision_solves = true;
+  EXPECT_FALSE(options.IsValid(&message));
 }
 
 TEST(Solver, CgnrOptionsSchurPreconditioners) {
