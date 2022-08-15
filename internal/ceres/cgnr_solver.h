@@ -33,6 +33,8 @@
 
 #include <memory>
 
+#include "ceres/cuda_sparse_matrix.h"
+#include "ceres/cuda_vector.h"
 #include "ceres/internal/export.h"
 #include "ceres/linear_solver.h"
 
@@ -65,8 +67,39 @@ class CERES_NO_EXPORT CgnrSolver final : public BlockSparseMatrixSolver {
   const LinearSolver::Options options_;
   std::unique_ptr<Preconditioner> preconditioner_;
   Vector cg_solution_;
-  Vector scratch_[4];
+  Vector* scratch_[4] = {nullptr, nullptr, nullptr, nullptr};
 };
+
+#ifndef CERES_NO_CUDA
+// A Cuda-accelerated version of CgnrSolver.
+// This solver assumes that the sparsity structure of A remains constant for its
+// lifetime.
+class CERES_NO_EXPORT CudaCgnrSolver final : public CompressedRowSparseMatrixSolver {
+ public:
+  static std::unique_ptr<CudaCgnrSolver> Create(
+      LinearSolver::Options options, std::string* error);
+  ~CudaCgnrSolver() override;
+
+  Summary SolveImpl(CompressedRowSparseMatrix* A,
+                    const double* b,
+                    const LinearSolver::PerSolveOptions& per_solve_options,
+                    double* x) final;
+
+ private:
+  CudaCgnrSolver();
+  void CpuToGpuTransfer(
+      const CompressedRowSparseMatrix& A, const double* b, const double* D);
+
+  LinearSolver::Options options_;
+  std::unique_ptr<CudaSparseMatrix> A_;
+  std::unique_ptr<CudaVector> b_;
+  std::unique_ptr<CudaVector> x_;
+  std::unique_ptr<CudaVector> Atb_;
+  std::unique_ptr<CudaVector> Ax_;
+  std::unique_ptr<CudaVector> D_;
+  CudaVector* scratch_[4] = {nullptr, nullptr, nullptr, nullptr};
+};
+#endif  // CERES_NO_CUDA
 
 }  // namespace ceres::internal
 

@@ -35,11 +35,14 @@
 
 #include "ceres/block_jacobi_preconditioner.h"
 #include "ceres/conjugate_gradients_solver.h"
+#include "ceres/cuda_sparse_matrix.h"
+#include "ceres/cuda_vector.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
 #include "ceres/subset_preconditioner.h"
 #include "ceres/wall_time.h"
 #include "glog/logging.h"
+
 
 namespace ceres::internal {
 
@@ -117,7 +120,14 @@ CgnrSolver::CgnrSolver(LinearSolver::Options options)
   }
 }
 
-CgnrSolver::~CgnrSolver() = default;
+CgnrSolver::~CgnrSolver()  {
+  for (int i = 0; i < 4; ++i) {
+    if (scratch_[i]) {
+      delete scratch_[i];
+      scratch_[i] = nullptr;
+    }
+  }
+}
 
 LinearSolver::Summary CgnrSolver::SolveImpl(
     BlockSparseMatrix* A,
@@ -163,9 +173,12 @@ LinearSolver::Summary CgnrSolver::SolveImpl(
 
   cg_solution_ = Vector::Zero(A->num_cols());
   for (int i = 0; i < 4; ++i) {
-    scratch_[i] = Vector::Zero(A->num_cols());
+    if (scratch_[i] == nullptr) {
+      scratch_[i] = new Vector(A->num_cols());
+    }
   }
   event_logger.AddEvent("Setup");
+
 
   LinearOperatorAdapter preconditioner(*preconditioner_);
   auto summary = ConjugateGradientsSolver(
@@ -174,5 +187,136 @@ LinearSolver::Summary CgnrSolver::SolveImpl(
   event_logger.AddEvent("Solve");
   return summary;
 }
+
+#ifndef CERES_NO_CUDA
+
+// A linear operator which takes a matrix A and a diagonal vector D and
+// performs products of the form
+//
+//   (A^T A + D^T D)x
+//
+// This is used to implement iterative general sparse linear solving with
+// conjugate gradients, where A is the Jacobian and D is a regularizing
+// parameter. A brief proof is included in cgnr_linear_operator.h.
+class CERES_NO_EXPORT CudaCgnrLinearOperator final : public
+    ConjugateGradientsLinearOperator<CudaVector> {
+ public:
+  CudaCgnrLinearOperator(CudaSparseMatrix& A,
+                         const CudaVector& D,
+                         CudaVector* z) : A_(A), D_(D), z_(z) {}
+
+  void RightMultiplyAndAccumulate(const CudaVector& x, CudaVector& y) final {
+    // z = Ax
+    z_->SetZero();
+    A_.RightMultiplyAndAccumulate(x, z_);
+
+    // y = y + Atz
+    //   = y + AtAx
+    A_.LeftMultiplyAndAccumulate(*z_, &y);
+
+    // y = y + DtDx
+    y.DtDxpy(D_, x);
+  }
+
+ private:
+  CudaSparseMatrix& A_;
+  const CudaVector& D_;
+  CudaVector* z_ = nullptr;
+};
+
+class CERES_NO_EXPORT CudaIdentityPreconditioner final : public
+    ConjugateGradientsLinearOperator<CudaVector> {
+ public:
+  void RightMultiplyAndAccumulate(const CudaVector& x, CudaVector& y) final {
+    y.Axpby(1.0, x, 1.0);
+  }
+};
+
+CudaCgnrSolver::CudaCgnrSolver() = default;
+
+CudaCgnrSolver::~CudaCgnrSolver() {
+  for (int i = 0; i < 4; ++i) {
+    if (scratch_[i]) {
+      delete scratch_[i];
+      scratch_[i] = nullptr;
+    }
+  }
+}
+
+std::unique_ptr<CudaCgnrSolver> CudaCgnrSolver::Create(
+      LinearSolver::Options options, std::string* error) {
+  CHECK(error != nullptr);
+  if (options.preconditioner_type != IDENTITY) {
+    *error = "CudaCgnrSolver does not support preconditioner type " +
+        std::string(PreconditionerTypeToString(options.preconditioner_type)) + ". ";
+    return nullptr;
+  }
+  CHECK(options.context->IsCUDAInitialized())
+      << "CudaCgnrSolver requires CUDA initialization.";
+  std::unique_ptr<CudaCgnrSolver> solver(new CudaCgnrSolver());
+  solver->options_ = options;
+  return solver;
+}
+
+void CudaCgnrSolver::CpuToGpuTransfer(
+    const CompressedRowSparseMatrix& A, const double* b, const double* D) {
+  if (A_ == nullptr) {
+    // Assume structure is not cached, do an initialization and structural copy.
+    A_ = std::make_unique<CudaSparseMatrix>(options_.context, A);
+    b_ = std::make_unique<CudaVector>(options_.context, A.num_rows());
+    x_ = std::make_unique<CudaVector>(options_.context, A.num_cols());
+    Atb_ = std::make_unique<CudaVector>(options_.context, A.num_cols());
+    Ax_ = std::make_unique<CudaVector>(options_.context, A.num_rows());
+    D_ = std::make_unique<CudaVector>(options_.context, A.num_cols());
+    for (int i = 0; i < 4; ++i) {
+      scratch_[i] = new CudaVector(options_.context, A.num_cols());
+    }
+  } else {
+    // Assume structure is cached, do a value copy.
+    A_->CopyValuesFromCpu(A);
+  }
+  b_->CopyFromCpu(ConstVectorRef(b, A.num_rows()));
+  D_->CopyFromCpu(ConstVectorRef(D, A.num_cols()));
+}
+
+LinearSolver::Summary CudaCgnrSolver::SolveImpl(
+    CompressedRowSparseMatrix* A,
+    const double* b,
+    const LinearSolver::PerSolveOptions& per_solve_options,
+    double* x) {
+  EventLogger event_logger("CudaCgnrSolver::Solve");
+  LinearSolver::Summary summary;
+  summary.num_iterations = 0;
+  summary.termination_type = LinearSolverTerminationType::FATAL_ERROR;
+
+  CpuToGpuTransfer(*A, b, per_solve_options.D);
+  event_logger.AddEvent("CPU to GPU Transfer");
+
+  // Form z = Atb.
+  Atb_->SetZero();
+  A_->LeftMultiplyAndAccumulate(*b_, Atb_.get());
+
+  // Solve (AtA + DtD)x = z (= Atb).
+  x_->SetZero();
+  CudaCgnrLinearOperator lhs(*A_, *D_, Ax_.get());
+
+  event_logger.AddEvent("Setup");
+
+  ConjugateGradientsSolverOptions cg_options;
+  cg_options.min_num_iterations = options_.min_num_iterations;
+  cg_options.max_num_iterations = options_.max_num_iterations;
+  cg_options.residual_reset_period = options_.residual_reset_period;
+  cg_options.q_tolerance = per_solve_options.q_tolerance;
+  cg_options.r_tolerance = per_solve_options.r_tolerance;
+
+  CudaIdentityPreconditioner preconditioner;
+  summary = ConjugateGradientsSolver(
+      cg_options, lhs, *Atb_, preconditioner, scratch_, *x_);
+  x_->CopyTo(x);
+  event_logger.AddEvent("Solve");
+  return summary;
+}
+
+#endif  // CERES_NO_CUDA
 
 }  // namespace ceres::internal

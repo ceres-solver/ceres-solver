@@ -327,7 +327,8 @@ bool OptionsAreValidForCgnr(const Solver::Options& options, string* error) {
     return false;
   }
 
-  if (options.preconditioner_type == SUBSET) {
+  if (options.sparse_linear_algebra_library_type != CUDA_SPARSE &&
+      options.preconditioner_type == SUBSET) {
     if (options.residual_blocks_for_subset_preconditioner.empty()) {
       *error =
           "When using SUBSET preconditioner, "
@@ -341,6 +342,20 @@ bool OptionsAreValidForCgnr(const Solver::Options& options, string* error) {
     }
   }
 
+  // Check options for CGNR with CUDA_SPARSE.
+  if (options.sparse_linear_algebra_library_type == CUDA_SPARSE) {
+    if (!IsSparseLinearAlgebraLibraryTypeAvailable(CUDA_SPARSE)) {
+      *error = "Can't use CGNR with sparse_linear_algebra_library_type = "
+          "CUDA_SPARSE because support was not enabled when Ceres was built.";
+      return false;
+    }
+    if (options.preconditioner_type != IDENTITY) {
+      StringPrintf("Can't use CGNR with preconditioner_type = %s when "
+                   "sparse_linear_algebra_library_type = CUDA_SPARSE.",
+                    PreconditionerTypeToString(options.preconditioner_type));
+      return false;
+    }
+  }
   return true;
 }
 
@@ -652,6 +667,18 @@ std::string SchurStructureToString(const int row_block_size,
   return internal::StringPrintf("%s,%s,%s", row.c_str(), e.c_str(), f.c_str());
 }
 
+bool IsCudaRequired(const Solver::Options& options) {
+  if (options.linear_solver_type == DENSE_NORMAL_CHOLESKY ||
+      options.linear_solver_type == DENSE_SCHUR ||
+      options.linear_solver_type == DENSE_QR) {
+    return (options.dense_linear_algebra_library_type == CUDA);
+  }
+  if (options.linear_solver_type == CGNR) {
+    return (options.sparse_linear_algebra_library_type == CUDA_SPARSE);
+  }
+  return false;
+}
+
 }  // namespace
 
 bool Solver::Options::IsValid(string* error) const {
@@ -696,6 +723,13 @@ void Solver::Solve(const Solver::Options& options,
   ProblemImpl* problem_impl = problem->impl_.get();
   Program* program = problem_impl->mutable_program();
   PreSolveSummarize(options, problem_impl, summary);
+
+  if (IsCudaRequired(options)) {
+    if (!problem_impl->context()->InitCUDA(&summary->message)) {
+      LOG(ERROR) << "Terminating: " << summary->message;
+      return;
+    }
+  }
 
   // If gradient_checking is enabled, wrap all cost functions in a
   // gradient checker and install a callback that terminates if any gradient
@@ -866,22 +900,40 @@ string Solver::Summary::FullReport() const {
       }
     }
 
-    if (linear_solver_type_used == SPARSE_NORMAL_CHOLESKY ||
+    const bool used_sparse_linear_algebra_library =
+        linear_solver_type_used == SPARSE_NORMAL_CHOLESKY ||
         linear_solver_type_used == SPARSE_SCHUR ||
-        (linear_solver_type_used == CGNR &&
-         preconditioner_type_used == SUBSET) ||
+        linear_solver_type_used == CGNR ||
         (linear_solver_type_used == ITERATIVE_SCHUR &&
-         (preconditioner_type_used == CLUSTER_JACOBI ||
-          preconditioner_type_used == CLUSTER_TRIDIAGONAL))) {
+            (preconditioner_type_used == CLUSTER_JACOBI ||
+            preconditioner_type_used == CLUSTER_TRIDIAGONAL));
+
+    const bool linear_solver_ordering_required =
+        linear_solver_type_used == SPARSE_SCHUR ||
+        (linear_solver_type_used == ITERATIVE_SCHUR &&
+            (preconditioner_type_used == CLUSTER_JACOBI ||
+            preconditioner_type_used == CLUSTER_TRIDIAGONAL)) ||
+        (linear_solver_type_used == CGNR && preconditioner_type_used == SUBSET);
+
+    if (used_sparse_linear_algebra_library) {
       const char* mixed_precision_suffix =
           (mixed_precision_solves_used ? "(Mixed Precision)" : "");
-      StringAppendF(
-          &report,
-          "\nSparse linear algebra library %15s + %s %s\n",
-          SparseLinearAlgebraLibraryTypeToString(
-              sparse_linear_algebra_library_type),
-          LinearSolverOrderingTypeToString(linear_solver_ordering_type),
-          mixed_precision_suffix);
+      if (linear_solver_ordering_required) {
+        StringAppendF(
+            &report,
+            "\nSparse linear algebra library %15s + %s %s\n",
+            SparseLinearAlgebraLibraryTypeToString(
+                sparse_linear_algebra_library_type),
+            LinearSolverOrderingTypeToString(linear_solver_ordering_type),
+            mixed_precision_suffix);
+      } else {
+        StringAppendF(
+            &report,
+            "\nSparse linear algebra library %15s %s\n",
+            SparseLinearAlgebraLibraryTypeToString(
+                sparse_linear_algebra_library_type),
+            mixed_precision_suffix);
+      }
     }
 
     StringAppendF(&report, "\n");
