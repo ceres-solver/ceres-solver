@@ -3,6 +3,345 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fc1df283_63dd8c6a",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-15T13:55:01Z",
+      "side": 1,
+      "message": "same as the header.",
+      "range": {
+        "startLine": 45,
+        "startChar": 16,
+        "endLine": 45,
+        "endChar": 34
+      },
+      "revId": "d56faf846b4fca25eaca6f366cd82451c6201771",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9b7184f_94149293",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-15T13:55:01Z",
+      "side": 1,
+      "message": "also change this to use the same pattern as the cuda based solver where you allocate the an array of size four of these vectors and destroy it upon destruction.",
+      "revId": "d56faf846b4fca25eaca6f366cd82451c6201771",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec1310fd_e6a5e2a9",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-15T13:55:01Z",
+      "side": 1,
+      "message": "scratch_array or just scratch, scratch_ptr is not useful here and elsehwere.",
+      "range": {
+        "startLine": 175,
+        "startChar": 10,
+        "endLine": 175,
+        "endChar": 21
+      },
+      "revId": "d56faf846b4fca25eaca6f366cd82451c6201771",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96f44eef_c186c04e",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-15T13:55:01Z",
+      "side": 1,
+      "message": "D should be const no?\nand z non-const.\nalso why doesn\u0027t this class own z?",
+      "range": {
+        "startLine": 200,
+        "startChar": 2,
+        "endLine": 200,
+        "endChar": 24
+      },
+      "revId": "d56faf846b4fca25eaca6f366cd82451c6201771",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "226277f5_0ef6381f",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-15T13:55:01Z",
+      "side": 1,
+      "message": "why do you need a init method here at all? the constructor is fine no? or is this going to get more complicated over time?",
+      "range": {
+        "startLine": 238,
+        "startChar": 10,
+        "endLine": 238,
+        "endChar": 22
+      },
+      "revId": "d56faf846b4fca25eaca6f366cd82451c6201771",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d45e774d_7c970107",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-15T13:55:01Z",
+      "side": 1,
+      "message": "auto solver \u003d std::make_unique\u003c\u003e...",
+      "range": {
+        "startLine": 254,
+        "startChar": 45,
+        "endLine": 254,
+        "endChar": 59
+      },
+      "revId": "d56faf846b4fca25eaca6f366cd82451c6201771",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35645239_e822d5f5",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-15T13:55:01Z",
+      "side": 1,
+      "message": "it would be simpler if you did not do make_unique here and had a destructor which destoryed these guys manually, that way you can just pass scratch_ to cg solver instead of copying pointers the way you are doing right now.",
+      "range": {
+        "startLine": 273,
+        "startChar": 6,
+        "endLine": 273,
+        "endChar": 14
+      },
+      "revId": "d56faf846b4fca25eaca6f366cd82451c6201771",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12bb7498_381c3097",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-15T13:55:01Z",
+      "side": 1,
+      "message": "you do not need per_solve_options at all.",
+      "range": {
+        "startLine": 302,
+        "startChar": 23,
+        "endLine": 302,
+        "endChar": 37
+      },
+      "revId": "d56faf846b4fca25eaca6f366cd82451c6201771",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcfe3ca4_11d22d2e",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-15T13:55:01Z",
+      "side": 1,
+      "message": "see my suggestion above it will simplify this.",
+      "range": {
+        "startLine": 318,
+        "startChar": 19,
+        "endLine": 318,
+        "endChar": 20
+      },
+      "revId": "d56faf846b4fca25eaca6f366cd82451c6201771",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a44fb0bb_f1999512",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-15T13:55:01Z",
+      "side": 1,
+      "message": "no need for this anymore.",
+      "range": {
+        "startLine": 321,
+        "startChar": 11,
+        "endLine": 321,
+        "endChar": 19
+      },
+      "revId": "d56faf846b4fca25eaca6f366cd82451c6201771",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd3178dc_dd01d03c",
+        "filename": "internal/ceres/cgnr_solver.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-15T13:55:01Z",
+      "side": 1,
+      "message": "these guys do not need guards, since they have guards inside them already no?",
+      "range": {
+        "startLine": 40,
+        "startChar": 15,
+        "endLine": 40,
+        "endChar": 16
+      },
+      "revId": "d56faf846b4fca25eaca6f366cd82451c6201771",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8bb9bbab_bff051e6",
+        "filename": "internal/ceres/conjugate_gradients_solver_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-15T13:55:01Z",
+      "side": 1,
+      "message": "scratch_array here and elsewhere.",
+      "range": {
+        "startLine": 77,
+        "startChar": 10,
+        "endLine": 77,
+        "endChar": 21
+      },
+      "revId": "d56faf846b4fca25eaca6f366cd82451c6201771",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc8a0a67_f988e3df",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-15T13:55:01Z",
+      "side": 1,
+      "message": "see suggestion in cgnr solver.",
+      "range": {
+        "startLine": 401,
+        "startChar": 0,
+        "endLine": 401,
+        "endChar": 28
+      },
+      "revId": "d56faf846b4fca25eaca6f366cd82451c6201771",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3993dc4_58cd0869",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-15T13:55:01Z",
+      "side": 1,
+      "message": "this conditional is at the wrong place, it should be at the bottom of the function rather than at the top.",
+      "range": {
+        "startLine": 312,
+        "startChar": 6,
+        "endLine": 312,
+        "endChar": 13
+      },
+      "revId": "d56faf846b4fca25eaca6f366cd82451c6201771",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "149d18d9_416aabae",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-15T13:55:01Z",
+      "side": 1,
+      "message": "was not enabled",
+      "range": {
+        "startLine": 315,
+        "startChar": 39,
+        "endLine": 315,
+        "endChar": 42
+      },
+      "revId": "d56faf846b4fca25eaca6f366cd82451c6201771",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "792eef76_a93f5d9e",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 5
@@ -14,6 +353,30 @@
       "writtenOn": "2022-08-15T02:05:55Z",
       "side": 1,
       "message": "We need to define what sparse linear algebra library this is, for consistency. I\u0027d  call the existing CPU CGNR implementation a NO_SPARSE implementation since it uses no external sparse linear algebra library. What do you think?",
+      "range": {
+        "startLine": 327,
+        "startChar": 33,
+        "endLine": 327,
+        "endChar": 37
+      },
+      "revId": "d56faf846b4fca25eaca6f366cd82451c6201771",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9544977_401e2c93",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-15T13:55:01Z",
+      "side": 1,
+      "message": "depends on the preconditioner. identity and jacobi do not need a sparse linear algebra library, but subset does.",
+      "parentUuid": "792eef76_a93f5d9e",
       "range": {
         "startLine": 327,
         "startChar": 33,

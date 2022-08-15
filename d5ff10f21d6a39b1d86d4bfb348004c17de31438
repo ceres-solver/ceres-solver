@@ -114,6 +114,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7590114c_39b98a2d",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-15T13:55:01Z",
+      "side": 1,
+      "message": "okay I think this has to do with the sofer and nash terimination criterion we use inside conjugate gradients.",
+      "parentUuid": "32d0ea26_247f8da9",
+      "range": {
+        "startLine": 357,
+        "startChar": 10,
+        "endLine": 357,
+        "endChar": 29
+      },
+      "revId": "d5ff10f21d6a39b1d86d4bfb348004c17de31438",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c6526ddf_1a5118a0",
         "filename": "internal/ceres/cgnr_solver.cc",
         "patchSetId": 3
@@ -196,6 +220,30 @@
       "side": 1,
       "message": "This is the first place that Cuda initialization hits. To have it be initialized before this, we\u0027ll need to add Cuda initialization to solver.cc or something.",
       "parentUuid": "89d137c4_30388a0f",
+      "range": {
+        "startLine": 252,
+        "startChar": 24,
+        "endLine": 252,
+        "endChar": 32
+      },
+      "revId": "d5ff10f21d6a39b1d86d4bfb348004c17de31438",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abb27c90_36f26310",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-15T13:55:01Z",
+      "side": 1,
+      "message": "we should move cuda initialization into solver or the trust_region_preprocessor.cc\nthat way downstream code does not have to worry about it being initialized, it will simplify things everywhere.",
+      "parentUuid": "13c7c370_cf380cd2",
       "range": {
         "startLine": 252,
         "startChar": 24,
