@@ -76,6 +76,8 @@ TEST_P(DenseCholeskyTest, FactorAndSolve) {
   LinearSolver::Options options;
   ContextImpl context;
   options.context = &context;
+  std::string error;
+  CHECK(context.InitCUDA(&error)) << error;
   options.dense_linear_algebra_library_type = ::testing::get<0>(GetParam());
   options.use_mixed_precision_solves = ::testing::get<1>(GetParam());
   const int kNumRefinementSteps = 4;
