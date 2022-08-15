@@ -398,9 +398,11 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingConjugateGradients(
   for (int i = 0; i < 4; ++i) {
     scratch_[i] = Vector::Zero(sc->num_rows());
   }
-
+  Vector* scratch_ptr[4] = {
+      &scratch_[0], &scratch_[1], &scratch_[2], &scratch_[3]
+  };
   auto summary = ConjugateGradientsSolver<Vector>(
-      cg_options, *lhs, rhs(), *preconditioner, scratch_, cg_solution_);
+      cg_options, *lhs, rhs(), *preconditioner, scratch_ptr, cg_solution_);
   VectorRef(solution, sc->num_rows()) = cg_solution_;
   return summary;
 }
