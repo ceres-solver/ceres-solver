@@ -616,6 +616,30 @@
       },
       "revId": "d5ff10f21d6a39b1d86d4bfb348004c17de31438",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7aeb3fa6_10184deb",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-15T14:06:54Z",
+      "side": 1,
+      "message": "I mean something like this\n\n\nused_sparse_linear_algebra_library \u003d \n(linear_solver_type_used \u003d\u003d SPARSE_NORMAL_CHOLESKY) ||\n(linear_solver_type_used \u003d\u003d SPARSE_SCHUR) ||\n(linear_solver_type_used \u003d\u003d ITERATIVE_SCHUR \u0026\u0026 \n (preconditioner_type_used \u003d\u003d CLUSTER_JACOBI) ||\n (preconditioner_type_used \u003d\u003d CLUSTER_TRIDIAGONAL)) ||\n(linear_solver_type_used \u003d\u003d CGNR);\n\nif (used_sparse_linear_algebra_library) {\n  if (mixed_precision_solves_used) {\n  }\n}",
+      "parentUuid": "8aac13ce_03d7111f",
+      "range": {
+        "startLine": 869,
+        "startChar": 6,
+        "endLine": 869,
+        "endChar": 7
+      },
+      "revId": "d5ff10f21d6a39b1d86d4bfb348004c17de31438",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
