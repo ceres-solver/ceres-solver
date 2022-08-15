@@ -217,7 +217,14 @@ SparseSchurComplementSolver::SparseSchurComplementSolver(
   }
 }
 
-SparseSchurComplementSolver::~SparseSchurComplementSolver() = default;
+SparseSchurComplementSolver::~SparseSchurComplementSolver() {
+  for (int i = 0; i < 4; ++i) {
+    if (scratch_[i]) {
+      delete scratch_[i];
+      scratch_[i] = nullptr;
+    }
+  }
+}
 
 // Determine the non-zero blocks in the Schur Complement matrix, and
 // initialize a BlockRandomAccessSparseMatrix object.
@@ -394,11 +401,11 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingConjugateGradients(
   cg_options.r_tolerance = per_solve_options.r_tolerance;
 
   cg_solution_ = Vector::Zero(sc->num_rows());
-  Vector scratch[4];
   for (int i = 0; i < 4; ++i) {
-    scratch_[i] = Vector::Zero(sc->num_rows());
+    if (scratch_[i] == nullptr) {
+      scratch_[i] = new Vector(sc->num_rows());
+    }
   }
-
   auto summary = ConjugateGradientsSolver<Vector>(
       cg_options, *lhs, rhs(), *preconditioner, scratch_, cg_solution_);
   VectorRef(solution, sc->num_rows()) = cg_solution_;

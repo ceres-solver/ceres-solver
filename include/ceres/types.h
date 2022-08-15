@@ -137,7 +137,7 @@ enum PreconditionerType {
   // well the matrix Q approximates J'J, or how well the chosen
   // residual blocks approximate the non-linear least squares
   // problem.
-  SUBSET,
+  SUBSET
 };
 
 enum VisibilityClusteringType {
@@ -174,6 +174,9 @@ enum SparseLinearAlgebraLibraryType {
 
   // Apple's Accelerate framework sparse linear algebra routines.
   ACCELERATE_SPARSE,
+
+  // Nvidia's cuSPARSE library.
+  CUDA_SPARSE,
 
   // No sparse linear solver should be used.  This does not necessarily
   // imply that Ceres was built without any sparse library, although that

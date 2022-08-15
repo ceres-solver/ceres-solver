@@ -81,8 +81,9 @@ DEFINE_string(blocks_for_inner_iterations, "automatic", "Options are: "
               "automatic, cameras, points, cameras,points, points,cameras");
 
 DEFINE_string(linear_solver, "sparse_schur", "Options are: "
-              "sparse_schur, dense_schur, iterative_schur, sparse_normal_cholesky, "
-              "dense_qr, dense_normal_cholesky and cgnr.");
+              "sparse_schur, dense_schur, iterative_schur, "
+              "sparse_normal_cholesky, dense_qr, dense_normal_cholesky, "
+              "and cgnr.");
 DEFINE_bool(explicit_schur_complement, false, "If using ITERATIVE_SCHUR "
             "then explicitly compute the Schur complement.");
 DEFINE_string(preconditioner, "jacobi", "Options are: "
@@ -94,11 +95,13 @@ DEFINE_bool(use_spse_initialization, false,
             "Use power series expansion to initialize the solution in ITERATIVE_SCHUR linear solver.");
 
 DEFINE_string(sparse_linear_algebra_library, "suite_sparse",
-              "Options are: suite_sparse, cx_sparse, accelerate_sparse and eigen_sparse.");
+              "Options are: suite_sparse, accelerate_sparse, eigen_sparse, and "
+              "cuda_sparse.");
 DEFINE_string(dense_linear_algebra_library, "eigen",
               "Options are: eigen, lapack, and cuda");
 DEFINE_string(ordering_type, "amd", "Options are: amd, nesdis");
-DEFINE_string(linear_solver_ordering, "automatic", "Options are: automatic and user");
+DEFINE_string(linear_solver_ordering, "automatic",
+              "Options are: automatic and user");
 
 DEFINE_bool(use_quaternions, false, "If true, uses quaternions to represent "
             "rotations. If false, angle axis is used.");
@@ -351,6 +354,7 @@ void SolveProblem(const char* filename) {
   SetSolverOptionsFromFlags(&bal_problem, &options);
   options.gradient_tolerance = 1e-16;
   options.function_tolerance = 1e-16;
+  options.parameter_tolerance = 1e-16;
   Solver::Summary summary;
   Solve(options, &problem, &summary);
   std::cout << summary.FullReport() << "\n";

@@ -348,9 +348,8 @@ LinearSolverTerminationType RefinedDenseCholesky::Solve(const double* rhs,
 #ifndef CERES_NO_CUDA
 
 bool CUDADenseCholesky::Init(ContextImpl* context, std::string* message) {
-  if (!context->InitCUDA(message)) {
-    return false;
-  }
+  CHECK(context->IsCUDAInitialized())
+      << "CUDADenseCholesky requires CUDA initialization.";
   cusolver_handle_ = context->cusolver_handle_;
   stream_ = context->stream_;
   error_.Reserve(1);
@@ -491,9 +490,8 @@ CUDADenseCholeskyMixedPrecision::Create(const LinearSolver::Options& options) {
 
 bool CUDADenseCholeskyMixedPrecision::Init(const LinearSolver::Options& options,
                                            std::string* message) {
-  if (!options.context->InitCUDA(message)) {
-    return false;
-  }
+  CHECK(options.context->IsCUDAInitialized())
+      << "CUDADenseCholeskyMixedPrecision requires CUDA initialization.";
   cusolver_handle_ = options.context->cusolver_handle_;
   cublas_handle_ = options.context->cublas_handle_;
   stream_ = options.context->stream_;
