@@ -64,10 +64,17 @@ std::unique_ptr<Evaluator> Evaluator::Create(const Evaluator::Options& options,
     case DENSE_SCHUR:
     case SPARSE_SCHUR:
     case ITERATIVE_SCHUR:
-    case CGNR:
-      return std::make_unique<
-          ProgramEvaluator<BlockEvaluatePreparer, BlockJacobianWriter>>(
-          options, program);
+    case CGNR: {
+      if (options.sparse_linear_algebra_library_type == CUDA_SPARSE) {
+        return std::make_unique<
+          ProgramEvaluator<ScratchEvaluatePreparer,
+                           CompressedRowJacobianWriter>>(options, program);
+      } else {
+        return std::make_unique<
+            ProgramEvaluator<BlockEvaluatePreparer, BlockJacobianWriter>>(
+            options, program);
+      }
+    }
     case SPARSE_NORMAL_CHOLESKY:
       if (options.dynamic_sparsity) {
         return std::make_unique<
