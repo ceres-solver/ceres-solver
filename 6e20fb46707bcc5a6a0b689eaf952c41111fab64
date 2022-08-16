@@ -41,6 +41,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b86258d_35292037",
+        "filename": "internal/ceres/block_jacobi_preconditioner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-16T20:47:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4021db4_8213d7d1",
+      "range": {
+        "startLine": 166,
+        "startChar": 2,
+        "endLine": 166,
+        "endChar": 13
+      },
+      "revId": "6e20fb46707bcc5a6a0b689eaf952c41111fab64",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ad89e386_75f579bf",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-08-16T20:31:21Z",
       "side": 1,
       "message": "Move variable and its initialization into the loop?",
+      "range": {
+        "startLine": 124,
+        "startChar": 4,
+        "endLine": 124,
+        "endChar": 15
+      },
+      "revId": "6e20fb46707bcc5a6a0b689eaf952c41111fab64",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c0714db_00e7a5e2",
+        "filename": "internal/ceres/block_jacobi_preconditioner_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-16T20:47:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad89e386_75f579bf",
       "range": {
         "startLine": 124,
         "startChar": 4,
