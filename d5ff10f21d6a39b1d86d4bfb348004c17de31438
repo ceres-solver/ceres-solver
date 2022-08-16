@@ -730,6 +730,30 @@
       },
       "revId": "d5ff10f21d6a39b1d86d4bfb348004c17de31438",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd65139f_45f888cb",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-16T04:08:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "567ee357_43995c26",
+      "range": {
+        "startLine": 869,
+        "startChar": 6,
+        "endLine": 869,
+        "endChar": 7
+      },
+      "revId": "d5ff10f21d6a39b1d86d4bfb348004c17de31438",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
