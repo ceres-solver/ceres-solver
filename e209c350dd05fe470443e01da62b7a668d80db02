@@ -16,6 +16,24 @@
       "message": "Latest patch set includes a separate norm timing.\n\n```\n------------------------------------------------------------------------------------\nBenchmark                                          Time             CPU   Iterations\n------------------------------------------------------------------------------------\nBM_CpuRightMultiplyAndAccumulate             3055451 ns      3055447 ns          216\nBM_CpuLeftMultiplyAndAccumulate              3044122 ns      3044089 ns          243\nBM_CudaRightMultiplyAndAccumulate              73587 ns        73588 ns         7753\nBM_CudaLeftMultiplyAndAccumulate               71295 ns        71296 ns         9846\nBM_CudaTransposeLeftMultiplyAndAccumulate      62072 ns        62069 ns        11301\nBM_CudaCopyFromTranspose                      804834 ns       802654 ns          874\nBM_CudaCopyValues                            1395316 ns      1395321 ns          497\nBM_CudaNorm                                    52417 ns        52415 ns        13362\n```",
       "revId": "e209c350dd05fe470443e01da62b7a668d80db02",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02fe6665_14452daa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-16T21:17:31Z",
+      "side": 1,
+      "message": "```\nLoad Average: 0.50, 0.43, 0.35\n------------------------------------------------------------------------------------\nBenchmark                                          Time             CPU   Iterations\n------------------------------------------------------------------------------------\nBM_CpuRightMultiplyAndAccumulate             4297416 ns      4297377 ns          163\nBM_CpuLeftMultiplyAndAccumulate              4565594 ns      4565596 ns          153\nBM_CudaRightMultiplyAndAccumulate             810614 ns       810507 ns          834\nBM_CudaLeftMultiplyAndAccumulate            17474058 ns     17474031 ns           40\nBM_CudaTransposeLeftMultiplyAndAccumulate     728163 ns       728120 ns          963\nBM_CudaCopyFromTranspose                     7489813 ns      7488886 ns           95\nBM_CudaCopyValues                            2405573 ns      2405569 ns          291\nBM_CudaNorm                                   106631 ns       106629 ns         6486\n```",
+      "parentUuid": "eb9b6329_134d6919",
+      "revId": "e209c350dd05fe470443e01da62b7a668d80db02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
