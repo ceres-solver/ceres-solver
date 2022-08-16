@@ -22,6 +22,30 @@
       },
       "revId": "da88f28ea6fa806fc9c82d8224d6f7ad7ab0cd9c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b8e4c28_7ad29dfa",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-16T04:44:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5321112e_11207401",
+      "range": {
+        "startLine": 257,
+        "startChar": 41,
+        "endLine": 257,
+        "endChar": 44
+      },
+      "revId": "da88f28ea6fa806fc9c82d8224d6f7ad7ab0cd9c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
