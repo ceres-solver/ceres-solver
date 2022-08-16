@@ -30,6 +30,7 @@
 
 #include "ceres/schur_eliminator.h"
 
+#include <algorithm>
 #include <memory>
 #include <random>
 

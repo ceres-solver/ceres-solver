@@ -31,6 +31,7 @@
 #include "ceres/block_jacobi_preconditioner.h"
 
 #include <memory>
+#include <random>
 #include <vector>
 
 #include "Eigen/Dense"

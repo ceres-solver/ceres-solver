@@ -669,6 +669,7 @@ std::string SchurStructureToString(const int row_block_size,
   return internal::StringPrintf("%s,%s,%s", row.c_str(), e.c_str(), f.c_str());
 }
 
+#ifndef CERES_NO_CUDA
 bool IsCudaRequired(const Solver::Options& options) {
   if (options.linear_solver_type == DENSE_NORMAL_CHOLESKY ||
       options.linear_solver_type == DENSE_SCHUR ||
@@ -680,6 +681,7 @@ bool IsCudaRequired(const Solver::Options& options) {
   }
   return false;
 }
+#endif
 
 }  // namespace
 

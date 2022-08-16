@@ -101,13 +101,13 @@ class SubsetPreconditionerTest : public ::testing::TestWithParam<Param> {
     options.max_row_block_size = 4;
     options.block_density = 0.9;
 
-    m_ = BlockSparseMatrix::CreateRandomMatrix(options, prng);
+    m_ = BlockSparseMatrix::CreateRandomMatrix(options, prng_);
     start_row_block_ = m_->block_structure()->rows.size();
 
     // Ensure that the bottom part of the matrix has the same column
     // block structure.
     options.col_blocks = m_->block_structure()->cols;
-    b_ = BlockSparseMatrix::CreateRandomMatrix(options, prng);
+    b_ = BlockSparseMatrix::CreateRandomMatrix(options, prng_);
     m_->AppendRows(*b_);
 
     // Create a Identity block diagonal matrix with the same column
@@ -133,7 +133,7 @@ class SubsetPreconditionerTest : public ::testing::TestWithParam<Param> {
   std::unique_ptr<Preconditioner> preconditioner_;
   Vector diagonal_;
   int start_row_block_;
-  std::mt19937 prng;
+  std::mt19937 prng_;
 };
 
 TEST_P(SubsetPreconditionerTest, foo) {

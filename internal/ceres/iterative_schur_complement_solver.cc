@@ -129,9 +129,7 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
   for (int i = 0; i < 4; ++i) {
     scratch[i] = Vector::Zero(schur_complement_->num_cols());
   }
-  Vector* scratch_ptr[4] = {
-      &scratch[0], &scratch[1], &scratch[2], &scratch[3]
-  };
+  Vector* scratch_ptr[4] = {&scratch[0], &scratch[1], &scratch[2], &scratch[3]};
 
   event_logger.AddEvent("Setup");
 

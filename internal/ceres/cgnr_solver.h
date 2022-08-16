@@ -74,11 +74,12 @@ class CERES_NO_EXPORT CgnrSolver final : public BlockSparseMatrixSolver {
 // A Cuda-accelerated version of CgnrSolver.
 // This solver assumes that the sparsity structure of A remains constant for its
 // lifetime.
-class CERES_NO_EXPORT CudaCgnrSolver final : public CompressedRowSparseMatrixSolver {
+class CERES_NO_EXPORT CudaCgnrSolver final
+    : public CompressedRowSparseMatrixSolver {
  public:
   explicit CudaCgnrSolver(LinearSolver::Options options);
-  static std::unique_ptr<CudaCgnrSolver> Create(
-      LinearSolver::Options options, std::string* error);
+  static std::unique_ptr<CudaCgnrSolver> Create(LinearSolver::Options options,
+                                                std::string* error);
   ~CudaCgnrSolver() override;
 
   Summary SolveImpl(CompressedRowSparseMatrix* A,
@@ -87,8 +88,9 @@ class CERES_NO_EXPORT CudaCgnrSolver final : public CompressedRowSparseMatrixSol
                     double* x) final;
 
  private:
-  void CpuToGpuTransfer(
-      const CompressedRowSparseMatrix& A, const double* b, const double* D);
+  void CpuToGpuTransfer(const CompressedRowSparseMatrix& A,
+                        const double* b,
+                        const double* D);
 
   LinearSolver::Options options_;
   std::unique_ptr<CudaSparseMatrix> A_;

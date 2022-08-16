@@ -74,8 +74,8 @@ TEST(ConjugateGradientTest, Solves3x3IdentitySystem) {
   IdentityPreconditioner identity(A->num_cols());
   LinearOperatorAdapter lhs(*A);
   LinearOperatorAdapter preconditioner(identity);
-  Vector* scratch_array[4] = 
-      {&scratch[0], &scratch[1], &scratch[2], &scratch[3]};
+  Vector* scratch_array[4] = {
+      &scratch[0], &scratch[1], &scratch[2], &scratch[3]};
   auto summary = ConjugateGradientsSolver(
       cg_options, lhs, b, preconditioner, scratch_array, x);
 
@@ -136,8 +136,8 @@ TEST(ConjuateGradientTest, Solves3x3SymmetricSystem) {
   for (int i = 0; i < 4; ++i) {
     scratch[i] = Vector::Zero(A->num_cols());
   }
-  Vector* scratch_array[4] = 
-      {&scratch[0], &scratch[1], &scratch[2], &scratch[3]};
+  Vector* scratch_array[4] = {
+      &scratch[0], &scratch[1], &scratch[2], &scratch[3]};
   IdentityPreconditioner identity(A->num_cols());
   LinearOperatorAdapter lhs(*A);
   LinearOperatorAdapter preconditioner(identity);

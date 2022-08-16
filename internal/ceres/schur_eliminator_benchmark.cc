@@ -28,6 +28,7 @@
 //
 // Authors: sameeragarwal@google.com (Sameer Agarwal)
 
+#include <algorithm>
 #include <memory>
 #include <random>
 
@@ -92,7 +93,7 @@ class BenchmarkData {
     matrix_ = std::make_unique<BlockSparseMatrix>(bs);
     double* values = matrix_->mutable_values();
     std::generate_n(values, matrix_->num_nonzeros(), [this] {
-      return standard_normal(prng);
+      return standard_normal(prng_);
     });
 
     b_.resize(matrix_->num_rows());
@@ -126,7 +127,7 @@ class BenchmarkData {
   Vector diagonal_;
   Vector z_;
   Vector y_;
-  std::mt19937 prng;
+  std::mt19937 prng_;
   std::normal_distribution<> standard_normal;
 };
 

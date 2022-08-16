@@ -100,8 +100,7 @@ std::unique_ptr<BlockSparseMatrix> GenerateSyntheticJacobian(
       values_offset += m_d * kResidualSize;
     }
   }
-  std::unique_ptr<BlockSparseMatrix> jacobian =
-      std::make_unique<BlockSparseMatrix>(bs);
+  auto jacobian = std::make_unique<BlockSparseMatrix>(bs);
   VectorRef(jacobian->mutable_values(), jacobian->num_nonzeros()).setRandom();
   return jacobian;
 }

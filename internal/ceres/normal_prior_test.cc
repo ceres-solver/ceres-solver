@@ -30,6 +30,7 @@
 
 #include "ceres/normal_prior.h"
 
+#include <algorithm>
 #include <cstddef>
 #include <random>
 
