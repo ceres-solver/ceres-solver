@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d079190f_966d4c82",
+        "filename": "internal/ceres/block_jacobi_preconditioner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-16T04:15:22Z",
+      "side": 1,
+      "message": "Nice! I did not realize that CompressedRowSparseMatrix passed this information along.",
+      "revId": "f2d3b590695ab01775ca632fe83fe6efcb847a57",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4771897_f53b7942",
+        "filename": "internal/ceres/block_jacobi_preconditioner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-16T04:15:22Z",
+      "side": 1,
+      "message": "Comment that this is needed since it will be filled in using rankUpdate(), which is an accumulate operation.",
+      "revId": "f2d3b590695ab01775ca632fe83fe6efcb847a57",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a37bb510_755bc023",
+        "filename": "internal/ceres/block_jacobi_preconditioner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-16T04:15:22Z",
+      "side": 1,
+      "message": "Isn\u0027t Eigen by default column-major? Or are you exploiting the fact that this is a symmetric matrix? If so, please add this note as a comment.",
+      "revId": "f2d3b590695ab01775ca632fe83fe6efcb847a57",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7de17706_ad37f655",
+        "filename": "internal/ceres/block_jacobi_preconditioner_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-16T04:15:22Z",
+      "side": 1,
+      "message": "If this test is intended to test numerical accuracy as well, shouldn\u0027t this diagonal be much smaller?",
+      "revId": "f2d3b590695ab01775ca632fe83fe6efcb847a57",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
