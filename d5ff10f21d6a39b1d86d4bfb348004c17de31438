@@ -154,6 +154,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "154398a5_44dd3660",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-16T04:14:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7590114c_39b98a2d",
+      "range": {
+        "startLine": 357,
+        "startChar": 10,
+        "endLine": 357,
+        "endChar": 29
+      },
+      "revId": "d5ff10f21d6a39b1d86d4bfb348004c17de31438",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c6526ddf_1a5118a0",

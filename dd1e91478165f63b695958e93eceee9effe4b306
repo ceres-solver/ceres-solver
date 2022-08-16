@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17065aee_90df44d5",
+        "filename": "internal/ceres/cuda_dense_cholesky_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-16T04:14:11Z",
+      "side": 1,
+      "message": "why are we adding flags in this CL?",
+      "range": {
+        "startLine": 39,
+        "startChar": 13,
+        "endLine": 39,
+        "endChar": 14
+      },
+      "revId": "dd1e91478165f63b695958e93eceee9effe4b306",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "882b16cc_64f121c6",
+        "filename": "internal/ceres/cuda_dense_cholesky_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-16T04:14:11Z",
+      "side": 1,
+      "message": "this flag syntax does not work inside google anymore. so its going to create problems. lets keep the static flags for now, once we move to absl we can do the flags.",
+      "range": {
+        "startLine": 302,
+        "startChar": 22,
+        "endLine": 302,
+        "endChar": 49
+      },
+      "revId": "dd1e91478165f63b695958e93eceee9effe4b306",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
