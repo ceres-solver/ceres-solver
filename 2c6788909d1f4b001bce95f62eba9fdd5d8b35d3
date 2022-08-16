@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c873e291_03c43348",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-16T21:04:42Z",
+      "side": 1,
+      "message": "Try the updated version? I added two more items to the benchmark\n\n```\nBM_CpuRightMultiplyAndAccumulate             2993286 ns      2993304 ns          218\nBM_CpuLeftMultiplyAndAccumulate              2842238 ns      2842256 ns          247\nBM_CudaRightMultiplyAndAccumulate             136301 ns       136299 ns         3980\nBM_CudaLeftMultiplyAndAccumulate              122346 ns       122343 ns         5704\nBM_CudaTransposeLeftMultiplyAndAccumulate     114300 ns       114298 ns         5983\nBM_CudaCopyFromTranspose                      805553 ns       803052 ns          874\nBM_CudaCopyValues                            1409491 ns      1409479 ns          489\n```",
+      "revId": "2c6788909d1f4b001bce95f62eba9fdd5d8b35d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
