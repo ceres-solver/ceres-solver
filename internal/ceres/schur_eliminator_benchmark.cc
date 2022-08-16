@@ -93,7 +93,7 @@ class BenchmarkData {
     matrix_ = std::make_unique<BlockSparseMatrix>(bs);
     double* values = matrix_->mutable_values();
     std::generate_n(values, matrix_->num_nonzeros(), [this] {
-      return standard_normal(prng_);
+      return standard_normal_(prng_);
     });
 
     b_.resize(matrix_->num_rows());
@@ -128,7 +128,7 @@ class BenchmarkData {
   Vector z_;
   Vector y_;
   std::mt19937 prng_;
-  std::normal_distribution<> standard_normal;
+  std::normal_distribution<> standard_normal_;
 };
 
 static void BM_SchurEliminatorEliminate(benchmark::State& state) {
