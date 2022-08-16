@@ -345,14 +345,16 @@ bool OptionsAreValidForCgnr(const Solver::Options& options, string* error) {
   // Check options for CGNR with CUDA_SPARSE.
   if (options.sparse_linear_algebra_library_type == CUDA_SPARSE) {
     if (!IsSparseLinearAlgebraLibraryTypeAvailable(CUDA_SPARSE)) {
-      *error = "Can't use CGNR with sparse_linear_algebra_library_type = "
+      *error =
+          "Can't use CGNR with sparse_linear_algebra_library_type = "
           "CUDA_SPARSE because support was not enabled when Ceres was built.";
       return false;
     }
     if (options.preconditioner_type != IDENTITY) {
-      StringPrintf("Can't use CGNR with preconditioner_type = %s when "
-                   "sparse_linear_algebra_library_type = CUDA_SPARSE.",
-                    PreconditionerTypeToString(options.preconditioner_type));
+      *error = StringPrintf(
+          "Can't use CGNR with preconditioner_type = %s when "
+          "sparse_linear_algebra_library_type = CUDA_SPARSE.",
+          PreconditionerTypeToString(options.preconditioner_type));
       return false;
     }
   }
@@ -907,14 +909,14 @@ string Solver::Summary::FullReport() const {
         linear_solver_type_used == SPARSE_SCHUR ||
         linear_solver_type_used == CGNR ||
         (linear_solver_type_used == ITERATIVE_SCHUR &&
-            (preconditioner_type_used == CLUSTER_JACOBI ||
-            preconditioner_type_used == CLUSTER_TRIDIAGONAL));
+         (preconditioner_type_used == CLUSTER_JACOBI ||
+          preconditioner_type_used == CLUSTER_TRIDIAGONAL));
 
     const bool linear_solver_ordering_required =
         linear_solver_type_used == SPARSE_SCHUR ||
         (linear_solver_type_used == ITERATIVE_SCHUR &&
-            (preconditioner_type_used == CLUSTER_JACOBI ||
-            preconditioner_type_used == CLUSTER_TRIDIAGONAL)) ||
+         (preconditioner_type_used == CLUSTER_JACOBI ||
+          preconditioner_type_used == CLUSTER_TRIDIAGONAL)) ||
         (linear_solver_type_used == CGNR && preconditioner_type_used == SUBSET);
 
     if (used_sparse_linear_algebra_library) {
@@ -929,12 +931,11 @@ string Solver::Summary::FullReport() const {
             LinearSolverOrderingTypeToString(linear_solver_ordering_type),
             mixed_precision_suffix);
       } else {
-        StringAppendF(
-            &report,
-            "\nSparse linear algebra library %15s %s\n",
-            SparseLinearAlgebraLibraryTypeToString(
-                sparse_linear_algebra_library_type),
-            mixed_precision_suffix);
+        StringAppendF(&report,
+                      "\nSparse linear algebra library %15s %s\n",
+                      SparseLinearAlgebraLibraryTypeToString(
+                          sparse_linear_algebra_library_type),
+                      mixed_precision_suffix);
       }
     }
 
