@@ -16,6 +16,69 @@
       "message": "Undoing unintentional changes!",
       "revId": "ee19998ef4360f741bafc8af84b79deab6df3867",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc0dbf7a_6c46ed42",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-16T04:27:15Z",
+      "side": 1,
+      "message": "last bit of comments about the constructor and we are good to go.",
+      "revId": "ee19998ef4360f741bafc8af84b79deab6df3867",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8f47f78_978fa128",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-16T04:27:15Z",
+      "side": 1,
+      "message": "this bit of code should get simpler.",
+      "range": {
+        "startLine": 256,
+        "startChar": 2,
+        "endLine": 256,
+        "endChar": 5
+      },
+      "revId": "ee19998ef4360f741bafc8af84b79deab6df3867",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d38a517_2a474fa0",
+        "filename": "internal/ceres/cgnr_solver.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-16T04:27:15Z",
+      "side": 1,
+      "message": "have the default constructor take options as an input that way you do not have to futz with options_ in the factory. also feel free to make this constructor public. there is no hard in it, there is no initialization happening.",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 16
+      },
+      "revId": "ee19998ef4360f741bafc8af84b79deab6df3867",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
