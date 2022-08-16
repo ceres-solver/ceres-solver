@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9bb455f_9027b701",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-16T20:56:58Z",
+      "side": 1,
+      "message": "This does the trick.\n\n```\n(LOAS)  cmake-build: ./bin/sparse_linear_operator_benchmark \n2022-08-16T13:56:22-07:00\nRunning ./bin/sparse_linear_operator_benchmark\nRun on (48 X 1667.26 MHz CPU s)\nCPU Caches:\n  L1 Data 32 KiB (x24)\n  L1 Instruction 32 KiB (x24)\n  L2 Unified 256 KiB (x24)\n  L3 Unified 30720 KiB (x2)\nLoad Average: 0.36, 0.31, 0.25\n------------------------------------------------------------------------------------\nBenchmark                                          Time             CPU   Iterations\n------------------------------------------------------------------------------------\nBM_CpuRightMultiplyAndAccumulate             4387002 ns      4386861 ns          136\nBM_CpuLeftMultiplyAndAccumulate              4708145 ns      4708042 ns          149\nBM_CudaRightMultiplyAndAccumulate             801941 ns       801940 ns          835\nBM_CudaLeftMultiplyAndAccumulate            17470490 ns     17468046 ns           40\nBM_CudaTransposeLeftMultiplyAndAccumulate     834210 ns       834053 ns          840\n```",
+      "revId": "5d71c64209d9b3a9179106a45c48e5b7d06f12b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
