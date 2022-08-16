@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5321112e_11207401",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-16T04:41:26Z",
+      "side": 1,
+      "message": "auto solver \u003d std::make_unique\u003cCudaCgnrSolver\u003e(options);",
+      "range": {
+        "startLine": 257,
+        "startChar": 41,
+        "endLine": 257,
+        "endChar": 44
+      },
+      "revId": "da88f28ea6fa806fc9c82d8224d6f7ad7ab0cd9c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
