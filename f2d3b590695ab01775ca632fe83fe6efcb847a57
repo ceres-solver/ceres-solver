@@ -35,6 +35,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "12ee816e_fc4f141d",
+        "filename": "internal/ceres/block_jacobi_preconditioner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-16T04:29:37Z",
+      "side": 1,
+      "message": "this has nothing to do with rankupdate, the loop as we go through the rows of the jacobian is an accumulating loop across the rows and even row blocks.",
+      "parentUuid": "d4771897_f53b7942",
+      "revId": "f2d3b590695ab01775ca632fe83fe6efcb847a57",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a37bb510_755bc023",
@@ -52,6 +70,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d63db559_0188ffc8",
+        "filename": "internal/ceres/block_jacobi_preconditioner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-16T04:29:37Z",
+      "side": 1,
+      "message": "Our aliases are all row major. they are defined in eigen.h. thats the convention in the whole code base. Matrix and MatrixRef are all row major.",
+      "parentUuid": "a37bb510_755bc023",
+      "revId": "f2d3b590695ab01775ca632fe83fe6efcb847a57",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7de17706_ad37f655",
@@ -65,6 +101,24 @@
       "writtenOn": "2022-08-16T04:15:22Z",
       "side": 1,
       "message": "If this test is intended to test numerical accuracy as well, shouldn\u0027t this diagonal be much smaller?",
+      "revId": "f2d3b590695ab01775ca632fe83fe6efcb847a57",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf1f0c68_c75ecccb",
+        "filename": "internal/ceres/block_jacobi_preconditioner_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-16T04:29:37Z",
+      "side": 1,
+      "message": "the numerical accuracy comes from eigen which we can\u0027t do anything about. the construction is entirely combinatorial and our tolerance is relatively tight.",
+      "parentUuid": "7de17706_ad37f655",
       "revId": "f2d3b590695ab01775ca632fe83fe6efcb847a57",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
