@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "254daa63_3ae5254c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-16T20:31:21Z",
+      "side": 1,
+      "message": "Mostly LGTM. Just a couple of suggestions.",
+      "revId": "6e20fb46707bcc5a6a0b689eaf952c41111fab64",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4021db4_8213d7d1",
+        "filename": "internal/ceres/block_jacobi_preconditioner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-16T20:31:21Z",
+      "side": 1,
+      "message": "Initialization can be moved into the outer loop:\n\n```\nfor (int i \u003d 0, col \u003d 0; ... )\n```",
+      "range": {
+        "startLine": 166,
+        "startChar": 2,
+        "endLine": 166,
+        "endChar": 13
+      },
+      "revId": "6e20fb46707bcc5a6a0b689eaf952c41111fab64",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad89e386_75f579bf",
+        "filename": "internal/ceres/block_jacobi_preconditioner_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-08-16T20:31:21Z",
+      "side": 1,
+      "message": "Move variable and its initialization into the loop?",
+      "range": {
+        "startLine": 124,
+        "startChar": 4,
+        "endLine": 124,
+        "endChar": 15
+      },
+      "revId": "6e20fb46707bcc5a6a0b689eaf952c41111fab64",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
