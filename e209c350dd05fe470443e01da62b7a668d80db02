@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb9b6329_134d6919",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-16T21:10:47Z",
+      "side": 1,
+      "message": "Latest patch set includes a separate norm timing.\n\n```\n------------------------------------------------------------------------------------\nBenchmark                                          Time             CPU   Iterations\n------------------------------------------------------------------------------------\nBM_CpuRightMultiplyAndAccumulate             3055451 ns      3055447 ns          216\nBM_CpuLeftMultiplyAndAccumulate              3044122 ns      3044089 ns          243\nBM_CudaRightMultiplyAndAccumulate              73587 ns        73588 ns         7753\nBM_CudaLeftMultiplyAndAccumulate               71295 ns        71296 ns         9846\nBM_CudaTransposeLeftMultiplyAndAccumulate      62072 ns        62069 ns        11301\nBM_CudaCopyFromTranspose                      804834 ns       802654 ns          874\nBM_CudaCopyValues                            1395316 ns      1395321 ns          497\nBM_CudaNorm                                    52417 ns        52415 ns        13362\n```",
+      "revId": "e209c350dd05fe470443e01da62b7a668d80db02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
