@@ -230,8 +230,121 @@ static void BM_CudaLeftMultiplyAndAccumulate(benchmark::State& state) {
   CHECK_NE(sum, 0.0);
 }
 
+static void BM_CudaTransposeLeftMultiplyAndAccumulate(benchmark::State& state) {
+  // Perform setup here
+  std::unique_ptr<BlockSparseMatrix> jacobian =
+      GenerateSyntheticJacobian(FLAGS_num_cameras,
+                                FLAGS_num_landmarks,
+                                FLAGS_num_parameters_per_camera,
+                                FLAGS_num_parameters_per_landmark,
+                                FLAGS_num_residuals_per_camera);
+  ContextImpl context;
+  std::string message;
+  context.InitCUDA(&message);
+  CompressedRowSparseMatrix jacobian_crs(
+      jacobian->num_rows(), jacobian->num_cols(), jacobian->num_nonzeros());
+  jacobian->ToCompressedRowSparseMatrix(&jacobian_crs);
+  CudaSparseMatrix cuda_jacobian(&context, jacobian_crs);
+  CudaSparseMatrix cuda_jacobian_transpose(&context, jacobian_crs);
+  cuda_jacobian_transpose.CopyFromTranspose(cuda_jacobian);
+  CudaVector cuda_x(&context, 0);
+  CudaVector cuda_y(&context, 0);
+
+  Vector x(jacobian->num_rows());
+  Vector y(jacobian->num_cols());
+  x.setRandom();
+  y.setRandom();
+
+  cuda_x.CopyFromCpu(x);
+  cuda_y.CopyFromCpu(y);
+  double sum = 0;
+  for (auto _ : state) {
+    // This code gets timed
+    // cuda_jacobian.LeftMultiplyAndAccumulate(cuda_x, &cuda_y);
+    cuda_jacobian_transpose.RightMultiplyAndAccumulate(cuda_x, &cuda_y);
+    sum += cuda_y.Norm();
+    CHECK_EQ(cudaDeviceSynchronize(), cudaSuccess);
+  }
+  CHECK_NE(sum, 0.0);
+}
+
+static void BM_CudaCopyFromTranspose(benchmark::State& state) {
+  // Perform setup here
+  std::unique_ptr<BlockSparseMatrix> jacobian =
+      GenerateSyntheticJacobian(FLAGS_num_cameras,
+                                FLAGS_num_landmarks,
+                                FLAGS_num_parameters_per_camera,
+                                FLAGS_num_parameters_per_landmark,
+                                FLAGS_num_residuals_per_camera);
+  ContextImpl context;
+  std::string message;
+  context.InitCUDA(&message);
+  CompressedRowSparseMatrix jacobian_crs(
+      jacobian->num_rows(), jacobian->num_cols(), jacobian->num_nonzeros());
+  jacobian->ToCompressedRowSparseMatrix(&jacobian_crs);
+  CudaSparseMatrix cuda_jacobian(&context, jacobian_crs);
+  CudaSparseMatrix cuda_jacobian_transpose(&context, jacobian_crs);
+  CudaVector cuda_x(&context, 0);
+  CudaVector cuda_y(&context, 0);
+
+  Vector x(jacobian->num_rows());
+  Vector y(jacobian->num_cols());
+  x.setRandom();
+  y.setRandom();
+
+  cuda_x.CopyFromCpu(x);
+  cuda_y.CopyFromCpu(y);
+  double sum = 0;
+  for (auto _ : state) {
+    // This code gets timed
+    // cuda_jacobian.LeftMultiplyAndAccumulate(cuda_x, &cuda_y);
+    cuda_jacobian_transpose.CopyFromTranspose(cuda_jacobian);
+    CHECK_EQ(cudaDeviceSynchronize(), cudaSuccess);
+  }
+  // CHECK_NE(sum, 0.0);
+}
+
+static void BM_CudaCopyValues(benchmark::State& state) {
+  // Perform setup here
+  std::unique_ptr<BlockSparseMatrix> jacobian =
+      GenerateSyntheticJacobian(FLAGS_num_cameras,
+                                FLAGS_num_landmarks,
+                                FLAGS_num_parameters_per_camera,
+                                FLAGS_num_parameters_per_landmark,
+                                FLAGS_num_residuals_per_camera);
+  ContextImpl context;
+  std::string message;
+  context.InitCUDA(&message);
+  CompressedRowSparseMatrix jacobian_crs(
+      jacobian->num_rows(), jacobian->num_cols(), jacobian->num_nonzeros());
+  jacobian->ToCompressedRowSparseMatrix(&jacobian_crs);
+  CudaSparseMatrix cuda_jacobian(&context, jacobian_crs);
+  CudaSparseMatrix cuda_jacobian_transpose(&context, jacobian_crs);
+  CudaVector cuda_x(&context, 0);
+  CudaVector cuda_y(&context, 0);
+
+  Vector x(jacobian->num_rows());
+  Vector y(jacobian->num_cols());
+  x.setRandom();
+  y.setRandom();
+
+  cuda_x.CopyFromCpu(x);
+  cuda_y.CopyFromCpu(y);
+  double sum = 0;
+  for (auto _ : state) {
+    // This code gets timed
+    // cuda_jacobian.LeftMultiplyAndAccumulate(cuda_x, &cuda_y);
+    cuda_jacobian_transpose.CopyValuesFromCpu(jacobian_crs);
+    CHECK_EQ(cudaDeviceSynchronize(), cudaSuccess);
+  }
+  // CHECK_NE(sum, 0.0);
+}
+
 BENCHMARK(BM_CudaRightMultiplyAndAccumulate);
 BENCHMARK(BM_CudaLeftMultiplyAndAccumulate);
+BENCHMARK(BM_CudaTransposeLeftMultiplyAndAccumulate);
+BENCHMARK(BM_CudaCopyFromTranspose);
+BENCHMARK(BM_CudaCopyValues);
 #endif
 
 BENCHMARK_MAIN();

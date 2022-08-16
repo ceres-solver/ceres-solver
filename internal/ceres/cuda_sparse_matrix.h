@@ -82,6 +82,7 @@ class CERES_NO_EXPORT CudaSparseMatrix {
   // matrix is unchanged.
   void CopyValuesFromCpu(const CompressedRowSparseMatrix& crs_matrix);
 
+  void CopyFromTranspose(const CudaSparseMatrix& other);
   const cusparseSpMatDescr_t& descr() const { return descr_; }
 
  private:
