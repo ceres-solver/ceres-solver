@@ -144,6 +144,65 @@ void CudaSparseMatrix::LeftMultiplyAndAccumulate(const CudaVector& x,
   SpMv(CUSPARSE_OPERATION_TRANSPOSE, x, y);
 }
 
+void CudaSparseMatrix::CopyFromTranspose(const CudaSparseMatrix& other) {
+  num_rows_ = other.num_cols_;
+  num_cols_ = other.num_rows_;
+  values_.Reserve(other.values_.size());
+  rows_.Reserve(num_rows_ + 1);
+  cols_.Reserve(values_.size());
+  num_nonzeros_ = other.num_nonzeros_;
+  if (descr_ != nullptr) {
+    CHECK_EQ(cusparseDestroySpMat(descr_), CUSPARSE_STATUS_SUCCESS);
+    descr_ = nullptr;
+  }
+  cusparseCreateCsr(&descr_,
+                    num_rows_,
+                    num_cols_,
+                    num_nonzeros_,
+                    rows_.data(),
+                    cols_.data(),
+                    values_.data(),
+                    CUSPARSE_INDEX_32I,
+                    CUSPARSE_INDEX_32I,
+                    CUSPARSE_INDEX_BASE_ZERO,
+                    CUDA_R_64F);
+  size_t buffer_size = 0;
+  CHECK_EQ(cusparseCsr2cscEx2_bufferSize(
+      context_->cusparse_handle_,
+      other.num_rows_,
+      other.num_cols_,
+      other.num_nonzeros_,
+      other.values_.data(),
+      other.rows_.data(),
+      other.cols_.data(),
+      values_.data(),
+      rows_.data(),
+      cols_.data(),
+      CUDA_R_64F,
+      CUSPARSE_ACTION_NUMERIC,
+      CUSPARSE_INDEX_BASE_ZERO,
+      CUSPARSE_CSR2CSC_ALG1,
+      &buffer_size), CUSPARSE_STATUS_SUCCESS);
+  CudaBuffer<uint8_t> buffer;
+  buffer.Reserve(buffer_size);
+  CHECK_EQ(cusparseCsr2cscEx2(
+      context_->cusparse_handle_,
+      other.num_rows_,
+      other.num_cols_,
+      other.num_nonzeros_,
+      other.values_.data(),
+      other.rows_.data(),
+      other.cols_.data(),
+      values_.data(),
+      rows_.data(),
+      cols_.data(),
+      CUDA_R_64F,
+      CUSPARSE_ACTION_NUMERIC,
+      CUSPARSE_INDEX_BASE_ZERO,
+      CUSPARSE_CSR2CSC_ALG1,
+      buffer.data()), CUSPARSE_STATUS_SUCCESS);
+}
+
 }  // namespace ceres::internal
 
 #endif  // CERES_NO_CUDA
