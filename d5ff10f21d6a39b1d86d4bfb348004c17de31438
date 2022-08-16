@@ -254,6 +254,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "02962e84_263ac6dc",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-16T02:38:29Z",
+      "side": 1,
+      "message": "Okay, I moved it to Solver::Solve, please take a look.",
+      "parentUuid": "abb27c90_36f26310",
+      "range": {
+        "startLine": 252,
+        "startChar": 24,
+        "endLine": 252,
+        "endChar": 32
+      },
+      "revId": "d5ff10f21d6a39b1d86d4bfb348004c17de31438",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "564164ac_f5a0fee9",
@@ -632,6 +656,30 @@
       "side": 1,
       "message": "I mean something like this\n\n\nused_sparse_linear_algebra_library \u003d \n(linear_solver_type_used \u003d\u003d SPARSE_NORMAL_CHOLESKY) ||\n(linear_solver_type_used \u003d\u003d SPARSE_SCHUR) ||\n(linear_solver_type_used \u003d\u003d ITERATIVE_SCHUR \u0026\u0026 \n (preconditioner_type_used \u003d\u003d CLUSTER_JACOBI) ||\n (preconditioner_type_used \u003d\u003d CLUSTER_TRIDIAGONAL)) ||\n(linear_solver_type_used \u003d\u003d CGNR);\n\nif (used_sparse_linear_algebra_library) {\n  if (mixed_precision_solves_used) {\n  }\n}",
       "parentUuid": "8aac13ce_03d7111f",
+      "range": {
+        "startLine": 869,
+        "startChar": 6,
+        "endLine": 869,
+        "endChar": 7
+      },
+      "revId": "d5ff10f21d6a39b1d86d4bfb348004c17de31438",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0854c1a_3991d899",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-16T02:38:29Z",
+      "side": 1,
+      "message": "Got it. Here\u0027s a proposal, can you check if the `linear_solver_ordering_required` bool is correct? If not, can you please correct it?",
+      "parentUuid": "7aeb3fa6_10184deb",
       "range": {
         "startLine": 869,
         "startChar": 6,
