@@ -724,12 +724,14 @@ void Solver::Solve(const Solver::Options& options,
   Program* program = problem_impl->mutable_program();
   PreSolveSummarize(options, problem_impl, summary);
 
+#ifndef CERES_NO_CUDA
   if (IsCudaRequired(options)) {
     if (!problem_impl->context()->InitCUDA(&summary->message)) {
       LOG(ERROR) << "Terminating: " << summary->message;
       return;
     }
   }
+#endif  // CERES_NO_CUDA
 
   // If gradient_checking is enabled, wrap all cost functions in a
   // gradient checker and install a callback that terminates if any gradient
