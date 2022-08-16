@@ -61,7 +61,7 @@ class GoodTestTerm : public CostFunction {
   template <class UniformRandomFunctor>
   GoodTestTerm(int arity, int const* dim, UniformRandomFunctor&& randu)
       : arity_(arity), return_value_(true) {
-    std::uniform_real_distribution distribution(-1.0, 1.0);
+    std::uniform_real_distribution<double> distribution(-1.0, 1.0);
     // Make 'arity' random vectors.
     a_.resize(arity_);
     for (int j = 0; j < arity_; ++j) {

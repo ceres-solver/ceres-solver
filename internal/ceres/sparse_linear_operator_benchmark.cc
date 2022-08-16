@@ -77,7 +77,8 @@ std::unique_ptr<BlockSparseMatrix> GenerateSyntheticJacobian(
   bs->rows.resize(k * n);
   int values_offset = 0;
   std::mt19937 prng;
-  std::uniform_real_distribution uniform_0_m(0.0, static_cast<double>(m));
+  std::uniform_real_distribution<double> uniform_0_m(0.0,
+                                                     static_cast<double>(m));
   // Generate structure of the Jacobian.
   // For n cameras:
   for (int i = 0; i < n; ++i) {
