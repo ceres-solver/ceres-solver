@@ -271,6 +271,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "37ea76c4_60193a83",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-16T03:13:25Z",
+      "side": 1,
+      "message": "that does not sound right, but in either case have the constructor take options as an input. also if there is no initialization happening after construction, why is the constructor private?",
+      "parentUuid": "d7c70f08_2e266010",
+      "range": {
+        "startLine": 254,
+        "startChar": 45,
+        "endLine": 254,
+        "endChar": 59
+      },
+      "revId": "d56faf846b4fca25eaca6f366cd82451c6201771",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "35645239_e822d5f5",

@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c644ee39_4071b36e",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-16T03:13:25Z",
+      "side": 1,
+      "message": "since you are doing this here, remove it from the factory for cgnr and elsewhere?",
+      "range": {
+        "startLine": 728,
+        "startChar": 32,
+        "endLine": 728,
+        "endChar": 33
+      },
+      "revId": "090fca144c970ad9a8874bf2b6f1a91a2fca88e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ad27e3c_aaf70f56",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-16T03:13:25Z",
+      "side": 1,
+      "message": "cgnr + subset will also use an ordering.",
+      "range": {
+        "startLine": 911,
+        "startChar": 15,
+        "endLine": 911,
+        "endChar": 46
+      },
+      "revId": "090fca144c970ad9a8874bf2b6f1a91a2fca88e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
