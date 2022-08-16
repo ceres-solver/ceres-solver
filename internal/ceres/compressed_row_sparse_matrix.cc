@@ -660,7 +660,6 @@ CompressedRowSparseMatrix::CreateRandomMatrix(
       options.min_row_block_size, options.max_row_block_size);
   std::uniform_real_distribution<double> uniform01(0.0, 1.0);
   std::normal_distribution<double> standard_normal_distribution;
-  auto values_dist = std::bind(standard_normal_distribution, std::ref(prng));
 
   // Generate the row block structure.
   for (int i = 0; i < options.num_row_blocks; ++i) {
