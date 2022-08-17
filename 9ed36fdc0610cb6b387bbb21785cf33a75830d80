@@ -16,6 +16,24 @@
       "message": "I\u0027m not a fan of implicit sign conversions; `hardware_concurrency` returns an `unsigned int`. Better cast the result explicitly during assignment below.",
       "revId": "9ed36fdc0610cb6b387bbb21785cf33a75830d80",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "58f0c6e4_a3eb6866",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-17T19:46:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38ea5786_4d79e21b",
+      "revId": "9ed36fdc0610cb6b387bbb21785cf33a75830d80",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
