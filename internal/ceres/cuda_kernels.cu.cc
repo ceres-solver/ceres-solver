@@ -40,7 +40,7 @@ namespace ceres::internal {
 // toolkit documentation.
 constexpr int kCudaBlockSize = 256;
 
-template<typename SrcType, typename DstType>
+template <typename SrcType, typename DstType>
 __global__ void TypeConversionKernel(const SrcType* __restrict__ input,
                                      DstType* __restrict__ output,
                                      const int size) {
@@ -68,7 +68,7 @@ void CudaFP32ToFP64(const float* input,
       <<<num_blocks, kCudaBlockSize, 0, stream>>>(input, output, size);
 }
 
-template<typename T>
+template <typename T>
 __global__ void SetZeroKernel(T* __restrict__ output, const int size) {
   const int i = blockIdx.x * blockDim.x + threadIdx.x;
   if (i < size) {
@@ -83,24 +83,21 @@ void CudaSetZeroFP32(float* output, const int size, cudaStream_t stream) {
 
 void CudaSetZeroFP64(double* output, const int size, cudaStream_t stream) {
   const int num_blocks = (size + kCudaBlockSize - 1) / kCudaBlockSize;
-  SetZeroKernel<double><<<num_blocks, kCudaBlockSize, 0, stream>>>(
-      output, size);
+  SetZeroKernel<double>
+      <<<num_blocks, kCudaBlockSize, 0, stream>>>(output, size);
 }
 
 template <typename SrcType, typename DstType>
 __global__ void XPlusEqualsYKernel(DstType* __restrict__ x,
                                    const SrcType* __restrict__ y,
-                                  const int size) {
+                                   const int size) {
   const int i = blockIdx.x * blockDim.x + threadIdx.x;
   if (i < size) {
     x[i] = x[i] + DstType(y[i]);
   }
 }
 
-void CudaDsxpy(double* x,
-                float* y,
-                const int size,
-                cudaStream_t stream) {
+void CudaDsxpy(double* x, float* y, const int size, cudaStream_t stream) {
   const int num_blocks = (size + kCudaBlockSize - 1) / kCudaBlockSize;
   XPlusEqualsYKernel<float, double>
       <<<num_blocks, kCudaBlockSize, 0, stream>>>(x, y, size);
@@ -122,8 +119,7 @@ void CudaDtDxpy(double* y,
                 const int size,
                 cudaStream_t stream) {
   const int num_blocks = (size + kCudaBlockSize - 1) / kCudaBlockSize;
-  CudaDtDxpyKernel<<<num_blocks, kCudaBlockSize, 0, stream>>>(
-      y, D, x, size);
+  CudaDtDxpyKernel<<<num_blocks, kCudaBlockSize, 0, stream>>>(y, D, x, size);
 }
 
-} // namespace ceres_cuda_kernels
+}  // namespace ceres::internal

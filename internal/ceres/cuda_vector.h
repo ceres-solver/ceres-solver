@@ -49,8 +49,8 @@
 
 #ifndef CERES_NO_CUDA
 
-#include "ceres/ceres_cuda_kernels.h"
 #include "ceres/cuda_buffer.h"
+#include "ceres/cuda_kernels.h"
 #include "ceres/internal/eigen.h"
 #include "cublas_v2.h"
 #include "cusparse.h"

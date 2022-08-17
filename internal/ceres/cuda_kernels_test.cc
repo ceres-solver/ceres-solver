@@ -28,13 +28,14 @@
 //
 // Author: joydeepb@cs.utexas.edu (Joydeep Biswas)
 
+#include "ceres/cuda_kernels.h"
+
 #include <math.h>
 
 #include <limits>
 #include <string>
 #include <vector>
 
-#include "ceres/ceres_cuda_kernels.h"
 #include "ceres/cuda_buffer.h"
 #include "ceres/internal/config.h"
 #include "ceres/internal/eigen.h"

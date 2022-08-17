@@ -40,8 +40,8 @@
 #include "ceres/iterative_refiner.h"
 
 #ifndef CERES_NO_CUDA
-#include "ceres/ceres_cuda_kernels.h"
 #include "ceres/context_impl.h"
+#include "ceres/cuda_kernels.h"
 #include "cuda_runtime.h"
 #include "cusolverDn.h"
 #endif  // CERES_NO_CUDA

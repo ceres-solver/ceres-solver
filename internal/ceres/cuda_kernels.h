@@ -28,6 +28,9 @@
 //
 // Author: joydeepb@cs.utexas.edu (Joydeep Biswas)
 
+#ifndef CERES_INTERNAL_CUDA_KERNELS_H_
+#define CERES_INTERNAL_CUDA_KERNELS_H_
+
 #include "ceres/internal/config.h"
 
 #ifndef CERES_NO_CUDA
@@ -72,3 +75,5 @@ void CudaDtDxpy(double* y,
 }  // namespace ceres::internal
 
 #endif  // CERES_NO_CUDA
+
+#endif  // CERES_INTERNAL_CUDA_KERNELS_H_
