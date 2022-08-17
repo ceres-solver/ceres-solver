@@ -57,6 +57,7 @@
 #include <cstdlib>
 #include <memory>
 #include <string>
+#include <thread>
 #include <vector>
 
 #include "bal_problem.h"
@@ -100,7 +101,7 @@ DEFINE_string(sparse_linear_algebra_library, "suite_sparse",
 DEFINE_string(dense_linear_algebra_library, "eigen",
               "Options are: eigen, lapack, and cuda");
 DEFINE_string(ordering_type, "amd", "Options are: amd, nesdis");
-DEFINE_string(linear_solver_ordering, "automatic",
+DEFINE_string(linear_solver_ordering, "user",
               "Options are: automatic and user");
 
 DEFINE_bool(use_quaternions, false, "If true, uses quaternions to represent "
@@ -112,7 +113,7 @@ DEFINE_double(eta, 1e-2, "Default value for eta. Eta determines the "
               "accuracy of each linear solve of the truncated newton step. "
               "Changing this parameter can affect solve performance.");
 
-DEFINE_int32(num_threads, 1, "Number of threads.");
+DEFINE_int32(num_threads, -1, "Number of threads. -1 = std::thread::hardware_concurrency.");
 DEFINE_int32(num_iterations, 5, "Number of iterations.");
 DEFINE_int32(max_linear_solver_iterations, 500, "Maximum number of iterations"
             " for solution of linear system.");
@@ -268,7 +269,17 @@ void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
 void SetMinimizerOptions(Solver::Options* options) {
   options->max_num_iterations = CERES_GET_FLAG(FLAGS_num_iterations);
   options->minimizer_progress_to_stdout = true;
-  options->num_threads = CERES_GET_FLAG(FLAGS_num_threads);
+  if (CERES_GET_FLAG(FLAGS_num_threads) == -1) {
+    const int num_available_threads =
+        static_cast<int>(std::thread::hardware_concurrency());
+    if (num_available_threads > 0) {
+      options->num_threads = num_available_threads;
+    }
+  } else {
+    options->num_threads = CERES_GET_FLAG(FLAGS_num_threads);
+  }
+  CHECK_GE(options->num_threads, 1);
+
   options->eta = CERES_GET_FLAG(FLAGS_eta);
   options->max_solver_time_in_seconds = CERES_GET_FLAG(FLAGS_max_solver_time);
   options->use_nonmonotonic_steps = CERES_GET_FLAG(FLAGS_nonmonotonic_steps);
