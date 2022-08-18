@@ -350,7 +350,8 @@ bool OptionsAreValidForCgnr(const Solver::Options& options, string* error) {
           "CUDA_SPARSE because support was not enabled when Ceres was built.";
       return false;
     }
-    if (options.preconditioner_type != IDENTITY) {
+    if (options.preconditioner_type != IDENTITY && 
+        options.preconditioner_type != JACOBI) {
       *error = StringPrintf(
           "Can't use CGNR with preconditioner_type = %s when "
           "sparse_linear_algebra_library_type = CUDA_SPARSE.",

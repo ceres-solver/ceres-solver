@@ -33,6 +33,8 @@
 
 #include <memory>
 
+#include "ceres/block_jacobi_preconditioner.h"
+#include "ceres/conjugate_gradients_solver.h"
 #include "ceres/cuda_sparse_matrix.h"
 #include "ceres/cuda_vector.h"
 #include "ceres/internal/export.h"
@@ -71,6 +73,51 @@ class CERES_NO_EXPORT CgnrSolver final : public BlockSparseMatrixSolver {
 };
 
 #ifndef CERES_NO_CUDA
+class CudaPreconditioner : public
+    ConjugateGradientsLinearOperator<CudaVector> {
+ public:
+  virtual void Update(const CompressedRowSparseMatrix& A, const double* D) = 0;
+  virtual ~CudaPreconditioner() = default;
+};
+
+// A wrapper around CPU-based preconditioners that allows them to be used with
+// CUDA-based iterative solvers.
+template <typename CpuPreconditionerType>
+class CudaCpuPreconditionerWrapper final : public CudaPreconditioner {
+ public:
+  explicit CudaCpuPreconditionerWrapper(ContextImpl* context,
+                                        const CompressedRowSparseMatrix& A) :
+      cpu_preconditioner_(A),
+      m_(context, cpu_preconditioner_.matrix()) {}
+  ~CudaCpuPreconditionerWrapper() = default;
+
+  void Update(const CompressedRowSparseMatrix& A, const double* D) final {
+    cpu_preconditioner_.Update(A, D);
+    m_.CopyValuesFromCpu(cpu_preconditioner_.matrix());
+  }
+
+  void RightMultiplyAndAccumulate(
+      const CudaVector& x, CudaVector& y) final {
+    m_.RightMultiplyAndAccumulate(x, &y);
+  }
+
+ private:
+  CpuPreconditionerType cpu_preconditioner_;
+  CudaSparseMatrix m_;
+};
+
+class CERES_NO_EXPORT CudaIdentityPreconditioner final
+    : public CudaPreconditioner {
+ public:
+  void Update(const CompressedRowSparseMatrix& A, const double* D) final {}
+  void RightMultiplyAndAccumulate(const CudaVector& x, CudaVector& y) final {
+    y.Axpby(1.0, x, 1.0);
+  }
+};
+
+using CudaJacobiPreconditioner =
+    CudaCpuPreconditionerWrapper<BlockCRSJacobiPreconditioner>;
+
 // A Cuda-accelerated version of CgnrSolver.
 // This solver assumes that the sparsity structure of A remains constant for its
 // lifetime.
@@ -99,6 +146,7 @@ class CERES_NO_EXPORT CudaCgnrSolver final
   std::unique_ptr<CudaVector> Atb_;
   std::unique_ptr<CudaVector> Ax_;
   std::unique_ptr<CudaVector> D_;
+  CudaPreconditioner* preconditioner_ = nullptr;
   CudaVector* scratch_[4] = {nullptr, nullptr, nullptr, nullptr};
 };
 #endif  // CERES_NO_CUDA
