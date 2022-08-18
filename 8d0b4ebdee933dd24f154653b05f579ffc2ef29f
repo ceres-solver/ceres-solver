@@ -58,6 +58,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "482f3acd_c7c17209",
+        "filename": "internal/ceres/context_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-18T22:08:36Z",
+      "side": 1,
+      "message": "There are three cases here:\n1. If nothing special is done, this will report the results from the \"default\" cuda device, which is device 0.\n2. If the user masks out GPUs using the `CUDA_VISIBLE_DEVICES` environment variable, it will still use device 0 visible to the program, but device 0 will be the first GPU indicated in the environment variable.\n3. If the user explicitly selects a GPU in the host process before calling Ceres, this code will reflect the selection already made.\n\nI have added this to the header file, we should probably add it to the docs.",
+      "parentUuid": "5343c6d0_f3cd85a5",
+      "range": {
+        "startLine": 71,
+        "startChar": 26,
+        "endLine": 71,
+        "endChar": 38
+      },
+      "revId": "8d0b4ebdee933dd24f154653b05f579ffc2ef29f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "27e14c78_37111531",
@@ -94,6 +118,54 @@
       "writtenOn": "2022-08-18T17:16:33Z",
       "side": 1,
       "message": "GpuMemoryAvailableInMb is better, though it maybe better to just return it in bytes.",
+      "range": {
+        "startLine": 84,
+        "startChar": 9,
+        "endLine": 84,
+        "endChar": 27
+      },
+      "revId": "8d0b4ebdee933dd24f154653b05f579ffc2ef29f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7dbd869_d2d4014e",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-18T22:08:36Z",
+      "side": 1,
+      "message": "I\u0027d like to return in bytes. It will be needed for precisely autodetecting when the SpMV LeftMultiply optimization is possible.",
+      "parentUuid": "05ade644_1ca55769",
+      "range": {
+        "startLine": 84,
+        "startChar": 9,
+        "endLine": 84,
+        "endChar": 27
+      },
+      "revId": "8d0b4ebdee933dd24f154653b05f579ffc2ef29f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "29dd42b5_3bae65ae",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-18T22:08:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27e14c78_37111531",
       "range": {
         "startLine": 84,
         "startChar": 9,
