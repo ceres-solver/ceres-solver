@@ -224,11 +224,39 @@ class CERES_NO_EXPORT CudaCgnrLinearOperator final
 };
 
 class CERES_NO_EXPORT CudaIdentityPreconditioner final
-    : public ConjugateGradientsLinearOperator<CudaVector> {
+    : public CudaPreconditioner {
  public:
+  void Update(const CompressedRowSparseMatrix& A, const double* D) final {}
   void RightMultiplyAndAccumulate(const CudaVector& x, CudaVector& y) final {
     y.Axpby(1.0, x, 1.0);
   }
+};
+
+// This class wraps the existing CPU Jacobi preconditioner, caches the structure
+// of the block diagonal, and for each CGNR solve updates the values on the CPU
+// and then copies them over to the GPU.
+class CERES_NO_EXPORT CudaJacobiPreconditioner final
+    : public CudaPreconditioner {
+ public:
+  explicit CudaJacobiPreconditioner(ContextImpl* context,
+                                    const CompressedRowSparseMatrix& A) :
+      cpu_preconditioner_(A),
+      m_(context, cpu_preconditioner_.matrix()) {}
+  ~CudaJacobiPreconditioner() = default;
+
+  void Update(const CompressedRowSparseMatrix& A, const double* D) final {
+    cpu_preconditioner_.Update(A, D);
+    m_.CopyValuesFromCpu(cpu_preconditioner_.matrix());
+  }
+
+  void RightMultiplyAndAccumulate(
+      const CudaVector& x, CudaVector& y) final {
+    m_.RightMultiplyAndAccumulate(x, &y);
+  }
+
+ private:
+  BlockCRSJacobiPreconditioner cpu_preconditioner_;
+  CudaSparseMatrix m_;
 };
 
 CudaCgnrSolver::CudaCgnrSolver(LinearSolver::Options options)
@@ -246,7 +274,8 @@ CudaCgnrSolver::~CudaCgnrSolver() {
 std::unique_ptr<CudaCgnrSolver> CudaCgnrSolver::Create(
     LinearSolver::Options options, std::string* error) {
   CHECK(error != nullptr);
-  if (options.preconditioner_type != IDENTITY) {
+  if (options.preconditioner_type != IDENTITY &&
+      options.preconditioner_type != JACOBI) {
     *error =
         "CudaCgnrSolver does not support preconditioner type " +
         std::string(PreconditionerTypeToString(options.preconditioner_type)) +
@@ -270,6 +299,12 @@ void CudaCgnrSolver::CpuToGpuTransfer(const CompressedRowSparseMatrix& A,
     Atb_ = std::make_unique<CudaVector>(options_.context, A.num_cols());
     Ax_ = std::make_unique<CudaVector>(options_.context, A.num_rows());
     D_ = std::make_unique<CudaVector>(options_.context, A.num_cols());
+    if (options_.preconditioner_type == JACOBI) {
+      preconditioner_ =
+          std::make_unique<CudaJacobiPreconditioner>(options_.context, A);
+    } else {
+      preconditioner_ = std::make_unique<CudaIdentityPreconditioner>();
+    }
     for (int i = 0; i < 4; ++i) {
       scratch_[i] = new CudaVector(options_.context, A.num_cols());
     }
@@ -293,6 +328,8 @@ LinearSolver::Summary CudaCgnrSolver::SolveImpl(
 
   CpuToGpuTransfer(*A, b, per_solve_options.D);
   event_logger.AddEvent("CPU to GPU Transfer");
+  preconditioner_->Update(*A, per_solve_options.D);
+  event_logger.AddEvent("Preconditioner Update");
 
   // Form z = Atb.
   Atb_->SetZero();
@@ -311,9 +348,8 @@ LinearSolver::Summary CudaCgnrSolver::SolveImpl(
   cg_options.q_tolerance = per_solve_options.q_tolerance;
   cg_options.r_tolerance = per_solve_options.r_tolerance;
 
-  CudaIdentityPreconditioner preconditioner;
   summary = ConjugateGradientsSolver(
-      cg_options, lhs, *Atb_, preconditioner, scratch_, *x_);
+      cg_options, lhs, *Atb_, *preconditioner_, scratch_, *x_);
   x_->CopyTo(x);
   event_logger.AddEvent("Solve");
   return summary;
