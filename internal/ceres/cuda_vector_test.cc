@@ -45,7 +45,7 @@ namespace internal {
 TEST(CudaVector, Creation) {
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCUDA(&message)) << "InitCUDA() failed because: " << message;
+  CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
   CudaVector x(&context, 1000);
   EXPECT_EQ(x.num_rows(), 1000);
   EXPECT_NE(x.data().data(), nullptr);
@@ -56,7 +56,7 @@ TEST(CudaVector, CopyVector) {
   x << 1, 2, 3;
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCUDA(&message)) << "InitCUDA() failed because: " << message;
+  CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
   CudaVector y(&context, 10);
   y.CopyFromCpu(x);
   EXPECT_EQ(y.num_rows(), 3);
@@ -72,7 +72,7 @@ TEST(CudaVector, DeepCopy) {
   x << 1, 2, 3;
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCUDA(&message)) << "InitCUDA() failed because: " << message;
+  CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
   CudaVector x_gpu(&context, 3);
   x_gpu.CopyFromCpu(x);
 
@@ -94,7 +94,7 @@ TEST(CudaVector, Dot) {
   y << 100, 10, 1;
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCUDA(&message)) << "InitCUDA() failed because: " << message;
+  CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
   CudaVector x_gpu(&context, 10);
   CudaVector y_gpu(&context, 10);
   x_gpu.CopyFromCpu(x);
@@ -109,7 +109,7 @@ TEST(CudaVector, Norm) {
   x << 1, 2, 3;
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCUDA(&message)) << "InitCUDA() failed because: " << message;
+  CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
   CudaVector x_gpu(&context, 10);
   x_gpu.CopyFromCpu(x);
 
@@ -127,7 +127,7 @@ TEST(CudaVector, SetZero) {
   x << 1, 1, 1, 1;
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCUDA(&message)) << "InitCUDA() failed because: " << message;
+  CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
   CudaVector x_gpu(&context, 10);
   x_gpu.CopyFromCpu(x);
 
@@ -145,7 +145,7 @@ TEST(CudaVector, SetZero) {
 TEST(CudaVector, Resize) {
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCUDA(&message)) << "InitCUDA() failed because: " << message;
+  CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
   CudaVector x_gpu(&context, 10);
   EXPECT_EQ(x_gpu.num_rows(), 10);
   x_gpu.Resize(4);
@@ -159,7 +159,7 @@ TEST(CudaVector, Axpy) {
   y << 100, 10, 1, 0;
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCUDA(&message)) << "InitCUDA() failed because: " << message;
+  CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
   CudaVector x_gpu(&context, 4);
   CudaVector y_gpu(&context, 4);
   x_gpu.CopyFromCpu(x);
@@ -180,7 +180,7 @@ TEST(CudaVector, AxpbyBEquals1) {
   y << 100, 10, 1, 0;
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCUDA(&message)) << "InitCUDA() failed because: " << message;
+  CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
   CudaVector x_gpu(&context, 4);
   CudaVector y_gpu(&context, 4);
   x_gpu.CopyFromCpu(x);
@@ -201,7 +201,7 @@ TEST(CudaVector, AxpbyMemberFunctionBNotEqual1) {
   y << 100, 10, 1, 0;
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCUDA(&message)) << "InitCUDA() failed because: " << message;
+  CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
   CudaVector x_gpu(&context, 4);
   CudaVector y_gpu(&context, 4);
   x_gpu.CopyFromCpu(x);
@@ -222,7 +222,7 @@ TEST(CudaVector, AxpbyMemberFunctionBEqual1) {
   y << 100, 10, 1, 0;
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCUDA(&message)) << "InitCUDA() failed because: " << message;
+  CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
   CudaVector x_gpu(&context, 4);
   CudaVector y_gpu(&context, 4);
   x_gpu.CopyFromCpu(x);
@@ -241,7 +241,7 @@ TEST(CudaVector, AxpbyMemberXAliasesY) {
   x << 100, 10, 1, 0;
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCUDA(&message)) << "InitCUDA() failed because: " << message;
+  CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
   CudaVector x_gpu(&context, 4);
   CudaVector y_gpu(&context, 4);
   x_gpu.CopyFromCpu(x);
@@ -262,7 +262,7 @@ TEST(CudaVector, AxpbyNonMemberMethodNoAliases) {
   y << 100, 10, 1, 0;
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCUDA(&message)) << "InitCUDA() failed because: " << message;
+  CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
   CudaVector x_gpu(&context, 4);
   CudaVector y_gpu(&context, 4);
   CudaVector z_gpu(&context, 4);
@@ -284,7 +284,7 @@ TEST(CudaVector, AxpbyNonMemberMethodXAliasesY) {
   x << 100, 10, 1, 0;
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCUDA(&message)) << "InitCUDA() failed because: " << message;
+  CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
   CudaVector x_gpu(&context, 4);
   CudaVector z_gpu(&context, 4);
   x_gpu.CopyFromCpu(x);
@@ -305,7 +305,7 @@ TEST(CudaVector, AxpbyNonMemberMethodXAliasesZ) {
   y << 100, 10, 1, 0;
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCUDA(&message)) << "InitCUDA() failed because: " << message;
+  CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
   CudaVector x_gpu(&context, 10);
   CudaVector y_gpu(&context, 10);
   x_gpu.CopyFromCpu(x);
@@ -326,7 +326,7 @@ TEST(CudaVector, AxpbyNonMemberMethodYAliasesZ) {
   y << 100, 10, 1, 0;
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCUDA(&message)) << "InitCUDA() failed because: " << message;
+  CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
   CudaVector x_gpu(&context, 4);
   CudaVector y_gpu(&context, 4);
   x_gpu.CopyFromCpu(x);
@@ -345,7 +345,7 @@ TEST(CudaVector, AxpbyNonMemberMethodXAliasesYAliasesZ) {
   x << 100, 10, 1, 0;
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCUDA(&message)) << "InitCUDA() failed because: " << message;
+  CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
   CudaVector x_gpu(&context, 10);
   x_gpu.CopyFromCpu(x);
 
@@ -366,7 +366,7 @@ TEST(CudaVector, DtDxpy) {
   D << 4, 3, 2, 1;
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCUDA(&message)) << "InitCUDA() failed because: " << message;
+  CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
   CudaVector x_gpu(&context, 4);
   CudaVector y_gpu(&context, 4);
   CudaVector D_gpu(&context, 4);
@@ -387,7 +387,7 @@ TEST(CudaVector, Scale) {
   x << 1, 2, 3, 4;
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCUDA(&message)) << "InitCUDA() failed because: " << message;
+  CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
   CudaVector x_gpu(&context, 4);
   x_gpu.CopyFromCpu(x);
 

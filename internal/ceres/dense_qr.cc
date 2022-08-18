@@ -312,7 +312,7 @@ LinearSolverTerminationType LAPACKDenseQR::Solve(const double* rhs,
 #ifndef CERES_NO_CUDA
 
 bool CUDADenseQR::Init(ContextImpl* context, std::string* message) {
-  if (!context->InitCUDA(message)) {
+  if (!context->InitCuda(message)) {
     return false;
   }
   cublas_handle_ = context->cublas_handle_;

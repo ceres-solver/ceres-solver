@@ -45,7 +45,7 @@ TEST(CUDADenseCholesky, InvalidOptionOnCreate) {
   ContextImpl context;
   options.context = &context;
   std::string error;
-  EXPECT_TRUE(context.InitCUDA(&error)) << error;
+  EXPECT_TRUE(context.InitCuda(&error)) << error;
   auto dense_cuda_solver = CUDADenseCholesky::Create(options);
   EXPECT_EQ(dense_cuda_solver, nullptr);
 }
@@ -65,7 +65,7 @@ TEST(CUDADenseCholesky, Cholesky4x4Matrix) {
   ContextImpl context;
   options.context = &context;
   std::string error;
-  EXPECT_TRUE(context.InitCUDA(&error)) << error;
+  EXPECT_TRUE(context.InitCuda(&error)) << error;
   options.dense_linear_algebra_library_type = CUDA;
   auto dense_cuda_solver = CUDADenseCholesky::Create(options);
   ASSERT_NE(dense_cuda_solver, nullptr);
@@ -94,7 +94,7 @@ TEST(CUDADenseCholesky, SingularMatrix) {
   ContextImpl context;
   options.context = &context;
   std::string error;
-  EXPECT_TRUE(context.InitCUDA(&error)) << error;
+  EXPECT_TRUE(context.InitCuda(&error)) << error;
   options.dense_linear_algebra_library_type = CUDA;
   auto dense_cuda_solver = CUDADenseCholesky::Create(options);
   ASSERT_NE(dense_cuda_solver, nullptr);
@@ -116,7 +116,7 @@ TEST(CUDADenseCholesky, NegativeMatrix) {
   ContextImpl context;
   options.context = &context;
   std::string error;
-  EXPECT_TRUE(context.InitCUDA(&error)) << error;
+  EXPECT_TRUE(context.InitCuda(&error)) << error;
   options.dense_linear_algebra_library_type = CUDA;
   auto dense_cuda_solver = CUDADenseCholesky::Create(options);
   ASSERT_NE(dense_cuda_solver, nullptr);
@@ -131,7 +131,7 @@ TEST(CUDADenseCholesky, MustFactorizeBeforeSolve) {
   ContextImpl context;
   options.context = &context;
   std::string error;
-  EXPECT_TRUE(context.InitCUDA(&error)) << error;
+  EXPECT_TRUE(context.InitCuda(&error)) << error;
   options.dense_linear_algebra_library_type = CUDA;
   auto dense_cuda_solver = CUDADenseCholesky::Create(options);
   ASSERT_NE(dense_cuda_solver, nullptr);
@@ -150,7 +150,7 @@ TEST(CUDADenseCholesky, Randomized1600x1600Tests) {
   ContextImpl context;
   options.context = &context;
   std::string error;
-  EXPECT_TRUE(context.InitCUDA(&error)) << error;
+  EXPECT_TRUE(context.InitCuda(&error)) << error;
   options.dense_linear_algebra_library_type = ceres::CUDA;
   std::unique_ptr<DenseCholesky> dense_cholesky =
       CUDADenseCholesky::Create(options);
@@ -189,7 +189,7 @@ TEST(CUDADenseCholeskyMixedPrecision, InvalidOptionsOnCreate) {
     ContextImpl context;
     options.context = &context;
     std::string error;
-    EXPECT_TRUE(context.InitCUDA(&error)) << error;
+    EXPECT_TRUE(context.InitCuda(&error)) << error;
     auto solver = CUDADenseCholeskyMixedPrecision::Create(options);
     ASSERT_EQ(solver, nullptr);
   }
@@ -199,7 +199,7 @@ TEST(CUDADenseCholeskyMixedPrecision, InvalidOptionsOnCreate) {
     ContextImpl context;
     options.context = &context;
     std::string error;
-    EXPECT_TRUE(context.InitCUDA(&error)) << error;
+    EXPECT_TRUE(context.InitCuda(&error)) << error;
     options.dense_linear_algebra_library_type = ceres::CUDA;
     auto solver = CUDADenseCholeskyMixedPrecision::Create(options);
     ASSERT_EQ(solver, nullptr);
@@ -224,7 +224,7 @@ TEST(CUDADenseCholeskyMixedPrecision, Cholesky4x4Matrix1Step) {
   ContextImpl context;
   options.context = &context;
   std::string error;
-  EXPECT_TRUE(context.InitCUDA(&error)) << error;
+  EXPECT_TRUE(context.InitCuda(&error)) << error;
   options.dense_linear_algebra_library_type = CUDA;
   options.use_mixed_precision_solves = true;
   auto solver = CUDADenseCholeskyMixedPrecision::Create(options);
@@ -261,7 +261,7 @@ TEST(CUDADenseCholeskyMixedPrecision, Cholesky4x4Matrix4Steps) {
   ContextImpl context;
   options.context = &context;
   std::string error;
-  EXPECT_TRUE(context.InitCUDA(&error)) << error;
+  EXPECT_TRUE(context.InitCuda(&error)) << error;
   options.dense_linear_algebra_library_type = CUDA;
   options.use_mixed_precision_solves = true;
   auto solver = CUDADenseCholeskyMixedPrecision::Create(options);
@@ -291,7 +291,7 @@ TEST(CUDADenseCholeskyMixedPrecision, Randomized1600x1600Tests) {
   ContextImpl context;
   options.context = &context;
   std::string error;
-  EXPECT_TRUE(context.InitCUDA(&error)) << error;
+  EXPECT_TRUE(context.InitCuda(&error)) << error;
   options.dense_linear_algebra_library_type = ceres::CUDA;
   options.use_mixed_precision_solves = true;
   options.max_num_refinement_iterations = 20;

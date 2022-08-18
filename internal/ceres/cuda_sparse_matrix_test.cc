@@ -51,8 +51,8 @@ class CudaSparseMatrixTest : public ::testing::Test {
  protected:
   void SetUp() final {
     std::string message;
-    CHECK(context_.InitCUDA(&message))
-        << "InitCUDA() failed because: " << message;
+    CHECK(context_.InitCuda(&message))
+        << "InitCuda() failed because: " << message;
     std::unique_ptr<LinearLeastSquaresProblem> problem =
         CreateLinearLeastSquaresProblemFromId(2);
     CHECK(problem != nullptr);
@@ -121,7 +121,7 @@ TEST(CudaSparseMatrix, CopyValuesFromCpu) {
 
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCUDA(&message)) << "InitCUDA() failed because: " << message;
+  CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
   auto A1_crs = CompressedRowSparseMatrix::FromTripletSparseMatrix(A1);
   CudaSparseMatrix A_gpu(&context, *A1_crs);
   CudaVector b_gpu(&context, A1.num_cols());
@@ -159,7 +159,7 @@ TEST(CudaSparseMatrix, RightMultiplyAndAccumulate) {
 
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCUDA(&message)) << "InitCUDA() failed because: " << message;
+  CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
   auto A_crs = CompressedRowSparseMatrix::FromTripletSparseMatrix(A);
   CudaSparseMatrix A_gpu(&context, *A_crs);
   CudaVector b_gpu(&context, A.num_cols());
@@ -189,7 +189,7 @@ TEST(CudaSparseMatrix, LeftMultiplyAndAccumulate) {
 
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCUDA(&message)) << "InitCUDA() failed because: " << message;
+  CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
   auto A_crs = CompressedRowSparseMatrix::FromTripletSparseMatrix(A);
   CudaSparseMatrix A_gpu(&context, *A_crs);
   CudaVector b_gpu(&context, A.num_rows());
@@ -244,7 +244,7 @@ TEST(CudaSparseMatrix, LargeMultiplyAndAccumulate) {
 
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCUDA(&message)) << "InitCUDA() failed because: " << message;
+  CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
   auto A_crs = CompressedRowSparseMatrix::FromTripletSparseMatrix(A);
   CudaSparseMatrix A_gpu(&context, *A_crs);
   CudaVector b_gpu(&context, N);
