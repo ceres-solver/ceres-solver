@@ -170,7 +170,7 @@ static void BM_CudaRightMultiplyAndAccumulate(benchmark::State& state) {
                                 FLAGS_num_residuals_per_camera);
   ContextImpl context;
   std::string message;
-  context.InitCUDA(&message);
+  context.InitCuda(&message);
   CompressedRowSparseMatrix jacobian_crs(
       jacobian->num_rows(), jacobian->num_cols(), jacobian->num_nonzeros());
   jacobian->ToCompressedRowSparseMatrix(&jacobian_crs);
@@ -205,7 +205,7 @@ static void BM_CudaLeftMultiplyAndAccumulate(benchmark::State& state) {
                                 FLAGS_num_residuals_per_camera);
   ContextImpl context;
   std::string message;
-  context.InitCUDA(&message);
+  context.InitCuda(&message);
   CompressedRowSparseMatrix jacobian_crs(
       jacobian->num_rows(), jacobian->num_cols(), jacobian->num_nonzeros());
   jacobian->ToCompressedRowSparseMatrix(&jacobian_crs);

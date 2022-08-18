@@ -72,19 +72,39 @@ class CERES_NO_EXPORT ContextImpl final : public Context {
 #endif  // CERES_USE_CXX_THREADS
 
 #ifndef CERES_NO_CUDA
-  // Initializes the cuSolverDN context, creates an asynchronous stream, and
-  // associates the stream with cuSolverDN. Returns true iff initialization was
-  // successful, else it returns false and a human-readable error message is
-  // returned.
-  bool InitCUDA(std::string* message);
+  // Note on Ceres' use of CUDA Devices on multi-GPU systems:
+  // 1. On a multi-GPU system, if nothing special is done, the "default" CUDA
+  //    device will be used, which is device 0.
+  // 2. If the user masks out GPUs using the  CUDA_VISIBLE_DEVICES  environment
+  //    variable, Ceres will still use device 0 visible to the program, but
+  //    device 0 will be the first GPU indicated in the environment variable.
+  // 3. If the user explicitly selects a GPU in the host process before calling
+  //    Ceres, Ceres will use that GPU.
+
+  // Initializes cuBLAS, cuSOLVER, and cuSPARSE contexts, creates an
+  // asynchronous CUDA stream, and associates the stream with the contexts.
+  // Returns true iff initialization was successful, else it returns false and a
+  // human-readable error message is returned.
+  bool InitCuda(std::string* message);
   void TearDown();
-  inline bool IsCUDAInitialized() const { return is_cuda_initialized_; }
+  inline bool IsCudaInitialized() const { return is_cuda_initialized_; }
+  // Returns a human-readable string describing the capabilities of the current
+  // CUDA device. CudaConfigAsString can only be called after InitCuda has been
+  // called.
+  std::string CudaConfigAsString() const;
+  // Returns the number of bytes of available global memory on the current CUDA 
+  // device. If it is called before InitCuda, it returns 0.
+  size_t GpuMemoryAvailable() const;
 
   cusolverDnHandle_t cusolver_handle_ = nullptr;
   cublasHandle_t cublas_handle_ = nullptr;
   cudaStream_t stream_ = nullptr;
   cusparseHandle_t cusparse_handle_ = nullptr;
   bool is_cuda_initialized_ = false;
+  int gpu_device_id_in_use_ = -1;
+  cudaDeviceProp gpu_device_properties_;
+  int cuda_version_major_ = 0;
+  int cuda_version_minor_ = 0;
 #endif  // CERES_NO_CUDA
 };
 
