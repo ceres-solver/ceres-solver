@@ -29,20 +29,41 @@
 // Author: vitus@google.com (Michael Vitus)
 
 // This include must come before any #ifndef check on Ceres compile options.
+#ifndef CERES_INTERNAL_PARALLEL_FOR_OPENMP_H_
+#define CERES_INTERNAL_PARALLEL_FOR_OPENMP_H_
+
 #include "ceres/internal/config.h"
 
 #if defined(CERES_USE_OPENMP)
 
 #include "ceres/parallel_for.h"
+#include "ceres/scoped_thread_token.h"
+#include "ceres/thread_token_provider.h"
 #include "glog/logging.h"
 #include "omp.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
-int MaxNumThreadsAvailable() { return omp_get_max_threads(); }
+template <typename F>
+void ParallelInvoke(ContextImpl* context,
+                    int start,
+                    int end,
+                    int num_threads,
+                    const F& function) {
+  using namespace parallel_for_details;
+  ThreadTokenProvider token_provider(num_threads);
+#pragma omp parallel num_threads(num_threads)
+  {
+    const ScopedThreadToken scoped_thread_token(&token_provider);
+    const int thread_id = scoped_thread_token.token();
+#pragma omp for schedule(guided)
+    for (int i = start; i < end; ++i) {
+      Invoke<F>(thread_id, i, function);
+    }
+  }
+}
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
 
-#endif  // defined(CERES_USE_OPENMP)
+#endif
+#endif
