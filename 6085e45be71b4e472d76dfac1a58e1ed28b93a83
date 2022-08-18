@@ -16,6 +16,24 @@
       "message": "I\u0027d like to try this out on a few platforms - I\u0027ve had issues with nvcc in the past not being happy about nested namespaces.",
       "revId": "6085e45be71b4e472d76dfac1a58e1ed28b93a83",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3aa682d1_97c8c8ec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-08-18T00:11:12Z",
+      "side": 1,
+      "message": "I did not change any namespaces. just updated a comment.",
+      "parentUuid": "33ee5cd1_4eebda4a",
+      "revId": "6085e45be71b4e472d76dfac1a58e1ed28b93a83",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
