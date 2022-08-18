@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20bb480d_1a935c8d",
+        "filename": "internal/ceres/context_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-18T03:41:09Z",
+      "side": 1,
+      "message": "Is there a reason to have this as a separate function and not just part of InitCuda? do you expect the user ever call it on its own?",
+      "range": {
+        "startLine": 70,
+        "startChar": 5,
+        "endLine": 70,
+        "endChar": 16
+      },
+      "revId": "e0b57e069e7250cc295dafa57ef2075d125cc7cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be35a6b1_bdd2d69d",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-18T03:41:09Z",
+      "side": 1,
+      "message": "I think you should fold DetectGpuAndCudaVersions into InitCUDA and document that GetCudaDevicePropertiesString() can only be called AFTER InitCUDA has been called.\n\nalso simpler name would be CudaConfigAsString()\n\nalso be consistent in use of Cuda, either CUDA or Cuda.I think google style guide actually recommends Cuda.",
+      "range": {
+        "startLine": 83,
+        "startChar": 14,
+        "endLine": 83,
+        "endChar": 43
+      },
+      "revId": "e0b57e069e7250cc295dafa57ef2075d125cc7cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
