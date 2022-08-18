@@ -546,6 +546,7 @@ class CERES_EXPORT Problem {
  private:
   friend class Solver;
   friend class Covariance;
+  friend class BenchmarkProblem;
   std::unique_ptr<internal::ProblemImpl> impl_;
 };
 

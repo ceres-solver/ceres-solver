@@ -26,7 +26,8 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: vitus@google.com (Michael Vitus)
+// Authors: vitus@google.com (Michael Vitus),
+//          dmitriy.korchemkin@gmail.com (Dmitriy Korchemkin)
 
 #ifndef CERES_INTERNAL_PARALLEL_FOR_H_
 #define CERES_INTERNAL_PARALLEL_FOR_H_
@@ -36,6 +37,7 @@
 #include "ceres/context_impl.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
+#include "glog/logging.h"
 
 namespace ceres::internal {
 
@@ -44,27 +46,100 @@ namespace ceres::internal {
 CERES_NO_EXPORT
 int MaxNumThreadsAvailable();
 
-// Execute the function for every element in the range [start, end) with at most
-// num_threads. It will execute all the work on the calling thread if
-// num_threads is 1.
-CERES_NO_EXPORT void ParallelFor(ContextImpl* context,
-                                 int start,
-                                 int end,
-                                 int num_threads,
-                                 const std::function<void(int)>& function);
+// Parallel for implementations share a common set of routines in order
+// to enforce inlining of loop bodies, ensuring that single-threaded
+// performance is equivalent to a simple for loop
+namespace parallel_for_details {
+// Get arguments of callable as a tuple
+template <typename F, typename... Args>
+std::tuple<Args...> args_of(void (F::*)(Args...) const);
+
+template <typename F>
+using args_of_t = decltype(args_of(&F::operator()));
+
+// Parallelizable functions might require passing thread_id as the first
+// argument. This class supplies thread_id argument to functions that
+// support it and ignores it otherwise.
+template <typename F, typename Args>
+struct InvokeImpl;
+
+// For parallel for iterations of type [](int i) -> void
+template <typename F>
+struct InvokeImpl<F, std::tuple<int>> {
+  static void Invoke(int thread_id, int i, const F& function) {
+    (void)thread_id;
+    function(i);
+  }
+};
+
+// For parallel for iterations of type [](int thread_id, int i) -> void
+template <typename F>
+struct InvokeImpl<F, std::tuple<int, int>> {
+  static void Invoke(int thread_id, int i, const F& function) {
+    function(thread_id, i);
+  }
+};
+
+// Invoke function passing thread_id only if required
+template <typename F>
+void Invoke(int thread_id, int i, const F& function) {
+  InvokeImpl<F, args_of_t<F>>::Invoke(thread_id, i, function);
+}
+}  // namespace parallel_for_details
+
+// Forward declaration of parallel invocation function that is to be
+// implemented by each threading backend
+template <typename F>
+void ParallelInvoke(ContextImpl* context,
+                    int i,
+                    int num_threads,
+                    const F& function);
 
 // Execute the function for every element in the range [start, end) with at most
 // num_threads. It will execute all the work on the calling thread if
-// num_threads is 1.  Each invocation of function() will be passed a thread_id
-// in [0, num_threads) that is guaranteed to be distinct from the value passed
-// to any concurrent execution of function().
-CERES_NO_EXPORT void ParallelFor(
-    ContextImpl* context,
-    int start,
-    int end,
-    int num_threads,
-    const std::function<void(int thread_id, int i)>& function);
+// num_threads or (end - start) is equal to 1.
+//
+// Functions with two arguments will be passed thread_id and loop index on each
+// invocation, functions with one argument will be invoked with loop index
+template <typename F>
+void ParallelFor(ContextImpl* context,
+                 int start,
+                 int end,
+                 int num_threads,
+                 const F& function) {
+  using namespace parallel_for_details;
+  CHECK_GT(num_threads, 0);
+  if (start >= end) {
+    return;
+  }
+
+  if (num_threads == 1 || end - start == 1) {
+    for (int i = start; i < end; ++i) {
+      Invoke<F>(0, i, function);
+    }
+    return;
+  }
+
+  CHECK(context != nullptr);
+  ParallelInvoke<F>(context, start, end, num_threads, function);
+}
 }  // namespace ceres::internal
+
+// Backend-specific implementations of ParallelInvoke
+#include "ceres/parallel_for_cxx.h"
+#include "ceres/parallel_for_openmp.h"
+#ifdef CERES_NO_THREADS
+namespace ceres::internal {
+template <typename F>
+void ParallelInvoke(ContextImpl* context,
+                    int start,
+                    int end,
+                    int num_threads,
+                    const F& function) {
+  ParallelFor(context, start, end, 1, function);
+}
+}  // namespace ceres::internal
+#endif
 
 #include "ceres/internal/disable_warnings.h"
 

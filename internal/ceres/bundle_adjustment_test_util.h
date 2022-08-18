@@ -65,6 +65,10 @@ const bool kUserOrdering = false;
 // problem is hard coded in the constructor.
 class BundleAdjustmentProblem {
  public:
+  BundleAdjustmentProblem(const std::string input_file) {
+    ReadData(input_file);
+    BuildProblem();
+  }
   BundleAdjustmentProblem() {
     const string input_file = TestFileAbsolutePath("problem-16-22106-pre.txt");
     ReadData(input_file);
