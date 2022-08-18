@@ -33,6 +33,7 @@
 #include <string>
 
 #include "ceres/internal/config.h"
+#include "ceres/stringprintf.h"
 #include "ceres/wall_time.h"
 
 #ifndef CERES_NO_CUDA
@@ -66,10 +67,54 @@ void ContextImpl::TearDown() {
   is_cuda_initialized_ = false;
 }
 
+void ContextImpl::DetectGpuAndCudaVersions() {
+  CHECK_EQ(cudaGetDevice(&gpu_device_id_in_use_), cudaSuccess);
+  int cuda_version;
+  CHECK_EQ(cudaRuntimeGetVersion(&cuda_version), cudaSuccess);
+  cuda_version_major_ = cuda_version / 1000;
+  cuda_version_minor_ = (cuda_version % 1000) / 10;
+  CHECK_EQ(cudaGetDeviceProperties(&gpu_device_properties_,
+                                   gpu_device_id_in_use_), cudaSuccess);
+}
+
+std::string ContextImpl::GetCudaDevicePropertiesString() const {
+  return ceres::internal::StringPrintf(
+      "======================= CUDA Device Properties ======================\n"
+      "Cuda version         : %d.%d\n"
+      "Device ID            : %d\n"
+      "Device name          : %s\n"
+      "Total global memory  : %.3f GB\n"
+      "Compute capability   : %d.%d\n"
+      "Warp size            : %d\n"
+      "Max threads per block: %d\n"
+      "Max threads per dim  : %d %d %d\n"
+      "Max grid size        : %d %d %d\n"
+      "Multiprocessor count : %d\n"
+      "====================================================================",
+      cuda_version_major_,
+      cuda_version_minor_,
+      gpu_device_id_in_use_,
+      gpu_device_properties_.name,
+      gpu_device_properties_.totalGlobalMem / 1024.0 / 1024.0 / 1024.0,
+      gpu_device_properties_.major,
+      gpu_device_properties_.minor,
+      gpu_device_properties_.warpSize,
+      gpu_device_properties_.maxThreadsPerBlock,
+      gpu_device_properties_.maxThreadsDim[0],
+      gpu_device_properties_.maxThreadsDim[1],
+      gpu_device_properties_.maxThreadsDim[2],
+      gpu_device_properties_.maxGridSize[0],
+      gpu_device_properties_.maxGridSize[1],
+      gpu_device_properties_.maxGridSize[2],
+      gpu_device_properties_.multiProcessorCount);
+}
+
 bool ContextImpl::InitCUDA(std::string* message) {
   if (is_cuda_initialized_) {
     return true;
   }
+  DetectGpuAndCudaVersions();
+  VLOG(3) << "\n" << GetCudaDevicePropertiesString();
   EventLogger event_logger("InitCuda");
   if (cublasCreate(&cublas_handle_) != CUBLAS_STATUS_SUCCESS) {
     *message = "cuBLAS::cublasCreate failed.";

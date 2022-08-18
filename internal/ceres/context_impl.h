@@ -79,12 +79,18 @@ class CERES_NO_EXPORT ContextImpl final : public Context {
   bool InitCUDA(std::string* message);
   void TearDown();
   inline bool IsCUDAInitialized() const { return is_cuda_initialized_; }
+  void DetectGpuAndCudaVersions();
+  std::string GetCudaDevicePropertiesString() const;
 
   cusolverDnHandle_t cusolver_handle_ = nullptr;
   cublasHandle_t cublas_handle_ = nullptr;
   cudaStream_t stream_ = nullptr;
   cusparseHandle_t cusparse_handle_ = nullptr;
   bool is_cuda_initialized_ = false;
+  int gpu_device_id_in_use_ = -1;
+  cudaDeviceProp gpu_device_properties_;
+  int cuda_version_major_ = 0;
+  int cuda_version_minor_ = 0;
 #endif  // CERES_NO_CUDA
 };
 
