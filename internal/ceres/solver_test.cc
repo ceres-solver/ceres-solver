@@ -959,7 +959,8 @@ TEST(Solver, CgnrOptionsJacobiPreconditioner) {
 
   options.dynamic_sparsity = false;
   options.use_mixed_precision_solves = false;
-  EXPECT_FALSE(options.IsValid(&message));
+  EXPECT_EQ(options.IsValid(&message),
+            IsSparseLinearAlgebraLibraryTypeAvailable(CUDA_SPARSE));
 
   options.dynamic_sparsity = true;
   options.use_mixed_precision_solves = false;
