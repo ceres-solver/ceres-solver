@@ -16,6 +16,92 @@
       "message": "I tried to add helper status code to string conversions, but annoyingly CUDA is inconsistent about which libraries have this built-in, and for some (e.g. cuBLAS), only the most recent version (11.7) has this. I might revisit this and add our own status to string conversion down the line if I feel like Yak shaving.",
       "revId": "8d0b4ebdee933dd24f154653b05f579ffc2ef29f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "889eed09_f2d513a1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-18T17:16:33Z",
+      "side": 1,
+      "message": "couple of minor comments.",
+      "revId": "8d0b4ebdee933dd24f154653b05f579ffc2ef29f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5343c6d0_f3cd85a5",
+        "filename": "internal/ceres/context_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-18T17:16:33Z",
+      "side": 1,
+      "message": "what happens if there are multiple gpus?",
+      "range": {
+        "startLine": 71,
+        "startChar": 26,
+        "endLine": 71,
+        "endChar": 38
+      },
+      "revId": "8d0b4ebdee933dd24f154653b05f579ffc2ef29f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27e14c78_37111531",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-18T17:16:33Z",
+      "side": 1,
+      "message": "add documentation for this also and calling convection (like CudaConfigAsString)",
+      "range": {
+        "startLine": 84,
+        "startChar": 9,
+        "endLine": 84,
+        "endChar": 27
+      },
+      "revId": "8d0b4ebdee933dd24f154653b05f579ffc2ef29f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05ade644_1ca55769",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-18T17:16:33Z",
+      "side": 1,
+      "message": "GpuMemoryAvailableInMb is better, though it maybe better to just return it in bytes.",
+      "range": {
+        "startLine": 84,
+        "startChar": 9,
+        "endLine": 84,
+        "endChar": 27
+      },
+      "revId": "8d0b4ebdee933dd24f154653b05f579ffc2ef29f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
