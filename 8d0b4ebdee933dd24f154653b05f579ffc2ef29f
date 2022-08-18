@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b3fa6a3_ad65e026",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-18T15:03:21Z",
+      "side": 1,
+      "message": "I tried to add helper status code to string conversions, but annoyingly CUDA is inconsistent about which libraries have this built-in, and for some (e.g. cuBLAS), only the most recent version (11.7) has this. I might revisit this and add our own status to string conversion down the line if I feel like Yak shaving.",
+      "revId": "8d0b4ebdee933dd24f154653b05f579ffc2ef29f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

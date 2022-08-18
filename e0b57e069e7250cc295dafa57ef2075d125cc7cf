@@ -24,6 +24,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "451a1f6c_94c5068d",
+        "filename": "internal/ceres/context_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-18T15:03:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20bb480d_1a935c8d",
+      "range": {
+        "startLine": 70,
+        "startChar": 5,
+        "endLine": 70,
+        "endChar": 16
+      },
+      "revId": "e0b57e069e7250cc295dafa57ef2075d125cc7cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c0bef4aa_64e89d1e",
@@ -47,6 +71,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a0db280_9de5e70f",
+        "filename": "internal/ceres/context_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-18T15:03:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0bef4aa_64e89d1e",
+      "range": {
+        "startLine": 118,
+        "startChar": 2,
+        "endLine": 118,
+        "endChar": 13
+      },
+      "revId": "e0b57e069e7250cc295dafa57ef2075d125cc7cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "be35a6b1_bdd2d69d",
@@ -60,6 +108,30 @@
       "writtenOn": "2022-08-18T03:41:09Z",
       "side": 1,
       "message": "I think you should fold DetectGpuAndCudaVersions into InitCUDA and document that GetCudaDevicePropertiesString() can only be called AFTER InitCUDA has been called.\n\nalso simpler name would be CudaConfigAsString()\n\nalso be consistent in use of Cuda, either CUDA or Cuda.I think google style guide actually recommends Cuda.",
+      "range": {
+        "startLine": 83,
+        "startChar": 14,
+        "endLine": 83,
+        "endChar": 43
+      },
+      "revId": "e0b57e069e7250cc295dafa57ef2075d125cc7cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43465d7b_bc3b12f8",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-18T15:03:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be35a6b1_bdd2d69d",
       "range": {
         "startLine": 83,
         "startChar": 14,
