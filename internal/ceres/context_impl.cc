@@ -33,6 +33,7 @@
 #include <string>
 
 #include "ceres/internal/config.h"
+#include "ceres/stringprintf.h"
 #include "ceres/wall_time.h"
 
 #ifndef CERES_NO_CUDA
@@ -66,32 +67,84 @@ void ContextImpl::TearDown() {
   is_cuda_initialized_ = false;
 }
 
-bool ContextImpl::InitCUDA(std::string* message) {
+std::string ContextImpl::CudaConfigAsString() const {
+  return ceres::internal::StringPrintf(
+      "======================= CUDA Device Properties ======================\n"
+      "Cuda version         : %d.%d\n"
+      "Device ID            : %d\n"
+      "Device name          : %s\n"
+      "Total GPU memory     : %6.f MiB\n"
+      "GPU memory available : %6.f MiB\n"
+      "Compute capability   : %d.%d\n"
+      "Warp size            : %d\n"
+      "Max threads per block: %d\n"
+      "Max threads per dim  : %d %d %d\n"
+      "Max grid size        : %d %d %d\n"
+      "Multiprocessor count : %d\n"
+      "====================================================================",
+      cuda_version_major_,
+      cuda_version_minor_,
+      gpu_device_id_in_use_,
+      gpu_device_properties_.name,
+      gpu_device_properties_.totalGlobalMem / 1024.0 / 1024.0,
+      GpuMemoryAvailable() / 1024.0 / 1024.0,
+      gpu_device_properties_.major,
+      gpu_device_properties_.minor,
+      gpu_device_properties_.warpSize,
+      gpu_device_properties_.maxThreadsPerBlock,
+      gpu_device_properties_.maxThreadsDim[0],
+      gpu_device_properties_.maxThreadsDim[1],
+      gpu_device_properties_.maxThreadsDim[2],
+      gpu_device_properties_.maxGridSize[0],
+      gpu_device_properties_.maxGridSize[1],
+      gpu_device_properties_.maxGridSize[2],
+      gpu_device_properties_.multiProcessorCount);
+}
+
+size_t ContextImpl::GpuMemoryAvailable() const {
+  size_t free, total;
+  cudaMemGetInfo(&free, &total);
+  return free;
+}
+
+bool ContextImpl::InitCuda(std::string* message) {
   if (is_cuda_initialized_) {
     return true;
   }
+  CHECK_EQ(cudaGetDevice(&gpu_device_id_in_use_), cudaSuccess);
+  int cuda_version;
+  CHECK_EQ(cudaRuntimeGetVersion(&cuda_version), cudaSuccess);
+  cuda_version_major_ = cuda_version / 1000;
+  cuda_version_minor_ = (cuda_version % 1000) / 10;
+  CHECK_EQ(cudaGetDeviceProperties(&gpu_device_properties_,
+                                   gpu_device_id_in_use_), cudaSuccess);
+  VLOG(3) << "\n" << CudaConfigAsString();
   EventLogger event_logger("InitCuda");
   if (cublasCreate(&cublas_handle_) != CUBLAS_STATUS_SUCCESS) {
-    *message = "cuBLAS::cublasCreate failed.";
+    *message = "CUDA initialization failed because "
+        "cuBLAS::cublasCreate failed.";
     cublas_handle_ = nullptr;
     return false;
   }
   event_logger.AddEvent("cublasCreate");
   if (cusolverDnCreate(&cusolver_handle_) != CUSOLVER_STATUS_SUCCESS) {
-    *message = "cuSolverDN::cusolverDnCreate failed.";
+    *message = "CUDA initialization failed because "
+        "cuSolverDN::cusolverDnCreate failed.";
     TearDown();
     return false;
   }
   event_logger.AddEvent("cusolverDnCreate");
   if (cusparseCreate(&cusparse_handle_) != CUSPARSE_STATUS_SUCCESS) {
-    *message = "cuSPARSE::cusparseCreate failed.";
+    *message = "CUDA initialization failed because "
+        "cuSPARSE::cusparseCreate failed.";
     TearDown();
     return false;
   }
   event_logger.AddEvent("cusparseCreate");
   if (cudaStreamCreateWithFlags(&stream_, cudaStreamNonBlocking) !=
       cudaSuccess) {
-    *message = "CUDA::cudaStreamCreateWithFlags failed.";
+    *message = "CUDA initialization failed because "
+        "CUDA::cudaStreamCreateWithFlags failed.";
     TearDown();
     return false;
   }
@@ -100,7 +153,7 @@ bool ContextImpl::InitCUDA(std::string* message) {
           CUSOLVER_STATUS_SUCCESS ||
       cublasSetStream(cublas_handle_, stream_) != CUBLAS_STATUS_SUCCESS ||
       cusparseSetStream(cusparse_handle_, stream_) != CUSPARSE_STATUS_SUCCESS) {
-    *message = "CUDA [Solver|BLAS|Sparse] SetStream failed.";
+    *message = "CUDA initialization failed because SetStream failed.";
     TearDown();
     return false;
   }
