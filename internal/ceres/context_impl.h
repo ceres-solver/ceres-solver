@@ -72,19 +72,25 @@ class CERES_NO_EXPORT ContextImpl final : public Context {
 #endif  // CERES_USE_CXX_THREADS
 
 #ifndef CERES_NO_CUDA
-  // Initializes the cuSolverDN context, creates an asynchronous stream, and
-  // associates the stream with cuSolverDN. Returns true iff initialization was
-  // successful, else it returns false and a human-readable error message is
-  // returned.
-  bool InitCUDA(std::string* message);
+  // Initializes cuBLAS, cuSOLVER, and cuSPARSE contexts, creates an
+  // asynchronous CUDA stream, and associates the stream with the contexts.
+  // Returns true iff initialization was successful, else it returns false and a
+  // human-readable error message is returned.
+  bool InitCuda(std::string* message);
   void TearDown();
-  inline bool IsCUDAInitialized() const { return is_cuda_initialized_; }
+  inline bool IsCudaInitialized() const { return is_cuda_initialized_; }
+  // CudaConfigAsString can only be called after InitCuda has been called.
+  std::string CudaConfigAsString() const;
 
   cusolverDnHandle_t cusolver_handle_ = nullptr;
   cublasHandle_t cublas_handle_ = nullptr;
   cudaStream_t stream_ = nullptr;
   cusparseHandle_t cusparse_handle_ = nullptr;
   bool is_cuda_initialized_ = false;
+  int gpu_device_id_in_use_ = -1;
+  cudaDeviceProp gpu_device_properties_;
+  int cuda_version_major_ = 0;
+  int cuda_version_minor_ = 0;
 #endif  // CERES_NO_CUDA
 };
 

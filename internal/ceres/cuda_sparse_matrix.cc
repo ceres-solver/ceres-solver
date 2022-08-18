@@ -61,7 +61,7 @@ namespace ceres::internal {
 CudaSparseMatrix::CudaSparseMatrix(
     ContextImpl* context, const CompressedRowSparseMatrix& crs_matrix) {
   DCHECK_NE(context, nullptr);
-  CHECK(context->IsCUDAInitialized());
+  CHECK(context->IsCudaInitialized());
   context_ = context;
   num_rows_ = crs_matrix.num_rows();
   num_cols_ = crs_matrix.num_cols();

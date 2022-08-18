@@ -730,7 +730,7 @@ void Solver::Solve(const Solver::Options& options,
 
 #ifndef CERES_NO_CUDA
   if (IsCudaRequired(options)) {
-    if (!problem_impl->context()->InitCUDA(&summary->message)) {
+    if (!problem_impl->context()->InitCuda(&summary->message)) {
       LOG(ERROR) << "Terminating: " << summary->message;
       return;
     }

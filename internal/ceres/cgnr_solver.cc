@@ -253,7 +253,7 @@ std::unique_ptr<CudaCgnrSolver> CudaCgnrSolver::Create(
         ". ";
     return nullptr;
   }
-  CHECK(options.context->IsCUDAInitialized())
+  CHECK(options.context->IsCudaInitialized())
       << "CudaCgnrSolver requires CUDA initialization.";
   auto solver = std::make_unique<CudaCgnrSolver>(options);
   return solver;

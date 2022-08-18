@@ -52,7 +52,7 @@ namespace ceres::internal {
 
 CudaVector::CudaVector(ContextImpl* context, int size) {
   DCHECK_NE(context, nullptr);
-  CHECK(context->IsCUDAInitialized());
+  CHECK(context->IsCudaInitialized());
   context_ = context;
   Resize(size);
 }
