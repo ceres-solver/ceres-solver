@@ -57,9 +57,10 @@ class BlockUntilFinished {
 
   // Increment the number of jobs that have finished and signal the blocking
   // thread if all jobs have finished.
-  void Finished() {
+  void Finished(int num_finished) {
+    if (!num_finished) return;
     std::lock_guard<std::mutex> lock(mutex_);
-    ++num_finished_;
+    num_finished_ += num_finished;
     CHECK_LE(num_finished_, num_total_);
     if (num_finished_ == num_total_) {
       condition_.notify_one();
@@ -84,12 +85,14 @@ class BlockUntilFinished {
 // Shared state between the parallel tasks. Each thread will use this
 // information to get the next block of work to be performed.
 struct SharedState {
-  SharedState(int start, int end, int num_work_items)
+  SharedState(int start, int end, int num_work_items, int num_workers)
       : start(start),
         end(end),
         num_work_items(num_work_items),
+        block_size((end - start) / num_work_items),
+        num_large_blocks((end - start) % num_work_items),
         i(0),
-        thread_token_provider(num_work_items),
+        thread_token_provider(num_workers),
         block_until_finished(num_work_items) {}
 
   // The start and end index of the for loop.
@@ -97,13 +100,18 @@ struct SharedState {
   const int end;
   // The number of blocks that need to be processed.
   const int num_work_items;
+  // Size of smaller block size
+  const int block_size;
+  // Number of larger (+1 index) blocks
+  const int num_large_blocks;
 
   // The next block of work to be assigned to a worker.  The parallel for loop
   // range is split into num_work_items blocks of work, i.e. a single block of
-  // work is:
-  //  for (int j = start + i; j < end; j += num_work_items) { ... }.
-  int i;
-  std::mutex mutex_i;
+  // work corresponds to either
+  //  - block_size + 1 for first num_large_blocks work items
+  //  - block_size for the rest blocks
+  //  blocks of indices are contiguous and disjoint
+  std::atomic<int> i;
 
   // Provides a unique thread ID among all active threads working on the same
   // group of tasks.  Thread-safe.
@@ -116,6 +124,11 @@ struct SharedState {
 }  // namespace
 
 int MaxNumThreadsAvailable() { return ThreadPool::MaxNumThreadsAvailable(); }
+
+// Maximal number of work items scheduled for a single thread
+//  - Lower number of work items results in larger runtimes on unequal tasks
+//  - Higher number of work items results in larger losses for synchronization
+const int kWorkItemsPerThread = 4;
 
 // See ParallelFor (below) for more details.
 void ParallelFor(ContextImpl* context,
@@ -145,9 +158,10 @@ void ParallelFor(ContextImpl* context,
 
 // This implementation uses a fixed size max worker pool with a shared task
 // queue. The problem of executing the function for the interval of [start, end)
-// is broken up into at most num_threads blocks and added to the thread pool. To
-// avoid deadlocks, the calling thread is allowed to steal work from the worker
-// pool. This is implemented via a shared state between the tasks. In order for
+// is broken up into at most num_threads * kWorkItemsPerThread blocks
+// and added to the thread pool. To avoid deadlocks, the calling thread is
+// allowed to steal work from the worker pool.
+// This is implemented via a shared state between the tasks. In order for
 // the calling thread or thread pool to get a block of work, it will query the
 // shared state for the next block of work to be done. If there is nothing left,
 // it will return. We will exit the ParallelFor call when all of the work has
@@ -187,36 +201,41 @@ void ParallelFor(ContextImpl* context,
   // We use a std::shared_ptr because the main thread can finish all
   // the work before the tasks have been popped off the queue.  So the
   // shared state needs to exist for the duration of all the tasks.
-  const int num_work_items = std::min((end - start), num_threads);
+  const int num_work_items =
+      std::min((end - start), num_threads * kWorkItemsPerThread);
   std::shared_ptr<SharedState> shared_state(
-      new SharedState(start, end, num_work_items));
+      new SharedState(start, end, num_work_items, num_threads));
 
-  // A function which tries to perform a chunk of work. This returns false if
-  // there is no work to be done.
+  // A function which tries to perform several chunks of work.
   auto task_function = [shared_state, &function]() {
-    int i = 0;
-    {
-      // Get the next available chunk of work to be performed. If there is no
-      // work, return false.
-      std::lock_guard<std::mutex> lock(shared_state->mutex_i);
-      if (shared_state->i >= shared_state->num_work_items) {
-        return false;
-      }
-      i = shared_state->i;
-      ++shared_state->i;
-    }
-
+    int finished = 0;
     const ScopedThreadToken scoped_thread_token(
         &shared_state->thread_token_provider);
     const int thread_id = scoped_thread_token.token();
+    const int start = shared_state->start;
+    const int end = shared_state->end;
+    const int block_size = shared_state->block_size;
+    const int num_large_blocks = shared_state->num_large_blocks;
 
-    // Perform each task.
-    for (int j = shared_state->start + i; j < shared_state->end;
-         j += shared_state->num_work_items) {
-      function(thread_id, j);
+    while (true) {
+      // Get the next available chunk of work to be performed. If there is no
+      // work, return.
+      int i = shared_state->i++;
+      if (i >= shared_state->num_work_items) {
+        break;
+      }
+      ++finished;
+
+      // Perform each task
+      const int curr_start =
+          start + i * block_size + std::min(i, num_large_blocks);
+      const int curr_end =
+          std::min(end, curr_start + block_size + (i < num_large_blocks ? 1 : 0));
+      for (int j = curr_start; j < curr_end; ++j) {
+        function(thread_id, j);
+      }
     }
-    shared_state->block_until_finished.Finished();
-    return true;
+    shared_state->block_until_finished.Finished(finished);
   };
 
   // Add all the tasks to the thread pool.
@@ -231,8 +250,7 @@ void ParallelFor(ContextImpl* context,
   // Try to do any available work on the main thread. This may steal work from
   // the thread pool, but when there is no work left the thread pool tasks
   // will be no-ops.
-  while (task_function()) {
-  }
+  task_function();
 
   // Wait until all tasks have finished.
   shared_state->block_until_finished.Block();
