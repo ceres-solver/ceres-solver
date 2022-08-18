@@ -196,20 +196,22 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::Eliminate(
                 num_eliminate_blocks_,
                 num_col_blocks,
                 num_threads_,
-                [&](int i) {
-                  const int block_id = i - num_eliminate_blocks_;
-                  int r, c, row_stride, col_stride;
-                  CellInfo* cell_info = lhs->GetCell(
-                      block_id, block_id, &r, &c, &row_stride, &col_stride);
-                  if (cell_info != nullptr) {
-                    const int block_size = bs->cols[i].size;
-                    typename EigenTypes<Eigen::Dynamic>::ConstVectorRef diag(
-                        D + bs->cols[i].position, block_size);
+                [&](int start, int end) {
+                  for (int i = start; i < end; ++i) {
+                    const int block_id = i - num_eliminate_blocks_;
+                    int r, c, row_stride, col_stride;
+                    CellInfo* cell_info = lhs->GetCell(
+                        block_id, block_id, &r, &c, &row_stride, &col_stride);
+                    if (cell_info != nullptr) {
+                      const int block_size = bs->cols[i].size;
+                      typename EigenTypes<Eigen::Dynamic>::ConstVectorRef diag(
+                          D + bs->cols[i].position, block_size);
 
-                    std::lock_guard<std::mutex> l(cell_info->m);
-                    MatrixRef m(cell_info->values, row_stride, col_stride);
-                    m.block(r, c, block_size, block_size).diagonal() +=
-                        diag.array().square().matrix();
+                      std::lock_guard<std::mutex> l(cell_info->m);
+                      MatrixRef m(cell_info->values, row_stride, col_stride);
+                      m.block(r, c, block_size, block_size).diagonal() +=
+                          diag.array().square().matrix();
+                    }
                   }
                 });
   }
@@ -232,72 +234,74 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::Eliminate(
       0,
       int(chunks_.size()),
       num_threads_,
-      [&](int thread_id, int i) {
+      [&](int thread_id, int start, int end) {
         double* buffer = buffer_.get() + thread_id * buffer_size_;
-        const Chunk& chunk = chunks_[i];
-        const int e_block_id = bs->rows[chunk.start].cells.front().block_id;
-        const int e_block_size = bs->cols[e_block_id].size;
+        for (int i = start; i < end; ++i) {
+          const Chunk& chunk = chunks_[i];
+          const int e_block_id = bs->rows[chunk.start].cells.front().block_id;
+          const int e_block_size = bs->cols[e_block_id].size;
 
-        VectorRef(buffer, buffer_size_).setZero();
+          VectorRef(buffer, buffer_size_).setZero();
 
-        typename EigenTypes<kEBlockSize, kEBlockSize>::Matrix ete(e_block_size,
-                                                                  e_block_size);
+          typename EigenTypes<kEBlockSize, kEBlockSize>::Matrix ete(
+              e_block_size, e_block_size);
 
-        if (D != nullptr) {
-          const typename EigenTypes<kEBlockSize>::ConstVectorRef diag(
-              D + bs->cols[e_block_id].position, e_block_size);
-          ete = diag.array().square().matrix().asDiagonal();
-        } else {
-          ete.setZero();
+          if (D != nullptr) {
+            const typename EigenTypes<kEBlockSize>::ConstVectorRef diag(
+                D + bs->cols[e_block_id].position, e_block_size);
+            ete = diag.array().square().matrix().asDiagonal();
+          } else {
+            ete.setZero();
+          }
+
+          FixedArray<double, 8> g(e_block_size);
+          typename EigenTypes<kEBlockSize>::VectorRef gref(g.data(),
+                                                           e_block_size);
+          gref.setZero();
+
+          // We are going to be computing
+          //
+          //   S += F'F - F'E(E'E)^{-1}E'F
+          //
+          // for each Chunk. The computation is broken down into a number of
+          // function calls as below.
+
+          // Compute the outer product of the e_blocks with themselves (ete
+          // = E'E). Compute the product of the e_blocks with the
+          // corresponding f_blocks (buffer = E'F), the gradient of the terms
+          // in this chunk (g) and add the outer product of the f_blocks to
+          // Schur complement (S += F'F).
+          ChunkDiagonalBlockAndGradient(
+              chunk, A, b, chunk.start, &ete, g.data(), buffer, lhs);
+
+          // Normally one wouldn't compute the inverse explicitly, but
+          // e_block_size will typically be a small number like 3, in
+          // which case its much faster to compute the inverse once and
+          // use it to multiply other matrices/vectors instead of doing a
+          // Solve call over and over again.
+          typename EigenTypes<kEBlockSize, kEBlockSize>::Matrix inverse_ete =
+              InvertPSDMatrix<kEBlockSize>(assume_full_rank_ete_, ete);
+
+          // For the current chunk compute and update the rhs of the reduced
+          // linear system.
+          //
+          //   rhs = F'b - F'E(E'E)^(-1) E'b
+
+          if (rhs) {
+            FixedArray<double, 8> inverse_ete_g(e_block_size);
+            MatrixVectorMultiply<kEBlockSize, kEBlockSize, 0>(
+                inverse_ete.data(),
+                e_block_size,
+                e_block_size,
+                g.data(),
+                inverse_ete_g.data());
+            UpdateRhs(chunk, A, b, chunk.start, inverse_ete_g.data(), rhs);
+          }
+
+          // S -= F'E(E'E)^{-1}E'F
+          ChunkOuterProduct(
+              thread_id, bs, inverse_ete, buffer, chunk.buffer_layout, lhs);
         }
-
-        FixedArray<double, 8> g(e_block_size);
-        typename EigenTypes<kEBlockSize>::VectorRef gref(g.data(),
-                                                         e_block_size);
-        gref.setZero();
-
-        // We are going to be computing
-        //
-        //   S += F'F - F'E(E'E)^{-1}E'F
-        //
-        // for each Chunk. The computation is broken down into a number of
-        // function calls as below.
-
-        // Compute the outer product of the e_blocks with themselves (ete
-        // = E'E). Compute the product of the e_blocks with the
-        // corresponding f_blocks (buffer = E'F), the gradient of the terms
-        // in this chunk (g) and add the outer product of the f_blocks to
-        // Schur complement (S += F'F).
-        ChunkDiagonalBlockAndGradient(
-            chunk, A, b, chunk.start, &ete, g.data(), buffer, lhs);
-
-        // Normally one wouldn't compute the inverse explicitly, but
-        // e_block_size will typically be a small number like 3, in
-        // which case its much faster to compute the inverse once and
-        // use it to multiply other matrices/vectors instead of doing a
-        // Solve call over and over again.
-        typename EigenTypes<kEBlockSize, kEBlockSize>::Matrix inverse_ete =
-            InvertPSDMatrix<kEBlockSize>(assume_full_rank_ete_, ete);
-
-        // For the current chunk compute and update the rhs of the reduced
-        // linear system.
-        //
-        //   rhs = F'b - F'E(E'E)^(-1) E'b
-
-        if (rhs) {
-          FixedArray<double, 8> inverse_ete_g(e_block_size);
-          MatrixVectorMultiply<kEBlockSize, kEBlockSize, 0>(
-              inverse_ete.data(),
-              e_block_size,
-              e_block_size,
-              g.data(),
-              inverse_ete_g.data());
-          UpdateRhs(chunk, A, b, chunk.start, inverse_ete_g.data(), rhs);
-        }
-
-        // S -= F'E(E'E)^{-1}E'F
-        ChunkOuterProduct(
-            thread_id, bs, inverse_ete, buffer, chunk.buffer_layout, lhs);
       });
 
   // For rows with no e_blocks, the Schur complement update reduces to
@@ -315,63 +319,69 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::BackSubstitute(
   const CompressedRowBlockStructure* bs = A.block_structure();
   const double* values = A.values();
 
-  ParallelFor(context_, 0, int(chunks_.size()), num_threads_, [&](int i) {
-    const Chunk& chunk = chunks_[i];
-    const int e_block_id = bs->rows[chunk.start].cells.front().block_id;
-    const int e_block_size = bs->cols[e_block_id].size;
+  ParallelFor(
+      context_, 0, int(chunks_.size()), num_threads_, [&](int start, int end) {
+        for (int i = start; i < end; ++i) {
+          const Chunk& chunk = chunks_[i];
+          const int e_block_id = bs->rows[chunk.start].cells.front().block_id;
+          const int e_block_size = bs->cols[e_block_id].size;
 
-    double* y_ptr = y + bs->cols[e_block_id].position;
-    typename EigenTypes<kEBlockSize>::VectorRef y_block(y_ptr, e_block_size);
-
-    typename EigenTypes<kEBlockSize, kEBlockSize>::Matrix ete(e_block_size,
+          double* y_ptr = y + bs->cols[e_block_id].position;
+          typename EigenTypes<kEBlockSize>::VectorRef y_block(y_ptr,
                                                               e_block_size);
-    if (D != nullptr) {
-      const typename EigenTypes<kEBlockSize>::ConstVectorRef diag(
-          D + bs->cols[e_block_id].position, e_block_size);
-      ete = diag.array().square().matrix().asDiagonal();
-    } else {
-      ete.setZero();
-    }
 
-    for (int j = 0; j < chunk.size; ++j) {
-      const CompressedRow& row = bs->rows[chunk.start + j];
-      const Cell& e_cell = row.cells.front();
-      DCHECK_EQ(e_block_id, e_cell.block_id);
+          typename EigenTypes<kEBlockSize, kEBlockSize>::Matrix ete(
+              e_block_size, e_block_size);
+          if (D != nullptr) {
+            const typename EigenTypes<kEBlockSize>::ConstVectorRef diag(
+                D + bs->cols[e_block_id].position, e_block_size);
+            ete = diag.array().square().matrix().asDiagonal();
+          } else {
+            ete.setZero();
+          }
 
-      FixedArray<double, 8> sj(row.block.size);
+          for (int j = 0; j < chunk.size; ++j) {
+            const CompressedRow& row = bs->rows[chunk.start + j];
+            const Cell& e_cell = row.cells.front();
+            DCHECK_EQ(e_block_id, e_cell.block_id);
 
-      typename EigenTypes<kRowBlockSize>::VectorRef(sj.data(), row.block.size) =
-          typename EigenTypes<kRowBlockSize>::ConstVectorRef(
-              b + bs->rows[chunk.start + j].block.position, row.block.size);
+            FixedArray<double, 8> sj(row.block.size);
 
-      for (int c = 1; c < row.cells.size(); ++c) {
-        const int f_block_id = row.cells[c].block_id;
-        const int f_block_size = bs->cols[f_block_id].size;
-        const int r_block = f_block_id - num_eliminate_blocks_;
+            typename EigenTypes<kRowBlockSize>::VectorRef(sj.data(),
+                                                          row.block.size) =
+                typename EigenTypes<kRowBlockSize>::ConstVectorRef(
+                    b + bs->rows[chunk.start + j].block.position,
+                    row.block.size);
 
-        // clang-format off
-        MatrixVectorMultiply<kRowBlockSize, kFBlockSize, -1>(
-            values + row.cells[c].position, row.block.size, f_block_size,
-            z + lhs_row_layout_[r_block],
-            sj.data());
-      }
+            for (int c = 1; c < row.cells.size(); ++c) {
+              const int f_block_id = row.cells[c].block_id;
+              const int f_block_size = bs->cols[f_block_id].size;
+              const int r_block = f_block_id - num_eliminate_blocks_;
 
-      MatrixTransposeVectorMultiply<kRowBlockSize, kEBlockSize, 1>(
-          values + e_cell.position, row.block.size, e_block_size,
-          sj.data(),
-          y_ptr);
+              // clang-format off
+              MatrixVectorMultiply<kRowBlockSize, kFBlockSize, -1>(
+                  values + row.cells[c].position, row.block.size, f_block_size,
+                  z + lhs_row_layout_[r_block],
+                  sj.data());
+              }
 
-      MatrixTransposeMatrixMultiply
-          <kRowBlockSize, kEBlockSize, kRowBlockSize, kEBlockSize, 1>(
-          values + e_cell.position, row.block.size, e_block_size,
-          values + e_cell.position, row.block.size, e_block_size,
-          ete.data(), 0, 0, e_block_size, e_block_size);
-      // clang-format on
-    }
+              MatrixTransposeVectorMultiply<kRowBlockSize, kEBlockSize, 1>(
+                  values + e_cell.position, row.block.size, e_block_size,
+                  sj.data(),
+                  y_ptr);
 
-    y_block =
-        InvertPSDMatrix<kEBlockSize>(assume_full_rank_ete_, ete) * y_block;
-  });
+              MatrixTransposeMatrixMultiply
+                  <kRowBlockSize, kEBlockSize, kRowBlockSize, kEBlockSize, 1>(
+                  values + e_cell.position, row.block.size, e_block_size,
+                  values + e_cell.position, row.block.size, e_block_size,
+                  ete.data(), 0, 0, e_block_size, e_block_size);
+            // clang-format on
+          }
+
+          y_block = InvertPSDMatrix<kEBlockSize>(assume_full_rank_ete_, ete) *
+                    y_block;
+        }
+      });
 }
 
 // Update the rhs of the reduced linear system. Compute

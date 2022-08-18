@@ -165,37 +165,40 @@ void CoordinateDescentMinimizer::Minimize(const Minimizer::Options& options,
         independent_set_offsets_[i],
         independent_set_offsets_[i + 1],
         num_inner_iteration_threads,
-        [&](int thread_id, int j) {
-          ParameterBlock* parameter_block = parameter_blocks_[j];
-          const int old_index = parameter_block->index();
-          const int old_delta_offset = parameter_block->delta_offset();
-          parameter_block->SetVarying();
-          parameter_block->set_index(0);
-          parameter_block->set_delta_offset(0);
+        [&](int thread_id, int start, int end) {
+          for (int j = start; j < end; ++j) {
+            ParameterBlock* parameter_block = parameter_blocks_[j];
+            const int old_index = parameter_block->index();
+            const int old_delta_offset = parameter_block->delta_offset();
+            parameter_block->SetVarying();
+            parameter_block->set_index(0);
+            parameter_block->set_delta_offset(0);
 
-          Program inner_program;
-          inner_program.mutable_parameter_blocks()->push_back(parameter_block);
-          *inner_program.mutable_residual_blocks() = residual_blocks_[j];
+            Program inner_program;
+            inner_program.mutable_parameter_blocks()->push_back(
+                parameter_block);
+            *inner_program.mutable_residual_blocks() = residual_blocks_[j];
 
-          // TODO(sameeragarwal): Better error handling. Right now we
-          // assume that this is not going to lead to problems of any
-          // sort. Basically we should be checking for numerical failure
-          // of some sort.
-          //
-          // On the other hand, if the optimization is a failure, that in
-          // some ways is fine, since it won't change the parameters and
-          // we are fine.
-          Solver::Summary inner_summary;
-          Solve(&inner_program,
-                linear_solvers[thread_id].get(),
-                parameters + parameter_block->state_offset(),
-                &inner_summary);
+            // TODO(sameeragarwal): Better error handling. Right now we
+            // assume that this is not going to lead to problems of any
+            // sort. Basically we should be checking for numerical failure
+            // of some sort.
+            //
+            // On the other hand, if the optimization is a failure, that in
+            // some ways is fine, since it won't change the parameters and
+            // we are fine.
+            Solver::Summary inner_summary;
+            Solve(&inner_program,
+                  linear_solvers[thread_id].get(),
+                  parameters + parameter_block->state_offset(),
+                  &inner_summary);
 
-          parameter_block->set_index(old_index);
-          parameter_block->set_delta_offset(old_delta_offset);
-          parameter_block->SetState(parameters +
-                                    parameter_block->state_offset());
-          parameter_block->SetConstant();
+            parameter_block->set_index(old_index);
+            parameter_block->set_delta_offset(old_delta_offset);
+            parameter_block->SetState(parameters +
+                                      parameter_block->state_offset());
+            parameter_block->SetConstant();
+          }
         });
   }
 

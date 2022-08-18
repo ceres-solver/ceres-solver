@@ -331,39 +331,42 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
   // i = 1:n, j = i:n.
   int iteration_count = (num_parameters * (num_parameters + 1)) / 2;
   problem_->context()->EnsureMinimumThreads(num_threads);
-  ParallelFor(problem_->context(),
-              0,
-              iteration_count,
-              num_threads,
-              [&](int thread_id, int k) {
-                int i, j;
-                LinearIndexToUpperTriangularIndex(k, num_parameters, &i, &j);
+  ParallelFor(
+      problem_->context(),
+      0,
+      iteration_count,
+      num_threads,
+      [&](int thread_id, int start_k, int end_k) {
+        int i, j;
+        for (int k = start_k; k < end_k; ++k) {
+          LinearIndexToUpperTriangularIndex(k, num_parameters, &i, &j);
 
-                int covariance_row_idx = cum_parameter_size[i];
-                int covariance_col_idx = cum_parameter_size[j];
-                int size_i = parameter_sizes[i];
-                int size_j = parameter_sizes[j];
-                double* covariance_block =
-                    workspace.get() + thread_id * max_covariance_block_size *
-                                          max_covariance_block_size;
-                if (!GetCovarianceBlockInTangentOrAmbientSpace(
-                        parameters[i],
-                        parameters[j],
-                        lift_covariance_to_ambient_space,
-                        covariance_block)) {
-                  success = false;
-                }
+          int covariance_row_idx = cum_parameter_size[i];
+          int covariance_col_idx = cum_parameter_size[j];
+          int size_i = parameter_sizes[i];
+          int size_j = parameter_sizes[j];
+          double* covariance_block =
+              workspace.get() +
+              thread_id * max_covariance_block_size * max_covariance_block_size;
+          if (!GetCovarianceBlockInTangentOrAmbientSpace(
+                  parameters[i],
+                  parameters[j],
+                  lift_covariance_to_ambient_space,
+                  covariance_block)) {
+            success = false;
+          }
 
-                covariance.block(
-                    covariance_row_idx, covariance_col_idx, size_i, size_j) =
-                    MatrixRef(covariance_block, size_i, size_j);
+          covariance.block(
+              covariance_row_idx, covariance_col_idx, size_i, size_j) =
+              MatrixRef(covariance_block, size_i, size_j);
 
-                if (i != j) {
-                  covariance.block(
-                      covariance_col_idx, covariance_row_idx, size_j, size_i) =
-                      MatrixRef(covariance_block, size_i, size_j).transpose();
-                }
-              });
+          if (i != j) {
+            covariance.block(
+                covariance_col_idx, covariance_row_idx, size_j, size_i) =
+                MatrixRef(covariance_block, size_i, size_j).transpose();
+          }
+        }
+      });
   return success;
 }
 
@@ -685,25 +688,30 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
   std::unique_ptr<double[]> workspace(new double[num_threads * num_cols]);
 
   problem_->context()->EnsureMinimumThreads(num_threads);
-  ParallelFor(
-      problem_->context(), 0, num_cols, num_threads, [&](int thread_id, int r) {
-        const int row_begin = rows[r];
-        const int row_end = rows[r + 1];
-        if (row_end != row_begin) {
-          double* solution = workspace.get() + thread_id * num_cols;
-          SolveRTRWithSparseRHS<SuiteSparse_long>(
+  ParallelFor(problem_->context(),
+              0,
               num_cols,
-              static_cast<SuiteSparse_long*>(R->i),
-              static_cast<SuiteSparse_long*>(R->p),
-              static_cast<double*>(R->x),
-              inverse_permutation[r],
-              solution);
-          for (int idx = row_begin; idx < row_end; ++idx) {
-            const int c = cols[idx];
-            values[idx] = solution[inverse_permutation[c]];
-          }
-        }
-      });
+              num_threads,
+              [&](int thread_id, int start_r, int end_r) {
+                for (int r = start_r; r < end_r; ++r) {
+                  const int row_begin = rows[r];
+                  const int row_end = rows[r + 1];
+                  if (row_end != row_begin) {
+                    double* solution = workspace.get() + thread_id * num_cols;
+                    SolveRTRWithSparseRHS<SuiteSparse_long>(
+                        num_cols,
+                        static_cast<SuiteSparse_long*>(R->i),
+                        static_cast<SuiteSparse_long*>(R->p),
+                        static_cast<double*>(R->x),
+                        inverse_permutation[r],
+                        solution);
+                    for (int idx = row_begin; idx < row_end; ++idx) {
+                      const int c = cols[idx];
+                      values[idx] = solution[inverse_permutation[c]];
+                    }
+                  }
+                }
+              });
 
   free(permutation);
   cholmod_l_free_sparse(&R, &cc);
@@ -877,23 +885,29 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
 
   problem_->context()->EnsureMinimumThreads(num_threads);
   ParallelFor(
-      problem_->context(), 0, num_cols, num_threads, [&](int thread_id, int r) {
-        const int row_begin = rows[r];
-        const int row_end = rows[r + 1];
-        if (row_end != row_begin) {
-          double* solution = workspace.get() + thread_id * num_cols;
-          SolveRTRWithSparseRHS<int>(num_cols,
-                                     qr.matrixR().innerIndexPtr(),
-                                     qr.matrixR().outerIndexPtr(),
-                                     &qr.matrixR().data().value(0),
-                                     inverse_permutation.indices().coeff(r),
-                                     solution);
+      problem_->context(),
+      0,
+      num_cols,
+      num_threads,
+      [&](int thread_id, int begin_r, int end_r) {
+        for (int r = begin_r; r < end_r; ++r) {
+          const int row_begin = rows[r];
+          const int row_end = rows[r + 1];
+          if (row_end != row_begin) {
+            double* solution = workspace.get() + thread_id * num_cols;
+            SolveRTRWithSparseRHS<int>(num_cols,
+                                       qr.matrixR().innerIndexPtr(),
+                                       qr.matrixR().outerIndexPtr(),
+                                       &qr.matrixR().data().value(0),
+                                       inverse_permutation.indices().coeff(r),
+                                       solution);
 
-          // Assign the values of the computed covariance using the
-          // inverse permutation used in the QR factorization.
-          for (int idx = row_begin; idx < row_end; ++idx) {
-            const int c = cols[idx];
-            values[idx] = solution[inverse_permutation.indices().coeff(c)];
+            // Assign the values of the computed covariance using the
+            // inverse permutation used in the QR factorization.
+            for (int idx = row_begin; idx < row_end; ++idx) {
+              const int c = cols[idx];
+              values[idx] = solution[inverse_permutation.indices().coeff(c)];
+            }
           }
         }
       });

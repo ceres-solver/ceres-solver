@@ -45,31 +45,28 @@ void ParallelFor(ContextImpl* context,
                  int start,
                  int end,
                  int num_threads,
-                 const std::function<void(int)>& function) {
+                 const std::function<void(int, int)>& function) {
   CHECK_GT(num_threads, 0);
-  CHECK(context != nullptr);
+  CHECK(context != nullptr || num_threads == 1);
   if (end <= start) {
     return;
   }
-  for (int i = start; i < end; ++i) {
-    function(i);
-  }
+  function(start, end);
 }
 
-void ParallelFor(ContextImpl* context,
-                 int start,
-                 int end,
-                 int num_threads,
-                 const std::function<void(int thread_id, int i)>& function) {
+void ParallelFor(
+    ContextImpl* context,
+    int start,
+    int end,
+    int num_threads,
+    const std::function<void(int thread_id, int start, int end)>& function) {
   CHECK_GT(num_threads, 0);
-  CHECK(context != nullptr);
+  CHECK(context != nullptr || num_threads == 1);
   if (end <= start) {
     return;
   }
   const int thread_id = 0;
-  for (int i = start; i < end; ++i) {
-    function(thread_id, i);
-  }
+  function(thread_id, start, end);
 }
 
 }  // namespace internal
