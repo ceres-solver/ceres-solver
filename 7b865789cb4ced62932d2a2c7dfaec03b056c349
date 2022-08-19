@@ -33,6 +33,24 @@
       "message": "Dmitriy, this is a very interesting patch. I ccing Mike Vitus on this patch because in parallel he has been working on replacing the threadpool in ceres with the one from eigen. His work also leads to performance improvements to jacobian evaluation. It would be good to make sure that his work and yours do not conflict and also what the next effect of the two changes are.\n\n\nMike can upload your patch to gerrit for Dmitriy to take a look too?",
       "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cde7ac67_92572d0c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-19T15:22:27Z",
+      "side": 1,
+      "message": "actually I just looked at Mike\u0027s patch, it absolutely conflicts with this patch.\nso a first step would be to compare the performances of the two approaches.",
+      "parentUuid": "fa3b61cc_7c242332",
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
