@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9dc28be_8df0155b",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-08-20T23:09:15Z",
+      "side": 1,
+      "message": "why do all this? why not just do the same thing you are doing for A_, i.e. create a CudaSparseMatrix?\n\nso the thing to do would be to create a simple trivial diagonal sparse matrix for the identity preconditioner. it is no cost at all and is trivial to create.",
+      "range": {
+        "startLine": 272,
+        "startChar": 6,
+        "endLine": 272,
+        "endChar": 7
+      },
+      "revId": "80c09ee8961f20feca452fc5191254285690b4b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f246e36a_b145391c",
+        "filename": "internal/ceres/cgnr_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-08-20T23:09:15Z",
+      "side": 1,
+      "message": "this is not really a cpu preconditioner wrapper, it is just a wrapper around a compressedrowsparsematrix, which already exists.",
+      "range": {
+        "startLine": 86,
+        "startChar": 6,
+        "endLine": 86,
+        "endChar": 34
+      },
+      "revId": "80c09ee8961f20feca452fc5191254285690b4b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "539d2c14_6a51a2b9",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-08-20T23:09:15Z",
+      "side": 1,
+      "message": "I think you can drop this whole block now, since identity and jacobi are supported by all sparse linear algebra libraries and  all that is left is subset which is handled by the block above.",
+      "range": {
+        "startLine": 346,
+        "startChar": 13,
+        "endLine": 346,
+        "endChar": 14
+      },
+      "revId": "80c09ee8961f20feca452fc5191254285690b4b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
