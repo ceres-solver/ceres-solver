@@ -24,6 +24,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d052aa9d_671f4c47",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-21T00:03:09Z",
+      "side": 1,
+      "message": "You can\u0027t just create a CudaSparseMatrix, since the preconditioner update logic is also needed. Notice that CudaJacobiPreconditioner owns both a BlockCRSJacobiPreconditioner which it uses for initializing the structure and value updates, and a CudaSparseMatrix that it then copies values to once the update is done. See CudaCpuPreconditionerWrapper::Update.",
+      "parentUuid": "c9dc28be_8df0155b",
+      "range": {
+        "startLine": 272,
+        "startChar": 6,
+        "endLine": 272,
+        "endChar": 7
+      },
+      "revId": "80c09ee8961f20feca452fc5191254285690b4b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f246e36a_b145391c",
@@ -47,6 +71,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5932142c_d5fe1336",
+        "filename": "internal/ceres/cgnr_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-21T00:03:09Z",
+      "side": 1,
+      "message": "No, it also wraps the update logic, so it is not just a wrapper around CompressedRowSparseMatrix.",
+      "parentUuid": "f246e36a_b145391c",
+      "range": {
+        "startLine": 86,
+        "startChar": 6,
+        "endLine": 86,
+        "endChar": 34
+      },
+      "revId": "80c09ee8961f20feca452fc5191254285690b4b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "539d2c14_6a51a2b9",
@@ -60,6 +108,30 @@
       "writtenOn": "2022-08-20T23:09:15Z",
       "side": 1,
       "message": "I think you can drop this whole block now, since identity and jacobi are supported by all sparse linear algebra libraries and  all that is left is subset which is handled by the block above.",
+      "range": {
+        "startLine": 346,
+        "startChar": 13,
+        "endLine": 346,
+        "endChar": 14
+      },
+      "revId": "80c09ee8961f20feca452fc5191254285690b4b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2dff55cc_ab359a39",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-21T00:03:09Z",
+      "side": 1,
+      "message": "We still have to check if CUDA support is available, and if I am reading it correctly, there is no other block that rules out the case of CUDA_SPARSE + SUBSET.",
+      "parentUuid": "539d2c14_6a51a2b9",
       "range": {
         "startLine": 346,
         "startChar": 13,
