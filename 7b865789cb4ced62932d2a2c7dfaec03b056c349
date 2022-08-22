@@ -51,6 +51,23 @@
       "parentUuid": "fa3b61cc_7c242332",
       "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6507b40a_d66dd654",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2022-08-22T16:27:01Z",
+      "side": 1,
+      "message": "I wonder how much the performance gain is due to eliminating the mutex lock?\n\nAs Sameer mentioned, we are swapping out our custom threadpool and parallel for implementation for eigens (see line 244 https://eigen.tuxfamily.org/dox/unsupported/TensorDeviceThreadPool_8h_source.html).",
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
