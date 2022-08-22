@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f65c611e_56d8cbf6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-08-22T01:31:44Z",
+      "side": 1,
+      "message": "hello from new delhi now that I have had some sleep.",
+      "revId": "80c09ee8961f20feca452fc5191254285690b4b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c9dc28be_8df0155b",
@@ -43,6 +60,29 @@
         "startChar": 6,
         "endLine": 272,
         "endChar": 7
+      },
+      "revId": "80c09ee8961f20feca452fc5191254285690b4b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1567c90_b9e431b1",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-08-22T01:31:44Z",
+      "side": 1,
+      "message": "drop",
+      "range": {
+        "startLine": 321,
+        "startChar": 5,
+        "endLine": 321,
+        "endChar": 31
       },
       "revId": "80c09ee8961f20feca452fc5191254285690b4b0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
@@ -97,6 +137,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "23c19079_ef2b3080",
+        "filename": "internal/ceres/cgnr_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-08-22T01:31:44Z",
+      "side": 1,
+      "message": "I still think this is too complicated for the following´ reason.\n\n1. For CGNR we only have three total preconditioners, identity, jacobi and subset. subset barely works and is likely not worth the effort, so lets not worry about it right now. \n\nThis leaves jacobi. It seems excessive to create a class hierarchy with a template when we know exactly one instance of this will ever be realized. It also makes assumptions about how that object is instantiated. So my suggestion remains.\n\n1. If using IDENTITY preconditioner, create it using CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(), or something even simpler.\n2. In CudaCgnr, instantiate the Jacobi preconditioner, in either case grab a pointer to the underlying crs matrix and copy it to the GPU.\n\n\n2. for iterative schur we are going to have a similar situation, the preconditioner is going to be made up of matrices we compute on the CPU and then copy to the GPU including the implicit schur complement.",
+      "parentUuid": "5932142c_d5fe1336",
+      "range": {
+        "startLine": 86,
+        "startChar": 6,
+        "endLine": 86,
+        "endChar": 34
+      },
+      "revId": "80c09ee8961f20feca452fc5191254285690b4b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "539d2c14_6a51a2b9",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 1
@@ -132,6 +196,30 @@
       "side": 1,
       "message": "We still have to check if CUDA support is available, and if I am reading it correctly, there is no other block that rules out the case of CUDA_SPARSE + SUBSET.",
       "parentUuid": "539d2c14_6a51a2b9",
+      "range": {
+        "startLine": 346,
+        "startChar": 13,
+        "endLine": 346,
+        "endChar": 14
+      },
+      "revId": "80c09ee8961f20feca452fc5191254285690b4b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32bd06f9_0ba2712c",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-08-22T01:31:44Z",
+      "side": 1,
+      "message": "actually what we should do is merge this block with the one above, where you start by checking for subset and if the sparse linear algebra library is cuda_sparse you bail, and then continue with the rest of the checks, that way you do not have to replicate the checks for indentity and jacobi below. roughly speaking:\n\nif (preconditioner \u003d\u003d subset) {\n   if (options.residual_blocks_for_subset_preconditioner.empty()) {\n      return false;\n    }\n    \n  if (sparse linear algebra library \u003d cuda_sparse) {\n    return false;\n  }\n  \n  if (!OptionsAreValidForSparseCholeskyBasedSolver(options, error)) {\n      return false;\n    }\n}",
+      "parentUuid": "2dff55cc_ab359a39",
       "range": {
         "startLine": 346,
         "startChar": 13,
