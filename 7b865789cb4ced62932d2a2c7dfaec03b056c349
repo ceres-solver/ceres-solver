@@ -68,6 +68,42 @@
       "message": "I wonder how much the performance gain is due to eliminating the mutex lock?\n\nAs Sameer mentioned, we are swapping out our custom threadpool and parallel for implementation for eigens (see line 244 https://eigen.tuxfamily.org/dox/unsupported/TensorDeviceThreadPool_8h_source.html).",
       "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "936a363a_05e7466d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-08-23T11:06:09Z",
+      "side": 1,
+      "message": "Performance gain from eliminating mutex in SharedState is relatively small  residual/jacobian evaluation, being ~1..2% on average (compared to ~20+% gains from changing work order)\n\nI think that is due to another mutex being captured/released in ThreadTokenProvider, straight before getting an index from SharedState.\n\nIf we eliminate both - there is an additional gain of ~1% for residual and jacobian evaluation on low (2..4) thread counts.\nBut that requires elaborate implementation if we really need mechanics of releasing thread tokens and waiting for available thread tokens.\nIf we omit this functionality - it is pretty much replacing the whole ThreadTokenProvider with an atomic integer.\n\n\n\nChanges to ParallelFor implementation are more observable on operations with even less computing per output than in case of residual evaluation, for example - parallel SpMV products.\n\nFor SpMV products interleaving of job items makes parallelization almost non-profitable, while it is reasonably profitable with contiguous blocks of work items per thread.\nTransitioning to atomics from mutexes is also more profitable in that case than in the case of residual/jacobian evaluation, but still has less effect than reordering.\n\n\n\nI think that a reasonable explanation for observed effect of performance gains from  reordering work items is a false sharing of output memory.\nWhen job items are interleaved - there is a high(er) probability of output regions for adjacent threads being on the same cacheline.\n\nperf c2c shows higher HITM rate for interleaving of working items.",
+      "parentUuid": "6507b40a_d66dd654",
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11526ce0_6d48474f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-08-23T11:06:09Z",
+      "side": 1,
+      "message": "As far as I understand, Eigen::ThreadPool assigns sequential ids to threads (before  work stealing).\n\nThus it should give +- comparable results (assuming that overhead is negligible), and better performance where elaborated work stealing is required.\n\nIn my experiments switching from interleaved to sequential job item scheduling results into greater improvement of \"smaller\" (in terms of computations per index) parallel loops; for example, it turns parallel SpMV from unprofitable to profitable.\n\nI think that this is due to false sharing.",
+      "parentUuid": "cde7ac67_92572d0c",
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
