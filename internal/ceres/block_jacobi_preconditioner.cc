@@ -134,7 +134,9 @@ BlockCRSJacobiPreconditioner::~BlockCRSJacobiPreconditioner() = default;
 bool BlockCRSJacobiPreconditioner::UpdateImpl(
     const CompressedRowSparseMatrix& A, const double* D) {
   const auto& col_blocks = A.col_blocks();
+  const auto& row_blocks = A.row_blocks();
   const int num_col_blocks = col_blocks.size();
+  const int num_row_blocks = row_blocks.size();
 
   const int* a_rows = A.rows();
   const int* a_cols = A.cols();
@@ -145,20 +147,27 @@ bool BlockCRSJacobiPreconditioner::UpdateImpl(
   const int* m_rows = m_->rows();
 
   const int num_rows = A.num_rows();
-  // The following loop can likely be optimized by exploiting the fact that each
-  // row block has exactly the same sparsity structure.
-  for (int r = 0; r < num_rows; ++r) {
+  int r = 0;
+  for (int i = 0; i < num_row_blocks; ++i) {
+    const int row_block_size = row_blocks[i];
+    const int row_nnz = a_rows[r + 1] - a_rows[r];
+    ConstMatrixRef row_block(a_values + a_rows[r], row_block_size, row_nnz);
     int idx = a_rows[r];
-    while (idx < a_rows[r + 1]) {
+    int c = 0;
+    while (c < row_nnz) {
+      const int idx = a_rows[r] + c;
       const int col = a_cols[idx];
       const int col_block_size = m_rows[col + 1] - m_rows[col];
+
       // We make use of the fact that the entire diagonal block is stored
       // contiguously in memory as a row-major matrix.
       MatrixRef m(m_values + m_rows[col], col_block_size, col_block_size);
-      ConstVectorRef b(a_values + idx, col_block_size);
-      m.selfadjointView<Eigen::Upper>().rankUpdate(b);
-      idx += col_block_size;
+      m.selfadjointView<Eigen::Upper>().rankUpdate(
+          row_block.middleCols(c, col_block_size).transpose());
+
+      c += col_block_size;
     }
+    r += row_block_size;
   }
 
   for (int i = 0, col = 0; i < num_col_blocks; ++i) {
