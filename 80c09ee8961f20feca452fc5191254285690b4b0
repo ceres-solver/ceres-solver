@@ -88,6 +88,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae97a4b6_a6d324ba",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-25T21:29:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1567c90_b9e431b1",
+      "range": {
+        "startLine": 321,
+        "startChar": 5,
+        "endLine": 321,
+        "endChar": 31
+      },
+      "revId": "80c09ee8961f20feca452fc5191254285690b4b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f246e36a_b145391c",
@@ -159,6 +183,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "242014c0_b0e40b90",
+        "filename": "internal/ceres/cgnr_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-25T21:29:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23c19079_ef2b3080",
+      "range": {
+        "startLine": 86,
+        "startChar": 6,
+        "endLine": 86,
+        "endChar": 34
+      },
+      "revId": "80c09ee8961f20feca452fc5191254285690b4b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "539d2c14_6a51a2b9",
@@ -220,6 +268,30 @@
       "side": 1,
       "message": "actually what we should do is merge this block with the one above, where you start by checking for subset and if the sparse linear algebra library is cuda_sparse you bail, and then continue with the rest of the checks, that way you do not have to replicate the checks for indentity and jacobi below. roughly speaking:\n\nif (preconditioner \u003d\u003d subset) {\n   if (options.residual_blocks_for_subset_preconditioner.empty()) {\n      return false;\n    }\n    \n  if (sparse linear algebra library \u003d cuda_sparse) {\n    return false;\n  }\n  \n  if (!OptionsAreValidForSparseCholeskyBasedSolver(options, error)) {\n      return false;\n    }\n}",
       "parentUuid": "2dff55cc_ab359a39",
+      "range": {
+        "startLine": 346,
+        "startChar": 13,
+        "endLine": 346,
+        "endChar": 14
+      },
+      "revId": "80c09ee8961f20feca452fc5191254285690b4b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7284b0c_34867f58",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-25T21:29:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32bd06f9_0ba2712c",
       "range": {
         "startLine": 346,
         "startChar": 13,
