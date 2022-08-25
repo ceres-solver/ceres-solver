@@ -255,7 +255,7 @@ void InnerProductComputer::ComputeOffsetsAndCreateResultMatrix(
   int nnz = 0;
 
   // Process the first term.
-  const InnerProductComputer::ProductTerm* current = &product_terms[0];
+  const InnerProductComputer::ProductTerm* current = product_terms.data();
   FILL_CRSM_COL_BLOCK;
 
   // Process the rest of the terms.

@@ -110,8 +110,8 @@ class CERES_NO_EXPORT CompressedRowSparseMatrix : public SparseMatrix {
   int num_rows() const final { return num_rows_; }
   int num_cols() const final { return num_cols_; }
   int num_nonzeros() const final { return rows_[num_rows_]; }
-  const double* values() const final { return &values_[0]; }
-  double* mutable_values() final { return &values_[0]; }
+  const double* values() const final { return values_.data(); }
+  double* mutable_values() final { return values_.data(); }
 
   // Delete the bottom delta_rows.
   // num_rows -= delta_rows
@@ -133,11 +133,11 @@ class CERES_NO_EXPORT CompressedRowSparseMatrix : public SparseMatrix {
   void set_num_cols(const int num_cols) { num_cols_ = num_cols; }
 
   // Low level access methods that expose the structure of the matrix.
-  const int* cols() const { return &cols_[0]; }
-  int* mutable_cols() { return &cols_[0]; }
+  const int* cols() const { return cols_.data(); }
+  int* mutable_cols() { return cols_.data(); }
 
-  const int* rows() const { return &rows_[0]; }
-  int* mutable_rows() { return &rows_[0]; }
+  const int* rows() const { return rows_.data(); }
+  int* mutable_rows() { return rows_.data(); }
 
   StorageType storage_type() const { return storage_type_; }
   void set_storage_type(const StorageType storage_type) {

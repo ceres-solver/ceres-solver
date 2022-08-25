@@ -129,7 +129,7 @@ void OrderingForSparseNormalCholeskyUsingSuiteSparse(
     if (parameter_block_ordering.NumGroups() <= 1) {
       // The user did not supply a useful ordering so just go ahead
       // and use AMD.
-      ss.Ordering(block_jacobian_transpose, OrderingType::AMD, &ordering[0]);
+      ss.Ordering(block_jacobian_transpose, OrderingType::AMD, ordering);
     } else {
       // The user supplied an ordering, so use CAMD.
       vector<int> constraints;
@@ -142,9 +142,9 @@ void OrderingForSparseNormalCholeskyUsingSuiteSparse(
       // Renumber the entries of constraints to be contiguous integers
       // as CAMD requires that the group ids be in the range [0,
       // parameter_blocks.size() - 1].
-      MapValuesToContiguousRange(constraints.size(), &constraints[0]);
+      MapValuesToContiguousRange(constraints.size(), constraints.data());
       ss.ConstrainedApproximateMinimumDegreeOrdering(
-          block_jacobian_transpose, &constraints[0], ordering);
+          block_jacobian_transpose, constraints.data(), ordering);
     }
   } else if (linear_solver_ordering_type == ceres::NESDIS) {
     // If nested dissection is chosen as an ordering algorithm, then
@@ -152,7 +152,7 @@ void OrderingForSparseNormalCholeskyUsingSuiteSparse(
     CHECK(SuiteSparse::IsNestedDissectionAvailable())
         << "Congratulations, you found a Ceres bug! "
         << "Please report this error to the developers.";
-    ss.Ordering(block_jacobian_transpose, OrderingType::NESDIS, &ordering[0]);
+    ss.Ordering(block_jacobian_transpose, OrderingType::NESDIS, ordering);
   } else {
     LOG(FATAL) << "Congratulations, you found a Ceres bug! "
                << "Please report this error to the developers.";
@@ -344,7 +344,7 @@ static void ReorderSchurComplementColumnsUsingSuiteSparse(
   // Renumber the entries of constraints to be contiguous integers as
   // CAMD requires that the group ids be in the range [0,
   // parameter_blocks.size() - 1].
-  MapValuesToContiguousRange(constraints.size(), &constraints[0]);
+  MapValuesToContiguousRange(constraints.size(), constraints.data());
 
   // Compute a block sparse presentation of J'.
   std::unique_ptr<TripletSparseMatrix> tsm_block_jacobian_transpose(
@@ -355,7 +355,7 @@ static void ReorderSchurComplementColumnsUsingSuiteSparse(
 
   vector<int> ordering(parameter_blocks.size(), 0);
   ss.ConstrainedApproximateMinimumDegreeOrdering(
-      block_jacobian_transpose, &constraints[0], &ordering[0]);
+      block_jacobian_transpose, constraints.data(), ordering.data());
   ss.Free(block_jacobian_transpose);
 
   const vector<ParameterBlock*> parameter_blocks_copy(parameter_blocks);
@@ -551,7 +551,7 @@ bool ReorderProgramForSparseCholesky(
         *tsm_block_jacobian_transpose,
         parameter_blocks,
         parameter_block_ordering,
-        &ordering[0]);
+        ordering.data());
   } else if (sparse_linear_algebra_library_type == ACCELERATE_SPARSE) {
     // Accelerate does not provide a function to perform reordering without
     // performing a full symbolic factorisation.  As such, we have nothing
@@ -565,7 +565,7 @@ bool ReorderProgramForSparseCholesky(
     OrderingForSparseNormalCholeskyUsingEigenSparse(
         linear_solver_ordering_type,
         *tsm_block_jacobian_transpose,
-        &ordering[0]);
+        ordering.data());
   }
 
   // Apply ordering.

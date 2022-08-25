@@ -600,9 +600,9 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
   cholmod_jacobian.ncol = num_cols;
   cholmod_jacobian.nzmax = num_nonzeros;
   cholmod_jacobian.nz = nullptr;
-  cholmod_jacobian.p = reinterpret_cast<void*>(&transpose_rows[0]);
-  cholmod_jacobian.i = reinterpret_cast<void*>(&transpose_cols[0]);
-  cholmod_jacobian.x = reinterpret_cast<void*>(&transpose_values[0]);
+  cholmod_jacobian.p = reinterpret_cast<void*>(transpose_rows.data());
+  cholmod_jacobian.i = reinterpret_cast<void*>(transpose_cols.data());
+  cholmod_jacobian.x = reinterpret_cast<void*>(transpose_values.data());
   cholmod_jacobian.z = nullptr;
   cholmod_jacobian.stype = 0;  // Matrix is not symmetric.
   cholmod_jacobian.itype = CHOLMOD_LONG;

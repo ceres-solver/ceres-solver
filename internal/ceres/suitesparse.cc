@@ -189,7 +189,7 @@ cholmod_factor* SuiteSparse::AnalyzeCholeskyWithGivenOrdering(
   cc_.nmethods = 1;
   cc_.method[0].ordering = CHOLMOD_GIVEN;
   cholmod_factor* factor =
-      cholmod_analyze_p(A, const_cast<int*>(&ordering[0]), nullptr, 0, &cc_);
+      cholmod_analyze_p(A, const_cast<int*>(ordering.data()), nullptr, 0, &cc_);
 
   if (cc_.status != CHOLMOD_OK) {
     *message =
@@ -236,8 +236,8 @@ bool SuiteSparse::BlockOrdering(const cholmod_sparse* A,
   block_matrix.nrow = num_row_blocks;
   block_matrix.ncol = num_col_blocks;
   block_matrix.nzmax = block_rows.size();
-  block_matrix.p = reinterpret_cast<void*>(&block_cols[0]);
-  block_matrix.i = reinterpret_cast<void*>(&block_rows[0]);
+  block_matrix.p = reinterpret_cast<void*>(block_cols.data());
+  block_matrix.i = reinterpret_cast<void*>(block_rows.data());
   block_matrix.x = nullptr;
   block_matrix.stype = A->stype;
   block_matrix.itype = CHOLMOD_INT;

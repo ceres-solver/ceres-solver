@@ -114,12 +114,12 @@ AccelerateSparse<Scalar>::CreateSparseMatrixTransposeView(
   // Accelerate's columnStarts is a long*, not an int*.  These types might be
   // different (e.g. ARM on iOS) so always make a copy.
   column_starts_.resize(A->num_rows() + 1);  // +1 for final column length.
-  std::copy_n(A->rows(), column_starts_.size(), &column_starts_[0]);
+  std::copy_n(A->rows(), column_starts_.size(), column_starts_.data());
 
   ASSparseMatrix At;
   At.structure.rowCount = A->num_cols();
   At.structure.columnCount = A->num_rows();
-  At.structure.columnStarts = &column_starts_[0];
+  At.structure.columnStarts = column_starts_.data();
   At.structure.rowIndices = A->mutable_cols();
   At.structure.attributes.transpose = false;
   At.structure.attributes.triangle = SparseUpperTriangle;
