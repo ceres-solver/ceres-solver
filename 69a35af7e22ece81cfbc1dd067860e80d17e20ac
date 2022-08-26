@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5896a20a_8ccb4ebb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-08-26T00:42:23Z",
+      "side": 1,
+      "message": "Thanks for the revision, only some minor comments.",
+      "revId": "69a35af7e22ece81cfbc1dd067860e80d17e20ac",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77c26bf9_3fa5bbc6",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-08-26T00:42:23Z",
+      "side": 1,
+      "message": "I recommend that you file a github issue for this, instead of dropping a comment here, (we should do this for all our todos really) so that we can track it and other people who are interested can poke at it too.",
+      "range": {
+        "startLine": 238,
+        "startChar": 22,
+        "endLine": 238,
+        "endChar": 23
+      },
+      "revId": "69a35af7e22ece81cfbc1dd067860e80d17e20ac",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e03aec3_fdb04ea5",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-08-26T00:42:23Z",
+      "side": 1,
+      "message": "use a unique_ptr instead.",
+      "range": {
+        "startLine": 274,
+        "startChar": 6,
+        "endLine": 274,
+        "endChar": 21
+      },
+      "revId": "69a35af7e22ece81cfbc1dd067860e80d17e20ac",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1c39a56_09eefa1f",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-08-26T00:42:23Z",
+      "side": 1,
+      "message": "make preconditioner a unique_ptr and then call make_unique here.",
+      "range": {
+        "startLine": 311,
+        "startChar": 28,
+        "endLine": 311,
+        "endChar": 52
+      },
+      "revId": "69a35af7e22ece81cfbc1dd067860e80d17e20ac",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1778491_f832c283",
+        "filename": "internal/ceres/cgnr_solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-08-26T00:42:23Z",
+      "side": 1,
+      "message": "you do not need this include here anymore.",
+      "range": {
+        "startLine": 36,
+        "startChar": 16,
+        "endLine": 36,
+        "endChar": 43
+      },
+      "revId": "69a35af7e22ece81cfbc1dd067860e80d17e20ac",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
