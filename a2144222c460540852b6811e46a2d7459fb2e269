@@ -52,6 +52,24 @@
       "parentUuid": "48a1f805_d01b53b8",
       "revId": "a2144222c460540852b6811e46a2d7459fb2e269",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c68659ed_ecdea11d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-08-26T13:33:40Z",
+      "side": 1,
+      "message": "Yes I wrote a benchmark and found the same and the reason for slowdown too.  I have a faster version which I will post shortly. The benchmark also found a problem/speedup in the CPU based block Jacobi preconditioner.\n\nSameer",
+      "tag": "mailMessageId\u003d\u003cCABqdRUBeHmc7FhWChX\u003dY6xopnsqev5x7zcgdnCLOe7TQhhp1Xw@mail.gmail.com\u003e",
+      "revId": "a2144222c460540852b6811e46a2d7459fb2e269",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
