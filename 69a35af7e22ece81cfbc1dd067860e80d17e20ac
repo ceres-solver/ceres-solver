@@ -41,6 +41,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "409e40c2_7c349465",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-26T13:58:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77c26bf9_3fa5bbc6",
+      "range": {
+        "startLine": 238,
+        "startChar": 22,
+        "endLine": 238,
+        "endChar": 23
+      },
+      "revId": "69a35af7e22ece81cfbc1dd067860e80d17e20ac",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5e03aec3_fdb04ea5",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-08-26T00:42:23Z",
       "side": 1,
       "message": "use a unique_ptr instead.",
+      "range": {
+        "startLine": 274,
+        "startChar": 6,
+        "endLine": 274,
+        "endChar": 21
+      },
+      "revId": "69a35af7e22ece81cfbc1dd067860e80d17e20ac",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c54b4974_78e87bc1",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-26T13:58:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e03aec3_fdb04ea5",
       "range": {
         "startLine": 274,
         "startChar": 6,
@@ -87,6 +135,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "66143001_74f12b67",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-26T13:58:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1c39a56_09eefa1f",
+      "range": {
+        "startLine": 311,
+        "startChar": 28,
+        "endLine": 311,
+        "endChar": 52
+      },
+      "revId": "69a35af7e22ece81cfbc1dd067860e80d17e20ac",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f1778491_f832c283",
@@ -100,6 +172,30 @@
       "writtenOn": "2022-08-26T00:42:23Z",
       "side": 1,
       "message": "you do not need this include here anymore.",
+      "range": {
+        "startLine": 36,
+        "startChar": 16,
+        "endLine": 36,
+        "endChar": 43
+      },
+      "revId": "69a35af7e22ece81cfbc1dd067860e80d17e20ac",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "780f9767_9497d163",
+        "filename": "internal/ceres/cgnr_solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-26T13:58:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1778491_f832c283",
       "range": {
         "startLine": 36,
         "startChar": 16,
