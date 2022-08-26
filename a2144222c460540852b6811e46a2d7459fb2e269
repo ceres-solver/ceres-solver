@@ -34,6 +34,24 @@
       "tag": "mailMessageId\u003d\u003cCABqdRUCnt-E8NwKZoOqhcgQqG7HmVEWopo2GWg5ZOXmkGoUo\u003dQ@mail.gmail.com\u003e",
       "revId": "a2144222c460540852b6811e46a2d7459fb2e269",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ceb4ec16_95677fcd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-26T13:14:56Z",
+      "side": 1,
+      "message": "Okay, I tested it - it is actually *slower* than before.\nWith problem-1778-993923-pre.txt\n\nOld:\n```\nBlockCRSJacobiPreconditioner::Update\n                                        Delta   Cumulative\n                    UpdateBlocks :    0.64919      0.64919\n                  ComputeInverse :    0.20131      0.85050\n                           Total :    0.00001      0.85050\n```\n\nNew:\n```\nBlockCRSJacobiPreconditioner::Update\n                                        Delta   Cumulative\n                    UpdateBlocks :    1.71468      1.71468\n                  ComputeInverse :    0.19616      1.91084\n                           Total :    0.00001      1.91085\n```",
+      "parentUuid": "48a1f805_d01b53b8",
+      "revId": "a2144222c460540852b6811e46a2d7459fb2e269",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
