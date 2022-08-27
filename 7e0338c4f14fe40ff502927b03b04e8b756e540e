@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "447d6dea_c80c67f7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-27T20:09:51Z",
+      "side": 1,
+      "message": "One minor nit.",
+      "revId": "7e0338c4f14fe40ff502927b03b04e8b756e540e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3be70d08_1c9f80f4",
+        "filename": "internal/ceres/block_jacobi_preconditioner_benchmark.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-27T20:09:51Z",
+      "side": 1,
+      "message": "This should be `BM_BlockSparseJacobiPreconditionerBA`.",
+      "range": {
+        "startLine": 57,
+        "startChar": 12,
+        "endLine": 57,
+        "endChar": 46
+      },
+      "revId": "7e0338c4f14fe40ff502927b03b04e8b756e540e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
