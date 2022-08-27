@@ -213,6 +213,7 @@ add_library(ceres_internal OBJECT
     eigensparse.cc
     evaluation_callback.cc
     evaluator.cc
+    fake_bundle_adjustment_jacobian.cc
     file.cc
     first_order_function.cc
     float_suitesparse.cc
@@ -591,9 +592,12 @@ if (BUILD_BENCHMARKS)
   add_executable(dense_linear_solver_benchmark dense_linear_solver_benchmark.cc)
   add_dependencies_to_benchmark(dense_linear_solver_benchmark)
 
-  add_executable(sparse_linear_operator_benchmark
-    sparse_linear_operator_benchmark.cc)
-  add_dependencies_to_benchmark(sparse_linear_operator_benchmark)
+  add_executable(spmv_benchmark spmv_benchmark.cc)
+  add_dependencies_to_benchmark(spmv_benchmark)
+
+  add_executable(block_jacobi_preconditioner_benchmark
+    block_jacobi_preconditioner_benchmark.cc)
+  add_dependencies_to_benchmark(block_jacobi_preconditioner_benchmark)
 
   add_subdirectory(autodiff_benchmarks)
 endif (BUILD_BENCHMARKS)
