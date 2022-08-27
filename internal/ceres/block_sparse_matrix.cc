@@ -170,9 +170,26 @@ void BlockSparseMatrix::ScaleColumns(const double* scale) {
 
 void BlockSparseMatrix::ToCompressedRowSparseMatrix(
     CompressedRowSparseMatrix* crs_matrix) const {
-  TripletSparseMatrix ts_matrix;
-  this->ToTripletSparseMatrix(&ts_matrix);
-  *crs_matrix = *CompressedRowSparseMatrix::FromTripletSparseMatrix(ts_matrix);
+  {
+    TripletSparseMatrix ts_matrix;
+    this->ToTripletSparseMatrix(&ts_matrix);
+    *crs_matrix =
+        *CompressedRowSparseMatrix::FromTripletSparseMatrix(ts_matrix);
+  }
+
+  int num_row_blocks = block_structure_->rows.size();
+  auto& row_blocks = *crs_matrix->mutable_row_blocks();
+  row_blocks.resize(num_row_blocks);
+  for (int i = 0; i < num_row_blocks; ++i) {
+    row_blocks[i] = block_structure_->rows[i].block.size;
+  }
+
+  int num_col_blocks = block_structure_->cols.size();
+  auto& col_blocks = *crs_matrix->mutable_col_blocks();
+  col_blocks.resize(num_col_blocks);
+  for (int i = 0; i < num_col_blocks; ++i) {
+    col_blocks[i] = block_structure_->cols[i].size;
+  }
 }
 
 void BlockSparseMatrix::ToDenseMatrix(Matrix* dense_matrix) const {
