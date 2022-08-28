@@ -18,6 +18,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1adbe58c_ee89525f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-28T14:29:19Z",
+      "side": 1,
+      "message": "Interestingly, on my computer the CRS implementations are faster. Curious to hear if this holds generally.\n\n```\n-----------------------------------------------------------------------------------------------\nBenchmark                                                     Time             CPU   Iterations\n-----------------------------------------------------------------------------------------------\nBM_BlockSparseRightMultiplyAndAccumulateBA             28877339 ns     28876471 ns           25\nBM_BlockSparseRightMultiplyAndAccumulateUnstructured   25979185 ns     25977054 ns           27\nBM_BlockSparseLeftMultiplyAndAccumulateBA              27963200 ns     27962259 ns           24\nBM_BlockSparseLeftMultiplyAndAccumulateUnstructured    38264256 ns     38259152 ns           18\nBM_CRSRightMultiplyAndAccumulateBA                     24425606 ns     24423961 ns           29\nBM_CRSRightMultiplyAndAccumulateUnstructured           21212445 ns     21212743 ns           31\nBM_CRSLeftMultiplyAndAccumulateBA                      23131257 ns     23128632 ns           30\nBM_CRSLeftMultiplyAndAccumulateUnstructured            22040780 ns     22039078 ns           32\nBM_CudaRightMultiplyAndAccumulateBA                      694207 ns       694216 ns          794\nBM_CudaRightMultiplyAndAccumulateUnstructured            473754 ns       473750 ns         1248\nBM_CudaLeftMultiplyAndAccumulateBA                       760556 ns       760516 ns          729\nBM_CudaLeftMultiplyAndAccumulateBA                       776337 ns       776296 ns          691\n```",
+      "revId": "7e0338c4f14fe40ff502927b03b04e8b756e540e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3be70d08_1c9f80f4",
