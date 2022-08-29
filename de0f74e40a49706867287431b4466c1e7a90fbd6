@@ -16,6 +16,40 @@
       "message": "even faster now.",
       "revId": "de0f74e40a49706867287431b4466c1e7a90fbd6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b4fcc3e_ff277923",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-29T14:33:55Z",
+      "side": 1,
+      "message": "Question regarding potential speedup using temp dense matrix.",
+      "revId": "de0f74e40a49706867287431b4466c1e7a90fbd6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0ad4c47_279c27ec",
+        "filename": "internal/ceres/block_jacobi_preconditioner.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-29T14:33:55Z",
+      "side": 1,
+      "message": "Would it speed things up to perform the m operations with a temporary dense matrix instead of operating on a MatrixRef? The memory write access might be more regular.\nSpecifically I\u0027m thinking:\n```\nfor each row block:\n  create temp dense matrix for block\n  update dense matrix with values from a\n  Invert the dense matrix\n  save values back into m_.\n```",
+      "revId": "de0f74e40a49706867287431b4466c1e7a90fbd6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
