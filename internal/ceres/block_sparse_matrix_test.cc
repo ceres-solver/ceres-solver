@@ -350,5 +350,46 @@ TEST(BlockSparseMatrix, ToCRSMatrix) {
   }
 }
 
+TEST(BlockSparseMatrix, CreateTranspose) {
+  constexpr int kNumtrials = 10;
+  BlockSparseMatrix::RandomMatrixOptions options;
+  options.num_col_blocks = 10;
+  options.min_col_block_size = 1;
+  options.max_col_block_size = 3;
+
+  options.num_row_blocks = 20;
+  options.min_row_block_size = 1;
+  options.max_row_block_size = 4;
+  options.block_density = 0.25;
+  std::mt19937 prng;
+
+  for (int trial = 0; trial < kNumtrials; ++trial) {
+    auto a = BlockSparseMatrix::CreateRandomMatrix(options, prng);
+
+    auto ap_bs = std::make_unique<CompressedRowBlockStructure>();
+    *ap_bs = *a->block_structure();
+    BlockSparseMatrix ap(ap_bs.release());
+    std::copy_n(a->values(), a->num_nonzeros(), ap.mutable_values());
+    ap.AddTransposeBlockStructure();
+
+    Vector x = Vector::Random(a->num_cols());
+    Vector y = Vector::Random(a->num_rows());
+    Vector a_x = Vector::Zero(a->num_rows());
+    Vector a_t_y = Vector::Zero(a->num_cols());
+    Vector ap_x = Vector::Zero(a->num_rows());
+    Vector ap_t_y = Vector::Zero(a->num_cols());
+    a->RightMultiplyAndAccumulate(x.data(), a_x.data());
+    ap.RightMultiplyAndAccumulate(x.data(), ap_x.data());
+    EXPECT_NEAR((a_x - ap_x).norm() / a_x.norm(),
+                0.0,
+                std::numeric_limits<double>::epsilon());
+    a->LeftMultiplyAndAccumulate(y.data(), a_t_y.data());
+    ap.LeftMultiplyAndAccumulate(y.data(), ap_t_y.data());
+    EXPECT_NEAR((a_t_y - ap_t_y).norm() / a_t_y.norm(),
+                0.0,
+                std::numeric_limits<double>::epsilon());
+  }
+}
+
 }  // namespace internal
 }  // namespace ceres

@@ -130,6 +130,26 @@ static void BM_BlockSparseLeftMultiplyAndAccumulateBA(benchmark::State& state) {
 
 BENCHMARK(BM_BlockSparseLeftMultiplyAndAccumulateBA);
 
+static void BM_BlockSparseLeftMultiplyAndAccumulateWithTransposeBA(
+    benchmark::State& state) {
+  std::mt19937 prng;
+  auto jacobian = CreateFakeBundleAdjustmentJacobian(
+      kNumCameras, kNumPoints, kCameraSize, kPointSize, kVisibility, prng);
+  jacobian->AddTransposeBlockStructure();
+  Vector x(jacobian->num_rows());
+  Vector y(jacobian->num_cols());
+  x.setRandom();
+  y.setRandom();
+  double sum = 0;
+  for (auto _ : state) {
+    jacobian->LeftMultiplyAndAccumulate(x.data(), y.data());
+    sum += y.norm();
+  }
+  CHECK_NE(sum, 0.0);
+}
+
+BENCHMARK(BM_BlockSparseLeftMultiplyAndAccumulateWithTransposeBA);
+
 static void BM_BlockSparseLeftMultiplyAndAccumulateUnstructured(
     benchmark::State& state) {
   BlockSparseMatrix::RandomMatrixOptions options;
@@ -156,6 +176,34 @@ static void BM_BlockSparseLeftMultiplyAndAccumulateUnstructured(
 }
 
 BENCHMARK(BM_BlockSparseLeftMultiplyAndAccumulateUnstructured);
+
+static void BM_BlockSparseLeftMultiplyAndAccumulateWithTransposeUnstructured(
+    benchmark::State& state) {
+  BlockSparseMatrix::RandomMatrixOptions options;
+  options.num_row_blocks = 100000;
+  options.num_col_blocks = 10000;
+  options.min_row_block_size = 1;
+  options.min_col_block_size = 1;
+  options.max_row_block_size = 10;
+  options.max_col_block_size = 15;
+  options.block_density = 5.0 / options.num_col_blocks;
+  std::mt19937 prng;
+
+  auto jacobian = BlockSparseMatrix::CreateRandomMatrix(options, prng);
+  jacobian->AddTransposeBlockStructure();
+  Vector x(jacobian->num_rows());
+  Vector y(jacobian->num_cols());
+  x.setRandom();
+  y.setRandom();
+  double sum = 0;
+  for (auto _ : state) {
+    jacobian->LeftMultiplyAndAccumulate(x.data(), y.data());
+    sum += y.norm();
+  }
+  CHECK_NE(sum, 0.0);
+}
+
+BENCHMARK(BM_BlockSparseLeftMultiplyAndAccumulateWithTransposeUnstructured);
 
 static void BM_CRSRightMultiplyAndAccumulateBA(benchmark::State& state) {
   std::mt19937 prng;

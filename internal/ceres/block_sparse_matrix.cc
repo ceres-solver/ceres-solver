@@ -84,6 +84,13 @@ BlockSparseMatrix::BlockSparseMatrix(
   CHECK(values_ != nullptr);
 }
 
+void BlockSparseMatrix::AddTransposeBlockStructure() {
+  // Should this always compute new structure?
+  if (transpose_block_structure_ == nullptr) {
+    transpose_block_structure_ = CreateTranspose(*block_structure_);
+  }
+}
+
 void BlockSparseMatrix::SetZero() {
   std::fill(values_.get(), values_.get() + num_nonzeros_, 0.0);
 }
@@ -115,21 +122,41 @@ void BlockSparseMatrix::LeftMultiplyAndAccumulate(const double* x,
                                                   double* y) const {
   CHECK(x != nullptr);
   CHECK(y != nullptr);
+  if (transpose_block_structure_ == nullptr) {
+    for (int i = 0; i < block_structure_->rows.size(); ++i) {
+      int row_block_pos = block_structure_->rows[i].block.position;
+      int row_block_size = block_structure_->rows[i].block.size;
+      const vector<Cell>& cells = block_structure_->rows[i].cells;
+      for (const auto& cell : cells) {
+        int col_block_id = cell.block_id;
+        int col_block_size = block_structure_->cols[col_block_id].size;
+        int col_block_pos = block_structure_->cols[col_block_id].position;
+        MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
+            values_.get() + cell.position,
+            row_block_size,
+            col_block_size,
+            x + row_block_pos,
+            y + col_block_pos);
+      }
+    }
+    return;
+  }
 
-  for (int i = 0; i < block_structure_->rows.size(); ++i) {
-    int row_block_pos = block_structure_->rows[i].block.position;
-    int row_block_size = block_structure_->rows[i].block.size;
-    const vector<Cell>& cells = block_structure_->rows[i].cells;
+  for (int i = 0; i < transpose_block_structure_->rows.size(); ++i) {
+    int row_block_pos = transpose_block_structure_->rows[i].block.position;
+    int row_block_size = transpose_block_structure_->rows[i].block.size;
+    const vector<Cell>& cells = transpose_block_structure_->rows[i].cells;
     for (const auto& cell : cells) {
       int col_block_id = cell.block_id;
-      int col_block_size = block_structure_->cols[col_block_id].size;
-      int col_block_pos = block_structure_->cols[col_block_id].position;
+      int col_block_size = transpose_block_structure_->cols[col_block_id].size;
+      int col_block_pos =
+          transpose_block_structure_->cols[col_block_id].position;
       MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
           values_.get() + cell.position,
-          row_block_size,
           col_block_size,
-          x + row_block_pos,
-          y + col_block_pos);
+          row_block_size,
+          x + col_block_pos,
+          y + row_block_pos);
     }
   }
 }
@@ -430,6 +457,27 @@ std::unique_ptr<BlockSparseMatrix> BlockSparseMatrix::CreateRandomMatrix(
       });
 
   return matrix;
+}
+
+std::unique_ptr<CompressedRowBlockStructure> CreateTranspose(
+    const CompressedRowBlockStructure& bs) {
+  auto transpose = std::make_unique<CompressedRowBlockStructure>();
+
+  transpose->rows.resize(bs.cols.size());
+  for (int i = 0; i < bs.cols.size(); ++i) {
+    transpose->rows[i].block = bs.cols[i];
+  }
+
+  transpose->cols.resize(bs.rows.size());
+  for (int i = 0; i < bs.rows.size(); ++i) {
+    auto& row = bs.rows[i];
+    transpose->cols[i] = row.block;
+    for (auto& cell : row.cells) {
+      transpose->rows[cell.block_id].cells.emplace_back(i, cell.position);
+    }
+  }
+
+  return transpose;
 }
 
 }  // namespace ceres::internal
