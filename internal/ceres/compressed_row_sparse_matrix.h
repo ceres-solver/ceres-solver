@@ -35,6 +35,7 @@
 #include <random>
 #include <vector>
 
+#include "ceres/block_structure.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
 #include "ceres/sparse_matrix.h"
@@ -144,17 +145,17 @@ class CERES_NO_EXPORT CompressedRowSparseMatrix : public SparseMatrix {
     storage_type_ = storage_type;
   }
 
-  const std::vector<int>& row_blocks() const { return row_blocks_; }
-  std::vector<int>* mutable_row_blocks() { return &row_blocks_; }
+  const std::vector<Block>& row_blocks() const { return row_blocks_; }
+  std::vector<Block>* mutable_row_blocks() { return &row_blocks_; }
 
-  const std::vector<int>& col_blocks() const { return col_blocks_; }
-  std::vector<int>* mutable_col_blocks() { return &col_blocks_; }
+  const std::vector<Block>& col_blocks() const { return col_blocks_; }
+  std::vector<Block>* mutable_col_blocks() { return &col_blocks_; }
 
   // Create a block diagonal CompressedRowSparseMatrix with the given
   // block structure. The individual blocks are assumed to be laid out
   // contiguously in the diagonal array, one block at a time.
   static std::unique_ptr<CompressedRowSparseMatrix> CreateBlockDiagonalMatrix(
-      const double* diagonal, const std::vector<int>& blocks);
+      const double* diagonal, const std::vector<Block>& blocks);
 
   // Options struct to control the generation of random block sparse
   // matrices in compressed row sparse format.
@@ -214,8 +215,8 @@ class CERES_NO_EXPORT CompressedRowSparseMatrix : public SparseMatrix {
   // optional information for use by algorithms operating on the
   // matrix. The class itself does not make use of this information in
   // any way.
-  std::vector<int> row_blocks_;
-  std::vector<int> col_blocks_;
+  std::vector<Block> row_blocks_;
+  std::vector<Block> col_blocks_;
 };
 
 inline std::ostream& operator<<(std::ostream& s,

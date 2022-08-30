@@ -61,9 +61,6 @@ int OrderingTypeToCHOLMODEnum(OrderingType ordering_type) {
 }
 }  // namespace
 
-using std::string;
-using std::vector;
-
 SuiteSparse::SuiteSparse() { cholmod_start(&cc_); }
 
 SuiteSparse::~SuiteSparse() { cholmod_finish(&cc_); }
@@ -163,7 +160,7 @@ cholmod_dense* SuiteSparse::CreateDenseVector(const double* x,
 
 cholmod_factor* SuiteSparse::AnalyzeCholesky(cholmod_sparse* A,
                                              OrderingType ordering_type,
-                                             string* message) {
+                                             std::string* message) {
   cc_.nmethods = 1;
   cc_.method[0].ordering = OrderingTypeToCHOLMODEnum(ordering_type);
   cholmod_factor* factor = cholmod_analyze(A, &cc_);
@@ -183,7 +180,7 @@ cholmod_factor* SuiteSparse::AnalyzeCholesky(cholmod_sparse* A,
 }
 
 cholmod_factor* SuiteSparse::AnalyzeCholeskyWithGivenOrdering(
-    cholmod_sparse* A, const vector<int>& ordering, string* message) {
+    cholmod_sparse* A, const std::vector<int>& ordering, std::string* message) {
   CHECK_EQ(ordering.size(), A->nrow);
 
   cc_.nmethods = 1;
@@ -207,9 +204,9 @@ cholmod_factor* SuiteSparse::AnalyzeCholeskyWithGivenOrdering(
 
 bool SuiteSparse::BlockOrdering(const cholmod_sparse* A,
                                 OrderingType ordering_type,
-                                const vector<int>& row_blocks,
-                                const vector<int>& col_blocks,
-                                vector<int>* ordering) {
+                                const std::vector<Block>& row_blocks,
+                                const std::vector<Block>& col_blocks,
+                                std::vector<int>* ordering) {
   if (ordering_type == OrderingType::NATURAL) {
     ordering->resize(A->nrow);
     for (int i = 0; i < A->nrow; ++i) {
@@ -223,8 +220,8 @@ bool SuiteSparse::BlockOrdering(const cholmod_sparse* A,
 
   // Arrays storing the compressed column structure of the matrix
   // encoding the block sparsity of A.
-  vector<int> block_cols;
-  vector<int> block_rows;
+  std::vector<int> block_cols;
+  std::vector<int> block_rows;
 
   CompressedColumnScalarMatrixToBlockMatrix(reinterpret_cast<const int*>(A->i),
                                             reinterpret_cast<const int*>(A->p),
@@ -246,7 +243,7 @@ bool SuiteSparse::BlockOrdering(const cholmod_sparse* A,
   block_matrix.sorted = 1;
   block_matrix.packed = 1;
 
-  vector<int> block_ordering(num_row_blocks);
+  std::vector<int> block_ordering(num_row_blocks);
   if (!Ordering(&block_matrix, ordering_type, block_ordering.data())) {
     return false;
   }
@@ -255,12 +252,13 @@ bool SuiteSparse::BlockOrdering(const cholmod_sparse* A,
   return true;
 }
 
-cholmod_factor* SuiteSparse::BlockAnalyzeCholesky(cholmod_sparse* A,
-                                                  OrderingType ordering_type,
-                                                  const vector<int>& row_blocks,
-                                                  const vector<int>& col_blocks,
-                                                  string* message) {
-  vector<int> ordering;
+cholmod_factor* SuiteSparse::BlockAnalyzeCholesky(
+    cholmod_sparse* A,
+    OrderingType ordering_type,
+    const std::vector<Block>& row_blocks,
+    const std::vector<Block>& col_blocks,
+    std::string* message) {
+  std::vector<int> ordering;
   if (!BlockOrdering(A, ordering_type, row_blocks, col_blocks, &ordering)) {
     return nullptr;
   }
@@ -269,7 +267,7 @@ cholmod_factor* SuiteSparse::BlockAnalyzeCholesky(cholmod_sparse* A,
 
 LinearSolverTerminationType SuiteSparse::Cholesky(cholmod_sparse* A,
                                                   cholmod_factor* L,
-                                                  string* message) {
+                                                  std::string* message) {
   CHECK(A != nullptr);
   CHECK(L != nullptr);
 
@@ -328,7 +326,7 @@ LinearSolverTerminationType SuiteSparse::Cholesky(cholmod_sparse* A,
 
 cholmod_dense* SuiteSparse::Solve(cholmod_factor* L,
                                   cholmod_dense* b,
-                                  string* message) {
+                                  std::string* message) {
   if (cc_.status != CHOLMOD_OK) {
     *message = "cholmod_solve failed. CHOLMOD status is not CHOLMOD_OK";
     return nullptr;
@@ -384,7 +382,7 @@ SuiteSparseCholesky::~SuiteSparseCholesky() {
 }
 
 LinearSolverTerminationType SuiteSparseCholesky::Factorize(
-    CompressedRowSparseMatrix* lhs, string* message) {
+    CompressedRowSparseMatrix* lhs, std::string* message) {
   if (lhs == nullptr) {
     *message = "Failure: Input lhs is nullptr.";
     return LinearSolverTerminationType::FATAL_ERROR;
@@ -434,7 +432,7 @@ CompressedRowSparseMatrix::StorageType SuiteSparseCholesky::StorageType()
 
 LinearSolverTerminationType SuiteSparseCholesky::Solve(const double* rhs,
                                                        double* solution,
-                                                       string* message) {
+                                                       std::string* message) {
   // Error checking
   if (factor_ == nullptr) {
     *message = "Solve called without a call to Factorize first.";

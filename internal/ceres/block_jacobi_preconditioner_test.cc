@@ -123,7 +123,7 @@ TEST(CompressedRowSparseJacobiPreconditioner, _) {
 
     const auto& col_blocks = jacobian->col_blocks();
     for (int i = 0, col = 0; i < col_blocks.size(); ++i) {
-      const int block_size = col_blocks[i];
+      const int block_size = col_blocks[i].size;
       int idx = m.rows()[col];
       for (int j = 0; j < block_size; ++j) {
         EXPECT_EQ(m.rows()[col + j + 1] - m.rows()[col + j], block_size);

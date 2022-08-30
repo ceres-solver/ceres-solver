@@ -42,13 +42,8 @@ namespace ceres::internal {
 
 BlockSparseJacobiPreconditioner::BlockSparseJacobiPreconditioner(
     const BlockSparseMatrix& A) {
-  const CompressedRowBlockStructure* bs = A.block_structure();
-  std::vector<int> blocks(bs->cols.size());
-  for (int i = 0; i < blocks.size(); ++i) {
-    blocks[i] = bs->cols[i].size;
-  }
-
-  m_ = std::make_unique<BlockRandomAccessDiagonalMatrix>(blocks);
+  m_ = std::make_unique<BlockRandomAccessDiagonalMatrix>(
+      A.block_structure()->cols);
 }
 
 BlockSparseJacobiPreconditioner::~BlockSparseJacobiPreconditioner() = default;
@@ -105,8 +100,8 @@ BlockCRSJacobiPreconditioner::BlockCRSJacobiPreconditioner(
   // Compute the number of non-zeros in the preconditioner. This is needed so
   // that we can construct the CompressedRowSparseMatrix.
   int m_nnz = 0;
-  for (int col_block_size : col_blocks) {
-    m_nnz += col_block_size * col_block_size;
+  for (auto& block : col_blocks) {
+    m_nnz += block.size * block.size;
   }
 
   m_ = std::make_unique<CompressedRowSparseMatrix>(
@@ -123,14 +118,13 @@ BlockCRSJacobiPreconditioner::BlockCRSJacobiPreconditioner(
     // Not that the because of the way the CompressedRowSparseMatrix format
     // works, the entire diagonal block is laid out contiguously in memory as a
     // row-major matrix. We will use this when updating the block.
-    const int col_block_size = col_blocks[i];
-    for (int j = 0; j < col_block_size; ++j) {
-      for (int k = 0; k < col_block_size; ++k, ++idx) {
-        m_cols[idx] = col + k;
+    auto& block = col_blocks[i];
+    for (int j = 0; j < block.size; ++j) {
+      for (int k = 0; k < block.size; ++k, ++idx) {
+        m_cols[idx] = block.position + k;
       }
-      m_rows[col + j + 1] = idx;
+      m_rows[block.position + j + 1] = idx;
     }
-    col += col_block_size;
   }
 
   CHECK_EQ(m_rows[A.num_cols()], m_nnz);
@@ -154,15 +148,14 @@ bool BlockCRSJacobiPreconditioner::UpdateImpl(
   const int* m_rows = m_->rows();
 
   const int num_rows = A.num_rows();
-  int r = 0;
   for (int i = 0; i < num_row_blocks; ++i) {
-    const int row_block_size = row_blocks[i];
-    const int row_nnz = a_rows[r + 1] - a_rows[r];
-    ConstMatrixRef row_block(a_values + a_rows[r], row_block_size, row_nnz);
-    int idx = a_rows[r];
+    const int row = row_blocks[i].position;
+    const int row_block_size = row_blocks[i].size;
+    const int row_nnz = a_rows[row + 1] - a_rows[row];
+    ConstMatrixRef row_block(a_values + a_rows[row], row_block_size, row_nnz);
     int c = 0;
     while (c < row_nnz) {
-      const int idx = a_rows[r] + c;
+      const int idx = a_rows[row] + c;
       const int col = a_cols[idx];
       const int col_block_size = m_rows[col + 1] - m_rows[col];
 
@@ -177,11 +170,11 @@ bool BlockCRSJacobiPreconditioner::UpdateImpl(
       m.noalias() += b.transpose() * b;
       c += col_block_size;
     }
-    r += row_block_size;
   }
 
-  for (int i = 0, col = 0; i < num_col_blocks; ++i) {
-    const int col_block_size = m_rows[col + 1] - m_rows[col];
+  for (int i = 0; i < num_col_blocks; ++i) {
+    const int col = col_blocks[i].position;
+    const int col_block_size = col_blocks[i].size;
     MatrixRef m(m_values + m_rows[col], col_block_size, col_block_size);
 
     if (D != nullptr) {
@@ -190,7 +183,6 @@ bool BlockCRSJacobiPreconditioner::UpdateImpl(
     }
 
     m = m.llt().solve(Matrix::Identity(col_block_size, col_block_size));
-    col += col_block_size;
   }
 
   return true;

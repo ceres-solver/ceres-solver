@@ -39,16 +39,16 @@
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 class BlockRandomAccessDiagonalMatrixTest : public ::testing::Test {
  public:
   void SetUp() override {
-    std::vector<int> blocks;
-    blocks.push_back(3);
-    blocks.push_back(4);
-    blocks.push_back(5);
+    std::vector<Block> blocks;
+    blocks.emplace_back(3, 0);
+    blocks.emplace_back(4, 3);
+    blocks.emplace_back(5, 7);
+
     const int num_rows = 3 + 4 + 5;
     num_nonzeros_ = 3 * 3 + 4 * 4 + 5 * 5;
 
@@ -78,15 +78,20 @@ class BlockRandomAccessDiagonalMatrixTest : public ::testing::Test {
         EXPECT_TRUE(cell != nullptr);
         EXPECT_EQ(row, 0);
         EXPECT_EQ(col, 0);
-        EXPECT_EQ(row_stride, blocks[row_block_id]);
-        EXPECT_EQ(col_stride, blocks[col_block_id]);
+        EXPECT_EQ(row_stride, blocks[row_block_id].size);
+        EXPECT_EQ(col_stride, blocks[col_block_id].size);
 
         // Write into the block
         MatrixRef(cell->values, row_stride, col_stride)
-            .block(row, col, blocks[row_block_id], blocks[col_block_id]) =
+            .block(row,
+                   col,
+                   blocks[row_block_id].size,
+                   blocks[col_block_id].size) =
             (row_block_id + 1) * (col_block_id + 1) *
-                Matrix::Ones(blocks[row_block_id], blocks[col_block_id]) +
-            Matrix::Identity(blocks[row_block_id], blocks[row_block_id]);
+                Matrix::Ones(blocks[row_block_id].size,
+                             blocks[col_block_id].size) +
+            Matrix::Identity(blocks[row_block_id].size,
+                             blocks[row_block_id].size);
       }
     }
   }
@@ -160,5 +165,4 @@ TEST_F(BlockRandomAccessDiagonalMatrixTest, Invert) {
   EXPECT_NEAR((expected_inverse - dense).norm(), 0.0, kTolerance);
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

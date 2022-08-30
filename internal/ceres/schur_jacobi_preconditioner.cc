@@ -51,9 +51,12 @@ SchurJacobiPreconditioner::SchurJacobiPreconditioner(
                           << "SCHUR_JACOBI preconditioner.";
   CHECK(options_.context != nullptr);
 
-  std::vector<int> blocks(num_blocks);
+  std::vector<Block> blocks(num_blocks);
+  int position = 0;
   for (int i = 0; i < num_blocks; ++i) {
-    blocks[i] = bs.cols[i + options_.elimination_groups[0]].size;
+    blocks[i] =
+        Block(bs.cols[i + options_.elimination_groups[0]].size, position);
+    position += blocks[i].size;
   }
 
   m_ = std::make_unique<BlockRandomAccessDiagonalMatrix>(blocks);

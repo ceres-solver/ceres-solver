@@ -92,7 +92,7 @@ class CERES_NO_EXPORT ContextImpl final : public Context {
   // CUDA device. CudaConfigAsString can only be called after InitCuda has been
   // called.
   std::string CudaConfigAsString() const;
-  // Returns the number of bytes of available global memory on the current CUDA 
+  // Returns the number of bytes of available global memory on the current CUDA
   // device. If it is called before InitCuda, it returns 0.
   size_t GpuMemoryAvailable() const;
 

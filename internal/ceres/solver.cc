@@ -329,7 +329,7 @@ bool OptionsAreValidForCgnr(const Solver::Options& options, string* error) {
 
   if (options.preconditioner_type == SUBSET) {
     if (options.sparse_linear_algebra_library_type == CUDA_SPARSE) {
-      *error = 
+      *error =
           "Can't use CGNR with preconditioner_type = SUBSET when "
           "sparse_linear_algebra_library_type = CUDA_SPARSE.";
       return false;

@@ -239,9 +239,8 @@ class CERES_NO_EXPORT CudaJacobiPreconditioner final
     : public CudaPreconditioner {
  public:
   explicit CudaJacobiPreconditioner(ContextImpl* context,
-                                    const CompressedRowSparseMatrix& A) :
-      cpu_preconditioner_(A),
-      m_(context, cpu_preconditioner_.matrix()) {}
+                                    const CompressedRowSparseMatrix& A)
+      : cpu_preconditioner_(A), m_(context, cpu_preconditioner_.matrix()) {}
   ~CudaJacobiPreconditioner() = default;
 
   void Update(const CompressedRowSparseMatrix& A, const double* D) final {
@@ -249,8 +248,7 @@ class CERES_NO_EXPORT CudaJacobiPreconditioner final
     m_.CopyValuesFromCpu(cpu_preconditioner_.matrix());
   }
 
-  void RightMultiplyAndAccumulate(
-      const CudaVector& x, CudaVector& y) final {
+  void RightMultiplyAndAccumulate(const CudaVector& x, CudaVector& y) final {
     m_.RightMultiplyAndAccumulate(x, &y);
   }
 

@@ -35,23 +35,22 @@
 #include "ceres/internal/eigen.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 TEST(BlockRandomAccessDenseMatrix, GetCell) {
-  std::vector<int> blocks;
-  blocks.push_back(3);
-  blocks.push_back(4);
-  blocks.push_back(5);
+  std::vector<Block> blocks;
+  blocks.emplace_back(3, 0);
+  blocks.emplace_back(4, 3);
+  blocks.emplace_back(5, 7);
   const int num_rows = 3 + 4 + 5;
   BlockRandomAccessDenseMatrix m(blocks);
   EXPECT_EQ(m.num_rows(), num_rows);
   EXPECT_EQ(m.num_cols(), num_rows);
 
-  int row_idx = 0;
   for (int i = 0; i < blocks.size(); ++i) {
-    int col_idx = 0;
+    const int row_idx = blocks[i].position;
     for (int j = 0; j < blocks.size(); ++j) {
+      const int col_idx = blocks[j].position;
       int row;
       int col;
       int row_stride;
@@ -63,17 +62,15 @@ TEST(BlockRandomAccessDenseMatrix, GetCell) {
       EXPECT_EQ(col, col_idx);
       EXPECT_EQ(row_stride, 3 + 4 + 5);
       EXPECT_EQ(col_stride, 3 + 4 + 5);
-      col_idx += blocks[j];
     }
-    row_idx += blocks[i];
   }
 }
 
 TEST(BlockRandomAccessDenseMatrix, WriteCell) {
-  std::vector<int> blocks;
-  blocks.push_back(3);
-  blocks.push_back(4);
-  blocks.push_back(5);
+  std::vector<Block> blocks;
+  blocks.emplace_back(3, 0);
+  blocks.emplace_back(4, 3);
+  blocks.emplace_back(5, 7);
   const int num_rows = 3 + 4 + 5;
 
   BlockRandomAccessDenseMatrix m(blocks);
@@ -87,29 +84,26 @@ TEST(BlockRandomAccessDenseMatrix, WriteCell) {
       int col_stride;
       CellInfo* cell = m.GetCell(i, j, &row, &col, &row_stride, &col_stride);
       MatrixRef(cell->values, row_stride, col_stride)
-          .block(row, col, blocks[i], blocks[j]) =
-          (i + 1) * (j + 1) * Matrix::Ones(blocks[i], blocks[j]);
+          .block(row, col, blocks[i].size, blocks[j].size) =
+          (i + 1) * (j + 1) * Matrix::Ones(blocks[i].size, blocks[j].size);
     }
   }
 
   // Check the values in the array are correct by going over the
   // entries of each block manually.
-  int row_idx = 0;
   for (int i = 0; i < blocks.size(); ++i) {
-    int col_idx = 0;
+    const int row_idx = blocks[i].position;
     for (int j = 0; j < blocks.size(); ++j) {
+      const int col_idx = blocks[j].position;
       // Check the values of this block.
-      for (int r = 0; r < blocks[i]; ++r) {
-        for (int c = 0; c < blocks[j]; ++c) {
+      for (int r = 0; r < blocks[i].size; ++r) {
+        for (int c = 0; c < blocks[j].size; ++c) {
           int pos = row_idx * num_rows + col_idx;
           EXPECT_EQ(m.values()[pos], (i + 1) * (j + 1));
         }
       }
-      col_idx += blocks[j];
     }
-    row_idx += blocks[i];
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

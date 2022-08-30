@@ -43,32 +43,21 @@
 
 namespace ceres::internal {
 
-using std::make_pair;
-using std::pair;
-using std::set;
-using std::vector;
-
 BlockRandomAccessSparseMatrix::BlockRandomAccessSparseMatrix(
-    const vector<int>& blocks, const set<pair<int, int>>& block_pairs)
+    const std::vector<Block>& blocks,
+    const std::set<std::pair<int, int>>& block_pairs)
     : kMaxRowBlocks(10 * 1000 * 1000), blocks_(blocks) {
   CHECK_LT(blocks.size(), kMaxRowBlocks);
 
-  // Build the row/column layout vector and count the number of scalar
-  // rows/columns.
-  int num_cols = 0;
-  block_positions_.reserve(blocks_.size());
-  for (int block_size : blocks_) {
-    block_positions_.push_back(num_cols);
-    num_cols += block_size;
-  }
+  const int num_cols = NumScalarEntries(blocks);
 
   // Count the number of scalar non-zero entries and build the layout
   // object for looking into the values array of the
   // TripletSparseMatrix.
   int num_nonzeros = 0;
   for (const auto& block_pair : block_pairs) {
-    const int row_block_size = blocks_[block_pair.first];
-    const int col_block_size = blocks_[block_pair.second];
+    const int row_block_size = blocks_[block_pair.first].size;
+    const int col_block_size = blocks_[block_pair.second].size;
     num_nonzeros += row_block_size * col_block_size;
   }
 
@@ -84,8 +73,8 @@ BlockRandomAccessSparseMatrix::BlockRandomAccessSparseMatrix(
 
   int pos = 0;
   for (const auto& block_pair : block_pairs) {
-    const int row_block_size = blocks_[block_pair.first];
-    const int col_block_size = blocks_[block_pair.second];
+    const int row_block_size = blocks_[block_pair.first].size;
+    const int col_block_size = blocks_[block_pair.second].size;
     cell_values_.emplace_back(block_pair, values + pos);
     layout_[IntPairToLong(block_pair.first, block_pair.second)] =
         new CellInfo(values + pos);
@@ -96,14 +85,14 @@ BlockRandomAccessSparseMatrix::BlockRandomAccessSparseMatrix(
   for (const auto& block_pair : block_pairs) {
     const int row_block_id = block_pair.first;
     const int col_block_id = block_pair.second;
-    const int row_block_size = blocks_[row_block_id];
-    const int col_block_size = blocks_[col_block_id];
+    const int row_block_size = blocks_[row_block_id].size;
+    const int col_block_size = blocks_[col_block_id].size;
     int pos =
         layout_[IntPairToLong(row_block_id, col_block_id)]->values - values;
     for (int r = 0; r < row_block_size; ++r) {
       for (int c = 0; c < col_block_size; ++c, ++pos) {
-        rows[pos] = block_positions_[row_block_id] + r;
-        cols[pos] = block_positions_[col_block_id] + c;
+        rows[pos] = blocks_[row_block_id].position + r;
+        cols[pos] = blocks_[col_block_id].position + c;
         values[pos] = 1.0;
         DCHECK_LT(rows[pos], tsm_->num_rows());
         DCHECK_LT(cols[pos], tsm_->num_rows());
@@ -134,8 +123,8 @@ CellInfo* BlockRandomAccessSparseMatrix::GetCell(int row_block_id,
   // Each cell is stored contiguously as its own little dense matrix.
   *row = 0;
   *col = 0;
-  *row_stride = blocks_[row_block_id];
-  *col_stride = blocks_[col_block_id];
+  *row_stride = blocks_[row_block_id].size;
+  *col_stride = blocks_[col_block_id].size;
   return it->second;
 }
 
@@ -151,12 +140,12 @@ void BlockRandomAccessSparseMatrix::SymmetricRightMultiplyAndAccumulate(
     const double* x, double* y) const {
   for (const auto& cell_position_and_data : cell_values_) {
     const int row = cell_position_and_data.first.first;
-    const int row_block_size = blocks_[row];
-    const int row_block_pos = block_positions_[row];
+    const int row_block_size = blocks_[row].size;
+    const int row_block_pos = blocks_[row].position;
 
     const int col = cell_position_and_data.first.second;
-    const int col_block_size = blocks_[col];
-    const int col_block_pos = block_positions_[col];
+    const int col_block_size = blocks_[col].size;
+    const int col_block_pos = blocks_[col].position;
 
     MatrixVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
         cell_position_and_data.second,
