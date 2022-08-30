@@ -53,12 +53,6 @@
 #include "ceres/wall_time.h"
 
 namespace ceres::internal {
-
-using std::make_pair;
-using std::pair;
-using std::set;
-using std::vector;
-
 namespace {
 
 class BlockRandomAccessSparseMatrixAdapter final
@@ -175,7 +169,7 @@ void DenseSchurComplementSolver::InitStorage(
   const int num_eliminate_blocks = options().elimination_groups[0];
   const int num_col_blocks = bs->cols.size();
 
-  vector<int> blocks(num_col_blocks - num_eliminate_blocks, 0);
+  std::vector<int> blocks(num_col_blocks - num_eliminate_blocks, 0);
   for (int i = num_eliminate_blocks, j = 0; i < num_col_blocks; ++i, ++j) {
     blocks[j] = bs->cols[i].size;
   }
@@ -234,14 +228,19 @@ void SparseSchurComplementSolver::InitStorage(
   const int num_col_blocks = bs->cols.size();
   const int num_row_blocks = bs->rows.size();
 
-  blocks_.resize(num_col_blocks - num_eliminate_blocks, 0);
+  blocks_.resize(num_col_blocks - num_eliminate_blocks);
+  const int delta_pos = num_eliminate_blocks > 0
+                            ? bs->cols[num_eliminate_blocks - 1].position
+                            : 0;
   for (int i = num_eliminate_blocks; i < num_col_blocks; ++i) {
-    blocks_[i - num_eliminate_blocks] = bs->cols[i].size;
+    auto& block = bs->cols[i];
+    blocks_[i - num_eliminate_blocks] =
+        Block(block.size, block.position - delta_pos);
   }
 
-  set<pair<int, int>> block_pairs;
+  std::set<std::pair<int, int>> block_pairs;
   for (int i = 0; i < blocks_.size(); ++i) {
-    block_pairs.insert(make_pair(i, i));
+    block_pairs.insert(std::make_pair(i, i));
   }
 
   int r = 0;
@@ -250,7 +249,7 @@ void SparseSchurComplementSolver::InitStorage(
     if (e_block_id >= num_eliminate_blocks) {
       break;
     }
-    vector<int> f_blocks;
+    std::vector<int> f_blocks;
 
     // Add to the chunk until the first block in the row is
     // different than the one in the first row for the chunk.
@@ -272,7 +271,7 @@ void SparseSchurComplementSolver::InitStorage(
     f_blocks.erase(unique(f_blocks.begin(), f_blocks.end()), f_blocks.end());
     for (int i = 0; i < f_blocks.size(); ++i) {
       for (int j = i + 1; j < f_blocks.size(); ++j) {
-        block_pairs.insert(make_pair(f_blocks[i], f_blocks[j]));
+        block_pairs.insert(std::make_pair(f_blocks[i], f_blocks[j]));
       }
     }
   }
@@ -287,7 +286,7 @@ void SparseSchurComplementSolver::InitStorage(
       for (const auto& cell : row.cells) {
         int r_block2_id = cell.block_id - num_eliminate_blocks;
         if (r_block1_id <= r_block2_id) {
-          block_pairs.insert(make_pair(r_block1_id, r_block2_id));
+          block_pairs.insert(std::make_pair(r_block1_id, r_block2_id));
         }
       }
     }
@@ -367,7 +366,7 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingConjugateGradients(
   // Extract block diagonal from the Schur complement to construct the
   // schur_jacobi preconditioner.
   for (int i = 0; i < blocks_.size(); ++i) {
-    const int block_size = blocks_[i];
+    const int block_size = blocks_[i].size;
 
     int sc_r, sc_c, sc_row_stride, sc_col_stride;
     CellInfo* sc_cell_info =

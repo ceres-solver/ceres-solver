@@ -44,6 +44,7 @@
 #include <vector>
 
 #include "SuiteSparseQR.hpp"
+#include "ceres/block_structure.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/linear_solver.h"
 #include "ceres/sparse_cholesky.h"
@@ -137,8 +138,8 @@ class CERES_NO_EXPORT SuiteSparse {
   // Block oriented version of AnalyzeCholesky.
   cholmod_factor* BlockAnalyzeCholesky(cholmod_sparse* A,
                                        OrderingType ordering_type,
-                                       const std::vector<int>& row_blocks,
-                                       const std::vector<int>& col_blocks,
+                                       const std::vector<Block>& row_blocks,
+                                       const std::vector<Block>& col_blocks,
                                        std::string* message);
 
   // If A is symmetric, then compute the symbolic Cholesky
@@ -202,8 +203,8 @@ class CERES_NO_EXPORT SuiteSparse {
   // matrix to the numerical factorization routines.
   bool BlockOrdering(const cholmod_sparse* A,
                      OrderingType ordering_type,
-                     const std::vector<int>& row_blocks,
-                     const std::vector<int>& col_blocks,
+                     const std::vector<Block>& row_blocks,
+                     const std::vector<Block>& col_blocks,
                      std::vector<int>* ordering);
 
   // Nested dissection is only available if SuiteSparse is compiled
