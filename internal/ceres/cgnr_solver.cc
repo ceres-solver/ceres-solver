@@ -135,18 +135,20 @@ LinearSolver::Summary CgnrSolver::SolveImpl(
     double* x) {
   EventLogger event_logger("CgnrSolver::Solve");
   if (!preconditioner_) {
+    Preconditioner::Options preconditioner_options;
+    preconditioner_options.type = options_.preconditioner_type;
+    preconditioner_options.subset_preconditioner_start_row_block =
+        options_.subset_preconditioner_start_row_block;
+    preconditioner_options.sparse_linear_algebra_library_type =
+        options_.sparse_linear_algebra_library_type;
+    preconditioner_options.ordering_type = options_.ordering_type;
+    preconditioner_options.num_threads = options_.num_threads;
+    preconditioner_options.context = options_.context;
+
     if (options_.preconditioner_type == JACOBI) {
-      preconditioner_ = std::make_unique<BlockSparseJacobiPreconditioner>(*A);
+      preconditioner_ = std::make_unique<BlockSparseJacobiPreconditioner>(
+          preconditioner_options, *A);
     } else if (options_.preconditioner_type == SUBSET) {
-      Preconditioner::Options preconditioner_options;
-      preconditioner_options.type = SUBSET;
-      preconditioner_options.subset_preconditioner_start_row_block =
-          options_.subset_preconditioner_start_row_block;
-      preconditioner_options.sparse_linear_algebra_library_type =
-          options_.sparse_linear_algebra_library_type;
-      preconditioner_options.ordering_type = options_.ordering_type;
-      preconditioner_options.num_threads = options_.num_threads;
-      preconditioner_options.context = options_.context;
       preconditioner_ =
           std::make_unique<SubsetPreconditioner>(preconditioner_options, *A);
     } else {
@@ -238,9 +240,11 @@ class CERES_NO_EXPORT CudaIdentityPreconditioner final
 class CERES_NO_EXPORT CudaJacobiPreconditioner final
     : public CudaPreconditioner {
  public:
-  explicit CudaJacobiPreconditioner(ContextImpl* context,
+  explicit CudaJacobiPreconditioner(Preconditioner::Options options,
                                     const CompressedRowSparseMatrix& A)
-      : cpu_preconditioner_(A), m_(context, cpu_preconditioner_.matrix()) {}
+      : options_(std::move(options)),
+        cpu_preconditioner_(options_, A),
+        m_(options_->context, cpu_preconditioner_.matrix()) {}
   ~CudaJacobiPreconditioner() = default;
 
   void Update(const CompressedRowSparseMatrix& A, const double* D) final {
@@ -253,6 +257,7 @@ class CERES_NO_EXPORT CudaJacobiPreconditioner final
   }
 
  private:
+  Preconditioner::Options options_;
   BlockCRSJacobiPreconditioner cpu_preconditioner_;
   CudaSparseMatrix m_;
 };
@@ -297,9 +302,20 @@ void CudaCgnrSolver::CpuToGpuTransfer(const CompressedRowSparseMatrix& A,
     Atb_ = std::make_unique<CudaVector>(options_.context, A.num_cols());
     Ax_ = std::make_unique<CudaVector>(options_.context, A.num_rows());
     D_ = std::make_unique<CudaVector>(options_.context, A.num_cols());
+
+    Preconditioner::Options preconditioner_options;
+    preconditioner_options.type = options_.preconditioner_type;
+    preconditioner_options.subset_preconditioner_start_row_block =
+        options_.subset_preconditioner_start_row_block;
+    preconditioner_options.sparse_linear_algebra_library_type =
+        options_.sparse_linear_algebra_library_type;
+    preconditioner_options.ordering_type = options_.ordering_type;
+    preconditioner_options.num_threads = options_.num_threads;
+    preconditioner_options.context = options_.context;
+
     if (options_.preconditioner_type == JACOBI) {
       preconditioner_ =
-          std::make_unique<CudaJacobiPreconditioner>(options_.context, A);
+          std::make_unique<CudaJacobiPreconditioner>(preconditioner_options, A);
     } else {
       preconditioner_ = std::make_unique<CudaIdentityPreconditioner>();
     }
