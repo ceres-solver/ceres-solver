@@ -36,14 +36,15 @@
 #include "ceres/block_structure.h"
 #include "ceres/casts.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/parallel_for.h"
 #include "ceres/small_blas.h"
 
 namespace ceres::internal {
 
 BlockSparseJacobiPreconditioner::BlockSparseJacobiPreconditioner(
-    const BlockSparseMatrix& A) {
-  m_ = std::make_unique<BlockRandomAccessDiagonalMatrix>(
-      A.block_structure()->cols);
+    Preconditioner::Options options, const BlockSparseMatrix& A)
+    : options_(std::move(options)) {
+  m_ = std::make_unique<BlockRandomAccessDiagonalMatrix>(A.block_structure());
 }
 
 BlockSparseJacobiPreconditioner::~BlockSparseJacobiPreconditioner() = default;
@@ -94,7 +95,8 @@ bool BlockSparseJacobiPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
 }
 
 BlockCRSJacobiPreconditioner::BlockCRSJacobiPreconditioner(
-    const CompressedRowSparseMatrix& A) {
+    Preconditioner::Options options, const CompressedRowSparseMatrix& A)
+    : options_(std::move(options)), locks_(A.col_blocks().size()) {
   auto& col_blocks = A.col_blocks();
 
   // Compute the number of non-zeros in the preconditioner. This is needed so
