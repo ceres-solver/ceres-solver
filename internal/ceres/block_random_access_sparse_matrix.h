@@ -39,6 +39,7 @@
 #include <vector>
 
 #include "ceres/block_random_access_matrix.h"
+#include "ceres/block_structure.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
 #include "ceres/small_blas.h"
@@ -58,7 +59,7 @@ class CERES_NO_EXPORT BlockRandomAccessSparseMatrix
   // <row_block_id, col_block_id> pairs to identify the non-zero cells
   // of this matrix.
   BlockRandomAccessSparseMatrix(
-      const std::vector<int>& blocks,
+      const std::vector<Block>& blocks,
       const std::set<std::pair<int, int>>& block_pairs);
   BlockRandomAccessSparseMatrix(const BlockRandomAccessSparseMatrix&) = delete;
   void operator=(const BlockRandomAccessSparseMatrix&) = delete;
@@ -106,8 +107,7 @@ class CERES_NO_EXPORT BlockRandomAccessSparseMatrix
   const int64_t kMaxRowBlocks;
 
   // row/column block sizes.
-  const std::vector<int> blocks_;
-  std::vector<int> block_positions_;
+  const std::vector<Block> blocks_;
 
   // A mapping from <row_block_id, col_block_id> to the position in
   // the values array of tsm_ where the block is stored.
