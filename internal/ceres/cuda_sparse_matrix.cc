@@ -54,6 +54,7 @@
 #include "ceres/cuda_buffer.h"
 #include "ceres/cuda_kernels.h"
 #include "ceres/cuda_vector.h"
+#include "cuda_runtime_api.h"
 #include "cusparse.h"
 
 namespace ceres::internal {
@@ -104,6 +105,14 @@ void CudaSparseMatrix::SpMv(cusparseOperation_t op,
   size_t buffer_size = 0;
   const double alpha = 1.0;
   const double beta = 1.0;
+
+  // Starting in CUDA 11.2.1, CUSPARSE_MV_ALG_DEFAULT was deprecated in favor of
+  // CUSPARSE_SPMV_ALG_DEFAULT.
+#if CUDART_VERSION >= 11021
+  const auto algorithm = CUSPARSE_SPMV_ALG_DEFAULT;
+#else
+  const auto algorithm = CUSPARSE_MV_ALG_DEFAULT;
+#endif
 
   CHECK_EQ(cusparseSpMV_bufferSize(context_->cusparse_handle_,
                                    op,
