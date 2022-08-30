@@ -52,7 +52,8 @@ class CERES_NO_EXPORT BlockSparseJacobiPreconditioner
     : public BlockSparseMatrixPreconditioner {
  public:
   // A must remain valid while the BlockJacobiPreconditioner is.
-  explicit BlockSparseJacobiPreconditioner(const BlockSparseMatrix& A);
+  explicit BlockSparseJacobiPreconditioner(Preconditioner::Options,
+                                           const BlockSparseMatrix& A);
   ~BlockSparseJacobiPreconditioner() override;
   void RightMultiplyAndAccumulate(const double* x, double* y) const final {
     return m_->RightMultiplyAndAccumulate(x, y);
@@ -64,6 +65,7 @@ class CERES_NO_EXPORT BlockSparseJacobiPreconditioner
  private:
   bool UpdateImpl(const BlockSparseMatrix& A, const double* D) final;
 
+  Preconditioner::Options options_;
   std::unique_ptr<BlockRandomAccessDiagonalMatrix> m_;
 };
 
@@ -73,7 +75,8 @@ class CERES_NO_EXPORT BlockCRSJacobiPreconditioner
     : public CompressedRowSparseMatrixPreconditioner {
  public:
   // A must remain valid while the BlockJacobiPreconditioner is.
-  explicit BlockCRSJacobiPreconditioner(const CompressedRowSparseMatrix& A);
+  explicit BlockCRSJacobiPreconditioner(Preconditioner::Options options,
+                                        const CompressedRowSparseMatrix& A);
   ~BlockCRSJacobiPreconditioner() override;
   void RightMultiplyAndAccumulate(const double* x, double* y) const final {
     m_->RightMultiplyAndAccumulate(x, y);
@@ -85,6 +88,8 @@ class CERES_NO_EXPORT BlockCRSJacobiPreconditioner
  private:
   bool UpdateImpl(const CompressedRowSparseMatrix& A, const double* D) final;
 
+  Preconditioner::Options options_;
+  std::vector<std::mutex> locks_;
   std::unique_ptr<CompressedRowSparseMatrix> m_;
 };
 
