@@ -55,6 +55,10 @@ struct CERES_NO_EXPORT Block {
   int position{-1};  // Position along the row/column.
 };
 
+inline bool operator==(const Block& left, const Block& right) {
+  return (left.size == right.size) && (left.position == right.position);
+}
+
 struct CERES_NO_EXPORT Cell {
   Cell() = default;
   Cell(int block_id_, int position_)
@@ -167,6 +171,13 @@ struct CERES_NO_EXPORT CompressedColumnBlockStructure {
   std::vector<Block> rows;
   std::vector<CompressedColumn> cols;
 };
+
+inline int NumScalarEntries(const std::vector<Block>& blocks) {
+  auto& block = blocks.back();
+  return block.position + block.size;
+}
+
+std::vector<Block> Tail(const std::vector<Block>& blocks, int n);
 
 }  // namespace ceres::internal
 
