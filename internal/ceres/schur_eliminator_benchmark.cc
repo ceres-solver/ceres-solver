@@ -99,7 +99,8 @@ class BenchmarkData {
     b_.resize(matrix_->num_rows());
     b_.setRandom();
 
-    std::vector<int> blocks(1, kFBlockSize);
+    std::vector<Block> blocks;
+    blocks.emplace_back(kFBlockSize, 0);
     lhs_ = std::make_unique<BlockRandomAccessDenseMatrix>(blocks);
     diagonal_.resize(matrix_->num_cols());
     diagonal_.setOnes();
