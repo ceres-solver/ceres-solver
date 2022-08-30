@@ -58,14 +58,26 @@ static void BM_BlockSparseJacobiPreconditionerBA(benchmark::State& state) {
   std::mt19937 prng;
   auto jacobian = CreateFakeBundleAdjustmentJacobian(
       kNumCameras, kNumPoints, kCameraSize, kPointSize, kVisibility, prng);
-  BlockSparseJacobiPreconditioner p(*jacobian);
+
+  Preconditioner::Options preconditioner_options;
+  ContextImpl context;
+  preconditioner_options.context = &context;
+  preconditioner_options.num_threads = state.range(0);
+  context.EnsureMinimumThreads(preconditioner_options.num_threads);
+  BlockSparseJacobiPreconditioner p(preconditioner_options, *jacobian);
+
   Vector d = Vector::Ones(jacobian->num_cols());
   for (auto _ : state) {
     p.Update(*jacobian, d.data());
   }
 }
 
-BENCHMARK(BM_BlockSparseJacobiPreconditionerBA);
+BENCHMARK(BM_BlockSparseJacobiPreconditionerBA)
+    ->Arg(1)
+    ->Arg(2)
+    ->Arg(4)
+    ->Arg(8)
+    ->Arg(16);
 
 static void BM_BlockCRSJacobiPreconditionerBA(benchmark::State& state) {
   std::mt19937 prng;
@@ -75,14 +87,25 @@ static void BM_BlockCRSJacobiPreconditionerBA(benchmark::State& state) {
   CompressedRowSparseMatrix jacobian_crs(
       jacobian->num_rows(), jacobian->num_cols(), jacobian->num_nonzeros());
   jacobian->ToCompressedRowSparseMatrix(&jacobian_crs);
-  BlockCRSJacobiPreconditioner p(jacobian_crs);
+  Preconditioner::Options preconditioner_options;
+  ContextImpl context;
+  preconditioner_options.context = &context;
+  preconditioner_options.num_threads = state.range(0);
+  context.EnsureMinimumThreads(preconditioner_options.num_threads);
+  BlockCRSJacobiPreconditioner p(preconditioner_options, jacobian_crs);
+
   Vector d = Vector::Ones(jacobian_crs.num_cols());
   for (auto _ : state) {
     p.Update(jacobian_crs, d.data());
   }
 }
 
-BENCHMARK(BM_BlockCRSJacobiPreconditionerBA);
+BENCHMARK(BM_BlockCRSJacobiPreconditionerBA)
+    ->Arg(1)
+    ->Arg(2)
+    ->Arg(4)
+    ->Arg(8)
+    ->Arg(16);
 
 static void BM_BlockSparseJacobiPreconditionerUnstructured(
     benchmark::State& state) {
@@ -97,14 +120,25 @@ static void BM_BlockSparseJacobiPreconditionerUnstructured(
   std::mt19937 prng;
 
   auto jacobian = BlockSparseMatrix::CreateRandomMatrix(options, prng);
-  BlockSparseJacobiPreconditioner p(*jacobian);
+  Preconditioner::Options preconditioner_options;
+  ContextImpl context;
+  preconditioner_options.context = &context;
+  preconditioner_options.num_threads = state.range(0);
+  context.EnsureMinimumThreads(preconditioner_options.num_threads);
+  BlockSparseJacobiPreconditioner p(preconditioner_options, *jacobian);
+
   Vector d = Vector::Ones(jacobian->num_cols());
   for (auto _ : state) {
     p.Update(*jacobian, d.data());
   }
 }
 
-BENCHMARK(BM_BlockSparseJacobiPreconditionerUnstructured);
+BENCHMARK(BM_BlockSparseJacobiPreconditionerUnstructured)
+    ->Arg(1)
+    ->Arg(2)
+    ->Arg(4)
+    ->Arg(8)
+    ->Arg(16);
 
 static void BM_BlockCRSJacobiPreconditionerUnstructured(
     benchmark::State& state) {
@@ -122,13 +156,24 @@ static void BM_BlockCRSJacobiPreconditionerUnstructured(
   CompressedRowSparseMatrix jacobian_crs(
       jacobian->num_rows(), jacobian->num_cols(), jacobian->num_nonzeros());
   jacobian->ToCompressedRowSparseMatrix(&jacobian_crs);
-  BlockCRSJacobiPreconditioner p(jacobian_crs);
+  Preconditioner::Options preconditioner_options;
+  ContextImpl context;
+  preconditioner_options.context = &context;
+  preconditioner_options.num_threads = state.range(0);
+  context.EnsureMinimumThreads(preconditioner_options.num_threads);
+  BlockCRSJacobiPreconditioner p(preconditioner_options, jacobian_crs);
+
   Vector d = Vector::Ones(jacobian_crs.num_cols());
   for (auto _ : state) {
     p.Update(jacobian_crs, d.data());
   }
 }
-BENCHMARK(BM_BlockCRSJacobiPreconditionerUnstructured);
+BENCHMARK(BM_BlockCRSJacobiPreconditionerUnstructured)
+    ->Arg(1)
+    ->Arg(2)
+    ->Arg(4)
+    ->Arg(8)
+    ->Arg(16);
 
 }  // namespace ceres::internal
 

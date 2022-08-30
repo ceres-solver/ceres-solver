@@ -166,7 +166,7 @@ void ParallelFor(ContextImpl* context,
                  int num_threads,
                  const std::function<void(int thread_id, int i)>& function) {
   CHECK_GT(num_threads, 0);
-  CHECK(context != nullptr);
+
   if (end <= start) {
     return;
   }
@@ -184,6 +184,7 @@ void ParallelFor(ContextImpl* context,
     return;
   }
 
+  CHECK(context != nullptr);
   // We use a std::shared_ptr because the main thread can finish all
   // the work before the tasks have been popped off the queue.  So the
   // shared state needs to exist for the duration of all the tasks.

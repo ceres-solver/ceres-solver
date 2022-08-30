@@ -36,12 +36,14 @@
 #include "ceres/block_structure.h"
 #include "ceres/casts.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/parallel_for.h"
 #include "ceres/small_blas.h"
 
 namespace ceres::internal {
 
 BlockSparseJacobiPreconditioner::BlockSparseJacobiPreconditioner(
-    const BlockSparseMatrix& A) {
+    Preconditioner::Options options, const BlockSparseMatrix& A)
+    : options_(std::move(options)) {
   m_ = std::make_unique<BlockRandomAccessDiagonalMatrix>(
       A.block_structure()->cols);
 }
@@ -94,7 +96,8 @@ bool BlockSparseJacobiPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
 }
 
 BlockCRSJacobiPreconditioner::BlockCRSJacobiPreconditioner(
-    const CompressedRowSparseMatrix& A) {
+    Preconditioner::Options options, const CompressedRowSparseMatrix& A)
+    : options_(std::move(options)), locks_(A.col_blocks().size()) {
   auto& col_blocks = A.col_blocks();
 
   // Compute the number of non-zeros in the preconditioner. This is needed so
@@ -123,6 +126,8 @@ BlockCRSJacobiPreconditioner::BlockCRSJacobiPreconditioner(
     }
   }
 
+  std::vector<std::mutex> locks(A.num_cols());
+  locks_.swap(locks);
   CHECK_EQ(m_rows[A.num_cols()], m_nnz);
 }
 
@@ -143,44 +148,49 @@ bool BlockCRSJacobiPreconditioner::UpdateImpl(
   double* m_values = m_->mutable_values();
   const int* m_rows = m_->rows();
 
-  for (int i = 0; i < num_row_blocks; ++i) {
-    const int row = row_blocks[i].position;
-    const int row_block_size = row_blocks[i].size;
-    const int row_nnz = a_rows[row + 1] - a_rows[row];
-    ConstMatrixRef row_block(a_values + a_rows[row], row_block_size, row_nnz);
-    int c = 0;
-    while (c < row_nnz) {
-      const int idx = a_rows[row] + c;
-      const int col = a_cols[idx];
-      const int col_block_size = m_rows[col + 1] - m_rows[col];
+  ParallelFor(
+      options_.context, 0, num_row_blocks, options_.num_threads, [&](int i) {
+        const int row = row_blocks[i].position;
+        const int row_block_size = row_blocks[i].size;
+        const int row_nnz = a_rows[row + 1] - a_rows[row];
+        ConstMatrixRef row_block(
+            a_values + a_rows[row], row_block_size, row_nnz);
+        int c = 0;
+        while (c < row_nnz) {
+          const int idx = a_rows[row] + c;
+          const int col = a_cols[idx];
+          const int col_block_size = m_rows[col + 1] - m_rows[col];
 
-      // We make use of the fact that the entire diagonal block is stored
-      // contiguously in memory as a row-major matrix.
-      MatrixRef m(m_values + m_rows[col], col_block_size, col_block_size);
+          // We make use of the fact that the entire diagonal block is stored
+          // contiguously in memory as a row-major matrix.
+          MatrixRef m(m_values + m_rows[col], col_block_size, col_block_size);
 
-      // We do not have a row_stride version of MatrixTransposeMatrixMultiply,
-      // otherwise we could use it here to further speed up the following
-      // expression.
-      auto b = row_block.middleCols(c, col_block_size);
-      m.noalias() += b.transpose() * b;
-      c += col_block_size;
-    }
-  }
+          // We do not have a row_stride version of
+          // MatrixTransposeMatrixMultiply, otherwise we could use it here to
+          // further speed up the following expression.
+          auto b = row_block.middleCols(c, col_block_size);
+          std::lock_guard<std::mutex> l(locks_[col]);
+          m.noalias() += b.transpose() * b;
+          c += col_block_size;
+        }
+      });
 
-  for (int i = 0; i < num_col_blocks; ++i) {
-    const int col = col_blocks[i].position;
-    const int col_block_size = col_blocks[i].size;
-    MatrixRef m(m_values + m_rows[col], col_block_size, col_block_size);
+  // for (int i = 0; i < num_col_blocks; ++i) {
+  ParallelFor(
+      options_.context, 0, num_col_blocks, options_.num_threads, [&](int i) {
+        const int col = col_blocks[i].position;
+        const int col_block_size = col_blocks[i].size;
+        MatrixRef m(m_values + m_rows[col], col_block_size, col_block_size);
 
-    if (D != nullptr) {
-      m.diagonal() +=
-          ConstVectorRef(D + col, col_block_size).array().square().matrix();
-    }
+        if (D != nullptr) {
+          m.diagonal() +=
+              ConstVectorRef(D + col, col_block_size).array().square().matrix();
+        }
 
-    // TODO(sameeragarwal): Deal with Cholesky inversion failure here and
-    // elsewhere.
-    m = m.llt().solve(Matrix::Identity(col_block_size, col_block_size));
-  }
+        // TODO(sameeragarwal): Deal with Cholesky inversion failure here and
+        // elsewhere.
+        m = m.llt().solve(Matrix::Identity(col_block_size, col_block_size));
+      });
 
   return true;
 }
