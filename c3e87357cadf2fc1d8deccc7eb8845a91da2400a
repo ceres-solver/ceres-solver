@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c73543e1_148c3a0e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-08-30T15:08:52Z",
+      "side": 1,
+      "message": "Sameer, do you have access to a computer with CUDA version \u003c 11.2.1? \nI think this patch should fix the compile error, but I don\u0027t have an appropriate computer available to test on.",
+      "revId": "c3e87357cadf2fc1d8deccc7eb8845a91da2400a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
