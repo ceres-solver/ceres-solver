@@ -45,24 +45,13 @@
 
 namespace ceres::internal {
 
-using std::vector;
-
 // TODO(sameeragarwal): Drop the dependence on TripletSparseMatrix.
 
 BlockRandomAccessDiagonalMatrix::BlockRandomAccessDiagonalMatrix(
-    const vector<int>& blocks)
-    : blocks_(blocks) {
-  // Build the row/column layout vector and count the number of scalar
-  // rows/columns.
-  int num_cols = 0;
-  int num_nonzeros = 0;
-  vector<int> block_positions;
-  for (int block_size : blocks_) {
-    block_positions.push_back(num_cols);
-    num_cols += block_size;
-    num_nonzeros += block_size * block_size;
-  }
-
+    std::vector<Block> blocks)
+    : blocks_(std::move(blocks)) {
+  const int num_cols = NumScalarEntries(blocks_);
+  const int num_nonzeros = SumSquaredSizes(blocks_);
   VLOG(1) << "Matrix Size [" << num_cols << "," << num_cols << "] "
           << num_nonzeros;
 
@@ -74,14 +63,12 @@ BlockRandomAccessDiagonalMatrix::BlockRandomAccessDiagonalMatrix(
   double* values = tsm_->mutable_values();
 
   int pos = 0;
-  for (int i = 0; i < blocks_.size(); ++i) {
-    const int block_size = blocks_[i];
+  for (auto& block : blocks_) {
     layout_.push_back(new CellInfo(values + pos));
-    const int block_begin = block_positions[i];
-    for (int r = 0; r < block_size; ++r) {
-      for (int c = 0; c < block_size; ++c, ++pos) {
-        rows[pos] = block_begin + r;
-        cols[pos] = block_begin + c;
+    for (int r = 0; r < block.size; ++r) {
+      for (int c = 0; c < block.size; ++c, ++pos) {
+        rows[pos] = block.position + r;
+        cols[pos] = block.position + c;
       }
     }
   }
@@ -102,7 +89,7 @@ CellInfo* BlockRandomAccessDiagonalMatrix::GetCell(int row_block_id,
   if (row_block_id != col_block_id) {
     return nullptr;
   }
-  const int stride = blocks_[row_block_id];
+  const int stride = blocks_[row_block_id].size;
 
   // Each cell is stored contiguously as its own little dense matrix.
   *row = 0;
@@ -122,11 +109,11 @@ void BlockRandomAccessDiagonalMatrix::SetZero() {
 
 void BlockRandomAccessDiagonalMatrix::Invert() {
   double* values = tsm_->mutable_values();
-  for (int block_size : blocks_) {
-    MatrixRef block(values, block_size, block_size);
-    block = block.selfadjointView<Eigen::Upper>().llt().solve(
-        Matrix::Identity(block_size, block_size));
-    values += block_size * block_size;
+  for (auto& block : blocks_) {
+    MatrixRef b(values, block.size, block.size);
+    b = b.selfadjointView<Eigen::Upper>().llt().solve(
+        Matrix::Identity(block.size, block.size));
+    values += block.size * block.size;
   }
 }
 
@@ -135,12 +122,12 @@ void BlockRandomAccessDiagonalMatrix::RightMultiplyAndAccumulate(
   CHECK(x != nullptr);
   CHECK(y != nullptr);
   const double* values = tsm_->values();
-  for (int block_size : blocks_) {
-    ConstMatrixRef block(values, block_size, block_size);
-    VectorRef(y, block_size).noalias() += block * ConstVectorRef(x, block_size);
-    x += block_size;
-    y += block_size;
-    values += block_size * block_size;
+  for (auto& block : blocks_) {
+    ConstMatrixRef b(values, block.size, block.size);
+    VectorRef(y, block.size).noalias() += b * ConstVectorRef(x, block.size);
+    x += block.size;
+    y += block.size;
+    values += block.size * block.size;
   }
 }
 

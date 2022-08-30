@@ -32,40 +32,36 @@
 
 #include <limits>
 #include <memory>
+#include <set>
+#include <utility>
 #include <vector>
 
 #include "ceres/internal/eigen.h"
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
-
-using std::make_pair;
-using std::pair;
-using std::set;
-using std::vector;
+namespace ceres::internal {
 
 TEST(BlockRandomAccessSparseMatrix, GetCell) {
-  vector<int> blocks;
-  blocks.push_back(3);
-  blocks.push_back(4);
-  blocks.push_back(5);
+  std::vector<Block> blocks;
+  blocks.emplace_back(3, 0);
+  blocks.emplace_back(4, 3);
+  blocks.emplace_back(5, 7);
   const int num_rows = 3 + 4 + 5;
 
-  set<pair<int, int>> block_pairs;
+  std::set<std::pair<int, int>> block_pairs;
   int num_nonzeros = 0;
-  block_pairs.insert(make_pair(0, 0));
-  num_nonzeros += blocks[0] * blocks[0];
+  block_pairs.emplace(0, 0);
+  num_nonzeros += blocks[0].size * blocks[0].size;
 
-  block_pairs.insert(make_pair(1, 1));
-  num_nonzeros += blocks[1] * blocks[1];
+  block_pairs.emplace(1, 1);
+  num_nonzeros += blocks[1].size * blocks[1].size;
 
-  block_pairs.insert(make_pair(1, 2));
-  num_nonzeros += blocks[1] * blocks[2];
+  block_pairs.emplace(1, 2);
+  num_nonzeros += blocks[1].size * blocks[2].size;
 
-  block_pairs.insert(make_pair(0, 2));
-  num_nonzeros += blocks[2] * blocks[0];
+  block_pairs.emplace(0, 2);
+  num_nonzeros += blocks[2].size * blocks[0].size;
 
   BlockRandomAccessSparseMatrix m(blocks, block_pairs);
   EXPECT_EQ(m.num_rows(), num_rows);
@@ -83,14 +79,14 @@ TEST(BlockRandomAccessSparseMatrix, GetCell) {
     EXPECT_TRUE(cell != nullptr);
     EXPECT_EQ(row, 0);
     EXPECT_EQ(col, 0);
-    EXPECT_EQ(row_stride, blocks[row_block_id]);
-    EXPECT_EQ(col_stride, blocks[col_block_id]);
+    EXPECT_EQ(row_stride, blocks[row_block_id].size);
+    EXPECT_EQ(col_stride, blocks[col_block_id].size);
 
     // Write into the block
     MatrixRef(cell->values, row_stride, col_stride)
-        .block(row, col, blocks[row_block_id], blocks[col_block_id]) =
+        .block(row, col, blocks[row_block_id].size, blocks[col_block_id].size) =
         (row_block_id + 1) * (col_block_id + 1) *
-        Matrix::Ones(blocks[row_block_id], blocks[col_block_id]);
+        Matrix::Ones(blocks[row_block_id].size, blocks[col_block_id].size);
   }
 
   const TripletSparseMatrix* tsm = m.matrix();
@@ -138,10 +134,10 @@ TEST(BlockRandomAccessSparseMatrix, GetCell) {
 class BlockRandomAccessSparseMatrixTest : public ::testing::Test {
  public:
   void SetUp() final {
-    vector<int> blocks;
-    blocks.push_back(1);
-    set<pair<int, int>> block_pairs;
-    block_pairs.insert(make_pair(0, 0));
+    std::vector<Block> blocks;
+    blocks.emplace_back(1, 0);
+    std::set<std::pair<int, int>> block_pairs;
+    block_pairs.emplace(0, 0);
     m_ = std::make_unique<BlockRandomAccessSparseMatrix>(blocks, block_pairs);
   }
 
@@ -179,5 +175,4 @@ TEST_F(BlockRandomAccessSparseMatrixTest, LongToIntPair) {
   CheckLongToIntPair();
 }
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal

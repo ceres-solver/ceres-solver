@@ -37,6 +37,7 @@
 #include <vector>
 
 #include "ceres/block_random_access_matrix.h"
+#include "ceres/block_structure.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
 #include "ceres/triplet_sparse_matrix.h"
@@ -50,7 +51,7 @@ class CERES_NO_EXPORT BlockRandomAccessDiagonalMatrix
     : public BlockRandomAccessMatrix {
  public:
   // blocks is an array of block sizes.
-  explicit BlockRandomAccessDiagonalMatrix(const std::vector<int>& blocks);
+  explicit BlockRandomAccessDiagonalMatrix(std::vector<Block> blocks);
   BlockRandomAccessDiagonalMatrix(const BlockRandomAccessDiagonalMatrix&) =
       delete;
   void operator=(const BlockRandomAccessDiagonalMatrix&) = delete;
@@ -86,7 +87,7 @@ class CERES_NO_EXPORT BlockRandomAccessDiagonalMatrix
 
  private:
   // row/column block sizes.
-  const std::vector<int> blocks_;
+  const std::vector<Block> blocks_;
   std::vector<CellInfo*> layout_;
 
   // The underlying matrix object which actually stores the cells.

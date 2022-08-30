@@ -49,15 +49,19 @@ using BlockSize = int32_t;
 
 struct CERES_NO_EXPORT Block {
   Block() = default;
-  Block(int size_, int position_) : size(size_), position(position_) {}
+  Block(int size_, int position_) noexcept : size(size_), position(position_) {}
 
   BlockSize size{-1};
   int position{-1};  // Position along the row/column.
 };
 
+inline bool operator==(const Block& left, const Block& right) noexcept {
+  return (left.size == right.size) && (left.position == right.position);
+}
+
 struct CERES_NO_EXPORT Cell {
   Cell() = default;
-  Cell(int block_id_, int position_)
+  Cell(int block_id_, int position_) noexcept
       : block_id(block_id_), position(position_) {}
 
   // Column or row block id as the case maybe.
@@ -74,7 +78,7 @@ struct CERES_NO_EXPORT CompressedList {
 
   // Construct a CompressedList with the cells containing num_cells
   // entries.
-  explicit CompressedList(int num_cells) : cells(num_cells) {}
+  explicit CompressedList(int num_cells) noexcept : cells(num_cells) {}
   Block block;
   std::vector<Cell> cells;
 };
@@ -167,6 +171,18 @@ struct CERES_NO_EXPORT CompressedColumnBlockStructure {
   std::vector<Block> rows;
   std::vector<CompressedColumn> cols;
 };
+
+inline int NumScalarEntries(const std::vector<Block>& blocks) {
+  if (blocks.empty()) {
+    return 0;
+  }
+
+  auto& block = blocks.back();
+  return block.position + block.size;
+}
+
+std::vector<Block> Tail(const std::vector<Block>& blocks, int n);
+int SumSquaredSizes(const std::vector<Block>& blocks);
 
 }  // namespace ceres::internal
 

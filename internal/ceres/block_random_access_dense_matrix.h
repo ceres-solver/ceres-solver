@@ -35,6 +35,7 @@
 #include <vector>
 
 #include "ceres/block_random_access_matrix.h"
+#include "ceres/block_structure.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
 
@@ -55,7 +56,7 @@ class CERES_NO_EXPORT BlockRandomAccessDenseMatrix
  public:
   // blocks is a vector of block sizes. The resulting matrix has
   // blocks.size() * blocks.size() cells.
-  explicit BlockRandomAccessDenseMatrix(const std::vector<int>& blocks);
+  explicit BlockRandomAccessDenseMatrix(std::vector<Block> blocks);
   BlockRandomAccessDenseMatrix(const BlockRandomAccessDenseMatrix&) = delete;
   void operator=(const BlockRandomAccessDenseMatrix&) = delete;
 
@@ -86,7 +87,7 @@ class CERES_NO_EXPORT BlockRandomAccessDenseMatrix
 
  private:
   int num_rows_;
-  std::vector<int> block_layout_;
+  std::vector<Block> blocks_;
   std::unique_ptr<double[]> values_;
   std::unique_ptr<CellInfo[]> cell_infos_;
 };
