@@ -55,6 +55,10 @@ TEST(BlockSparseJacobiPreconditioner, _) {
   options.block_density = 0.25;
   std::mt19937 prng;
 
+  Preconditioner::Options preconditioner_options;
+  ContextImpl context;
+  preconditioner_options.context = &context;
+
   for (int trial = 0; trial < kNumtrials; ++trial) {
     auto jacobian = BlockSparseMatrix::CreateRandomMatrix(options, prng);
     Vector diagonal = Vector::Ones(jacobian->num_cols());
@@ -63,7 +67,7 @@ TEST(BlockSparseJacobiPreconditioner, _) {
     Matrix hessian = dense_jacobian.transpose() * dense_jacobian;
     hessian.diagonal() += diagonal.array().square().matrix();
 
-    BlockSparseJacobiPreconditioner pre(*jacobian);
+    BlockSparseJacobiPreconditioner pre(preconditioner_options, *jacobian);
     pre.Update(*jacobian, diagonal.data());
 
     // The const_cast is needed to be able to call GetCell.
@@ -104,6 +108,10 @@ TEST(CompressedRowSparseJacobiPreconditioner, _) {
   options.block_density = 0.25;
   std::mt19937 prng;
 
+  Preconditioner::Options preconditioner_options;
+  ContextImpl context;
+  preconditioner_options.context = &context;
+
   for (int trial = 0; trial < kNumtrials; ++trial) {
     auto jacobian =
         CompressedRowSparseMatrix::CreateRandomMatrix(options, prng);
@@ -114,7 +122,7 @@ TEST(CompressedRowSparseJacobiPreconditioner, _) {
     Matrix hessian = dense_jacobian.transpose() * dense_jacobian;
     hessian.diagonal() += diagonal.array().square().matrix();
 
-    BlockCRSJacobiPreconditioner pre(*jacobian);
+    BlockCRSJacobiPreconditioner pre(preconditioner_options, *jacobian);
     pre.Update(*jacobian, diagonal.data());
     auto& m = pre.matrix();
 
