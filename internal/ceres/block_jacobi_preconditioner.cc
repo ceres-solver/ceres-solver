@@ -42,13 +42,8 @@ namespace ceres::internal {
 
 BlockSparseJacobiPreconditioner::BlockSparseJacobiPreconditioner(
     const BlockSparseMatrix& A) {
-  const CompressedRowBlockStructure* bs = A.block_structure();
-  std::vector<int> blocks(bs->cols.size());
-  for (int i = 0; i < blocks.size(); ++i) {
-    blocks[i] = bs->cols[i].size;
-  }
-
-  m_ = std::make_unique<BlockRandomAccessDiagonalMatrix>(blocks);
+  m_ = std::make_unique<BlockRandomAccessDiagonalMatrix>(
+      A.block_structure()->cols);
 }
 
 BlockSparseJacobiPreconditioner::~BlockSparseJacobiPreconditioner() = default;
@@ -105,8 +100,8 @@ BlockCRSJacobiPreconditioner::BlockCRSJacobiPreconditioner(
   // Compute the number of non-zeros in the preconditioner. This is needed so
   // that we can construct the CompressedRowSparseMatrix.
   int m_nnz = 0;
-  for (int col_block_size : col_blocks) {
-    m_nnz += col_block_size * col_block_size;
+  for (auto& block : col_blocks) {
+    m_nnz += block.size * block.size;
   }
 
   m_ = std::make_unique<CompressedRowSparseMatrix>(
@@ -123,7 +118,7 @@ BlockCRSJacobiPreconditioner::BlockCRSJacobiPreconditioner(
     // Not that the because of the way the CompressedRowSparseMatrix format
     // works, the entire diagonal block is laid out contiguously in memory as a
     // row-major matrix. We will use this when updating the block.
-    const int col_block_size = col_blocks[i];
+    const int col_block_size = col_blocks[i].size;
     for (int j = 0; j < col_block_size; ++j) {
       for (int k = 0; k < col_block_size; ++k, ++idx) {
         m_cols[idx] = col + k;
@@ -156,7 +151,7 @@ bool BlockCRSJacobiPreconditioner::UpdateImpl(
   const int num_rows = A.num_rows();
   int r = 0;
   for (int i = 0; i < num_row_blocks; ++i) {
-    const int row_block_size = row_blocks[i];
+    const int row_block_size = row_blocks[i].size;
     const int row_nnz = a_rows[r + 1] - a_rows[r];
     ConstMatrixRef row_block(a_values + a_rows[r], row_block_size, row_nnz);
     int idx = a_rows[r];

@@ -54,13 +54,8 @@ InnerProductComputer::CreateResultMatrix(
 
   const CompressedRowBlockStructure* bs = m_.block_structure();
   const std::vector<Block>& blocks = bs->cols;
-  matrix->mutable_row_blocks()->resize(blocks.size());
-  matrix->mutable_col_blocks()->resize(blocks.size());
-  for (int i = 0; i < blocks.size(); ++i) {
-    (*(matrix->mutable_row_blocks()))[i] = blocks[i].size;
-    (*(matrix->mutable_col_blocks()))[i] = blocks[i].size;
-  }
-
+  *matrix->mutable_row_blocks() = blocks;
+  *matrix->mutable_col_blocks() = blocks;
   return matrix;
 }
 
