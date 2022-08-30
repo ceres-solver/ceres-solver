@@ -43,9 +43,6 @@
 #include "glog/logging.h"
 
 namespace ceres::internal {
-
-using std::vector;
-
 namespace {
 
 // Helper functor used by the constructor for reordering the contents
@@ -206,7 +203,7 @@ CompressedRowSparseMatrix::FromTripletSparseMatrix(
   }
 
   // index is the list of indices into the TripletSparseMatrix input.
-  vector<int> index(input.num_nonzeros(), 0);
+  std::vector<int> index(input.num_nonzeros(), 0);
   for (int i = 0; i < input.num_nonzeros(); ++i) {
     index[i] = i;
   }
@@ -457,7 +454,7 @@ void CompressedRowSparseMatrix::DeleteRows(int delta_rows) {
   int num_row_blocks = 0;
   int num_rows = 0;
   while (num_row_blocks < row_blocks_.size() && num_rows < num_rows_) {
-    num_rows += row_blocks_[num_row_blocks];
+    num_rows += row_blocks_[num_row_blocks].size;
     ++num_row_blocks;
   }
 
@@ -545,12 +542,11 @@ void CompressedRowSparseMatrix::SetMaxNumNonZeros(int num_nonzeros) {
 
 std::unique_ptr<CompressedRowSparseMatrix>
 CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(
-    const double* diagonal, const vector<int>& blocks) {
-  int num_rows = 0;
+    const double* diagonal, const std::vector<Block>& blocks) {
+  const int num_rows = blocks.back().size + blocks.back().position;
   int num_nonzeros = 0;
-  for (int block_size : blocks) {
-    num_rows += block_size;
-    num_nonzeros += block_size * block_size;
+  for (auto& block : blocks) {
+    num_nonzeros += block.size * block.size;
   }
 
   std::unique_ptr<CompressedRowSparseMatrix> matrix =
@@ -564,15 +560,15 @@ CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(
 
   int idx_cursor = 0;
   int col_cursor = 0;
-  for (int block_size : blocks) {
-    for (int r = 0; r < block_size; ++r) {
+  for (auto& block : blocks) {
+    for (int r = 0; r < block.size; ++r) {
       *(rows++) = idx_cursor;
       values[idx_cursor + r] = diagonal[col_cursor + r];
-      for (int c = 0; c < block_size; ++c, ++idx_cursor) {
+      for (int c = 0; c < block.size; ++c, ++idx_cursor) {
         *(cols++) = col_cursor + c;
       }
     }
-    col_cursor += block_size;
+    col_cursor += block.size;
   }
   *rows = idx_cursor;
 
@@ -649,9 +645,9 @@ CompressedRowSparseMatrix::CreateRandomMatrix(
   CHECK_GT(options.block_density, 0.0);
   CHECK_LE(options.block_density, 1.0);
 
-  vector<int> row_blocks;
+  std::vector<Block> row_blocks;
   row_blocks.reserve(options.num_row_blocks);
-  vector<int> col_blocks;
+  std::vector<Block> col_blocks;
   col_blocks.reserve(options.num_col_blocks);
 
   std::uniform_int_distribution<int> col_distribution(
@@ -662,25 +658,29 @@ CompressedRowSparseMatrix::CreateRandomMatrix(
   std::normal_distribution<double> standard_normal_distribution;
 
   // Generate the row block structure.
+  int row_pos = 0;
   for (int i = 0; i < options.num_row_blocks; ++i) {
     // Generate a random integer in [min_row_block_size, max_row_block_size]
-    row_blocks.push_back(row_distribution(prng));
+    row_blocks.emplace_back(row_distribution(prng), row_pos);
+    row_pos += row_blocks.back().size;
   }
 
   if (options.storage_type == StorageType::UNSYMMETRIC) {
     // Generate the col block structure.
+    int col_pos = 0;
     for (int i = 0; i < options.num_col_blocks; ++i) {
       // Generate a random integer in [min_col_block_size, max_col_block_size]
-      col_blocks.push_back(col_distribution(prng));
+      col_blocks.emplace_back(col_distribution(prng), col_pos);
+      col_pos += col_blocks.back().size;
     }
   } else {
     // Symmetric matrices (LOWER_TRIANGULAR or UPPER_TRIANGULAR);
     col_blocks = row_blocks;
   }
 
-  vector<int> tsm_rows;
-  vector<int> tsm_cols;
-  vector<double> tsm_values;
+  std::vector<int> tsm_rows;
+  std::vector<int> tsm_cols;
+  std::vector<double> tsm_values;
 
   // For ease of construction, we are going to generate the
   // CompressedRowSparseMatrix by generating it as a
@@ -703,7 +703,7 @@ CompressedRowSparseMatrix::CreateRandomMatrix(
              (r > c)) ||
             ((options.storage_type == StorageType::LOWER_TRIANGULAR) &&
              (r < c))) {
-          col_block_begin += col_blocks[c];
+          col_block_begin += col_blocks[c].size;
           continue;
         }
 
@@ -715,8 +715,8 @@ CompressedRowSparseMatrix::CreateRandomMatrix(
           // If the matrix is symmetric, then we take care to generate
           // symmetric diagonal blocks.
           if (options.storage_type == StorageType::UNSYMMETRIC || r != c) {
-            AddRandomBlock(row_blocks[r],
-                           col_blocks[c],
+            AddRandomBlock(row_blocks[r].size,
+                           col_blocks[c].size,
                            row_block_begin,
                            col_block_begin,
                            randn,
@@ -724,7 +724,7 @@ CompressedRowSparseMatrix::CreateRandomMatrix(
                            &tsm_cols,
                            &tsm_values);
           } else {
-            AddSymmetricRandomBlock(row_blocks[r],
+            AddSymmetricRandomBlock(row_blocks[r].size,
                                     row_block_begin,
                                     randn,
                                     &tsm_rows,
@@ -732,14 +732,14 @@ CompressedRowSparseMatrix::CreateRandomMatrix(
                                     &tsm_values);
           }
         }
-        col_block_begin += col_blocks[c];
+        col_block_begin += col_blocks[c].size;
       }
-      row_block_begin += row_blocks[r];
+      row_block_begin += row_blocks[r].size;
     }
   }
 
-  const int num_rows = std::accumulate(row_blocks.begin(), row_blocks.end(), 0);
-  const int num_cols = std::accumulate(col_blocks.begin(), col_blocks.end(), 0);
+  const int num_rows = row_blocks.back().size + row_blocks.back().position;
+  const int num_cols = col_blocks.back().size + col_blocks.back().position;
   const bool kDoNotTranspose = false;
   std::unique_ptr<CompressedRowSparseMatrix> matrix =
       CompressedRowSparseMatrix::FromTripletSparseMatrix(

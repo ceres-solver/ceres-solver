@@ -45,33 +45,35 @@
 #include "ceres/scratch_evaluate_preparer.h"
 
 namespace ceres::internal {
-
-using std::adjacent_find;
-using std::make_pair;
-using std::pair;
-using std::vector;
-
 void CompressedRowJacobianWriter::PopulateJacobianRowAndColumnBlockVectors(
     const Program* program, CompressedRowSparseMatrix* jacobian) {
-  const vector<ParameterBlock*>& parameter_blocks = program->parameter_blocks();
-  vector<int>& col_blocks = *(jacobian->mutable_col_blocks());
+  const std::vector<ParameterBlock*>& parameter_blocks =
+      program->parameter_blocks();
+  auto& col_blocks = *(jacobian->mutable_col_blocks());
   col_blocks.resize(parameter_blocks.size());
+  int col_pos = 0;
   for (int i = 0; i < parameter_blocks.size(); ++i) {
-    col_blocks[i] = parameter_blocks[i]->TangentSize();
+    col_blocks[i].size = parameter_blocks[i]->TangentSize();
+    col_blocks[i].position = col_pos;
+    col_pos += col_blocks[i].size;
   }
 
-  const vector<ResidualBlock*>& residual_blocks = program->residual_blocks();
-  vector<int>& row_blocks = *(jacobian->mutable_row_blocks());
+  const std::vector<ResidualBlock*>& residual_blocks =
+      program->residual_blocks();
+  auto& row_blocks = *(jacobian->mutable_row_blocks());
   row_blocks.resize(residual_blocks.size());
+  int row_pos = 0;
   for (int i = 0; i < residual_blocks.size(); ++i) {
-    row_blocks[i] = residual_blocks[i]->NumResiduals();
+    row_blocks[i].size = residual_blocks[i]->NumResiduals();
+    row_blocks[i].position = row_pos;
+    row_pos += row_blocks[i].size;
   }
 }
 
 void CompressedRowJacobianWriter::GetOrderedParameterBlocks(
     const Program* program,
     int residual_id,
-    vector<pair<int, int>>* evaluated_jacobian_blocks) {
+    std::vector<std::pair<int, int>>* evaluated_jacobian_blocks) {
   const ResidualBlock* residual_block = program->residual_blocks()[residual_id];
   const int num_parameter_blocks = residual_block->NumParameterBlocks();
 
@@ -80,7 +82,7 @@ void CompressedRowJacobianWriter::GetOrderedParameterBlocks(
         residual_block->parameter_blocks()[j];
     if (!parameter_block->IsConstant()) {
       evaluated_jacobian_blocks->push_back(
-          make_pair(parameter_block->index(), j));
+          std::make_pair(parameter_block->index(), j));
     }
   }
   std::sort(evaluated_jacobian_blocks->begin(),
@@ -89,7 +91,8 @@ void CompressedRowJacobianWriter::GetOrderedParameterBlocks(
 
 std::unique_ptr<SparseMatrix> CompressedRowJacobianWriter::CreateJacobian()
     const {
-  const vector<ResidualBlock*>& residual_blocks = program_->residual_blocks();
+  const std::vector<ResidualBlock*>& residual_blocks =
+      program_->residual_blocks();
 
   int total_num_residuals = program_->NumResiduals();
   int total_num_effective_parameters = program_->NumEffectiveParameters();
@@ -117,8 +120,9 @@ std::unique_ptr<SparseMatrix> CompressedRowJacobianWriter::CreateJacobian()
           total_num_effective_parameters,
           num_jacobian_nonzeros + total_num_effective_parameters);
 
-  // At this stage, the CompressedRowSparseMatrix is an invalid state. But this
-  // seems to be the only way to construct it without doing a memory copy.
+  // At this stage, the CompressedRowSparseMatrix is an invalid state. But
+  // this seems to be the only way to construct it without doing a memory
+  // copy.
   int* rows = jacobian->mutable_rows();
   int* cols = jacobian->mutable_cols();
 
@@ -130,7 +134,7 @@ std::unique_ptr<SparseMatrix> CompressedRowJacobianWriter::CreateJacobian()
     // Count the number of derivatives for a row of this residual block and
     // build a list of active parameter block indices.
     int num_derivatives = 0;
-    vector<int> parameter_indices;
+    std::vector<int> parameter_indices;
     for (int j = 0; j < num_parameter_blocks; ++j) {
       ParameterBlock* parameter_block = residual_block->parameter_blocks()[j];
       if (!parameter_block->IsConstant()) {
@@ -204,7 +208,7 @@ void CompressedRowJacobianWriter::Write(int residual_id,
       program_->residual_blocks()[residual_id];
   const int num_residuals = residual_block->NumResiduals();
 
-  vector<pair<int, int>> evaluated_jacobian_blocks;
+  std::vector<std::pair<int, int>> evaluated_jacobian_blocks;
   GetOrderedParameterBlocks(program_, residual_id, &evaluated_jacobian_blocks);
 
   // Where in the current row does the jacobian for a parameter block begin.
