@@ -183,8 +183,7 @@ class CERES_NO_EXPORT SparseSchurComplementSolver final
   LinearSolver::Summary SolveReducedLinearSystemUsingConjugateGradients(
       const LinearSolver::PerSolveOptions& per_solve_options, double* solution);
 
-  // Size of the blocks in the Schur complement.
-  std::vector<int> blocks_;
+  std::vector<Block> blocks_;
   std::unique_ptr<SparseCholesky> sparse_cholesky_;
   std::unique_ptr<BlockRandomAccessDiagonalMatrix> preconditioner_;
   Vector cg_solution_;

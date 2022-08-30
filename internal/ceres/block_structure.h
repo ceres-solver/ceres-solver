@@ -168,6 +168,11 @@ struct CERES_NO_EXPORT CompressedColumnBlockStructure {
   std::vector<CompressedColumn> cols;
 };
 
+inline int NumScalarEntries(const std::vector<Block>& blocks) {
+  auto& block = blocks.back();
+  return block.position + block.size;
+}
+
 }  // namespace ceres::internal
 
 #endif  // CERES_INTERNAL_BLOCK_STRUCTURE_H_
