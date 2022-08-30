@@ -38,17 +38,11 @@
 namespace ceres::internal {
 
 BlockRandomAccessDenseMatrix::BlockRandomAccessDenseMatrix(
-    const std::vector<int>& blocks) {
-  const int num_blocks = blocks.size();
-  block_layout_.resize(num_blocks, 0);
-  num_rows_ = 0;
-  for (int i = 0; i < num_blocks; ++i) {
-    block_layout_[i] = num_rows_;
-    num_rows_ += blocks[i];
-  }
-
+    const std::vector<Block>& blocks)
+    : blocks_(blocks) {
+  const int num_blocks = blocks_.size();
+  num_rows_ = NumScalarEntries(blocks_);
   values_ = std::make_unique<double[]>(num_rows_ * num_rows_);
-
   cell_infos_ = std::make_unique<CellInfo[]>(num_blocks * num_blocks);
   for (int i = 0; i < num_blocks * num_blocks; ++i) {
     cell_infos_[i].values = values_.get();
@@ -67,11 +61,11 @@ CellInfo* BlockRandomAccessDenseMatrix::GetCell(const int row_block_id,
                                                 int* col,
                                                 int* row_stride,
                                                 int* col_stride) {
-  *row = block_layout_[row_block_id];
-  *col = block_layout_[col_block_id];
+  *row = blocks_[row_block_id].position;
+  *col = blocks_[col_block_id].position;
   *row_stride = num_rows_;
   *col_stride = num_rows_;
-  return &cell_infos_[row_block_id * block_layout_.size() + col_block_id];
+  return &cell_infos_[row_block_id * blocks_.size() + col_block_id];
 }
 
 // Assume that the user does not hold any locks on any cell blocks
