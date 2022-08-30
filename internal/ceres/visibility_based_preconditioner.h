@@ -55,6 +55,7 @@
 #include <utility>
 #include <vector>
 
+#include "ceres/block_structure.h"
 #include "ceres/graph.h"
 #include "ceres/linear_solver.h"
 #include "ceres/pair_hash.h"
@@ -176,7 +177,7 @@ class CERES_NO_EXPORT VisibilityBasedPreconditioner
   int num_clusters_;
 
   // Sizes of the blocks in the schur complement.
-  std::vector<int> block_size_;
+  std::vector<Block> blocks_;
 
   // Mapping from cameras to clusters.
   std::vector<int> cluster_membership_;
