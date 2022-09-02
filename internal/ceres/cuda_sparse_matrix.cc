@@ -110,7 +110,7 @@ void CudaSparseMatrix::SpMv(cusparseOperation_t op,
   // CUSPARSE_SPMV_ALG_DEFAULT.
 #if CUDART_VERSION >= 11021
   const auto algorithm = CUSPARSE_SPMV_ALG_DEFAULT;
-#else  // CUDART_VERSION >= 11021
+#else   // CUDART_VERSION >= 11021
   const auto algorithm = CUSPARSE_MV_ALG_DEFAULT;
 #endif  // CUDART_VERSION >= 11021
 
