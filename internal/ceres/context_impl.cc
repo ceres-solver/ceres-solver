@@ -116,35 +116,38 @@ bool ContextImpl::InitCuda(std::string* message) {
   CHECK_EQ(cudaRuntimeGetVersion(&cuda_version), cudaSuccess);
   cuda_version_major_ = cuda_version / 1000;
   cuda_version_minor_ = (cuda_version % 1000) / 10;
-  CHECK_EQ(cudaGetDeviceProperties(&gpu_device_properties_,
-                                   gpu_device_id_in_use_), cudaSuccess);
+  CHECK_EQ(
+      cudaGetDeviceProperties(&gpu_device_properties_, gpu_device_id_in_use_),
+      cudaSuccess);
   VLOG(3) << "\n" << CudaConfigAsString();
   EventLogger event_logger("InitCuda");
   if (cublasCreate(&cublas_handle_) != CUBLAS_STATUS_SUCCESS) {
-    *message = "CUDA initialization failed because "
-        "cuBLAS::cublasCreate failed.";
+    *message =
+        "CUDA initialization failed because cuBLAS::cublasCreate failed.";
     cublas_handle_ = nullptr;
     return false;
   }
   event_logger.AddEvent("cublasCreate");
   if (cusolverDnCreate(&cusolver_handle_) != CUSOLVER_STATUS_SUCCESS) {
-    *message = "CUDA initialization failed because "
-        "cuSolverDN::cusolverDnCreate failed.";
+    *message =
+        "CUDA initialization failed because cuSolverDN::cusolverDnCreate "
+        "failed.";
     TearDown();
     return false;
   }
   event_logger.AddEvent("cusolverDnCreate");
   if (cusparseCreate(&cusparse_handle_) != CUSPARSE_STATUS_SUCCESS) {
-    *message = "CUDA initialization failed because "
-        "cuSPARSE::cusparseCreate failed.";
+    *message =
+        "CUDA initialization failed because cuSPARSE::cusparseCreate failed.";
     TearDown();
     return false;
   }
   event_logger.AddEvent("cusparseCreate");
   if (cudaStreamCreateWithFlags(&stream_, cudaStreamNonBlocking) !=
       cudaSuccess) {
-    *message = "CUDA initialization failed because "
-        "CUDA::cudaStreamCreateWithFlags failed.";
+    *message =
+        "CUDA initialization failed because CUDA::cudaStreamCreateWithFlags "
+        "failed.";
     TearDown();
     return false;
   }

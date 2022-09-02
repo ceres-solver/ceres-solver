@@ -72,8 +72,7 @@ class CERES_NO_EXPORT CgnrSolver final : public BlockSparseMatrixSolver {
 };
 
 #ifndef CERES_NO_CUDA
-class CudaPreconditioner : public
-    ConjugateGradientsLinearOperator<CudaVector> {
+class CudaPreconditioner : public ConjugateGradientsLinearOperator<CudaVector> {
  public:
   virtual void Update(const CompressedRowSparseMatrix& A, const double* D) = 0;
   virtual ~CudaPreconditioner() = default;
