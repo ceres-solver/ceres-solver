@@ -39,6 +39,7 @@
 
 #include "Eigen/SparseCore"
 #include "ceres/casts.h"
+#include "ceres/context_impl.h"
 #include "ceres/crs_matrix.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
@@ -598,6 +599,73 @@ INSTANTIATE_TEST_SUITE_P(
                       CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR,
                       CompressedRowSparseMatrix::StorageType::UNSYMMETRIC),
     ParamInfoToString);
+
+const int kMaxNumThreads = 8;
+class CompressedRowSparseMatrixParallelTest
+    : public ::testing::TestWithParam<int> {
+  void SetUp() final { context_.EnsureMinimumThreads(kMaxNumThreads); }
+
+ protected:
+  ContextImpl context_;
+};
+
+TEST_P(CompressedRowSparseMatrixParallelTest,
+       RightMultiplyAndAccumulateUnsymmetric) {
+  const int kMinNumBlocks = 1;
+  const int kMaxNumBlocks = 10;
+  const int kMinBlockSize = 1;
+  const int kMaxBlockSize = 5;
+  const int kNumTrials = 10;
+  const int kNumThreads = GetParam();
+  std::mt19937 prng;
+  std::uniform_real_distribution<double> uniform(0.5, 1.0);
+  for (int num_blocks = kMinNumBlocks; num_blocks < kMaxNumBlocks;
+       ++num_blocks) {
+    for (int trial = 0; trial < kNumTrials; ++trial) {
+      CompressedRowSparseMatrix::RandomMatrixOptions options;
+      options.num_col_blocks = num_blocks;
+      options.min_col_block_size = kMinBlockSize;
+      options.max_col_block_size = kMaxBlockSize;
+      options.num_row_blocks = 2 * num_blocks;
+      options.min_row_block_size = kMinBlockSize;
+      options.max_row_block_size = kMaxBlockSize;
+      options.block_density = uniform(prng);
+      options.storage_type =
+          CompressedRowSparseMatrix::StorageType::UNSYMMETRIC;
+      auto matrix =
+          CompressedRowSparseMatrix::CreateRandomMatrix(options, prng);
+      const int num_rows = matrix->num_rows();
+      const int num_cols = matrix->num_cols();
+
+      Vector x(num_cols);
+      x.setRandom();
+
+      Vector actual_y(num_rows);
+      actual_y.setZero();
+      matrix->RightMultiplyAndAccumulate(
+          x.data(), actual_y.data(), &context_, kNumThreads);
+
+      Matrix dense;
+      matrix->ToDenseMatrix(&dense);
+      Vector expected_y = dense * x;
+
+      ASSERT_NEAR((expected_y - actual_y).norm() / actual_y.norm(),
+                  0.0,
+                  std::numeric_limits<double>::epsilon() * 10)
+          << "\n"
+          << dense << "x:\n"
+          << x.transpose() << "\n"
+          << "expected: \n"
+          << expected_y.transpose() << "\n"
+          << "actual: \n"
+          << actual_y.transpose();
+    }
+  }
+}
+INSTANTIATE_TEST_SUITE_P(ParallelProducts,
+                         CompressedRowSparseMatrixParallelTest,
+                         ::testing::Values(1, 2, 4, 8),
+                         ::testing::PrintToStringParamName());
 
 // TODO(sameeragarwal) Add tests for the random matrix creation methods.
 

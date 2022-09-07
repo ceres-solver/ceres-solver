@@ -115,6 +115,8 @@ std::unique_ptr<BlockSparseMatrix> CreateTestMatrixFromId(int id) {
 }
 }  // namespace
 
+const int kNumThreads = 4;
+
 class BlockSparseMatrixTest : public ::testing::Test {
  protected:
   void SetUp() final {
@@ -130,10 +132,12 @@ class BlockSparseMatrixTest : public ::testing::Test {
     CHECK_EQ(A_->num_rows(), B_->num_rows());
     CHECK_EQ(A_->num_cols(), B_->num_cols());
     CHECK_EQ(A_->num_nonzeros(), B_->num_nonzeros());
+    context_.EnsureMinimumThreads(kNumThreads);
   }
 
   std::unique_ptr<BlockSparseMatrix> A_;
   std::unique_ptr<TripletSparseMatrix> B_;
+  ContextImpl context_;
 };
 
 TEST_F(BlockSparseMatrixTest, SetZeroTest) {
@@ -151,6 +155,20 @@ TEST_F(BlockSparseMatrixTest, RightMultiplyAndAccumulateTest) {
     B_->RightMultiplyAndAccumulate(x.data(), y_b.data());
     EXPECT_LT((y_a - y_b).norm(), 1e-12);
   }
+}
+
+TEST_F(BlockSparseMatrixTest, RightMultiplyAndAccumulateParallelTest) {
+  Vector y_0 = Vector::Random(A_->num_rows());
+  Vector y_s = y_0;
+  Vector y_p = y_0;
+
+  Vector x = Vector::Random(A_->num_cols());
+  A_->RightMultiplyAndAccumulate(x.data(), y_s.data());
+
+  A_->RightMultiplyAndAccumulate(x.data(), y_p.data(), &context_, kNumThreads);
+
+  // Current parallel implementation is expected to be bit-exact
+  EXPECT_EQ((y_s - y_p).norm(), 0.);
 }
 
 TEST_F(BlockSparseMatrixTest, LeftMultiplyAndAccumulateTest) {

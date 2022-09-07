@@ -39,6 +39,7 @@
 #include "ceres/block_structure.h"
 #include "ceres/crs_matrix.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/parallel_for.h"
 #include "ceres/small_blas.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "glog/logging.h"
@@ -88,25 +89,44 @@ void BlockSparseMatrix::SetZero() {
 
 void BlockSparseMatrix::RightMultiplyAndAccumulate(const double* x,
                                                    double* y) const {
+  RightMultiplyAndAccumulate(x, y, nullptr, 1);
+}
+
+void BlockSparseMatrix::RightMultiplyAndAccumulate(const double* x,
+                                                   double* y,
+                                                   ContextImpl* context,
+                                                   int num_threads) const {
   CHECK(x != nullptr);
   CHECK(y != nullptr);
 
-  for (int i = 0; i < block_structure_->rows.size(); ++i) {
-    int row_block_pos = block_structure_->rows[i].block.position;
-    int row_block_size = block_structure_->rows[i].block.size;
-    const std::vector<Cell>& cells = block_structure_->rows[i].cells;
-    for (const auto& cell : cells) {
-      int col_block_id = cell.block_id;
-      int col_block_size = block_structure_->cols[col_block_id].size;
-      int col_block_pos = block_structure_->cols[col_block_id].position;
-      MatrixVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
-          values_.get() + cell.position,
-          row_block_size,
-          col_block_size,
-          x + col_block_pos,
-          y + row_block_pos);
-    }
-  }
+  const auto values = values_.get();
+  const auto block_structure = block_structure_.get();
+  const auto num_row_blocks = block_structure->rows.size();
+
+  ParallelFor(context,
+              0,
+              num_row_blocks,
+              num_threads,
+              [values, block_structure, x, y](int row_block_id) {
+                const int row_block_pos =
+                    block_structure->rows[row_block_id].block.position;
+                const int row_block_size =
+                    block_structure->rows[row_block_id].block.size;
+                const auto& cells = block_structure->rows[row_block_id].cells;
+                for (const auto& cell : cells) {
+                  const int col_block_id = cell.block_id;
+                  const int col_block_size =
+                      block_structure->cols[col_block_id].size;
+                  const int col_block_pos =
+                      block_structure->cols[col_block_id].position;
+                  MatrixVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
+                      values + cell.position,
+                      row_block_size,
+                      col_block_size,
+                      x + col_block_pos,
+                      y + row_block_pos);
+                }
+              });
 }
 
 void BlockSparseMatrix::LeftMultiplyAndAccumulate(const double* x,

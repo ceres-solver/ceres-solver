@@ -36,6 +36,7 @@
 #include <random>
 
 #include "ceres/block_sparse_matrix.h"
+#include "ceres/partitioned_matrix_view.h"
 
 namespace ceres::internal {
 std::unique_ptr<BlockSparseMatrix> CreateFakeBundleAdjustmentJacobian(
@@ -45,6 +46,32 @@ std::unique_ptr<BlockSparseMatrix> CreateFakeBundleAdjustmentJacobian(
     int point_size,
     double visibility,
     std::mt19937& prng);
+
+template <int kEBlockSize = 3, int kFBlockSize = 6>
+std::pair<std::unique_ptr<PartitionedMatrixView<2, kEBlockSize, kFBlockSize>>,
+          std::unique_ptr<BlockSparseMatrix>>
+CreateFakeBundleAdjustmentPartitionedJacobian(int num_cameras,
+                                              int num_points,
+                                              double visibility,
+                                              std::mt19937& rng) {
+  using PartitionedView = PartitionedMatrixView<2, kEBlockSize, kFBlockSize>;
+  auto block_sparse_matrix = CreateFakeBundleAdjustmentJacobian(
+      num_cameras, num_points, kFBlockSize, kEBlockSize, visibility, rng);
+  auto partitioned_view =
+      std::make_unique<PartitionedView>(*block_sparse_matrix, num_points);
+  return std::make_pair(std::move(partitioned_view),
+                        std::move(block_sparse_matrix));
+}
+
+std::pair<
+    std::unique_ptr<PartitionedMatrixView<2, Eigen::Dynamic, Eigen::Dynamic>>,
+    std::unique_ptr<BlockSparseMatrix>>
+CreateFakeBundleAdjustmentPartitionedJacobian(int num_cameras,
+                                              int num_points,
+                                              int camera_size,
+                                              int landmark_size,
+                                              double visibility,
+                                              std::mt19937& rng);
 
 }  // namespace ceres::internal
 

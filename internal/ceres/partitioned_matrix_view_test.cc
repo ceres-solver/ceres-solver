@@ -174,5 +174,64 @@ TEST_F(PartitionedMatrixViewTest, BlockDiagonalFtF) {
   EXPECT_NEAR(block_diagonal_ff->values()[2], 37.0, kEpsilon);
 }
 
+const int kMaxNumThreads = 8;
+class PartitionedMatrixViewParallelTest : public ::testing::TestWithParam<int> {
+ protected:
+  void SetUp() final {
+    std::unique_ptr<LinearLeastSquaresProblem> problem =
+        CreateLinearLeastSquaresProblemFromId(2);
+    CHECK(problem != nullptr);
+    A_ = std::move(problem->A);
+
+    num_cols_ = A_->num_cols();
+    num_rows_ = A_->num_rows();
+    num_eliminate_blocks_ = problem->num_eliminate_blocks;
+    LinearSolver::Options options;
+    options.elimination_groups.push_back(num_eliminate_blocks_);
+    pmv_ = PartitionedMatrixViewBase::Create(
+        options, *down_cast<BlockSparseMatrix*>(A_.get()));
+    context_.EnsureMinimumThreads(kMaxNumThreads);
+  }
+
+  double RandDouble() { return distribution_(prng_); }
+
+  ContextImpl context_;
+  int num_rows_;
+  int num_cols_;
+  int num_eliminate_blocks_;
+  std::unique_ptr<SparseMatrix> A_;
+  std::unique_ptr<PartitionedMatrixViewBase> pmv_;
+  std::mt19937 prng_;
+  std::uniform_real_distribution<double> distribution_ =
+      std::uniform_real_distribution<double>(0.0, 1.0);
+};
+
+TEST_P(PartitionedMatrixViewParallelTest, RightMultiplyAndAccumulateEParallel) {
+  const int kNumThreads = GetParam();
+  Vector x1(pmv_->num_cols_e());
+  Vector x2(pmv_->num_cols());
+  x2.setZero();
+
+  for (int i = 0; i < pmv_->num_cols_e(); ++i) {
+    x1(i) = x2(i) = RandDouble();
+  }
+
+  Vector y1 = Vector::Zero(pmv_->num_rows());
+  pmv_->RightMultiplyAndAccumulateE(
+      x1.data(), y1.data(), &context_, kNumThreads);
+
+  Vector y2 = Vector::Zero(pmv_->num_rows());
+  A_->RightMultiplyAndAccumulate(x2.data(), y2.data());
+
+  for (int i = 0; i < pmv_->num_rows(); ++i) {
+    EXPECT_NEAR(y1(i), y2(i), kEpsilon);
+  }
+}
+
+INSTANTIATE_TEST_SUITE_P(ParallelProducts,
+                         PartitionedMatrixViewParallelTest,
+                         ::testing::Values(1, 2, 4, 8),
+                         ::testing::PrintToStringParamName());
+
 }  // namespace internal
 }  // namespace ceres

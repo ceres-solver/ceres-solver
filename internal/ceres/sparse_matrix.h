@@ -41,6 +41,7 @@
 #include "ceres/types.h"
 
 namespace ceres::internal {
+struct ContextImpl;
 
 // This class defines the interface for storing and manipulating
 // sparse matrices. The key property that differentiates different
