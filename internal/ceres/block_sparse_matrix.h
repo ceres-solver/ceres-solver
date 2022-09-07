@@ -39,6 +39,7 @@
 
 #include "ceres/block_structure.h"
 #include "ceres/compressed_row_sparse_matrix.h"
+#include "ceres/context_impl.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
@@ -64,9 +65,10 @@ class CERES_NO_EXPORT BlockSparseMatrix final : public SparseMatrix {
   //
   // TODO(sameeragarwal): Add a function which will validate legal
   // CompressedRowBlockStructure objects.
-  explicit BlockSparseMatrix(CompressedRowBlockStructure* block_structure);
+  explicit BlockSparseMatrix(CompressedRowBlockStructure* block_structure,
+                             ContextImpl* context = nullptr,
+                             int num_threads_ = 1);
 
-  BlockSparseMatrix();
   BlockSparseMatrix(const BlockSparseMatrix&) = delete;
   void operator=(const BlockSparseMatrix&) = delete;
 
@@ -87,6 +89,9 @@ class CERES_NO_EXPORT BlockSparseMatrix final : public SparseMatrix {
   const double* values() const final { return values_.get(); }
   double* mutable_values()     final { return values_.get(); }
   // clang-format on
+
+  void SetNumThreads(int num_threads);
+  void SetContext(ContextImpl* context);
 
   void ToTripletSparseMatrix(TripletSparseMatrix* matrix) const;
   const CompressedRowBlockStructure* block_structure() const;
@@ -133,6 +138,9 @@ class CERES_NO_EXPORT BlockSparseMatrix final : public SparseMatrix {
   int max_num_nonzeros_;
   std::unique_ptr<double[]> values_;
   std::unique_ptr<CompressedRowBlockStructure> block_structure_;
+
+  ContextImpl* context_ = nullptr;
+  int num_threads_ = 0;
 };
 
 // A number of algorithms like the SchurEliminator do not need

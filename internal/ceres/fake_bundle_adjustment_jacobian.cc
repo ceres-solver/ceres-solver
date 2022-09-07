@@ -47,7 +47,8 @@ std::unique_ptr<BlockSparseMatrix> CreateFakeBundleAdjustmentJacobian(
     int camera_size,
     int point_size,
     double visibility,
-    std::mt19937& prng) {
+    std::mt19937& prng,
+    int* num_col_blocks_e) {
   constexpr int kResidualSize = 2;
 
   CompressedRowBlockStructure* bs = new CompressedRowBlockStructure;
@@ -93,6 +94,10 @@ std::unique_ptr<BlockSparseMatrix> CreateFakeBundleAdjustmentJacobian(
 
   auto jacobian = std::make_unique<BlockSparseMatrix>(bs);
   VectorRef(jacobian->mutable_values(), jacobian->num_nonzeros()).setRandom();
+
+  if (num_col_blocks_e) {
+    *num_col_blocks_e = num_points;
+  }
   return jacobian;
 }
 

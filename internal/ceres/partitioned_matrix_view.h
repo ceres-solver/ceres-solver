@@ -103,6 +103,11 @@ class CERES_NO_EXPORT PartitionedMatrixViewBase {
   virtual void UpdateBlockDiagonalFtF(
       BlockSparseMatrix* block_diagonal) const = 0;
 
+  // Set number of threads for parallel operations
+  virtual void SetNumThreads(int num_threads) = 0;
+  // Set context for parallel operations
+  virtual void SetContext(ContextImpl* context) = 0;
+
   // clang-format off
   virtual int num_col_blocks_e() const = 0;
   virtual int num_col_blocks_f() const = 0;
@@ -124,7 +129,10 @@ class CERES_NO_EXPORT PartitionedMatrixView final
  public:
   // matrix = [E F], where the matrix E contains the first
   // num_col_blocks_a column blocks.
-  PartitionedMatrixView(const BlockSparseMatrix& matrix, int num_col_blocks_e);
+  PartitionedMatrixView(const BlockSparseMatrix& matrix,
+                        int num_col_blocks_e,
+                        ContextImpl* context_ = nullptr,
+                        int num_threads_ = 1);
 
   void LeftMultiplyAndAccumulateE(const double* x, double* y) const final;
   void LeftMultiplyAndAccumulateF(const double* x, double* y) const final;
@@ -143,6 +151,9 @@ class CERES_NO_EXPORT PartitionedMatrixView final
   int num_cols()         const final { return matrix_.num_cols(); }
   // clang-format on
 
+  void SetNumThreads(int num_threads) final;
+  void SetContext(ContextImpl* context) final;
+
  private:
   std::unique_ptr<BlockSparseMatrix> CreateBlockDiagonalMatrixLayout(
       int start_col_block, int end_col_block) const;
@@ -153,6 +164,9 @@ class CERES_NO_EXPORT PartitionedMatrixView final
   int num_col_blocks_f_;
   int num_cols_e_;
   int num_cols_f_;
+
+  ContextImpl* context_;
+  int num_threads_;
 };
 
 }  // namespace ceres::internal

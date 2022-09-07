@@ -39,20 +39,48 @@
 #include "ceres/block_structure.h"
 #include "ceres/crs_matrix.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/parallel_for.h"
 #include "ceres/small_blas.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "glog/logging.h"
 
 namespace ceres::internal {
+namespace {
+inline void RightMultiplyAndAccumulateRowBlock(
+    const double* values,
+    const CompressedRowBlockStructure* block_structure,
+    const int block,
+    const double* x,
+    double* y) {
+  int row_block_pos = block_structure->rows[block].block.position;
+  int row_block_size = block_structure->rows[block].block.size;
+  const auto& cells = block_structure->rows[block].cells;
+  for (const auto& cell : cells) {
+    int col_block_id = cell.block_id;
+    int col_block_size = block_structure->cols[col_block_id].size;
+    int col_block_pos = block_structure->cols[col_block_id].position;
+    MatrixVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
+        values + cell.position,
+        row_block_size,
+        col_block_size,
+        x + col_block_pos,
+        y + row_block_pos);
+  }
+}
+}  // namespace
 
 using std::vector;
 
 BlockSparseMatrix::BlockSparseMatrix(
-    CompressedRowBlockStructure* block_structure)
+    CompressedRowBlockStructure* block_structure,
+    ContextImpl* context,
+    int num_threads)
     : num_rows_(0),
       num_cols_(0),
       num_nonzeros_(0),
-      block_structure_(block_structure) {
+      block_structure_(block_structure),
+      context_(context),
+      num_threads_(num_threads) {
   CHECK(block_structure_ != nullptr);
 
   // Count the number of columns in the matrix.
@@ -93,21 +121,22 @@ void BlockSparseMatrix::RightMultiplyAndAccumulate(const double* x,
   CHECK(x != nullptr);
   CHECK(y != nullptr);
 
-  for (int i = 0; i < block_structure_->rows.size(); ++i) {
-    int row_block_pos = block_structure_->rows[i].block.position;
-    int row_block_size = block_structure_->rows[i].block.size;
-    const vector<Cell>& cells = block_structure_->rows[i].cells;
-    for (const auto& cell : cells) {
-      int col_block_id = cell.block_id;
-      int col_block_size = block_structure_->cols[col_block_id].size;
-      int col_block_pos = block_structure_->cols[col_block_id].position;
-      MatrixVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
-          values_.get() + cell.position,
-          row_block_size,
-          col_block_size,
-          x + col_block_pos,
-          y + row_block_pos);
+  auto values = values_.get();
+  auto block_structure = block_structure_.get();
+  const int num_row_blocks = block_structure->rows.size();
+  if (num_threads_ <= 1 || !context_) {
+    for (int i = 0; i < num_row_blocks; ++i) {
+      RightMultiplyAndAccumulateRowBlock(values, block_structure, i, x, y);
     }
+  } else {
+    ParallelFor(context_,
+                0,
+                num_row_blocks,
+                num_threads_,
+                [values, block_structure, x, y](int i) {
+                  RightMultiplyAndAccumulateRowBlock(
+                      values, block_structure, i, x, y);
+                });
   }
 }
 
@@ -431,5 +460,10 @@ std::unique_ptr<BlockSparseMatrix> BlockSparseMatrix::CreateRandomMatrix(
 
   return matrix;
 }
+
+void BlockSparseMatrix::SetNumThreads(int num_threads) {
+  num_threads_ = num_threads;
+}
+void BlockSparseMatrix::SetContext(ContextImpl* context) { context_ = context; }
 
 }  // namespace ceres::internal

@@ -35,6 +35,7 @@
 #include <random>
 #include <vector>
 
+#include "ceres/context_impl.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
 #include "ceres/sparse_matrix.h"
@@ -144,6 +145,9 @@ class CERES_NO_EXPORT CompressedRowSparseMatrix : public SparseMatrix {
     storage_type_ = storage_type;
   }
 
+  void SetNumThreads(int num_threads);
+  void SetContext(ContextImpl* context);
+
   const std::vector<int>& row_blocks() const { return row_blocks_; }
   std::vector<int>* mutable_row_blocks() { return &row_blocks_; }
 
@@ -208,6 +212,9 @@ class CERES_NO_EXPORT CompressedRowSparseMatrix : public SparseMatrix {
   std::vector<int> cols_;
   std::vector<double> values_;
   StorageType storage_type_;
+
+  ContextImpl* context_;
+  int num_threads_;
 
   // If the matrix has an underlying block structure, then it can also
   // carry with it row and column block sizes. This is auxiliary and

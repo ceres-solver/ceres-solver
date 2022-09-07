@@ -595,6 +595,9 @@ if (BUILD_BENCHMARKS)
   add_executable(spmv_benchmark spmv_benchmark.cc)
   add_dependencies_to_benchmark(spmv_benchmark)
 
+  add_executable(partitioned_matrix_view_benchmark partitioned_matrix_view_benchmark.cc)
+  add_dependencies_to_benchmark(partitioned_matrix_view_benchmark)
+
   add_executable(block_jacobi_preconditioner_benchmark
     block_jacobi_preconditioner_benchmark.cc)
   add_dependencies_to_benchmark(block_jacobi_preconditioner_benchmark)

@@ -39,6 +39,7 @@
 
 #include "ceres/crs_matrix.h"
 #include "ceres/internal/export.h"
+#include "ceres/parallel_for.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "glog/logging.h"
 
@@ -164,7 +165,8 @@ void AddSymmetricRandomBlock(const int num_rows,
 // This constructor gives you a semi-initialized CompressedRowSparseMatrix.
 CompressedRowSparseMatrix::CompressedRowSparseMatrix(int num_rows,
                                                      int num_cols,
-                                                     int max_num_nonzeros) {
+                                                     int max_num_nonzeros)
+    : context_(nullptr), num_threads_(1) {
   num_rows_ = num_rows;
   num_cols_ = num_cols;
   storage_type_ = StorageType::UNSYMMETRIC;
@@ -254,7 +256,8 @@ CompressedRowSparseMatrix::FromTripletSparseMatrix(
 }
 
 CompressedRowSparseMatrix::CompressedRowSparseMatrix(const double* diagonal,
-                                                     int num_rows) {
+                                                     int num_rows)
+    : context_(nullptr), num_threads_(1) {
   CHECK(diagonal != nullptr);
 
   num_rows_ = num_rows;
@@ -280,6 +283,29 @@ void CompressedRowSparseMatrix::SetZero() {
   std::fill(values_.begin(), values_.end(), 0);
 }
 
+void CompressedRowSparseMatrix::SetNumThreads(int num_threads) {
+  num_threads_ = num_threads;
+}
+
+void CompressedRowSparseMatrix::SetContext(ContextImpl* context) {
+  context_ = context;
+}
+
+namespace {
+inline void RightMultiplyAndAccumulateRowUnsymmetric(const double* values,
+                                                     const int* rows,
+                                                     const int* cols,
+                                                     int r,
+                                                     const double* x,
+                                                     double* y) {
+  for (int idx = rows[r]; idx < rows[r + 1]; ++idx) {
+    const int c = cols[idx];
+    const double v = values[idx];
+    y[r] += v * x[c];
+  }
+}
+}  // namespace
+
 // TODO(sameeragarwal): Make RightMultiplyAndAccumulate and
 // LeftMultiplyAndAccumulate block-aware for higher performance.
 void CompressedRowSparseMatrix::RightMultiplyAndAccumulate(const double* x,
@@ -288,12 +314,22 @@ void CompressedRowSparseMatrix::RightMultiplyAndAccumulate(const double* x,
   CHECK(y != nullptr);
 
   if (storage_type_ == StorageType::UNSYMMETRIC) {
-    for (int r = 0; r < num_rows_; ++r) {
-      for (int idx = rows_[r]; idx < rows_[r + 1]; ++idx) {
-        const int c = cols_[idx];
-        const double v = values_[idx];
-        y[r] += v * x[c];
+    auto values = values_.data();
+    auto rows = rows_.data();
+    auto cols = cols_.data();
+    if (num_threads_ <= 1 || !context_) {
+      for (int r = 0; r < num_rows_; ++r) {
+        RightMultiplyAndAccumulateRowUnsymmetric(values, rows, cols, r, x, y);
       }
+    } else {
+      ParallelFor(context_,
+                  0,
+                  num_rows_,
+                  num_threads_,
+                  [values, rows, cols, x, y](int r) {
+                    RightMultiplyAndAccumulateRowUnsymmetric(
+                        values, rows, cols, r, x, y);
+                  });
     }
   } else if (storage_type_ == StorageType::UPPER_TRIANGULAR) {
     // Because of their block structure, we will have entries that lie

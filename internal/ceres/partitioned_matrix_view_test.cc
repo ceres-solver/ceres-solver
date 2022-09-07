@@ -46,6 +46,7 @@ namespace ceres {
 namespace internal {
 
 const double kEpsilon = 1e-14;
+const int kNumThreads = 4;
 
 class PartitionedMatrixViewTest : public ::testing::Test {
  protected:
@@ -62,10 +63,12 @@ class PartitionedMatrixViewTest : public ::testing::Test {
     options.elimination_groups.push_back(num_eliminate_blocks_);
     pmv_ = PartitionedMatrixViewBase::Create(
         options, *down_cast<BlockSparseMatrix*>(A_.get()));
+    context_.EnsureMinimumThreads(kNumThreads);
   }
 
   double RandDouble() { return distribution_(prng_); }
 
+  ContextImpl context_;
   int num_rows_;
   int num_cols_;
   int num_eliminate_blocks_;
@@ -94,14 +97,25 @@ TEST_F(PartitionedMatrixViewTest, RightMultiplyAndAccumulateE) {
     x1(i) = x2(i) = RandDouble();
   }
 
+  // Sequential
   Vector y1 = Vector::Zero(pmv_->num_rows());
   pmv_->RightMultiplyAndAccumulateE(x1.data(), y1.data());
+
+  // Parallel
+  Vector y3 = Vector::Zero(pmv_->num_rows());
+  pmv_->SetContext(&context_);
+  pmv_->SetNumThreads(kNumThreads);
+  pmv_->RightMultiplyAndAccumulateE(x1.data(), y3.data());
+  pmv_->SetContext(nullptr);
+  pmv_->SetNumThreads(1);
 
   Vector y2 = Vector::Zero(pmv_->num_rows());
   A_->RightMultiplyAndAccumulate(x2.data(), y2.data());
 
   for (int i = 0; i < pmv_->num_rows(); ++i) {
     EXPECT_NEAR(y1(i), y2(i), kEpsilon);
+    // Current parallel implementation is expected to be bit-exact
+    EXPECT_EQ(y1(i), y3(i));
   }
 }
 
