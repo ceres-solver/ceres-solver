@@ -84,14 +84,21 @@ namespace ceres::internal {
 class CERES_NO_EXPORT CgnrLinearOperator final
     : public ConjugateGradientsLinearOperator<Vector> {
  public:
-  CgnrLinearOperator(const LinearOperator& A, const double* D)
-      : A_(A), D_(D), z_(Vector::Zero(A.num_rows())) {}
+  CgnrLinearOperator(const LinearOperator& A,
+                     const double* D,
+                     ContextImpl* context,
+                     int num_threads)
+      : A_(A),
+        D_(D),
+        z_(Vector::Zero(A.num_rows())),
+        context_(context),
+        num_threads_(num_threads) {}
 
   void RightMultiplyAndAccumulate(const Vector& x, Vector& y) final {
     // z = Ax
     // y = y + Atz
     z_.setZero();
-    A_.RightMultiplyAndAccumulate(x, z_);
+    A_.RightMultiplyAndAccumulate(x, z_, context_, num_threads_);
     A_.LeftMultiplyAndAccumulate(z_, y);
 
     // y = y + DtDx
@@ -105,6 +112,9 @@ class CERES_NO_EXPORT CgnrLinearOperator final
   const LinearOperator& A_;
   const double* D_;
   Vector z_;
+
+  ContextImpl* context_;
+  int num_threads_;
 };
 
 CgnrSolver::CgnrSolver(LinearSolver::Options options)
@@ -166,7 +176,8 @@ LinearSolver::Summary CgnrSolver::SolveImpl(
   cg_options.r_tolerance = per_solve_options.r_tolerance;
 
   // lhs = AtA + DtD
-  CgnrLinearOperator lhs(*A, per_solve_options.D);
+  CgnrLinearOperator lhs(
+      *A, per_solve_options.D, options_.context, options_.num_threads);
   // rhs = Atb.
   Vector rhs(A->num_cols());
   rhs.setZero();

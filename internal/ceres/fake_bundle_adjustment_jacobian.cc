@@ -93,6 +93,7 @@ std::unique_ptr<BlockSparseMatrix> CreateFakeBundleAdjustmentJacobian(
 
   auto jacobian = std::make_unique<BlockSparseMatrix>(bs);
   VectorRef(jacobian->mutable_values(), jacobian->num_nonzeros()).setRandom();
+
   return jacobian;
 }
 

@@ -30,7 +30,33 @@
 
 #include "ceres/linear_operator.h"
 
+#include <glog/logging.h>
+
 namespace ceres::internal {
+
+void LinearOperator::RightMultiplyAndAccumulate(const double* x,
+                                                double* y,
+                                                ContextImpl* context,
+                                                int num_threads) const {
+  (void)context;
+  if (num_threads != 1) {
+    VLOG(3) << "Parallel right product is not supported by linear operator "
+               "implementation";
+  }
+  RightMultiplyAndAccumulate(x, y);
+}
+
+void LinearOperator::LeftMultiplyAndAccumulate(const double* x,
+                                               double* y,
+                                               ContextImpl* context,
+                                               int num_threads) const {
+  (void)context;
+  if (num_threads != 1) {
+    VLOG(3) << "Parallel left product is not supported by linear operator "
+               "implementation";
+  }
+  LeftMultiplyAndAccumulate(x, y);
+}
 
 LinearOperator::~LinearOperator() = default;
 

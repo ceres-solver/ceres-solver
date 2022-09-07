@@ -39,6 +39,8 @@
 
 namespace ceres::internal {
 
+class ContextImpl;
+
 // This is an abstract base class for linear operators. It supports
 // access to size information and left and right multiply operators.
 class CERES_NO_EXPORT LinearOperator {
@@ -47,8 +49,16 @@ class CERES_NO_EXPORT LinearOperator {
 
   // y = y + Ax;
   virtual void RightMultiplyAndAccumulate(const double* x, double* y) const = 0;
+  virtual void RightMultiplyAndAccumulate(const double* x,
+                                          double* y,
+                                          ContextImpl* context,
+                                          int num_threads) const;
   // y = y + A'x;
   virtual void LeftMultiplyAndAccumulate(const double* x, double* y) const = 0;
+  virtual void LeftMultiplyAndAccumulate(const double* x,
+                                         double* y,
+                                         ContextImpl* context,
+                                         int num_threads) const;
 
   virtual void RightMultiplyAndAccumulate(const Vector& x, Vector& y) const {
     RightMultiplyAndAccumulate(x.data(), y.data());
@@ -56,6 +66,20 @@ class CERES_NO_EXPORT LinearOperator {
 
   virtual void LeftMultiplyAndAccumulate(const Vector& x, Vector& y) const {
     LeftMultiplyAndAccumulate(x.data(), y.data());
+  }
+
+  virtual void RightMultiplyAndAccumulate(const Vector& x,
+                                          Vector& y,
+                                          ContextImpl* context,
+                                          int num_threads) const {
+    RightMultiplyAndAccumulate(x.data(), y.data(), context, num_threads);
+  }
+
+  virtual void LeftMultiplyAndAccumulate(const Vector& x,
+                                         Vector& y,
+                                         ContextImpl* context,
+                                         int num_threads) const {
+    LeftMultiplyAndAccumulate(x.data(), y.data(), context, num_threads);
   }
 
   virtual int num_rows() const = 0;
