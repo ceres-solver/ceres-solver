@@ -37,8 +37,10 @@
 #include <random>
 #include <vector>
 
+#include "ceres/context_impl.h"
 #include "ceres/crs_matrix.h"
 #include "ceres/internal/export.h"
+#include "ceres/parallel_for.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "glog/logging.h"
 
@@ -278,19 +280,34 @@ void CompressedRowSparseMatrix::SetZero() {
 
 // TODO(sameeragarwal): Make RightMultiplyAndAccumulate and
 // LeftMultiplyAndAccumulate block-aware for higher performance.
+void CompressedRowSparseMatrix::RightMultiplyAndAccumulate(
+    const double* x, double* y, ContextImpl* context, int num_threads) const {
+  if (storage_type_ != StorageType::UNSYMMETRIC) {
+    RightMultiplyAndAccumulate(x, y);
+    return;
+  }
+
+  auto values = values_.data();
+  auto rows = rows_.data();
+  auto cols = cols_.data();
+
+  ParallelFor(
+      context, 0, num_rows_, num_threads, [values, rows, cols, x, y](int row) {
+        for (int idx = rows[row]; idx < rows[row + 1]; ++idx) {
+          const int c = cols[idx];
+          const double v = values[idx];
+          y[row] += v * x[c];
+        }
+      });
+}
+
 void CompressedRowSparseMatrix::RightMultiplyAndAccumulate(const double* x,
                                                            double* y) const {
   CHECK(x != nullptr);
   CHECK(y != nullptr);
 
   if (storage_type_ == StorageType::UNSYMMETRIC) {
-    for (int r = 0; r < num_rows_; ++r) {
-      for (int idx = rows_[r]; idx < rows_[r + 1]; ++idx) {
-        const int c = cols_[idx];
-        const double v = values_[idx];
-        y[r] += v * x[c];
-      }
-    }
+    RightMultiplyAndAccumulate(x, y, nullptr, 1);
   } else if (storage_type_ == StorageType::UPPER_TRIANGULAR) {
     // Because of their block structure, we will have entries that lie
     // above (below) the diagonal for lower (upper) triangular matrices,

@@ -52,6 +52,8 @@
 
 namespace ceres::internal {
 
+class ContextImpl;
+
 // Given generalized bi-partite matrix A = [E F], with the same block
 // structure as required by the Schur complement based solver, found
 // in schur_complement_solver.h, provide access to the
@@ -75,10 +77,18 @@ class CERES_NO_EXPORT PartitionedMatrixViewBase {
   // y += Ex
   virtual void RightMultiplyAndAccumulateE(const double* x,
                                            double* y) const = 0;
+  virtual void RightMultiplyAndAccumulateE(const double* x,
+                                           double* y,
+                                           ContextImpl* context,
+                                           int num_threads) const = 0;
 
   // y += Fx
   virtual void RightMultiplyAndAccumulateF(const double* x,
                                            double* y) const = 0;
+  virtual void RightMultiplyAndAccumulateF(const double* x,
+                                           double* y,
+                                           ContextImpl* context,
+                                           int num_threads) const = 0;
 
   // Create and return the block diagonal of the matrix E'E.
   virtual std::unique_ptr<BlockSparseMatrix> CreateBlockDiagonalEtE() const = 0;
@@ -130,6 +140,14 @@ class CERES_NO_EXPORT PartitionedMatrixView final
   void LeftMultiplyAndAccumulateF(const double* x, double* y) const final;
   void RightMultiplyAndAccumulateE(const double* x, double* y) const final;
   void RightMultiplyAndAccumulateF(const double* x, double* y) const final;
+  void RightMultiplyAndAccumulateE(const double* x,
+                                   double* y,
+                                   ContextImpl* context,
+                                   int num_threads) const final;
+  void RightMultiplyAndAccumulateF(const double* x,
+                                   double* y,
+                                   ContextImpl* context,
+                                   int num_threads) const final;
   std::unique_ptr<BlockSparseMatrix> CreateBlockDiagonalEtE() const final;
   std::unique_ptr<BlockSparseMatrix> CreateBlockDiagonalFtF() const final;
   void UpdateBlockDiagonalEtE(BlockSparseMatrix* block_diagonal) const final;

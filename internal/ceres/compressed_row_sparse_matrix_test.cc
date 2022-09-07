@@ -39,6 +39,7 @@
 
 #include "Eigen/SparseCore"
 #include "ceres/casts.h"
+#include "ceres/context_impl.h"
 #include "ceres/crs_matrix.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
@@ -392,7 +393,13 @@ static std::string ParamInfoToString(testing::TestParamInfo<Param> info) {
   return "UNSYMMETRIC";
 }
 
+const int kNumThreads = 4;
+
 class RightMultiplyAndAccumulateTest : public ::testing::TestWithParam<Param> {
+  void SetUp() final { context_.EnsureMinimumThreads(kNumThreads); }
+
+ protected:
+  ContextImpl context_;
 };
 
 TEST_P(RightMultiplyAndAccumulateTest, _) {
@@ -428,6 +435,11 @@ TEST_P(RightMultiplyAndAccumulateTest, _) {
       actual_y.setZero();
       matrix->RightMultiplyAndAccumulate(x.data(), actual_y.data());
 
+      Vector parallel_y(num_rows);
+      parallel_y.setZero();
+      matrix->RightMultiplyAndAccumulate(
+          x.data(), parallel_y.data(), &context_, kNumThreads);
+
       Matrix dense;
       matrix->ToDenseMatrix(&dense);
       Vector expected_y;
@@ -451,6 +463,8 @@ TEST_P(RightMultiplyAndAccumulateTest, _) {
           << expected_y.transpose() << "\n"
           << "actual: \n"
           << actual_y.transpose();
+      // Current parallel implementation expected to be bit-exact
+      EXPECT_EQ((actual_y - parallel_y).norm(), 0.);
     }
   }
 }

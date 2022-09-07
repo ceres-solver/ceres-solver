@@ -105,7 +105,8 @@ void ImplicitSchurComplement::RightMultiplyAndAccumulate(const double* x,
                                                          double* y) const {
   // y1 = F x
   tmp_rows_.setZero();
-  A_->RightMultiplyAndAccumulateF(x, tmp_rows_.data());
+  A_->RightMultiplyAndAccumulateF(
+      x, tmp_rows_.data(), options_.context, options_.num_threads);
 
   // y2 = E' y1
   tmp_e_cols_.setZero();
@@ -114,11 +115,16 @@ void ImplicitSchurComplement::RightMultiplyAndAccumulate(const double* x,
   // y3 = -(E'E)^-1 y2
   tmp_e_cols_2_.setZero();
   block_diagonal_EtE_inverse_->RightMultiplyAndAccumulate(tmp_e_cols_.data(),
-                                                          tmp_e_cols_2_.data());
+                                                          tmp_e_cols_2_.data(),
+                                                          options_.context,
+                                                          options_.num_threads);
   tmp_e_cols_2_ *= -1.0;
 
   // y1 = y1 + E y3
-  A_->RightMultiplyAndAccumulateE(tmp_e_cols_2_.data(), tmp_rows_.data());
+  A_->RightMultiplyAndAccumulateE(tmp_e_cols_2_.data(),
+                                  tmp_rows_.data(),
+                                  options_.context,
+                                  options_.num_threads);
 
   // y5 = D * x
   if (D_ != nullptr) {
@@ -139,7 +145,8 @@ void ImplicitSchurComplement::InversePowerSeriesOperatorRightMultiplyAccumulate(
   CHECK(compute_ftf_inverse_);
   // y1 = F x
   tmp_rows_.setZero();
-  A_->RightMultiplyAndAccumulateF(x, tmp_rows_.data());
+  A_->RightMultiplyAndAccumulateF(
+      x, tmp_rows_.data(), options_.context, options_.num_threads);
 
   // y2 = E' y1
   tmp_e_cols_.setZero();
@@ -148,18 +155,23 @@ void ImplicitSchurComplement::InversePowerSeriesOperatorRightMultiplyAccumulate(
   // y3 = (E'E)^-1 y2
   tmp_e_cols_2_.setZero();
   block_diagonal_EtE_inverse_->RightMultiplyAndAccumulate(tmp_e_cols_.data(),
-                                                          tmp_e_cols_2_.data());
+                                                          tmp_e_cols_2_.data(),
+                                                          options_.context,
+                                                          options_.num_threads);
   // y1 = E y3
   tmp_rows_.setZero();
-  A_->RightMultiplyAndAccumulateE(tmp_e_cols_2_.data(), tmp_rows_.data());
+  A_->RightMultiplyAndAccumulateE(tmp_e_cols_2_.data(),
+                                  tmp_rows_.data(),
+                                  options_.context,
+                                  options_.num_threads);
 
   // y4 = F' y1
   tmp_f_cols_.setZero();
   A_->LeftMultiplyAndAccumulateF(tmp_rows_.data(), tmp_f_cols_.data());
 
   // y += (F'F)^-1 y4
-  block_diagonal_FtF_inverse_->RightMultiplyAndAccumulate(tmp_f_cols_.data(),
-                                                          y);
+  block_diagonal_FtF_inverse_->RightMultiplyAndAccumulate(
+      tmp_f_cols_.data(), y, options_.context, options_.num_threads);
 }
 
 // Given a block diagonal matrix and an optional array of diagonal
@@ -197,7 +209,8 @@ void ImplicitSchurComplement::BackSubstitute(const double* x, double* y) {
 
   // y1 = F x
   tmp_rows_.setZero();
-  A_->RightMultiplyAndAccumulateF(x, tmp_rows_.data());
+  A_->RightMultiplyAndAccumulateF(
+      x, tmp_rows_.data(), options_.context, options_.num_threads);
 
   // y2 = b - y1
   tmp_rows_ = ConstVectorRef(b_, num_rows) - tmp_rows_;
@@ -208,8 +221,8 @@ void ImplicitSchurComplement::BackSubstitute(const double* x, double* y) {
 
   // y = (E'E)^-1 y3
   VectorRef(y, num_cols).setZero();
-  block_diagonal_EtE_inverse_->RightMultiplyAndAccumulate(tmp_e_cols_.data(),
-                                                          y);
+  block_diagonal_EtE_inverse_->RightMultiplyAndAccumulate(
+      tmp_e_cols_.data(), y, options_.context, options_.num_threads);
 
   // The full solution vector y has two blocks. The first block of
   // variables corresponds to the eliminated variables, which we just
@@ -232,12 +245,13 @@ void ImplicitSchurComplement::UpdateRhs() {
 
   // y2 = (E'E)^-1 y1
   Vector y2 = Vector::Zero(A_->num_cols_e());
-  block_diagonal_EtE_inverse_->RightMultiplyAndAccumulate(tmp_e_cols_.data(),
-                                                          y2.data());
+  block_diagonal_EtE_inverse_->RightMultiplyAndAccumulate(
+      tmp_e_cols_.data(), y2.data(), options_.context, options_.num_threads);
 
   // y3 = E y2
   tmp_rows_.setZero();
-  A_->RightMultiplyAndAccumulateE(y2.data(), tmp_rows_.data());
+  A_->RightMultiplyAndAccumulateE(
+      y2.data(), tmp_rows_.data(), options_.context, options_.num_threads);
 
   // y3 = b - y3
   tmp_rows_ = ConstVectorRef(b_, A_->num_rows()) - tmp_rows_;

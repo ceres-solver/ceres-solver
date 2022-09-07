@@ -45,10 +45,9 @@ class PowerSeriesExpansionPreconditionerTest : public ::testing::Test {
     const auto A = down_cast<BlockSparseMatrix*>(problem_->A.get());
     const auto D = problem_->D.get();
 
-    LinearSolver::Options options;
-    options.elimination_groups.push_back(problem_->num_eliminate_blocks);
-    options.preconditioner_type = SCHUR_POWER_SERIES_EXPANSION;
-    isc_ = std::make_unique<ImplicitSchurComplement>(options);
+    options_.elimination_groups.push_back(problem_->num_eliminate_blocks);
+    options_.preconditioner_type = SCHUR_POWER_SERIES_EXPANSION;
+    isc_ = std::make_unique<ImplicitSchurComplement>(options_);
     isc_->Init(*A, D, problem_->b.get());
     num_f_cols_ = isc_->rhs().rows();
     const int num_rows = A->num_rows(), num_cols = A->num_cols(),
@@ -76,6 +75,7 @@ class PowerSeriesExpansionPreconditionerTest : public ::testing::Test {
   std::unique_ptr<ImplicitSchurComplement> isc_;
   int num_f_cols_;
   Matrix sc_inverse_expected_;
+  LinearSolver::Options options_;
 };
 
 TEST_F(PowerSeriesExpansionPreconditionerTest,

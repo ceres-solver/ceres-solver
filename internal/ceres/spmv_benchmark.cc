@@ -66,9 +66,13 @@ constexpr double kBlockDensity = 5.0 / kNumColBlocks;
 
 static void BM_BlockSparseRightMultiplyAndAccumulateBA(
     benchmark::State& state) {
+  const int num_threads = state.range(0);
   std::mt19937 prng;
   auto jacobian = CreateFakeBundleAdjustmentJacobian(
       kNumCameras, kNumPoints, kCameraSize, kPointSize, kVisibility, prng);
+
+  ContextImpl context;
+  context.EnsureMinimumThreads(num_threads);
 
   Vector x(jacobian->num_cols());
   Vector y(jacobian->num_rows());
@@ -76,16 +80,23 @@ static void BM_BlockSparseRightMultiplyAndAccumulateBA(
   y.setRandom();
   double sum = 0;
   for (auto _ : state) {
-    jacobian->RightMultiplyAndAccumulate(x.data(), y.data());
+    jacobian->RightMultiplyAndAccumulate(
+        x.data(), y.data(), &context, num_threads);
     sum += y.norm();
   }
   CHECK_NE(sum, 0.0);
 }
 
-BENCHMARK(BM_BlockSparseRightMultiplyAndAccumulateBA);
+BENCHMARK(BM_BlockSparseRightMultiplyAndAccumulateBA)
+    ->Arg(1)
+    ->Arg(2)
+    ->Arg(4)
+    ->Arg(8)
+    ->Arg(16);
 
 static void BM_BlockSparseRightMultiplyAndAccumulateUnstructured(
     benchmark::State& state) {
+  const int num_threads = state.range(0);
   BlockSparseMatrix::RandomMatrixOptions options;
   options.num_row_blocks = kNumRowBlocks;
   options.num_col_blocks = kNumColBlocks;
@@ -98,19 +109,28 @@ static void BM_BlockSparseRightMultiplyAndAccumulateUnstructured(
 
   auto jacobian = BlockSparseMatrix::CreateRandomMatrix(options, prng);
 
+  ContextImpl context;
+  context.EnsureMinimumThreads(num_threads);
+
   Vector x(jacobian->num_cols());
   Vector y(jacobian->num_rows());
   x.setRandom();
   y.setRandom();
   double sum = 0;
   for (auto _ : state) {
-    jacobian->RightMultiplyAndAccumulate(x.data(), y.data());
+    jacobian->RightMultiplyAndAccumulate(
+        x.data(), y.data(), &context, num_threads);
     sum += y.norm();
   }
   CHECK_NE(sum, 0.0);
 }
 
-BENCHMARK(BM_BlockSparseRightMultiplyAndAccumulateUnstructured);
+BENCHMARK(BM_BlockSparseRightMultiplyAndAccumulateUnstructured)
+    ->Arg(1)
+    ->Arg(2)
+    ->Arg(4)
+    ->Arg(8)
+    ->Arg(16);
 
 static void BM_BlockSparseLeftMultiplyAndAccumulateBA(benchmark::State& state) {
   std::mt19937 prng;
@@ -158,6 +178,7 @@ static void BM_BlockSparseLeftMultiplyAndAccumulateUnstructured(
 BENCHMARK(BM_BlockSparseLeftMultiplyAndAccumulateUnstructured);
 
 static void BM_CRSRightMultiplyAndAccumulateBA(benchmark::State& state) {
+  const int num_threads = state.range(0);
   std::mt19937 prng;
   auto bsm_jacobian = CreateFakeBundleAdjustmentJacobian(
       kNumCameras, kNumPoints, kCameraSize, kPointSize, kVisibility, prng);
@@ -167,22 +188,32 @@ static void BM_CRSRightMultiplyAndAccumulateBA(benchmark::State& state) {
                                      bsm_jacobian->num_nonzeros());
   bsm_jacobian->ToCompressedRowSparseMatrix(&jacobian);
 
+  ContextImpl context;
+  context.EnsureMinimumThreads(num_threads);
+
   Vector x(jacobian.num_cols());
   Vector y(jacobian.num_rows());
   x.setRandom();
   y.setRandom();
   double sum = 0;
   for (auto _ : state) {
-    jacobian.RightMultiplyAndAccumulate(x.data(), y.data());
+    jacobian.RightMultiplyAndAccumulate(
+        x.data(), y.data(), &context, num_threads);
     sum += y.norm();
   }
   CHECK_NE(sum, 0.0);
 }
 
-BENCHMARK(BM_CRSRightMultiplyAndAccumulateBA);
+BENCHMARK(BM_CRSRightMultiplyAndAccumulateBA)
+    ->Arg(1)
+    ->Arg(2)
+    ->Arg(4)
+    ->Arg(8)
+    ->Arg(16);
 
 static void BM_CRSRightMultiplyAndAccumulateUnstructured(
     benchmark::State& state) {
+  const int num_threads = state.range(0);
   BlockSparseMatrix::RandomMatrixOptions options;
   options.num_row_blocks = kNumRowBlocks;
   options.num_col_blocks = kNumColBlocks;
@@ -199,19 +230,28 @@ static void BM_CRSRightMultiplyAndAccumulateUnstructured(
                                      bsm_jacobian->num_nonzeros());
   bsm_jacobian->ToCompressedRowSparseMatrix(&jacobian);
 
+  ContextImpl context;
+  context.EnsureMinimumThreads(num_threads);
+
   Vector x(jacobian.num_cols());
   Vector y(jacobian.num_rows());
   x.setRandom();
   y.setRandom();
   double sum = 0;
   for (auto _ : state) {
-    jacobian.RightMultiplyAndAccumulate(x.data(), y.data());
+    jacobian.RightMultiplyAndAccumulate(
+        x.data(), y.data(), &context, num_threads);
     sum += y.norm();
   }
   CHECK_NE(sum, 0.0);
 }
 
-BENCHMARK(BM_CRSRightMultiplyAndAccumulateUnstructured);
+BENCHMARK(BM_CRSRightMultiplyAndAccumulateUnstructured)
+    ->Arg(1)
+    ->Arg(2)
+    ->Arg(4)
+    ->Arg(8)
+    ->Arg(16);
 
 static void BM_CRSLeftMultiplyAndAccumulateBA(benchmark::State& state) {
   std::mt19937 prng;

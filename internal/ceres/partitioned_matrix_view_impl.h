@@ -36,6 +36,7 @@
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/parallel_for.h"
 #include "ceres/partitioned_matrix_view.h"
 #include "ceres/small_blas.h"
 #include "glog/logging.h"
@@ -88,71 +89,100 @@ PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
 void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
     RightMultiplyAndAccumulateE(const double* x, double* y) const {
-  const CompressedRowBlockStructure* bs = matrix_.block_structure();
+  RightMultiplyAndAccumulateE(x, y, nullptr, 1);
+}
 
+template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
+void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
+    RightMultiplyAndAccumulateE(const double* x,
+                                double* y,
+                                ContextImpl* context,
+                                int num_threads) const {
   // Iterate over the first num_row_blocks_e_ row blocks, and multiply
   // by the first cell in each row block.
+  auto bs = matrix_.block_structure();
   const double* values = matrix_.values();
-  for (int r = 0; r < num_row_blocks_e_; ++r) {
-    const Cell& cell = bs->rows[r].cells[0];
-    const int row_block_pos = bs->rows[r].block.position;
-    const int row_block_size = bs->rows[r].block.size;
-    const int col_block_id = cell.block_id;
-    const int col_block_pos = bs->cols[col_block_id].position;
-    const int col_block_size = bs->cols[col_block_id].size;
-    // clang-format off
-    MatrixVectorMultiply<kRowBlockSize, kEBlockSize, 1>(
-        values + cell.position, row_block_size, col_block_size,
-        x + col_block_pos,
-        y + row_block_pos);
-    // clang-format on
-  }
+  ParallelFor(context,
+              0,
+              num_row_blocks_e_,
+              num_threads,
+              [values, bs, x, y](int row_block_id) {
+                const Cell& cell = bs->rows[row_block_id].cells[0];
+                const int row_block_pos = bs->rows[row_block_id].block.position;
+                const int row_block_size = bs->rows[row_block_id].block.size;
+                const int col_block_id = cell.block_id;
+                const int col_block_pos = bs->cols[col_block_id].position;
+                const int col_block_size = bs->cols[col_block_id].size;
+                // clang-format off
+                MatrixVectorMultiply<kRowBlockSize, kEBlockSize, 1>(
+                    values + cell.position, row_block_size, col_block_size,
+                    x + col_block_pos,
+                    y + row_block_pos);
+                // clang-format on
+              });
 }
 
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
 void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
     RightMultiplyAndAccumulateF(const double* x, double* y) const {
-  const CompressedRowBlockStructure* bs = matrix_.block_structure();
+  RightMultiplyAndAccumulateF(x, y, nullptr, 1);
+}
 
+template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
+void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
+    RightMultiplyAndAccumulateF(const double* x,
+                                double* y,
+                                ContextImpl* context,
+                                int num_threads) const {
   // Iterate over row blocks, and if the row block is in E, then
   // multiply by all the cells except the first one which is of type
   // E. If the row block is not in E (i.e its in the bottom
   // num_row_blocks - num_row_blocks_e row blocks), then all the cells
   // are of type F and multiply by them all.
+  const CompressedRowBlockStructure* bs = matrix_.block_structure();
+  const int num_row_blocks = bs->rows.size();
+  const int num_cols_e = num_cols_e_;
   const double* values = matrix_.values();
-  for (int r = 0; r < num_row_blocks_e_; ++r) {
-    const int row_block_pos = bs->rows[r].block.position;
-    const int row_block_size = bs->rows[r].block.size;
-    const std::vector<Cell>& cells = bs->rows[r].cells;
-    for (int c = 1; c < cells.size(); ++c) {
-      const int col_block_id = cells[c].block_id;
-      const int col_block_pos = bs->cols[col_block_id].position;
-      const int col_block_size = bs->cols[col_block_id].size;
-      // clang-format off
-      MatrixVectorMultiply<kRowBlockSize, kFBlockSize, 1>(
-          values + cells[c].position, row_block_size, col_block_size,
-          x + col_block_pos - num_cols_e_,
-          y + row_block_pos);
-      // clang-format on
-    }
-  }
-
-  for (int r = num_row_blocks_e_; r < bs->rows.size(); ++r) {
-    const int row_block_pos = bs->rows[r].block.position;
-    const int row_block_size = bs->rows[r].block.size;
-    const std::vector<Cell>& cells = bs->rows[r].cells;
-    for (const auto& cell : cells) {
-      const int col_block_id = cell.block_id;
-      const int col_block_pos = bs->cols[col_block_id].position;
-      const int col_block_size = bs->cols[col_block_id].size;
-      // clang-format off
-      MatrixVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
-          values + cell.position, row_block_size, col_block_size,
-          x + col_block_pos - num_cols_e_,
-          y + row_block_pos);
-      // clang-format on
-    }
-  }
+  ParallelFor(context,
+              0,
+              num_row_blocks_e_,
+              num_threads,
+              [values, bs, num_cols_e, x, y](int row_block_id) {
+                const int row_block_pos = bs->rows[row_block_id].block.position;
+                const int row_block_size = bs->rows[row_block_id].block.size;
+                const auto& cells = bs->rows[row_block_id].cells;
+                for (int c = 1; c < cells.size(); ++c) {
+                  const int col_block_id = cells[c].block_id;
+                  const int col_block_pos = bs->cols[col_block_id].position;
+                  const int col_block_size = bs->cols[col_block_id].size;
+                  // clang-format off
+                  MatrixVectorMultiply<kRowBlockSize, kFBlockSize, 1>(
+                      values + cells[c].position, row_block_size, col_block_size,
+                      x + col_block_pos - num_cols_e,
+                      y + row_block_pos);
+                  // clang-format on
+                }
+              });
+  ParallelFor(context,
+              num_row_blocks_e_,
+              num_row_blocks,
+              num_threads,
+              [values, bs, num_cols_e, x, y](int row_block_id) {
+                const int row_block_pos = bs->rows[row_block_id].block.position;
+                const int row_block_size = bs->rows[row_block_id].block.size;
+                const auto& cells = bs->rows[row_block_id].cells;
+                for (const auto& cell : cells) {
+                  const int col_block_id = cell.block_id;
+                  const int col_block_pos = bs->cols[col_block_id].position;
+                  const int col_block_size = bs->cols[col_block_id].size;
+                  // clang-format off
+                  MatrixVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
+                      values + cell.position, row_block_size, col_block_size,
+                      x + col_block_pos - num_cols_e,
+                      y + row_block_pos);
+                  // clang-format on
+                }
+              });
 }
 
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
