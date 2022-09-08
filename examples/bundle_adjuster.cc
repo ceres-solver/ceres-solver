@@ -202,13 +202,13 @@ void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
       LOG(INFO) << "Point followed by camera blocks for inner iterations";
       options->inner_iteration_ordering =
           std::make_shared<ParameterBlockOrdering>();
-      for (int i = 0; i < bal_problem->num_cameras(); ++i) {
-        options->inner_iteration_ordering->AddElementToGroup(
-            bal_problem->mutable_camera(i), 1);
-      }
       for (int i = 0; i < bal_problem->num_points(); ++i) {
         options->inner_iteration_ordering->AddElementToGroup(
             bal_problem->mutable_point(i), 0);
+      }
+      for (int i = 0; i < bal_problem->num_cameras(); ++i) {
+        options->inner_iteration_ordering->AddElementToGroup(
+            bal_problem->mutable_camera(i), 1);
       }
     } else if (CERES_GET_FLAG(FLAGS_blocks_for_inner_iterations) ==
                "automatic") {
@@ -276,6 +276,11 @@ void BuildProblem(BALProblem* bal_problem, Problem* problem) {
   // If enabled use Huber's loss function.
   LossFunction* loss_function =
       CERES_GET_FLAG(FLAGS_robustify) ? new HuberLoss(1.0) : nullptr;
+
+  // add camera parameters
+  for (int i = 0; i < bal_problem->num_cameras(); ++i) {
+    problem->AddParameterBlock(bal_problem->mutable_camera(i), bal_problem->camera_block_size());
+  }
 
   // Observations is 2*num_observations long array observations =
   // [u_1, u_2, ... , u_n], where each u_i is two dimensional, the x

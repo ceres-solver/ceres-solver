@@ -38,6 +38,7 @@
 #include <vector>
 
 #include "Eigen/Core"
+#include "brown_ffcc_reprojection_error.h"
 #include "brown_ffcckkk_reprojection_error.h"
 #include "ceres/rotation.h"
 #include "glog/logging.h"
@@ -306,6 +307,7 @@ void BALProblem::CameraToAngleAxisAndCenter(const double* camera,
       VectorRef(center, 3) *= -1.0;
       break;
     }
+    case IntrinsicsType::BROWN_FFCC:
     case IntrinsicsType::BROWN_FFCCKKK: {
       VectorRef(center, 3) =
           ConstVectorRef(camera + (camera_block_size() - 3), 3);
@@ -334,6 +336,7 @@ void BALProblem::AngleAxisAndCenterToCamera(const double* angle_axis,
       VectorRef(camera + (camera_block_size() - 3), 3) *= -1.0;
       break;
     }
+    case IntrinsicsType::BROWN_FFCC:
     case IntrinsicsType::BROWN_FFCCKKK: {
       VectorRef(camera + (camera_block_size() - 3), 3) =
           ConstVectorRef(center, 3);
@@ -434,6 +437,11 @@ CostFunction* BALProblem::CreateReprojectionErrorCostFunction(int idx) const {
       return use_quaternions_
                  ? SnavelyReprojectionErrorWithQuaternions::Create(observation)
                  : SnavelyReprojectionError::Create(observation);
+    case IntrinsicsType::BROWN_FFCC:
+      return use_quaternions_
+                 ? BrownffccReprojectionErrorWithQuaternions::Create(
+                       observation)
+                 : BrownffccReprojectionError::Create(observation);
     case IntrinsicsType::BROWN_FFCCKKK:
       return use_quaternions_
                  ? BrownffcckkkReprojectionErrorWithQuaternions::Create(

@@ -47,6 +47,7 @@ class BALProblem {
  public:
   enum class IntrinsicsType {
     SNAVELY = 0,
+    BROWN_FFCC,
     BROWN_FFCCKKK,
   };
 
@@ -81,7 +82,7 @@ class BALProblem {
   std::string PrintIntrinsics(int idx) const;
 	
   // clang-format off
-  int intrinsic_block_size()       const { return intrinsics_type_ == IntrinsicsType::SNAVELY ? 3 : 7;  }
+  int intrinsic_block_size()       const { return intrinsics_type_ == IntrinsicsType::SNAVELY ? 3 : (intrinsics_type_ == IntrinsicsType::BROWN_FFCC ? 4 : 7);  }
   int camera_block_size()          const { return use_quaternions_ ? 7 : 6;  }
   int point_block_size()           const { return 3;                         }
   int num_intrinsics()             const { return num_intrinsics_;           }
