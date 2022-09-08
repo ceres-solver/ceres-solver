@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5899b5ef_d996085d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-08T11:38:48Z",
+      "side": 1,
+      "message": "The first part of bringing multi-threading to iterative linear solvers with partitioned matrix view and block-sparse matrices.\n\nThis provides a reasonable speedup for right products.\nWith higher core-counts ratio w.r.t GPGPU approach is close to memory throughput ratio (120GB/s vs 620GB/s in my setup).\n\nNote that a parallel-for implementation with non-interleaving indexes *is a must* to obtain good speedups; with interleaved indexes in ParallelFor performance gains are minuscule.",
+      "revId": "2eab796c6ae47255ca37dfdae733043aa32f35ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
