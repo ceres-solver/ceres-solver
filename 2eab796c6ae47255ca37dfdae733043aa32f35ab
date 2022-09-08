@@ -50,6 +50,42 @@
       "message": "I will review the CL later today. I also have another change which may impact this CL in flight https://ceres-solver-review.googlesource.com/c/ceres-solver/+/22760.",
       "revId": "2eab796c6ae47255ca37dfdae733043aa32f35ab",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf8d9069_8cb294d5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-08T15:40:24Z",
+      "side": 1,
+      "message": "I think we can review and submit this one first; as long as callers do not provide a valid ContextImpl -- it should work as good as it was with sequential methods.\nThose changes do not depend on particular threadpool implementation per se, but only work great with those that do not supply nearby indices to different threads (for example, I had success with tbb-based one as I\u0027ve mentioned in google groups a while ago).\n\nSo far I\u0027ve only added setting parallel context into tests.\nI think it makes sense to get both left- and right- products multi-threaded before implementing setting parallel context in all iterative solvers.",
+      "parentUuid": "f5a9331d_e94fc505",
+      "revId": "2eab796c6ae47255ca37dfdae733043aa32f35ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "694b2f9b_17ddf9ea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-08T15:40:24Z",
+      "side": 1,
+      "message": "I am ready to rebase over those changes if it will be easier this way.",
+      "parentUuid": "203496d3_184066c3",
+      "revId": "2eab796c6ae47255ca37dfdae733043aa32f35ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
