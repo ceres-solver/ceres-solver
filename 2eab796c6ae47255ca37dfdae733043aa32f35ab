@@ -104,6 +104,155 @@
       "parentUuid": "694b2f9b_17ddf9ea",
       "revId": "2eab796c6ae47255ca37dfdae733043aa32f35ab",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e40021e_abcd9037",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-08T21:32:55Z",
+      "side": 1,
+      "message": "I have some minor comments but one big one.\n\nThat has to do with SetContext and SetNumThreads.\n\nFirst of all, having two different methods means that you can call SetNumThreads while Context is null, which leaves you in a weird state.\n\nBut this raises the question, why should matrices have any thread and context objects at all.  \n\nI think the right thing to do is have the left and right multiply methods have threaded variants. WDYT?",
+      "revId": "2eab796c6ae47255ca37dfdae733043aa32f35ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e95ba6ed_5cef1aa7",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-08T21:32:55Z",
+      "side": 1,
+      "message": "block -\u003e row_block_id",
+      "range": {
+        "startLine": 52,
+        "startChar": 14,
+        "endLine": 52,
+        "endChar": 19
+      },
+      "revId": "2eab796c6ae47255ca37dfdae733043aa32f35ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e896051_951e3339",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-08T21:32:55Z",
+      "side": 1,
+      "message": "all these ints can be marked const no?",
+      "range": {
+        "startLine": 55,
+        "startChar": 6,
+        "endLine": 55,
+        "endChar": 19
+      },
+      "revId": "2eab796c6ae47255ca37dfdae733043aa32f35ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4310c155_267ce9c1",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-08T21:32:55Z",
+      "side": 1,
+      "message": "parallel for is perfectly capable of handling the 1 thread case, so why have two variants here?",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 132,
+        "endChar": 15
+      },
+      "revId": "2eab796c6ae47255ca37dfdae733043aa32f35ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ddf3e773_2f2fb905",
+        "filename": "internal/ceres/block_sparse_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-08T21:32:55Z",
+      "side": 1,
+      "message": "drop blank",
+      "revId": "2eab796c6ae47255ca37dfdae733043aa32f35ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d6bd44f_20306f57",
+        "filename": "internal/ceres/block_sparse_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-08T21:32:55Z",
+      "side": 1,
+      "message": "The default number of threads should be 1 no? what does zero mean?",
+      "range": {
+        "startLine": 143,
+        "startChar": 22,
+        "endLine": 143,
+        "endChar": 23
+      },
+      "revId": "2eab796c6ae47255ca37dfdae733043aa32f35ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7e1b3ed_be2934c9",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-08T21:32:55Z",
+      "side": 1,
+      "message": "same comment as block_sparse_matrix.",
+      "range": {
+        "startLine": 316,
+        "startChar": 6,
+        "endLine": 316,
+        "endChar": 19
+      },
+      "revId": "2eab796c6ae47255ca37dfdae733043aa32f35ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
