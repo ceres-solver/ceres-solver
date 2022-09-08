@@ -33,6 +33,23 @@
       "message": "Thank you Dmitriy, this is very interesting. \nGiven that we are still going through figuring out which threadpool to use, I think we should review and submit this CL and use this as part of the evaluation of your change to the threadpool and what Mike is proposing.\n\nWDYT?",
       "revId": "2eab796c6ae47255ca37dfdae733043aa32f35ab",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "203496d3_184066c3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-09-08T15:06:21Z",
+      "side": 1,
+      "message": "I will review the CL later today. I also have another change which may impact this CL in flight https://ceres-solver-review.googlesource.com/c/ceres-solver/+/22760.",
+      "revId": "2eab796c6ae47255ca37dfdae733043aa32f35ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
