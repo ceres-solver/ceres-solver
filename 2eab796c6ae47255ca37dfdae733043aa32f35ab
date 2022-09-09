@@ -123,6 +123,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a5e588d_95b7b816",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-09T09:22:22Z",
+      "side": 1,
+      "message": "My decision to make matrices hold a pointer to ContextImpl object inside was mainly driven by CudaSparseMatrix storing a pointer to ContextImpl.\n\nThis definitely can be also implemented by passing a context object only to methods that utilize it, since not every method requires it.\n\nIf I change implementation for cpu-side matrices to accepting pointers to context only in methods that utilize it - should gpu-side matrix classes be changed in the same way?",
+      "parentUuid": "1e40021e_abcd9037",
+      "revId": "2eab796c6ae47255ca37dfdae733043aa32f35ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e95ba6ed_5cef1aa7",
@@ -182,6 +200,30 @@
       "writtenOn": "2022-09-08T21:32:55Z",
       "side": 1,
       "message": "parallel for is perfectly capable of handling the 1 thread case, so why have two variants here?",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 132,
+        "endChar": 15
+      },
+      "revId": "2eab796c6ae47255ca37dfdae733043aa32f35ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90813c55_f2571ae0",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-09T09:22:22Z",
+      "side": 1,
+      "message": "a. ParallelFor requires a valid context (maybe we can just move the check for context pointer lower inside ParallelFor implementation though).\n\n\nb. For small loops (which can be as small as computing 2x3 matrix by 3-vector product in the case of PartitionedMatrixView::RightMultiplyE) there is a very high penalty for wrapping loop body into std::function compared to \"perfect\" inlining of a local function (up to 15% for jacobians from BA problems, up to 5% for unstructured ones, ~5% for partitioned view).\nI\u0027ve tried to keep single-threaded performance unchanged.\n\n\nHere are timings with a separate single-threaded case with inlined loop body:\nRunning ./bin/spmv_benchmark\n----------------------------------------------------------------------\nBenchmark                                                         Time\n----------------------------------------------------------------------\nBM_BlockSparseRightMultiplyAndAccumulateBA/1_mean              28.2 ms\nBM_BlockSparseRightMultiplyAndAccumulateBA/1_median            28.2 ms\nBM_BlockSparseRightMultiplyAndAccumulateBA/1_stddev           0.186 ms\nBM_BlockSparseRightMultiplyAndAccumulateBA/1_cv                0.66 % \nBM_BlockSparseRightMultiplyAndAccumulateUnstructured/1_mean    24.4 ms\nBM_BlockSparseRightMultiplyAndAccumulateUnstructured/1_median  24.4 ms\nBM_BlockSparseRightMultiplyAndAccumulateUnstructured/1_stddev 0.225 ms\nBM_BlockSparseRightMultiplyAndAccumulateUnstructured/1_cv      0.92 % \nBM_CRSRightMultiplyAndAccumulateBA/1_mean                      23.8 ms\nBM_CRSRightMultiplyAndAccumulateBA/1_median                    23.8 ms\nBM_CRSRightMultiplyAndAccumulateBA/1_stddev                   0.053 ms\nBM_CRSRightMultiplyAndAccumulateBA/1_cv                        0.22 % \nBM_CRSRightMultiplyAndAccumulateUnstructured/1_mean            20.6 ms\nBM_CRSRightMultiplyAndAccumulateUnstructured/1_median          20.6 ms\nBM_CRSRightMultiplyAndAccumulateUnstructured/1_stddev         0.093 ms\nBM_CRSRightMultiplyAndAccumulateUnstructured/1_cv              0.45 % \n\nRunning ./bin/partitioned_matrix_view_benchmark\n----------------------------------------------------------------------\nBenchmark                                                        Time \n----------------------------------------------------------------------\nBM_PatitionedViewRightMultiplyAndAccumulateE_Static/1_mean     18.3 ms \nBM_PatitionedViewRightMultiplyAndAccumulateE_Static/1_median   18.4 ms \nBM_PatitionedViewRightMultiplyAndAccumulateE_Static/1_stddev  0.039 ms \nBM_PatitionedViewRightMultiplyAndAccumulateE_Static/1_cv       0.21 %  \nBM_PatitionedViewRightMultiplyAndAccumulateF_Static/1_mean     18.9 ms \nBM_PatitionedViewRightMultiplyAndAccumulateF_Static/1_median   18.9 ms \nBM_PatitionedViewRightMultiplyAndAccumulateF_Static/1_stddev  0.150 ms \nBM_PatitionedViewRightMultiplyAndAccumulateF_Static/1_cv       0.79 % \n\nHere are timings with single-threaded case being handled with ParallelFor:\n----------------------------------------------------------------------\nBenchmark                                                         Time\n----------------------------------------------------------------------\nBM_BlockSparseRightMultiplyAndAccumulateBA/1_mean              31.9 ms\nBM_BlockSparseRightMultiplyAndAccumulateBA/1_median            31.9 ms\nBM_BlockSparseRightMultiplyAndAccumulateBA/1_stddev           0.211 ms\nBM_BlockSparseRightMultiplyAndAccumulateBA/1_cv                0.66 % \nBM_BlockSparseRightMultiplyAndAccumulateUnstructured/1_mean    24.9 ms\nBM_BlockSparseRightMultiplyAndAccumulateUnstructured/1_median  24.8 ms\nBM_BlockSparseRightMultiplyAndAccumulateUnstructured/1_stddev 0.147 ms\nBM_BlockSparseRightMultiplyAndAccumulateUnstructured/1_cv      0.59 % \nBM_CRSRightMultiplyAndAccumulateBA/1_mean                      27.2 ms\nBM_CRSRightMultiplyAndAccumulateBA/1_median                    27.1 ms\nBM_CRSRightMultiplyAndAccumulateBA/1_stddev                   0.207 ms\nBM_CRSRightMultiplyAndAccumulateBA/1_cv                        0.76 % \nBM_CRSRightMultiplyAndAccumulateUnstructured/1_mean            22.0 ms\nBM_CRSRightMultiplyAndAccumulateUnstructured/1_median          22.0 ms\nBM_CRSRightMultiplyAndAccumulateUnstructured/1_stddev         0.063 ms\nBM_CRSRightMultiplyAndAccumulateUnstructured/1_cv              0.29 % \n\nRunning ./bin/partitioned_matrix_view_benchmark\n----------------------------------------------------------------------\nBenchmark                                                        Time \n----------------------------------------------------------------------\nBM_PatitionedViewRightMultiplyAndAccumulateE_Static/1_mean    19.5 ms \nBM_PatitionedViewRightMultiplyAndAccumulateE_Static/1_median  19.5 ms \nBM_PatitionedViewRightMultiplyAndAccumulateE_Static/1_stddev 0.068 ms \nBM_PatitionedViewRightMultiplyAndAccumulateE_Static/1_cv      0.35 %  \nBM_PatitionedViewRightMultiplyAndAccumulateF_Static/1_mean    19.8 ms \nBM_PatitionedViewRightMultiplyAndAccumulateF_Static/1_median  19.7 ms \nBM_PatitionedViewRightMultiplyAndAccumulateF_Static/1_stddev 0.153 ms \nBM_PatitionedViewRightMultiplyAndAccumulateF_Static/1_cv      0.78 %  \n\n\nAs one may note, there is always a [statistically] significant difference in favor of inlined loop body, while standard deviations are pretty small.",
+      "parentUuid": "4310c155_267ce9c1",
       "range": {
         "startLine": 132,
         "startChar": 4,
