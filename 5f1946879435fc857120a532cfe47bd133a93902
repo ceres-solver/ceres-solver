@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "613ce583_cf413607",
+        "filename": "internal/ceres/block_random_access_sparse_matrix_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-11T13:10:40Z",
+      "side": 0,
+      "message": "Nice! 😊",
+      "revId": "5f1946879435fc857120a532cfe47bd133a93902",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

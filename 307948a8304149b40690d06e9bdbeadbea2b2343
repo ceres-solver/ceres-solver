@@ -52,6 +52,210 @@
       "tag": "mailMessageId\u003d\u003cCABqdRUAX9\u003d7-EOjDXfnPeFDKBoQViMFK9A1oorThU7E0epsWqw@mail.gmail.com\u003e",
       "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62c59634_c1ba53d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-11T13:10:40Z",
+      "side": 1,
+      "message": "Just a couple of suggestions. Mostly non-critical.",
+      "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce89455b_839381fb",
+        "filename": "internal/ceres/block_jacobi_preconditioner.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-11T13:10:40Z",
+      "side": 1,
+      "message": "This computation is performed in at least two other locations. Provide a free function over an iterator range of `Block`s (alternatively, over `std::vector\u003cBlock\u003e`) to avoid code duplication?",
+      "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "297389f1_1c1a7fdf",
+        "filename": "internal/ceres/block_jacobi_preconditioner.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-11T13:10:40Z",
+      "side": 1,
+      "message": "Is it safely to assume that the Cholesky decomposition always exist here? If not, I would additionally check the result of `.llt().info()`.",
+      "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5464f197_8d3109d3",
+        "filename": "internal/ceres/block_random_access_dense_matrix.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-11T13:10:40Z",
+      "side": 1,
+      "message": "Use the pass-by-value and move idiom?",
+      "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aadb0e7c_c324a071",
+        "filename": "internal/ceres/block_random_access_diagonal_matrix.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-11T13:10:40Z",
+      "side": 1,
+      "message": "Extract to function to avoid code duplication?",
+      "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2bb97119_18990eb5",
+        "filename": "internal/ceres/block_random_access_diagonal_matrix.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-11T13:10:40Z",
+      "side": 1,
+      "message": "Suggestion: pass by value and move to avoid unnecessary copying.",
+      "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aaae259b_4bc59ea0",
+        "filename": "internal/ceres/block_random_access_sparse_matrix_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-11T13:10:40Z",
+      "side": 1,
+      "message": "Replace `.insert(make_pair(...))` by `.emplace(...)`? Also everywhere else.",
+      "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c72be4ea_34c1866e",
+        "filename": "internal/ceres/block_random_access_sparse_matrix_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-11T13:10:40Z",
+      "side": 1,
+      "message": "Use `.emplace`?",
+      "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55c038a6_ed66f161",
+        "filename": "internal/ceres/block_structure.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-11T13:10:40Z",
+      "side": 1,
+      "message": "Add `noexcept` to all methods since exceptions are not possible?",
+      "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1662abb_1021cc0a",
+        "filename": "internal/ceres/compressed_col_sparse_matrix_utils_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-11T13:10:40Z",
+      "side": 1,
+      "message": "Could be simplified to `std::vector\u003cint\u003e block_ordering{{1, 0, 2, 4, 3}};`",
+      "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c813a18a_28b891ee",
+        "filename": "internal/ceres/compressed_col_sparse_matrix_utils_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-11T13:10:40Z",
+      "side": 1,
+      "message": "Could be probably simplified to `std::vector\u003cBlock\u003e col_blocks{{1, 0}, {2, 1}, {3, 3}, {2, 5}};`",
+      "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b806019e_55d20d02",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-11T13:10:40Z",
+      "side": 1,
+      "message": "Use `.emplace(i, i)`?",
+      "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
