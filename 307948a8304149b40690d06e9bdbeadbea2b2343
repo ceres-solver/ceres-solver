@@ -71,6 +71,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "57b38a3f_eac955e5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-11T14:32:13Z",
+      "side": 1,
+      "message": "Thanks Sergiu.",
+      "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ce89455b_839381fb",
@@ -84,6 +101,24 @@
       "writtenOn": "2022-09-11T13:10:40Z",
       "side": 1,
       "message": "This computation is performed in at least two other locations. Provide a free function over an iterator range of `Block`s (alternatively, over `std::vector\u003cBlock\u003e`) to avoid code duplication?",
+      "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "473f7a08_41dd9aaa",
+        "filename": "internal/ceres/block_jacobi_preconditioner.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-11T14:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce89455b_839381fb",
       "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -105,6 +140,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d487d02_a29cf577",
+        "filename": "internal/ceres/block_jacobi_preconditioner.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-11T14:32:13Z",
+      "side": 1,
+      "message": "In practice yes, this is not expected to fail, because we only use iterative solvers with LM which adds the regularizing diagonal. That said, it would be good to be careful, but thats a larger refactor for this implementation and others. So I have added a TODO and come back to it along with another TODO which needs to deal with how I treat eigen errors.",
+      "parentUuid": "297389f1_1c1a7fdf",
+      "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5464f197_8d3109d3",
@@ -118,6 +171,24 @@
       "writtenOn": "2022-09-11T13:10:40Z",
       "side": 1,
       "message": "Use the pass-by-value and move idiom?",
+      "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9233c57f_d5934821",
+        "filename": "internal/ceres/block_random_access_dense_matrix.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-11T14:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5464f197_8d3109d3",
       "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -139,6 +210,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8a76217_56ade129",
+        "filename": "internal/ceres/block_random_access_diagonal_matrix.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-11T14:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aadb0e7c_c324a071",
+      "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2bb97119_18990eb5",
@@ -152,6 +241,24 @@
       "writtenOn": "2022-09-11T13:10:40Z",
       "side": 1,
       "message": "Suggestion: pass by value and move to avoid unnecessary copying.",
+      "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "489e72f2_ce088a81",
+        "filename": "internal/ceres/block_random_access_diagonal_matrix.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-11T14:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bb97119_18990eb5",
       "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -173,6 +280,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "07b6f304_aa0ded99",
+        "filename": "internal/ceres/block_random_access_sparse_matrix_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-11T14:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaae259b_4bc59ea0",
+      "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c72be4ea_34c1866e",
@@ -186,6 +311,24 @@
       "writtenOn": "2022-09-11T13:10:40Z",
       "side": 1,
       "message": "Use `.emplace`?",
+      "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd47f22e_cba56fe9",
+        "filename": "internal/ceres/block_random_access_sparse_matrix_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-11T14:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c72be4ea_34c1866e",
       "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -207,6 +350,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8ed4327_5baaac36",
+        "filename": "internal/ceres/block_structure.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-11T14:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55c038a6_ed66f161",
+      "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c1662abb_1021cc0a",
@@ -220,6 +381,24 @@
       "writtenOn": "2022-09-11T13:10:40Z",
       "side": 1,
       "message": "Could be simplified to `std::vector\u003cint\u003e block_ordering{{1, 0, 2, 4, 3}};`",
+      "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0c0ba94_66937b86",
+        "filename": "internal/ceres/compressed_col_sparse_matrix_utils_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-11T14:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1662abb_1021cc0a",
       "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -241,6 +420,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c721c90_7539991e",
+        "filename": "internal/ceres/compressed_col_sparse_matrix_utils_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-11T14:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c813a18a_28b891ee",
+      "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b806019e_55d20d02",
@@ -254,6 +451,24 @@
       "writtenOn": "2022-09-11T13:10:40Z",
       "side": 1,
       "message": "Use `.emplace(i, i)`?",
+      "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a08d636d_3f4bafef",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-11T14:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b806019e_55d20d02",
       "revId": "307948a8304149b40690d06e9bdbeadbea2b2343",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
