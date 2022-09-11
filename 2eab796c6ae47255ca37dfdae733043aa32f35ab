@@ -143,6 +143,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2d2a7bf1_349f87ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-11T14:49:27Z",
+      "side": 1,
+      "message": "Thats a good point, I had not thought about CudaSparseMatrix. In light of that decision it makes sense to have the Context in the matrix. Then the only thing that remains is the right way to inject the Context into the matrix and set the number of threads.\n\nShould this be a construction time thing, or should it be something that happens afterwards. Both of them have their ups and downs.\n\nI think the former is better, because once constructed the user does not have to worry about whether the matrix has the requisite capabilities or not. This may require that we have to pipe the context object more deeply in some places but I think if we if we allow injection of these objects later on, then it is not clear who is responsible for doing so.\n\nAnd to make sure that we are doing this right and not missing anything, I would not have constructors with default arguments and instead carefully modify all callsites.\n\nWDYT?",
+      "parentUuid": "9a5e588d_95b7b816",
+      "revId": "2eab796c6ae47255ca37dfdae733043aa32f35ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e95ba6ed_5cef1aa7",
         "filename": "internal/ceres/block_sparse_matrix.cc",
         "patchSetId": 1
@@ -224,6 +242,30 @@
       "side": 1,
       "message": "a. ParallelFor requires a valid context (maybe we can just move the check for context pointer lower inside ParallelFor implementation though).\n\n\nb. For small loops (which can be as small as computing 2x3 matrix by 3-vector product in the case of PartitionedMatrixView::RightMultiplyE) there is a very high penalty for wrapping loop body into std::function compared to \"perfect\" inlining of a local function (up to 15% for jacobians from BA problems, up to 5% for unstructured ones, ~5% for partitioned view).\nI\u0027ve tried to keep single-threaded performance unchanged.\n\n\nHere are timings with a separate single-threaded case with inlined loop body:\nRunning ./bin/spmv_benchmark\n----------------------------------------------------------------------\nBenchmark                                                         Time\n----------------------------------------------------------------------\nBM_BlockSparseRightMultiplyAndAccumulateBA/1_mean              28.2 ms\nBM_BlockSparseRightMultiplyAndAccumulateBA/1_median            28.2 ms\nBM_BlockSparseRightMultiplyAndAccumulateBA/1_stddev           0.186 ms\nBM_BlockSparseRightMultiplyAndAccumulateBA/1_cv                0.66 % \nBM_BlockSparseRightMultiplyAndAccumulateUnstructured/1_mean    24.4 ms\nBM_BlockSparseRightMultiplyAndAccumulateUnstructured/1_median  24.4 ms\nBM_BlockSparseRightMultiplyAndAccumulateUnstructured/1_stddev 0.225 ms\nBM_BlockSparseRightMultiplyAndAccumulateUnstructured/1_cv      0.92 % \nBM_CRSRightMultiplyAndAccumulateBA/1_mean                      23.8 ms\nBM_CRSRightMultiplyAndAccumulateBA/1_median                    23.8 ms\nBM_CRSRightMultiplyAndAccumulateBA/1_stddev                   0.053 ms\nBM_CRSRightMultiplyAndAccumulateBA/1_cv                        0.22 % \nBM_CRSRightMultiplyAndAccumulateUnstructured/1_mean            20.6 ms\nBM_CRSRightMultiplyAndAccumulateUnstructured/1_median          20.6 ms\nBM_CRSRightMultiplyAndAccumulateUnstructured/1_stddev         0.093 ms\nBM_CRSRightMultiplyAndAccumulateUnstructured/1_cv              0.45 % \n\nRunning ./bin/partitioned_matrix_view_benchmark\n----------------------------------------------------------------------\nBenchmark                                                        Time \n----------------------------------------------------------------------\nBM_PatitionedViewRightMultiplyAndAccumulateE_Static/1_mean     18.3 ms \nBM_PatitionedViewRightMultiplyAndAccumulateE_Static/1_median   18.4 ms \nBM_PatitionedViewRightMultiplyAndAccumulateE_Static/1_stddev  0.039 ms \nBM_PatitionedViewRightMultiplyAndAccumulateE_Static/1_cv       0.21 %  \nBM_PatitionedViewRightMultiplyAndAccumulateF_Static/1_mean     18.9 ms \nBM_PatitionedViewRightMultiplyAndAccumulateF_Static/1_median   18.9 ms \nBM_PatitionedViewRightMultiplyAndAccumulateF_Static/1_stddev  0.150 ms \nBM_PatitionedViewRightMultiplyAndAccumulateF_Static/1_cv       0.79 % \n\nHere are timings with single-threaded case being handled with ParallelFor:\n----------------------------------------------------------------------\nBenchmark                                                         Time\n----------------------------------------------------------------------\nBM_BlockSparseRightMultiplyAndAccumulateBA/1_mean              31.9 ms\nBM_BlockSparseRightMultiplyAndAccumulateBA/1_median            31.9 ms\nBM_BlockSparseRightMultiplyAndAccumulateBA/1_stddev           0.211 ms\nBM_BlockSparseRightMultiplyAndAccumulateBA/1_cv                0.66 % \nBM_BlockSparseRightMultiplyAndAccumulateUnstructured/1_mean    24.9 ms\nBM_BlockSparseRightMultiplyAndAccumulateUnstructured/1_median  24.8 ms\nBM_BlockSparseRightMultiplyAndAccumulateUnstructured/1_stddev 0.147 ms\nBM_BlockSparseRightMultiplyAndAccumulateUnstructured/1_cv      0.59 % \nBM_CRSRightMultiplyAndAccumulateBA/1_mean                      27.2 ms\nBM_CRSRightMultiplyAndAccumulateBA/1_median                    27.1 ms\nBM_CRSRightMultiplyAndAccumulateBA/1_stddev                   0.207 ms\nBM_CRSRightMultiplyAndAccumulateBA/1_cv                        0.76 % \nBM_CRSRightMultiplyAndAccumulateUnstructured/1_mean            22.0 ms\nBM_CRSRightMultiplyAndAccumulateUnstructured/1_median          22.0 ms\nBM_CRSRightMultiplyAndAccumulateUnstructured/1_stddev         0.063 ms\nBM_CRSRightMultiplyAndAccumulateUnstructured/1_cv              0.29 % \n\nRunning ./bin/partitioned_matrix_view_benchmark\n----------------------------------------------------------------------\nBenchmark                                                        Time \n----------------------------------------------------------------------\nBM_PatitionedViewRightMultiplyAndAccumulateE_Static/1_mean    19.5 ms \nBM_PatitionedViewRightMultiplyAndAccumulateE_Static/1_median  19.5 ms \nBM_PatitionedViewRightMultiplyAndAccumulateE_Static/1_stddev 0.068 ms \nBM_PatitionedViewRightMultiplyAndAccumulateE_Static/1_cv      0.35 %  \nBM_PatitionedViewRightMultiplyAndAccumulateF_Static/1_mean    19.8 ms \nBM_PatitionedViewRightMultiplyAndAccumulateF_Static/1_median  19.7 ms \nBM_PatitionedViewRightMultiplyAndAccumulateF_Static/1_stddev 0.153 ms \nBM_PatitionedViewRightMultiplyAndAccumulateF_Static/1_cv      0.78 %  \n\n\nAs one may note, there is always a [statistically] significant difference in favor of inlined loop body, while standard deviations are pretty small.",
       "parentUuid": "4310c155_267ce9c1",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 132,
+        "endChar": 15
+      },
+      "revId": "2eab796c6ae47255ca37dfdae733043aa32f35ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e34cd8b2_cd57e624",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-11T14:49:27Z",
+      "side": 1,
+      "message": "thank you Dmitriy for these experiments make sense to me. I imagine having a lambda defined right where the parallelfor loop is used is not going to make things any better either. This is what is done elsewhere where we use parallelfor and this maybe worthy of some inspection in light of your experiments.",
+      "parentUuid": "90813c55_f2571ae0",
       "range": {
         "startLine": 132,
         "startChar": 4,
