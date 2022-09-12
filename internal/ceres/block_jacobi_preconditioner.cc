@@ -30,6 +30,9 @@
 
 #include "ceres/block_jacobi_preconditioner.h"
 
+#include <memory>
+#include <utility>
+
 #include "Eigen/Dense"
 #include "ceres/block_random_access_diagonal_matrix.h"
 #include "ceres/block_sparse_matrix.h"

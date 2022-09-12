@@ -42,7 +42,7 @@ std::unique_ptr<BlockSparseMatrix> CreateFakeBundleAdjustmentJacobian(
     int num_cameras,
     int num_points,
     int camera_size,
-    int landmark_size,
+    int point_size,
     double visibility,
     std::mt19937& prng);
 

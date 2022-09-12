@@ -32,7 +32,9 @@
 #include "ceres/internal/config.h"
 
 #ifndef CERES_NO_SUITESPARSE
+
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "ceres/compressed_col_sparse_matrix_utils.h"

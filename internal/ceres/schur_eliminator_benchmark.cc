@@ -31,6 +31,7 @@
 #include <algorithm>
 #include <memory>
 #include <random>
+#include <vector>
 
 #include "Eigen/Dense"
 #include "benchmark/benchmark.h"

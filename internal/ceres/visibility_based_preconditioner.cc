@@ -35,6 +35,8 @@
 #include <iterator>
 #include <memory>
 #include <set>
+#include <string>
+#include <unordered_set>
 #include <utility>
 #include <vector>
 
@@ -501,7 +503,7 @@ VisibilityBasedPreconditioner::CreateClusterGraph(
                             cluster_i.end(),
                             cluster_j.begin(),
                             cluster_j.end(),
-                            back_inserter(intersection));
+                            std::back_inserter(intersection));
 
       if (intersection.size() > 0) {
         // Clusters interact strongly when they share a large number

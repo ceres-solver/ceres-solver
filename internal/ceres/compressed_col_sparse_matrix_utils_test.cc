@@ -32,6 +32,7 @@
 
 #include <algorithm>
 #include <numeric>
+#include <vector>
 
 #include "Eigen/SparseCore"
 #include "ceres/internal/export.h"

@@ -33,6 +33,7 @@
 #include <algorithm>
 #include <memory>
 #include <random>
+#include <vector>
 
 #include "Eigen/Dense"
 #include "ceres/block_random_access_dense_matrix.h"

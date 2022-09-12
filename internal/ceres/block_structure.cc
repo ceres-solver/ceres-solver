@@ -30,6 +30,8 @@
 
 #include "ceres/block_structure.h"
 
+#include <vector>
+
 #include "glog/logging.h"
 
 namespace ceres::internal {
