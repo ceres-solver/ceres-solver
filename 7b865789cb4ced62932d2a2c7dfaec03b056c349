@@ -121,6 +121,299 @@
       "message": "as another data point, I used this patch as part of my efforts to parallelize block jacobi preconditioner and it leads to a very solid win there too. \n\nI would like to review this seriously and use this as a baseline for comparisons to the work Mike is doing to see what the delta to going to Eigen\u0027s threadpool would be.",
       "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac75501f_167d5442",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-12T23:45:05Z",
+      "side": 1,
+      "message": "a bunch of nit picky comments to make this code more readable.",
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad334c04_4d40078c",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-12T23:45:05Z",
+      "side": 1,
+      "message": "document argument.\n\nhow about the following renaming for clarity?\n\nnum_finished -\u003e num_jobs_finished\nnum_finished_ -\u003e num_total_jobs_finished_;\nnum_total_ -\u003e num_total_jobs_;",
+      "range": {
+        "startLine": 59,
+        "startChar": 28,
+        "endLine": 59,
+        "endChar": 29
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ac5e1ac_7557a122",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-12T23:45:05Z",
+      "side": 1,
+      "message": "Maybe rename this to ThreadPoolState.",
+      "range": {
+        "startLine": 87,
+        "startChar": 7,
+        "endLine": 87,
+        "endChar": 18
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07dfcaf3_80b8548b",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-12T23:45:05Z",
+      "side": 1,
+      "message": "I think the constructor documentation should be expanded to explain the relationship between start, end and num_work_items.",
+      "range": {
+        "startLine": 88,
+        "startChar": 29,
+        "endLine": 88,
+        "endChar": 32
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc5428f8_c7d2de5a",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-12T23:45:05Z",
+      "side": 1,
+      "message": "this comment is confusing now.",
+      "range": {
+        "startLine": 101,
+        "startChar": 18,
+        "endLine": 101,
+        "endChar": 19
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01a4c3ea_9b7898b4",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-12T23:45:05Z",
+      "side": 1,
+      "message": "I think larger/smaller is a bad distinction.\nwhat you really mean is full sized blocks and the tail/remainder.\n\n\nso how about num_large_blocks -\u003e num_full_sized_blocks\nblock_size -\u003e remainder_block_size/tail_block_size/last_block_size;",
+      "range": {
+        "startLine": 102,
+        "startChar": 12,
+        "endLine": 102,
+        "endChar": 26
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71bb8ecf_75d8ac2f",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-12T23:45:05Z",
+      "side": 1,
+      "message": "I do not understand this comment.\n\nhow about num_full_blocks,",
+      "range": {
+        "startLine": 105,
+        "startChar": 23,
+        "endLine": 105,
+        "endChar": 24
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "137b8c39_4e71c9cf",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-12T23:45:05Z",
+      "side": 1,
+      "message": "should this be a hardcoded constant like this?",
+      "range": {
+        "startLine": 128,
+        "startChar": 21,
+        "endLine": 128,
+        "endChar": 25
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59ca1ff4_e9f07485",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-12T23:45:05Z",
+      "side": 1,
+      "message": "I think it is a good idea to move this below the num_threads \u003d 1 case.",
+      "range": {
+        "startLine": 183,
+        "startChar": 17,
+        "endLine": 183,
+        "endChar": 18
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "739eee61_4b103404",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-12T23:45:05Z",
+      "side": 1,
+      "message": "this comment is misplaced it should be next to the shared_ptr declaration and not num_work_items.",
+      "range": {
+        "startLine": 201,
+        "startChar": 42,
+        "endLine": 201,
+        "endChar": 46
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ba8c67c_1e6afad3",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-12T23:45:05Z",
+      "side": 1,
+      "message": "I do not understand this computation of num_work_items. can you add a comment explaining it?",
+      "range": {
+        "startLine": 205,
+        "startChar": 14,
+        "endLine": 205,
+        "endChar": 15
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "447c37c0_fbb801cb",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-12T23:45:05Z",
+      "side": 1,
+      "message": "num_items_finished",
+      "range": {
+        "startLine": 211,
+        "startChar": 8,
+        "endLine": 211,
+        "endChar": 16
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26568371_c8ac22af",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-12T23:45:05Z",
+      "side": 1,
+      "message": "I am confused by this logic here.\nisn\u0027t i a work item rather than a block number?  also i itself was a terrible variable name, can you change it to something more informative?\n\nalso isn\u0027t block_size the size of the trailing/tail block?\n\ncan you add a comment documenting curr_start and curr_end computation.",
+      "range": {
+        "startLine": 231,
+        "startChar": 16,
+        "endLine": 231,
+        "endChar": 17
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
