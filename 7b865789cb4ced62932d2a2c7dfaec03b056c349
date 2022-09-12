@@ -104,6 +104,23 @@
       "parentUuid": "cde7ac67_92572d0c",
       "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "44472126_fa603fea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-12T20:50:15Z",
+      "side": 1,
+      "message": "as another data point, I used this patch as part of my efforts to parallelize block jacobi preconditioner and it leads to a very solid win there too. \n\nI would like to review this seriously and use this as a baseline for comparisons to the work Mike is doing to see what the delta to going to Eigen\u0027s threadpool would be.",
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
