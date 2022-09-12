@@ -49,7 +49,6 @@ void CompressedColumnScalarMatrixToBlockMatrix(
   CHECK(block_cols != nullptr);
   block_rows->clear();
   block_cols->clear();
-  const int num_row_blocks = row_blocks.size();
   const int num_col_blocks = col_blocks.size();
 
   // This loop extracts the block sparsity of the scalar sparse matrix

@@ -109,7 +109,7 @@ BlockCRSJacobiPreconditioner::BlockCRSJacobiPreconditioner(
   int* m_cols = m_->mutable_cols();
   int* m_rows = m_->mutable_rows();
   m_rows[0] = 0;
-  for (int i = 0, col = 0, idx = 0; i < num_col_blocks; ++i) {
+  for (int i = 0, idx = 0; i < num_col_blocks; ++i) {
     // For each column block populate a diagonal block in the preconditioner.
     // Not that the because of the way the CompressedRowSparseMatrix format
     // works, the entire diagonal block is laid out contiguously in memory as a
@@ -143,7 +143,6 @@ bool BlockCRSJacobiPreconditioner::UpdateImpl(
   double* m_values = m_->mutable_values();
   const int* m_rows = m_->rows();
 
-  const int num_rows = A.num_rows();
   for (int i = 0; i < num_row_blocks; ++i) {
     const int row = row_blocks[i].position;
     const int row_block_size = row_blocks[i].size;
