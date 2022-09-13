@@ -311,17 +311,13 @@ LinearSolverTerminationType LAPACKDenseQR::Solve(const double* rhs,
 
 #ifndef CERES_NO_CUDA
 
-bool CUDADenseQR::Init(ContextImpl* context, std::string* message) {
-  if (!context->InitCuda(message)) {
-    return false;
-  }
-  cublas_handle_ = context->cublas_handle_;
-  cusolver_handle_ = context->cusolver_handle_;
-  stream_ = context->stream_;
-  error_.Reserve(1);
-  *message = "CUDADenseQR::Init Success.";
-  return true;
-}
+CUDADenseQR::CUDADenseQR(ContextImpl* context)
+    : context_(context),
+      lhs_{context},
+      rhs_{context},
+      tau_{context},
+      device_workspace_{context},
+      error_(context, 1) {}
 
 LinearSolverTerminationType CUDADenseQR::Factorize(int num_rows,
                                                    int num_cols,
@@ -332,9 +328,9 @@ LinearSolverTerminationType CUDADenseQR::Factorize(int num_rows,
   tau_.Reserve(std::min(num_rows, num_cols));
   num_rows_ = num_rows;
   num_cols_ = num_cols;
-  lhs_.CopyFromCpu(lhs, num_rows * num_cols, stream_);
+  lhs_.CopyFromCpu(lhs, num_rows * num_cols);
   int device_workspace_size = 0;
-  if (cusolverDnDgeqrf_bufferSize(cusolver_handle_,
+  if (cusolverDnDgeqrf_bufferSize(context_->cusolver_handle_,
                                   num_rows,
                                   num_cols,
                                   lhs_.data(),
@@ -345,7 +341,7 @@ LinearSolverTerminationType CUDADenseQR::Factorize(int num_rows,
     return LinearSolverTerminationType::FATAL_ERROR;
   }
   device_workspace_.Reserve(device_workspace_size);
-  if (cusolverDnDgeqrf(cusolver_handle_,
+  if (cusolverDnDgeqrf(context_->cusolver_handle_,
                        num_rows,
                        num_cols,
                        lhs_.data(),
@@ -355,11 +351,6 @@ LinearSolverTerminationType CUDADenseQR::Factorize(int num_rows,
                        device_workspace_.size(),
                        error_.data()) != CUSOLVER_STATUS_SUCCESS) {
     *message = "cuSolverDN::cusolverDnDgeqrf failed.";
-    return LinearSolverTerminationType::FATAL_ERROR;
-  }
-  if (cudaDeviceSynchronize() != cudaSuccess ||
-      cudaStreamSynchronize(stream_) != cudaSuccess) {
-    *message = "Cuda device synchronization failed.";
     return LinearSolverTerminationType::FATAL_ERROR;
   }
   int error = 0;
@@ -386,9 +377,9 @@ LinearSolverTerminationType CUDADenseQR::Solve(const double* rhs,
     *message = "Factorize did not complete successfully previously.";
     return factorize_result_;
   }
-  rhs_.CopyFromCpu(rhs, num_rows_, stream_);
+  rhs_.CopyFromCpu(rhs, num_rows_);
   int device_workspace_size = 0;
-  if (cusolverDnDormqr_bufferSize(cusolver_handle_,
+  if (cusolverDnDormqr_bufferSize(context_->cusolver_handle_,
                                   CUBLAS_SIDE_LEFT,
                                   CUBLAS_OP_T,
                                   num_rows_,
@@ -407,7 +398,7 @@ LinearSolverTerminationType CUDADenseQR::Solve(const double* rhs,
   device_workspace_.Reserve(device_workspace_size);
   // Compute rhs = Q^T * rhs, assuming that lhs has already been factorized.
   // The result of factorization would have stored Q in a packed form in lhs_.
-  if (cusolverDnDormqr(cusolver_handle_,
+  if (cusolverDnDormqr(context_->cusolver_handle_,
                        CUBLAS_SIDE_LEFT,
                        CUBLAS_OP_T,
                        num_rows_,
@@ -434,7 +425,7 @@ LinearSolverTerminationType CUDADenseQR::Solve(const double* rhs,
   }
   // Compute the solution vector as x = R \ (Q^T * rhs). Since the previous step
   // replaced rhs by (Q^T * rhs), this is just x = R \ rhs.
-  if (cublasDtrsv(cublas_handle_,
+  if (cublasDtrsv(context_->cublas_handle_,
                   CUBLAS_FILL_MODE_UPPER,
                   CUBLAS_OP_N,
                   CUBLAS_DIAG_NON_UNIT,
@@ -446,11 +437,6 @@ LinearSolverTerminationType CUDADenseQR::Solve(const double* rhs,
     *message = "cuBLAS::cublasDtrsv failed.";
     return LinearSolverTerminationType::FATAL_ERROR;
   }
-  if (cudaDeviceSynchronize() != cudaSuccess ||
-      cudaStreamSynchronize(stream_) != cudaSuccess) {
-    *message = "Cuda device synchronization failed.";
-    return LinearSolverTerminationType::FATAL_ERROR;
-  }
   rhs_.CopyToCpu(solution, num_cols_);
   *message = "Success";
   return LinearSolverTerminationType::SUCCESS;
@@ -458,22 +444,12 @@ LinearSolverTerminationType CUDADenseQR::Solve(const double* rhs,
 
 std::unique_ptr<CUDADenseQR> CUDADenseQR::Create(
     const LinearSolver::Options& options) {
-  if (options.dense_linear_algebra_library_type != CUDA) {
-    // The user called the wrong factory method.
+  if (options.dense_linear_algebra_library_type != CUDA ||
+      options.context == nullptr || !options.context->IsCudaInitialized()) {
     return nullptr;
   }
-  auto cuda_dense_qr = std::unique_ptr<CUDADenseQR>(new CUDADenseQR());
-  std::string cuda_error;
-  if (cuda_dense_qr->Init(options.context, &cuda_error)) {
-    return cuda_dense_qr;
-  }
-  // Initialization failed, destroy the object (done automatically) and return a
-  // nullptr.
-  LOG(ERROR) << "CUDADenseQR::Init failed: " << cuda_error;
-  return nullptr;
+  return std::unique_ptr<CUDADenseQR>(new CUDADenseQR(options.context));
 }
-
-CUDADenseQR::CUDADenseQR() = default;
 
 #endif  // CERES_NO_CUDA
 

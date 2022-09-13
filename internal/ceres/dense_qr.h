@@ -40,6 +40,7 @@
 #include <vector>
 
 #include "Eigen/Dense"
+#include "ceres/context_impl.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
@@ -164,18 +165,9 @@ class CERES_NO_EXPORT CUDADenseQR final : public DenseQR {
                                     std::string* message) override;
 
  private:
-  CUDADenseQR();
-  // Picks up the cuSolverDN, cuBLAS, and cuStream handles from the context. If
-  // the context is unable to initialize CUDA, returns false with a
-  // human-readable message indicating the reason.
-  bool Init(ContextImpl* context, std::string* message);
+  explicit CUDADenseQR(ContextImpl* context);
 
-  // Handle to the cuSOLVER context.
-  cusolverDnHandle_t cusolver_handle_ = nullptr;
-  // Handle to cuBLAS context.
-  cublasHandle_t cublas_handle_ = nullptr;
-  // CUDA device stream.
-  cudaStream_t stream_ = nullptr;
+  ContextImpl* context_ = nullptr;
   // Number of rowns in the A matrix, to be cached between calls to *Factorize
   // and *Solve.
   size_t num_rows_ = 0;

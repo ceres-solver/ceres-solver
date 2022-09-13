@@ -97,14 +97,13 @@ class CERES_NO_EXPORT CudaSparseMatrix {
   int num_cols_ = 0;
   int num_nonzeros_ = 0;
 
+  ContextImpl* context_ = nullptr;
   // CSR row indices.
   CudaBuffer<int32_t> rows_;
   // CSR column indices.
   CudaBuffer<int32_t> cols_;
   // CSR values.
   CudaBuffer<double> values_;
-
-  ContextImpl* context_ = nullptr;
 
   // CuSparse object that describes this matrix.
   cusparseSpMatDescr_t descr_ = nullptr;
