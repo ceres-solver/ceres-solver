@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "65900019_def59513",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-13T19:56:55Z",
+      "side": 1,
+      "message": "oops early reply.\n\ninstead if we took \n\nconst std::function\u003cvoid(int thread_id, int start, int end)\u003e\u0026 function\n\nthis would solve the num_threads\u003d1 case, and also allow us to use variable sized chunks ? WDYT? \n\nwe are not creating a threadpool for general usage, we are doing this for our purposes, so we can futz with the calling API as we need.\n\nFurther, we understand our workloads, generally speaking our workloads are small per loop iteration -- unless someone is doing really heavy duty numerical differentiation in their jacobian evaluation.",
+      "parentUuid": "de84a0df_83fed9ad",
+      "revId": "a69baf90a3f96abc2b8d89a850446e6b3b1359cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c2efbd42_73f1f52a",
