@@ -40,6 +40,7 @@
 #include <vector>
 
 #include "Eigen/Dense"
+#include "ceres/context_impl.h"
 #include "ceres/cuda_buffer.h"
 #include "ceres/linear_solver.h"
 #include "glog/logging.h"
@@ -208,16 +209,14 @@ class CERES_NO_EXPORT CUDADenseCholesky final : public DenseCholesky {
                                     std::string* message) override;
 
  private:
-  CUDADenseCholesky() = default;
-  // Picks up the cuSolverDN and cuStream handles from the context. If
-  // the context is unable to initialize CUDA, returns false with a
-  // human-readable message indicating the reason.
-  bool Init(ContextImpl* context, std::string* message);
+  explicit CUDADenseCholesky(ContextImpl* context) : 
+      context_(context),
+      lhs_(context),
+      rhs_(context),
+      device_workspace_(context),
+      error_(context, 1) {}
 
-  // Handle to the cuSOLVER context.
-  cusolverDnHandle_t cusolver_handle_ = nullptr;
-  // CUDA device stream.
-  cudaStream_t stream_ = nullptr;
+  ContextImpl* context_ = nullptr;
   // Number of columns in the A matrix, to be cached between calls to *Factorize
   // and *Solve.
   size_t num_cols_ = 0;
@@ -266,7 +265,20 @@ class CERES_NO_EXPORT CUDADenseCholeskyMixedPrecision final
                                     std::string* message) override;
 
  private:
-  CUDADenseCholeskyMixedPrecision() = default;
+  CUDADenseCholeskyMixedPrecision(ContextImpl* context,
+                                  int max_num_refinement_iterations) :
+      context_(context),
+      lhs_fp64_(context),
+      rhs_fp64_(context),
+      lhs_fp32_(context),
+      device_workspace_(context),
+      error_(context, 1),
+      x_fp64_(context),
+      correction_fp32_(context),
+      residual_fp32_(context),
+      residual_fp64_(context),
+      max_num_refinement_iterations_(max_num_refinement_iterations) {}
+
   // Helper function to wrap Cuda boilerplate needed to call Spotrf.
   LinearSolverTerminationType CudaCholeskyFactorize(std::string* message);
   // Helper function to wrap Cuda boilerplate needed to call Spotrs.
@@ -277,9 +289,7 @@ class CERES_NO_EXPORT CUDADenseCholeskyMixedPrecision final
   // human-readable message indicating the reason.
   bool Init(const LinearSolver::Options& options, std::string* message);
 
-  cusolverDnHandle_t cusolver_handle_ = nullptr;
-  cublasHandle_t cublas_handle_ = nullptr;
-  cudaStream_t stream_ = nullptr;
+  ContextImpl* context_ = nullptr;
   // Number of columns in the A matrix, to be cached between calls to *Factorize
   // and *Solve.
   size_t num_cols_ = 0;
