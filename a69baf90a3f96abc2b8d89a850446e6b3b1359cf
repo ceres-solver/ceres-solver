@@ -36,6 +36,41 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f83b8171_43c58bbc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-13T21:00:39Z",
+      "side": 1,
+      "message": "Yes, I think it is a good idea; I will implement this tomorrow.",
+      "parentUuid": "65900019_def59513",
+      "revId": "a69baf90a3f96abc2b8d89a850446e6b3b1359cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b504a520_62fd3232",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-13T21:00:39Z",
+      "side": 1,
+      "message": "Let me explain the most confusing part of the change-set in a more explicit way.\n\n\nProbably it is better to start with a small concrete example:\n\nLet say we want to split 14 items into blocks for 4 threads, with a single item taking 1s to process\n\na. We split using proposed algo:[4, 4, 3, 3] \u003d\u003e total runtime is 4\nb. We split into equal-sized blocks and remainder: [3, 3, 3, 3, 2] \u003d\u003e total runtime is 5 (3 for 4 blocks of 3 in parallel, and then wait for a single thread processing remaining block)\nc. We split into equal-sized blocks and then split remainder into equal-sized blocks: [3,3,3,3,1,1] \u003d\u003e total runtime is 4, but we have more synchronization events than in case a.\n\nThings will get a bit more dramatic in case of 31 items and 16 threads:\na: Proposed: [2,2,...,2,1] \u003d\u003e total run time 2, 16 blocks\nb: One block for remainder: [1,...1, 15] \u003d\u003e total runtime 16\nc: Splitting remainder into 1-sized blocks: [1,...,1] \u003d\u003e total runtime 2, 31 blocks\n\n\n\nMain idea is to slightly adjust (by 1 extra element at most) several blocks and keep number of blocks being a multiple of number of threads instead of adding extra block(s).",
+      "revId": "a69baf90a3f96abc2b8d89a850446e6b3b1359cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c2efbd42_73f1f52a",
@@ -130,6 +165,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "228f38fc_497b13bf",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-13T21:00:39Z",
+      "side": 1,
+      "message": "No, this way extra block might end up being processed by a single thread while all other threads already finished working (because initial number of blocks was divisible by number of threads).\n\nThus we spread remainder over multiple blocks, adding one additional index per block.",
+      "parentUuid": "e72a06d5_7d46bf28",
+      "range": {
+        "startLine": 104,
+        "startChar": 45,
+        "endLine": 104,
+        "endChar": 48
+      },
+      "revId": "a69baf90a3f96abc2b8d89a850446e6b3b1359cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f6db8130_2bdfcf86",
         "filename": "internal/ceres/parallel_for_cxx.cc",
         "patchSetId": 2
@@ -141,6 +200,30 @@
       "writtenOn": "2022-09-13T19:44:03Z",
       "side": 1,
       "message": "these definitions are reversed\nwhat you are defining to be tail_block_size is really the size of the \"normal\" block.\nand what you are defining as num_full_sized_blocks is the size of the last remainder block no?",
+      "range": {
+        "startLine": 114,
+        "startChar": 8,
+        "endLine": 114,
+        "endChar": 23
+      },
+      "revId": "a69baf90a3f96abc2b8d89a850446e6b3b1359cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e47af04b_ae3db4bd",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-13T21:00:39Z",
+      "side": 1,
+      "message": "When splitting N elements into M blocks we will have:\nN % M \"front\" blocks of size floor(N / M) + 1\nM - (N % M) \"tail\" blocks of size floor(N / M)\n\nThis is done in order to minimize max | n_i - n_j |  where n_i is number of items in i-th block, while keeping number of blocks exactly M.",
+      "parentUuid": "f6db8130_2bdfcf86",
       "range": {
         "startLine": 114,
         "startChar": 8,
@@ -227,6 +310,30 @@
       "writtenOn": "2022-09-13T19:44:03Z",
       "side": 1,
       "message": "this is wrong, only the last block is sized tail_block_size if there is one.\n\nI think you have mixed up tail_block with the regular blocks in the comments and in the code.",
+      "range": {
+        "startLine": 254,
+        "startChar": 44,
+        "endLine": 254,
+        "endChar": 59
+      },
+      "revId": "a69baf90a3f96abc2b8d89a850446e6b3b1359cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8282f8b3_dd70d848",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-13T21:00:39Z",
+      "side": 1,
+      "message": "When splitting N elements into M blocks we will have:\n\nM \"tail\" blocks when N % M \u003d\u003d 0, and 0 \"front\" blocks\nM - 1 \"tail\" blocks when N % M \u003d\u003d 1, and 1 \"front\" blocks\n...\nM - K \"tail\" blocks when N % M \u003d\u003d K, and K \"front\" blocks\n\nEvery \"tail\" block have size floor(N / M), every \"front\" (\u003d \"full sized\") block have size floor(N / M) + 1\n\n\nThe goal is to create exactly M blocks, not M + 1 blocks; because M is divisible by number of threads, and adding one extra block will lead to waiting a single thread to process this last block (while all other threads already stopped).",
+      "parentUuid": "2e0655ad_b902af2a",
       "range": {
         "startLine": 254,
         "startChar": 44,
