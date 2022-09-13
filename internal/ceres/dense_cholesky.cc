@@ -393,7 +393,7 @@ LinearSolverTerminationType CUDADenseCholesky::Factorize(int num_cols,
     return LinearSolverTerminationType::FATAL_ERROR;
   }
   int error = 0;
-  error_.CopyToCpu(&error, 1);
+  error_.CopyToCpu(&error, 1, stream_);
   if (error < 0) {
     LOG(FATAL) << "Congratulations, you found a bug in Ceres - "
                << "please report it. "
@@ -441,14 +441,14 @@ LinearSolverTerminationType CUDADenseCholesky::Solve(const double* rhs,
     return LinearSolverTerminationType::FATAL_ERROR;
   }
   int error = 0;
-  error_.CopyToCpu(&error, 1);
+  error_.CopyToCpu(&error, 1, stream_);
   if (error != 0) {
     LOG(FATAL) << "Congratulations, you found a bug in Ceres. "
                << "Please report it."
                << "cuSolverDN::cusolverDnDpotrs fatal error. "
                << "Argument: " << -error << " is invalid.";
   }
-  rhs_.CopyToCpu(solution, num_cols_);
+  rhs_.CopyToCpu(solution, num_cols_, stream_);
   *message = "Success";
   return LinearSolverTerminationType::SUCCESS;
 }
@@ -532,7 +532,7 @@ CUDADenseCholeskyMixedPrecision::CudaCholeskyFactorize(std::string* message) {
     return LinearSolverTerminationType::FATAL_ERROR;
   }
   int error = 0;
-  error_.CopyToCpu(&error, 1);
+  error_.CopyToCpu(&error, 1, stream_);
   if (error < 0) {
     LOG(FATAL) << "Congratulations, you found a bug in Ceres - "
                << "please report it. "
@@ -580,7 +580,7 @@ LinearSolverTerminationType CUDADenseCholeskyMixedPrecision::CudaCholeskySolve(
     return LinearSolverTerminationType::FATAL_ERROR;
   }
   int error = 0;
-  error_.CopyToCpu(&error, 1);
+  error_.CopyToCpu(&error, 1, stream_);
   if (error != 0) {
     LOG(FATAL) << "Congratulations, you found a bug in Ceres. "
                << "Please report it."
@@ -663,7 +663,7 @@ LinearSolverTerminationType CUDADenseCholeskyMixedPrecision::Solve(
                   1);
     }
   }
-  x_fp64_.CopyToCpu(solution, num_cols_);
+  x_fp64_.CopyToCpu(solution, num_cols_, stream_);
   *message = "Success.";
   return LinearSolverTerminationType::SUCCESS;
 }

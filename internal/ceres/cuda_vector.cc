@@ -120,7 +120,7 @@ void CudaVector::CopyTo(Vector* x) const {
   // Need to synchronize with any GPU kernels that may be writing to the
   // buffer before the transfer happens.
   CHECK_EQ(cudaStreamSynchronize(context_->stream_), cudaSuccess);
-  data_.CopyToCpu(x->data(), num_rows_);
+  data_.CopyToCpu(x->data(), num_rows_, context_->stream_);
 }
 
 void CudaVector::CopyTo(double* x) const {
@@ -128,7 +128,7 @@ void CudaVector::CopyTo(double* x) const {
   // Need to synchronize with any GPU kernels that may be writing to the
   // buffer before the transfer happens.
   CHECK_EQ(cudaStreamSynchronize(context_->stream_), cudaSuccess);
-  data_.CopyToCpu(x, num_rows_);
+  data_.CopyToCpu(x, num_rows_, context_->stream_);
 }
 
 void CudaVector::SetZero() {

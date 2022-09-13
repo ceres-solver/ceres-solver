@@ -363,7 +363,7 @@ LinearSolverTerminationType CUDADenseQR::Factorize(int num_rows,
     return LinearSolverTerminationType::FATAL_ERROR;
   }
   int error = 0;
-  error_.CopyToCpu(&error, 1);
+  error_.CopyToCpu(&error, 1, stream_);
   if (error < 0) {
     LOG(FATAL) << "Congratulations, you found a bug in Ceres - "
                << "please report it. "
@@ -425,7 +425,7 @@ LinearSolverTerminationType CUDADenseQR::Solve(const double* rhs,
     return LinearSolverTerminationType::FATAL_ERROR;
   }
   int error = 0;
-  error_.CopyToCpu(&error, 1);
+  error_.CopyToCpu(&error, 1, stream_);
   if (error < 0) {
     LOG(FATAL) << "Congratulations, you found a bug in Ceres. "
                << "Please report it."
@@ -451,7 +451,7 @@ LinearSolverTerminationType CUDADenseQR::Solve(const double* rhs,
     *message = "Cuda device synchronization failed.";
     return LinearSolverTerminationType::FATAL_ERROR;
   }
-  rhs_.CopyToCpu(solution, num_cols_);
+  rhs_.CopyToCpu(solution, num_cols_, stream_);
   *message = "Success";
   return LinearSolverTerminationType::SUCCESS;
 }

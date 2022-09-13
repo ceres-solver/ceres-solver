@@ -107,11 +107,12 @@ class CudaBuffer {
   // Copy data from the GPU memory managed by this CudaBuffer instance to CPU
   // memory. It is the caller's responsibility to ensure that the CPU memory
   // pointer is valid, i.e. it is not null, and that it points to memory of
-  // at least this->size() size. This copy is necessarily synchronous since any
-  // potential GPU kernels that may be writing to the buffer must finish before
-  // the transfer happens.
-  void CopyToCpu(T* data, const size_t size) const {
+  // at least this->size() size. This method ensures all previously dispatched
+  // GPU operations on the specified stream have completed before copying the
+  // data to CPU memory.
+  void CopyToCpu(T* data, const size_t size, cudaStream_t stream) const {
     CHECK(data_ != nullptr);
+    cudaStreamSynchronize(stream);
     CHECK_EQ(cudaMemcpy(data, data_, size * sizeof(T), cudaMemcpyDeviceToHost),
              cudaSuccess);
   }
