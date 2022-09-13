@@ -140,6 +140,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8413adaa_a87709a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-13T14:18:53Z",
+      "side": 1,
+      "message": "I think that threadpool from Eigen might be significantly better for severely unbalanced (in terms of computations per loop index) problems.\n\nI expect solution proposed here to work poorly when (largest computation time per loop index) / (typical computation time per loop index) \u003e\u003e kWorkItemsPerThread , and job stealing might help there.\nBecause in that case one thread will be stuck at processing the \"hardest\" loop index with other threads just waiting instead of \"stealing\" remaining indices from that block.",
+      "parentUuid": "44472126_fa603fea",
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ad334c04_4d40078c",
@@ -153,6 +171,30 @@
       "writtenOn": "2022-09-12T23:45:05Z",
       "side": 1,
       "message": "document argument.\n\nhow about the following renaming for clarity?\n\nnum_finished -\u003e num_jobs_finished\nnum_finished_ -\u003e num_total_jobs_finished_;\nnum_total_ -\u003e num_total_jobs_;",
+      "range": {
+        "startLine": 59,
+        "startChar": 28,
+        "endLine": 59,
+        "endChar": 29
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9cbf6843_db03929f",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-13T14:18:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad334c04_4d40078c",
       "range": {
         "startLine": 59,
         "startChar": 28,
@@ -186,6 +228,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a19f873f_461922c1",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-13T14:18:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ac5e1ac_7557a122",
+      "range": {
+        "startLine": 87,
+        "startChar": 7,
+        "endLine": 87,
+        "endChar": 18
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "07dfcaf3_80b8548b",
@@ -209,6 +275,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd25be2e_063bdbe2",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-13T14:18:53Z",
+      "side": 1,
+      "message": "Done; also spotted creating extra threads due to bad naming.",
+      "parentUuid": "07dfcaf3_80b8548b",
+      "range": {
+        "startLine": 88,
+        "startChar": 29,
+        "endLine": 88,
+        "endChar": 32
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bc5428f8_c7d2de5a",
@@ -222,6 +312,30 @@
       "writtenOn": "2022-09-12T23:45:05Z",
       "side": 1,
       "message": "this comment is confusing now.",
+      "range": {
+        "startLine": 101,
+        "startChar": 18,
+        "endLine": 101,
+        "endChar": 19
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "641fd385_f28700f9",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-13T14:18:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc5428f8_c7d2de5a",
       "range": {
         "startLine": 101,
         "startChar": 18,
@@ -257,6 +371,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a34c0c1c_2b0a5fda",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-13T14:18:53Z",
+      "side": 1,
+      "message": "I went with block_size -\u003e tail_block_size, but a bit unsure if it was the best choice.\n\nI\u0027ve described a scheme of splitting input range into blocks with more details, hopefully it helps.",
+      "parentUuid": "01a4c3ea_9b7898b4",
+      "range": {
+        "startLine": 102,
+        "startChar": 12,
+        "endLine": 102,
+        "endChar": 26
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "71bb8ecf_75d8ac2f",
         "filename": "internal/ceres/parallel_for_cxx.cc",
         "patchSetId": 1
@@ -268,6 +406,30 @@
       "writtenOn": "2022-09-12T23:45:05Z",
       "side": 1,
       "message": "I do not understand this comment.\n\nhow about num_full_blocks,",
+      "range": {
+        "startLine": 105,
+        "startChar": 23,
+        "endLine": 105,
+        "endChar": 24
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e331764_eb701dda",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-13T14:18:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71bb8ecf_75d8ac2f",
       "range": {
         "startLine": 105,
         "startChar": 23,
@@ -303,6 +465,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "18b9e20f_4e9aec66",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-13T14:18:53Z",
+      "side": 1,
+      "message": "Would you prefer it being an additional argument to ParallelFor call?\n\nI have also changed items to blocks trying to make naming less confusing",
+      "parentUuid": "137b8c39_4e71c9cf",
+      "range": {
+        "startLine": 128,
+        "startChar": 21,
+        "endLine": 128,
+        "endChar": 25
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "59ca1ff4_e9f07485",
         "filename": "internal/ceres/parallel_for_cxx.cc",
         "patchSetId": 1
@@ -314,6 +500,30 @@
       "writtenOn": "2022-09-12T23:45:05Z",
       "side": 1,
       "message": "I think it is a good idea to move this below the num_threads \u003d 1 case.",
+      "range": {
+        "startLine": 183,
+        "startChar": 17,
+        "endLine": 183,
+        "endChar": 18
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "292d9330_444c2d25",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-13T14:18:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59ca1ff4_e9f07485",
       "range": {
         "startLine": 183,
         "startChar": 17,
@@ -347,6 +557,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "575e4f4a_59aae017",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-13T14:18:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "739eee61_4b103404",
+      "range": {
+        "startLine": 201,
+        "startChar": 42,
+        "endLine": 201,
+        "endChar": 46
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0ba8c67c_1e6afad3",
@@ -360,6 +594,30 @@
       "writtenOn": "2022-09-12T23:45:05Z",
       "side": 1,
       "message": "I do not understand this computation of num_work_items. can you add a comment explaining it?",
+      "range": {
+        "startLine": 205,
+        "startChar": 14,
+        "endLine": 205,
+        "endChar": 15
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7481e27a_22b3a64e",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-13T14:18:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ba8c67c_1e6afad3",
       "range": {
         "startLine": 205,
         "startChar": 14,
@@ -395,6 +653,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d9ba124f_0bc72a5b",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-13T14:18:53Z",
+      "side": 1,
+      "message": "I think it is not num_items_finished but num_jobs_finished, in order to keep naming consistent with BlockUntilFinished\n\nOr maybe even rename *job*-\u003e*block* in ThreadPoolState.",
+      "parentUuid": "447c37c0_fbb801cb",
+      "range": {
+        "startLine": 211,
+        "startChar": 8,
+        "endLine": 211,
+        "endChar": 16
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "26568371_c8ac22af",
         "filename": "internal/ceres/parallel_for_cxx.cc",
         "patchSetId": 1
@@ -406,6 +688,30 @@
       "writtenOn": "2022-09-12T23:45:05Z",
       "side": 1,
       "message": "I am confused by this logic here.\nisn\u0027t i a work item rather than a block number?  also i itself was a terrible variable name, can you change it to something more informative?\n\nalso isn\u0027t block_size the size of the trailing/tail block?\n\ncan you add a comment documenting curr_start and curr_end computation.",
+      "range": {
+        "startLine": 231,
+        "startChar": 16,
+        "endLine": 231,
+        "endChar": 17
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dcc1e87e_cd413b1f",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-13T14:18:53Z",
+      "side": 1,
+      "message": "The idea is to split N work items (N \u003d end - start) into M as equal as possible contiguous disjoint \"blocks\".\n\nOne can prove that we can either:\n - Keep all blocks equal if N % M \u003d\u003d 0\n - Keep difference of block sizes at most 1 otherwise\nAnd this is as good as we can get when selecting a split that minimizes maximal difference between block sizes\n\nIn the latter case we will have N % M blocks of size [N / M] + 1 and M - (N % M) blocks of size [N / M]\n\nThis gives a total size of (N % M) * ([N / M] + 1) + (M - (N % M)) * [N / M] \u003d [N / M] * M + (N % M) \u003d N\n\n\n\nI\u0027ve added some comments here and there and tried to adjust variable naming.\n\nI\u0027ve removed std::min(...) from curr_end computations because it was a leftover of less \"equal\" partitioning.",
+      "parentUuid": "26568371_c8ac22af",
       "range": {
         "startLine": 231,
         "startChar": 16,
