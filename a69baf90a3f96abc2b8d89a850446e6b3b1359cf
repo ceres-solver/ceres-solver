@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "de84a0df_83fed9ad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-13T19:53:42Z",
+      "side": 1,
+      "message": "Dmitriy,\n\nAs I was playing with threading the block jacobi preconditioner your observation from the threaded matrix multiplication CL showed up, i.e. the single threaded performance using parallelfor is worse (significantly so) compared to just using the loop directly.\n\nAnd as I was reviewing this CL, it made me think about the chunking you are doing here where multiple work items that are consecutive are executed on the same thread.\n\nI am wondering if this and the problem of num_threads \u003d1 can be solved in a unified fashion. Here is my thought.\n\nCurrently the way parallelfor is structured is as follows:\n\nvoid ParallelFor(ContextImpl* context,\n                 int start,\n                 int end,\n                 int num_threads,\n                 const std::function\u003cvoid(int thread_id, int i)\u003e\u0026 function)\n                 \nwhere the expectation is that function operates on a single element i.\nwhat if we instead took \n\n",
+      "revId": "a69baf90a3f96abc2b8d89a850446e6b3b1359cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c2efbd42_73f1f52a",
