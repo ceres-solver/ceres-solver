@@ -16,6 +16,23 @@
       "message": "Dmitriy, since you are the one who found this issue, do you mind reviewing this patch?",
       "revId": "a012cec03d1e1070002495f08f1299b184230197",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84520987_964e1abd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-13T22:15:28Z",
+      "side": 1,
+      "message": "so we were reading before the buffer was ready? ",
+      "revId": "a012cec03d1e1070002495f08f1299b184230197",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
