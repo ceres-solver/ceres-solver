@@ -284,6 +284,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8744cf3a_7cf3d447",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-13T23:10:34Z",
+      "side": 1,
+      "message": "a better naming suggestion\ntail_block_size -\u003e base_block_size\nnum_full_sized_blocks -\u003e num_base_p1_sized_blocks;",
+      "parentUuid": "d9137598_78375a3a",
+      "range": {
+        "startLine": 114,
+        "startChar": 8,
+        "endLine": 114,
+        "endChar": 23
+      },
+      "revId": "a69baf90a3f96abc2b8d89a850446e6b3b1359cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "44b35813_aa1bd04f",
         "filename": "internal/ceres/parallel_for_cxx.cc",
         "patchSetId": 2
