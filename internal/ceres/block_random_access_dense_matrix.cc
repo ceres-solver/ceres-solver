@@ -30,6 +30,7 @@
 
 #include "ceres/block_random_access_dense_matrix.h"
 
+#include <utility>
 #include <vector>
 
 #include "ceres/internal/eigen.h"

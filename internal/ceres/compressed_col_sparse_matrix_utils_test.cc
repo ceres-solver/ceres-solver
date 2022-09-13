@@ -121,47 +121,26 @@ TEST(_, ScalarMatrixToBlockMatrix) {
 
 class SolveUpperTriangularTest : public ::testing::Test {
  protected:
-  void SetUp() override {
-    cols.resize(5);
-    rows.resize(7);
-    values.resize(7);
+  const std::vector<int>& cols() const { return cols_; }
+  const std::vector<int>& rows() const { return rows_; }
+  const std::vector<double>& values() const { return values_; }
 
-    cols[0] = 0;
-    rows[0] = 0;
-    values[0] = 0.50754;
-
-    cols[1] = 1;
-    rows[1] = 1;
-    values[1] = 0.80483;
-
-    cols[2] = 2;
-    rows[2] = 1;
-    values[2] = 0.14120;
-    rows[3] = 2;
-    values[3] = 0.3;
-
-    cols[3] = 4;
-    rows[4] = 0;
-    values[4] = 0.77696;
-    rows[5] = 1;
-    values[5] = 0.41860;
-    rows[6] = 3;
-    values[6] = 0.88979;
-
-    cols[4] = 7;
-  }
-
-  std::vector<int> cols;
-  std::vector<int> rows;
-  std::vector<double> values;
+ private:
+  const std::vector<int> cols_ = {0, 1, 2, 4, 7};
+  const std::vector<int> rows_ = {0, 1, 1, 2, 0, 1, 3};
+  const std::vector<double> values_ = {
+      0.50754, 0.80483, 0.14120, 0.3, 0.77696, 0.41860, 0.88979};
 };
 
 TEST_F(SolveUpperTriangularTest, SolveInPlace) {
   double rhs_and_solution[] = {1.0, 1.0, 2.0, 2.0};
   const double expected[] = {-1.4706, -1.0962, 6.6667, 2.2477};
 
-  SolveUpperTriangularInPlace<int>(
-      cols.size() - 1, &rows[0], &cols[0], &values[0], rhs_and_solution);
+  SolveUpperTriangularInPlace<int>(cols().size() - 1,
+                                   rows().data(),
+                                   cols().data(),
+                                   values().data(),
+                                   rhs_and_solution);
 
   for (int i = 0; i < 4; ++i) {
     EXPECT_NEAR(rhs_and_solution[i], expected[i], 1e-4) << i;
@@ -172,8 +151,11 @@ TEST_F(SolveUpperTriangularTest, TransposeSolveInPlace) {
   double rhs_and_solution[] = {1.0, 1.0, 2.0, 2.0};
   double expected[] = {1.970288, 1.242498, 6.081864, -0.057255};
 
-  SolveUpperTriangularTransposeInPlace<int>(
-      cols.size() - 1, &rows[0], &cols[0], &values[0], rhs_and_solution);
+  SolveUpperTriangularTransposeInPlace<int>(cols().size() - 1,
+                                            rows().data(),
+                                            cols().data(),
+                                            values().data(),
+                                            rhs_and_solution);
 
   for (int i = 0; i < 4; ++i) {
     EXPECT_NEAR(rhs_and_solution[i], expected[i], 1e-4) << i;
@@ -190,8 +172,12 @@ TEST_F(SolveUpperTriangularTest, RTRSolveWithSparseRHS) {
   // clang-format on
 
   for (int i = 0; i < 4; ++i) {
-    SolveRTRWithSparseRHS<int>(
-        cols.size() - 1, &rows[0], &cols[0], &values[0], i, solution);
+    SolveRTRWithSparseRHS<int>(cols().size() - 1,
+                               rows().data(),
+                               cols().data(),
+                               values().data(),
+                               i,
+                               solution);
     for (int j = 0; j < 4; ++j) {
       EXPECT_NEAR(solution[j], expected[4 * i + j], 1e-3) << i;
     }
