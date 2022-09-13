@@ -189,6 +189,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d7a54096_d541b0fc",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-13T21:36:55Z",
+      "side": 1,
+      "message": "okay I understand now.",
+      "parentUuid": "228f38fc_497b13bf",
+      "range": {
+        "startLine": 104,
+        "startChar": 45,
+        "endLine": 104,
+        "endChar": 48
+      },
+      "revId": "a69baf90a3f96abc2b8d89a850446e6b3b1359cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f6db8130_2bdfcf86",
         "filename": "internal/ceres/parallel_for_cxx.cc",
         "patchSetId": 2
@@ -224,6 +248,30 @@
       "side": 1,
       "message": "When splitting N elements into M blocks we will have:\nN % M \"front\" blocks of size floor(N / M) + 1\nM - (N % M) \"tail\" blocks of size floor(N / M)\n\nThis is done in order to minimize max | n_i - n_j |  where n_i is number of items in i-th block, while keeping number of blocks exactly M.",
       "parentUuid": "f6db8130_2bdfcf86",
+      "range": {
+        "startLine": 114,
+        "startChar": 8,
+        "endLine": 114,
+        "endChar": 23
+      },
+      "revId": "a69baf90a3f96abc2b8d89a850446e6b3b1359cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9137598_78375a3a",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-13T21:36:55Z",
+      "side": 1,
+      "message": "I understand now.\n\nin light of this, the variable names I suggested are not great.\n\nhow about\n\ntail_block_size -\u003e base_block_size;\nnum_full_size_blocks -\u003e num_plus1_sized_blocks;",
+      "parentUuid": "e47af04b_ae3db4bd",
       "range": {
         "startLine": 114,
         "startChar": 8,
@@ -334,6 +382,30 @@
       "side": 1,
       "message": "When splitting N elements into M blocks we will have:\n\nM \"tail\" blocks when N % M \u003d\u003d 0, and 0 \"front\" blocks\nM - 1 \"tail\" blocks when N % M \u003d\u003d 1, and 1 \"front\" blocks\n...\nM - K \"tail\" blocks when N % M \u003d\u003d K, and K \"front\" blocks\n\nEvery \"tail\" block have size floor(N / M), every \"front\" (\u003d \"full sized\") block have size floor(N / M) + 1\n\n\nThe goal is to create exactly M blocks, not M + 1 blocks; because M is divisible by number of threads, and adding one extra block will lead to waiting a single thread to process this last block (while all other threads already stopped).",
       "parentUuid": "2e0655ad_b902af2a",
+      "range": {
+        "startLine": 254,
+        "startChar": 44,
+        "endLine": 254,
+        "endChar": 59
+      },
+      "revId": "a69baf90a3f96abc2b8d89a850446e6b3b1359cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3abb801_65c95d9f",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-13T21:36:55Z",
+      "side": 1,
+      "message": "Thanks for the explanation, I agree this is better. I think with a slightly different variable naming this will be much better.",
+      "parentUuid": "8282f8b3_dd70d848",
       "range": {
         "startLine": 254,
         "startChar": 44,
