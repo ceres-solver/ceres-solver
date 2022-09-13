@@ -50,17 +50,17 @@
 
 namespace ceres::internal {
 
-CudaVector::CudaVector(ContextImpl* context, int size) {
+CudaVector::CudaVector(ContextImpl* context, int size) 
+    : context_(context), data_(context, size) {
   DCHECK_NE(context, nullptr);
-  CHECK(context->IsCudaInitialized());
-  context_ = context;
+  DCHECK(context->IsCudaInitialized());
   Resize(size);
 }
 
 CudaVector& CudaVector::operator=(const CudaVector& other) {
   if (this != &other) {
     Resize(other.num_rows());
-    data_.CopyFromGPUArray(other.data_.data(), num_rows_, context_->stream_);
+    data_.CopyFromGPUArray(other.data_.data(), num_rows_);
   }
   return *this;
 }
@@ -107,7 +107,7 @@ double CudaVector::Norm() const {
 
 void CudaVector::CopyFromCpu(const Vector& x) {
   data_.Reserve(x.rows());
-  data_.CopyFromCpu(x.data(), x.rows(), context_->stream_);
+  data_.CopyFromCpu(x.data(), x.rows());
   num_rows_ = x.rows();
   DestroyDescriptor();
   CHECK_EQ(cusparseCreateDnVec(&descr_, num_rows_, data_.data(), CUDA_R_64F),
@@ -117,17 +117,11 @@ void CudaVector::CopyFromCpu(const Vector& x) {
 void CudaVector::CopyTo(Vector* x) const {
   CHECK(x != nullptr);
   x->resize(num_rows_);
-  // Need to synchronize with any GPU kernels that may be writing to the
-  // buffer before the transfer happens.
-  CHECK_EQ(cudaStreamSynchronize(context_->stream_), cudaSuccess);
   data_.CopyToCpu(x->data(), num_rows_);
 }
 
 void CudaVector::CopyTo(double* x) const {
   CHECK(x != nullptr);
-  // Need to synchronize with any GPU kernels that may be writing to the
-  // buffer before the transfer happens.
-  CHECK_EQ(cudaStreamSynchronize(context_->stream_), cudaSuccess);
   data_.CopyToCpu(x, num_rows_);
 }
 
