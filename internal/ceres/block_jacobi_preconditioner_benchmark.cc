@@ -29,6 +29,7 @@
 // Authors: sameeragarwal@google.com (Sameer Agarwal)
 
 #include <memory>
+#include <random>
 
 #include "Eigen/Dense"
 #include "benchmark/benchmark.h"
