@@ -56,7 +56,7 @@ TEST(CudaFP64ToFP32, SimpleConversions) {
   CudaFP64ToFP32(
       fp64_gpu.data(), fp32_gpu.data(), fp64_cpu.size(), cudaStreamDefault);
   std::vector<float> fp32_cpu(fp64_cpu.size());
-  fp32_gpu.CopyToCpu(fp32_cpu.data(), fp32_cpu.size());
+  fp32_gpu.CopyToCpu(fp32_cpu.data(), fp32_cpu.size(), cudaStreamDefault);
   for (int i = 0; i < fp32_cpu.size(); ++i) {
     EXPECT_EQ(fp32_cpu[i], static_cast<float>(fp64_cpu[i]));
   }
@@ -78,7 +78,7 @@ TEST(CudaFP64ToFP32, NumericallyExtremeValues) {
   CudaFP64ToFP32(
       fp64_gpu.data(), fp32_gpu.data(), fp64_cpu.size(), cudaStreamDefault);
   std::vector<float> fp32_cpu(fp64_cpu.size());
-  fp32_gpu.CopyToCpu(fp32_cpu.data(), fp32_cpu.size());
+  fp32_gpu.CopyToCpu(fp32_cpu.data(), fp32_cpu.size(), cudaStreamDefault);
   EXPECT_EQ(fp32_cpu[0], 0.0f);
   EXPECT_EQ(fp32_cpu[1], 0.0f);
   EXPECT_EQ(fp32_cpu[2], std::numeric_limits<float>::infinity());
@@ -94,7 +94,7 @@ TEST(CudaFP32ToFP64, SimpleConversions) {
   CudaFP32ToFP64(
       fp32_gpu.data(), fp64_gpu.data(), fp32_cpu.size(), cudaStreamDefault);
   std::vector<double> fp64_cpu(fp32_cpu.size());
-  fp64_gpu.CopyToCpu(fp64_cpu.data(), fp64_cpu.size());
+  fp64_gpu.CopyToCpu(fp64_cpu.data(), fp64_cpu.size(), cudaStreamDefault);
   for (int i = 0; i < fp64_cpu.size(); ++i) {
     EXPECT_EQ(fp64_cpu[i], static_cast<double>(fp32_cpu[i]));
   }
@@ -106,7 +106,8 @@ TEST(CudaSetZeroFP32, NonZeroInput) {
   fp32_gpu.CopyFromCpuVector(fp32_cpu, cudaStreamDefault);
   CudaSetZeroFP32(fp32_gpu.data(), fp32_cpu.size(), cudaStreamDefault);
   std::vector<float> fp32_cpu_zero(fp32_cpu.size());
-  fp32_gpu.CopyToCpu(fp32_cpu_zero.data(), fp32_cpu_zero.size());
+  fp32_gpu.CopyToCpu(
+      fp32_cpu_zero.data(), fp32_cpu_zero.size(), cudaStreamDefault);
   for (int i = 0; i < fp32_cpu_zero.size(); ++i) {
     EXPECT_EQ(fp32_cpu_zero[i], 0.0f);
   }
@@ -118,7 +119,8 @@ TEST(CudaSetZeroFP64, NonZeroInput) {
   fp64_gpu.CopyFromCpuVector(fp64_cpu, cudaStreamDefault);
   CudaSetZeroFP64(fp64_gpu.data(), fp64_cpu.size(), cudaStreamDefault);
   std::vector<double> fp64_cpu_zero(fp64_cpu.size());
-  fp64_gpu.CopyToCpu(fp64_cpu_zero.data(), fp64_cpu_zero.size());
+  fp64_gpu.CopyToCpu(
+      fp64_cpu_zero.data(), fp64_cpu_zero.size(), cudaStreamDefault);
   for (int i = 0; i < fp64_cpu_zero.size(); ++i) {
     EXPECT_EQ(fp64_cpu_zero[i], 0.0);
   }
@@ -136,7 +138,7 @@ TEST(CudaDsxpy, DoubleValues) {
             fp32_gpu_a.data(),
             fp32_gpu_a.size(),
             cudaStreamDefault);
-  fp64_gpu_b.CopyToCpu(fp64_cpu_b.data(), fp64_cpu_b.size());
+  fp64_gpu_b.CopyToCpu(fp64_cpu_b.data(), fp64_cpu_b.size(), cudaStreamDefault);
   for (int i = 0; i < fp64_cpu_b.size(); ++i) {
     EXPECT_DOUBLE_EQ(fp64_cpu_b[i], 2.0 * fp32_cpu_a[i]);
   }
@@ -157,7 +159,7 @@ TEST(CudaDtDxpy, ComputeFourItems) {
              x_gpu.data(),
              y_gpu.size(),
              cudaStreamDefault);
-  y_gpu.CopyToCpu(y_cpu.data(), y_cpu.size());
+  y_gpu.CopyToCpu(y_cpu.data(), y_cpu.size(), cudaStreamDefault);
   EXPECT_DOUBLE_EQ(y_cpu[0], 4.0 + 10.0 * 10.0 * 1.0);
   EXPECT_DOUBLE_EQ(y_cpu[1], 3.0 + 20.0 * 20.0 * 2.0);
   EXPECT_DOUBLE_EQ(y_cpu[2], 2.0 + 30.0 * 30.0 * 3.0);
