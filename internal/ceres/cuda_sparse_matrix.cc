@@ -59,17 +59,21 @@
 
 namespace ceres::internal {
 
-CudaSparseMatrix::CudaSparseMatrix(
-    ContextImpl* context, const CompressedRowSparseMatrix& crs_matrix) {
+CudaSparseMatrix::CudaSparseMatrix(ContextImpl* context,
+                                   const CompressedRowSparseMatrix& crs_matrix)
+    : context_(context),
+      rows_{context},
+      cols_{context},
+      values_{context},
+      spmv_buffer_{context} {
   DCHECK_NE(context, nullptr);
   CHECK(context->IsCudaInitialized());
-  context_ = context;
   num_rows_ = crs_matrix.num_rows();
   num_cols_ = crs_matrix.num_cols();
   num_nonzeros_ = crs_matrix.num_nonzeros();
-  rows_.CopyFromCpu(crs_matrix.rows(), num_rows_ + 1, context_->stream_);
-  cols_.CopyFromCpu(crs_matrix.cols(), num_nonzeros_, context_->stream_);
-  values_.CopyFromCpu(crs_matrix.values(), num_nonzeros_, context_->stream_);
+  rows_.CopyFromCpu(crs_matrix.rows(), num_rows_ + 1);
+  cols_.CopyFromCpu(crs_matrix.cols(), num_nonzeros_);
+  values_.CopyFromCpu(crs_matrix.values(), num_nonzeros_);
   cusparseCreateCsr(&descr_,
                     num_rows_,
                     num_cols_,
@@ -96,7 +100,7 @@ void CudaSparseMatrix::CopyValuesFromCpu(
   CHECK_EQ(num_rows_, crs_matrix.num_rows());
   CHECK_EQ(num_cols_, crs_matrix.num_cols());
   CHECK_EQ(num_nonzeros_, crs_matrix.num_nonzeros());
-  values_.CopyFromCpu(crs_matrix.values(), num_nonzeros_, context_->stream_);
+  values_.CopyFromCpu(crs_matrix.values(), num_nonzeros_);
 }
 
 void CudaSparseMatrix::SpMv(cusparseOperation_t op,

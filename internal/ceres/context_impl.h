@@ -81,6 +81,13 @@ class CERES_NO_EXPORT ContextImpl final : public Context {
   // 3. If the user explicitly selects a GPU in the host process before calling
   //    Ceres, Ceres will use that GPU.
 
+  // Note on Ceres' use of CUDA Streams:
+  // All operations on the GPU are performed using a single stream. This ensures
+  // that the order of operations are stream-ordered, but we do not need to
+  // explicitly synchronize the stream at the end of every operation. Stream
+  // synchronization occurs only before GPU to CPU transfers, and is handled by
+  // CudaBuffer.
+
   // Initializes cuBLAS, cuSOLVER, and cuSPARSE contexts, creates an
   // asynchronous CUDA stream, and associates the stream with the contexts.
   // Returns true iff initialization was successful, else it returns false and a
