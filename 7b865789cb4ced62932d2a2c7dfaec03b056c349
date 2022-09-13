@@ -393,6 +393,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9aa7eef6_b99b1f65",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-13T19:44:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a34c0c1c_2b0a5fda",
+      "range": {
+        "startLine": 102,
+        "startChar": 12,
+        "endLine": 102,
+        "endChar": 26
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "71bb8ecf_75d8ac2f",
@@ -477,6 +501,30 @@
       "side": 1,
       "message": "Would you prefer it being an additional argument to ParallelFor call?\n\nI have also changed items to blocks trying to make naming less confusing",
       "parentUuid": "137b8c39_4e71c9cf",
+      "range": {
+        "startLine": 128,
+        "startChar": 21,
+        "endLine": 128,
+        "endChar": 25
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "551c9c94_9f5a6f67",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-13T19:44:03Z",
+      "side": 1,
+      "message": "I am not sure how tunable this should be, should this be a global constant like here, a global parameter thats stored in the context object or a per call parameter. what do you think?",
+      "parentUuid": "18b9e20f_4e9aec66",
       "range": {
         "startLine": 128,
         "startChar": 21,
@@ -675,6 +723,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "64b579f6_0956ab24",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-13T19:44:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d9ba124f_0bc72a5b",
+      "range": {
+        "startLine": 211,
+        "startChar": 8,
+        "endLine": 211,
+        "endChar": 16
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "26568371_c8ac22af",
@@ -712,6 +784,30 @@
       "side": 1,
       "message": "The idea is to split N work items (N \u003d end - start) into M as equal as possible contiguous disjoint \"blocks\".\n\nOne can prove that we can either:\n - Keep all blocks equal if N % M \u003d\u003d 0\n - Keep difference of block sizes at most 1 otherwise\nAnd this is as good as we can get when selecting a split that minimizes maximal difference between block sizes\n\nIn the latter case we will have N % M blocks of size [N / M] + 1 and M - (N % M) blocks of size [N / M]\n\nThis gives a total size of (N % M) * ([N / M] + 1) + (M - (N % M)) * [N / M] \u003d [N / M] * M + (N % M) \u003d N\n\n\n\nI\u0027ve added some comments here and there and tried to adjust variable naming.\n\nI\u0027ve removed std::min(...) from curr_end computations because it was a leftover of less \"equal\" partitioning.",
       "parentUuid": "26568371_c8ac22af",
+      "range": {
+        "startLine": 231,
+        "startChar": 16,
+        "endLine": 231,
+        "endChar": 17
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fd6e0cb_3f45bf73",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-13T19:44:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dcc1e87e_cd413b1f",
       "range": {
         "startLine": 231,
         "startChar": 16,

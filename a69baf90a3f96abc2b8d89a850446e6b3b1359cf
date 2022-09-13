@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2efbd42_73f1f52a",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-13T19:44:03Z",
+      "side": 1,
+      "message": "It is better to have an explicit comparison with zero.",
+      "range": {
+        "startLine": 63,
+        "startChar": 9,
+        "endLine": 63,
+        "endChar": 26
+      },
+      "revId": "a69baf90a3f96abc2b8d89a850446e6b3b1359cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc1e487d_b34a75d0",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-13T19:44:03Z",
+      "side": 1,
+      "message": "the variable names are self explanatory now, you can drop the comments.",
+      "range": {
+        "startLine": 82,
+        "startChar": 24,
+        "endLine": 82,
+        "endChar": 26
+      },
+      "revId": "a69baf90a3f96abc2b8d89a850446e6b3b1359cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a01acbe_fc5788e0",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-13T19:44:03Z",
+      "side": 1,
+      "message": "divisible",
+      "range": {
+        "startLine": 101,
+        "startChar": 54,
+        "endLine": 101,
+        "endChar": 63
+      },
+      "revId": "a69baf90a3f96abc2b8d89a850446e6b3b1359cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e72a06d5_7d46bf28",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-13T19:44:03Z",
+      "side": 1,
+      "message": "this seems very confusing to me.\n\nas I understand it\n\nif num_work_blocks divideds (end - start) then you will have a total of num_work_blocks each of size (end - start)/num_work_blocks.\n\nif num_work_blocks does NOT divide (end - start) then you will have \n\n(num_work_blocks) blocks of size floor((end-start)/num_work_blocks) \n\nand and extra block of size (end - start) % num_work_blocks no?",
+      "range": {
+        "startLine": 104,
+        "startChar": 45,
+        "endLine": 104,
+        "endChar": 48
+      },
+      "revId": "a69baf90a3f96abc2b8d89a850446e6b3b1359cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6db8130_2bdfcf86",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-13T19:44:03Z",
+      "side": 1,
+      "message": "these definitions are reversed\nwhat you are defining to be tail_block_size is really the size of the \"normal\" block.\nand what you are defining as num_full_sized_blocks is the size of the last remainder block no?",
+      "range": {
+        "startLine": 114,
+        "startChar": 8,
+        "endLine": 114,
+        "endChar": 23
+      },
+      "revId": "a69baf90a3f96abc2b8d89a850446e6b3b1359cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44b35813_aa1bd04f",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-13T19:44:03Z",
+      "side": 1,
+      "message": "give this a better name.",
+      "range": {
+        "startLine": 136,
+        "startChar": 20,
+        "endLine": 136,
+        "endChar": 21
+      },
+      "revId": "a69baf90a3f96abc2b8d89a850446e6b3b1359cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aabd6ed6_0c09bc89",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-13T19:44:03Z",
+      "side": 1,
+      "message": "shouldn\u0027t the early exit for end \u003c\u003d start be at the very top? regardless of whether it is one thread or more.",
+      "range": {
+        "startLine": 215,
+        "startChar": 10,
+        "endLine": 215,
+        "endChar": 11
+      },
+      "revId": "a69baf90a3f96abc2b8d89a850446e6b3b1359cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7aa13a2d_bd3dcaa4",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-13T19:44:03Z",
+      "side": 1,
+      "message": "I think i here and in shared_state should be named to block_id",
+      "revId": "a69baf90a3f96abc2b8d89a850446e6b3b1359cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e0655ad_b902af2a",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-13T19:44:03Z",
+      "side": 1,
+      "message": "this is wrong, only the last block is sized tail_block_size if there is one.\n\nI think you have mixed up tail_block with the regular blocks in the comments and in the code.",
+      "range": {
+        "startLine": 254,
+        "startChar": 44,
+        "endLine": 254,
+        "endChar": 59
+      },
+      "revId": "a69baf90a3f96abc2b8d89a850446e6b3b1359cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
