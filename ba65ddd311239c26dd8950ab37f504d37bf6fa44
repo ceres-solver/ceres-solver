@@ -1,5 +1,40 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6736f4b_6bfdcd81",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-09-14T12:56:07Z",
+      "side": 1,
+      "message": "I just realized there is a small bug - we are repeating a BM instead of calling the one intended.",
+      "revId": "ba65ddd311239c26dd8950ab37f504d37bf6fa44",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e980941_e53bfffa",
+        "filename": "internal/ceres/spmv_benchmark.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-09-14T12:56:07Z",
+      "side": 1,
+      "message": "This should be:\n```\nBENCHMARK(BM_BM_CudaLeftMultiplyAndAccumulateUnstructured)\n```",
+      "revId": "ba65ddd311239c26dd8950ab37f504d37bf6fa44",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
