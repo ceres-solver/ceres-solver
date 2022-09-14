@@ -133,6 +133,30 @@
       },
       "revId": "a012cec03d1e1070002495f08f1299b184230197",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "806374d2_8f103646",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-09-14T01:55:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7be0fa32_e1afcd64",
+      "range": {
+        "startLine": 396,
+        "startChar": 9,
+        "endLine": 396,
+        "endChar": 18
+      },
+      "revId": "a012cec03d1e1070002495f08f1299b184230197",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
