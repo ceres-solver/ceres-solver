@@ -229,6 +229,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0cf41311_e9fc0ea1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-09-14T13:54:32Z",
+      "side": 1,
+      "message": "Doesn\u0027t the context already manage the CXX thread pool? \nIs the plan to remove it from the context once the new threading model is implemented?",
+      "parentUuid": "aed4cbc1_0b786ad2",
+      "revId": "2eab796c6ae47255ca37dfdae733043aa32f35ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e95ba6ed_5cef1aa7",
