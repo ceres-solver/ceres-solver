@@ -146,6 +146,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c65ce9bd_57eaced2",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2022-09-14T16:05:43Z",
+      "side": 1,
+      "message": "Can you use fetch_add instead of the increment operator? I know ++ is implemented using fetch and add but since block_id is an atomic I think it is important to be explicit because there are a bunch of issues you can run into with atomics.\n\n\nhttps://en.cppreference.com/w/cpp/atomic/atomic/fetch_add",
+      "range": {
+        "startLine": 248,
+        "startChar": 43,
+        "endLine": 248,
+        "endChar": 45
+      },
+      "revId": "8e97913440812543ef6f55f78921978002faca40",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "63d7a107_2e37d601",
         "filename": "internal/ceres/parallel_for_cxx.cc",
         "patchSetId": 3
