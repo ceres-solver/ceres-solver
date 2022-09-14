@@ -18,6 +18,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b01d726_df5a8699",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-14T08:25:49Z",
+      "side": 1,
+      "message": "This version works fine, while the previous is consistently failing in  CUDADenseCholeskyMixedPrecision.Cholesky4x4Matrix1Step when run with cuda-memcheck\n\nDo you experience the same behavior (in terms of previous version failing when being run with cuda-memcheck)?\n\n\n\n\nI would like to share some thoughts I got after making a thread on google groups.\n\na. Previous version without stream sync in CopyToCpu only fails under cuda-memcheck with tool memcheck; but does not fail without cuda-memcheck or with tools racecheck/synccheck/initcheck. No errors reported by any of these tools, even when test is failing.\n\nb. I find the wording in nvidia docs about implicit synchronization a bit vague - I am still not sure if \"legacy\" behavior is turned on or off by default (but going  stream-synchronous is better in both cases from my point).",
+      "revId": "8a1a925df1d6b5754a35e6a6a19c255ce2b89991",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "54887f78_88ab0dd1",
@@ -84,6 +101,29 @@
         "startChar": 7,
         "endLine": 113,
         "endChar": 16
+      },
+      "revId": "8a1a925df1d6b5754a35e6a6a19c255ce2b89991",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "765120c1_6b29bae9",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-14T08:25:49Z",
+      "side": 1,
+      "message": "I think it might be better to replace those two calls with\na. Scheduling cudaMemcpyAsync in the stream (so it will be run automatically once the previous operation finishes).\nb. Synchronizing after with cudaStreamSynchronize\n\nThis way behavior will be the same for both options of default stream operation, but we will synchronize one time less",
+      "range": {
+        "startLine": 115,
+        "startChar": 4,
+        "endLine": 117,
+        "endChar": 26
       },
       "revId": "8a1a925df1d6b5754a35e6a6a19c255ce2b89991",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
