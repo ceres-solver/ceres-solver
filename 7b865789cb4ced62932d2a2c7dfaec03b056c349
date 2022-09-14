@@ -585,6 +585,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2258a85f_de99a8c1",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2022-09-14T21:06:01Z",
+      "side": 1,
+      "message": "In Eigen where did you find that you can specify the block size?  All I see is that it dynamically computes block size based on (1) the iteration cost and (2) parallel efficiency?",
+      "parentUuid": "a7ab0247_b58d0583",
+      "range": {
+        "startLine": 128,
+        "startChar": 21,
+        "endLine": 128,
+        "endChar": 25
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "59ca1ff4_e9f07485",
         "filename": "internal/ceres/parallel_for_cxx.cc",
         "patchSetId": 1
