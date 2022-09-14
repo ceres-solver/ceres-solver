@@ -33,6 +33,24 @@
       "message": "so we were reading before the buffer was ready? ",
       "revId": "a012cec03d1e1070002495f08f1299b184230197",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac84df66_ebc16cf0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-09-14T00:40:43Z",
+      "side": 1,
+      "message": "Unfortunately it seems yes - even though cudaMemcpy is synchronous w.r.t. the memory transfer, it may not be sequential w.r.t. the stream operations. The stream sync is required to ensure this.",
+      "parentUuid": "84520987_964e1abd",
+      "revId": "a012cec03d1e1070002495f08f1299b184230197",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
