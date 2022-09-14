@@ -51,6 +51,29 @@
       "parentUuid": "84520987_964e1abd",
       "revId": "a012cec03d1e1070002495f08f1299b184230197",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5ac1b61_8807cec3",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-14T00:42:23Z",
+      "side": 1,
+      "message": "but aren\u0027t you syncronizing just above this call?",
+      "range": {
+        "startLine": 396,
+        "startChar": 9,
+        "endLine": 396,
+        "endChar": 18
+      },
+      "revId": "a012cec03d1e1070002495f08f1299b184230197",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
