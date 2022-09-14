@@ -16,6 +16,138 @@
       "message": "I\u0027ve changed ParallelFor behavior to accepting functions\n * void(start, end) instead of void(i)\n * void(thread_id, start, end) instead of void(thread_id, i)\n \nUnfortunately this requires us to also change all current ParallelFor invocations (hence the size of change-set increased).\n \nThis does help to reduce performance impact for single-threaded case and small  number of computations per loop iteration.\n\n\nNaming issues were also resolved.\n\nSeems that the only remaining issue is to decide if we want to export limit of number of blocks per thread via API (or maybe add lower bound for block size into API).\n ",
       "revId": "8e97913440812543ef6f55f78921978002faca40",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b36971f8_e5ccfd6b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-14T15:47:17Z",
+      "side": 1,
+      "message": "Minor nits, otherwise good to go. Also rebase please. ",
+      "revId": "8e97913440812543ef6f55f78921978002faca40",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f6046ca_87ea7816",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-14T15:47:17Z",
+      "side": 1,
+      "message": "reflow these comments. here and the ones above.",
+      "range": {
+        "startLine": 60,
+        "startChar": 11,
+        "endLine": 60,
+        "endChar": 14
+      },
+      "revId": "8e97913440812543ef6f55f78921978002faca40",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d86effc_42ee39d5",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-14T15:47:17Z",
+      "side": 1,
+      "message": "rest of the blocks.",
+      "range": {
+        "startLine": 132,
+        "startChar": 37,
+        "endLine": 132,
+        "endChar": 43
+      },
+      "revId": "8e97913440812543ef6f55f78921978002faca40",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68561553_fc7de7d1",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-14T15:47:17Z",
+      "side": 1,
+      "message": "is there a way around this double function wrapper here? perhaps using templates so that we do not have to pay this cost of chasing two function pointers? or maybe it does not matter as much now that we have chunks of work rather than one work item per call.",
+      "range": {
+        "startLine": 174,
+        "startChar": 16,
+        "endLine": 174,
+        "endChar": 24
+      },
+      "revId": "8e97913440812543ef6f55f78921978002faca40",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15c5ef66_40a1b43c",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-14T15:47:17Z",
+      "side": 1,
+      "message": "this check for end \u003c\u003d start should be at the top no?",
+      "range": {
+        "startLine": 216,
+        "startChar": 9,
+        "endLine": 216,
+        "endChar": 10
+      },
+      "revId": "8e97913440812543ef6f55f78921978002faca40",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63d7a107_2e37d601",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-14T15:47:17Z",
+      "side": 1,
+      "message": "why not pull this out as a constant like above too?",
+      "range": {
+        "startLine": 249,
+        "startChar": 22,
+        "endLine": 249,
+        "endChar": 34
+      },
+      "revId": "8e97913440812543ef6f55f78921978002faca40",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }

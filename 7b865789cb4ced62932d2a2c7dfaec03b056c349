@@ -561,6 +561,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6307339a_e010c9f5",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-14T15:47:17Z",
+      "side": 1,
+      "message": "So the way I think about this is that at the call site, the programmer has a decent idea of what each chunk of work looks like, so they maybe in a position to say what the minimal block size should be. we do not have to do this in this change, we can come back and deal with this in a subsequent change and reason about it.",
+      "parentUuid": "a7ab0247_b58d0583",
+      "range": {
+        "startLine": 128,
+        "startChar": 21,
+        "endLine": 128,
+        "endChar": 25
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "59ca1ff4_e9f07485",
         "filename": "internal/ceres/parallel_for_cxx.cc",
         "patchSetId": 1
