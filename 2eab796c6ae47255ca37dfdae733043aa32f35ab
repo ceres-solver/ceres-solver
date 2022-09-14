@@ -211,6 +211,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aed4cbc1_0b786ad2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-09-14T13:45:48Z",
+      "side": 1,
+      "message": "I think context and threading are qualitatively different things. Context is passed to the problem object and is basically state which is expensive to carry, whereas num threads come from the solve call.\n\nI do not think they can or should be merged into one.\n\nSameer",
+      "tag": "mailMessageId\u003d\u003cCAK0oyEoQ8dt0GjB6aURMm12DBj-5U2BOaa7kV+vc4LC9LdpMKQ@mail.gmail.com\u003e",
+      "revId": "2eab796c6ae47255ca37dfdae733043aa32f35ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e95ba6ed_5cef1aa7",
