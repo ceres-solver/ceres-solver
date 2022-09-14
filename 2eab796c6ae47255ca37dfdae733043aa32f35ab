@@ -247,6 +247,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f4dd12c_b5e45dcf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-14T13:56:41Z",
+      "side": 1,
+      "message": "It manages the thread pool, but it does not decide number of threads used to solve. The user can decide that independent of problem construction.",
+      "tag": "mailMessageId\u003d\u003cCABqdRUD4\u003dQDqCM+\u003d4ePobT5p8PmnfpcvB5C8fUCfULv8mTV0+w@mail.gmail.com\u003e",
+      "revId": "2eab796c6ae47255ca37dfdae733043aa32f35ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e95ba6ed_5cef1aa7",
