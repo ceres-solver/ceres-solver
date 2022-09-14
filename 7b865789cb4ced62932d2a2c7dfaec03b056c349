@@ -537,6 +537,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a7ab0247_b58d0583",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-14T14:22:23Z",
+      "side": 1,
+      "message": "When transitioning from index to range as an argument of functions, I\u0027ve noticed that there is some logic inversion compared, for example, to OpenMP where schedule([static,dynamic,guided], block_size) is used.\n\nThere are similar approaches in other parallel-for implementations, for example:\n\nIn Eigen::ThreadPoolDevice user can provide desired divisor of block size, but maximal number of blocks is also limited by a fixed constant * number of threads (coincidentally that fixed constant is also 4).\n\nIn OpenMP user supplies size of block for static/dynamic scheduling.\n\nIn TBB user provides lower bound called grainsize that limits block size from below.\n\n\nIn that sense it seems that adding limit for number of work items per thread to public API might be not very useful.\n\nDo you think we should add specifying minimal block size?\nThis will be logically more similar to OpenMP / TBB / Eigen.",
+      "parentUuid": "551c9c94_9f5a6f67",
+      "range": {
+        "startLine": 128,
+        "startChar": 21,
+        "endLine": 128,
+        "endChar": 25
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "59ca1ff4_e9f07485",
         "filename": "internal/ceres/parallel_for_cxx.cc",
         "patchSetId": 1

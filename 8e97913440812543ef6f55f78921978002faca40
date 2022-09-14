@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "04546dee_f85fcb94",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-14T14:22:23Z",
+      "side": 1,
+      "message": "I\u0027ve changed ParallelFor behavior to accepting functions\n * void(start, end) instead of void(i)\n * void(thread_id, start, end) instead of void(thread_id, i)\n \nUnfortunately this requires us to also change all current ParallelFor invocations (hence the size of change-set increased).\n \nThis does help to reduce performance impact for single-threaded case and small  number of computations per loop iteration.\n\n\nNaming issues were also resolved.\n\nSeems that the only remaining issue is to decide if we want to export limit of number of blocks per thread via API (or maybe add lower bound for block size into API).\n ",
+      "revId": "8e97913440812543ef6f55f78921978002faca40",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

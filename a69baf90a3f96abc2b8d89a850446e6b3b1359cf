@@ -94,6 +94,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cbd4ef2e_56cc72d7",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-14T14:22:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2efbd42_73f1f52a",
+      "range": {
+        "startLine": 63,
+        "startChar": 9,
+        "endLine": 63,
+        "endChar": 26
+      },
+      "revId": "a69baf90a3f96abc2b8d89a850446e6b3b1359cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bc1e487d_b34a75d0",
@@ -117,6 +141,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4e33e4e_24b557f9",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-14T14:22:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc1e487d_b34a75d0",
+      "range": {
+        "startLine": 82,
+        "startChar": 24,
+        "endLine": 82,
+        "endChar": 26
+      },
+      "revId": "a69baf90a3f96abc2b8d89a850446e6b3b1359cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1a01acbe_fc5788e0",
@@ -130,6 +178,30 @@
       "writtenOn": "2022-09-13T19:44:03Z",
       "side": 1,
       "message": "divisible",
+      "range": {
+        "startLine": 101,
+        "startChar": 54,
+        "endLine": 101,
+        "endChar": 63
+      },
+      "revId": "a69baf90a3f96abc2b8d89a850446e6b3b1359cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00bc9ca7_449408ee",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-14T14:22:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a01acbe_fc5788e0",
       "range": {
         "startLine": 101,
         "startChar": 54,
@@ -201,6 +273,30 @@
       "side": 1,
       "message": "okay I understand now.",
       "parentUuid": "228f38fc_497b13bf",
+      "range": {
+        "startLine": 104,
+        "startChar": 45,
+        "endLine": 104,
+        "endChar": 48
+      },
+      "revId": "a69baf90a3f96abc2b8d89a850446e6b3b1359cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ec8cfe7_46c3db6e",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-14T14:22:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7a54096_d541b0fc",
       "range": {
         "startLine": 104,
         "startChar": 45,
@@ -306,6 +402,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6535376_6569fc94",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-14T14:22:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8744cf3a_7cf3d447",
+      "range": {
+        "startLine": 114,
+        "startChar": 8,
+        "endLine": 114,
+        "endChar": 23
+      },
+      "revId": "a69baf90a3f96abc2b8d89a850446e6b3b1359cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "44b35813_aa1bd04f",
@@ -319,6 +439,30 @@
       "writtenOn": "2022-09-13T19:44:03Z",
       "side": 1,
       "message": "give this a better name.",
+      "range": {
+        "startLine": 136,
+        "startChar": 20,
+        "endLine": 136,
+        "endChar": 21
+      },
+      "revId": "a69baf90a3f96abc2b8d89a850446e6b3b1359cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38d03c19_7c8db986",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-14T14:22:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44b35813_aa1bd04f",
       "range": {
         "startLine": 136,
         "startChar": 20,
@@ -352,6 +496,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed067109_e3b2efcf",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-14T14:22:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aabd6ed6_0c09bc89",
+      "range": {
+        "startLine": 215,
+        "startChar": 10,
+        "endLine": 215,
+        "endChar": 11
+      },
+      "revId": "a69baf90a3f96abc2b8d89a850446e6b3b1359cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7aa13a2d_bd3dcaa4",
@@ -365,6 +533,24 @@
       "writtenOn": "2022-09-13T19:44:03Z",
       "side": 1,
       "message": "I think i here and in shared_state should be named to block_id",
+      "revId": "a69baf90a3f96abc2b8d89a850446e6b3b1359cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a6902ab_09989194",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-14T14:22:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aa13a2d_bd3dcaa4",
       "revId": "a69baf90a3f96abc2b8d89a850446e6b3b1359cf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -430,6 +616,30 @@
       "side": 1,
       "message": "Thanks for the explanation, I agree this is better. I think with a slightly different variable naming this will be much better.",
       "parentUuid": "8282f8b3_dd70d848",
+      "range": {
+        "startLine": 254,
+        "startChar": 44,
+        "endLine": 254,
+        "endChar": 59
+      },
+      "revId": "a69baf90a3f96abc2b8d89a850446e6b3b1359cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49aedabc_bee0d153",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-14T14:22:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3abb801_65c95d9f",
       "range": {
         "startLine": 254,
         "startChar": 44,
