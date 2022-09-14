@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ef021648_911e34f9",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-09-14T02:42:51Z",
+      "side": 1,
+      "message": "Technically no, it needs to be whichever stream we should wait on for operations to complete. That said, all Ceres CUDA operations are on the same stream currently so we could just take a stream in the constructor. Let me think about it.\nI also noticed elsewhere that we are inconsistently saving a ContextImpl some places and saving some specific handles from the context in others. Maybe we should just save the contextimpl everywhere so that we are sure all handles and streams are the same.",
+      "parentUuid": "54887f78_88ab0dd1",
+      "range": {
+        "startLine": 113,
+        "startChar": 7,
+        "endLine": 113,
+        "endChar": 16
+      },
+      "revId": "8a1a925df1d6b5754a35e6a6a19c255ce2b89991",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "316055ec_0041a4df",
         "filename": "internal/ceres/dense_cholesky.cc",
         "patchSetId": 2
@@ -54,6 +78,24 @@
       "writtenOn": "2022-09-14T02:24:58Z",
       "side": 1,
       "message": "so stream synchronization is enough? whatever happened to the calls to devicesynchronize?",
+      "revId": "8a1a925df1d6b5754a35e6a6a19c255ce2b89991",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4951e6a5_74f88906",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-09-14T02:42:51Z",
+      "side": 1,
+      "message": "The devicesync is a holdover from when not all operations were explicitly on a stream. Now that we have all ceres operations on one stream we can just sync on the stream. This has the advantage that it does not interfere with other GPU stuff that the host process may be doing on the same device.",
+      "parentUuid": "316055ec_0041a4df",
       "revId": "8a1a925df1d6b5754a35e6a6a19c255ce2b89991",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
