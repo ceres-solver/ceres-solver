@@ -178,6 +178,41 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "759ae621_3b3a4a6d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-09-14T12:08:42Z",
+      "side": 1,
+      "message": "In the Cuda* objects, the design I\u0027d like to move towards is that all objects get a ContextImpl* on construction, with the assumption that it has already been initialized. Constructors only perform a lightweight check to see if it is already initialized, and fail if not initialized. Since the context has all the handles that the CUDA operations need, all objects have consistent usage of resources.\n\nCan the number of threads be absorbed into the Context? If this needs to vary based on the compute being performed, it would be good to have something like a ThreadingPolicy under the context that returns (for example) the number of threads to use for different classes of operations.",
+      "parentUuid": "2d2a7bf1_349f87ab",
+      "revId": "2eab796c6ae47255ca37dfdae733043aa32f35ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ee3f8ba_0e1cf62e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-09-14T12:08:42Z",
+      "side": 1,
+      "message": "Great to see threading in the CPU SpMV operations!\n@Dmitriy, could you please add the CPU and GPU model numbers to the commit message?",
+      "revId": "2eab796c6ae47255ca37dfdae733043aa32f35ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e95ba6ed_5cef1aa7",
         "filename": "internal/ceres/block_sparse_matrix.cc",
         "patchSetId": 1
