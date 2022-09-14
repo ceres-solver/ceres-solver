@@ -53,6 +53,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3bdcf0a_4a7320ce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-09-14T01:00:12Z",
+      "side": 1,
+      "message": "Okay this is bugging me - instead of explicitly syncing everywhere we should just do a sync on the buffer transfers. Please hold off, and let me do a more systematic cleanup.",
+      "revId": "a012cec03d1e1070002495f08f1299b184230197",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c5ac1b61_8807cec3",
@@ -66,6 +83,30 @@
       "writtenOn": "2022-09-14T00:42:23Z",
       "side": 1,
       "message": "but aren\u0027t you syncronizing just above this call?",
+      "range": {
+        "startLine": 396,
+        "startChar": 9,
+        "endLine": 396,
+        "endChar": 18
+      },
+      "revId": "a012cec03d1e1070002495f08f1299b184230197",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7be0fa32_e1afcd64",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-09-14T01:00:12Z",
+      "side": 1,
+      "message": "The affected code is actually line 666, the mixed precision solver - it is missing the explicit sync.",
+      "parentUuid": "c5ac1b61_8807cec3",
       "range": {
         "startLine": 396,
         "startChar": 9,
