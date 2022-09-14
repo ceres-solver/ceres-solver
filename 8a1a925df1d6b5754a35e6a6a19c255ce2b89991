@@ -16,6 +16,46 @@
       "message": "Okay, cleaned up.",
       "revId": "8a1a925df1d6b5754a35e6a6a19c255ce2b89991",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54887f78_88ab0dd1",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-14T02:24:58Z",
+      "side": 1,
+      "message": "isn\u0027t it important that the same stream be passed here that is used at construction time? should the stream be a constructor argument?",
+      "range": {
+        "startLine": 113,
+        "startChar": 7,
+        "endLine": 113,
+        "endChar": 16
+      },
+      "revId": "8a1a925df1d6b5754a35e6a6a19c255ce2b89991",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "316055ec_0041a4df",
+        "filename": "internal/ceres/dense_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-14T02:24:58Z",
+      "side": 1,
+      "message": "so stream synchronization is enough? whatever happened to the calls to devicesynchronize?",
+      "revId": "8a1a925df1d6b5754a35e6a6a19c255ce2b89991",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
