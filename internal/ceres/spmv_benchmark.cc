@@ -416,7 +416,7 @@ static void BM_CudaLeftMultiplyAndAccumulateUnstructured(
   CHECK_NE(sum, 0.0);
 }
 
-BENCHMARK(BM_CudaLeftMultiplyAndAccumulateBA);
+BENCHMARK(BM_CudaLeftMultiplyAndAccumulateUnstructured);
 
 #endif
 
