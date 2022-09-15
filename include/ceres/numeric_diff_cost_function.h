@@ -176,7 +176,7 @@
 namespace ceres {
 
 template <typename CostFunctor,
-          NumericDiffMethodType method = CENTRAL,
+          NumericDiffMethodType kMethod = CENTRAL,
           int kNumResiduals = 0,  // Number of residuals, or ceres::DYNAMIC
           int... Ns>              // Parameters dimensions for each block.
 class NumericDiffCostFunction final
@@ -236,7 +236,7 @@ class NumericDiffCostFunction final
     }
 
     internal::EvaluateJacobianForParameterBlocks<ParameterDims>::
-        template Apply<method, kNumResiduals>(
+        template Apply<kMethod, kNumResiduals>(
             functor_.get(),
             residuals,
             options_,
