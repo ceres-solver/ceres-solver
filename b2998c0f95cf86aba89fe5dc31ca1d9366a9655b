@@ -33,6 +33,23 @@
       "message": "Dmitriy,\nThanks for iterating on this, I will take a look shortly. Are the benchmarks still current?\nSameer\n ",
       "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2fb83a3_158131d1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-15T16:08:04Z",
+      "side": 1,
+      "message": "one more thought before I review, I think it maybe time to junk the openmp backend.\nand seriously think about not having the nothreads backend either. since we are using c++17, we are guaranteed to have c++ threads (which was not the case when these backends were introduced). and single threaded performance seems to be on par now, so we could simplify our lives considerlay.\n\nMike what do you think? I will also add alex to this discussion to see what he thinks.",
+      "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
