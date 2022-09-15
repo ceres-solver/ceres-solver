@@ -106,6 +106,26 @@ inline bool VariadicEvaluate(const Functor& functor,
   return VariadicEvaluateImpl<ParameterDims>(functor, input, output, &functor);
 }
 
+// When differentiating dynamically sized CostFunctions, VariadicEvaluate
+// expects a functor with the signature:
+//
+// bool operator()(double const* const* parameters, double* cost) const
+//
+// However for NumericDiffFirstOrderFunction, the functor has the signature
+//
+// bool operator()(double const* parameters, double* cost) const
+//
+// This thin wrapper adapts the latter to the former.
+template <typename Functor>
+struct FirstOrderFunctorAdapter {
+  explicit FirstOrderFunctorAdapter(const Functor& functor)
+      : functor(functor) {}
+  bool operator()(double const* const* parameters, double* cost) const {
+    return functor(*parameters, cost);
+  }
+  const Functor& functor;
+};
+
 }  // namespace ceres::internal
 
 #endif  // CERES_PUBLIC_INTERNAL_VARIADIC_EVALUATE_H_
