@@ -16,6 +16,23 @@
       "message": "Major changes once again:\n - Removed `std::function\u003c...\u003e` usage in favor of template-driven inlining\n - Reverted changes from patchset #3 related to passing range to loop bodies, because removing `std::function\u003c...\u003e` allows to preserve more usable syntax\n\n\nAll backends get a common prologue for dealing with `num_threads \u003d\u003d 1`, `end \u003e\u003d start + 1`.\n\nCXX threading backend: replaced `ThreadTokenProvider` with another atomic int in `ThreadPoolState`, because we are never reusing tokens, hence no need for maintaining a thread-safe queue\n\nOpenMP backend: replaced scheduling dynamic-\u003eguided; which makes it slightly worse than new CXX backend, but better than old CXX backend.",
       "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fb9488e_6bd39863",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-15T16:03:23Z",
+      "side": 1,
+      "message": "Dmitriy,\nThanks for iterating on this, I will take a look shortly. Are the benchmarks still current?\nSameer\n ",
+      "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
