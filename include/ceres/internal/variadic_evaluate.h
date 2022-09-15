@@ -106,6 +106,16 @@ inline bool VariadicEvaluate(const Functor& functor,
   return VariadicEvaluateImpl<ParameterDims>(functor, input, output, &functor);
 }
 
+template <typename Functor>
+struct FirstOrderFunctorAdapter {
+  explicit FirstOrderFunctorAdapter(const Functor& functor)
+      : functor(functor) {}
+  bool operator()(double const* const* parameters, double* cost) const {
+    return functor(*parameters, cost);
+  }
+  const Functor& functor;
+};
+
 }  // namespace ceres::internal
 
 #endif  // CERES_PUBLIC_INTERNAL_VARIADIC_EVALUATE_H_
