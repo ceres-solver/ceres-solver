@@ -609,6 +609,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "da1fe05e_22cca303",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-15T07:34:48Z",
+      "side": 1,
+      "message": "https://gitlab.com/libeigen/eigen/-/blob/master/unsupported/Eigen/CXX11/src/Tensor/TensorDeviceThreadPool.h#L197-199\n\nHere one can pass block_align function for rounding up block size.\nIn my understanding using that function user can specify block size (for example, if block_align is just rounds up to next number divisible by B - all input blocks except one will have size being multiple of B, if my understanding is correct).",
+      "parentUuid": "2258a85f_de99a8c1",
+      "range": {
+        "startLine": 128,
+        "startChar": 21,
+        "endLine": 128,
+        "endChar": 25
+      },
+      "revId": "7b865789cb4ced62932d2a2c7dfaec03b056c349",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "59ca1ff4_e9f07485",
         "filename": "internal/ceres/parallel_for_cxx.cc",
         "patchSetId": 1

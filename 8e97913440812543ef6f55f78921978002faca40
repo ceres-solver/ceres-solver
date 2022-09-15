@@ -75,6 +75,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c814b4e3_655606a8",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-15T07:34:48Z",
+      "side": 1,
+      "message": "Done, reverted supplying ranges because removing std::function turned out to be equally good performance-wise and better in terms of API",
+      "parentUuid": "4f6046ca_87ea7816",
+      "range": {
+        "startLine": 60,
+        "startChar": 11,
+        "endLine": 60,
+        "endChar": 14
+      },
+      "revId": "8e97913440812543ef6f55f78921978002faca40",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1d86effc_42ee39d5",
@@ -88,6 +112,30 @@
       "writtenOn": "2022-09-14T15:47:17Z",
       "side": 1,
       "message": "rest of the blocks.",
+      "range": {
+        "startLine": 132,
+        "startChar": 37,
+        "endLine": 132,
+        "endChar": 43
+      },
+      "revId": "8e97913440812543ef6f55f78921978002faca40",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f8ada49_72583790",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-15T07:34:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d86effc_42ee39d5",
       "range": {
         "startLine": 132,
         "startChar": 37,
@@ -123,6 +171,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ccf0b2fb_61da053a",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-15T07:34:48Z",
+      "side": 1,
+      "message": "I\u0027ve replaced all std::function usages (except adding job into pool) with templates.\n\nThis seem to make in-place lambdas of loop bodies being inlined all the way down to parallel for, and removes the necessity of introduction functions working on ranges before we actually need them.\nThus I reverted back everything from patcheset #3 except variable renaming.",
+      "parentUuid": "68561553_fc7de7d1",
+      "range": {
+        "startLine": 174,
+        "startChar": 16,
+        "endLine": 174,
+        "endChar": 24
+      },
+      "revId": "8e97913440812543ef6f55f78921978002faca40",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "15c5ef66_40a1b43c",
         "filename": "internal/ceres/parallel_for_cxx.cc",
         "patchSetId": 3
@@ -134,6 +206,30 @@
       "writtenOn": "2022-09-14T15:47:17Z",
       "side": 1,
       "message": "this check for end \u003c\u003d start should be at the top no?",
+      "range": {
+        "startLine": 216,
+        "startChar": 9,
+        "endLine": 216,
+        "endChar": 10
+      },
+      "revId": "8e97913440812543ef6f55f78921978002faca40",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d256b3b_48370b57",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-15T07:34:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15c5ef66_40a1b43c",
       "range": {
         "startLine": 216,
         "startChar": 9,
@@ -167,6 +263,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "45310b6e_04724cc0",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-15T07:34:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c65ce9bd_57eaced2",
+      "range": {
+        "startLine": 248,
+        "startChar": 43,
+        "endLine": 248,
+        "endChar": 45
+      },
+      "revId": "8e97913440812543ef6f55f78921978002faca40",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "63d7a107_2e37d601",
@@ -180,6 +300,30 @@
       "writtenOn": "2022-09-14T15:47:17Z",
       "side": 1,
       "message": "why not pull this out as a constant like above too?",
+      "range": {
+        "startLine": 249,
+        "startChar": 22,
+        "endLine": 249,
+        "endChar": 34
+      },
+      "revId": "8e97913440812543ef6f55f78921978002faca40",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d38c20ff_60bf1392",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-15T07:34:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63d7a107_2e37d601",
       "range": {
         "startLine": 249,
         "startChar": 22,
