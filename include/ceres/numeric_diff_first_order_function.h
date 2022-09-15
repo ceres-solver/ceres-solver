@@ -99,17 +99,53 @@ namespace ceres {
 // "QuadraticCostFunctor", "CENTRAL, 4", describe the finite
 // differencing scheme as "central differencing" and the functor as
 // computing its cost from a 4 dimensional input.
+//
+// If the size of the parameter vector is not known at compile time, then an
+// alternate construction syntax can be used:
+//
+//   FirstOrderFunction* function
+//       = new NumericDiffFirstOrderFunction<MyScalarCostFunctor, CENTRAL>(
+//           new QuadraticCostFunctor(1.0), 4);
+//
+// Note that instead of passing 4 as a template argument, it is now passed as
+// the second argument to the constructor.
 template <typename FirstOrderFunctor,
-          NumericDiffMethodType method,
-          int kNumParameters>
+          NumericDiffMethodType kMethod,
+          int kNumParameters = DYNAMIC>
 class NumericDiffFirstOrderFunction final : public FirstOrderFunction {
  public:
+  // Constructor for the case where the parameter size is known at compile time.
   explicit NumericDiffFirstOrderFunction(
       FirstOrderFunctor* functor,
       Ownership ownership = TAKE_OWNERSHIP,
       const NumericDiffOptions& options = NumericDiffOptions())
-      : functor_(functor), ownership_(ownership), options_(options) {
+      : functor_(functor),
+        num_parameters_(kNumParameters),
+        ownership_(ownership),
+        options_(options) {
+    static_assert(kNumParameters != DYNAMIC,
+                  "Number of parameters must be static when defined via the "
+                  "template parameter. Use the other constructor for "
+                  "dynamically sized functions.");
     static_assert(kNumParameters > 0, "kNumParameters must be positive");
+  }
+
+  // Constructor for the case where the parameter size is specified at run time.
+  explicit NumericDiffFirstOrderFunction(
+      FirstOrderFunctor* functor,
+      int num_parameters,
+      Ownership ownership = TAKE_OWNERSHIP,
+      const NumericDiffOptions& options = NumericDiffOptions())
+      : functor_(functor),
+        num_parameters_(num_parameters),
+        ownership_(ownership),
+        options_(options) {
+    static_assert(
+        kNumParameters == DYNAMIC,
+        "Template parameter must be DYNAMIC when using this constructor. If "
+        "you want to provide the number of parameters statically (it does not "
+        "make any difference performancewise), use the other constructor.");
+    CHECK_GT(num_parameters, 0);
   }
 
   ~NumericDiffFirstOrderFunction() override {
@@ -121,12 +157,8 @@ class NumericDiffFirstOrderFunction final : public FirstOrderFunction {
   bool Evaluate(const double* const parameters,
                 double* cost,
                 double* gradient) const override {
-    using ParameterDims = internal::StaticParameterDims<kNumParameters>;
-    constexpr int kNumResiduals = 1;
-
     // Get the function value (cost) at the the point to evaluate.
-    if (!internal::VariadicEvaluate<ParameterDims>(
-            *functor_, &parameters, cost)) {
+    if (!(*functor_)(parameters, cost)) {
       return false;
     }
 
@@ -135,27 +167,36 @@ class NumericDiffFirstOrderFunction final : public FirstOrderFunction {
     }
 
     // Create a copy of the parameters which will get mutated.
-    internal::FixedArray<double, 32> parameters_copy(kNumParameters);
-    std::copy_n(parameters, kNumParameters, parameters_copy.data());
+    internal::FixedArray<double, 32> parameters_copy(num_parameters_);
+    std::copy_n(parameters, num_parameters_, parameters_copy.data());
     double* parameters_ptr = parameters_copy.data();
-    internal::EvaluateJacobianForParameterBlocks<
-        ParameterDims>::template Apply<method, kNumResiduals>(functor_.get(),
-                                                              cost,
-                                                              options_,
-                                                              kNumResiduals,
-                                                              &parameters_ptr,
-                                                              &gradient);
-    return true;
+
+    internal::FirstOrderFunctorAdapter<FirstOrderFunctor> fofa(*functor_);
+    return internal::NumericDiff<
+        internal::FirstOrderFunctorAdapter<FirstOrderFunctor>,
+        kMethod,
+        1,
+        internal::DynamicParameterDims,
+        0,
+        DYNAMIC>::EvaluateJacobianForParameterBlock(&fofa,
+                                                    cost,
+                                                    options_,
+                                                    1,
+                                                    0,
+                                                    num_parameters_,
+                                                    &parameters_ptr,
+                                                    gradient);
   }
 
-  int NumParameters() const override { return kNumParameters; }
+  int NumParameters() const override { return num_parameters_; }
 
   const FirstOrderFunctor& functor() const { return *functor_; }
 
  private:
   std::unique_ptr<FirstOrderFunctor> functor_;
-  Ownership ownership_;
-  NumericDiffOptions options_;
+  const int num_parameters_;
+  const Ownership ownership_;
+  const NumericDiffOptions options_;
 };
 
 }  // namespace ceres
