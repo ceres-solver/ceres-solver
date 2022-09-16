@@ -36,6 +36,7 @@
 #include "ceres/gradient_checking_cost_function.h"
 #include "ceres/line_search_preprocessor.h"
 #include "ceres/parallel_for.h"
+#include "ceres/parallel_utils.h"
 #include "ceres/problem_impl.h"
 #include "ceres/solver.h"
 #include "ceres/trust_region_preprocessor.h"
@@ -58,16 +59,13 @@ std::unique_ptr<Preprocessor> Preprocessor::Create(
 
 Preprocessor::~Preprocessor() = default;
 
-void ChangeNumThreadsIfNeeded(Solver::Options* options) {
-  if (options->num_threads == 1) {
-    return;
-  }
-  const int num_threads_available = MaxNumThreadsAvailable();
-  if (options->num_threads > num_threads_available) {
+void ChangeNumThreadsIfNeeded(int num_threads_available,
+                              Solver::Options* options) {
+  if (options->num_threads != num_threads_available) {
     LOG(WARNING) << "Specified options.num_threads: " << options->num_threads
-                 << " exceeds maximum available from the threading model Ceres "
-                 << "was compiled with: " << num_threads_available
-                 << ".  Bounding to maximum number available.";
+                 << " does not match the number of threads in the pool: "
+                 << num_threads_available
+                 << ".  Changing to the number of threads in the pool.";
     options->num_threads = num_threads_available;
   }
 }

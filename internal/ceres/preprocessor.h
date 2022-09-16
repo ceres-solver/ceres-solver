@@ -105,11 +105,11 @@ struct CERES_NO_EXPORT PreprocessedProblem {
 
 // Common functions used by various preprocessors.
 
-// If the user has specified a num_threads > the maximum number of threads
-// available from the compiled threading model, bound the number of threads
-// to the maximum.
+// If the user has requested a number of threads not equal to the number
+// available in the thread pool, change to the number in the the thread pool.
 CERES_NO_EXPORT
-void ChangeNumThreadsIfNeeded(Solver::Options* options);
+void ChangeNumThreadsIfNeeded(int num_threads_available,
+                              Solver::Options* options);
 
 // Extract the effective parameter vector from the preprocessed
 // problem and setup bits of the Minimizer::Options object that are

@@ -147,7 +147,6 @@ CERES_TESTS = [
     "sparse_normal_cholesky_solver",
     "subset_preconditioner",
     "system",
-    "thread_pool",
     "tiny_solver_autodiff_function",
     "tiny_solver_cost_function_adapter",
     "tiny_solver",
@@ -207,6 +206,25 @@ TEST_DEPS = [
 ) for test_filename in glob([
     "internal/ceres/generated_bundle_adjustment_tests/*_test.cc",
 ])]
+
+cc_test(
+    name = "context_with_threads_reuse_test",
+    size = "large",
+    timeout = "eternal",
+    srcs = [
+        "internal/ceres/context_with_threads_reuse_test.cc",
+    ],
+    copts = ["-Ithird_party/ceres/internal/ceres"],
+    data = ["data/problem-16-22106-pre.txt"],
+    defines = ceres_defines,
+    deps = [
+        ":ceres",
+        ":test_util",
+        ":testing_shim",
+        "//base",
+        "//testing/base/public:gunit_main",
+    ],
+)
 
 # Build the benchmarks.
 [cc_binary(

@@ -49,6 +49,7 @@ endfunction()
 
 macro(set_ceres_threading_model_to_cxx11_threads)
   list(APPEND CERES_COMPILE_OPTIONS CERES_USE_CXX_THREADS)
+  list(APPEND CERES_COMPILE_OPTIONS EIGEN_USE_THREADS)
 endmacro()
 
 macro(set_ceres_threading_model_to_openmp)

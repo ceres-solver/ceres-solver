@@ -30,6 +30,12 @@
 
 #include "ceres/parallel_utils.h"
 
+#include <cmath>
+#include <limits>
+#include <thread>
+
+#include "ceres/internal/config.h"
+
 namespace ceres::internal {
 
 void LinearIndexToUpperTriangularIndex(int k, int n, int* i, int* j) {
@@ -83,6 +89,27 @@ void LinearIndexToUpperTriangularIndex(int k, int n, int* i, int* j) {
       *j = *i + j0;
     }
   }
+}
+
+int MaxNumThreadsAvailable() {
+#ifdef CERES_USE_CXX_THREADS
+  static int num_hardware_threads = std::thread::hardware_concurrency();
+  // hardware_concurrency() can return 0 if the value is not well defined or not
+  // computable.
+  return num_hardware_threads == 0 ? std::numeric_limits<int>::max()
+                                   : num_hardware_threads;
+#else
+  return 1;
+#endif  // CERES_USE_CXX_THREADS
+}
+
+int SizeOfScratchSpaceForThreads(int num_threads) {
+  if (num_threads <= 1) {
+    return 1;
+  }
+  // Use num threads + 1 since the eigen thread pool may run work on the main
+  // thread.
+  return num_threads + 1;
 }
 
 }  // namespace ceres::internal
