@@ -33,6 +33,24 @@
       "message": "I think it is worth first merging Dmitriy\u0027s ParallelFor changes and then looking at this change in that context, it will be easier to evaluate it both for performance as well what code changes it causes. WDYT? \nDmitriy also has another CL which brings spmv threading, which will also give us some nice benchmarks to evaluate threading rather than just using end to end bundle adjuster solver.",
       "revId": "ba5fa141dfe6a93b78833b717dc1780b8d6487cf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20e9cd5f_a40d414b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2022-09-16T23:36:02Z",
+      "side": 1,
+      "message": "Definitely. We need Dmitriy\u0027s changes if we are going with Eigen anyways.",
+      "parentUuid": "8b00d2bb_a2034f73",
+      "revId": "ba5fa141dfe6a93b78833b717dc1780b8d6487cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
