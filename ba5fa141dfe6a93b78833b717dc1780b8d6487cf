@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8e3ec0d_79b6467e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2022-09-16T21:00:29Z",
+      "side": 1,
+      "message": "This is the version which we re-use the Eigen\u0027s parallel for implementation that takes a cost. I\u0027ve set the cost to a very large number to force sharding and from what I have seen it chooses 4 * num threads as the number of blocks. So the same as Dimitriy\u0027s implementation.\n\nWe should swap out the std function range for Dimitriy\u0027s template solution.",
+      "revId": "ba5fa141dfe6a93b78833b717dc1780b8d6487cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
