@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b86db94c_33e624d4",
+        "filename": "include/ceres/internal/variadic_evaluate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-16T15:56:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb7d4cff_c64c568d",
+      "revId": "d27797794659d353e8ee7037627157b1fdca05d0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a599efaf_e7400f38",
@@ -31,6 +49,24 @@
       "writtenOn": "2022-09-16T15:38:11Z",
       "side": 1,
       "message": "I admit that the rules [1] would imply that this is right, and that kNumParameters is wrong, but I think kMethod would be clearer here, as this is in fact a constant.\n\n[1]: https://google.github.io/styleguide/cppguide.html#General_Naming_Rules (last paragraph)",
+      "revId": "d27797794659d353e8ee7037627157b1fdca05d0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "065a4bca_ea182a65",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-16T15:56:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a599efaf_e7400f38",
       "revId": "d27797794659d353e8ee7037627157b1fdca05d0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -52,6 +88,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "059ac9d6_f5a68c78",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-16T15:56:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fab8be2_2b4a9e1b",
+      "revId": "d27797794659d353e8ee7037627157b1fdca05d0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e6ecd500_ec1b977b",
@@ -65,6 +119,24 @@
       "writtenOn": "2022-09-16T15:38:11Z",
       "side": 1,
       "message": "We should also CHECK() here that num_parameters_ \u003e 0 no?",
+      "revId": "d27797794659d353e8ee7037627157b1fdca05d0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09cbf387_a6eaecc3",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-16T15:56:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6ecd500_ec1b977b",
       "revId": "d27797794659d353e8ee7037627157b1fdca05d0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -88,6 +160,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9592d0a2_17437ef1",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-16T15:56:03Z",
+      "side": 1,
+      "message": "Yes, for the use case for this function it is fine. The template trickery needed for this is UGH. Note that you have to call a different function too. In fact after I did this patch it was not clear to me if the template parameter should even be allowed, dynamic is all you need really.",
+      "parentUuid": "b64d5a45_451f3f0f",
+      "revId": "d27797794659d353e8ee7037627157b1fdca05d0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "13e52e81_210e31bb",
         "filename": "include/ceres/numeric_diff_first_order_function.h",
         "patchSetId": 3
@@ -99,6 +189,24 @@
       "writtenOn": "2022-09-16T15:38:11Z",
       "side": 1,
       "message": "These members could actually also be declared const",
+      "revId": "d27797794659d353e8ee7037627157b1fdca05d0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c6e1569_e25e6a98",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-16T15:56:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13e52e81_210e31bb",
       "revId": "d27797794659d353e8ee7037627157b1fdca05d0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
