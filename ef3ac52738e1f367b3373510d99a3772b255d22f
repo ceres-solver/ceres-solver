@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "18eadb0d_8922ce42",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-16T17:16:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e197a596_bfa8e118",
+      "revId": "ef3ac52738e1f367b3373510d99a3772b255d22f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e7833393_93c39566",
@@ -35,6 +53,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c382b76c_f7ca449e",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-16T17:16:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7833393_93c39566",
+      "revId": "ef3ac52738e1f367b3373510d99a3772b255d22f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "007e2233_afcdbaf2",
@@ -48,6 +84,24 @@
       "writtenOn": "2022-09-16T17:13:15Z",
       "side": 1,
       "message": "Consider using \u0027constexpr int kNumResiduals \u003d 1\u0027 here as before rather then repeating the \u00271\u0027 literal, I think it would aid legibility given the number of parameters",
+      "revId": "ef3ac52738e1f367b3373510d99a3772b255d22f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf0a70f5_4f0c4170",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-16T17:16:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "007e2233_afcdbaf2",
       "revId": "ef3ac52738e1f367b3373510d99a3772b255d22f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
