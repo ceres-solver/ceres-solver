@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aed3d0be_74f2bb7a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-16T16:11:03Z",
+      "side": 1,
+      "message": "Thank you for revising this, I will take a look over the weekend. I imagine Sergiu also has questions/comments.",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
