@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e197a596_bfa8e118",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-09-16T17:13:15Z",
+      "side": 1,
+      "message": "This last statement may not be true now no ?",
+      "revId": "ef3ac52738e1f367b3373510d99a3772b255d22f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7833393_93c39566",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-09-16T17:13:15Z",
+      "side": 1,
+      "message": "I just noticed that we\u0027re missing an #include of logging in this file",
+      "revId": "ef3ac52738e1f367b3373510d99a3772b255d22f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "007e2233_afcdbaf2",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-09-16T17:13:15Z",
+      "side": 1,
+      "message": "Consider using \u0027constexpr int kNumResiduals \u003d 1\u0027 here as before rather then repeating the \u00271\u0027 literal, I think it would aid legibility given the number of parameters",
+      "revId": "ef3ac52738e1f367b3373510d99a3772b255d22f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
