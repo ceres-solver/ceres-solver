@@ -41,35 +41,24 @@ namespace internal {
 
 int MaxNumThreadsAvailable() { return 1; }
 
-void ParallelFor(ContextImpl* context,
-                 int start,
-                 int end,
-                 int num_threads,
-                 const std::function<void(int)>& function) {
-  CHECK_GT(num_threads, 0);
+void ParallelFor(ContextImpl* context, int start, int end,
+                 const std::function<void(int start, int end)>& function) {
   CHECK(context != nullptr);
   if (end <= start) {
     return;
   }
-  for (int i = start; i < end; ++i) {
-    function(i);
-  }
+  function(start, end);
 }
 
-void ParallelFor(ContextImpl* context,
-                 int start,
-                 int end,
-                 int num_threads,
-                 const std::function<void(int thread_id, int i)>& function) {
-  CHECK_GT(num_threads, 0);
+void ParallelFor(
+    ContextImpl* context, int start, int end,
+    const std::function<void(int thread_id, int start, int end)>& function) {
   CHECK(context != nullptr);
   if (end <= start) {
     return;
   }
   const int thread_id = 0;
-  for (int i = start; i < end; ++i) {
-    function(thread_id, i);
-  }
+  function(thread_id, start, end);
 }
 
 }  // namespace internal

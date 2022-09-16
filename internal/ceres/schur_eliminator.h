@@ -227,7 +227,7 @@ template <int kRowBlockSize = Eigen::Dynamic,
 class CERES_NO_EXPORT SchurEliminator final : public SchurEliminatorBase {
  public:
   explicit SchurEliminator(const LinearSolver::Options& options)
-      : num_threads_(options.num_threads), context_(options.context) {
+      : context_(options.context) {
     CHECK(context_ != nullptr);
   }
 
@@ -318,7 +318,6 @@ class CERES_NO_EXPORT SchurEliminator final : public SchurEliminatorBase {
                                int row_block_index,
                                BlockRandomAccessMatrix* lhs);
 
-  int num_threads_;
   ContextImpl* context_;
   int num_eliminate_blocks_;
   bool assume_full_rank_ete_;

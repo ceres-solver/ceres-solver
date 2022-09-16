@@ -39,31 +39,22 @@
 
 namespace ceres::internal {
 
-// Returns the maximum number of threads supported by the threading backend
-// Ceres was compiled with.
-CERES_NO_EXPORT
-int MaxNumThreadsAvailable();
-
-// Execute the function for every element in the range [start, end) with at most
-// num_threads. It will execute all the work on the calling thread if
-// num_threads is 1.
-CERES_NO_EXPORT void ParallelFor(ContextImpl* context,
-                                 int start,
-                                 int end,
-                                 int num_threads,
-                                 const std::function<void(int)>& function);
-
-// Execute the function for every element in the range [start, end) with at most
-// num_threads. It will execute all the work on the calling thread if
-// num_threads is 1.  Each invocation of function() will be passed a thread_id
-// in [0, num_threads) that is guaranteed to be distinct from the value passed
-// to any concurrent execution of function().
+// Execute the function for every element in the range [start, end) using all
+// the threads in the thread pool. Each invocation of function() will be passed
+// a [start, end) interval to be processed.
 CERES_NO_EXPORT void ParallelFor(
-    ContextImpl* context,
-    int start,
-    int end,
-    int num_threads,
-    const std::function<void(int thread_id, int i)>& function);
+    ContextImpl* context, int start, int end,
+    const std::function<void(int start, int end)>& function);
+
+// Execute the function for every element in the range [start, end) using all
+// the threads in the thread pool. It will execute all the work on the calling
+// thread if num_threads is 1.  Each invocation of function() will be passed a
+// thread_id in [0, num_threads] that is guaranteed to be distinct from the
+// value passed to any concurrent execution of function() and passed a [start,
+// end) interval to be processed.
+CERES_NO_EXPORT void ParallelFor(
+    ContextImpl* context, int start, int end,
+    const std::function<void(int thread_id, int start, int end)>& function);
 }  // namespace ceres::internal
 
 #include "ceres/internal/disable_warnings.h"
