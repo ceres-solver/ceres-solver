@@ -58,6 +58,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8228e13_dab91dd4",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-09-16T21:05:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e86516f0_f673695f",
+      "range": {
+        "startLine": 159,
+        "startChar": 23,
+        "endLine": 159,
+        "endChar": 24
+      },
+      "revId": "ebffd2a7a9481464fe054fca9cb1c99636374bcc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bbf2edb0_dfb00f47",
@@ -83,6 +107,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f3477e9d_2b414d1f",
+        "filename": "internal/ceres/cuda_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-09-16T21:05:16Z",
+      "side": 1,
+      "message": "Oh, I did not know you could do that without an explicit constructor.\nDid you mean to omit the explicit constructor and then propagate the context using brace initialization?",
+      "parentUuid": "bbf2edb0_dfb00f47",
+      "range": {
+        "startLine": 65,
+        "startChar": 10,
+        "endLine": 65,
+        "endChar": 17
+      },
+      "revId": "ebffd2a7a9481464fe054fca9cb1c99636374bcc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5198a46c_4c406d85",
         "filename": "internal/ceres/dense_cholesky.h",
         "patchSetId": 4
@@ -94,6 +142,30 @@
       "writtenOn": "2022-09-16T20:49:19Z",
       "side": 1,
       "message": "move this to the cc file.",
+      "range": {
+        "startLine": 212,
+        "startChar": 11,
+        "endLine": 212,
+        "endChar": 28
+      },
+      "revId": "ebffd2a7a9481464fe054fca9cb1c99636374bcc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "195bb07b_e167a958",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-09-16T21:05:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5198a46c_4c406d85",
       "range": {
         "startLine": 212,
         "startChar": 11,
@@ -150,6 +222,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcd16707_ec8b17fc",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-09-16T21:05:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a159dee9_e880fb91",
+      "range": {
+        "startLine": 268,
+        "startChar": 2,
+        "endLine": 268,
+        "endChar": 33
+      },
+      "revId": "ebffd2a7a9481464fe054fca9cb1c99636374bcc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7aebecf9_6d0b4b67",
@@ -163,6 +259,30 @@
       "writtenOn": "2022-09-16T20:49:19Z",
       "side": 1,
       "message": "move to cc file.",
+      "range": {
+        "startLine": 168,
+        "startChar": 11,
+        "endLine": 168,
+        "endChar": 22
+      },
+      "revId": "ebffd2a7a9481464fe054fca9cb1c99636374bcc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de5b64a8_97c8fd8d",
+        "filename": "internal/ceres/dense_qr.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-09-16T21:05:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aebecf9_6d0b4b67",
       "range": {
         "startLine": 168,
         "startChar": 11,
