@@ -193,6 +193,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4ad06d36_1ed4548c",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2022-09-16T10:20:20Z",
+      "side": 1,
+      "message": "Hello, I\u0027m back on this contribution project!! Sorry for essentially \"giving up\", but in this year I learned enough about template programming to finally address your comments adequately. I redesigned the implementation around a quasi-tag dispatch approach that lets the user call something like\n\n`EulerAnglesToRotation(some_angle, some_matrix, IntrinsicZYX)` \n\nwhere `IntrinsicZYX` acts as a highly human-readable tag. (whereas the definition of Intrinsic / Extrinsic is still addressed in comments). `IntrinsicZYX` (or any of its bretheren, `ExtrinsicZYZ`, etc. defined in `euler_angles.h`) are struct tags that contains information to specify the behavior of the conversion function. The conversion functions exploit constexpr if to act on these information at compile time. \n\nThis design lets typed tests iterate through a list of these struct tags, achieving the same effect as what I attempted in the past with vanilla for.\n\nI\u0027d really appreciate if you\u0027ll still give this contribution your consideration after so long.",
+      "parentUuid": "d002b725_9d7799f9",
+      "range": {
+        "startLine": 153,
+        "startChar": 5,
+        "endLine": 153,
+        "endChar": 26
+      },
+      "revId": "c5e033d4fe42645c1eb5f5260a9c9f7fe3006f13",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "62c618a6_e8d4b2d9",
         "filename": "internal/ceres/rotation_test.cc",
         "patchSetId": 2
