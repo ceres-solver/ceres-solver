@@ -106,6 +106,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2ed599f_04a25aa5",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-09-16T20:39:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f9e8ce7_b9eeba2f",
+      "range": {
+        "startLine": 113,
+        "startChar": 7,
+        "endLine": 113,
+        "endChar": 16
+      },
+      "revId": "8a1a925df1d6b5754a35e6a6a19c255ce2b89991",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "765120c1_6b29bae9",
@@ -119,6 +143,30 @@
       "writtenOn": "2022-09-14T08:25:49Z",
       "side": 1,
       "message": "I think it might be better to replace those two calls with\na. Scheduling cudaMemcpyAsync in the stream (so it will be run automatically once the previous operation finishes).\nb. Synchronizing after with cudaStreamSynchronize\n\nThis way behavior will be the same for both options of default stream operation, but we will synchronize one time less",
+      "range": {
+        "startLine": 115,
+        "startChar": 4,
+        "endLine": 117,
+        "endChar": 26
+      },
+      "revId": "8a1a925df1d6b5754a35e6a6a19c255ce2b89991",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d0f9e20_394178f1",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-09-16T20:39:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "765120c1_6b29bae9",
       "range": {
         "startLine": 115,
         "startChar": 4,

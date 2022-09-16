@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8681d17_c7f1a18f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-09-16T20:39:39Z",
+      "side": 1,
+      "message": "This became a larger CL, but now all Cuda* objects have consistent constructor semantics, and consistent syncing.",
+      "revId": "ebffd2a7a9481464fe054fca9cb1c99636374bcc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
