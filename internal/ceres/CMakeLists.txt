@@ -33,7 +33,7 @@
 # Avoid 'xxx.cc has no symbols' warnings from source files which are 'empty'
 # when their enclosing #ifdefs are disabled.
 if (CERES_THREADING_MODEL STREQUAL "CXX_THREADS")
-  set(CERES_PARALLEL_FOR_SRC parallel_for_cxx.cc thread_pool.cc)
+  set(CERES_PARALLEL_FOR_SRC parallel_for_cxx.cc)
   find_package(Threads REQUIRED)
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES Threads::Threads)
 
@@ -261,7 +261,6 @@ add_library(ceres_internal OBJECT
     stringprintf.cc
     subset_preconditioner.cc
     suitesparse.cc
-    thread_token_provider.cc
     triplet_sparse_matrix.cc
     trust_region_minimizer.cc
     trust_region_preprocessor.cc
@@ -479,6 +478,7 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(concurrent_queue)
   ceres_test(conditioned_cost_function)
   ceres_test(conjugate_gradients_solver)
+  ceres_test(context_with_threads_reuse)
   ceres_test(corrector)
   ceres_test(cost_function_to_functor)
   ceres_test(covariance)
@@ -554,7 +554,6 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(tiny_solver)
   ceres_test(tiny_solver_autodiff_function)
   ceres_test(tiny_solver_cost_function_adapter)
-  ceres_test(thread_pool)
   ceres_test(triplet_sparse_matrix)
   ceres_test(trust_region_minimizer)
   ceres_test(trust_region_preprocessor)

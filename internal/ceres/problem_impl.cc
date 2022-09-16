@@ -684,8 +684,16 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
   evaluator_options.num_threads = evaluate_options.num_threads;
 #endif  // CERES_NO_THREADS
 
-  // The main thread also does work so we only need to launch num_threads - 1.
-  context_impl_->EnsureMinimumThreads(evaluator_options.num_threads - 1);
+  context_impl_->MaybeInitThreadPool(evaluator_options.num_threads);
+  if (evaluator_options.num_threads != context_impl_->NumThreads()) {
+    LOG(WARNING) << "Specified options.num_threads: "
+                 << evaluator_options.num_threads
+                 << " does not match the number of threads in the pool: "
+                 << context_impl_->NumThreads()
+                 << ".  Changing to the number of threads in the pool.";
+    evaluator_options.num_threads = context_impl_->NumThreads();
+  }
+
   evaluator_options.context = context_impl_;
   evaluator_options.evaluation_callback =
       program_->mutable_evaluation_callback();

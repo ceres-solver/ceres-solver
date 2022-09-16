@@ -65,6 +65,15 @@ CERES_NO_EXPORT void LinearIndexToUpperTriangularIndex(int k,
                                                        int* i,
                                                        int* j);
 
+// Returns the maximum number of threads supported by the threading backend
+// Ceres was compiled with.
+CERES_NO_EXPORT
+int MaxNumThreadsAvailable();
+
+// Returns the size of the scratch space needed for the number of threads.
+CERES_NO_EXPORT
+int SizeOfScratchSpaceForThreads(int num_threads);
+
 }  // namespace ceres::internal
 
 #endif  // CERES_INTERNAL_PARALLEL_UTILS_H_
