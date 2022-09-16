@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb7d4cff_c64c568d",
+        "filename": "include/ceres/internal/variadic_evaluate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-09-16T15:38:11Z",
+      "side": 1,
+      "message": "Whilst this is fine, my bias would be to make this a class, with operator() public and functor_ private, purely to avoid unintentional misuse later given that the purpose is to change the signature",
+      "revId": "d27797794659d353e8ee7037627157b1fdca05d0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a599efaf_e7400f38",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-09-16T15:38:11Z",
+      "side": 1,
+      "message": "I admit that the rules [1] would imply that this is right, and that kNumParameters is wrong, but I think kMethod would be clearer here, as this is in fact a constant.\n\n[1]: https://google.github.io/styleguide/cppguide.html#General_Naming_Rules (last paragraph)",
+      "revId": "d27797794659d353e8ee7037627157b1fdca05d0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fab8be2_2b4a9e1b",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-09-16T15:38:11Z",
+      "side": 1,
+      "message": "This is fine, but consider for clarity of error message adding a second static_assert() above this one that checks for DYNAMIC (which happens to be negative, but a user wouldn\u0027t know that) which emits a more focussed error message, something like:\n\nstatic_assert(kNumParameters !\u003d DYNAMIC, \"Number of parameters must be static when defined via the template parameter. Use the alternate constructor for dynamically sized functions.\");",
+      "revId": "d27797794659d353e8ee7037627157b1fdca05d0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6ecd500_ec1b977b",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-09-16T15:38:11Z",
+      "side": 1,
+      "message": "We should also CHECK() here that num_parameters_ \u003e 0 no?",
+      "revId": "d27797794659d353e8ee7037627157b1fdca05d0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b64d5a45_451f3f0f",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-09-16T15:38:11Z",
+      "side": 1,
+      "message": "This forces the use of DYNAMIC even when the size is statically known, what if we had a if constexpr (kNumParameters \u003d\u003d DYNAMIC) / else statement here, that should allow us to use the static version of this when the size is known at compile time no ?",
+      "revId": "d27797794659d353e8ee7037627157b1fdca05d0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13e52e81_210e31bb",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-09-16T15:38:11Z",
+      "side": 1,
+      "message": "These members could actually also be declared const",
+      "revId": "d27797794659d353e8ee7037627157b1fdca05d0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
