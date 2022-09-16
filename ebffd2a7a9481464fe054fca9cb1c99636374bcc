@@ -16,6 +16,161 @@
       "message": "This became a larger CL, but now all Cuda* objects have consistent constructor semantics, and consistent syncing.",
       "revId": "ebffd2a7a9481464fe054fca9cb1c99636374bcc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfd0971b_0d51c221",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-16T20:49:19Z",
+      "side": 1,
+      "message": "very nice cleanup. can you also run scripts/format_all",
+      "revId": "ebffd2a7a9481464fe054fca9cb1c99636374bcc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e86516f0_f673695f",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-16T20:49:19Z",
+      "side": 1,
+      "message": "default initialize to nullptr.",
+      "range": {
+        "startLine": 159,
+        "startChar": 23,
+        "endLine": 159,
+        "endChar": 24
+      },
+      "revId": "ebffd2a7a9481464fe054fca9cb1c99636374bcc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbf2edb0_dfb00f47",
+        "filename": "internal/ceres/cuda_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-16T20:49:19Z",
+      "side": 1,
+      "message": "this is an odd syntax, shouldn\u0027t you be using some sort of brace syntax here?",
+      "range": {
+        "startLine": 65,
+        "startChar": 10,
+        "endLine": 65,
+        "endChar": 17
+      },
+      "revId": "ebffd2a7a9481464fe054fca9cb1c99636374bcc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5198a46c_4c406d85",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-16T20:49:19Z",
+      "side": 1,
+      "message": "move this to the cc file.",
+      "range": {
+        "startLine": 212,
+        "startChar": 11,
+        "endLine": 212,
+        "endChar": 28
+      },
+      "revId": "ebffd2a7a9481464fe054fca9cb1c99636374bcc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2dde838b_b4885b2f",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-16T20:49:19Z",
+      "side": 1,
+      "message": "same comment as before.",
+      "range": {
+        "startLine": 214,
+        "startChar": 11,
+        "endLine": 214,
+        "endChar": 18
+      },
+      "revId": "ebffd2a7a9481464fe054fca9cb1c99636374bcc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a159dee9_e880fb91",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-16T20:49:19Z",
+      "side": 1,
+      "message": "move to cc file.",
+      "range": {
+        "startLine": 268,
+        "startChar": 2,
+        "endLine": 268,
+        "endChar": 33
+      },
+      "revId": "ebffd2a7a9481464fe054fca9cb1c99636374bcc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7aebecf9_6d0b4b67",
+        "filename": "internal/ceres/dense_qr.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-16T20:49:19Z",
+      "side": 1,
+      "message": "move to cc file.",
+      "range": {
+        "startLine": 168,
+        "startChar": 11,
+        "endLine": 168,
+        "endChar": 22
+      },
+      "revId": "ebffd2a7a9481464fe054fca9cb1c99636374bcc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
