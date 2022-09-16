@@ -176,6 +176,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2cc6929_479d188c",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-16T16:28:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9592d0a2_17437ef1",
+      "revId": "d27797794659d353e8ee7037627157b1fdca05d0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "13e52e81_210e31bb",
