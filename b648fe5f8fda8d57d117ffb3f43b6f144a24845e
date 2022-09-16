@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebd45535_1c31f9cd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2022-09-16T21:05:58Z",
+      "side": 1,
+      "message": "This is an alternative implementation which forks Eigen\u0027s parallel for implementation so that we have explicit control over block size. I\u0027m not sure it is worth the extra code unless we think Eigen\u0027s cost implementation may change in the future.",
+      "revId": "b648fe5f8fda8d57d117ffb3f43b6f144a24845e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
