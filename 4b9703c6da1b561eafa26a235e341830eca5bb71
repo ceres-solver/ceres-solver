@@ -16,6 +16,250 @@
       "message": "Thank you for revising this, I will take a look over the weekend. I imagine Sergiu also has questions/comments.",
       "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1ab84bb_7513b38d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-17T08:36:58Z",
+      "side": 1,
+      "message": "Thanks for revisiting the CL. I have a couple of suggestions.",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b5a727c_c9075b3f",
+        "filename": "include/ceres/internal/euler_angles.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-17T08:36:58Z",
+      "side": 1,
+      "message": "These can be dropped if the tag is specified directly.",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca580051_ec85d422",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-17T08:36:58Z",
+      "side": 1,
+      "message": "I would rather swap `EulerSystem` and `T` and use the former as a required template parameter. I don\u0027t see any benefits from providing the tag as a function argument.",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4150177c_ac7d633b",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-17T08:36:58Z",
+      "side": 1,
+      "message": "Don\u0027t mix types: `kInnerAxis` is an `int`.",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df87bf6f_6845f35f",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-17T08:36:58Z",
+      "side": 1,
+      "message": "For ADL to work, add `using` declarations for `\u003ccmath\u003e` functions somewhere above, i.e.,\n```\nusing std::cos;\nusing std::sin;\n// etc.\n```\nAlso in the functions below.",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88e846ee_c9212bfc",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-17T08:36:58Z",
+      "side": 1,
+      "message": "Don\u0027t mix types. Use `int` also below.",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5663c617_a56d2d7f",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-17T08:36:58Z",
+      "side": 1,
+      "message": "I don\u0027t think you want to limit yourself to `float` precision. Generally, I would avoid the use of C-style overloads and instead use `sqrt` with a `using` declaration.\n\nYou also want to use `hypot` here:\n```\nconst T sy \u003d hypot(R(i, j), R(i, k))\n```",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d572d93_37cd6246",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-17T08:36:58Z",
+      "side": 1,
+      "message": "Use `std::numeric_limits\u003cT\u003e::epsilon()` directly. No cast necessary.",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db06b2ae_3aeb430d",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-17T08:36:58Z",
+      "side": 1,
+      "message": "`using std::atan2;`",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d091dcaf_cdf71ec8",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-17T08:36:58Z",
+      "side": 1,
+      "message": "`hypot`",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "385c1eb0_beda7383",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-17T08:36:58Z",
+      "side": 1,
+      "message": "`std::numeric_limits\u003cT\u003e::epsilon()`",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58498eb5_869587e9",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-17T08:36:58Z",
+      "side": 1,
+      "message": "Use `3.1415926535897932384626433832795028841971693993751` to cover `long double`, just in case.",
+      "range": {
+        "startLine": 583,
+        "startChar": 20,
+        "endLine": 583,
+        "endChar": 42
+      },
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4291ff43_f01d7915",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-17T08:36:58Z",
+      "side": 1,
+      "message": "Add a comment on what happens here and why the angle normalization is necessary.",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f1dc32b_79a1d031",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-17T08:36:58Z",
+      "side": 1,
+      "message": "To avoid multiple definitions of the constant, define it as variable template\n```\ntemplate\u003cclass T\u003e\ninline constexpr T kPi \u003d T(3.1415926535897932384626433832795028841971693993751);\n```\nand reuse it.",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
