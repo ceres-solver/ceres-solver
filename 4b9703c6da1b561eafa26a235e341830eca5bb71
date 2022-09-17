@@ -37,6 +37,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d6f940a8_ecee1779",
+        "filename": "include/ceres/internal/euler_angles.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-17T16:56:54Z",
+      "side": 1,
+      "message": "These aliases are somewhat confusing.\n\nInstead of using literals, I would have preferred to see a type definition for each axis (possibly in an inner `axis` namespace), e.g., defined as\n```\nstruct X : std::integral_constant\u003cint, 0\u003e {};\n```\nwhose value can be referenced as `Axis::value`.\n\nAlso using `bool` in the template interface makes corresponding type definitions pretty much unreadable. Again, I would define each template parameter in terms of a type (a declaration is probably sufficient):\n```\nstruct Even; \nstruct Odd;\n\nstruct ProperEuler;\nstruct TaitBryan;\n\nstruct Extrinsic;\nstruct Intrinsic;\n```\nThen, the type alias becomes\n```\nusing ExtrinsicXYX_t \u003d EulerSystem\u003cX, Even, ProperEuler, Extrinsic\u003e;\n```\nmaking it much more readable.",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6b5a727c_c9075b3f",
         "filename": "include/ceres/internal/euler_angles.h",
         "patchSetId": 4
