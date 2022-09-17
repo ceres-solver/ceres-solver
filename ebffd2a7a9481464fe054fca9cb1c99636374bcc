@@ -179,6 +179,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "107f70bf_d187660b",
+        "filename": "internal/ceres/cuda_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2022-09-17T18:19:57Z",
+      "side": 1,
+      "message": "this is not really a blocker, I am just curious to learn myself.",
+      "parentUuid": "c0180010_85ce5c4f",
+      "range": {
+        "startLine": 65,
+        "startChar": 10,
+        "endLine": 65,
+        "endChar": 17
+      },
+      "revId": "ebffd2a7a9481464fe054fca9cb1c99636374bcc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5198a46c_4c406d85",
         "filename": "internal/ceres/dense_cholesky.h",
         "patchSetId": 4
