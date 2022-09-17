@@ -203,6 +203,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "39b65e0e_97ce7125",
+        "filename": "internal/ceres/cuda_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-17T18:59:02Z",
+      "side": 1,
+      "message": "I personally prefer uniform (brace) initialization to pre-C++11 syntax which allows to easier identify initialization as such and prevents most vexing parse.\n\nOld style initialization is still helpful particularly in generic code when a type cast is necessary, e.g., to avoid double promotion/truncation warnings. For instance, `T{1.0}` would trigger a loss of precision warning if `T` is a `float` because `1.0` is a double literal. Alternatively, one can also use `T(1.0)` to enforce a type cast during initialization (or use `T{1}` due to integer promotion rules) to avoid the problem.",
+      "parentUuid": "107f70bf_d187660b",
+      "range": {
+        "startLine": 65,
+        "startChar": 10,
+        "endLine": 65,
+        "endChar": 17
+      },
+      "revId": "ebffd2a7a9481464fe054fca9cb1c99636374bcc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5198a46c_4c406d85",
         "filename": "internal/ceres/dense_cholesky.h",
         "patchSetId": 4
