@@ -52,6 +52,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aaf9d6fa_e12d6379",
+        "filename": "include/ceres/internal/euler_angles.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2022-09-17T23:58:50Z",
+      "side": 1,
+      "message": "Done. Also introduced some predicate structs to aid checking these parameters.",
+      "parentUuid": "d6f940a8_ecee1779",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6b5a727c_c9075b3f",
@@ -88,6 +106,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "50615de2_2669766a",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2022-09-17T23:58:50Z",
+      "side": 1,
+      "message": "It\u0027s an easy change and I\u0027m happy to do it, but I\u0027d like to appeal just once: Passing tags as function args make the call resemble other languages, e.g. MATLAB\u0027s `eul2rotm(eul,\u0027ZYZ\u0027)` or python `R.from_euler(\"ZYZ\", angle)`. Also, I\u0027ve had the impression that C++ prefers passing tag parameters, e.g. `std::adopt_lock` and `std::defer_lock`, and everything else in `rotation.h` don\u0027t seem to require explicit template params. Granted, I might be missing something so please advise.",
+      "parentUuid": "ca580051_ec85d422",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4150177c_ac7d633b",
         "filename": "include/ceres/rotation.h",
         "patchSetId": 4
@@ -99,6 +135,24 @@
       "writtenOn": "2022-09-17T08:36:58Z",
       "side": 1,
       "message": "Don\u0027t mix types: `kInnerAxis` is an `int`.",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e962e9e_a8d527a9",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2022-09-17T23:58:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4150177c_ac7d633b",
       "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -120,6 +174,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6666d94d_aab14278",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2022-09-17T23:58:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df87bf6f_6845f35f",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "88e846ee_c9212bfc",
@@ -133,6 +205,24 @@
       "writtenOn": "2022-09-17T08:36:58Z",
       "side": 1,
       "message": "Don\u0027t mix types. Use `int` also below.",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05ddf8f9_085bb2b1",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2022-09-17T23:58:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88e846ee_c9212bfc",
       "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -154,6 +244,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b54887c_2993b237",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2022-09-17T23:58:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5663c617_a56d2d7f",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6d572d93_37cd6246",
@@ -167,6 +275,24 @@
       "writtenOn": "2022-09-17T08:36:58Z",
       "side": 1,
       "message": "Use `std::numeric_limits\u003cT\u003e::epsilon()` directly. No cast necessary.",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9a36fd7_44fbbd8a",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2022-09-17T23:58:50Z",
+      "side": 1,
+      "message": "Done. FYI I found a few other usages of `T(std::numeric_limits\u003cdouble\u003e::epsilon())` in `rotation.h` so I thought there might be some reason behind it.",
+      "parentUuid": "6d572d93_37cd6246",
       "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -188,6 +314,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf332efd_38d0b5cf",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2022-09-17T23:58:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db06b2ae_3aeb430d",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d091dcaf_cdf71ec8",
@@ -205,6 +349,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "408bcd59_15ffd36b",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2022-09-17T23:58:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d091dcaf_cdf71ec8",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "385c1eb0_beda7383",
@@ -218,6 +380,24 @@
       "writtenOn": "2022-09-17T08:36:58Z",
       "side": 1,
       "message": "`std::numeric_limits\u003cT\u003e::epsilon()`",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63c365ee_6f64c951",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2022-09-17T23:58:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "385c1eb0_beda7383",
       "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -245,6 +425,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aadc2f9f_527504db",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2022-09-17T23:58:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58498eb5_869587e9",
+      "range": {
+        "startLine": 583,
+        "startChar": 20,
+        "endLine": 583,
+        "endChar": 42
+      },
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4291ff43_f01d7915",
@@ -262,6 +466,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3902c4c5_aec62b63",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2022-09-17T23:58:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4291ff43_f01d7915",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1f1dc32b_79a1d031",
@@ -275,6 +497,24 @@
       "writtenOn": "2022-09-17T08:36:58Z",
       "side": 1,
       "message": "To avoid multiple definitions of the constant, define it as variable template\n```\ntemplate\u003cclass T\u003e\ninline constexpr T kPi \u003d T(3.1415926535897932384626433832795028841971693993751);\n```\nand reuse it.",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d22a9073_8313a6e3",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2022-09-17T23:58:50Z",
+      "side": 1,
+      "message": "There is a global `kPi` for which used to be `static const`. I redefined it `constexpr` for my tests to reuse this constant. Let me know if this might run afoul of ODR.",
+      "parentUuid": "1f1dc32b_79a1d031",
       "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
