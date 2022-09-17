@@ -155,6 +155,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c0180010_85ce5c4f",
+        "filename": "internal/ceres/cuda_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-09-17T18:08:41Z",
+      "side": 1,
+      "message": "I don\u0027t know - this is using the explicit constructor. I checked that the {} also calls the same explicit constructor, so () and {} are functionally equivalent here. Is there a relevant entry in the style guide?",
+      "parentUuid": "1b9a78e2_ede5da85",
+      "range": {
+        "startLine": 65,
+        "startChar": 10,
+        "endLine": 65,
+        "endChar": 17
+      },
+      "revId": "ebffd2a7a9481464fe054fca9cb1c99636374bcc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5198a46c_4c406d85",
         "filename": "internal/ceres/dense_cholesky.h",
         "patchSetId": 4
