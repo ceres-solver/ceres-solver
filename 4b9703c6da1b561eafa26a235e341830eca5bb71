@@ -89,6 +89,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e3e8a2aa_3f67543f",
+        "filename": "include/ceres/internal/euler_angles.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-18T12:21:53Z",
+      "side": 1,
+      "message": "Also move the above aliases to the outer namespace and drop the `_t` suffix in the alias names.",
+      "parentUuid": "6b5a727c_c9075b3f",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ca580051_ec85d422",
         "filename": "include/ceres/rotation.h",
         "patchSetId": 4
@@ -118,6 +136,24 @@
       "side": 1,
       "message": "It\u0027s an easy change and I\u0027m happy to do it, but I\u0027d like to appeal just once: Passing tags as function args make the call resemble other languages, e.g. MATLAB\u0027s `eul2rotm(eul,\u0027ZYZ\u0027)` or python `R.from_euler(\"ZYZ\", angle)`. Also, I\u0027ve had the impression that C++ prefers passing tag parameters, e.g. `std::adopt_lock` and `std::defer_lock`, and everything else in `rotation.h` don\u0027t seem to require explicit template params. Granted, I might be missing something so please advise.",
       "parentUuid": "ca580051_ec85d422",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8364582_d9936539",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-18T12:21:53Z",
+      "side": 1,
+      "message": "I don\u0027t see other languages to be particularly relevant when making API choices. The languages you specifically mention don\u0027t support compile-time constructs which considerably reduces the number of design choices already.\n\nAt the same time, the current implementation might give users the false impression that the dispatch is done at runtime because the system is specified as a function argument. However, this is clearly not the case and can result in confusion when someone tries to change the system argument at runtime (e.g., by storing the tag in a variable.)\n\nAlso, I think you are missing the context in which the tag-dispatch mechanism is used in the standard library because it is unavoidable under those specific circumstances. There are two primary use cases:\n1. to differentiate between overloads with n and n+1 arguments.\n2. to work around the language inherent limitation which does not allow to explicitly specify the template parameters of a constructor.\nNeither 1 nor 2 is applicable here.",
+      "parentUuid": "50615de2_2669766a",
       "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },

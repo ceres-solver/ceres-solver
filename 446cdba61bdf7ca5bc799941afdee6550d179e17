@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2e6247c_a46c1d88",
+        "filename": "include/ceres/internal/euler_angles.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-18T12:21:53Z",
+      "side": 1,
+      "message": "Don\u0027t use underscores as prefix in identifiers. Underscore followed by an uppercase letter is reserved to the implementation. Use a readable suffix, e.g., `InnerAxisType`.",
+      "revId": "446cdba61bdf7ca5bc799941afdee6550d179e17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25b455f3_6527b09d",
+        "filename": "include/ceres/internal/euler_angles.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-18T12:21:53Z",
+      "side": 1,
+      "message": "You could have performed all these checks in the `EulerSystem` struct.",
+      "revId": "446cdba61bdf7ca5bc799941afdee6550d179e17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "263dcfea_b1ba13b4",
+        "filename": "include/ceres/internal/euler_angles.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-18T12:21:53Z",
+      "side": 1,
+      "message": "Derive from `std::is_same`. No `integral_constant` is necessary.",
+      "revId": "446cdba61bdf7ca5bc799941afdee6550d179e17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b41f2e4e_a6f1c999",
+        "filename": "include/ceres/internal/euler_angles.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-18T12:21:53Z",
+      "side": 1,
+      "message": "Derive from `std::is_same`.",
+      "revId": "446cdba61bdf7ca5bc799941afdee6550d179e17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57fd3c66_34d70345",
+        "filename": "include/ceres/internal/euler_angles.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-18T12:21:53Z",
+      "side": 1,
+      "message": "Derive from `std::is_same`.",
+      "revId": "446cdba61bdf7ca5bc799941afdee6550d179e17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "274fce1b_cda8ee92",
+        "filename": "include/ceres/internal/euler_angles.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-18T12:21:53Z",
+      "side": 1,
+      "message": "Should be a `bool` not an `int`.",
+      "revId": "446cdba61bdf7ca5bc799941afdee6550d179e17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2358f0c5_20ac9d11",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-18T12:21:53Z",
+      "side": 1,
+      "message": "The same computations are performed in at least two locations. Maybe let the `EulerSystem` return the axes as a 3-tuple and use structured binding. Something along the lines:\n```\nauto [i, j, k] \u003d EulerSystem::axes()\n```\nIdeally, the available `axis` definitions are reused to avoid the use of magic constants for indexing Euler angles arrays. However, this is only nice to have.",
+      "revId": "446cdba61bdf7ca5bc799941afdee6550d179e17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ea650a3_799e44d9",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-18T12:21:53Z",
+      "side": 1,
+      "message": "This check is still bothering me. You likely want to check against zero not against machine epsilon. There are plenty of values smaller than machine epsilon.\n\nI suggest that you use `fpclassify(cy) !\u003d FP_ZERO` here (and in other similar conditions) with a corresponding `using` declaration. I\u0027m aware this is not how other `rotation.h` functions implement such logic (Sophus also does this.) However, I don\u0027t see a good reason to give up on accuracy even though the precision loss in the function limit evaluation (from a practical standpoint) is likely only negligible.",
+      "revId": "446cdba61bdf7ca5bc799941afdee6550d179e17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a1be336_6c5620a9",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-18T12:21:53Z",
+      "side": 1,
+      "message": "This still duplicates the definition in `rotation.h`. The same constant should be reused by means of a variable template as mentioned previously. For this, you can create add a new header, let\u0027s say `constants.h`, and put the definition there, possibly in a `constants` namespace.\n\nThe `L` suffix is AFAIK not necessary.",
+      "revId": "446cdba61bdf7ca5bc799941afdee6550d179e17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56fcb6d9_82ebdd9c",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-18T12:21:53Z",
+      "side": 1,
+      "message": "Remove duplication.",
+      "revId": "446cdba61bdf7ca5bc799941afdee6550d179e17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
