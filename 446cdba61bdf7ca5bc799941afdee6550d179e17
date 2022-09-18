@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d38d9703_c93b9a56",
+        "filename": "include/ceres/internal/euler_angles.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-18T14:47:50Z",
+      "side": 1,
+      "message": "Derive from `EulerSystem::InnerAxis` directly.",
+      "range": {
+        "startLine": 141,
+        "startChar": 19,
+        "endLine": 141,
+        "endChar": 77
+      },
+      "revId": "446cdba61bdf7ca5bc799941afdee6550d179e17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "25b455f3_6527b09d",
         "filename": "include/ceres/internal/euler_angles.h",
         "patchSetId": 5
