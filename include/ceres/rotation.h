@@ -136,6 +136,13 @@ template <typename T, int row_stride, int col_stride>
 void EulerAnglesToRotationMatrix(
     const T* euler, const MatrixAdapter<T, row_stride, col_stride>& R);
 
+template <typename T>
+void RotationMatrixToEulerAngles(const T* R, T* euler);
+
+template <typename T, int row_stride, int col_stride>
+void RotationMatrixToEulerAngles(
+    const MatrixAdapter<const T, row_stride, col_stride>& R, T* euler);
+
 // Convert a 4-vector to a 3x3 scaled rotation matrix.
 //
 // The choice of rotation is such that the quaternion [1 0 0 0] goes to an
@@ -459,6 +466,37 @@ void EulerAnglesToRotationMatrix(
   R(2, 0) = -s2;
   R(2, 1) = c2 * s3;
   R(2, 2) = c2 * c3;
+}
+
+template <typename T>
+void RotationMatrixToEulerAngles(const T* R, T* euler) 
+{
+  RotationMatrixToEulerAngles(RowMajorAdapter3x3(R), euler);
+}
+
+template <typename T, int row_stride, int col_stride>
+void RotationMatrixToEulerAngles(
+    const MatrixAdapter<const T, row_stride, col_stride>& R, T* euler) {
+  // Refer to: Computing Euler angles from a rotation matrix
+  const double rad2deg = 180 * 0.3183098861837906715;
+  T bound1 = abs(R(2, 0) - T(1.0));
+  T bound2 = abs(R(2, 0) + T(1.0));
+  if (bound1 > 1E-12 && bound2 > 1E-12) {
+    euler[2] = atan2(R(1, 0), R(0, 0));  // Yaw around Z axis
+    euler[1] = asin(-R(2, 0));           // Pitch around Y
+    euler[0] = atan2(R(2, 1), R(2, 2));  // Roll around X
+  } else if (bound2 <= 1E-12) {
+    euler[2] = T(0.);                               // Yaw around Z axis
+    euler[1] = T(3.14159265358979323846 * 0.5);     // Pitch around Y axis
+    euler[0] = euler[2] + atan2(R(0, 1), R(0, 2));  // Roll around X axis
+  } else {
+    euler[2] = T(0.);                                  // Yaw around Z axis
+    euler[1] = T(-3.14159265358979323846 * 0.5);       // Pitch around Y axis
+    euler[0] = -euler[2] + atan2(-R(0, 1), -R(0, 2));  // Roll around X axis
+  }
+  euler[0] = T(euler[0] * rad2deg);
+  euler[1] = T(euler[1] * rad2deg);
+  euler[2] = T(euler[2] * rad2deg);
 }
 
 template <typename T>
