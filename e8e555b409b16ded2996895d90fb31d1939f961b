@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39143f03_c5662676",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-19T14:23:01Z",
+      "side": 1,
+      "message": "It may also be the formatting, but my guess is that the sentence is somewhat broken probably due to an incomplete edit.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 36
+      },
+      "revId": "e8e555b409b16ded2996895d90fb31d1939f961b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3685c09a_f71c4045",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-19T14:23:01Z",
+      "side": 1,
+      "message": "Mostly LGTM.",
+      "revId": "e8e555b409b16ded2996895d90fb31d1939f961b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
