@@ -125,6 +125,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3907d09c_bccfe27c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-19T18:19:37Z",
+      "side": 1,
+      "message": "I did some benchmarking over the weekend, and I would say the answer is not that clear.\n\n\n1. Benchmarks\n   - All benchmarks from #22800\n   - New benchmark that creates program for BAL problem and runs ProgramEvaluator::Evaluate method with block-sparse jacobian writer\n\n\n2. Implementations\n   - master branch: both CXX and OpenMP backends\n   - #22640 : CXX and OpenMP backends\n   - #22921 : original implementation by Mike and templated one (without std::function\u003c\u003e)\n\n\n3. Software/hardware setup\n   - Linux (debian sid)\n   - gcc 12.2\n   - 2x Intel Xeon 8176 CPU, memory allocations and compute are tied to a single NUMA node with numactl, 2 instances of benchmark running on different NUMA nodes simultaneously\n   - 1,2,4,8,16,28 threads\n   - Residual / residual+jacobian evaluations were run 80 times at each (thread-count, problem size, backend)\n   - SpMV benchmarks were run 8 times, with a standard google benchmark iteration count (computation-speed dependent)\n\n\n\n3. Results\nPlot with all benchmarks, depicted as speedup over 1-thread execution on CXX backend from master branch.\nhttps://drive.google.com/file/d/1xClXkchZng5bK9nssuB-Mc_qtZEdMFiz/view?usp\u003dsharing\n\nNote that both speedup and number of threads are log-scale axes.\n\n\n4. Conclusions\n  a. It seems that OpenMP backend with updates from this CL is the fastest one most of the time\n  b. OpenMP backend with updates from this CL is closely followed by Mike\u0027s work\n  c. CXX backend from this CL for some reason has hard time on CRS SpMV benchmark with 2 threads\n  d. Performance of jacobian evaluation on large inputs might be limited by non-parallelized parts of code (for example, we are traversing all jacobian single-threaded for setting it to zero)\n\n\nDoes it make sense to submit program evaluation benchmark as part of this (or maybe even better separate) change list?",
+      "parentUuid": "38cb1859_348ff2bc",
+      "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "98674c73_46c3cfb4",
         "filename": "internal/ceres/parallel_for.h",
         "patchSetId": 4
