@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "606147dc_63305c85",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-19T20:34:26Z",
+      "side": 1,
+      "message": "I am going to wait to submit this till after Dmitriy\u0027s CL goes in, otherwise single threading perf goes to crap.",
+      "revId": "b1c3b5d79a3713e4cc8f2eae50eba5270c10bed5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
