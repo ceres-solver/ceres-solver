@@ -29,9 +29,6 @@
 // Author: vitus@google.com (Michael Vitus)
 
 // This include must come before any #ifndef check on Ceres compile options.
-#include "ceres/internal/config.h"
-
-#ifdef CERES_USE_CXX_THREADS
 
 #include <cmath>
 #include <condition_variable>
@@ -39,6 +36,7 @@
 #include <mutex>
 
 #include "ceres/concurrent_queue.h"
+#include "ceres/internal/config.h"
 #include "ceres/parallel_for.h"
 #include "ceres/scoped_thread_token.h"
 #include "ceres/thread_token_provider.h"
@@ -239,5 +237,3 @@ void ParallelFor(ContextImpl* context,
 }
 
 }  // namespace ceres::internal
-
-#endif  // CERES_USE_CXX_THREADS
