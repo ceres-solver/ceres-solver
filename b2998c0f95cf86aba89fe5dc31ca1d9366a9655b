@@ -143,6 +143,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6a42c13f_9a4008c5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-19T18:37:24Z",
+      "side": 1,
+      "message": "Thanks for the thorough benchmarking Dmitriy. We do not have to get rid of the openmp backend for now. Yes it would be nice to have the benchmarking CL checked in on its own.",
+      "parentUuid": "3907d09c_bccfe27c",
+      "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "98674c73_46c3cfb4",
         "filename": "internal/ceres/parallel_for.h",
         "patchSetId": 4
