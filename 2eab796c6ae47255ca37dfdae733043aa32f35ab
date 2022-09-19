@@ -303,6 +303,41 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6f7ac646_e7f4cb6f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-19T23:06:56Z",
+      "side": 1,
+      "message": "I am actually less concerned about consistency and I get the convenience argument.\nMy concern is that it makes the Matrix API ambiguous. Callers can never be sure if the matrix has its context and num threads have been set correctly or not. It might be fine, but as other people start working with the API, they will start sprinkling calls to SetContext and SetNumThreads over the code because they are not sure :/",
+      "parentUuid": "28302ed7_893032f8",
+      "revId": "2eab796c6ae47255ca37dfdae733043aa32f35ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f7ae28d_dee68218",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-19T23:06:56Z",
+      "side": 1,
+      "message": "Dmitriy, I am happy to do the API change to the SparseMatrix API if its too much yak shaving for you. ",
+      "revId": "2eab796c6ae47255ca37dfdae733043aa32f35ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e95ba6ed_5cef1aa7",
         "filename": "internal/ceres/block_sparse_matrix.cc",
         "patchSetId": 1
