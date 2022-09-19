@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "484fed8a_7bf1f210",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-19T12:46:14Z",
+      "side": 1,
+      "message": "Joydeep, once you resolve the constructor thing, this is good to go",
+      "revId": "346e8934bc90584642bed6cdee383227e50a4e7c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

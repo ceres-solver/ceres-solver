@@ -227,6 +227,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b4034fe7_8aa48aa2",
+        "filename": "internal/ceres/cuda_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-19T12:46:14Z",
+      "side": 1,
+      "message": "Thanks Sergiu.",
+      "parentUuid": "39b65e0e_97ce7125",
+      "range": {
+        "startLine": 65,
+        "startChar": 10,
+        "endLine": 65,
+        "endChar": 17
+      },
+      "revId": "ebffd2a7a9481464fe054fca9cb1c99636374bcc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5198a46c_4c406d85",
         "filename": "internal/ceres/dense_cholesky.h",
         "patchSetId": 4
