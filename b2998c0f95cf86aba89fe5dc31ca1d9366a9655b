@@ -68,6 +68,248 @@
       "parentUuid": "c2fb83a3_158131d1",
       "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d9287c3_98c1bea0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-19T12:39:35Z",
+      "side": 1,
+      "message": "I think we do not need to worry about no-threads and openmp in this CL. lets do that in a follow-up CL.",
+      "parentUuid": "38cb1859_348ff2bc",
+      "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d06e3bf0_dfafc693",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-19T12:39:35Z",
+      "side": 1,
+      "message": "I thought I had reviewed this, but apparently all my comments were sitting in the queue. Sorry about that.",
+      "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98674c73_46c3cfb4",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-19T12:39:35Z",
+      "side": 1,
+      "message": "this is really nice.",
+      "range": {
+        "startLine": 48,
+        "startChar": 12,
+        "endLine": 48,
+        "endChar": 15
+      },
+      "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6bb454e7_0be78ce1",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-19T12:39:35Z",
+      "side": 1,
+      "message": "I think OptionalInvoke is not a great name for this. since it sounds like the invocation is optional.\n\nEither it should be named to indicate that we may ignore one of the arguments, or it should be named to ignore the thread id in particular or invoke with it.\n\nYou could also just call this InvokeImpl and document that this template metaprogramming is done to include/ignore the thread_id as needed.",
+      "range": {
+        "startLine": 63,
+        "startChar": 7,
+        "endLine": 63,
+        "endChar": 21
+      },
+      "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5235d78_fe419691",
+        "filename": "internal/ceres/parallel_for_cxx.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-19T12:39:35Z",
+      "side": 1,
+      "message": "at this time you should add your name to this and other files.",
+      "range": {
+        "startLine": 29,
+        "startChar": 24,
+        "endLine": 29,
+        "endChar": 27
+      },
+      "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c68b6598_fc8c3ac2",
+        "filename": "internal/ceres/parallel_for_cxx.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-19T12:39:35Z",
+      "side": 1,
+      "message": "I am confused by this comment. are you saying that this function can exit and this object can be destroyed before all the work is done?\n\nIsn\u0027t the final call to shared_state-\u003eblock_until_finished.Block(); ensure that this object lives as long as needed?",
+      "range": {
+        "startLine": 166,
+        "startChar": 18,
+        "endLine": 166,
+        "endChar": 33
+      },
+      "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe18fe52_6da9c2c2",
+        "filename": "internal/ceres/parallel_for_cxx.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-19T12:39:35Z",
+      "side": 1,
+      "message": "nit: maybe just call this task ?",
+      "range": {
+        "startLine": 170,
+        "startChar": 7,
+        "endLine": 170,
+        "endChar": 20
+      },
+      "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91c5e597_2c31be04",
+        "filename": "internal/ceres/parallel_for_cxx.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-19T12:39:35Z",
+      "side": 1,
+      "message": "this comment is confusing.",
+      "range": {
+        "startLine": 173,
+        "startChar": 25,
+        "endLine": 173,
+        "endChar": 27
+      },
+      "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4200edc4_d249e3e2",
+        "filename": "internal/ceres/parallel_for_cxx.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-19T12:39:35Z",
+      "side": 1,
+      "message": "I think this comment belongs at the top where the task_function is defined. so the reader reads the definition more carefully and sees it being passed by value.",
+      "range": {
+        "startLine": 226,
+        "startChar": 30,
+        "endLine": 226,
+        "endChar": 43
+      },
+      "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d984e015_effd52b3",
+        "filename": "internal/ceres/parallel_for_cxx.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-19T12:39:35Z",
+      "side": 1,
+      "message": "won\u0027t this ensure that all threads are done before we exit this function?",
+      "range": {
+        "startLine": 239,
+        "startChar": 16,
+        "endLine": 239,
+        "endChar": 36
+      },
+      "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd3303dd_700543e7",
+        "filename": "internal/ceres/parallel_for_nothreads.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-19T12:39:35Z",
+      "side": 1,
+      "message": "since you have the implementation of parallelfor in the header you could also have this in the header too no?",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 26
+      },
+      "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
