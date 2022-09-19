@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d1f2b48_eafc8219",
+        "filename": "include/ceres/constants.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-19T12:44:55Z",
+      "side": 1,
+      "message": "Please use the standard ceres header here.",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 1
+      },
+      "revId": "c9f11bf674dcef55ab350bb5aba7f40708e2da6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a8c4f68_44e7e749",
+        "filename": "include/ceres/internal/euler_angles.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-19T12:44:55Z",
+      "side": 1,
+      "message": "this comment is not clear.",
+      "range": {
+        "startLine": 49,
+        "startChar": 28,
+        "endLine": 49,
+        "endChar": 29
+      },
+      "revId": "c9f11bf674dcef55ab350bb5aba7f40708e2da6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b918a7b7_6f9ef7b1",
+        "filename": "include/ceres/internal/euler_angles.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-19T12:44:55Z",
+      "side": 1,
+      "message": "blank before.",
+      "range": {
+        "startLine": 95,
+        "startChar": 3,
+        "endLine": 95,
+        "endChar": 9
+      },
+      "revId": "c9f11bf674dcef55ab350bb5aba7f40708e2da6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61afc4ce_7a1362d7",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-19T12:44:55Z",
+      "side": 1,
+      "message": "the documentation in the internal header should be replicated here, these comments are too brief. They should be expanded to be pedagogic.",
+      "range": {
+        "startLine": 141,
+        "startChar": 3,
+        "endLine": 141,
+        "endChar": 10
+      },
+      "revId": "c9f11bf674dcef55ab350bb5aba7f40708e2da6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
