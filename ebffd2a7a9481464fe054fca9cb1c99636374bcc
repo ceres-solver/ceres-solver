@@ -249,6 +249,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6c0097e_0e21710f",
+        "filename": "internal/ceres/cuda_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-09-19T14:58:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4034fe7_8aa48aa2",
+      "range": {
+        "startLine": 65,
+        "startChar": 10,
+        "endLine": 65,
+        "endChar": 17
+      },
+      "revId": "ebffd2a7a9481464fe054fca9cb1c99636374bcc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5198a46c_4c406d85",
@@ -309,6 +333,30 @@
       "writtenOn": "2022-09-16T20:49:19Z",
       "side": 1,
       "message": "same comment as before.",
+      "range": {
+        "startLine": 214,
+        "startChar": 11,
+        "endLine": 214,
+        "endChar": 18
+      },
+      "revId": "ebffd2a7a9481464fe054fca9cb1c99636374bcc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e2a35bd_4b1d14e0",
+        "filename": "internal/ceres/dense_cholesky.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-09-19T14:58:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dde838b_b4885b2f",
       "range": {
         "startLine": 214,
         "startChar": 11,
