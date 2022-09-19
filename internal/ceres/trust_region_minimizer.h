@@ -138,8 +138,6 @@ class CERES_NO_EXPORT TrustRegionMinimizer final : public Minimizer {
   // Scaling vector to scale the columns of the Jacobian.
   Vector jacobian_scaling_;
 
-  // Euclidean norm of x_.
-  double x_norm_;
   // Cost at x_.
   double x_cost_;
   // Minimum cost encountered up till now.

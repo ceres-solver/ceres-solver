@@ -136,8 +136,8 @@ void TrustRegionMinimizer::Init(const Minimizer::Options& options,
                                 double* parameters,
                                 Solver::Summary* solver_summary) {
   options_ = options;
-  sort(options_.trust_region_minimizer_iterations_to_dump.begin(),
-       options_.trust_region_minimizer_iterations_to_dump.end());
+  std::sort(options_.trust_region_minimizer_iterations_to_dump.begin(),
+            options_.trust_region_minimizer_iterations_to_dump.end());
 
   parameters_ = parameters;
 
@@ -165,7 +165,6 @@ void TrustRegionMinimizer::Init(const Minimizer::Options& options,
   num_consecutive_invalid_steps_ = 0;
 
   x_ = ConstVectorRef(parameters_, num_parameters_);
-  x_norm_ = x_.norm();
   residuals_.resize(num_residuals_);
   trust_region_step_.resize(num_effective_parameters_);
   delta_.resize(num_effective_parameters_);
@@ -179,7 +178,6 @@ void TrustRegionMinimizer::Init(const Minimizer::Options& options,
   // the Jacobian, we will compute and overwrite this vector.
   jacobian_scaling_ = Vector::Ones(num_effective_parameters_);
 
-  x_norm_ = -1;  // Invalid value
   x_cost_ = std::numeric_limits<double>::max();
   minimum_cost_ = x_cost_;
   model_cost_change_ = 0.0;
@@ -213,7 +211,6 @@ bool TrustRegionMinimizer::IterationZero() {
     }
 
     x_ = candidate_x_;
-    x_norm_ = x_.norm();
   }
 
   if (!EvaluateGradientAndJacobian(/*new_evaluation_point=*/true)) {
@@ -704,10 +701,12 @@ bool TrustRegionMinimizer::MinTrustRegionRadiusReached() {
 
 // Solver::Options::parameter_tolerance based convergence check.
 bool TrustRegionMinimizer::ParameterToleranceReached() {
+  const double x_norm = x_.norm();
+
   // Compute the norm of the step in the ambient space.
   iteration_summary_.step_norm = (x_ - candidate_x_).norm();
   const double step_size_tolerance =
-      options_.parameter_tolerance * (x_norm_ + options_.parameter_tolerance);
+      options_.parameter_tolerance * (x_norm + options_.parameter_tolerance);
 
   if (iteration_summary_.step_norm > step_size_tolerance) {
     return false;
@@ -716,7 +715,7 @@ bool TrustRegionMinimizer::ParameterToleranceReached() {
   solver_summary_->message = StringPrintf(
       "Parameter tolerance reached. "
       "Relative step_norm: %e <= %e.",
-      (iteration_summary_.step_norm / (x_norm_ + options_.parameter_tolerance)),
+      (iteration_summary_.step_norm / (x_norm + options_.parameter_tolerance)),
       options_.parameter_tolerance);
   solver_summary_->termination_type = CONVERGENCE;
   if (is_not_silent_) {
@@ -809,7 +808,6 @@ bool TrustRegionMinimizer::IsStepSuccessful() {
 // evaluator know that the step has been accepted.
 bool TrustRegionMinimizer::HandleSuccessfulStep() {
   x_ = candidate_x_;
-  x_norm_ = x_.norm();
 
   // Since the step was successful, this point has already had the residual
   // evaluated (but not the jacobian). So indicate that to the evaluator.
