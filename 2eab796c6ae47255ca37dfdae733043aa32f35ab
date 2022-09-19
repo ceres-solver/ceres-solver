@@ -267,6 +267,42 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "28302ed7_893032f8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-19T23:00:07Z",
+      "side": 1,
+      "message": "If we consider two of the options for clean API:\n - Passing context object and number of threads to constructor (and only to constructor, without option to modify later)\n - Passing context object and number of threads directly to operator functions (and avoiding storing it inside)\n\nIt now seems to me that the first one makes it a bit painful to use those objects (because you need to pass the context all the way down to all creation points).\n\nThus, at least for CPU matrices, it seems reasonable to provide context and number of threads at the place of invocation of SpMV products, decoupling storage from compute in a certain sense.\n\nThis will make APIs of GPU and CPU sparse matrices a bit diverged, but they already cannot be used interchangeably due to incompatible interfaces of right/left products.",
+      "parentUuid": "759ae621_3b3a4a6d",
+      "revId": "2eab796c6ae47255ca37dfdae733043aa32f35ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ddf521ec_9feb627b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-19T23:00:07Z",
+      "side": 1,
+      "message": "I will add CPU/GPU models to commit message with the next revision.\n\n\nAll timings were recorded on Supermicro 7049GP-TRT workstation with 2x Intel Xeon Platinum 8176 CPUs and 4x 2080Ti FE GPUs (2 GPUs per NUMA-node).\n\nSince there is no performance gain from running across NUMA-nodes, I limit execution and memory allocation to a single NUMA-node (and select GPU attached to that particular CPU using CUDA_VISIBLE_DEVICES environment variable).\n\n\nTheoretical maximal memory throughput for single CPU is 119Gbyte/s in six-channel configuration, and theoretical maximal memory throughput for GPU is 616Gbyte/s.\n\nBecause SpMV is bandwidth-limited, I would expect performance of CPU and GPU differ by a factor of ~5 on that machine.\n\n\nFor CRS matrices real speedup from GPGPU turns out to be 4.31/0.724\u003d5.95x (BA) 2.16/0.514\u003d4.2x (Unstructured), which matches the \"theory\" above reasonably good, in my opinion.\n\n\nIf you would like to reproduce those results on your machine - please keep in mind that certain modifications to ParallelFor routine are required (being discussed as a separate change-request).\n\n\nMy plan is to finish parallelization of parts \u0026 pieces required for iterative solvers on CPU first, and then provide GPU versions for partitioned matrices.",
+      "parentUuid": "0ee3f8ba_0e1cf62e",
+      "revId": "2eab796c6ae47255ca37dfdae733043aa32f35ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e95ba6ed_5cef1aa7",
         "filename": "internal/ceres/block_sparse_matrix.cc",
         "patchSetId": 1
@@ -372,6 +408,30 @@
       "side": 1,
       "message": "thank you Dmitriy for these experiments make sense to me. I imagine having a lambda defined right where the parallelfor loop is used is not going to make things any better either. This is what is done elsewhere where we use parallelfor and this maybe worthy of some inspection in light of your experiments.",
       "parentUuid": "90813c55_f2571ae0",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 132,
+        "endChar": 15
+      },
+      "revId": "2eab796c6ae47255ca37dfdae733043aa32f35ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b516f1df_a71a9c23",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-19T23:00:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e34cd8b2_cd57e624",
       "range": {
         "startLine": 132,
         "startChar": 4,
