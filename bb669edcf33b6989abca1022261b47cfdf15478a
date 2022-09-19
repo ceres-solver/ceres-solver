@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f819b77_7cedc55a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-19T15:01:09Z",
+      "side": 1,
+      "message": "small typo.",
+      "revId": "bb669edcf33b6989abca1022261b47cfdf15478a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6982b13_ff36aff1",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-19T15:01:09Z",
+      "side": 1,
+      "message": "synchronization",
+      "range": {
+        "startLine": 88,
+        "startChar": 5,
+        "endLine": 88,
+        "endChar": 21
+      },
+      "revId": "bb669edcf33b6989abca1022261b47cfdf15478a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
