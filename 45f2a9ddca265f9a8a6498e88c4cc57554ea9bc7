@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b52c8e9a_9530b071",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-19T19:53:30Z",
+      "side": 1,
+      "message": "One last nit. Otherwise LGTM.\n\nIt would also be nice to have an updated Sphinx documentation that covers the new functionality. However, this can be done in a subsequent CL.",
+      "revId": "45f2a9ddca265f9a8a6498e88c4cc57554ea9bc7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a78bb82_1a156389",
+        "filename": "include/ceres/constants.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-19T19:53:30Z",
+      "side": 1,
+      "message": "You mean 2022? 😊",
+      "range": {
+        "startLine": 2,
+        "startChar": 13,
+        "endLine": 2,
+        "endChar": 17
+      },
+      "revId": "45f2a9ddca265f9a8a6498e88c4cc57554ea9bc7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
