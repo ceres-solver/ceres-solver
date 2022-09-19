@@ -193,6 +193,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2921b836_c0382894",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-19T12:41:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ccf0b2fb_61da053a",
+      "range": {
+        "startLine": 174,
+        "startChar": 16,
+        "endLine": 174,
+        "endChar": 24
+      },
+      "revId": "8e97913440812543ef6f55f78921978002faca40",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "15c5ef66_40a1b43c",
