@@ -176,6 +176,42 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "19b8c883_76c33a69",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-19T22:45:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a42c13f_9a4008c5",
+      "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "795264f5_fd57de64",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-19T22:45:49Z",
+      "side": 1,
+      "message": "Updated benchmark results in commit message (added single-threaded cases and the largest one from BAL)",
+      "parentUuid": "9fb9488e_6bd39863",
+      "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "98674c73_46c3cfb4",
@@ -189,6 +225,30 @@
       "writtenOn": "2022-09-19T12:39:35Z",
       "side": 1,
       "message": "this is really nice.",
+      "range": {
+        "startLine": 48,
+        "startChar": 12,
+        "endLine": 48,
+        "endChar": 15
+      },
+      "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f446a4d_3aa032eb",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-19T22:45:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98674c73_46c3cfb4",
       "range": {
         "startLine": 48,
         "startChar": 12,
@@ -222,6 +282,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c36b735f_9298410d",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-19T22:45:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bb454e7_0be78ce1",
+      "range": {
+        "startLine": 63,
+        "startChar": 7,
+        "endLine": 63,
+        "endChar": 21
+      },
+      "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e5235d78_fe419691",
@@ -235,6 +319,30 @@
       "writtenOn": "2022-09-19T12:39:35Z",
       "side": 1,
       "message": "at this time you should add your name to this and other files.",
+      "range": {
+        "startLine": 29,
+        "startChar": 24,
+        "endLine": 29,
+        "endChar": 27
+      },
+      "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d4f68ba_88cf36ea",
+        "filename": "internal/ceres/parallel_for_cxx.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-19T22:45:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5235d78_fe419691",
       "range": {
         "startLine": 29,
         "startChar": 24,
@@ -270,6 +378,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c8394005_5666a48c",
+        "filename": "internal/ceres/parallel_for_cxx.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-19T22:45:49Z",
+      "side": 1,
+      "message": "This is a result of how we handle nested parallel for calls with a call for task function from the main thread.\n\nThis way we\na. Enqueue num_threads tasks into the pool\nb. Launch one task in the main thread\n\nIn the case of nested parallel for (or other situation where thread pool does not execute our tasks immediately), main thread might complete all the work, and exit.\n\nBut there is no way to evict unneeded tasks from the pool, and when they will be called by thread pool - ThreadPoolState object needs to be in a correct state in order for threads to understand, that there is no work left.",
+      "parentUuid": "c68b6598_fc8c3ac2",
+      "range": {
+        "startLine": 166,
+        "startChar": 18,
+        "endLine": 166,
+        "endChar": 33
+      },
+      "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fe18fe52_6da9c2c2",
         "filename": "internal/ceres/parallel_for_cxx.h",
         "patchSetId": 4
@@ -281,6 +413,30 @@
       "writtenOn": "2022-09-19T12:39:35Z",
       "side": 1,
       "message": "nit: maybe just call this task ?",
+      "range": {
+        "startLine": 170,
+        "startChar": 7,
+        "endLine": 170,
+        "endChar": 20
+      },
+      "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5028445b_485d630c",
+        "filename": "internal/ceres/parallel_for_cxx.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-19T22:45:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe18fe52_6da9c2c2",
       "range": {
         "startLine": 170,
         "startChar": 7,
@@ -316,6 +472,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dc48faf5_e2d33034",
+        "filename": "internal/ceres/parallel_for_cxx.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-19T22:45:49Z",
+      "side": 1,
+      "message": "Described the purpose of num_threads + 1 invocation more clearly",
+      "parentUuid": "91c5e597_2c31be04",
+      "range": {
+        "startLine": 173,
+        "startChar": 25,
+        "endLine": 173,
+        "endChar": 27
+      },
+      "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4200edc4_d249e3e2",
         "filename": "internal/ceres/parallel_for_cxx.h",
         "patchSetId": 4
@@ -339,6 +519,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7f411221_a2961ef6",
+        "filename": "internal/ceres/parallel_for_cxx.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-19T22:45:49Z",
+      "side": 1,
+      "message": "I think here we talk about capturing task_function itself by value while enqueueing it into thread pool.\n\nAnd near defining std::shared_ptr\u003c...\u003e we have a comment about having a copy of it inside each task_function.",
+      "parentUuid": "4200edc4_d249e3e2",
+      "range": {
+        "startLine": 226,
+        "startChar": 30,
+        "endLine": 226,
+        "endChar": 43
+      },
+      "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d984e015_effd52b3",
         "filename": "internal/ceres/parallel_for_cxx.h",
         "patchSetId": 4
@@ -350,6 +554,30 @@
       "writtenOn": "2022-09-19T12:39:35Z",
       "side": 1,
       "message": "won\u0027t this ensure that all threads are done before we exit this function?",
+      "range": {
+        "startLine": 239,
+        "startChar": 16,
+        "endLine": 239,
+        "endChar": 36
+      },
+      "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73e0348f_4870802f",
+        "filename": "internal/ceres/parallel_for_cxx.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-19T22:45:49Z",
+      "side": 1,
+      "message": "No, we can finish all the work in the main thread while there are still tasks in thread pool waiting to start.\n\nFor example in the case of nested parallel for calls.",
+      "parentUuid": "d984e015_effd52b3",
       "range": {
         "startLine": 239,
         "startChar": 16,
