@@ -1,6 +1,40 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2d7a3ca_63a4bf6f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-19T14:32:25Z",
+      "side": 1,
+      "message": "Just a couple of minor comments.",
+      "revId": "c9f11bf674dcef55ab350bb5aba7f40708e2da6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c2099b6_4687f6b0",
+        "filename": "include/ceres/constants.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-19T14:32:25Z",
+      "side": 1,
+      "message": "It does not really make sense to use a different license for such a simple header, does it? Better reuse the existing header and just add yourself as author.",
+      "revId": "c9f11bf674dcef55ab350bb5aba7f40708e2da6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4d1f2b48_eafc8219",
@@ -20,6 +54,40 @@
         "endLine": 4,
         "endChar": 1
       },
+      "revId": "c9f11bf674dcef55ab350bb5aba7f40708e2da6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e962efc1_183326e9",
+        "filename": "include/ceres/constants.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-19T14:32:25Z",
+      "side": 1,
+      "message": "Use C++17 nested namespace: `namespace ceres::constants`.",
+      "revId": "c9f11bf674dcef55ab350bb5aba7f40708e2da6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fc67c2a_b32b337e",
+        "filename": "include/ceres/constants.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-19T14:32:25Z",
+      "side": 1,
+      "message": "Added a TODO for dropping the header once C++20 `std::numbers` becomes usable (in distant future.)",
       "revId": "c9f11bf674dcef55ab350bb5aba7f40708e2da6e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
