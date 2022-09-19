@@ -105,6 +105,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2585b388_993daee2",
+        "filename": "include/ceres/internal/euler_angles.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2022-09-19T02:29:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3e8a2aa_3f67543f",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ca580051_ec85d422",
@@ -154,6 +172,24 @@
       "side": 1,
       "message": "I don\u0027t see other languages to be particularly relevant when making API choices. The languages you specifically mention don\u0027t support compile-time constructs which considerably reduces the number of design choices already.\n\nAt the same time, the current implementation might give users the false impression that the dispatch is done at runtime because the system is specified as a function argument. However, this is clearly not the case and can result in confusion when someone tries to change the system argument at runtime (e.g., by storing the tag in a variable.)\n\nAlso, I think you are missing the context in which the tag-dispatch mechanism is used in the standard library because it is unavoidable under those specific circumstances. There are two primary use cases:\n1. to differentiate between overloads with n and n+1 arguments.\n2. to work around the language inherent limitation which does not allow to explicitly specify the template parameters of a constructor.\nNeither 1 nor 2 is applicable here.",
       "parentUuid": "50615de2_2669766a",
+      "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05e852e9_0c8bcaa8",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2022-09-19T02:29:18Z",
+      "side": 1,
+      "message": "That makes a lot of sense. Done.",
+      "parentUuid": "f8364582_d9936539",
       "revId": "4b9703c6da1b561eafa26a235e341830eca5bb71",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },

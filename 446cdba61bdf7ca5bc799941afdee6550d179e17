@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb6db234_22be7a85",
+        "filename": "include/ceres/internal/euler_angles.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2022-09-19T02:29:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2e6247c_a46c1d88",
+      "revId": "446cdba61bdf7ca5bc799941afdee6550d179e17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d38d9703_c93b9a56",
@@ -31,6 +49,30 @@
       "writtenOn": "2022-09-18T14:47:50Z",
       "side": 1,
       "message": "Derive from `EulerSystem::InnerAxis` directly.",
+      "range": {
+        "startLine": 141,
+        "startChar": 19,
+        "endLine": 141,
+        "endChar": 77
+      },
+      "revId": "446cdba61bdf7ca5bc799941afdee6550d179e17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4dd5218_bb2b2abc",
+        "filename": "include/ceres/internal/euler_angles.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2022-09-19T02:29:18Z",
+      "side": 1,
+      "message": "The structured-bindable `kAxis` array dispenses with this inner axis extraction struct entirely.",
+      "parentUuid": "d38d9703_c93b9a56",
       "range": {
         "startLine": 141,
         "startChar": 19,
@@ -58,6 +100,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "82b9dbd9_7ffa566c",
+        "filename": "include/ceres/internal/euler_angles.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2022-09-19T02:29:18Z",
+      "side": 1,
+      "message": "Done. The conditions are now directly encoded by constants inside the `EulerSystem` struct. This is a lot closer to my initial struct implementation, except now these boolean constants are set by named tags instead of raw truth values.",
+      "parentUuid": "25b455f3_6527b09d",
+      "revId": "446cdba61bdf7ca5bc799941afdee6550d179e17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "263dcfea_b1ba13b4",
@@ -71,6 +131,24 @@
       "writtenOn": "2022-09-18T12:21:53Z",
       "side": 1,
       "message": "Derive from `std::is_same`. No `integral_constant` is necessary.",
+      "revId": "446cdba61bdf7ca5bc799941afdee6550d179e17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0ae0bfe_598854ce",
+        "filename": "include/ceres/internal/euler_angles.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2022-09-19T02:29:18Z",
+      "side": 1,
+      "message": "Folding the `kIsParityOdd` conditions inside the `EulerSystem` struct dispenses with the predicate entirely.",
+      "parentUuid": "263dcfea_b1ba13b4",
       "revId": "446cdba61bdf7ca5bc799941afdee6550d179e17",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -92,6 +170,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e887dddf_e82fd689",
+        "filename": "include/ceres/internal/euler_angles.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2022-09-19T02:29:18Z",
+      "side": 1,
+      "message": "\"Performing checks inside the `EulerSystem` struct\" lets us dispense with the predicate entirely",
+      "parentUuid": "b41f2e4e_a6f1c999",
+      "revId": "446cdba61bdf7ca5bc799941afdee6550d179e17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "57fd3c66_34d70345",
@@ -105,6 +201,24 @@
       "writtenOn": "2022-09-18T12:21:53Z",
       "side": 1,
       "message": "Derive from `std::is_same`.",
+      "revId": "446cdba61bdf7ca5bc799941afdee6550d179e17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ece2e4cc_f264d47a",
+        "filename": "include/ceres/internal/euler_angles.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2022-09-19T02:29:18Z",
+      "side": 1,
+      "message": "\"Performing checks inside the `EulerSystem` struct\" lets us dispense with the predicate entirely",
+      "parentUuid": "57fd3c66_34d70345",
       "revId": "446cdba61bdf7ca5bc799941afdee6550d179e17",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -126,6 +240,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa9b0e75_a1810dd6",
+        "filename": "include/ceres/internal/euler_angles.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2022-09-19T02:29:18Z",
+      "side": 1,
+      "message": "\"Performing checks inside the `EulerSystem` struct\" lets us dispense with the predicate entirely",
+      "parentUuid": "274fce1b_cda8ee92",
+      "revId": "446cdba61bdf7ca5bc799941afdee6550d179e17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2358f0c5_20ac9d11",
@@ -139,6 +271,24 @@
       "writtenOn": "2022-09-18T12:21:53Z",
       "side": 1,
       "message": "The same computations are performed in at least two locations. Maybe let the `EulerSystem` return the axes as a 3-tuple and use structured binding. Something along the lines:\n```\nauto [i, j, k] \u003d EulerSystem::axes()\n```\nIdeally, the available `axis` definitions are reused to avoid the use of magic constants for indexing Euler angles arrays. However, this is only nice to have.",
+      "revId": "446cdba61bdf7ca5bc799941afdee6550d179e17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ef5fb73_26902a6b",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2022-09-19T02:29:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2358f0c5_20ac9d11",
       "revId": "446cdba61bdf7ca5bc799941afdee6550d179e17",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -160,6 +310,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b41618b_bad94c08",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2022-09-19T02:29:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ea650a3_799e44d9",
+      "revId": "446cdba61bdf7ca5bc799941afdee6550d179e17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6a1be336_6c5620a9",
@@ -177,6 +345,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d138dc97_795428ad",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2022-09-19T02:29:18Z",
+      "side": 1,
+      "message": "Done. Added a new `constants.h` header. Only `pi_v` is defined, as I\u0027m already uneasy about bundling more headers into my first contribution request.",
+      "parentUuid": "6a1be336_6c5620a9",
+      "revId": "446cdba61bdf7ca5bc799941afdee6550d179e17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "56fcb6d9_82ebdd9c",
@@ -190,6 +376,24 @@
       "writtenOn": "2022-09-18T12:21:53Z",
       "side": 1,
       "message": "Remove duplication.",
+      "revId": "446cdba61bdf7ca5bc799941afdee6550d179e17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc5244aa_eacd0d7b",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2022-09-19T02:29:18Z",
+      "side": 1,
+      "message": "Redefined in terms of `pi_v`",
+      "parentUuid": "56fcb6d9_82ebdd9c",
       "revId": "446cdba61bdf7ca5bc799941afdee6550d179e17",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
