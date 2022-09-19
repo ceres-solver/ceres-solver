@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8294393c_c3e48983",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-19T19:45:34Z",
+      "side": 1,
+      "message": "Mostly LGTM. Only few suggestions.",
+      "revId": "9cc69c0171573ae2a9b2f36ee67482e2190758bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34e9701d_6e9f1683",
+        "filename": "internal/ceres/block_jacobi_preconditioner.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-19T19:45:34Z",
+      "side": 1,
+      "message": "Since `Options` is likely a POD, the idiom does not provide any value here. But it doesn\u0027t do any harm either.",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 34
+      },
+      "revId": "9cc69c0171573ae2a9b2f36ee67482e2190758bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77228601_f6e57332",
+        "filename": "internal/ceres/block_jacobi_preconditioner.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-19T19:45:34Z",
+      "side": 1,
+      "message": "Suggestion: rather than capturing everything by reference, capture only the necessary variables. I believe the code is then better readable if the captured variables are explicitly stated.",
+      "range": {
+        "startLine": 63,
+        "startChar": 66,
+        "endLine": 63,
+        "endChar": 69
+      },
+      "revId": "9cc69c0171573ae2a9b2f36ee67482e2190758bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc6f27b9_d94baa4d",
+        "filename": "internal/ceres/block_jacobi_preconditioner.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-19T19:45:34Z",
+      "side": 1,
+      "message": "It is not obvious to me why the same cell can be processed by different threads at the same time eventually requiring this lock. My guess is there\u0027s some kind of overlap. However, it would be nice to have a brief explanation as a comment why this is.",
+      "revId": "9cc69c0171573ae2a9b2f36ee67482e2190758bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c624ac6_2a538618",
+        "filename": "internal/ceres/block_jacobi_preconditioner.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-19T19:45:34Z",
+      "side": 1,
+      "message": "Capture only the necessary?",
+      "range": {
+        "startLine": 91,
+        "startChar": 68,
+        "endLine": 91,
+        "endChar": 71
+      },
+      "revId": "9cc69c0171573ae2a9b2f36ee67482e2190758bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbc04919_6273ea01",
+        "filename": "internal/ceres/block_jacobi_preconditioner.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-19T19:45:34Z",
+      "side": 1,
+      "message": "Capture only the necessary?",
+      "range": {
+        "startLine": 169,
+        "startChar": 65,
+        "endLine": 169,
+        "endChar": 68
+      },
+      "revId": "9cc69c0171573ae2a9b2f36ee67482e2190758bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "686a0f18_217563ab",
+        "filename": "internal/ceres/block_jacobi_preconditioner.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-19T19:45:34Z",
+      "side": 1,
+      "message": "Capture only the necessary?",
+      "range": {
+        "startLine": 196,
+        "startChar": 65,
+        "endLine": 196,
+        "endChar": 68
+      },
+      "revId": "9cc69c0171573ae2a9b2f36ee67482e2190758bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
