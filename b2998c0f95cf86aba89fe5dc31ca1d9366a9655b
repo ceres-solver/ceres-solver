@@ -400,6 +400,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab2e3894_44dd46ff",
+        "filename": "internal/ceres/parallel_for_cxx.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-19T23:02:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c8394005_5666a48c",
+      "range": {
+        "startLine": 166,
+        "startChar": 18,
+        "endLine": 166,
+        "endChar": 33
+      },
+      "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fe18fe52_6da9c2c2",
@@ -541,6 +565,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "428855f8_42475a39",
+        "filename": "internal/ceres/parallel_for_cxx.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-19T23:02:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7f411221_a2961ef6",
+      "range": {
+        "startLine": 226,
+        "startChar": 30,
+        "endLine": 226,
+        "endChar": 43
+      },
+      "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d984e015_effd52b3",
@@ -578,6 +626,30 @@
       "side": 1,
       "message": "No, we can finish all the work in the main thread while there are still tasks in thread pool waiting to start.\n\nFor example in the case of nested parallel for calls.",
       "parentUuid": "d984e015_effd52b3",
+      "range": {
+        "startLine": 239,
+        "startChar": 16,
+        "endLine": 239,
+        "endChar": 36
+      },
+      "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "708de698_1e1788cd",
+        "filename": "internal/ceres/parallel_for_cxx.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-19T23:02:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "73e0348f_4870802f",
       "range": {
         "startLine": 239,
         "startChar": 16,
