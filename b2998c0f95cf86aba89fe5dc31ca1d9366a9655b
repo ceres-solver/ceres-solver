@@ -107,6 +107,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e98bcd75_b7587a19",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-19T16:36:58Z",
+      "side": 1,
+      "message": "Alex I did some quick benchmarking, and even at HEAD without Dmitriy\u0027s changes CXX_THREADS is faster than OpenMP.\n\n./bin/bundle_adjuster --input ${HOME}/bal_problems/problem-744-543562-pre.txt\n\nOpenMP:\nPreprocessor                        17.609368\n\n  Residual only evaluation           1.727921 (5)\n  Jacobian \u0026 residual evaluation     6.731878 (6)\n  Linear solver                     36.640296 (5)\nMinimizer                           49.505668\n\nPostprocessor                        0.286242\nTotal                               67.401280\n\nCXX:\nPreprocessor                        17.996831\n\n  Residual only evaluation           0.518822 (5)\n  Jacobian \u0026 residual evaluation     7.362002 (6)\n  Linear solver                     34.516102 (5)\nMinimizer                           46.748151\n\nPostprocessor                        0.285872\nTotal                               65.030854\n\n./bin/bundle_adjuster --input ${HOME}/bal_problems/problem-951-708276-pre.txt\nOpenMP\nPreprocessor                        23.855088\n\n  Residual only evaluation           2.528524 (5)\n  Jacobian \u0026 residual evaluation     8.800000 (5)\n  Linear solver                     57.068341 (5)\nMinimizer                           73.529374\n\nPostprocessor                        0.365246\nTotal                               97.749709\n\nCXX:\nPreprocessor                        23.893380\n\n  Residual only evaluation           0.556834 (5)\n  Jacobian \u0026 residual evaluation     6.941720 (5)\n  Linear solver                     54.890267 (5)\nMinimizer                           67.108281\n\nPostprocessor                        0.351945\nTotal                               91.353606",
+      "parentUuid": "1d9287c3_98c1bea0",
+      "revId": "b2998c0f95cf86aba89fe5dc31ca1d9366a9655b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "98674c73_46c3cfb4",
         "filename": "internal/ceres/parallel_for.h",
         "patchSetId": 4
