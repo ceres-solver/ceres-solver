@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c2a55d9_4cf1e035",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-19T13:51:56Z",
+      "side": 1,
+      "message": "I will add benchmark numbers once the ParallelFor refactoring that Dmitriy is working on, as it will affect the single threaded performance by quite a bit.",
+      "revId": "4e27993dcf2f44c1f07d268928ba2b19972f81f1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
