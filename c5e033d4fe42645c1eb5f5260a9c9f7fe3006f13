@@ -260,6 +260,30 @@
       },
       "revId": "c5e033d4fe42645c1eb5f5260a9c9f7fe3006f13",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be00d45e_a50d0353",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-20T22:13:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "62c618a6_e8d4b2d9",
+      "range": {
+        "startLine": 688,
+        "startChar": 7,
+        "endLine": 688,
+        "endChar": 13
+      },
+      "revId": "c5e033d4fe42645c1eb5f5260a9c9f7fe3006f13",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
