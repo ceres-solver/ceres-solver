@@ -16,6 +16,29 @@
       "message": "I think it is a good idea to not lock when you don\u0027t need to. Not sure if the syntax can be improved since from the macro it is hard to understand what code is being inserted.",
       "revId": "2644a0b4b254e650908c4f9943bbf24dc3e6eb01",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9555d249_cea9f424",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-09-20T18:31:58Z",
+      "side": 1,
+      "message": "Better use a free function instead:\n```\ninline decltype(auto) MakeConditionalLock(int num_threads, std::mutex\u0026 m)\n{\n   return (num_threads \u003d\u003d 1) ? std::unique_lock\u003cstd::mutex\u003e{}\n                             : std::unique_lock\u003cstd::mutex\u003e{m};\n}\n```",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 44,
+        "endChar": 42
+      },
+      "revId": "2644a0b4b254e650908c4f9943bbf24dc3e6eb01",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
