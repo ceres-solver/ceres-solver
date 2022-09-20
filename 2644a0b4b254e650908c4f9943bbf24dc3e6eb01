@@ -39,6 +39,29 @@
       },
       "revId": "2644a0b4b254e650908c4f9943bbf24dc3e6eb01",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ecaedfd4_0592520f",
+        "filename": "internal/ceres/schur_eliminator_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-20T19:35:48Z",
+      "side": 1,
+      "message": "By the way, in the case of rhs update - is it viable to avoid synchronization by computing num_threads separate updates in parallel and then doing parallel reduction?\n\nOr simultaneous synchronization on the same block are relatively rare to compensate for additional cost of reduction?",
+      "range": {
+        "startLine": 379,
+        "startChar": 63,
+        "endLine": 379,
+        "endChar": 72
+      },
+      "revId": "2644a0b4b254e650908c4f9943bbf24dc3e6eb01",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
