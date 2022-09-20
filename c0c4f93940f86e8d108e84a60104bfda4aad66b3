@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb1cf7c9_6f802258",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-20T08:08:38Z",
+      "side": 1,
+      "message": "Removed benchmark, will fix it and submit as a separate CL.",
+      "revId": "c0c4f93940f86e8d108e84a60104bfda4aad66b3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

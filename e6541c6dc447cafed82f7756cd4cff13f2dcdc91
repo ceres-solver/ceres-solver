@@ -58,6 +58,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "856008bb_70b62ae1",
+        "filename": "internal/ceres/evaluation_benchmark.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-20T08:08:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "957f4cad_673468af",
+      "range": {
+        "startLine": 44,
+        "startChar": 25,
+        "endLine": 44,
+        "endChar": 31
+      },
+      "revId": "e6541c6dc447cafed82f7756cd4cff13f2dcdc91",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c60ed5f8_a575b908",
@@ -71,6 +95,30 @@
       "writtenOn": "2022-09-19T23:02:39Z",
       "side": 1,
       "message": "this commits to a particular layout of datafiles. which matches the website but not how I just download them into my download directory :/. this is fine for now, we may come back and tweak this a bit later on.",
+      "range": {
+        "startLine": 54,
+        "startChar": 25,
+        "endLine": 54,
+        "endChar": 34
+      },
+      "revId": "e6541c6dc447cafed82f7756cd4cff13f2dcdc91",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "70bc333b_79379e32",
+        "filename": "internal/ceres/evaluation_benchmark.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-20T08:08:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c60ed5f8_a575b908",
       "range": {
         "startLine": 54,
         "startChar": 25,
@@ -104,6 +152,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "773ad9b1_17ffc8c0",
+        "filename": "internal/ceres/evaluation_benchmark.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-20T08:08:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d9ea9530_6b5b1658",
+      "range": {
+        "startLine": 110,
+        "startChar": 9,
+        "endLine": 110,
+        "endChar": 13
+      },
+      "revId": "e6541c6dc447cafed82f7756cd4cff13f2dcdc91",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1e645868_bf3a5edd",
@@ -117,6 +189,24 @@
       "writtenOn": "2022-09-19T23:02:39Z",
       "side": 1,
       "message": "parameters_",
+      "revId": "e6541c6dc447cafed82f7756cd4cff13f2dcdc91",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f7c338f_53b3810b",
+        "filename": "internal/ceres/evaluation_benchmark.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-20T08:08:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1e645868_bf3a5edd",
       "revId": "e6541c6dc447cafed82f7756cd4cff13f2dcdc91",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -144,6 +234,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "73cc72b8_7a13aa3b",
+        "filename": "internal/ceres/evaluation_benchmark.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-20T08:08:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8f152df6_ce6a7094",
+      "range": {
+        "startLine": 122,
+        "startChar": 12,
+        "endLine": 122,
+        "endChar": 21
+      },
+      "revId": "e6541c6dc447cafed82f7756cd4cff13f2dcdc91",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8b193330_8516b977",
@@ -157,6 +271,30 @@
       "writtenOn": "2022-09-19T23:02:39Z",
       "side": 1,
       "message": "ResidualsAndJacobian",
+      "range": {
+        "startLine": 157,
+        "startChar": 12,
+        "endLine": 157,
+        "endChar": 34
+      },
+      "revId": "e6541c6dc447cafed82f7756cd4cff13f2dcdc91",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a99d9c7_d2d44681",
+        "filename": "internal/ceres/evaluation_benchmark.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-20T08:08:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8b193330_8516b977",
       "range": {
         "startLine": 157,
         "startChar": 12,
