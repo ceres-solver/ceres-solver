@@ -16,6 +16,23 @@
       "message": "Removed benchmark, will fix it and submit as a separate CL.",
       "revId": "c0c4f93940f86e8d108e84a60104bfda4aad66b3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c9ad9c8_d4f8e4b3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-20T13:09:28Z",
+      "side": 1,
+      "message": "Thank you Dmitriy",
+      "revId": "c0c4f93940f86e8d108e84a60104bfda4aad66b3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
