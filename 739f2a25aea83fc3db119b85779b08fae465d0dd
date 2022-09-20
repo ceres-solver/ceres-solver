@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8a4d676_a78c8c78",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-20T16:24:48Z",
+      "side": 1,
+      "message": "further investigation seems to indicate that this is the locking overhead. I have a solution for this which I will submit as a separate change.",
+      "revId": "739f2a25aea83fc3db119b85779b08fae465d0dd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
