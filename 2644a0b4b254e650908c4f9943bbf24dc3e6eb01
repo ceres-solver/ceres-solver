@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62b3deea_4e337207",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2022-09-20T18:21:43Z",
+      "side": 1,
+      "message": "I think it is a good idea to not lock when you don\u0027t need to. Not sure if the syntax can be improved since from the macro it is hard to understand what code is being inserted.",
+      "revId": "2644a0b4b254e650908c4f9943bbf24dc3e6eb01",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "969953b3_c7e29e80",
+        "filename": "internal/ceres/schur_eliminator_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2022-09-20T18:21:43Z",
+      "side": 0,
+      "message": "why is this one removed?",
+      "range": {
+        "startLine": 209,
+        "startChar": 20,
+        "endLine": 209,
+        "endChar": 64
+      },
+      "revId": "739f2a25aea83fc3db119b85779b08fae465d0dd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
