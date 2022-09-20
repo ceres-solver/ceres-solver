@@ -16,6 +16,24 @@
       "message": "Please do consider contributing documentation for this very nice API.",
       "revId": "2b89ce66f053a0895c1d6fe83b284d7e3f0fcf0e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63c001cf_f6de5e7e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2022-09-20T22:41:23Z",
+      "side": 1,
+      "message": "On it. Apart from docs, Ken Shoemake\u0027s article that inspired this CL also offered a unique algo for `EulerAnglesToQuaternion` (although `QuaternionToEulerAngles` is just converting to rotation matrix, followed by `RotationMatrixToEulerAngles`). If you don\u0027t feel eul-quat conversions are redundant, I can also code them up",
+      "parentUuid": "4bcc5462_a45e7bd6",
+      "revId": "2b89ce66f053a0895c1d6fe83b284d7e3f0fcf0e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
