@@ -16,6 +16,184 @@
       "message": "Parallel evaluation benchmark.\n\n - User can specify any input(s) in BAL format on the command line\n - Flags for benchmark library can be passed on the command line too.",
       "revId": "8dae07e4992f9f5fd35c0eb94ae54bb8b998fcbb",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40b42c0a_899fe825",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-20T21:35:52Z",
+      "side": 1,
+      "message": "Minor comments.",
+      "revId": "8dae07e4992f9f5fd35c0eb94ae54bb8b998fcbb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0b4e0af_aedd8593",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-20T21:35:52Z",
+      "side": 1,
+      "message": "this is stylistically correct. however in ceres follow the other convention mutable_impl();",
+      "range": {
+        "startLine": 547,
+        "startChar": 25,
+        "endLine": 547,
+        "endChar": 43
+      },
+      "revId": "8dae07e4992f9f5fd35c0eb94ae54bb8b998fcbb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ab59af1_dfbee758",
+        "filename": "internal/ceres/covariance.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-20T21:35:52Z",
+      "side": 1,
+      "message": "I suppose we can get rid of the friend declaration now.. I can take care of this in a follow up, just realized that once you have this accessor, the friend declaration is not needed anymore.",
+      "range": {
+        "startLine": 54,
+        "startChar": 16,
+        "endLine": 54,
+        "endChar": 23
+      },
+      "revId": "8dae07e4992f9f5fd35c0eb94ae54bb8b998fcbb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "835eb851_9d8a512f",
+        "filename": "internal/ceres/evaluation_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-20T21:35:52Z",
+      "side": 1,
+      "message": "BAL_Data -\u003e BALData.",
+      "range": {
+        "startLine": 46,
+        "startChar": 7,
+        "endLine": 46,
+        "endChar": 15
+      },
+      "revId": "8dae07e4992f9f5fd35c0eb94ae54bb8b998fcbb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72535e56_42626dd3",
+        "filename": "internal/ceres/evaluation_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-20T21:35:52Z",
+      "side": 1,
+      "message": "you don\u0027t need to do this test, the following call to BundleAdjustmentProblem will do the needful no? just check for it not being null?",
+      "range": {
+        "startLine": 48,
+        "startChar": 24,
+        "endLine": 48,
+        "endChar": 29
+      },
+      "revId": "8dae07e4992f9f5fd35c0eb94ae54bb8b998fcbb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e6c8f88_49dd7a01",
+        "filename": "internal/ceres/evaluation_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-20T21:35:52Z",
+      "side": 1,
+      "message": "I think SPARSE_NORMAL_CHOLESKY is a better choice, since SPARSE_SCHUR actually implies a bunch of reordering constraints on the Jacobian which we are not doing here. (all that happens in ReorderProgram inside the TrustRegionPreprocessor).",
+      "range": {
+        "startLine": 59,
+        "startChar": 33,
+        "endLine": 59,
+        "endChar": 45
+      },
+      "revId": "8dae07e4992f9f5fd35c0eb94ae54bb8b998fcbb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33b291b1_0ce4c6a7",
+        "filename": "internal/ceres/evaluation_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-20T21:35:52Z",
+      "side": 1,
+      "message": "struct members do not need _ at the end.",
+      "range": {
+        "startLine": 74,
+        "startChar": 18,
+        "endLine": 74,
+        "endChar": 41
+      },
+      "revId": "8dae07e4992f9f5fd35c0eb94ae54bb8b998fcbb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a11635c9_a2e54ed6",
+        "filename": "internal/ceres/evaluation_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-20T21:35:52Z",
+      "side": 1,
+      "message": "I am curious, as to why you are doing the evaluator construction twice, why not just do it once here and create the Jacobian here too? that way you only creating one context object too.",
+      "range": {
+        "startLine": 97,
+        "startChar": 28,
+        "endLine": 97,
+        "endChar": 29
+      },
+      "revId": "8dae07e4992f9f5fd35c0eb94ae54bb8b998fcbb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
