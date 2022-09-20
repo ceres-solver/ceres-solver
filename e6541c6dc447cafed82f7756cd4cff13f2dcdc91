@@ -18,6 +18,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "970b4fc5_cb3a14b3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-20T04:49:08Z",
+      "side": 1,
+      "message": "Dmitriy, instead of growing this CL why don\u0027t we get the parallel for changes in and then iterate on the evaluation benchmark separately? the parallel for stuff is ready to go in. no point delaying it.",
+      "revId": "e6541c6dc447cafed82f7756cd4cff13f2dcdc91",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "957f4cad_673468af",
