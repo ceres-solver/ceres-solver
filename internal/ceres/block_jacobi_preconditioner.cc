@@ -75,13 +75,14 @@ bool BlockSparseJacobiPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
                   MatrixRef m(cell_info->values, row_stride, col_stride);
                   ConstMatrixRef b(
                       values + cell.position, row_block_size, col_block_size);
-                  std::lock_guard<std::mutex> l(cell_info->m);
+                  auto lock =
+                      MakeConditionalLock(options_.num_threads, cell_info->m);
                   // clang-format off
                   MatrixTransposeMatrixMultiply<Eigen::Dynamic, Eigen::Dynamic,
-                   Eigen::Dynamic,Eigen::Dynamic, 1>(
-                   values + cell.position, row_block_size,col_block_size,
-                   values + cell.position, row_block_size,col_block_size,
-                   cell_info->values,r, c,row_stride,col_stride);
+                      Eigen::Dynamic,Eigen::Dynamic, 1>(
+                          values + cell.position, row_block_size,col_block_size,
+                          values + cell.position, row_block_size,col_block_size,
+                          cell_info->values,r, c,row_stride,col_stride);
                   // clang-format on
                 }
               });
@@ -193,7 +194,7 @@ bool BlockCRSJacobiPreconditioner::UpdateImpl(
           // MatrixTransposeMatrixMultiply, otherwise we could use it
           // here to further speed up the following expression.
           auto b = row_block.middleCols(c, col_block_size);
-          std::lock_guard<std::mutex> l(locks_[col]);
+          auto lock = MakeConditionalLock(options_.num_threads, locks_[col]);
           m.noalias() += b.transpose() * b;
           c += col_block_size;
         }

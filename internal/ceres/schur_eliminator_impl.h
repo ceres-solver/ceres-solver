@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -205,8 +205,6 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::Eliminate(
                     const int block_size = bs->cols[i].size;
                     typename EigenTypes<Eigen::Dynamic>::ConstVectorRef diag(
                         D + bs->cols[i].position, block_size);
-
-                    std::lock_guard<std::mutex> l(cell_info->m);
                     MatrixRef m(cell_info->values, row_stride, col_stride);
                     m.block(r, c, block_size, block_size).diagonal() +=
                         diag.array().square().matrix();
@@ -409,7 +407,7 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::UpdateRhs(
       const int block_id = row.cells[c].block_id;
       const int block_size = bs->cols[block_id].size;
       const int block = block_id - num_eliminate_blocks_;
-      std::lock_guard<std::mutex> l(*rhs_locks_[block]);
+      auto lock = MakeConditionalLock(num_threads_, *rhs_locks_[block]);
       // clang-format off
       MatrixTransposeVectorMultiply<kRowBlockSize, kFBlockSize, 1>(
           values + row.cells[c].position,
@@ -549,7 +547,7 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::
           lhs->GetCell(block1, block2, &r, &c, &row_stride, &col_stride);
       if (cell_info != nullptr) {
         const int block2_size = bs->cols[it2->first].size;
-        std::lock_guard<std::mutex> l(cell_info->m);
+        auto lock = MakeConditionalLock(num_threads_, cell_info->m);
         // clang-format off
         MatrixMatrixMultiply
             <kFBlockSize, kEBlockSize, kEBlockSize, kFBlockSize, -1>(
@@ -626,7 +624,7 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::
     CellInfo* cell_info =
         lhs->GetCell(block1, block1, &r, &c, &row_stride, &col_stride);
     if (cell_info != nullptr) {
-      std::lock_guard<std::mutex> l(cell_info->m);
+      auto lock = MakeConditionalLock(num_threads_, cell_info->m);
       // This multiply currently ignores the fact that this is a
       // symmetric outer product.
       // clang-format off
@@ -647,7 +645,7 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::
           lhs->GetCell(block1, block2, &r, &c, &row_stride, &col_stride);
       if (cell_info != nullptr) {
         const int block2_size = bs->cols[row.cells[j].block_id].size;
-        std::lock_guard<std::mutex> l(cell_info->m);
+        auto lock = MakeConditionalLock(num_threads_, cell_info->m);
         // clang-format off
         MatrixTransposeMatrixMultiply
             <Eigen::Dynamic, Eigen::Dynamic, Eigen::Dynamic, Eigen::Dynamic, 1>(
@@ -681,7 +679,7 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::
     CellInfo* cell_info =
         lhs->GetCell(block1, block1, &r, &c, &row_stride, &col_stride);
     if (cell_info != nullptr) {
-      std::lock_guard<std::mutex> l(cell_info->m);
+      auto lock = MakeConditionalLock(num_threads_, cell_info->m);
       // block += b1.transpose() * b1;
       // clang-format off
       MatrixTransposeMatrixMultiply
@@ -702,7 +700,7 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::
           lhs->GetCell(block1, block2, &r, &c, &row_stride, &col_stride);
       if (cell_info != nullptr) {
         // block += b1.transpose() * b2;
-        std::lock_guard<std::mutex> l(cell_info->m);
+        auto lock = MakeConditionalLock(num_threads_, cell_info->m);
         // clang-format off
         MatrixTransposeMatrixMultiply
             <kRowBlockSize, kFBlockSize, kRowBlockSize, kFBlockSize, 1>(

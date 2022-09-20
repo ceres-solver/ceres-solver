@@ -33,6 +33,7 @@
 #define CERES_INTERNAL_PARALLEL_FOR_H_
 
 #include <functional>
+#include <mutex>
 
 #include "ceres/context_impl.h"
 #include "ceres/internal/disable_warnings.h"
@@ -40,6 +41,13 @@
 #include "glog/logging.h"
 
 namespace ceres::internal {
+
+// Use a dummy mutex if num_threads = 1.
+inline decltype(auto) MakeConditionalLock(const int num_threads,
+                                          std::mutex& m) {
+  return (num_threads == 1) ? std::unique_lock<std::mutex>{}
+                            : std::unique_lock<std::mutex>{m};
+}
 
 // Returns the maximum number of threads supported by the threading backend
 // Ceres was compiled with.
