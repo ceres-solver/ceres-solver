@@ -574,6 +574,9 @@ macro(add_dependencies_to_benchmark BENCHMARK_TARGET)
 endmacro()
 
 if (BUILD_BENCHMARKS)
+  add_executable(evaluation_benchmark evaluation_benchmark.cc)
+  add_dependencies_to_benchmark(evaluation_benchmark)
+
   add_executable(small_blas_gemv_benchmark small_blas_gemv_benchmark.cc)
   add_dependencies_to_benchmark(small_blas_gemv_benchmark)
 

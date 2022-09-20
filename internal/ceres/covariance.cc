@@ -51,12 +51,12 @@ Covariance::~Covariance() = default;
 bool Covariance::Compute(
     const vector<pair<const double*, const double*>>& covariance_blocks,
     Problem* problem) {
-  return impl_->Compute(covariance_blocks, problem->impl_.get());
+  return impl_->Compute(covariance_blocks, problem->mutable_impl());
 }
 
 bool Covariance::Compute(const vector<const double*>& parameter_blocks,
                          Problem* problem) {
-  return impl_->Compute(parameter_blocks, problem->impl_.get());
+  return impl_->Compute(parameter_blocks, problem->mutable_impl());
 }
 
 bool Covariance::GetCovarianceBlock(const double* parameter_block1,

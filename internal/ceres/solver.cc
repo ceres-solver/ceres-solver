@@ -723,7 +723,7 @@ void Solver::Solve(const Solver::Options& options,
     return;
   }
 
-  ProblemImpl* problem_impl = problem->impl_.get();
+  ProblemImpl* problem_impl = problem->mutable_impl();
   Program* program = problem_impl->mutable_program();
   PreSolveSummarize(options, problem_impl, summary);
 
@@ -805,7 +805,7 @@ void Solver::Solve(const Solver::Options& options,
   }
 
   const double postprocessor_start_time = WallTimeInSeconds();
-  problem_impl = problem->impl_.get();
+  problem_impl = problem->mutable_impl();
   program = problem_impl->mutable_program();
   // On exit, ensure that the parameter blocks again point at the user
   // provided values and the parameter blocks are numbered according
