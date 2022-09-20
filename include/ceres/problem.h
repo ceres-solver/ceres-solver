@@ -543,9 +543,10 @@ class CERES_EXPORT Problem {
       double* residuals,
       double** jacobians) const;
 
+  // Returns pointer to Problem implementation
+  internal::ProblemImpl* MutableProblemImpl();
+
  private:
-  friend class Solver;
-  friend class Covariance;
   std::unique_ptr<internal::ProblemImpl> impl_;
 };
 
