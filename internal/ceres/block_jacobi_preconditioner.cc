@@ -31,7 +31,9 @@
 #include "ceres/block_jacobi_preconditioner.h"
 
 #include <memory>
+#include <mutex>
 #include <utility>
+#include <vector>
 
 #include "Eigen/Dense"
 #include "ceres/block_random_access_diagonal_matrix.h"
