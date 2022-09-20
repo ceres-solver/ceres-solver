@@ -1,5 +1,23 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4bcc5462_a45e7bd6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-20T22:15:02Z",
+      "side": 1,
+      "message": "Please do consider contributing documentation for this very nice API.",
+      "revId": "2b89ce66f053a0895c1d6fe83b284d7e3f0fcf0e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
