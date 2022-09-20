@@ -34,6 +34,24 @@
       "parentUuid": "4bcc5462_a45e7bd6",
       "revId": "2b89ce66f053a0895c1d6fe83b284d7e3f0fcf0e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8340c6b_e413bcac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-20T22:44:22Z",
+      "side": 1,
+      "message": "fewer arithmetic operations are better :), so yes please go ahead and code it up and maybe improve the testing for that function as you go.",
+      "parentUuid": "63c001cf_f6de5e7e",
+      "revId": "2b89ce66f053a0895c1d6fe83b284d7e3f0fcf0e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
