@@ -33,11 +33,16 @@
 #define CERES_INTERNAL_PARALLEL_FOR_H_
 
 #include <functional>
+#include <mutex>
 
 #include "ceres/context_impl.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
 #include "glog/logging.h"
+
+#define CERES_CONDITIONAL_LOCK(num_threads, m)                      \
+  auto __lock = (num_threads == 1) ? std::unique_lock<std::mutex>() \
+                                   : std::unique_lock<std::mutex>(m);
 
 namespace ceres::internal {
 
