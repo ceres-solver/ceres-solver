@@ -22,6 +22,30 @@
       },
       "revId": "739f2a25aea83fc3db119b85779b08fae465d0dd",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4fa635b9_9ef95a24",
+        "filename": "internal/ceres/schur_eliminator_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-20T20:48:10Z",
+      "side": 0,
+      "message": "its not needed. it was an errant lock. notice that we are iterating over the diagonal one f block at a time, so there is no overlap between loop iterations.",
+      "parentUuid": "969953b3_c7e29e80",
+      "range": {
+        "startLine": 209,
+        "startChar": 20,
+        "endLine": 209,
+        "endChar": 64
+      },
+      "revId": "739f2a25aea83fc3db119b85779b08fae465d0dd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }

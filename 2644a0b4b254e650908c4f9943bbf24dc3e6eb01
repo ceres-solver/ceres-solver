@@ -41,6 +41,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "890e077a_99670364",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-20T20:48:10Z",
+      "side": 1,
+      "message": "thanks, free function \u003e\u003e macro.",
+      "parentUuid": "9555d249_cea9f424",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 44,
+        "endChar": 42
+      },
+      "revId": "2644a0b4b254e650908c4f9943bbf24dc3e6eb01",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ecaedfd4_0592520f",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-09-20T19:35:48Z",
       "side": 1,
       "message": "By the way, in the case of rhs update - is it viable to avoid synchronization by computing num_threads separate updates in parallel and then doing parallel reduction?\n\nOr simultaneous synchronization on the same block are relatively rare to compensate for additional cost of reduction?",
+      "range": {
+        "startLine": 379,
+        "startChar": 63,
+        "endLine": 379,
+        "endChar": 72
+      },
+      "revId": "2644a0b4b254e650908c4f9943bbf24dc3e6eb01",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "269312eb_5074e3cc",
+        "filename": "internal/ceres/schur_eliminator_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-20T20:48:10Z",
+      "side": 1,
+      "message": "I think you can do that, but the rhs computation barely shows up in measurements, all the time is spent in accumulating the schur complement.",
+      "parentUuid": "ecaedfd4_0592520f",
       "range": {
         "startLine": 379,
         "startChar": 63,
