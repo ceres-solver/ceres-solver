@@ -362,6 +362,30 @@
       },
       "revId": "8dae07e4992f9f5fd35c0eb94ae54bb8b998fcbb",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f97a26e1_4c25aad1",
+        "filename": "internal/ceres/evaluation_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-21T14:17:04Z",
+      "side": 1,
+      "message": "you made the change I was expecting. creating the evaluator just once here is the right thing to do here IMO.",
+      "parentUuid": "4351f882_f1beae45",
+      "range": {
+        "startLine": 97,
+        "startChar": 28,
+        "endLine": 97,
+        "endChar": 29
+      },
+      "revId": "8dae07e4992f9f5fd35c0eb94ae54bb8b998fcbb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
