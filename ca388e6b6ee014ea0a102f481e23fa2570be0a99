@@ -16,6 +16,110 @@
       "message": "After our discussion I decided to remove parallel context from matrix implementations and supply context directly to linear operator invocations.\n\nSince we already merged parallel for modification, I added invocations of new api into some places to see how it looks in real code, and it turned out that most of the time we already have parallel context and number of threads near of computing linear operator products (but typically don\u0027t have them available at linear operator creation).\n\nThere are already some gains in performance for \"real\" tasks, but without left multiplications they are not very big.",
       "revId": "ca388e6b6ee014ea0a102f481e23fa2570be0a99",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff8598bc_c5250790",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-21T17:10:38Z",
+      "side": 1,
+      "message": "are the benchmarks still current?",
+      "revId": "ca388e6b6ee014ea0a102f481e23fa2570be0a99",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c9eb75d_50a95e1d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-21T17:10:38Z",
+      "side": 1,
+      "message": "Dmitriy,\nI will review this change as is, but I am wondering how something like left multiply will work -- if for example the leftmultiply method needs extra memory or locks, which I suspect the matrix will have to allocate at construction?",
+      "parentUuid": "ec735050_b0667d34",
+      "revId": "ca388e6b6ee014ea0a102f481e23fa2570be0a99",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20a94e9d_5c7faf10",
+        "filename": "internal/ceres/compressed_row_sparse_matrix_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-21T17:10:38Z",
+      "side": 1,
+      "message": "I recommend splitting the parallel and serial versions OR making this test parametric on the number of threads, which is really what you are doing here.",
+      "range": {
+        "startLine": 405,
+        "startChar": 7,
+        "endLine": 405,
+        "endChar": 37
+      },
+      "revId": "ca388e6b6ee014ea0a102f481e23fa2570be0a99",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9132bd0_c4eacc0e",
+        "filename": "internal/ceres/fake_bundle_adjustment_jacobian.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-21T17:10:38Z",
+      "side": 1,
+      "message": "why add this if you already know that num_col_blocks_e is going to be the same as num_points",
+      "range": {
+        "startLine": 51,
+        "startChar": 9,
+        "endLine": 51,
+        "endChar": 25
+      },
+      "revId": "ca388e6b6ee014ea0a102f481e23fa2570be0a99",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f8d3018_dd5e95ae",
+        "filename": "internal/ceres/partitioned_matrix_view_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-21T17:10:38Z",
+      "side": 1,
+      "message": "split into serial and parallel tests please or parameterize by number of threads.",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 6
+      },
+      "revId": "ca388e6b6ee014ea0a102f481e23fa2570be0a99",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
