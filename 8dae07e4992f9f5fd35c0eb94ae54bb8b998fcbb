@@ -60,6 +60,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "19d5cefe_58e7a585",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-21T10:41:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0b4e0af_aedd8593",
+      "range": {
+        "startLine": 547,
+        "startChar": 25,
+        "endLine": 547,
+        "endChar": 43
+      },
+      "revId": "8dae07e4992f9f5fd35c0eb94ae54bb8b998fcbb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "7ab59af1_dfbee758",
         "filename": "internal/ceres/covariance.cc",
         "patchSetId": 1
@@ -71,6 +95,30 @@
       "writtenOn": "2022-09-20T21:35:52Z",
       "side": 1,
       "message": "I suppose we can get rid of the friend declaration now.. I can take care of this in a follow up, just realized that once you have this accessor, the friend declaration is not needed anymore.",
+      "range": {
+        "startLine": 54,
+        "startChar": 16,
+        "endLine": 54,
+        "endChar": 23
+      },
+      "revId": "8dae07e4992f9f5fd35c0eb94ae54bb8b998fcbb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89a64bec_9ea7e8fc",
+        "filename": "internal/ceres/covariance.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-21T10:41:18Z",
+      "side": 1,
+      "message": "Friend declarations from ceres::Problem were already removed in this patchset.\nOr do you mean that Covariance/CovarianceImpl can be reworked into a single object now?",
+      "parentUuid": "7ab59af1_dfbee758",
       "range": {
         "startLine": 54,
         "startChar": 16,
@@ -104,6 +152,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1622b61_e7885e16",
+        "filename": "internal/ceres/evaluation_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-21T10:41:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "835eb851_9d8a512f",
+      "range": {
+        "startLine": 46,
+        "startChar": 7,
+        "endLine": 46,
+        "endChar": 15
+      },
+      "revId": "8dae07e4992f9f5fd35c0eb94ae54bb8b998fcbb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "72535e56_42626dd3",
@@ -117,6 +189,30 @@
       "writtenOn": "2022-09-20T21:35:52Z",
       "side": 1,
       "message": "you don\u0027t need to do this test, the following call to BundleAdjustmentProblem will do the needful no? just check for it not being null?",
+      "range": {
+        "startLine": 48,
+        "startChar": 24,
+        "endLine": 48,
+        "endChar": 29
+      },
+      "revId": "8dae07e4992f9f5fd35c0eb94ae54bb8b998fcbb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "769baa6c_24f112e2",
+        "filename": "internal/ceres/evaluation_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-21T10:41:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72535e56_42626dd3",
       "range": {
         "startLine": 48,
         "startChar": 24,
@@ -150,6 +246,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "80b9a4b9_94817859",
+        "filename": "internal/ceres/evaluation_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-21T10:41:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e6c8f88_49dd7a01",
+      "range": {
+        "startLine": 59,
+        "startChar": 33,
+        "endLine": 59,
+        "endChar": 45
+      },
+      "revId": "8dae07e4992f9f5fd35c0eb94ae54bb8b998fcbb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "33b291b1_0ce4c6a7",
@@ -173,6 +293,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "407b74df_d98098f2",
+        "filename": "internal/ceres/evaluation_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-21T10:41:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33b291b1_0ce4c6a7",
+      "range": {
+        "startLine": 74,
+        "startChar": 18,
+        "endLine": 74,
+        "endChar": 41
+      },
+      "revId": "8dae07e4992f9f5fd35c0eb94ae54bb8b998fcbb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a11635c9_a2e54ed6",
@@ -186,6 +330,30 @@
       "writtenOn": "2022-09-20T21:35:52Z",
       "side": 1,
       "message": "I am curious, as to why you are doing the evaluator construction twice, why not just do it once here and create the Jacobian here too? that way you only creating one context object too.",
+      "range": {
+        "startLine": 97,
+        "startChar": 28,
+        "endLine": 97,
+        "endChar": 29
+      },
+      "revId": "8dae07e4992f9f5fd35c0eb94ae54bb8b998fcbb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4351f882_f1beae45",
+        "filename": "internal/ceres/evaluation_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-21T10:41:18Z",
+      "side": 1,
+      "message": "Evaluator stores context and number of threads inside, thus I create it once per benchmark evaluation (potentially with different number of threads each time).\n\nI was creating a separate Evaluator during reading of the dataset in order to construct jacobian.\nNow only vector of parameters is being maintained between different benchmarks on the same dataset (because pointers to data being stored in parameter blocks); and vector of residuals and jacobian are re-created each time.",
+      "parentUuid": "a11635c9_a2e54ed6",
       "range": {
         "startLine": 97,
         "startChar": 28,
