@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec735050_b0667d34",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-21T08:44:05Z",
+      "side": 1,
+      "message": "After our discussion I decided to remove parallel context from matrix implementations and supply context directly to linear operator invocations.\n\nSince we already merged parallel for modification, I added invocations of new api into some places to see how it looks in real code, and it turned out that most of the time we already have parallel context and number of threads near of computing linear operator products (but typically don\u0027t have them available at linear operator creation).\n\nThere are already some gains in performance for \"real\" tasks, but without left multiplications they are not very big.",
+      "revId": "ca388e6b6ee014ea0a102f481e23fa2570be0a99",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
