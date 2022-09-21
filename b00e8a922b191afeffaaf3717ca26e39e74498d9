@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "738bcfef_91488538",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-21T17:19:19Z",
+      "side": 1,
+      "message": "By transposing the block structure we maybe able to get around the need for locks/extra memory.. this is not cache friendly though.",
+      "revId": "b00e8a922b191afeffaaf3717ca26e39e74498d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
