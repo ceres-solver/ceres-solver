@@ -39,6 +39,30 @@
       },
       "revId": "c964fce90ce90d6fa61553d42ab1042a177ab200",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49ec00cf_ba706656",
+        "filename": "internal/ceres/cuda_kernels_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-09-22T18:26:25Z",
+      "side": 1,
+      "message": "Yes, 100% agreed. I decided to submit this patch to first fix the bug at head, and then think about how to fix the API.",
+      "parentUuid": "56b308ef_6ebf454f",
+      "range": {
+        "startLine": 61,
+        "startChar": 23,
+        "endLine": 61,
+        "endChar": 31
+      },
+      "revId": "c964fce90ce90d6fa61553d42ab1042a177ab200",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
