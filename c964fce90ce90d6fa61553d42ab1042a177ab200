@@ -16,6 +16,29 @@
       "message": "I believe this should fix #889.",
       "revId": "c964fce90ce90d6fa61553d42ab1042a177ab200",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56b308ef_6ebf454f",
+        "filename": "internal/ceres/cuda_kernels_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-22T18:23:31Z",
+      "side": 1,
+      "message": "so this raises an API question. Shouldn\u0027t these functions get their stream from the underlying buffer automatically instead of depending on the user to do it?\n\nI am going to commit this fix, but the api for these functions seems to be ripe for error.",
+      "range": {
+        "startLine": 61,
+        "startChar": 23,
+        "endLine": 61,
+        "endChar": 31
+      },
+      "revId": "c964fce90ce90d6fa61553d42ab1042a177ab200",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
