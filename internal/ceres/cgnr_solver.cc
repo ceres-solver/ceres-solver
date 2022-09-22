@@ -244,7 +244,7 @@ class CERES_NO_EXPORT CudaJacobiPreconditioner final
                                     const CompressedRowSparseMatrix& A)
       : options_(std::move(options)),
         cpu_preconditioner_(options_, A),
-        m_(options_->context, cpu_preconditioner_.matrix()) {}
+        m_(options_.context, cpu_preconditioner_.matrix()) {}
   ~CudaJacobiPreconditioner() = default;
 
   void Update(const CompressedRowSparseMatrix& A, const double* D) final {
