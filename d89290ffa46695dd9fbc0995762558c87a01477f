@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "115d36c2_5ed98a9c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-23T23:04:03Z",
+      "side": 1,
+      "message": "Benchmark library before revision d17ea665515f0c54d100c6fc973632431379f64b doesn\u0027t have ::benchmark::Shutdown() function.\n\nWe provide templated Shutdown function which will have the lowest priority in overload resolution.",
+      "revId": "d89290ffa46695dd9fbc0995762558c87a01477f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
