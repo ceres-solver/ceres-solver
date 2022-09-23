@@ -78,6 +78,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
           ? options_.max_consecutive_nonmonotonic_steps
           : 0);
 
+  bool atleast_one_successful_step = false;
   while (FinalizeIterationAndCheckIfMinimizerCanContinue()) {
     iteration_start_time_in_secs_ = WallTimeInSeconds();
 
@@ -105,7 +106,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
     ComputeCandidatePointAndEvaluateCost();
     DoInnerIterationsIfNeeded();
 
-    if (ParameterToleranceReached()) {
+    if (atleast_one_successful_step && ParameterToleranceReached()) {
       return;
     }
 
@@ -114,6 +115,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
     }
 
     if (IsStepSuccessful()) {
+      atleast_one_successful_step = true;
       RETURN_IF_ERROR_AND_LOG(HandleSuccessfulStep());
     } else {
       // Declare the step unsuccessful and inform the trust region strategy.
