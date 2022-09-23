@@ -130,6 +130,14 @@ static void ResidualsAndJacobian(benchmark::State& state,
 
 }  // namespace ceres::internal
 
+// Older versions of benchmark library might come without ::benchmark::Shutdown
+// function. We provide an empty fallback variant of Shutdown function in
+// order to support both older and newer versions
+namespace benchmark_shutdown_fallback {
+template <typename... Args>
+void Shutdown(Args... args) {}
+};  // namespace benchmark_shutdown_fallback
+
 int main(int argc, char** argv) {
   ::benchmark::Initialize(&argc, argv);
 
@@ -170,6 +178,9 @@ int main(int argc, char** argv) {
   }
 
   ::benchmark::RunSpecifiedBenchmarks();
-  ::benchmark::Shutdown();
+
+  using namespace ::benchmark;
+  using namespace benchmark_shutdown_fallback;
+  Shutdown();
   return 0;
 }
