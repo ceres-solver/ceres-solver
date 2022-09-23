@@ -28,15 +28,18 @@
 //
 // Authors: dmitriy.korchemkin@gmail.com (Dmitriy Korchemkin)
 
-#include <benchmark/benchmark.h>
-#include <gflags/gflags.h>
+#include <memory>
+#include <string>
+#include <vector>
 
+#include "benchmark/benchmark.h"
 #include "ceres/bundle_adjustment_test_util.h"
 #include "ceres/evaluator.h"
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
 #include "ceres/sparse_matrix.h"
+#include "gflags/gflags.h"
 
 namespace ceres::internal {
 
@@ -44,7 +47,7 @@ namespace ceres::internal {
 // In order to save time required to parse BAL data, we ensure that
 // each dataset is being loaded at most once.
 struct BALData {
-  BALData(const std::string& path) {
+  explicit BALData(const std::string& path) {
     bal_problem = std::make_unique<BundleAdjustmentProblem>(path);
     CHECK(bal_problem != nullptr);
 
@@ -128,10 +131,9 @@ static void ResidualsAndJacobian(benchmark::State& state,
 }  // namespace ceres::internal
 
 int main(int argc, char** argv) {
-  using namespace ceres::internal;
   ::benchmark::Initialize(&argc, argv);
 
-  std::vector<std::unique_ptr<BALData>> benchmark_data;
+  std::vector<std::unique_ptr<ceres::internal::BALData>> benchmark_data;
   if (argc == 1) {
     LOG(FATAL) << "No input datasets specified. Usage: " << argv[0]
                << " [benchmark flags] path_to_BAL_data_1.txt ... "
@@ -139,24 +141,27 @@ int main(int argc, char** argv) {
     return -1;
   }
 
-  ContextImpl context;
+  ceres::internal::ContextImpl context;
   context.EnsureMinimumThreads(16);
 
   for (int i = 1; i < argc; ++i) {
     const std::string path(argv[i]);
     const std::string name_residuals = "Residuals<" + path + ">";
-    benchmark_data.emplace_back(std::make_unique<BALData>(path));
+    benchmark_data.emplace_back(
+        std::make_unique<ceres::internal::BALData>(path));
     auto data = benchmark_data.back().get();
     ::benchmark::RegisterBenchmark(
-        name_residuals.c_str(), Residuals, data, &context)
+        name_residuals.c_str(), ceres::internal::Residuals, data, &context)
         ->Arg(1)
         ->Arg(2)
         ->Arg(4)
         ->Arg(8)
         ->Arg(16);
     const std::string name_jacobians = "ResidualsAndJacobian<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_jacobians.c_str(), ResidualsAndJacobian, data, &context)
+    ::benchmark::RegisterBenchmark(name_jacobians.c_str(),
+                                   ceres::internal::ResidualsAndJacobian,
+                                   data,
+                                   &context)
         ->Arg(1)
         ->Arg(2)
         ->Arg(4)
