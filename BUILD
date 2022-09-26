@@ -72,7 +72,6 @@ cc_library(
 CERES_TESTS = [
     "array_utils",
     "autodiff_cost_function",
-    "autodiff_local_parameterization",
     "autodiff_manifold",
     "autodiff",
     "block_jacobi_preconditioner",
@@ -120,7 +119,6 @@ CERES_TESTS = [
     "levenberg_marquardt_strategy",
     "line_search_minimizer",
     "line_search_preprocessor",
-    "local_parameterization",
     "loss_function",
     "minimizer",
     "normal_prior",
@@ -167,10 +165,6 @@ TEST_COPTS = [
     # but in the future disable these warnings only for rotation_test.
     # TODO(keir): When the tests are macro-ified, apply these selectively.
     "-Wno-address",
-
-    # Disable warnings about deprecated interfraces while we are
-    # transitioning from LocalParameterization to Manifolds.
-    "-Wno-deprecated-declarations",
 ]
 
 TEST_DEPS = [

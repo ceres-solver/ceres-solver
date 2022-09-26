@@ -181,7 +181,6 @@ void ParallelInvoke(ContextImpl* context,
     if (thread_id >= num_threads) return;
 
     const int start = shared_state->start;
-    const int end = shared_state->end;
     const int base_block_size = shared_state->base_block_size;
     const int num_base_p1_sized_blocks = shared_state->num_base_p1_sized_blocks;
     const int num_work_blocks = shared_state->num_work_blocks;
