@@ -613,12 +613,6 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "Clang") # Matches Clang & AppleClang.
   endif(HAVE_RETURN_TYPE_C_LINKAGE)
 endif ()
 
-# Disable warnings about deprecated interfaces while we are
-# transitioning from LocalParameterization to Manifolds.
-add_compile_options(
-  $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>:-Wno-deprecated-declarations>
-  $<$<CXX_COMPILER_ID:MSVC>:/wd4996>)
-
 if (CMAKE_VERSION VERSION_LESS 3.12)
   # Disable the definition of min/max macros within the project
   if (WIN32)

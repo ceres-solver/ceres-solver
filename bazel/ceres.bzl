@@ -48,7 +48,6 @@ CERES_SRCS = ["internal/ceres/" + filename for filename in [
     "compressed_row_jacobian_writer.cc",
     "compressed_row_sparse_matrix.cc",
     "conditioned_cost_function.cc",
-    "conjugate_gradients_solver.cc",
     "context.cc",
     "context_impl.cc",
     "coordinate_descent_minimizer.cc",
@@ -189,10 +188,6 @@ def ceres_library(name,
         copts = [
             "-I" + internal,
             "-Wno-sign-compare",
-
-            # Disable warnings about deprecated interfaces while we are
-            # transitioning from LocalParameterization to Manifolds.
-            "-Wno-deprecated-declarations",
         ] + schur_eliminator_copts,
 
         # These include directories and defines are propagated to other targets
