@@ -60,6 +60,7 @@ TEST(CUDADenseCholesky, Cholesky4x4Matrix) {
         0,   0,   0, 1;
   // clang-format on
 
+  Vector b = Eigen::Vector4d::Ones();
   LinearSolver::Options options;
   ContextImpl context;
   options.context = &context;
