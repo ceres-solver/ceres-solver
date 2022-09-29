@@ -100,6 +100,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b837dab4_beee6897",
+        "filename": "internal/ceres/linear_operator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-29T20:13:24Z",
+      "side": 1,
+      "message": "Leaving this method pure virtual will make us to implement it in other linear operators, such as\n - DenseSparseMatrix\n - FakeSparseMatrix\n - ImplicitSchurComplement [now uses context from options]\n - LowRankInverseHessian\n - Preconditioner\n - TripletSparseMatrix\n\nWill it be a preferred solution?",
+      "parentUuid": "9a236cad_2f849527",
+      "range": {
+        "startLine": 42,
+        "startChar": 6,
+        "endLine": 42,
+        "endChar": 17
+      },
+      "revId": "41824c728dfcadd6e801711ac9a220f19a210357",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "07355e2d_22212b50",
         "filename": "internal/ceres/linear_operator.cc",
         "patchSetId": 3

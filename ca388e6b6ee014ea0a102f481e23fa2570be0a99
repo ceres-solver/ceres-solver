@@ -107,6 +107,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "07668fe9_e6918c06",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-29T20:13:24Z",
+      "side": 1,
+      "message": "Yes, something like that; I expect SpMV to scale reasonably well (with performance limit being memory throughput).\n\nI suppose that in SpMM we will be able to get better scalability as well, maybe except the case with both matrices being traversed \"in wrong way\".",
+      "parentUuid": "f624ea27_45b6b515",
+      "revId": "ca388e6b6ee014ea0a102f481e23fa2570be0a99",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "20a94e9d_5c7faf10",
