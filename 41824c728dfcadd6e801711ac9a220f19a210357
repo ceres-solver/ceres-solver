@@ -124,6 +124,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e5c9042d_ff40e590",
+        "filename": "internal/ceres/linear_operator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-29T20:59:00Z",
+      "side": 1,
+      "message": "oh I see the problem, I think in that case, we should just crash here. Because if control flow is reaching here then we have screwed up no?",
+      "parentUuid": "b837dab4_beee6897",
+      "range": {
+        "startLine": 42,
+        "startChar": 6,
+        "endLine": 42,
+        "endChar": 17
+      },
+      "revId": "41824c728dfcadd6e801711ac9a220f19a210357",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "07355e2d_22212b50",
         "filename": "internal/ceres/linear_operator.cc",
         "patchSetId": 3
