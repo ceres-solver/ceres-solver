@@ -56,7 +56,7 @@ void ContextImpl::TearDown() {
     cublasDestroy(cublas_handle_);
     cublas_handle_ = nullptr;
   }
-  if (cusolver_handle_ != nullptr) {
+  if (cusparse_handle_ != nullptr) {
     cusparseDestroy(cusparse_handle_);
     cusparse_handle_ = nullptr;
   }
