@@ -664,6 +664,30 @@
       },
       "revId": "2eab796c6ae47255ca37dfdae733043aa32f35ab",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f4394c3_3c63725e",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-29T09:42:37Z",
+      "side": 1,
+      "message": "Done (I suppose the comment was about a separate single-threaded loop)",
+      "parentUuid": "a7e1b3ed_be2934c9",
+      "range": {
+        "startLine": 316,
+        "startChar": 6,
+        "endLine": 316,
+        "endChar": 19
+      },
+      "revId": "2eab796c6ae47255ca37dfdae733043aa32f35ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }

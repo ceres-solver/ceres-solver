@@ -53,6 +53,42 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfe70e1a_407a81a0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-29T09:42:37Z",
+      "side": 1,
+      "message": "I planned to use transposed block structure for left products.\nSince matrix structure changes rarely, I think we can pre-caclculate it for each matrix.\n\nWith both regular and transposed block structures we can handle left/right products without locks (one of them will have benefits from memory layout, but in the end SpMV products for large matrices will be limited by memory throughput).",
+      "parentUuid": "6c9eb75d_50a95e1d",
+      "revId": "ca388e6b6ee014ea0a102f481e23fa2570be0a99",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34262e1a_ea0acf29",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-29T09:42:37Z",
+      "side": 1,
+      "message": "Benchmarks were updated in Patch-set #2, using the final version of parallel for.",
+      "parentUuid": "ff8598bc_c5250790",
+      "revId": "ca388e6b6ee014ea0a102f481e23fa2570be0a99",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "20a94e9d_5c7faf10",
@@ -66,6 +102,30 @@
       "writtenOn": "2022-09-21T17:10:38Z",
       "side": 1,
       "message": "I recommend splitting the parallel and serial versions OR making this test parametric on the number of threads, which is really what you are doing here.",
+      "range": {
+        "startLine": 405,
+        "startChar": 7,
+        "endLine": 405,
+        "endChar": 37
+      },
+      "revId": "ca388e6b6ee014ea0a102f481e23fa2570be0a99",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "012c4a8a_9e7d971a",
+        "filename": "internal/ceres/compressed_row_sparse_matrix_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-29T09:42:37Z",
+      "side": 1,
+      "message": "Done; separated parallel multiplication into a separate test paramethrized by number of threads (since it uses different API [from user perspective], 1-thread case is also tested).",
+      "parentUuid": "20a94e9d_5c7faf10",
       "range": {
         "startLine": 405,
         "startChar": 7,
@@ -99,6 +159,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6b45d5e_f31e419c",
+        "filename": "internal/ceres/fake_bundle_adjustment_jacobian.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-29T09:42:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9132bd0_c4eacc0e",
+      "range": {
+        "startLine": 51,
+        "startChar": 9,
+        "endLine": 51,
+        "endChar": 25
+      },
+      "revId": "ca388e6b6ee014ea0a102f481e23fa2570be0a99",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8f8d3018_dd5e95ae",
@@ -112,6 +196,30 @@
       "writtenOn": "2022-09-21T17:10:38Z",
       "side": 1,
       "message": "split into serial and parallel tests please or parameterize by number of threads.",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 6
+      },
+      "revId": "ca388e6b6ee014ea0a102f481e23fa2570be0a99",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac812c92_c11e0edc",
+        "filename": "internal/ceres/partitioned_matrix_view_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-29T09:42:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f8d3018_dd5e95ae",
       "range": {
         "startLine": 91,
         "startChar": 0,
