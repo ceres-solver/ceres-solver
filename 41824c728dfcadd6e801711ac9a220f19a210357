@@ -148,6 +148,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2c4c0423_37cb11ca",
+        "filename": "internal/ceres/linear_operator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-30T12:58:38Z",
+      "side": 1,
+      "message": "It really depends if we treat \"num_threads\" as \"might use up to num_threads threads\" or \"should use num_threads threads\".\n\nI\u0027ve thought about the former, since we have a single num_threads control exposed to user and it is easier to just propagate it with \"hope\" that something will accelerate.\n\n\nI have checked - at least all tests pass if we replace it with CHECK, so we can select either option.",
+      "parentUuid": "e5c9042d_ff40e590",
+      "range": {
+        "startLine": 42,
+        "startChar": 6,
+        "endLine": 42,
+        "endChar": 17
+      },
+      "revId": "41824c728dfcadd6e801711ac9a220f19a210357",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "07355e2d_22212b50",
         "filename": "internal/ceres/linear_operator.cc",
         "patchSetId": 3
@@ -182,6 +206,30 @@
       "writtenOn": "2022-09-29T14:05:56Z",
       "side": 1,
       "message": "add the parallel right multiply method here too.",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 75,
+        "endChar": 32
+      },
+      "revId": "41824c728dfcadd6e801711ac9a220f19a210357",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "017d4367_123613a1",
+        "filename": "internal/ceres/sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-30T12:58:38Z",
+      "side": 1,
+      "message": "Seems to be related to discussion about linear_operator.{h,cc}: if we add some declaration of parallel methods there - they will override defaults provided via LinearOperator.\n\nSeems that either we have not-clean interfaces, or have to provide a separate stub for parallel implementation in each descendant.\n\nNot sure if there is a non-ugly solution for this.",
+      "parentUuid": "6891822c_9cb55e58",
       "range": {
         "startLine": 75,
         "startChar": 7,
