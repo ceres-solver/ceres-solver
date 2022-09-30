@@ -35,6 +35,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "722f62b7_acb2c221",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-30T13:58:00Z",
+      "side": 1,
+      "message": "Dmitriy,\nCan you resolve the other three remaining nits, and then lets get this change merged.",
+      "revId": "41824c728dfcadd6e801711ac9a220f19a210357",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "98b4bd1d_c211f2fd",
@@ -170,6 +187,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f6a9435_cf9f9527",
+        "filename": "internal/ceres/linear_operator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-30T13:58:00Z",
+      "side": 1,
+      "message": "I think thats fair. My only concern was that this will accidentally hide an implementation mistake. but we can come back to this if that happens.",
+      "parentUuid": "2c4c0423_37cb11ca",
+      "range": {
+        "startLine": 42,
+        "startChar": 6,
+        "endLine": 42,
+        "endChar": 17
+      },
+      "revId": "41824c728dfcadd6e801711ac9a220f19a210357",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "07355e2d_22212b50",
@@ -230,6 +271,30 @@
       "side": 1,
       "message": "Seems to be related to discussion about linear_operator.{h,cc}: if we add some declaration of parallel methods there - they will override defaults provided via LinearOperator.\n\nSeems that either we have not-clean interfaces, or have to provide a separate stub for parallel implementation in each descendant.\n\nNot sure if there is a non-ugly solution for this.",
       "parentUuid": "6891822c_9cb55e58",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 75,
+        "endChar": 32
+      },
+      "revId": "41824c728dfcadd6e801711ac9a220f19a210357",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8902f7a9_d83417fa",
+        "filename": "internal/ceres/sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-09-30T13:58:00Z",
+      "side": 1,
+      "message": "yes that makes sense.",
+      "parentUuid": "017d4367_123613a1",
       "range": {
         "startLine": 75,
         "startChar": 7,
