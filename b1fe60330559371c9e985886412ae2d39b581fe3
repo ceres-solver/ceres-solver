@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15b95067_938e96ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-30T14:57:23Z",
+      "side": 1,
+      "message": "Separated creation of synthetic partitioned matrix view with dynamic sizes into a separate method, resolved formatting issues.",
+      "revId": "b1fe60330559371c9e985886412ae2d39b581fe3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

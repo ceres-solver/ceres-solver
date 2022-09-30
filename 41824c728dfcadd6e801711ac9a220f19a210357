@@ -69,6 +69,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "89d00bf2_ead1154f",
+        "filename": "internal/ceres/fake_bundle_adjustment_jacobian.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-30T14:57:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98b4bd1d_c211f2fd",
+      "revId": "41824c728dfcadd6e801711ac9a220f19a210357",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b185a84_8ba95a7f",
@@ -82,6 +100,30 @@
       "writtenOn": "2022-09-29T14:05:56Z",
       "side": 1,
       "message": "this is a bit odd, where you are taking template arguments and function arguments that need to be equal. camwra_size and landmark_size should be dropped IMO.",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 45
+      },
+      "revId": "41824c728dfcadd6e801711ac9a220f19a210357",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61e6ffd0_6bb38511",
+        "filename": "internal/ceres/fake_bundle_adjustment_jacobian.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-30T14:57:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b185a84_8ba95a7f",
       "range": {
         "startLine": 53,
         "startChar": 0,
@@ -224,6 +266,30 @@
       "writtenOn": "2022-09-29T14:05:56Z",
       "side": 1,
       "message": "same here.",
+      "range": {
+        "startLine": 54,
+        "startChar": 6,
+        "endLine": 54,
+        "endChar": 17
+      },
+      "revId": "41824c728dfcadd6e801711ac9a220f19a210357",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c341e48_2f03f7ff",
+        "filename": "internal/ceres/linear_operator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-09-30T14:57:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "07355e2d_22212b50",
       "range": {
         "startLine": 54,
         "startChar": 6,
