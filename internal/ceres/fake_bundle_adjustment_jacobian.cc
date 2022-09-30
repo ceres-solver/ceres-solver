@@ -30,10 +30,10 @@
 
 #include "ceres/fake_bundle_adjustment_jacobian.h"
 
-#include <iostream>
 #include <memory>
 #include <random>
 #include <string>
+#include <utility>
 
 #include "Eigen/Dense"
 #include "ceres/block_sparse_matrix.h"

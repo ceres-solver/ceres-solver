@@ -30,6 +30,8 @@
 
 #include "ceres/power_series_expansion_preconditioner.h"
 
+#include <memory>
+
 #include "Eigen/Dense"
 #include "ceres/linear_least_squares_problems.h"
 #include "gtest/gtest.h"
