@@ -51,6 +51,24 @@
       "parentUuid": "3f7bc0b8_f909a375",
       "revId": "b00e8a922b191afeffaaf3717ca26e39e74498d9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1dfd36f0_c463de81",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-03T16:10:28Z",
+      "side": 1,
+      "message": "Thanks Dmitriy. What do you think about checking in LeftMultiplyAndAccumulateWithTranspose, the numbers look fairly decent to me. And then we can continue researching better blocking/prefetching with that as the baseline?",
+      "parentUuid": "1edebffd_1ef7e8cb",
+      "revId": "b00e8a922b191afeffaaf3717ca26e39e74498d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
