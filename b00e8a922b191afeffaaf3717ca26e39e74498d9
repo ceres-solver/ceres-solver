@@ -69,6 +69,23 @@
       "parentUuid": "1edebffd_1ef7e8cb",
       "revId": "b00e8a922b191afeffaaf3717ca26e39e74498d9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "676c0e4f_414f0f44",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-03T16:40:38Z",
+      "side": 1,
+      "message": "I think one problem with the AddTranspose approach is that it makes the semantics of AddRows etc complicated and we need to be careful about modifications to the matrix.",
+      "revId": "b00e8a922b191afeffaaf3717ca26e39e74498d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
