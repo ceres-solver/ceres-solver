@@ -89,15 +89,14 @@ PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
 void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
     RightMultiplyAndAccumulateE(const double* x, double* y) const {
-  RightMultiplyAndAccumulateE(x, y, nullptr, 1);
+  RightMultiplyAndAccumulateE(x, y, nullptr);
 }
 
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
 void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
     RightMultiplyAndAccumulateE(const double* x,
                                 double* y,
-                                ContextImpl* context,
-                                int num_threads) const {
+                                ContextImpl* context) const {
   // Iterate over the first num_row_blocks_e_ row blocks, and multiply
   // by the first cell in each row block.
   auto bs = matrix_.block_structure();
@@ -105,7 +104,6 @@ void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
   ParallelFor(context,
               0,
               num_row_blocks_e_,
-              num_threads,
               [values, bs, x, y](int row_block_id) {
                 const Cell& cell = bs->rows[row_block_id].cells[0];
                 const int row_block_pos = bs->rows[row_block_id].block.position;
@@ -125,15 +123,14 @@ void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
 void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
     RightMultiplyAndAccumulateF(const double* x, double* y) const {
-  RightMultiplyAndAccumulateF(x, y, nullptr, 1);
+  RightMultiplyAndAccumulateF(x, y, nullptr);
 }
 
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
 void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
     RightMultiplyAndAccumulateF(const double* x,
                                 double* y,
-                                ContextImpl* context,
-                                int num_threads) const {
+                                ContextImpl* context) const {
   // Iterate over row blocks, and if the row block is in E, then
   // multiply by all the cells except the first one which is of type
   // E. If the row block is not in E (i.e its in the bottom
@@ -146,7 +143,6 @@ void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
   ParallelFor(context,
               0,
               num_row_blocks_e_,
-              num_threads,
               [values, bs, num_cols_e, x, y](int row_block_id) {
                 const int row_block_pos = bs->rows[row_block_id].block.position;
                 const int row_block_size = bs->rows[row_block_id].block.size;
@@ -166,7 +162,6 @@ void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
   ParallelFor(context,
               num_row_blocks_e_,
               num_row_blocks,
-              num_threads,
               [values, bs, num_cols_e, x, y](int row_block_id) {
                 const int row_block_pos = bs->rows[row_block_id].block.position;
                 const int row_block_size = bs->rows[row_block_id].block.size;

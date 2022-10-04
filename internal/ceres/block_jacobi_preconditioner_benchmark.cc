@@ -64,7 +64,7 @@ static void BM_BlockSparseJacobiPreconditionerBA(benchmark::State& state) {
   ContextImpl context;
   preconditioner_options.context = &context;
   preconditioner_options.num_threads = state.range(0);
-  context.EnsureMinimumThreads(preconditioner_options.num_threads);
+  context.MaybeInitThreadPool(preconditioner_options.num_threads);
   BlockSparseJacobiPreconditioner p(preconditioner_options, *jacobian);
 
   Vector d = Vector::Ones(jacobian->num_cols());
@@ -92,7 +92,7 @@ static void BM_BlockCRSJacobiPreconditionerBA(benchmark::State& state) {
   ContextImpl context;
   preconditioner_options.context = &context;
   preconditioner_options.num_threads = state.range(0);
-  context.EnsureMinimumThreads(preconditioner_options.num_threads);
+  context.MaybeInitThreadPool(preconditioner_options.num_threads);
   BlockCRSJacobiPreconditioner p(preconditioner_options, jacobian_crs);
 
   Vector d = Vector::Ones(jacobian_crs.num_cols());
@@ -125,7 +125,7 @@ static void BM_BlockSparseJacobiPreconditionerUnstructured(
   ContextImpl context;
   preconditioner_options.context = &context;
   preconditioner_options.num_threads = state.range(0);
-  context.EnsureMinimumThreads(preconditioner_options.num_threads);
+  context.MaybeInitThreadPool(preconditioner_options.num_threads);
   BlockSparseJacobiPreconditioner p(preconditioner_options, *jacobian);
 
   Vector d = Vector::Ones(jacobian->num_cols());
@@ -161,7 +161,7 @@ static void BM_BlockCRSJacobiPreconditionerUnstructured(
   ContextImpl context;
   preconditioner_options.context = &context;
   preconditioner_options.num_threads = state.range(0);
-  context.EnsureMinimumThreads(preconditioner_options.num_threads);
+  context.MaybeInitThreadPool(preconditioner_options.num_threads);
   BlockCRSJacobiPreconditioner p(preconditioner_options, jacobian_crs);
 
   Vector d = Vector::Ones(jacobian_crs.num_cols());

@@ -51,7 +51,7 @@ static void BM_PatitionedViewRightMultiplyAndAccumulateE_Static(
           kNumCameras, kNumPoints, kVisibility, prng);
 
   ContextImpl context;
-  context.EnsureMinimumThreads(num_threads);
+  context.MaybeInitThreadPool(num_threads);
 
   Vector x(partitioned_view->num_cols_e());
   Vector y(partitioned_view->num_rows());
@@ -59,8 +59,7 @@ static void BM_PatitionedViewRightMultiplyAndAccumulateE_Static(
   y.setRandom();
   double sum = 0;
   for (auto _ : state) {
-    partitioned_view->RightMultiplyAndAccumulateE(
-        x.data(), y.data(), &context, num_threads);
+    partitioned_view->RightMultiplyAndAccumulateE(x.data(), y.data(), &context);
     sum += y.norm();
   }
   CHECK_NE(sum, 0.0);
@@ -101,7 +100,7 @@ static void BM_PatitionedViewRightMultiplyAndAccumulateF_Static(
           kNumCameras, kNumPoints, kVisibility, prng);
 
   ContextImpl context;
-  context.EnsureMinimumThreads(num_threads);
+  context.MaybeInitThreadPool(num_threads);
 
   Vector x(partitioned_view->num_cols_f());
   Vector y(partitioned_view->num_rows());
@@ -109,8 +108,7 @@ static void BM_PatitionedViewRightMultiplyAndAccumulateF_Static(
   y.setRandom();
   double sum = 0;
   for (auto _ : state) {
-    partitioned_view->RightMultiplyAndAccumulateF(
-        x.data(), y.data(), &context, num_threads);
+    partitioned_view->RightMultiplyAndAccumulateF(x.data(), y.data(), &context);
     sum += y.norm();
   }
   CHECK_NE(sum, 0.0);

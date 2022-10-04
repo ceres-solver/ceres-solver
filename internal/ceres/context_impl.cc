@@ -30,9 +30,13 @@
 
 #include "ceres/context_impl.h"
 
+#include <algorithm>
+#include <memory>
+#include <mutex>
 #include <string>
 
 #include "ceres/internal/config.h"
+#include "ceres/parallel_utils.h"
 #include "ceres/stringprintf.h"
 #include "ceres/wall_time.h"
 
@@ -171,9 +175,40 @@ ContextImpl::~ContextImpl() {
   TearDown();
 #endif  // CERES_NO_CUDA
 }
-void ContextImpl::EnsureMinimumThreads(int num_threads) {
+void ContextImpl::MaybeInitThreadPool(int num_threads) {
 #ifdef CERES_USE_CXX_THREADS
-  thread_pool.Resize(num_threads);
+  // Fast path that doesn't require obtaining the lock.
+  if (thread_pool_initialized_) {
+    return;
+  }
+  std::lock_guard<std::mutex> lock(thread_pool_mutex_);
+  if (!thread_pool_initialized_) {
+    // Don't instantiate a thread pool if we only want one thread.
+    if (num_threads <= 1) {
+      thread_pool_initialized_ = true;
+      return;
+    }
+
+    // Cap the number of threads to the maximum available in the hardware.
+    num_threads = std::min(num_threads, MaxNumThreadsAvailable());
+
+    eigen_thread_pool_ =
+        std::make_unique<Eigen::ThreadPoolTempl<Eigen::StlThreadEnvironment>>(
+            num_threads, /*allow_spinning = */ true);
+    CHECK(eigen_thread_pool_ != nullptr)
+        << "Unable to instantiate a threadpool.";
+    num_threads_ = num_threads;
+
+    thread_pool_initialized_ = true;
+  }
 #endif  // CERES_USE_CXX_THREADS
+}
+
+int ContextImpl::NumThreads() {
+  // TODO(vitus): should we require MaybeInitThreadPool be called first?
+
+  // We don't acquire the lock because it is slow and negatively impacts the
+  // performance of the parallel for.
+  return num_threads_;
 }
 }  // namespace ceres::internal

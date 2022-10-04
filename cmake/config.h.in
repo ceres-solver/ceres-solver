@@ -76,6 +76,8 @@
 @CERES_USE_OPENMP@
 // If defined Ceres was compiled with modern C++ multithreading.
 @CERES_USE_CXX_THREADS@
+// If define, Ceres will use the Eigen threadpool.
+@EIGEN_USE_THREADS@
 // If defined, Ceres was compiled with a version of SuiteSparse/CHOLMOD without
 // the Partition module (requires METIS).
 @CERES_NO_CHOLMOD_PARTITION@

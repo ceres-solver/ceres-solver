@@ -40,6 +40,7 @@
 #include "ceres/linear_solver.h"
 #include "ceres/minimizer.h"
 #include "ceres/parallel_for.h"
+#include "ceres/parallel_utils.h"
 #include "ceres/parameter_block.h"
 #include "ceres/parameter_block_ordering.h"
 #include "ceres/problem_impl.h"
@@ -133,15 +134,13 @@ void CoordinateDescentMinimizer::Minimize(const Minimizer::Options& options,
   }
 
   std::vector<std::unique_ptr<LinearSolver>> linear_solvers(
-      options.num_threads);
-  // std::unique_ptr<LinearSolver*[]> linear_solvers(
-  //    new LinearSolver*[options.num_threads]);
+      SizeOfScratchSpaceForThreads(context_->NumThreads()));
 
   LinearSolver::Options linear_solver_options;
   linear_solver_options.type = DENSE_QR;
   linear_solver_options.context = context_;
 
-  for (int i = 0; i < options.num_threads; ++i) {
+  for (int i = 0; i < linear_solvers.size(); ++i) {
     linear_solvers[i] = LinearSolver::Create(linear_solver_options);
   }
 
@@ -153,18 +152,12 @@ void CoordinateDescentMinimizer::Minimize(const Minimizer::Options& options,
       continue;
     }
 
-    const int num_inner_iteration_threads =
-        min(options.num_threads, num_problems);
-    evaluator_options_.num_threads =
-        max(1, options.num_threads / num_inner_iteration_threads);
-
     // The parameter blocks in each independent set can be optimized
     // in parallel, since they do not co-occur in any residual block.
     ParallelFor(
         context_,
         independent_set_offsets_[i],
         independent_set_offsets_[i + 1],
-        num_inner_iteration_threads,
         [&](int thread_id, int j) {
           ParameterBlock* parameter_block = parameter_blocks_[j];
           const int old_index = parameter_block->index();
@@ -202,10 +195,6 @@ void CoordinateDescentMinimizer::Minimize(const Minimizer::Options& options,
   for (auto* parameter_block : parameter_blocks_) {
     parameter_block->SetVarying();
   }
-
-  //  for (int i = 0; i < options.num_threads; ++i) {
-  //  delete linear_solvers[i];
-  //}
 }
 
 // Solve the optimization problem for one parameter block.

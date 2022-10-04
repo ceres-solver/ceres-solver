@@ -132,7 +132,7 @@ class BlockSparseMatrixTest : public ::testing::Test {
     CHECK_EQ(A_->num_rows(), B_->num_rows());
     CHECK_EQ(A_->num_cols(), B_->num_cols());
     CHECK_EQ(A_->num_nonzeros(), B_->num_nonzeros());
-    context_.EnsureMinimumThreads(kNumThreads);
+    context_.MaybeInitThreadPool(kNumThreads);
   }
 
   std::unique_ptr<BlockSparseMatrix> A_;
@@ -165,7 +165,7 @@ TEST_F(BlockSparseMatrixTest, RightMultiplyAndAccumulateParallelTest) {
   Vector x = Vector::Random(A_->num_cols());
   A_->RightMultiplyAndAccumulate(x.data(), y_s.data());
 
-  A_->RightMultiplyAndAccumulate(x.data(), y_p.data(), &context_, kNumThreads);
+  A_->RightMultiplyAndAccumulate(x.data(), y_p.data(), &context_);
 
   // Current parallel implementation is expected to be bit-exact
   EXPECT_EQ((y_s - y_p).norm(), 0.);

@@ -367,7 +367,7 @@ bool TrustRegionPreprocessor::Preprocess(const Solver::Options& options,
                                          PreprocessedProblem* pp) {
   CHECK(pp != nullptr);
   pp->options = options;
-  ChangeNumThreadsIfNeeded(&pp->options);
+  ChangeNumThreadsIfNeeded(problem->context()->NumThreads(), &pp->options);
 
   pp->problem = problem;
   Program* program = problem->mutable_program();

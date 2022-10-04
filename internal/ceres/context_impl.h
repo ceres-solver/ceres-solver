@@ -36,6 +36,8 @@
 #include "ceres/internal/config.h"
 // clang-format on
 
+#include <memory>
+#include <mutex>
 #include <string>
 
 #include "ceres/context.h"
@@ -50,7 +52,7 @@
 #endif  // CERES_NO_CUDA
 
 #ifdef CERES_USE_CXX_THREADS
-#include "ceres/thread_pool.h"
+#include <unsupported/Eigen/CXX11/ThreadPool>
 #endif  // CERES_USE_CXX_THREADS
 
 namespace ceres::internal {
@@ -62,13 +64,22 @@ class CERES_NO_EXPORT ContextImpl final : public Context {
   ContextImpl(const ContextImpl&) = delete;
   void operator=(const ContextImpl&) = delete;
 
-  // When compiled with C++ threading support, resize the thread pool to have
-  // at min(num_thread, num_hardware_threads) where num_hardware_threads is
-  // defined by the hardware.  Otherwise this call is a no-op.
-  void EnsureMinimumThreads(int num_threads);
+  // When compiled with C++ threading support, initialize the thread pool to
+  // have at min(num_thread, num_hardware_threads) where num_hardware_threads is
+  // defined by the hardware.  If the thread pool has already been initialized
+  // the thread pool is not modified.  If no threading support, this call is a
+  // no-op.
+  void MaybeInitThreadPool(int num_threads);
+
+  // Returns the number of threads used by the thread pool otherwise return 1.
+  int NumThreads();
 
 #ifdef CERES_USE_CXX_THREADS
-  ThreadPool thread_pool;
+  std::mutex thread_pool_mutex_;
+  std::unique_ptr<Eigen::ThreadPoolInterface> eigen_thread_pool_;
+  // Whether the thread pool has been initialized yet.
+  std::atomic<bool> thread_pool_initialized_ = false;
+  std::atomic<int> num_threads_ = 1;
 #endif  // CERES_USE_CXX_THREADS
 
 #ifndef CERES_NO_CUDA

@@ -757,8 +757,7 @@ void Solver::Solve(const Solver::Options& options,
   // values provided by the user.
   program->SetParameterBlockStatePtrsToUserStatePtrs();
 
-  // The main thread also does work so we only need to launch num_threads - 1.
-  problem_impl->context()->EnsureMinimumThreads(options.num_threads - 1);
+  problem_impl->context()->MaybeInitThreadPool(options.num_threads);
 
   auto preprocessor = Preprocessor::Create(modified_options.minimizer_type);
   PreprocessedProblem pp;

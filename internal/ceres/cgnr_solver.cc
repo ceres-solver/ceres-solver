@@ -86,19 +86,17 @@ class CERES_NO_EXPORT CgnrLinearOperator final
  public:
   CgnrLinearOperator(const LinearOperator& A,
                      const double* D,
-                     ContextImpl* context,
-                     int num_threads)
+                     ContextImpl* context)
       : A_(A),
         D_(D),
         z_(Vector::Zero(A.num_rows())),
-        context_(context),
-        num_threads_(num_threads) {}
+        context_(context) {}
 
   void RightMultiplyAndAccumulate(const Vector& x, Vector& y) final {
     // z = Ax
     // y = y + Atz
     z_.setZero();
-    A_.RightMultiplyAndAccumulate(x, z_, context_, num_threads_);
+    A_.RightMultiplyAndAccumulate(x, z_, context_);
     A_.LeftMultiplyAndAccumulate(z_, y);
 
     // y = y + DtDx
@@ -176,8 +174,7 @@ LinearSolver::Summary CgnrSolver::SolveImpl(
   cg_options.r_tolerance = per_solve_options.r_tolerance;
 
   // lhs = AtA + DtD
-  CgnrLinearOperator lhs(
-      *A, per_solve_options.D, options_.context, options_.num_threads);
+  CgnrLinearOperator lhs(*A, per_solve_options.D, options_.context);
   // rhs = Atb.
   Vector rhs(A->num_cols());
   rhs.setZero();

@@ -106,8 +106,7 @@ class CERES_NO_EXPORT CompressedRowSparseMatrix : public SparseMatrix {
   void RightMultiplyAndAccumulate(const double* x, double* y) const final;
   void RightMultiplyAndAccumulate(const double* x,
                                   double* y,
-                                  ContextImpl* context,
-                                  int num_threads) const final;
+                                  ContextImpl* context) const final;
   void LeftMultiplyAndAccumulate(const double* x, double* y) const final;
   void SquaredColumnNorm(double* x) const final;
   void ScaleColumns(const double* scale) final;

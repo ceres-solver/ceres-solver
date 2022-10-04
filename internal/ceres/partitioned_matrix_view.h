@@ -79,16 +79,14 @@ class CERES_NO_EXPORT PartitionedMatrixViewBase {
                                            double* y) const = 0;
   virtual void RightMultiplyAndAccumulateE(const double* x,
                                            double* y,
-                                           ContextImpl* context,
-                                           int num_threads) const = 0;
+                                           ContextImpl* context) const = 0;
 
   // y += Fx
   virtual void RightMultiplyAndAccumulateF(const double* x,
                                            double* y) const = 0;
   virtual void RightMultiplyAndAccumulateF(const double* x,
                                            double* y,
-                                           ContextImpl* context,
-                                           int num_threads) const = 0;
+                                           ContextImpl* context) const = 0;
 
   // Create and return the block diagonal of the matrix E'E.
   virtual std::unique_ptr<BlockSparseMatrix> CreateBlockDiagonalEtE() const = 0;
@@ -142,12 +140,10 @@ class CERES_NO_EXPORT PartitionedMatrixView final
   void RightMultiplyAndAccumulateF(const double* x, double* y) const final;
   void RightMultiplyAndAccumulateE(const double* x,
                                    double* y,
-                                   ContextImpl* context,
-                                   int num_threads) const final;
+                                   ContextImpl* context) const final;
   void RightMultiplyAndAccumulateF(const double* x,
                                    double* y,
-                                   ContextImpl* context,
-                                   int num_threads) const final;
+                                   ContextImpl* context) const final;
   std::unique_ptr<BlockSparseMatrix> CreateBlockDiagonalEtE() const final;
   std::unique_ptr<BlockSparseMatrix> CreateBlockDiagonalFtF() const final;
   void UpdateBlockDiagonalEtE(BlockSparseMatrix* block_diagonal) const final;

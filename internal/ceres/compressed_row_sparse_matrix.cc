@@ -281,7 +281,7 @@ void CompressedRowSparseMatrix::SetZero() {
 // TODO(sameeragarwal): Make RightMultiplyAndAccumulate and
 // LeftMultiplyAndAccumulate block-aware for higher performance.
 void CompressedRowSparseMatrix::RightMultiplyAndAccumulate(
-    const double* x, double* y, ContextImpl* context, int num_threads) const {
+    const double* x, double* y, ContextImpl* context) const {
   if (storage_type_ != StorageType::UNSYMMETRIC) {
     RightMultiplyAndAccumulate(x, y);
     return;
@@ -292,7 +292,7 @@ void CompressedRowSparseMatrix::RightMultiplyAndAccumulate(
   auto cols = cols_.data();
 
   ParallelFor(
-      context, 0, num_rows_, num_threads, [values, rows, cols, x, y](int row) {
+      context, 0, num_rows_, [values, rows, cols, x, y](int row) {
         for (int idx = rows[row]; idx < rows[row + 1]; ++idx) {
           const int c = cols[idx];
           const double v = values[idx];
@@ -307,7 +307,7 @@ void CompressedRowSparseMatrix::RightMultiplyAndAccumulate(const double* x,
   CHECK(y != nullptr);
 
   if (storage_type_ == StorageType::UNSYMMETRIC) {
-    RightMultiplyAndAccumulate(x, y, nullptr, 1);
+    RightMultiplyAndAccumulate(x, y, nullptr);
   } else if (storage_type_ == StorageType::UPPER_TRIANGULAR) {
     // Because of their block structure, we will have entries that lie
     // above (below) the diagonal for lower (upper) triangular matrices,

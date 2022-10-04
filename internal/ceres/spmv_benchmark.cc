@@ -72,7 +72,7 @@ static void BM_BlockSparseRightMultiplyAndAccumulateBA(
       kNumCameras, kNumPoints, kCameraSize, kPointSize, kVisibility, prng);
 
   ContextImpl context;
-  context.EnsureMinimumThreads(num_threads);
+  context.MaybeInitThreadPool(num_threads);
 
   Vector x(jacobian->num_cols());
   Vector y(jacobian->num_rows());
@@ -80,8 +80,7 @@ static void BM_BlockSparseRightMultiplyAndAccumulateBA(
   y.setRandom();
   double sum = 0;
   for (auto _ : state) {
-    jacobian->RightMultiplyAndAccumulate(
-        x.data(), y.data(), &context, num_threads);
+    jacobian->RightMultiplyAndAccumulate(x.data(), y.data(), &context);
     sum += y.norm();
   }
   CHECK_NE(sum, 0.0);
@@ -110,7 +109,7 @@ static void BM_BlockSparseRightMultiplyAndAccumulateUnstructured(
   auto jacobian = BlockSparseMatrix::CreateRandomMatrix(options, prng);
 
   ContextImpl context;
-  context.EnsureMinimumThreads(num_threads);
+  context.MaybeInitThreadPool(num_threads);
 
   Vector x(jacobian->num_cols());
   Vector y(jacobian->num_rows());
@@ -118,8 +117,7 @@ static void BM_BlockSparseRightMultiplyAndAccumulateUnstructured(
   y.setRandom();
   double sum = 0;
   for (auto _ : state) {
-    jacobian->RightMultiplyAndAccumulate(
-        x.data(), y.data(), &context, num_threads);
+    jacobian->RightMultiplyAndAccumulate(x.data(), y.data(), &context);
     sum += y.norm();
   }
   CHECK_NE(sum, 0.0);
@@ -189,7 +187,7 @@ static void BM_CRSRightMultiplyAndAccumulateBA(benchmark::State& state) {
   bsm_jacobian->ToCompressedRowSparseMatrix(&jacobian);
 
   ContextImpl context;
-  context.EnsureMinimumThreads(num_threads);
+  context.MaybeInitThreadPool(num_threads);
 
   Vector x(jacobian.num_cols());
   Vector y(jacobian.num_rows());
@@ -197,8 +195,7 @@ static void BM_CRSRightMultiplyAndAccumulateBA(benchmark::State& state) {
   y.setRandom();
   double sum = 0;
   for (auto _ : state) {
-    jacobian.RightMultiplyAndAccumulate(
-        x.data(), y.data(), &context, num_threads);
+    jacobian.RightMultiplyAndAccumulate(x.data(), y.data(), &context);
     sum += y.norm();
   }
   CHECK_NE(sum, 0.0);
@@ -231,7 +228,7 @@ static void BM_CRSRightMultiplyAndAccumulateUnstructured(
   bsm_jacobian->ToCompressedRowSparseMatrix(&jacobian);
 
   ContextImpl context;
-  context.EnsureMinimumThreads(num_threads);
+  context.MaybeInitThreadPool(num_threads);
 
   Vector x(jacobian.num_cols());
   Vector y(jacobian.num_rows());
@@ -239,8 +236,7 @@ static void BM_CRSRightMultiplyAndAccumulateUnstructured(
   y.setRandom();
   double sum = 0;
   for (auto _ : state) {
-    jacobian.RightMultiplyAndAccumulate(
-        x.data(), y.data(), &context, num_threads);
+    jacobian.RightMultiplyAndAccumulate(x.data(), y.data(), &context);
     sum += y.norm();
   }
   CHECK_NE(sum, 0.0);

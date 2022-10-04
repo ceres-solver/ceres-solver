@@ -64,7 +64,6 @@ bool BlockSparseJacobiPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
   ParallelFor(options_.context,
               0,
               bs->rows.size(),
-              options_.num_threads,
               [this, bs, values](int i) {
                 const int row_block_size = bs->rows[i].block.size;
                 const std::vector<Cell>& cells = bs->rows[i].cells;
@@ -94,7 +93,6 @@ bool BlockSparseJacobiPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
     ParallelFor(options_.context,
                 0,
                 bs->cols.size(),
-                options_.num_threads,
                 [this, bs, D](int i) {
                   const int block_size = bs->cols[i].size;
                   int r, c, row_stride, col_stride;
@@ -176,7 +174,6 @@ bool BlockCRSJacobiPreconditioner::UpdateImpl(
       options_.context,
       0,
       num_row_blocks,
-      options_.num_threads,
       [this, row_blocks, a_rows, a_cols, a_values, m_values, m_rows](int i) {
         const int row = row_blocks[i].position;
         const int row_block_size = row_blocks[i].size;
@@ -206,7 +203,6 @@ bool BlockCRSJacobiPreconditioner::UpdateImpl(
       options_.context,
       0,
       num_col_blocks,
-      options_.num_threads,
       [col_blocks, m_rows, m_values, D](int i) {
         const int col = col_blocks[i].position;
         const int col_block_size = col_blocks[i].size;

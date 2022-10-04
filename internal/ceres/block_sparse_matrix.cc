@@ -89,13 +89,12 @@ void BlockSparseMatrix::SetZero() {
 
 void BlockSparseMatrix::RightMultiplyAndAccumulate(const double* x,
                                                    double* y) const {
-  RightMultiplyAndAccumulate(x, y, nullptr, 1);
+  RightMultiplyAndAccumulate(x, y, nullptr);
 }
 
 void BlockSparseMatrix::RightMultiplyAndAccumulate(const double* x,
                                                    double* y,
-                                                   ContextImpl* context,
-                                                   int num_threads) const {
+                                                   ContextImpl* context) const {
   CHECK(x != nullptr);
   CHECK(y != nullptr);
 
@@ -106,7 +105,6 @@ void BlockSparseMatrix::RightMultiplyAndAccumulate(const double* x,
   ParallelFor(context,
               0,
               num_row_blocks,
-              num_threads,
               [values, block_structure, x, y](int row_block_id) {
                 const int row_block_pos =
                     block_structure->rows[row_block_id].block.position;

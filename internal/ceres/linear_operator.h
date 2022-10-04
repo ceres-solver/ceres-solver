@@ -51,14 +51,12 @@ class CERES_NO_EXPORT LinearOperator {
   virtual void RightMultiplyAndAccumulate(const double* x, double* y) const = 0;
   virtual void RightMultiplyAndAccumulate(const double* x,
                                           double* y,
-                                          ContextImpl* context,
-                                          int num_threads) const;
+                                          ContextImpl* context) const;
   // y = y + A'x;
   virtual void LeftMultiplyAndAccumulate(const double* x, double* y) const = 0;
   virtual void LeftMultiplyAndAccumulate(const double* x,
                                          double* y,
-                                         ContextImpl* context,
-                                         int num_threads) const;
+                                         ContextImpl* context) const;
 
   virtual void RightMultiplyAndAccumulate(const Vector& x, Vector& y) const {
     RightMultiplyAndAccumulate(x.data(), y.data());
@@ -70,16 +68,14 @@ class CERES_NO_EXPORT LinearOperator {
 
   virtual void RightMultiplyAndAccumulate(const Vector& x,
                                           Vector& y,
-                                          ContextImpl* context,
-                                          int num_threads) const {
-    RightMultiplyAndAccumulate(x.data(), y.data(), context, num_threads);
+                                          ContextImpl* context) const {
+    RightMultiplyAndAccumulate(x.data(), y.data(), context);
   }
 
   virtual void LeftMultiplyAndAccumulate(const Vector& x,
                                          Vector& y,
-                                         ContextImpl* context,
-                                         int num_threads) const {
-    LeftMultiplyAndAccumulate(x.data(), y.data(), context, num_threads);
+                                         ContextImpl* context) const {
+    LeftMultiplyAndAccumulate(x.data(), y.data(), context);
   }
 
   virtual int num_rows() const = 0;

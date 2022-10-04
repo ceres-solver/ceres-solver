@@ -190,7 +190,7 @@ class PartitionedMatrixViewParallelTest : public ::testing::TestWithParam<int> {
     options.elimination_groups.push_back(num_eliminate_blocks_);
     pmv_ = PartitionedMatrixViewBase::Create(
         options, *down_cast<BlockSparseMatrix*>(A_.get()));
-    context_.EnsureMinimumThreads(kMaxNumThreads);
+    context_.MaybeInitThreadPool(kMaxNumThreads);
   }
 
   double RandDouble() { return distribution_(prng_); }
@@ -217,8 +217,7 @@ TEST_P(PartitionedMatrixViewParallelTest, RightMultiplyAndAccumulateEParallel) {
   }
 
   Vector y1 = Vector::Zero(pmv_->num_rows());
-  pmv_->RightMultiplyAndAccumulateE(
-      x1.data(), y1.data(), &context_, kNumThreads);
+  pmv_->RightMultiplyAndAccumulateE(x1.data(), y1.data(), &context_);
 
   Vector y2 = Vector::Zero(pmv_->num_rows());
   A_->RightMultiplyAndAccumulate(x2.data(), y2.data());

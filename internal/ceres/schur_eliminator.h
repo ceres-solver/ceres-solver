@@ -227,8 +227,9 @@ template <int kRowBlockSize = Eigen::Dynamic,
 class CERES_NO_EXPORT SchurEliminator final : public SchurEliminatorBase {
  public:
   explicit SchurEliminator(const LinearSolver::Options& options)
-      : num_threads_(options.num_threads), context_(options.context) {
+      : context_(options.context) {
     CHECK(context_ != nullptr);
+    num_threads_ = context_->NumThreads();
   }
 
   // SchurEliminatorBase Interface

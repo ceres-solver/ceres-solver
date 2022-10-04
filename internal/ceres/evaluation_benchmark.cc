@@ -62,17 +62,18 @@ struct BALData {
 };
 
 static void Residuals(benchmark::State& state,
-                      BALData* data,
-                      ContextImpl* context) {
+                      BALData* data) {
   auto problem = data->bal_problem->mutable_problem();
   auto problem_impl = problem->mutable_impl();
   CHECK(problem_impl != nullptr);
   const int num_threads = state.range(0);
+  ContextImpl context;
+  context.MaybeInitThreadPool(num_threads);
 
   Evaluator::Options options;
   options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
   options.num_threads = num_threads;
-  options.context = context;
+  options.context = &context;
   options.num_eliminate_blocks = 0;
 
   std::string error;
@@ -95,17 +96,18 @@ static void Residuals(benchmark::State& state,
 }
 
 static void ResidualsAndJacobian(benchmark::State& state,
-                                 BALData* data,
-                                 ContextImpl* context) {
+                                 BALData* data) {
   auto problem = data->bal_problem->mutable_problem();
   auto problem_impl = problem->mutable_impl();
   CHECK(problem_impl != nullptr);
   const int num_threads = state.range(0);
+  ContextImpl context;
+  context.MaybeInitThreadPool(num_threads);
 
   Evaluator::Options options;
   options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
   options.num_threads = num_threads;
-  options.context = context;
+  options.context = &context;
   options.num_eliminate_blocks = 0;
 
   std::string error;
@@ -149,9 +151,6 @@ int main(int argc, char** argv) {
     return -1;
   }
 
-  ceres::internal::ContextImpl context;
-  context.EnsureMinimumThreads(16);
-
   for (int i = 1; i < argc; ++i) {
     const std::string path(argv[i]);
     const std::string name_residuals = "Residuals<" + path + ">";
@@ -159,17 +158,15 @@ int main(int argc, char** argv) {
         std::make_unique<ceres::internal::BALData>(path));
     auto data = benchmark_data.back().get();
     ::benchmark::RegisterBenchmark(
-        name_residuals.c_str(), ceres::internal::Residuals, data, &context)
+        name_residuals.c_str(), ceres::internal::Residuals, data)
         ->Arg(1)
         ->Arg(2)
         ->Arg(4)
         ->Arg(8)
         ->Arg(16);
     const std::string name_jacobians = "ResidualsAndJacobian<" + path + ">";
-    ::benchmark::RegisterBenchmark(name_jacobians.c_str(),
-                                   ceres::internal::ResidualsAndJacobian,
-                                   data,
-                                   &context)
+    ::benchmark::RegisterBenchmark(
+        name_jacobians.c_str(), ceres::internal::ResidualsAndJacobian, data)
         ->Arg(1)
         ->Arg(2)
         ->Arg(4)

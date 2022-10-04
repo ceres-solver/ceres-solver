@@ -96,6 +96,7 @@
 #include "ceres/execution_summary.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/parallel_for.h"
+#include "ceres/parallel_utils.h"
 #include "ceres/parameter_block.h"
 #include "ceres/program.h"
 #include "ceres/residual_block.h"
@@ -116,9 +117,7 @@ class ProgramEvaluator final : public Evaluator {
   ProgramEvaluator(const Evaluator::Options& options, Program* program)
       : options_(options),
         program_(program),
-        jacobian_writer_(options, program),
-        evaluate_preparers_(std::move(
-            jacobian_writer_.CreateEvaluatePreparers(options.num_threads))) {
+        jacobian_writer_(options, program) {
 #ifdef CERES_NO_THREADS
     if (options_.num_threads > 1) {
       LOG(WARNING) << "No threading support is compiled into this binary; "
@@ -128,9 +127,14 @@ class ProgramEvaluator final : public Evaluator {
     }
 #endif  // CERES_NO_THREADS
 
+    CHECK(options_.context != nullptr);
+    evaluate_preparers_ = std::move(jacobian_writer_.CreateEvaluatePreparers(
+        SizeOfScratchSpaceForThreads(options_.context->NumThreads())));
     BuildResidualLayout(*program, &residual_layout_);
     evaluate_scratch_ = std::move(CreateEvaluatorScratch(
-        *program, static_cast<unsigned>(options.num_threads)));
+        *program,
+        static_cast<unsigned>(
+            SizeOfScratchSpaceForThreads(options_.context->NumThreads()))));
   }
 
   // Implementation of Evaluator interface.
@@ -172,7 +176,9 @@ class ProgramEvaluator final : public Evaluator {
     }
 
     // Each thread gets it's own cost and evaluate scratch space.
-    for (int i = 0; i < options_.num_threads; ++i) {
+    for (int i = 0;
+         i < SizeOfScratchSpaceForThreads(options_.context->NumThreads());
+         ++i) {
       evaluate_scratch_[i].cost = 0.0;
       if (gradient != nullptr) {
         VectorRef(evaluate_scratch_[i].gradient.get(),
@@ -187,11 +193,7 @@ class ProgramEvaluator final : public Evaluator {
     // an empty body, and so will finish quickly.
     std::atomic_bool abort(false);
     ParallelFor(
-        options_.context,
-        0,
-        num_residual_blocks,
-        options_.num_threads,
-        [&](int thread_id, int i) {
+        options_.context, 0, num_residual_blocks, [&](int thread_id, int i) {
           if (abort) {
             return;
           }
@@ -267,7 +269,9 @@ class ProgramEvaluator final : public Evaluator {
       if (gradient != nullptr) {
         VectorRef(gradient, num_parameters).setZero();
       }
-      for (int i = 0; i < options_.num_threads; ++i) {
+      for (int i = 0;
+           i < SizeOfScratchSpaceForThreads(options_.context->NumThreads());
+           ++i) {
         (*cost) += evaluate_scratch_[i].cost;
         if (gradient != nullptr) {
           VectorRef(gradient, num_parameters) +=

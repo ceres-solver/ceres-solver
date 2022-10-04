@@ -28,56 +28,37 @@
 //
 // Author: vitus@google.com (Michael Vitus)
 
-// This include must come before any #ifndef check on Ceres compile options.
+#include <iostream>
+
+#include "bundle_adjustment_test_util.h"
 #include "ceres/internal/config.h"
 
-#ifdef CERES_USE_CXX_THREADS
-
-#include <atomic>
-#include <cmath>
-#include <condition_variable>
-#include <memory>
-#include <mutex>
-
-#include "ceres/parallel_for.h"
-#include "glog/logging.h"
+#ifndef CERES_NO_THREADS
 
 namespace ceres::internal {
 
-BlockUntilFinished::BlockUntilFinished(int num_total_jobs)
-    : num_total_jobs_finished_(0), num_total_jobs_(num_total_jobs) {}
-
-void BlockUntilFinished::Finished(int num_jobs_finished) {
-  if (num_jobs_finished == 0) return;
-  std::lock_guard<std::mutex> lock(mutex_);
-  num_total_jobs_finished_ += num_jobs_finished;
-  CHECK_LE(num_total_jobs_finished_, num_total_jobs_);
-  if (num_total_jobs_finished_ == num_total_jobs_) {
-    condition_.notify_one();
+TEST_F(BundleAdjustmentTest,
+       ReuseContextWithThreads) {  // NOLINT
+  BundleAdjustmentProblem bundle_adjustment_problem;
+  Solver::Options* options = bundle_adjustment_problem.mutable_solver_options();
+  options->num_threads = 4;
+  options->linear_solver_type = DENSE_SCHUR;
+  options->dense_linear_algebra_library_type = EIGEN;
+  options->sparse_linear_algebra_library_type = NO_SPARSE;
+  options->preconditioner_type = IDENTITY;
+  if (kUserOrdering) {
+    options->linear_solver_ordering = nullptr;
   }
+  Problem* problem = bundle_adjustment_problem.mutable_problem();
+  RunSolverForConfigAndExpectResidualsMatch(*options, problem);
+
+  // Solve a second time re-using the context but use a smaller number of
+  // threads. This will catch accessing the parallel for temp space out of range
+  // if we don't handle it appropriately.
+  options->num_threads = 2;
+  RunSolverForConfigAndExpectResidualsMatch(*options, problem);
 }
-
-void BlockUntilFinished::Block() {
-  std::unique_lock<std::mutex> lock(mutex_);
-  condition_.wait(
-      lock, [&]() { return num_total_jobs_finished_ == num_total_jobs_; });
-}
-
-ThreadPoolState::ThreadPoolState(int start,
-                                 int end,
-                                 int num_work_blocks,
-                                 int num_workers)
-    : start(start),
-      end(end),
-      num_work_blocks(num_work_blocks),
-      base_block_size((end - start) / num_work_blocks),
-      num_base_p1_sized_blocks((end - start) % num_work_blocks),
-      block_id(0),
-      thread_id(0),
-      block_until_finished(num_work_blocks) {}
-
-int MaxNumThreadsAvailable() { return ThreadPool::MaxNumThreadsAvailable(); }
 
 }  // namespace ceres::internal
 
-#endif  // CERES_USE_CXX_THREADS
+#endif  // CERES_NO_THREADS

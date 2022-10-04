@@ -603,7 +603,7 @@ INSTANTIATE_TEST_SUITE_P(
 const int kMaxNumThreads = 8;
 class CompressedRowSparseMatrixParallelTest
     : public ::testing::TestWithParam<int> {
-  void SetUp() final { context_.EnsureMinimumThreads(kMaxNumThreads); }
+  void SetUp() final { context_.MaybeInitThreadPool(kMaxNumThreads); }
 
  protected:
   ContextImpl context_;
@@ -642,8 +642,7 @@ TEST_P(CompressedRowSparseMatrixParallelTest,
 
       Vector actual_y(num_rows);
       actual_y.setZero();
-      matrix->RightMultiplyAndAccumulate(
-          x.data(), actual_y.data(), &context_, kNumThreads);
+      matrix->RightMultiplyAndAccumulate(x.data(), actual_y.data(), &context_);
 
       Matrix dense;
       matrix->ToDenseMatrix(&dense);

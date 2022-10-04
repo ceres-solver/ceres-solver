@@ -49,11 +49,6 @@ inline decltype(auto) MakeConditionalLock(const int num_threads,
                             : std::unique_lock<std::mutex>{m};
 }
 
-// Returns the maximum number of threads supported by the threading backend
-// Ceres was compiled with.
-CERES_NO_EXPORT
-int MaxNumThreadsAvailable();
-
 // Parallel for implementations share a common set of routines in order
 // to enforce inlining of loop bodies, ensuring that single-threaded
 // performance is equivalent to a simple for loop
@@ -100,28 +95,25 @@ void Invoke(int thread_id, int i, const F& function) {
 template <typename F>
 void ParallelInvoke(ContextImpl* context,
                     int i,
-                    int num_threads,
                     const F& function);
 
-// Execute the function for every element in the range [start, end) with at most
-// num_threads. It will execute all the work on the calling thread if
-// num_threads or (end - start) is equal to 1.
+// Execute the function for every element in the range [start, end).
 //
 // Functions with two arguments will be passed thread_id and loop index on each
 // invocation, functions with one argument will be invoked with loop index
+//
+// If the context is null then the for loop with be single threaded.
 template <typename F>
 void ParallelFor(ContextImpl* context,
                  int start,
                  int end,
-                 int num_threads,
                  const F& function) {
   using namespace parallel_for_details;
-  CHECK_GT(num_threads, 0);
   if (start >= end) {
     return;
   }
 
-  if (num_threads == 1 || end - start == 1) {
+  if (context == nullptr || context->NumThreads() == 1 || end - start == 1) {
     for (int i = start; i < end; ++i) {
       Invoke<F>(0, i, function);
     }
@@ -129,7 +121,7 @@ void ParallelFor(ContextImpl* context,
   }
 
   CHECK(context != nullptr);
-  ParallelInvoke<F>(context, start, end, num_threads, function);
+  ParallelInvoke<F>(context, start, end, function);
 }
 }  // namespace ceres::internal
 
@@ -142,9 +134,8 @@ template <typename F>
 void ParallelInvoke(ContextImpl* context,
                     int start,
                     int end,
-                    int num_threads,
                     const F& function) {
-  ParallelFor(context, start, end, 1, function);
+  ParallelFor(context, start, end, function);
 }
 }  // namespace ceres::internal
 #endif

@@ -33,7 +33,6 @@
 # Avoid 'xxx.cc has no symbols' warnings from source files which are 'empty'
 # when their enclosing #ifdefs are disabled.
 if (CERES_THREADING_MODEL STREQUAL "CXX_THREADS")
-  set(CERES_PARALLEL_FOR_SRC parallel_for_cxx.cc thread_pool.cc)
   find_package(Threads REQUIRED)
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES Threads::Threads)
 
@@ -554,7 +553,6 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(tiny_solver)
   ceres_test(tiny_solver_autodiff_function)
   ceres_test(tiny_solver_cost_function_adapter)
-  ceres_test(thread_pool)
   ceres_test(triplet_sparse_matrix)
   ceres_test(trust_region_minimizer)
   ceres_test(trust_region_preprocessor)
