@@ -122,6 +122,24 @@
       "message": "Based on the experiments here I would like to propose that we keep our threadpool and remove the no threads and openmp options. The mild difference in performance between openmp and our threadpool is not really worth the extra complexity of multiple threading models.",
       "revId": "012e4fa421267d6c0f358a80628c665c037e8658",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8262325_fc6d2f02",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2022-10-05T21:04:37Z",
+      "side": 1,
+      "message": "Makes sense to me.",
+      "parentUuid": "6fde3824_62fcd659",
+      "revId": "012e4fa421267d6c0f358a80628c665c037e8658",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
