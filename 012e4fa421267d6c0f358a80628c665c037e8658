@@ -16,6 +16,23 @@
       "message": "Hi,\n\nThis replaces the threadpool with Eigen. It would be nice if you could run some evaluations on your machines to get a larger test of performance on different machines. I\u0027ve noticed that the timings are fairly noisy.\n\nNote: the CL is complete except for I need to figure out what to do about openmp.\n\nthanks!\nMike",
       "revId": "012e4fa421267d6c0f358a80628c665c037e8658",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51753024_cd2001fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-05T13:27:35Z",
+      "side": 1,
+      "message": "I just shared a spreadsheet with you guys, where I compared head CXX_THREADS, OPENMP and this CL on linux and macos. The results are curious.\n\nhttps://docs.google.com/spreadsheets/d/1UwIcPE0WGrNfK5axVWhqsryVszcoO2iMzvRrNK2--6M/edit?usp\u003dsharing\u0026resourcekey\u003d0-gfxgBAhmtoYdVlNIfpRqpg",
+      "revId": "012e4fa421267d6c0f358a80628c665c037e8658",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
