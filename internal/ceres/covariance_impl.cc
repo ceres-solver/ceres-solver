@@ -321,9 +321,8 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
   // Assemble the blocks in the covariance matrix.
   MatrixRef covariance(covariance_matrix, covariance_size, covariance_size);
   const int num_threads = options_.num_threads;
-  std::unique_ptr<double[]> workspace(
-      new double[num_threads * max_covariance_block_size *
-                 max_covariance_block_size]);
+  auto workspace = std::make_unique<double[]>(
+      num_threads * max_covariance_block_size * max_covariance_block_size);
 
   bool success = true;
 
@@ -682,7 +681,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
   // Since the covariance matrix is symmetric, the i^th row and column
   // are equal.
   const int num_threads = options_.num_threads;
-  std::unique_ptr<double[]> workspace(new double[num_threads * num_cols]);
+  auto workspace = std::make_unique<double[]>(num_threads * num_cols);
 
   problem_->context()->EnsureMinimumThreads(num_threads);
   ParallelFor(
@@ -873,7 +872,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
   // are equal.
   const int num_cols = jacobian.num_cols;
   const int num_threads = options_.num_threads;
-  std::unique_ptr<double[]> workspace(new double[num_threads * num_cols]);
+  auto workspace = std::make_unique<double[]>(num_threads * num_cols);
 
   problem_->context()->EnsureMinimumThreads(num_threads);
   ParallelFor(

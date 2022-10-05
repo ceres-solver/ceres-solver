@@ -134,8 +134,6 @@ void CoordinateDescentMinimizer::Minimize(const Minimizer::Options& options,
 
   std::vector<std::unique_ptr<LinearSolver>> linear_solvers(
       options.num_threads);
-  // std::unique_ptr<LinearSolver*[]> linear_solvers(
-  //    new LinearSolver*[options.num_threads]);
 
   LinearSolver::Options linear_solver_options;
   linear_solver_options.type = DENSE_QR;
@@ -202,10 +200,6 @@ void CoordinateDescentMinimizer::Minimize(const Minimizer::Options& options,
   for (auto* parameter_block : parameter_blocks_) {
     parameter_block->SetVarying();
   }
-
-  //  for (int i = 0; i < options.num_threads; ++i) {
-  //  delete linear_solvers[i];
-  //}
 }
 
 // Solve the optimization problem for one parameter block.
