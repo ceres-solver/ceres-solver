@@ -140,6 +140,24 @@
       "parentUuid": "6fde3824_62fcd659",
       "revId": "012e4fa421267d6c0f358a80628c665c037e8658",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0f66ff1_cb602dab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-10-10T13:46:41Z",
+      "side": 1,
+      "message": "On my linux machine the relationship\nOpenMP \u003e Eigen \u003e CXX also holds (with \"\u003e\" being \"better\"), with ~2% improvement on each step.\n\nHere is a spreadsheet with aggregated mean/median and raw data for 100 iterations of each benchmark.\n\nhttps://docs.google.com/spreadsheets/d/1-i8q2IW2Ee4-7Bdj0j9IQY3NEFT3KqBjdMSBKvgX_NI/edit?usp\u003dsharing\n\nUnfortunately, google-benchmark library seem to set number of \"iterations\" per \"repetition\" based on cpu time, not wall time; and time measurements reported per-repetition are already averaged by number of iterations (and aggregates are aggregated over \"repetitions\", not raw \"iterations\").\nSo this data is hardly usable for anything except mean/median computations.",
+      "parentUuid": "bc982831_4815831d",
+      "revId": "012e4fa421267d6c0f358a80628c665c037e8658",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
