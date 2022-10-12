@@ -121,6 +121,24 @@
       "parentUuid": "a2e0aa12_b2fc5dd5",
       "revId": "b00e8a922b191afeffaaf3717ca26e39e74498d9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7350ff36_83716d09",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-12T16:15:41Z",
+      "side": 1,
+      "message": "I think the latter is perhaps nicer but it will require a larger set of changes to the whole class whereas the former makes it look like the special case change it is just meant for multiplications. If we were using the transpose structure more broadly, I would be more inclined for the larger set of changes. so I am a little bit inclined for the transposed_block_structure_ option.",
+      "parentUuid": "705e5aff_08a086b0",
+      "revId": "b00e8a922b191afeffaaf3717ca26e39e74498d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
