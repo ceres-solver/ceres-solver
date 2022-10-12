@@ -103,6 +103,24 @@
       "message": "ping?",
       "revId": "b00e8a922b191afeffaaf3717ca26e39e74498d9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "705e5aff_08a086b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-10-12T09:35:45Z",
+      "side": 1,
+      "message": "Hi,\n\nI\u0027ve implemented AddRows/RemoveRows functionality and stopped at writing tests for it. I think I\u0027ll finalize a change-list on the weekend.\n\nAs far as I understand, we already have an invariant of column / row indices of cells in rows / columns coming in ascending order. Thus, since rows are being added / removed only from the end of the matrix, adjusting transposed structure seems to be quite  straightforward:\n - On addition of rows - prepend blocks to corresponding columns (rows in transposed structure), and this will not break the invariant\n - On deletion of rows - for each cell in row being deleted, pop blocks from the back of corresponding column while row index is lower than the last remaining row (when we hit the column first - we remove everything we will need to remove from that column, and when we hit the same column for the second time - no extra computation is being performed)\n\nThis seem to work fine (at least does not break existing tests and bundle adjuster works the same).\n\n\n\nI would like to discuss, which of the following options would look better from your perspective:\n\n - Store row-block structure of transposed matrix as `transposed_block_structure_`\n - Store col-block structure of original matrix as `col_block_structure_`\n\nIn the second case \"rows\" and \"columns\" have the same meaning in both structures, while in the first case they\u0027re switched.",
+      "parentUuid": "a2e0aa12_b2fc5dd5",
+      "revId": "b00e8a922b191afeffaaf3717ca26e39e74498d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
