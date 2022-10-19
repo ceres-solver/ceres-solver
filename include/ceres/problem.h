@@ -53,7 +53,6 @@ namespace ceres {
 class CostFunction;
 class EvaluationCallback;
 class LossFunction;
-class LocalParameterization;
 class Manifold;
 class Solver;
 struct CRSMatrix;
@@ -122,8 +121,7 @@ class CERES_EXPORT Problem {
  public:
   struct CERES_EXPORT Options {
     // These flags control whether the Problem object owns the CostFunctions,
-    // LossFunctions, LocalParameterizations, and Manifolds passed into the
-    // Problem.
+    // LossFunctions, and Manifolds passed into the Problem.
     //
     // If set to TAKE_OWNERSHIP, then the problem object will delete the
     // corresponding object on destruction. The destructor is careful to delete
@@ -269,15 +267,14 @@ class CERES_EXPORT Problem {
   //
   // Repeated calls with the same double pointer and size but different Manifold
   // is equivalent to calling SetManifold(manifold), i.e., any previously
-  // associated LocalParameterization or Manifold object will be replaced with
-  // the manifold.
+  // associated Manifold object will be replaced with the manifold.
   void AddParameterBlock(double* values, int size, Manifold* manifold);
 
-  // Remove a parameter block from the problem. The LocalParameterization or
-  // Manifold of the parameter block, if it exists, will persist until the
-  // deletion of the problem (similar to cost/loss functions in residual block
-  // removal). Any residual blocks that depend on the parameter are also
-  // removed, as described above in RemoveResidualBlock().
+  // Remove a parameter block from the problem. The Manifold of the parameter
+  // block, if it exists, will persist until the deletion of the problem
+  // (similar to cost/loss functions in residual block removal). Any residual
+  // blocks that depend on the parameter are also removed, as described above
+  // in RemoveResidualBlock().
   //
   // If Problem::Options::enable_fast_removal is true, then the removal is fast
   // (almost constant time). Otherwise, removing a parameter block will incur a
@@ -308,16 +305,15 @@ class CERES_EXPORT Problem {
 
   // Returns true if a parameter block is set constant, and false otherwise. A
   // parameter block may be set constant in two ways: either by calling
-  // SetParameterBlockConstant or by associating a LocalParameterization or
-  // Manifold with a zero dimensional tangent space with it.
+  // SetParameterBlockConstant or by associating a Manifold with a zero
+  // dimensional tangent space with it.
   bool IsParameterBlockConstant(const double* values) const;
 
   // Set the Manifold for the parameter block. Calling SetManifold with nullptr
-  // will clear any previously set LocalParameterization or Manifold for the
-  // parameter block.
+  // will clear any previously set Manifold for the parameter block.
   //
-  // Repeated calls will result in any previously associated
-  // LocalParameterization or Manifold object to be replaced with the manifold.
+  // Repeated calls will result in any previously associated Manifold object to
+  // be replaced with the manifold.
   //
   // The manifold is owned by the Problem by default (See Problem::Options to
   // override this behaviour).
@@ -330,8 +326,8 @@ class CERES_EXPORT Problem {
   // If there is no Manifold object associated then nullptr is returned.
   const Manifold* GetManifold(const double* values) const;
 
-  // Returns true if a Manifold or a LocalParameterization is associated with
-  // this parameter block, false otherwise.
+  // Returns true if a Manifold is associated with this parameter block, false
+  // otherwise.
   bool HasManifold(const double* values) const;
 
   // Set the lower/upper bound for the parameter at position "index".
@@ -364,10 +360,9 @@ class CERES_EXPORT Problem {
   // The size of the parameter block.
   int ParameterBlockSize(const double* values) const;
 
-  // The dimension of the tangent space of the LocalParameterization or Manifold
-  // for the parameter block. If there is no LocalParameterization or Manifold
-  // associated with this parameter block, then ParameterBlockTangentSize =
-  // ParameterBlockSize.
+  // The dimension of the tangent space of the Manifold for the parameter block.
+  // If there is no Manifold associated with this parameter block, then
+  // ParameterBlockTangentSize = ParameterBlockSize.
   int ParameterBlockTangentSize(const double* values) const;
 
   // Is the given parameter block present in this problem or not?
@@ -467,11 +462,11 @@ class CERES_EXPORT Problem {
   //
   // is the way to do so.
   //
-  // Note 2: If no LocalParameterizations or Manifolds are used, then the size
-  // of the gradient vector (and the number of columns in the jacobian) is the
-  // sum of the sizes of all the parameter blocks. If a parameter block has a
-  // LocalParameterization or Manifold, then it contributes "TangentSize"
-  // entries to the gradient vector (and the number of columns in the jacobian).
+  // Note 2: If no Manifolds are used, then the size of the gradient vector (and
+  // the number of columns in the jacobian) is the sum of the sizes of all the
+  // parameter blocks. If a parameter block has a Manifold, then it contributes
+  // "TangentSize" entries to the gradient vector (and the number of columns in
+  // the jacobian).
   //
   // Note 3: This function cannot be called while the problem is being solved,
   // for example it cannot be called from an IterationCallback at the end of an
@@ -502,11 +497,10 @@ class CERES_EXPORT Problem {
   // returns false, the caller should expect the output memory locations to have
   // been modified.
   //
-  // The returned cost and jacobians have had robustification and
-  // LocalParameterization/Manifold applied already; for example, the jacobian
-  // for a 4-dimensional quaternion parameter using the
-  // "QuaternionParameterization" is num_residuals by 3 instead of num_residuals
-  // by 4.
+  // The returned cost and jacobians have had robustification and Manifold
+  // applied already; for example, the jacobian for a 4-dimensional quaternion
+  // parameter using the "QuaternionParameterization" is num_residuals by 3
+  // instead of num_residuals by 4.
   //
   // apply_loss_function as the name implies allows the user to switch the
   // application of the loss function on and off.

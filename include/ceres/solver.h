@@ -953,7 +953,7 @@ class CERES_EXPORT Solver {
     // Dimension of the tangent space of the problem (or the number of
     // columns in the Jacobian for the problem). This is different
     // from num_parameters if a parameter block is associated with a
-    // LocalParameterization/Manifold.
+    // Manifold.
     int num_effective_parameters = -1;
 
     // Number of residual blocks in the problem.
@@ -974,7 +974,7 @@ class CERES_EXPORT Solver {
     // number of columns in the Jacobian for the reduced
     // problem). This is different from num_parameters_reduced if a
     // parameter block in the reduced problem is associated with a
-    // LocalParameterization/Manifold.
+    // Manifold.
     int num_effective_parameters_reduced = -1;
 
     // Number of residual blocks in the reduced problem.

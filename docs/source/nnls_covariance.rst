@@ -115,7 +115,7 @@ cases.
      four dimensional quaternion used to parameterize :math:`SO(3)`,
      which is a three dimensional manifold. In cases like this, the
      user should use an appropriate
-     :class:`LocalParameterization`. Not only will this lead to better
+     :class:`Manifold`. Not only will this lead to better
      numerical behaviour of the Solver, it will also expose the rank
      deficiency to the :class:`Covariance` object so that it can
      handle it correctly.

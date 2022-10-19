@@ -146,7 +146,7 @@ class CovarianceImpl;
 //   a. The rank deficiency arises from overparameterization. e.g., a
 //   four dimensional quaternion used to parameterize SO(3), which is
 //   a three dimensional manifold. In cases like this, the user should
-//   use an appropriate LocalParameterization/Manifold. Not only will this lead
+//   use an appropriate Manifold. Not only will this lead
 //   to better numerical behaviour of the Solver, it will also expose
 //   the rank deficiency to the Covariance object so that it can
 //   handle it correctly.
@@ -408,11 +408,9 @@ class CERES_EXPORT Covariance {
                           const double* parameter_block2,
                           double* covariance_block) const;
 
-  // Return the block of the cross-covariance matrix corresponding to
-  // parameter_block1 and parameter_block2.
-  // Returns cross-covariance in the tangent space if a local
-  // parameterization is associated with either parameter block;
-  // else returns cross-covariance in the ambient space.
+  // Returns the block of the cross-covariance in the tangent space if a
+  // manifold is associated with either parameter block; else returns
+  // cross-covariance in the ambient space.
   //
   // Compute must be called before the first call to
   // GetCovarianceBlock and the pair <parameter_block1,
@@ -444,9 +442,8 @@ class CERES_EXPORT Covariance {
                            double* covariance_matrix) const;
 
   // Return the covariance matrix corresponding to parameter_blocks
-  // in the tangent space if a local parameterization is associated
-  // with one of the parameter blocks else returns the covariance
-  // matrix in the ambient space.
+  // in the tangent space if a manifold is associated with one of the parameter
+  // blocks else returns the covariance matrix in the ambient space.
   //
   // Compute must be called before calling GetCovarianceMatrix and all
   // parameter_blocks must have been present in the vector

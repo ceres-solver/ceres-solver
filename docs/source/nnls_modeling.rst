@@ -1826,447 +1826,10 @@ be constructed as
 
    Manifold* manifold = new AutoDiffManifold<QuaternionFunctor, 4, 3>;
 
-
-:class:`LocalParameterization`
-==============================
-
-.. NOTE::
-
-   The :class:`LocalParameterization` interface and associated classes
-   are deprecated. They will be removed in the version 2.2.0. Please use
-   :class:`Manifold` instead.
-
-.. class:: LocalParameterization
-
-  In many optimization problems, especially sensor fusion problems,
-  one has to model quantities that live in spaces known as `Manifolds
-  <https://en.wikipedia.org/wiki/Manifold>`_ , for example the
-  rotation/orientation of a sensor that is represented by a
-  `Quaternion
-  <https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation>`_.
-
-  Manifolds are spaces, which locally look like Euclidean spaces. More
-  precisely, at each point on the manifold there is a linear space
-  that is tangent to the manifold. It has dimension equal to the
-  intrinsic dimension of the manifold itself, which is less than or
-  equal to the ambient space in which the manifold is embedded.
-
-  For example, the tangent space to a point on a sphere in three
-  dimensions is the two dimensional plane that is tangent to the
-  sphere at that point. There are two reasons tangent spaces are
-  interesting:
-
-  1. They are Euclidean spaces, so the usual vector space operations
-     apply there, which makes numerical operations easy.
-
-  2. Movement in the tangent space translate into movements along the
-     manifold.  Movements perpendicular to the tangent space do not
-     translate into movements on the manifold.
-
-  Moving along the 2 dimensional plane tangent to the sphere and
-  projecting back onto the sphere will move you away from the point
-  you started from but moving along the normal at the same point and
-  the projecting back onto the sphere brings you back to the point.
-
-  Besides the mathematical niceness, modeling manifold valued
-  quantities correctly and paying attention to their geometry has
-  practical benefits too:
-
-  1. It naturally constrains the quantity to the manifold throughout
-     the optimization, freeing the user from hacks like *quaternion
-     normalization*.
-
-  2. It reduces the dimension of the optimization problem to its
-     *natural* size. For example, a quantity restricted to a line, is a
-     one dimensional object regardless of the dimension of the ambient
-     space in which this line lives.
-
-     Working in the tangent space reduces not just the computational
-     complexity of the optimization algorithm, but also improves its
-     numerical behaviour of the algorithm.
-
-  A basic operation one can perform on a manifold is the
-  :math:`\boxplus` operation that computes the result of moving along
-  delta in the tangent space at x, and then projecting back onto the
-  manifold that x belongs to. Also known as a *Retraction*,
-  :math:`\boxplus` is a generalization of vector addition in Euclidean
-  spaces. Formally, :math:`\boxplus` is a smooth map from a
-  manifold :math:`\mathcal{M}` and its tangent space
-  :math:`T_\mathcal{M}` to the manifold :math:`\mathcal{M}` that
-  obeys the identity
-
-  .. math::  \boxplus(x, 0) = x,\quad \forall x.
-
-  That is, it ensures that the tangent space is *centered* at :math:`x`
-  and the zero vector is the identity element. For more see
-  [Hertzberg]_ and section A.6.9 of [HartleyZisserman]_.
-
-  Let us consider two examples:
-
-  The Euclidean space :math:`\mathbb{R}^n` is the simplest example of a
-  manifold. It has dimension :math:`n` (and so does its tangent space)
-  and :math:`\boxplus` is the familiar vector sum operation.
-
-    .. math:: \boxplus(x, \Delta) = x + \Delta
-
-  A more interesting case is :math:`SO(3)`, the special orthogonal
-  group in three dimensions - the space of :math:`3\times3` rotation
-  matrices. :math:`SO(3)` is a three dimensional manifold embedded in
-  :math:`\mathbb{R}^9` or :math:`\mathbb{R}^{3\times 3}`.
-
-  :math:`\boxplus` on :math:`SO(3)` is defined using the *Exponential*
-  map, from the tangent space (:math:`\mathbb{R}^3`) to the manifold. The
-  Exponential map :math:`\operatorname{Exp}` is defined as:
-
-  .. math::
-
-     \operatorname{Exp}([p,q,r]) = \left [ \begin{matrix}
-     \cos \theta + cp^2 & -sr + cpq        &  sq + cpr \\
-     sr + cpq         & \cos \theta + cq^2& -sp + cqr \\
-     -sq + cpr        & sp + cqr         & \cos \theta + cr^2
-     \end{matrix} \right ]
-
-  where,
-
-  .. math::
-     \theta = \sqrt{p^2 + q^2 + r^2}, s = \frac{\sin \theta}{\theta},
-     c = \frac{1 - \cos \theta}{\theta^2}.
-
-  Then,
-
-  .. math::
-
-     \boxplus(x, \Delta) = x \operatorname{Exp}(\Delta)
-
-  The ``LocalParameterization`` interface allows the user to define
-  and associate with parameter blocks the manifold that they belong
-  to. It does so by defining the ``Plus`` (:math:`\boxplus`) operation
-  and its derivative with respect to :math:`\Delta` at :math:`\Delta =
-  0`.
-
-   .. code-block:: c++
-
-     class LocalParameterization {
-      public:
-       virtual ~LocalParameterization() = default;
-       virtual bool Plus(const double* x,
-                         const double* delta,
-                         double* x_plus_delta) const = 0;
-       virtual bool ComputeJacobian(const double* x, double* jacobian) const = 0;
-       virtual bool MultiplyByJacobian(const double* x,
-                                       const int num_rows,
-                                       const double* global_matrix,
-                                       double* local_matrix) const;
-       virtual int GlobalSize() const = 0;
-       virtual int LocalSize() const = 0;
-     };
-
-
-.. function:: int LocalParameterization::GlobalSize()
-
-   The dimension of the ambient space in which the parameter block
-   :math:`x` lives.
-
-.. function:: int LocalParameterization::LocalSize()
-
-   The size of the tangent space that :math:`\Delta` lives in.
-
-.. function:: bool LocalParameterization::Plus(const double* x, const double* delta, double* x_plus_delta) const
-
-    :func:`LocalParameterization::Plus` implements :math:`\boxplus(x,\Delta)`.
-
-.. function:: bool LocalParameterization::ComputeJacobian(const double* x, double* jacobian) const
-
-   Computes the Jacobian matrix
-
-   .. math:: J = D_2 \boxplus(x, 0)
-
-   in row major form.
-
-.. function:: bool MultiplyByJacobian(const double* x, const int num_rows, const double* global_matrix, double* local_matrix) const
-
-   ``local_matrix = global_matrix * jacobian``
-
-   ``global_matrix`` is a ``num_rows x GlobalSize``  row major matrix.
-   ``local_matrix`` is a ``num_rows x LocalSize`` row major matrix.
-   ``jacobian`` is the matrix returned by :func:`LocalParameterization::ComputeJacobian` at :math:`x`.
-
-   This is only used by :class:`GradientProblem`. For most normal
-   uses, it is okay to use the default implementation.
-
-Ceres Solver ships with a number of commonly used instances of
-:class:`LocalParameterization`. Another great place to find high
-quality implementations of :math:`\boxplus` operations on a variety of
-manifolds is the `Sophus <https://github.com/strasdat/Sophus>`_
-library developed by Hauke Strasdat and his collaborators.
-
-:class:`IdentityParameterization`
----------------------------------
-
-.. NOTE::
-
-   :class:`IdentityParameterization` is deprecated. It will be removed
-   in version 2.2.0 of Ceres Solver. Please use
-   :class:`EuclideanManifold` instead.
-
-.. class:: IdentityParameterization
-
-A trivial version of :math:`\boxplus` is when :math:`\Delta` is of the
-same size as :math:`x` and
-
-.. math::  \boxplus(x, \Delta) = x + \Delta
-
-This is the same as :math:`x` living in a Euclidean manifold.
-
-:class:`QuaternionParameterization`
------------------------------------
-
-.. NOTE::
-
-   :class:`QuaternionParameterization` is deprecated. It will be
-   removed in version 2.2.0 of Ceres Solver. Please use
-   :class:`QuaternionManifold` instead.
-
-.. class:: QuaternionParameterization
-
-Another example that occurs commonly in Structure from Motion problems
-is when camera rotations are parameterized using a quaternion. This is
-a 3-dimensional manifold that lives in 4-dimensional space.
-
-.. math:: \boxplus(x, \Delta) = \left[ \cos(|\Delta|), \frac{\sin\left(|\Delta|\right)}{|\Delta|} \Delta \right] \otimes x
-
-The multiplication :math:`\otimes` between the two 4-vectors on the right
-hand side is the standard quaternion product.
-
-:class:`EigenQuaternionParameterization`
-----------------------------------------
-
-.. NOTE::
-
-   :class:`EigenQuaternionParameterization` is deprecated. It will be
-   removed in version 2.2.0 of Ceres Solver. Please use
-   :class:`EigenQuaternionManifold` instead.
-
-.. class:: EigenQuaternionParameterization
-
-`Eigen <http://eigen.tuxfamily.org/index.php?title=Main_Page>`_ uses a
-different internal memory layout for the elements of the quaternion
-than what is commonly used. Specifically, Eigen stores the elements in
-memory as :math:`(x, y, z, w)`, i.e., the *real* part (:math:`w`) is
-stored as the last element. Note, when creating an Eigen quaternion
-through the constructor the elements are accepted in :math:`w, x, y,
-z` order.
-
-Since Ceres operates on parameter blocks which are raw ``double``
-pointers this difference is important and requires a different
-parameterization. :class:`EigenQuaternionParameterization` uses the
-same ``Plus`` operation as :class:`QuaternionParameterization` but
-takes into account Eigen's internal memory element ordering.
-
-:class:`SubsetParameterization`
--------------------------------
-
-.. NOTE::
-
-   :class:`SubsetParameterization` is deprecated. It will be removed
-   in version 2.2.0 of Ceres Solver. Please use
-   :class:`SubsetManifold` instead.
-
-.. class:: SubsetParameterization
-
-Suppose :math:`x` is a two dimensional vector, and the user wishes to
-hold the first coordinate constant. Then, :math:`\Delta` is a scalar
-and :math:`\boxplus` is defined as
-
-.. math:: \boxplus(x, \Delta) = x + \left[ \begin{array}{c} 0 \\ 1 \end{array} \right] \Delta
-
-:class:`SubsetParameterization` generalizes this construction to hold
-any part of a parameter block constant by specifying the set of
-coordinates that are held constant.
-
-.. NOTE::
-   It is legal to hold all coordinates of a parameter block to constant
-   using a :class:`SubsetParameterization`. It is the same as calling
-   :func:`Problem::SetParameterBlockConstant` on that parameter block.
-
-:class:`HomogeneousVectorParameterization`
-------------------------------------------
-
-.. NOTE::
-
-   :class:`HomogeneousVectorParameterization` is deprecated. It will
-   be removed in version 2.2.0 of Ceres Solver. Please use
-   :class:`SphereManifold` instead.
-
-.. class:: HomogeneousVectorParameterization
-
-In computer vision, homogeneous vectors are commonly used to represent
-objects in projective geometry such as points in projective space. One
-example where it is useful to use this over-parameterization is in
-representing points whose triangulation is ill-conditioned. Here it is
-advantageous to use homogeneous vectors, instead of an Euclidean
-vector, because it can represent points at and near infinity.
-
-:class:`HomogeneousVectorParameterization` defines a
-:class:`LocalParameterization` for an :math:`n-1` dimensional
-manifold that embedded in :math:`n` dimensional space where the
-scale of the vector does not matter, i.e., elements of the
-projective space :math:`\mathbb{P}^{n-1}`. It assumes that the last
-coordinate of the :math:`n`-vector is the *scalar* component of the
-homogeneous vector, i.e., *finite* points in this representation are
-those for which the *scalar* component is non-zero.
-
-Further, ``HomogeneousVectorParameterization::Plus`` preserves the
-scale of :math:`x`.
-
-:class:`LineParameterization`
------------------------------
-
-.. NOTE::
-
-   :class:`LineParameterization` is deprecated. It will be removed in
-   version 2.2.0 of Ceres Solver. Please use :class:`LineManifold`
-   instead.
-
-.. class:: LineParameterization
-
-This class provides a parameterization for lines, where the line is
-defined using an origin point and a direction vector. So the
-parameter vector size needs to be two times the ambient space
-dimension, where the first half is interpreted as the origin point
-and the second half as the direction. This local parameterization is
-a special case of the `Affine Grassmannian manifold
-<https://en.wikipedia.org/wiki/Affine_Grassmannian_(manifold))>`_
-for the case :math:`\operatorname{Graff}_1(R^n)`.
-
-Note that this is a parameterization for a line, rather than a point
-constrained to lie on a line. It is useful when one wants to optimize
-over the space of lines. For example, :math:`n` distinct points in 3D
-(measurements) we want to find the line that minimizes the sum of
-squared distances to all the points.
-
-:class:`ProductParameterization`
---------------------------------
-
-.. NOTE::
-
-   :class:`ProductParameterization` is deprecated. It will be removed
-   in version 2.2.0 of Ceres Solver. Please use
-   :class:`ProductManifold` instead.
-
-.. class:: ProductParameterization
-
-Consider an optimization problem over the space of rigid
-transformations :math:`SE(3)`, which is the Cartesian product of
-:math:`SO(3)` and :math:`\mathbb{R}^3`. Suppose you are using
-Quaternions to represent the rotation, Ceres ships with a local
-parameterization for that and :math:`\mathbb{R}^3` requires no, or
-:class:`IdentityParameterization` parameterization. So how do we
-construct a local parameterization for a parameter block a rigid
-transformation?
-
-In cases, where a parameter block is the Cartesian product of a number
-of manifolds and you have the local parameterization of the individual
-manifolds available, :class:`ProductParameterization` can be used to
-construct a local parameterization of the Cartesian product. For the
-case of the rigid transformation, where say you have a parameter block
-of size 7, where the first four entries represent the rotation as a
-quaternion, a local parameterization can be constructed as
-
-.. code-block:: c++
-
-   ProductParameterization se3_param(new QuaternionParameterization(),
-                                     new IdentityParameterization(3));
-
-
-:class:`AutoDiffLocalParameterization`
-======================================
-
-.. NOTE::
-
-   :class:`AutoDiffParameterization` is deprecated. It will be removed
-   in version 2.2.0 of Ceres Solver. Please use
-   :class:`AutoDiffManifold` instead.
-
-.. class:: AutoDiffLocalParameterization
-
-  :class:`AutoDiffLocalParameterization` does for
-  :class:`LocalParameterization` what :class:`AutoDiffCostFunction`
-  does for :class:`CostFunction`. It allows the user to define a
-  templated functor that implements the
-  :func:`LocalParameterization::Plus` operation and it uses automatic
-  differentiation to implement the computation of the Jacobian.
-
-  To get an auto differentiated local parameterization, you must
-  define a class with a templated operator() (a functor) that computes
-
-     .. math:: x' = \boxplus(x, \Delta x),
-
-  For example, Quaternions have a three dimensional local
-  parameterization. Its plus operation can be implemented as (taken
-  from `internal/ceres/autodiff_local_parameterization_test.cc
-  <https://ceres-solver.googlesource.com/ceres-solver/+/master/internal/ceres/autodiff_local_parameterization_test.cc>`_
-  )
-
-    .. code-block:: c++
-
-      struct QuaternionPlus {
-        template<typename T>
-        bool operator()(const T* x, const T* delta, T* x_plus_delta) const {
-          const T squared_norm_delta =
-              delta[0] * delta[0] + delta[1] * delta[1] + delta[2] * delta[2];
-
-          T q_delta[4];
-          if (squared_norm_delta > 0.0) {
-            T norm_delta = sqrt(squared_norm_delta);
-            const T sin_delta_by_delta = sin(norm_delta) / norm_delta;
-            q_delta[0] = cos(norm_delta);
-            q_delta[1] = sin_delta_by_delta * delta[0];
-            q_delta[2] = sin_delta_by_delta * delta[1];
-            q_delta[3] = sin_delta_by_delta * delta[2];
-          } else {
-            // We do not just use q_delta = [1,0,0,0] here because that is a
-            // constant and when used for automatic differentiation will
-            // lead to a zero derivative. Instead we take a first order
-            // approximation and evaluate it at zero.
-            q_delta[0] = T(1.0);
-            q_delta[1] = delta[0];
-            q_delta[2] = delta[1];
-            q_delta[3] = delta[2];
-          }
-
-          QuaternionProduct(q_delta, x, x_plus_delta);
-          return true;
-        }
-      };
-
-  Given this struct, the auto differentiated local
-  parameterization can now be constructed as
-
-  .. code-block:: c++
-
-     LocalParameterization* local_parameterization =
-         new AutoDiffLocalParameterization<QuaternionPlus, 4, 3>;
-                                                           |  |
-                                Global Size ---------------+  |
-                                Local Size -------------------+
-
-
-
 :class:`Problem`
 ================
 
 .. class:: Problem
-
-   .. NOTE:: We are currently in the process of transitioning from
-      :class:`LocalParameterization` to :class:`Manifolds` in the
-      Ceres Solver API. During this period, :class:`Problem` will
-      support using both :class:`Manifold` and
-      :class:`LocalParameterization` objects interchangeably. In
-      particular, adding a :class:`LocalParameterization` to a
-      parameter block is the same as adding a :class:`Manifold` to
-      that parameter block. For methods in the API affected by this
-      change, see their documentation below.
 
    :class:`Problem` holds the robustified bounds constrained
    non-linear least squares problem :eq:`ceresproblem_modeling`. To
@@ -2331,18 +1894,16 @@ quaternion, a local parameterization can be constructed as
    **Ownership**
 
    :class:`Problem` by default takes ownership of the
-   ``cost_function``, ``loss_function``, ``local_parameterization``,
-   and ``manifold`` pointers. These objects remain live for the life
-   of the :class:`Problem`. If the user wishes to keep control over
-   the destruction of these objects, then they can do this by setting
-   the corresponding enums in the :class:`Problem::Options` struct.
+   ``cost_function``, ``loss_function`` and ``manifold`` pointers. These
+   objects remain live for the life of the :class:`Problem`. If the user wishes
+   to keep control over the destruction of these objects, then they can do this
+   by setting the corresponding enums in the :class:`Problem::Options` struct.
 
    Note that even though the Problem takes ownership of objects,
    ``cost_function`` and ``loss_function``, it does not preclude the
    user from re-using them in another residual block. Similarly the
-   same ``local_parameterization`` or ``manifold`` object can be used
-   with multiple parameter blocks. The destructor takes care to call
-   delete on each owned object exactly once.
+   same ``manifold`` object can be used with multiple parameter blocks. The
+   destructor takes care to call delete on each owned object exactly once.
 
 .. class:: Problem::Options
 
@@ -2369,25 +1930,6 @@ quaternion, a local parameterization can be constructed as
    If set to ``TAKE_OWNERSHIP``, then the problem object will delete the
    loss functions on destruction. The destructor is careful to delete
    the pointers only once, since sharing loss functions is allowed.
-
-.. member:: Ownership Problem::Options::local_parameterization_ownership
-
-   .. NOTE::
-
-      `Problem::Options::local_parameterization_ownership` is
-      deprecated. It will be removed in Ceres Solver version
-      2.2.0. Please move to using Manifolds and use
-      `Problem::Options::manifold_ownership` instead.
-
-   Default: ``TAKE_OWNERSHIP``
-
-   This option controls whether the Problem object owns the local
-   parameterizations.
-
-   If set to ``TAKE_OWNERSHIP``, then the problem object will delete the
-   local parameterizations on destruction. The destructor is careful
-   to delete the pointers only once, since sharing local
-   parameterizations is allowed.
 
 .. member:: Ownership Problem::Options::manifold_ownership
 
@@ -2529,48 +2071,7 @@ quaternion, a local parameterization can be constructed as
       problem.AddResidualBlock(new MyUnaryCostFunction(...), nullptr, v1);
       problem.AddResidualBlock(new MyBinaryCostFunction(...), nullptr, v2);
 
-.. function:: void Problem::AddParameterBlock(double* values, int size, LocalParameterization* local_parameterization)
-
-   .. NOTE::
-
-       This method is deprecated and will be removed in Ceres Solver
-       version 2.2.0. Please move to using the :class:`Manifold` based version
-       of `AddParameterBlock`.
-
-       During the transition from :class:`LocalParameterization` to
-       :class:`Manifold`, internally the
-       :class:`LocalParameterization` is treated as a
-       :class:`Manifold` by wrapping it using a `ManifoldAdapter`
-       object. So :func:`Problem::HasManifold` will return true,
-       :func:`Problem::GetManifold` will return the wrapped object and
-       :func:`Problem::ParameterBlockTangentSize` will return the value of
-       :func:`LocalParameterization::LocalSize`.
-
-   Add a parameter block with appropriate size and parameterization to the
-   problem. It is okay for ``local_parameterization`` to be ``nullptr``.
-
-   Repeated calls with the same arguments are ignored. Repeated calls
-   with the same double pointer but a different size results in a crash
-   (unless :member:`Solver::Options::disable_all_safety_checks` is set to ``true``).
-
-   Repeated calls with the same double pointer and size but different
-   :class:`LocalParameterization` is equivalent to calling
-   `SetParameterization(local_parameterization)`, i.e., any previously
-   associated :class:`LocalParameterization` or :class:`Manifold`
-   object will be replaced with the `local_parameterization`.
-
-
 .. function:: void Problem::AddParameterBlock(double* values, int size, Manifold* manifold)
-
-   .. NOTE::
-
-      During the transition from :class:`LocalParameterization` to
-      :class:`Manifold`, calling `AddParameterBlock` with a
-      :class:`Manifold` when a :class:`LocalParameterization` is
-      already associated with the parameter block is okay. It is
-      equivalent to calling `SetManifold(manifold)`, i.e., any
-      previously associated :class:`LocalParameterization` or
-      :class:`Manifold` object will be replaced with the manifold.
 
    Add a parameter block with appropriate size and Manifold to the
    problem. It is okay for ``manifold`` to be ``nullptr``.
@@ -2581,8 +2082,8 @@ quaternion, a local parameterization can be constructed as
 
    Repeated calls with the same double pointer and size but different
    :class:`Manifold` is equivalent to calling `SetManifold(manifold)`,
-   i.e., any previously associated :class:`LocalParameterization` or
-   :class:`Manifold` object will be replaced with the `manifold`.
+   i.e., any previously associated :class:`Manifold` object will be replaced
+   with the `manifold`.
 
 .. function:: void Problem::AddParameterBlock(double* values, int size)
 
@@ -2621,8 +2122,8 @@ quaternion, a local parameterization can be constructed as
    depend on the parameter are also removed, as described above in
    :func:`RemoveResidualBlock()`.
 
-   The parameterization of the parameter block, if it exists, will
-   persist until the deletion of the problem.
+   The manifold of the parameter block, if it exists, will persist until the
+   deletion of the problem.
 
    If :member:`Problem::Options::enable_fast_removal` is ``true``, then the removal
    is fast (almost constant time). Otherwise, removing a parameter
@@ -2647,88 +2148,16 @@ quaternion, a local parameterization can be constructed as
    Returns ``true`` if a parameter block is set constant, and false
    otherwise. A parameter block may be set constant in two ways:
    either by calling ``SetParameterBlockConstant`` or by associating a
-   :class:`LocalParameterization` or :class:`Manifold` with a zero
-   dimensional tangent space with it.
-
-.. function:: void Problem::SetParameterization(double* values, LocalParameterization* local_parameterization)
-
-   .. NOTE::
-
-      This method is deprecated and will be removed in Ceres Solver
-      version 2.2.0. Please move to using the SetManifold instead.
-
-      During the transition from :class:`LocalParameterization` to
-      :class:`Manifold`, calling `AddParameterBlock` with a
-      :class:`Manifold` when a :class:`LocalParameterization` is
-      already associated with the parameter block is okay. It is
-      equivalent to calling `SetManifold(manifold)`, i.e., any
-      previously associated :class:`LocalParameterization` or
-      :class:`Manifold` object will be replaced with the manifold.
-
-   Set the :class:`LocalParameterization` for the parameter
-   block. Calling :func:`Problem::SetParameterization` with
-   ``nullptr`` will clear any previously set
-   :class:`LocalParameterization` or :class:`Manifold` for the
-   parameter block.
-
-   Repeated calls will cause any previously associated
-   :class:`LocalParameterization` or :class:`Manifold` object to be
-   replaced with the ``local_parameterization``.
-
-   The ``local_parameterization`` is owned by the :class:`Problem` by
-   default (See :class:`Problem::Options` to override this behaviour).
-
-   It is acceptable to set the same :class:`LocalParameterization` for
-   multiple parameter blocks; the Problem destructor is careful to
-   delete :class:`LocalParameterizations` only once.
-
-.. function:: LocalParameterization* Problem::GetParameterization(const double* values) const
-
-   Get the local parameterization object associated with this
-   parameter block. If there is no parameterization object associated
-   then ``nullptr`` is returned
-
-   .. NOTE::
-
-       This method is deprecated and will be removed in Ceres Solver
-       version 2.2.0. Please move to using the
-       :func:`Problem::GetParameterization` instead.
-
-       Note also that if a :class:`LocalParameterization` is
-       associated with a parameter block, :func:`Problem::HasManifold`
-       will return true and :func:`Problem::GetManifold` will return
-       the :class:`LocalParameterization` wrapped in a
-       ``ManifoldAdapter``.
-
-       The converse is NOT true, i.e., if a :class:`Manifold` is
-       associated with a parameter block,
-       :func:`Problem::HasParameterization` will return ``false`` and
-       :func:`Problem::GetParameterization` will return a
-       ``nullptr``.
-
-.. function:: bool HasParameterization(const double* values) const;
-
-   Returns ``true`` if a :class:`LocalParameterization` is associated
-   with this parameter block, ``false`` otherwise.
-
-   .. NOTE::
-
-      This method is deprecated and will be removed in the next public
-      release of Ceres Solver. Use :func:`Problem::HasManifold` instead.
-
-      Note also that if a :class:`Manifold` is associated with the
-      parameter block, this method will return ``false``.
+   :class:`Manifold` with a zero dimensional tangent space with it.
 
 .. function:: void SetManifold(double* values, Manifold* manifold);
 
    Set the :class:`Manifold` for the parameter block. Calling
    :func:`Problem::SetManifold` with ``nullptr`` will clear any
-   previously set :class:`LocalParameterization` or :class:`Manifold`
-   for the parameter block.
+   previously set :class:`Manifold` for the parameter block.
 
    Repeated calls will result in any previously associated
-   :class:`LocalParameterization` or :class:`Manifold` object to be
-   replaced with ``manifold``.
+   :class:`Manifold` object to be replaced with ``manifold``.
 
    ``manifold`` is owned by :class:`Problem` by default (See
    :class:`Problem::Options` to override this behaviour).
@@ -2740,22 +2169,12 @@ quaternion, a local parameterization can be constructed as
 
    Get the :class:`Manifold` object associated with this parameter block.
 
-   If there is no :class:`Manifold` or :class:`LocalParameterization`
-   object associated then ``nullptr`` is returned.
-
-   .. NOTE::
-
-      During the transition from :class:`LocalParameterization` to
-      :class:`Manifold`, internally the :class:`LocalParameterization` is
-      treated as a :class:`Manifold` by wrapping it using a ``ManifoldAdapter``
-      object. So calling :func:`Problem::GetManifold` on a parameter block with a
-      :class:`LocalParameterization` associated with it will return the
-      :class:`LocalParameterization` wrapped in a ManifoldAdapter.
+   If there is no :class:`Manifold` object associated with the parameter block,
+   then ``nullptr`` is returned.
 
 .. function:: bool HasManifold(const double* values) const;
 
-   Returns ``true`` if a :class:`Manifold` or a
-   :class:`LocalParameterization` is associated with this parameter
+   Returns ``true`` if a :class:`Manifold` is associated with this parameter
    block, ``false`` otherwise.
 
 .. function:: void Problem::SetParameterLowerBound(double* values, int index, double lower_bound)
@@ -2808,27 +2227,11 @@ quaternion, a local parameterization can be constructed as
 
    The size of the parameter block.
 
-.. function:: int Problem::ParameterBlockLocalSize(const double* values) const
-
-   The dimension of the tangent space of the
-   :class:`LocalParameterization` or :class:`Manifold` for the
-   parameter block. If there is no :class:`LocalParameterization` or
-   :class:`Manifold` associated with this parameter block, then
-   ``ParameterBlockLocalSize = ParameterBlockSize``.
-
-   .. NOTE::
-
-      This method is deprecated and will be removed in Ceres Solver
-      Version 2.2.0. Use :func:`Problem::ParameterBlockTangentSize`
-      instead.
-
 .. function:: int Problem::ParameterBlockTangentSize(const double* values) const
 
-   The dimension of the tangent space of the
-   :class:`LocalParameterization` or :class:`Manifold` for the
-   parameter block. If there is no :class:`LocalParameterization` or
-   :class:`Manifold` associated with this parameter block, then
-   ``ParameterBlockLocalSize = ParameterBlockSize``.
+   The dimension of the tangent space of the :class:`Manifold` for the
+   parameter block. If there is no :class:`Manifold` associated with this
+   parameter block, then ``ParameterBlockTangentSize = ParameterBlockSize``.
 
 .. function:: bool Problem::HasParameterBlock(const double* values) const
 
@@ -2889,10 +2292,9 @@ quaternion, a local parameterization can be constructed as
    memory locations to have been modified.
 
    The returned cost and jacobians have had robustification and
-   :class:`LocalParameterization`/:class:`Manifold` applied already;
-   for example, the jacobian for a 4-dimensional quaternion parameter
-   using the :class:`QuaternionManifold` is ``num_residuals x 3``
-   instead of ``num_residuals x 4``.
+   :class:`Manifold` applied already; for example, the jacobian for a
+   4-dimensional quaternion parameter using the :class:`QuaternionManifold` is
+   ``num_residuals x 3`` instead of ``num_residuals x 4``.
 
    ``apply_loss_function`` as the name implies allows the user to
    switch the application of the loss function on and off.
@@ -2962,11 +2364,10 @@ quaternion, a local parameterization can be constructed as
 
    .. NOTE::
 
-      If no :class:`LocalParameterization`/:class:`Manifold` are used,
-      then the size of the gradient vector is the sum of the sizes of
-      all the parameter blocks. If a parameter block has a local
-      parameterization, then it contributes "LocalSize" entries to the
-      gradient vector.
+      If no :class:`Manifold` are used, then the size of the gradient vector is
+      the sum of the sizes of all the parameter blocks. If a parameter block has
+      a manifold then it contributes "TangentSize" entries to the gradient
+      vector.
 
    .. NOTE::
 

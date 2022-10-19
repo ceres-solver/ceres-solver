@@ -200,9 +200,8 @@ class CERES_NO_EXPORT ProblemImpl {
   std::unique_ptr<internal::Program> program_;
 
   // TODO(sameeragarwal): Unify the shared object handling across object types.
-  // Right now we are using vectors for LocalParameterization and Manifold
-  // objects and reference counting for CostFunctions and LossFunctions. Ideally
-  // this should be done uniformly.
+  // Right now we are using vectors for Manifold objects and reference counting
+  // for CostFunctions and LossFunctions. Ideally this should be done uniformly.
 
   // When removing parameter blocks, manifolds have ambiguous
   // ownership. Instead of scanning the entire problem to see if the
