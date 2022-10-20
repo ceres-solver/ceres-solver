@@ -99,7 +99,7 @@ class CERES_NO_EXPORT CgnrLinearOperator final
     // y = y + Atz
     z_.setZero();
     A_.RightMultiplyAndAccumulate(x, z_, context_, num_threads_);
-    A_.LeftMultiplyAndAccumulate(z_, y);
+    A_.LeftMultiplyAndAccumulate(z_, y, context_, num_threads_);
 
     // y = y + DtDx
     if (D_ != nullptr) {
@@ -165,7 +165,9 @@ LinearSolver::Summary CgnrSolver::SolveImpl(
       preconditioner_ = std::make_unique<IdentityPreconditioner>(A->num_cols());
     }
   }
-
+  if (options_.num_threads > 1) {
+    A->AddTransposeBlockStructure();
+  }
   preconditioner_->Update(*A, per_solve_options.D);
 
   ConjugateGradientsSolverOptions cg_options;
@@ -181,7 +183,8 @@ LinearSolver::Summary CgnrSolver::SolveImpl(
   // rhs = Atb.
   Vector rhs(A->num_cols());
   rhs.setZero();
-  A->LeftMultiplyAndAccumulate(b, rhs.data());
+  A->LeftMultiplyAndAccumulate(
+      b, rhs.data(), options_.context, options_.num_threads);
 
   cg_solution_ = Vector::Zero(A->num_cols());
   for (int i = 0; i < 4; ++i) {

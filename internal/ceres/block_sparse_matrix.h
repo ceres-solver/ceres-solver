@@ -78,11 +78,17 @@ class CERES_NO_EXPORT BlockSparseMatrix final : public SparseMatrix {
                                   ContextImpl* context,
                                   int num_threads) const final;
   void LeftMultiplyAndAccumulate(const double* x, double* y) const final;
+  void LeftMultiplyAndAccumulate(const double* x,
+                                 double* y,
+                                 ContextImpl* context,
+                                 int num_threads) const final;
   void SquaredColumnNorm(double* x) const final;
   void ScaleColumns(const double* scale) final;
   void ToCompressedRowSparseMatrix(CompressedRowSparseMatrix* matrix) const;
   void ToDenseMatrix(Matrix* dense_matrix) const final;
   void ToTextFile(FILE* file) const final;
+
+  void AddTransposeBlockStructure();
 
   // clang-format off
   int num_rows()         const final { return num_rows_;     }
@@ -94,6 +100,7 @@ class CERES_NO_EXPORT BlockSparseMatrix final : public SparseMatrix {
 
   void ToTripletSparseMatrix(TripletSparseMatrix* matrix) const;
   const CompressedRowBlockStructure* block_structure() const;
+  const CompressedRowBlockStructure* transpose_block_structure() const;
 
   // Append the contents of m to the bottom of this matrix. m must
   // have the same column blocks structure as this matrix.
@@ -135,8 +142,10 @@ class CERES_NO_EXPORT BlockSparseMatrix final : public SparseMatrix {
   int num_cols_;
   int num_nonzeros_;
   int max_num_nonzeros_;
+  int max_num_nonzeros_col_{-1};
   std::unique_ptr<double[]> values_;
   std::unique_ptr<CompressedRowBlockStructure> block_structure_;
+  std::unique_ptr<CompressedRowBlockStructure> transpose_block_structure_;
 };
 
 // A number of algorithms like the SchurEliminator do not need
@@ -163,6 +172,26 @@ class CERES_NO_EXPORT BlockSparseMatrixData {
   const CompressedRowBlockStructure* block_structure_;
   const double* values_;
 };
+
+std::unique_ptr<CompressedRowBlockStructure> CreateTranspose(
+    const CompressedRowBlockStructure& bs);
+
+// Compute partition of row blocks into "almost" equall-sized disjoint sets
+// of consecutive row blocks from the range [first_row_block, last_row_block)
+//
+// Each set of row blocks except the last one will have number of non-zeros in
+// the range (partition_threshold, partition_threshold +
+// max_number_of_nonzeros_per_block)
+//
+// Algorithm takes O(P log(R)) time where P is number of partitions and R is a
+// number of row blocks, avoiding accessing every column block entry.
+//
+// This function requires cumulative number of non-zeros per row to be filled
+void CreateFairRowPartition(const CompressedRowBlockStructure& block_structure,
+                            int first_row_block,
+                            int last_row_block,
+                            int partition_threshold,
+                            std::vector<int>* partition);
 
 }  // namespace ceres::internal
 
