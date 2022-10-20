@@ -64,6 +64,25 @@ constexpr int kMinColBlockSize = 1;
 constexpr int kMaxColBlockSize = 15;
 constexpr double kBlockDensity = 5.0 / kNumColBlocks;
 
+template <bool kRequireTransposedStructure = false>
+static const BlockSparseMatrix* UnstructuredJacobian() {
+  BlockSparseMatrix::RandomMatrixOptions options;
+  options.num_row_blocks = kNumRowBlocks;
+  options.num_col_blocks = kNumColBlocks;
+  options.min_row_block_size = kMinRowBlockSize;
+  options.min_col_block_size = kMinColBlockSize;
+  options.max_row_block_size = kMaxRowBlockSize;
+  options.max_col_block_size = kMaxColBlockSize;
+  options.block_density = kBlockDensity;
+  std::mt19937 prng;
+
+  static auto jacobian = BlockSparseMatrix::CreateRandomMatrix(options, prng);
+  if (kRequireTransposedStructure) {
+    jacobian->AddTransposeBlockStructure();
+  }
+  return jacobian.get();
+}
+
 static void BM_BlockSparseRightMultiplyAndAccumulateBA(
     benchmark::State& state) {
   const int num_threads = state.range(0);
@@ -97,17 +116,7 @@ BENCHMARK(BM_BlockSparseRightMultiplyAndAccumulateBA)
 static void BM_BlockSparseRightMultiplyAndAccumulateUnstructured(
     benchmark::State& state) {
   const int num_threads = state.range(0);
-  BlockSparseMatrix::RandomMatrixOptions options;
-  options.num_row_blocks = kNumRowBlocks;
-  options.num_col_blocks = kNumColBlocks;
-  options.min_row_block_size = kMinRowBlockSize;
-  options.min_col_block_size = kMinColBlockSize;
-  options.max_row_block_size = kMaxRowBlockSize;
-  options.max_col_block_size = kMaxColBlockSize;
-  options.block_density = kBlockDensity;
-  std::mt19937 prng;
-
-  auto jacobian = BlockSparseMatrix::CreateRandomMatrix(options, prng);
+  auto jacobian = UnstructuredJacobian();
 
   ContextImpl context;
   context.EnsureMinimumThreads(num_threads);
@@ -141,6 +150,7 @@ static void BM_BlockSparseLeftMultiplyAndAccumulateBA(benchmark::State& state) {
   x.setRandom();
   y.setRandom();
   double sum = 0;
+
   for (auto _ : state) {
     jacobian->LeftMultiplyAndAccumulate(x.data(), y.data());
     sum += y.norm();
@@ -150,19 +160,40 @@ static void BM_BlockSparseLeftMultiplyAndAccumulateBA(benchmark::State& state) {
 
 BENCHMARK(BM_BlockSparseLeftMultiplyAndAccumulateBA);
 
+static void BM_BlockSparseLeftMultiplyAndAccumulateWithTransposeBA(
+    benchmark::State& state) {
+  const int num_threads = state.range(0);
+  std::mt19937 prng;
+  auto jacobian = CreateFakeBundleAdjustmentJacobian(
+      kNumCameras, kNumPoints, kCameraSize, kPointSize, kVisibility, prng);
+  jacobian->AddTransposeBlockStructure();
+  Vector x(jacobian->num_rows());
+  Vector y(jacobian->num_cols());
+  x.setRandom();
+  y.setRandom();
+  double sum = 0;
+
+  ContextImpl context;
+  context.EnsureMinimumThreads(num_threads);
+
+  for (auto _ : state) {
+    jacobian->LeftMultiplyAndAccumulate(
+        x.data(), y.data(), &context, num_threads);
+    sum += y.norm();
+  }
+  CHECK_NE(sum, 0.0);
+}
+
+BENCHMARK(BM_BlockSparseLeftMultiplyAndAccumulateWithTransposeBA)
+    ->Arg(1)
+    ->Arg(2)
+    ->Arg(4)
+    ->Arg(8)
+    ->Arg(16);
+
 static void BM_BlockSparseLeftMultiplyAndAccumulateUnstructured(
     benchmark::State& state) {
-  BlockSparseMatrix::RandomMatrixOptions options;
-  options.num_row_blocks = 100000;
-  options.num_col_blocks = 10000;
-  options.min_row_block_size = 1;
-  options.min_col_block_size = 1;
-  options.max_row_block_size = 10;
-  options.max_col_block_size = 15;
-  options.block_density = 5.0 / options.num_col_blocks;
-  std::mt19937 prng;
-
-  auto jacobian = BlockSparseMatrix::CreateRandomMatrix(options, prng);
+  auto jacobian = UnstructuredJacobian();
   Vector x(jacobian->num_rows());
   Vector y(jacobian->num_cols());
   x.setRandom();
@@ -176,6 +207,34 @@ static void BM_BlockSparseLeftMultiplyAndAccumulateUnstructured(
 }
 
 BENCHMARK(BM_BlockSparseLeftMultiplyAndAccumulateUnstructured);
+
+static void BM_BlockSparseLeftMultiplyAndAccumulateWithTransposeUnstructured(
+    benchmark::State& state) {
+  const int num_threads = state.range(0);
+  auto jacobian = UnstructuredJacobian<true>();
+  Vector x(jacobian->num_rows());
+  Vector y(jacobian->num_cols());
+  x.setRandom();
+  y.setRandom();
+  double sum = 0;
+
+  ContextImpl context;
+  context.EnsureMinimumThreads(num_threads);
+
+  for (auto _ : state) {
+    jacobian->LeftMultiplyAndAccumulate(
+        x.data(), y.data(), &context, num_threads);
+    sum += y.norm();
+  }
+  CHECK_NE(sum, 0.0);
+}
+
+BENCHMARK(BM_BlockSparseLeftMultiplyAndAccumulateWithTransposeUnstructured)
+    ->Arg(1)
+    ->Arg(2)
+    ->Arg(4)
+    ->Arg(8)
+    ->Arg(16);
 
 static void BM_CRSRightMultiplyAndAccumulateBA(benchmark::State& state) {
   const int num_threads = state.range(0);
@@ -214,17 +273,7 @@ BENCHMARK(BM_CRSRightMultiplyAndAccumulateBA)
 static void BM_CRSRightMultiplyAndAccumulateUnstructured(
     benchmark::State& state) {
   const int num_threads = state.range(0);
-  BlockSparseMatrix::RandomMatrixOptions options;
-  options.num_row_blocks = kNumRowBlocks;
-  options.num_col_blocks = kNumColBlocks;
-  options.min_row_block_size = kMinRowBlockSize;
-  options.min_col_block_size = kMinColBlockSize;
-  options.max_row_block_size = kMaxRowBlockSize;
-  options.max_col_block_size = kMaxColBlockSize;
-  options.block_density = kBlockDensity;
-  std::mt19937 prng;
-
-  auto bsm_jacobian = BlockSparseMatrix::CreateRandomMatrix(options, prng);
+  auto bsm_jacobian = UnstructuredJacobian();
   CompressedRowSparseMatrix jacobian(bsm_jacobian->num_rows(),
                                      bsm_jacobian->num_cols(),
                                      bsm_jacobian->num_nonzeros());
@@ -267,6 +316,7 @@ static void BM_CRSLeftMultiplyAndAccumulateBA(benchmark::State& state) {
   Vector y(jacobian.num_cols());
   x.setRandom();
   y.setRandom();
+
   double sum = 0;
   for (auto _ : state) {
     // This code gets timed
@@ -280,17 +330,7 @@ BENCHMARK(BM_CRSLeftMultiplyAndAccumulateBA);
 
 static void BM_CRSLeftMultiplyAndAccumulateUnstructured(
     benchmark::State& state) {
-  BlockSparseMatrix::RandomMatrixOptions options;
-  options.num_row_blocks = kNumRowBlocks;
-  options.num_col_blocks = kNumColBlocks;
-  options.min_row_block_size = kMinRowBlockSize;
-  options.min_col_block_size = kMinColBlockSize;
-  options.max_row_block_size = kMaxRowBlockSize;
-  options.max_col_block_size = kMaxColBlockSize;
-  options.block_density = kBlockDensity;
-  std::mt19937 prng;
-
-  auto bsm_jacobian = BlockSparseMatrix::CreateRandomMatrix(options, prng);
+  auto bsm_jacobian = UnstructuredJacobian();
   CompressedRowSparseMatrix jacobian(bsm_jacobian->num_rows(),
                                      bsm_jacobian->num_cols(),
                                      bsm_jacobian->num_nonzeros());
@@ -346,17 +386,7 @@ BENCHMARK(BM_CudaRightMultiplyAndAccumulateBA);
 
 static void BM_CudaRightMultiplyAndAccumulateUnstructured(
     benchmark::State& state) {
-  BlockSparseMatrix::RandomMatrixOptions options;
-  options.num_row_blocks = kNumRowBlocks;
-  options.num_col_blocks = kNumColBlocks;
-  options.min_row_block_size = kMinRowBlockSize;
-  options.min_col_block_size = kMinColBlockSize;
-  options.max_row_block_size = kMaxRowBlockSize;
-  options.max_col_block_size = kMaxColBlockSize;
-  options.block_density = kBlockDensity;
-  std::mt19937 prng;
-
-  auto jacobian = BlockSparseMatrix::CreateRandomMatrix(options, prng);
+  auto jacobian = UnstructuredJacobian();
   ContextImpl context;
   std::string message;
   context.InitCuda(&message);
@@ -419,17 +449,7 @@ BENCHMARK(BM_CudaLeftMultiplyAndAccumulateBA);
 
 static void BM_CudaLeftMultiplyAndAccumulateUnstructured(
     benchmark::State& state) {
-  BlockSparseMatrix::RandomMatrixOptions options;
-  options.num_row_blocks = kNumRowBlocks;
-  options.num_col_blocks = kNumColBlocks;
-  options.min_row_block_size = kMinRowBlockSize;
-  options.min_col_block_size = kMinColBlockSize;
-  options.max_row_block_size = kMaxRowBlockSize;
-  options.max_col_block_size = kMaxColBlockSize;
-  options.block_density = kBlockDensity;
-  std::mt19937 prng;
-
-  auto jacobian = BlockSparseMatrix::CreateRandomMatrix(options, prng);
+  auto jacobian = UnstructuredJacobian();
   ContextImpl context;
   std::string message;
   context.InitCuda(&message);

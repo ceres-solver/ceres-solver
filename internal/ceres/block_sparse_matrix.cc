@@ -44,6 +44,12 @@
 #include "ceres/triplet_sparse_matrix.h"
 #include "glog/logging.h"
 
+#if defined(__clang__) || defined(__GNUC__)
+#define PREFETCH(addr, rw, hint) __builtin_prefetch(addr, rw, hint)
+#else
+#define NO_PREFETCH
+#endif
+
 namespace ceres::internal {
 
 BlockSparseMatrix::BlockSparseMatrix(
@@ -81,6 +87,23 @@ BlockSparseMatrix::BlockSparseMatrix(
   values_ = std::make_unique<double[]>(num_nonzeros_);
   max_num_nonzeros_ = num_nonzeros_;
   CHECK(values_ != nullptr);
+}
+
+void BlockSparseMatrix::AddTransposeBlockStructure() {
+  // Should this always compute new structure?
+  if (transpose_block_structure_ == nullptr) {
+    transpose_block_structure_ = CreateTranspose(*block_structure_);
+    auto& transpose_rows = transpose_block_structure_->rows;
+    if (transpose_rows.size()) {
+      max_num_nonzeros_col_ = transpose_rows[0].block.nnz;
+      for (int i = 1; i < transpose_rows.size(); ++i) {
+        const int curr_nnz = transpose_rows[i].block.nnz;
+        if (curr_nnz > max_num_nonzeros_col_) {
+          max_num_nonzeros_col_ = curr_nnz;
+        }
+      }
+    }
+  }
 }
 
 void BlockSparseMatrix::SetZero() {
@@ -130,14 +153,161 @@ void BlockSparseMatrix::RightMultiplyAndAccumulate(const double* x,
 }
 
 void BlockSparseMatrix::LeftMultiplyAndAccumulate(const double* x,
+                                                  double* y,
+                                                  ContextImpl* context,
+                                                  int num_threads) const {
+  // While utilizing transposed structure allows to perform parallel
+  // left-multiplication by dense vector, it makes access patterns to matrix
+  // elements scattered. Thus, parallel exectution makes sense only for parallel
+  // execution
+  CHECK(x != nullptr);
+  CHECK(y != nullptr);
+  if (transpose_block_structure_ == nullptr || num_threads == 1) {
+    LeftMultiplyAndAccumulate(x, y);
+    return;
+  }
+
+  auto transpose_bs = transpose_block_structure_.get();
+  const int num_cols = transpose_bs->rows.size();
+  if (!num_cols) return;
+
+  // Partition column blocks into disjoint sets of consecutive column blocks
+  // with balanced distribution of non-zero elements
+  //
+  // We use partitioning algorithm that provides block sizes that are
+  // within [partition_threshold, partition_threshold +
+  // max_number_of_nonzeros_per_block)
+  //
+  // Assuming that execution time is proportional to number of non-zeros, and
+  // having column blocks with at least max_num_nonzeros_col_ non-zero elements,
+  // we set partition size threshold to the value that limits maximal
+  int nnz_total = transpose_bs->rows.back().block.cumulative_nnz;
+  const int num_partitions = num_threads * 2;
+  const int maximum_partition_size = std::max(
+      (nnz_total + num_partitions - 1) / num_partitions, max_num_nonzeros_col_);
+  const int partition_size = (maximum_partition_size + 1) / 2;
+
+  std::vector<int> column_blocks_partition;
+  CreateFairRowPartition(
+      *transpose_bs, 0, num_cols, partition_size, &column_blocks_partition);
+
+  // Last element is the right boundary of the last column block set
+  const int num_partitions_real = column_blocks_partition.size() - 1;
+  const double* values = values_.get();
+#ifndef NO_PREFETCH
+  ParallelFor(
+      context,
+      0,
+      num_partitions_real,
+      num_threads,
+      [values, transpose_bs, &column_blocks_partition, x, y](int partition_id) {
+        const int first_col_id = column_blocks_partition[partition_id];
+        const int last_col_id = column_blocks_partition[partition_id + 1];
+        auto first_col = transpose_bs->rows.data() + first_col_id;
+        auto last_col = transpose_bs->rows.data() + last_col_id;
+        auto prefetch_col = first_col;
+        auto prefetch_cell = prefetch_col->cells.begin();
+        auto prefetch_last_cell = prefetch_col->cells.end();
+        int prefetch_row_pos = prefetch_col->block.position;
+        int prefetch_row_size = prefetch_col->block.size;
+
+        const int kPrefetchDepth = 8;
+        int prefetched = 0;
+
+        int process_id = 0;
+        int prefetch_id = 0;
+        const double* prefetch_values[kPrefetchDepth];
+        int prefetch_col_block_size[kPrefetchDepth];
+        int prefetch_row_block_size[kPrefetchDepth];
+        const double* prefetch_x[kPrefetchDepth];
+        double* prefetch_y[kPrefetchDepth];
+
+        while (prefetched > 0 || prefetch_col < last_col) {
+          while (prefetch_cell == prefetch_last_cell) {
+            ++prefetch_col;
+            if (prefetch_col < last_col) {
+              prefetch_cell = prefetch_col->cells.begin();
+              prefetch_last_cell = prefetch_col->cells.end();
+              prefetch_row_pos = prefetch_col->block.position;
+              prefetch_row_size = prefetch_col->block.size;
+            } else {
+              break;
+            }
+          }
+          if (prefetch_col < last_col) {
+            // prefetch next cell
+            prefetch_values[prefetch_id] = values + prefetch_cell->position;
+            const int col_block_id = prefetch_cell->block_id;
+            const auto& col_block = transpose_bs->cols[col_block_id];
+
+            prefetch_row_block_size[prefetch_id] = prefetch_row_size;
+            prefetch_y[prefetch_id] = y + prefetch_row_pos;
+
+            prefetch_col_block_size[prefetch_id] = col_block.size;
+            const int col_block_pos = col_block.position;
+            prefetch_x[prefetch_id] = x + col_block_pos;
+
+            PREFETCH(prefetch_values[prefetch_id], 0, 3);
+            PREFETCH(prefetch_x[prefetch_id], 0, 3);
+            PREFETCH(prefetch_y[prefetch_id], 1, 3);
+
+            ++prefetched;
+            ++prefetch_cell;
+            prefetch_id = (prefetch_id + 1) % kPrefetchDepth;
+          }
+          if (prefetched != kPrefetchDepth && prefetch_col < last_col) continue;
+          // multiply the oldest prefetched cell
+          MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
+              prefetch_values[process_id],
+              prefetch_col_block_size[process_id],
+              prefetch_row_block_size[process_id],
+              prefetch_x[process_id],
+              prefetch_y[process_id]);
+          process_id = (process_id + 1) % kPrefetchDepth;
+          --prefetched;
+        }
+      });
+#else
+  ParallelFor(
+      context,
+      0,
+      num_partitions_real,
+      num_threads,
+      [values, transpose_bs, &column_blocks_partition, x, y](int partition_id) {
+        for (int i = column_blocks_partition[partition_id];
+             i < column_blocks_partition[partition_id + 1];
+             ++i) {
+          int row_block_pos = transpose_bs->rows[i].block.position;
+          int row_block_size = transpose_bs->rows[i].block.size;
+          auto& cells = transpose_bs->rows[i].cells;
+
+          for (auto& cell : cells) {
+            const int col_block_id = cell.block_id;
+            const int col_block_size = transpose_bs->cols[col_block_id].size;
+            const int col_block_pos = transpose_bs->cols[col_block_id].position;
+            MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
+                values + cell.position,
+                col_block_size,
+                row_block_size,
+                x + col_block_pos,
+                y + row_block_pos);
+          }
+        }
+      });
+
+#endif
+}
+
+void BlockSparseMatrix::LeftMultiplyAndAccumulate(const double* x,
                                                   double* y) const {
   CHECK(x != nullptr);
   CHECK(y != nullptr);
-
+  // Single-threaded left products are always computed using a non-transpose
+  // block structure, because it has linear acess pattern to matrix elements
   for (int i = 0; i < block_structure_->rows.size(); ++i) {
     int row_block_pos = block_structure_->rows[i].block.position;
     int row_block_size = block_structure_->rows[i].block.size;
-    auto& cells = block_structure_->rows[i].cells;
+    const auto& cells = block_structure_->rows[i].cells;
     for (const auto& cell : cells) {
       int col_block_id = cell.block_id;
       int col_block_size = block_structure_->cols[col_block_id].size;
@@ -267,6 +437,13 @@ const CompressedRowBlockStructure* BlockSparseMatrix::block_structure() const {
   return block_structure_.get();
 }
 
+// Return a pointer to the block structure of matrix transpose. We continue to
+// hold ownership of the object though.
+const CompressedRowBlockStructure*
+BlockSparseMatrix::transpose_block_structure() const {
+  return transpose_block_structure_.get();
+}
+
 void BlockSparseMatrix::ToTextFile(FILE* file) const {
   CHECK(file != nullptr);
   for (int i = 0; i < block_structure_->rows.size(); ++i) {
@@ -337,16 +514,28 @@ void BlockSparseMatrix::AppendRows(const BlockSparseMatrix& m) {
 
   for (int i = 0; i < m_bs->rows.size(); ++i) {
     const CompressedRow& m_row = m_bs->rows[i];
-    CompressedRow& row = block_structure_->rows[old_num_row_blocks + i];
+    const int row_block_id = old_num_row_blocks + i;
+    CompressedRow& row = block_structure_->rows[row_block_id];
     row.block.size = m_row.block.size;
     row.block.position = num_rows_;
     num_rows_ += m_row.block.size;
     row.cells.resize(m_row.cells.size());
+    if (transpose_block_structure_) {
+      transpose_block_structure_->cols.emplace_back(row.block);
+    }
     for (int c = 0; c < m_row.cells.size(); ++c) {
       const int block_id = m_row.cells[c].block_id;
       row.cells[c].block_id = block_id;
       row.cells[c].position = num_nonzeros_;
-      num_nonzeros_ += m_row.block.size * m_bs->cols[block_id].size;
+
+      const int block_size = m_row.block.size * m_bs->cols[block_id].size;
+      if (transpose_block_structure_) {
+        transpose_block_structure_->rows[block_id].cells.emplace_back(
+            row_block_id, num_nonzeros_);
+        transpose_block_structure_->rows[block_id].block.nnz += block_size;
+      }
+
+      num_nonzeros_ += block_size;
     }
   }
 
@@ -360,10 +549,24 @@ void BlockSparseMatrix::AppendRows(const BlockSparseMatrix& m) {
   std::copy(m.values(),
             m.values() + m.num_nonzeros(),
             values_.get() + old_num_nonzeros);
+
+  if (transpose_block_structure_ && transpose_block_structure_->rows.size()) {
+    auto& transpose_rows = transpose_block_structure_->rows;
+
+    transpose_rows[0].block.cumulative_nnz = transpose_rows[0].block.nnz;
+    max_num_nonzeros_col_ = transpose_rows[0].block.nnz;
+    for (int c = 1; c < transpose_rows.size(); ++c) {
+      const int curr_nnz = transpose_rows[c].block.nnz;
+      if (curr_nnz > max_num_nonzeros_col_) max_num_nonzeros_col_ = curr_nnz;
+      transpose_rows[c].block.cumulative_nnz =
+          curr_nnz + transpose_rows[c - 1].block.cumulative_nnz;
+    }
+  }
 }
 
 void BlockSparseMatrix::DeleteRowBlocks(const int delta_row_blocks) {
   const int num_row_blocks = block_structure_->rows.size();
+  const int new_num_row_blocks = num_row_blocks - delta_row_blocks;
   int delta_num_nonzeros = 0;
   int delta_num_rows = 0;
   const std::vector<Block>& column_blocks = block_structure_->cols;
@@ -373,11 +576,45 @@ void BlockSparseMatrix::DeleteRowBlocks(const int delta_row_blocks) {
     for (int c = 0; c < row.cells.size(); ++c) {
       const Cell& cell = row.cells[c];
       delta_num_nonzeros += row.block.size * column_blocks[cell.block_id].size;
+
+      if (transpose_block_structure_) {
+        auto& col_cells = transpose_block_structure_->rows[cell.block_id].cells;
+        while (col_cells.size() &&
+               col_cells.back().block_id >= new_num_row_blocks) {
+          const int del_block_id = col_cells.back().block_id;
+          const int del_block_rows =
+              block_structure_->rows[del_block_id].block.size;
+          const int del_block_cols = column_blocks[cell.block_id].size;
+          const int del_cell_size = del_block_rows * del_block_cols;
+          transpose_block_structure_->rows[cell.block_id].block.nnz -=
+              del_cell_size;
+          col_cells.pop_back();
+        }
+      }
     }
   }
   num_nonzeros_ -= delta_num_nonzeros;
   num_rows_ -= delta_num_rows;
   block_structure_->rows.resize(num_row_blocks - delta_row_blocks);
+  if (transpose_block_structure_) {
+    for (int i = 0; i < delta_row_blocks; ++i) {
+      transpose_block_structure_->cols.pop_back();
+    }
+    if (transpose_block_structure_->rows.size()) {
+      auto& transpose_rows = transpose_block_structure_->rows;
+
+      transpose_rows[0].block.cumulative_nnz = transpose_rows[0].block.nnz;
+      max_num_nonzeros_col_ = transpose_rows[0].block.nnz;
+      for (int c = 1; c < transpose_rows.size(); ++c) {
+        const int curr_nnz = transpose_rows[c].block.nnz;
+        if (curr_nnz > max_num_nonzeros_col_) {
+          max_num_nonzeros_col_ = curr_nnz;
+        }
+        transpose_rows[c].block.cumulative_nnz =
+            curr_nnz + transpose_rows[c - 1].block.cumulative_nnz;
+      }
+    }
+  }
 }
 
 std::unique_ptr<BlockSparseMatrix> BlockSparseMatrix::CreateRandomMatrix(
@@ -447,6 +684,79 @@ std::unique_ptr<BlockSparseMatrix> BlockSparseMatrix::CreateRandomMatrix(
       });
 
   return matrix;
+}
+
+std::unique_ptr<CompressedRowBlockStructure> CreateTranspose(
+    const CompressedRowBlockStructure& bs) {
+  auto transpose = std::make_unique<CompressedRowBlockStructure>();
+
+  transpose->rows.resize(bs.cols.size());
+  for (int i = 0; i < bs.cols.size(); ++i) {
+    transpose->rows[i].block = bs.cols[i];
+    transpose->rows[i].block.nnz = 0;
+  }
+
+  transpose->cols.resize(bs.rows.size());
+  for (int i = 0; i < bs.rows.size(); ++i) {
+    auto& row = bs.rows[i];
+    transpose->cols[i] = row.block;
+
+    const int nrows = row.block.size;
+    for (auto& cell : row.cells) {
+      transpose->rows[cell.block_id].cells.emplace_back(i, cell.position);
+
+      const int ncols = transpose->rows[cell.block_id].block.size;
+      transpose->rows[cell.block_id].block.nnz += nrows * ncols;
+    }
+  }
+  transpose->rows[0].block.cumulative_nnz = transpose->rows[0].block.nnz;
+  for (int i = 1; i < bs.cols.size(); ++i) {
+    const int curr_nnz = transpose->rows[i].block.nnz;
+    transpose->rows[i].block.cumulative_nnz =
+        curr_nnz + transpose->rows[i - 1].block.cumulative_nnz;
+  }
+  return transpose;
+}
+
+void CreateFairRowPartition(const CompressedRowBlockStructure& block_structure,
+                            int first_row_block,
+                            int last_row_block,
+                            int partition_threshold,
+                            std::vector<int>* partition) {
+  CHECK(partition != nullptr);
+  partition->clear();
+  if (!block_structure.rows.size()) return;
+  if (first_row_block == last_row_block) return;
+  CHECK_GE(first_row_block, 0);
+  CHECK_LT(first_row_block, last_row_block);
+  CHECK_GE(block_structure.rows[first_row_block].block.cumulative_nnz, 0);
+  CHECK_LE(last_row_block, block_structure.rows.size());
+
+  int nnz_before = 0;
+  if (first_row_block > 0) {
+    nnz_before = block_structure.rows[first_row_block - 1].block.cumulative_nnz;
+  }
+  const int max_partitions =
+      (block_structure.rows[last_row_block - 1].block.cumulative_nnz +
+       partition_threshold - 1) /
+      partition_threshold;
+  partition->reserve(max_partitions + 1);
+
+  partition->push_back(first_row_block);
+  auto last_block = block_structure.rows.begin() + last_row_block;
+  while (first_row_block < last_row_block) {
+    const int target = partition_threshold + nnz_before;
+    auto next = std::partition_point(
+        block_structure.rows.begin() + first_row_block,
+        last_block,
+        [target](const auto& v) { return v.block.cumulative_nnz < target; });
+    int row_block_id = std::distance(block_structure.rows.begin(), next);
+    if (row_block_id != last_row_block) ++row_block_id;
+
+    partition->push_back(row_block_id);
+    first_row_block = row_block_id;
+    nnz_before = block_structure.rows[row_block_id - 1].block.cumulative_nnz;
+  }
 }
 
 }  // namespace ceres::internal

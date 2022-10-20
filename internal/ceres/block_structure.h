@@ -53,6 +53,8 @@ struct CERES_NO_EXPORT Block {
 
   BlockSize size{-1};
   int position{-1};  // Position along the row/column.
+  int nnz{-1}; // Number of non-zeros in cells corresponding to block
+  int cumulative_nnz{-1}; // Cumulative number of non-zeros.
 };
 
 inline bool operator==(const Block& left, const Block& right) noexcept {
