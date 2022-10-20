@@ -46,6 +46,19 @@
 
 namespace ceres::internal {
 
+namespace {
+void ComputeCumulativeNumberOfNonZeros(std::vector<CompressedList>& rows) {
+  if (!rows.size()) {
+    return;
+  }
+  rows[0].cumulative_nnz = rows[0].nnz;
+  for (int c = 1; c < rows.size(); ++c) {
+    const int curr_nnz = rows[c].nnz;
+    rows[c].cumulative_nnz = curr_nnz + rows[c - 1].cumulative_nnz;
+  }
+}
+}  // namespace
+
 BlockSparseMatrix::BlockSparseMatrix(
     CompressedRowBlockStructure* block_structure)
     : num_rows_(0),
@@ -81,6 +94,12 @@ BlockSparseMatrix::BlockSparseMatrix(
   values_ = std::make_unique<double[]>(num_nonzeros_);
   max_num_nonzeros_ = num_nonzeros_;
   CHECK(values_ != nullptr);
+}
+
+void BlockSparseMatrix::AddTransposeBlockStructure() {
+  if (transpose_block_structure_ == nullptr) {
+    transpose_block_structure_ = CreateTranspose(*block_structure_);
+  }
 }
 
 void BlockSparseMatrix::SetZero() {
@@ -133,7 +152,6 @@ void BlockSparseMatrix::LeftMultiplyAndAccumulate(const double* x,
                                                   double* y) const {
   CHECK(x != nullptr);
   CHECK(y != nullptr);
-
   for (int i = 0; i < block_structure_->rows.size(); ++i) {
     int row_block_pos = block_structure_->rows[i].block.position;
     int row_block_size = block_structure_->rows[i].block.size;
@@ -267,6 +285,13 @@ const CompressedRowBlockStructure* BlockSparseMatrix::block_structure() const {
   return block_structure_.get();
 }
 
+// Return a pointer to the block structure of matrix transpose. We continue to
+// hold ownership of the object though.
+const CompressedRowBlockStructure*
+BlockSparseMatrix::transpose_block_structure() const {
+  return transpose_block_structure_.get();
+}
+
 void BlockSparseMatrix::ToTextFile(FILE* file) const {
   CHECK(file != nullptr);
   for (int i = 0; i < block_structure_->rows.size(); ++i) {
@@ -337,16 +362,28 @@ void BlockSparseMatrix::AppendRows(const BlockSparseMatrix& m) {
 
   for (int i = 0; i < m_bs->rows.size(); ++i) {
     const CompressedRow& m_row = m_bs->rows[i];
-    CompressedRow& row = block_structure_->rows[old_num_row_blocks + i];
+    const int row_block_id = old_num_row_blocks + i;
+    CompressedRow& row = block_structure_->rows[row_block_id];
     row.block.size = m_row.block.size;
     row.block.position = num_rows_;
     num_rows_ += m_row.block.size;
     row.cells.resize(m_row.cells.size());
+    if (transpose_block_structure_) {
+      transpose_block_structure_->cols.emplace_back(row.block);
+    }
     for (int c = 0; c < m_row.cells.size(); ++c) {
       const int block_id = m_row.cells[c].block_id;
       row.cells[c].block_id = block_id;
       row.cells[c].position = num_nonzeros_;
-      num_nonzeros_ += m_row.block.size * m_bs->cols[block_id].size;
+
+      const int cell_nnz = m_row.block.size * m_bs->cols[block_id].size;
+      if (transpose_block_structure_) {
+        transpose_block_structure_->rows[block_id].cells.emplace_back(
+            row_block_id, num_nonzeros_);
+        transpose_block_structure_->rows[block_id].nnz += cell_nnz;
+      }
+
+      num_nonzeros_ += cell_nnz;
     }
   }
 
@@ -360,10 +397,16 @@ void BlockSparseMatrix::AppendRows(const BlockSparseMatrix& m) {
   std::copy(m.values(),
             m.values() + m.num_nonzeros(),
             values_.get() + old_num_nonzeros);
+
+  if (transpose_block_structure_ == nullptr) {
+    return;
+  }
+  ComputeCumulativeNumberOfNonZeros(transpose_block_structure_->rows);
 }
 
 void BlockSparseMatrix::DeleteRowBlocks(const int delta_row_blocks) {
   const int num_row_blocks = block_structure_->rows.size();
+  const int new_num_row_blocks = num_row_blocks - delta_row_blocks;
   int delta_num_nonzeros = 0;
   int delta_num_rows = 0;
   const std::vector<Block>& column_blocks = block_structure_->cols;
@@ -373,11 +416,34 @@ void BlockSparseMatrix::DeleteRowBlocks(const int delta_row_blocks) {
     for (int c = 0; c < row.cells.size(); ++c) {
       const Cell& cell = row.cells[c];
       delta_num_nonzeros += row.block.size * column_blocks[cell.block_id].size;
+
+      if (transpose_block_structure_) {
+        auto& col_cells = transpose_block_structure_->rows[cell.block_id].cells;
+        while (!col_cells.empty() &&
+               col_cells.back().block_id >= new_num_row_blocks) {
+          const int del_block_id = col_cells.back().block_id;
+          const int del_block_rows =
+              block_structure_->rows[del_block_id].block.size;
+          const int del_block_cols = column_blocks[cell.block_id].size;
+          const int del_cell_nnz = del_block_rows * del_block_cols;
+          transpose_block_structure_->rows[cell.block_id].nnz -= del_cell_nnz;
+          col_cells.pop_back();
+        }
+      }
     }
   }
   num_nonzeros_ -= delta_num_nonzeros;
   num_rows_ -= delta_num_rows;
-  block_structure_->rows.resize(num_row_blocks - delta_row_blocks);
+  block_structure_->rows.resize(new_num_row_blocks);
+
+  if (transpose_block_structure_ == nullptr) {
+    return;
+  }
+  for (int i = 0; i < delta_row_blocks; ++i) {
+    transpose_block_structure_->cols.pop_back();
+  }
+
+  ComputeCumulativeNumberOfNonZeros(transpose_block_structure_->rows);
 }
 
 std::unique_ptr<BlockSparseMatrix> BlockSparseMatrix::CreateRandomMatrix(
@@ -447,6 +513,32 @@ std::unique_ptr<BlockSparseMatrix> BlockSparseMatrix::CreateRandomMatrix(
       });
 
   return matrix;
+}
+
+std::unique_ptr<CompressedRowBlockStructure> CreateTranspose(
+    const CompressedRowBlockStructure& bs) {
+  auto transpose = std::make_unique<CompressedRowBlockStructure>();
+
+  transpose->rows.resize(bs.cols.size());
+  for (int i = 0; i < bs.cols.size(); ++i) {
+    transpose->rows[i].block = bs.cols[i];
+    transpose->rows[i].nnz = 0;
+  }
+
+  transpose->cols.resize(bs.rows.size());
+  for (int i = 0; i < bs.rows.size(); ++i) {
+    auto& row = bs.rows[i];
+    transpose->cols[i] = row.block;
+
+    const int nrows = row.block.size;
+    for (auto& cell : row.cells) {
+      transpose->rows[cell.block_id].cells.emplace_back(i, cell.position);
+      const int ncols = transpose->rows[cell.block_id].block.size;
+      transpose->rows[cell.block_id].nnz += nrows * ncols;
+    }
+  }
+  ComputeCumulativeNumberOfNonZeros(transpose->rows);
+  return transpose;
 }
 
 }  // namespace ceres::internal

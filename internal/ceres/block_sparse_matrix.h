@@ -84,6 +84,8 @@ class CERES_NO_EXPORT BlockSparseMatrix final : public SparseMatrix {
   void ToDenseMatrix(Matrix* dense_matrix) const final;
   void ToTextFile(FILE* file) const final;
 
+  void AddTransposeBlockStructure();
+
   // clang-format off
   int num_rows()         const final { return num_rows_;     }
   int num_cols()         const final { return num_cols_;     }
@@ -94,6 +96,7 @@ class CERES_NO_EXPORT BlockSparseMatrix final : public SparseMatrix {
 
   void ToTripletSparseMatrix(TripletSparseMatrix* matrix) const;
   const CompressedRowBlockStructure* block_structure() const;
+  const CompressedRowBlockStructure* transpose_block_structure() const;
 
   // Append the contents of m to the bottom of this matrix. m must
   // have the same column blocks structure as this matrix.
@@ -137,6 +140,7 @@ class CERES_NO_EXPORT BlockSparseMatrix final : public SparseMatrix {
   int max_num_nonzeros_;
   std::unique_ptr<double[]> values_;
   std::unique_ptr<CompressedRowBlockStructure> block_structure_;
+  std::unique_ptr<CompressedRowBlockStructure> transpose_block_structure_;
 };
 
 // A number of algorithms like the SchurEliminator do not need
@@ -163,6 +167,9 @@ class CERES_NO_EXPORT BlockSparseMatrixData {
   const CompressedRowBlockStructure* block_structure_;
   const double* values_;
 };
+
+std::unique_ptr<CompressedRowBlockStructure> CreateTranspose(
+    const CompressedRowBlockStructure& bs);
 
 }  // namespace ceres::internal
 

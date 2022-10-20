@@ -227,6 +227,85 @@ TEST_F(BlockSparseMatrixTest, AppendRows) {
   }
 }
 
+TEST_F(BlockSparseMatrixTest, AppendDeleteRowsTransposedStructure) {
+  auto problem = CreateLinearLeastSquaresProblemFromId(2);
+  std::unique_ptr<BlockSparseMatrix> m(
+      down_cast<BlockSparseMatrix*>(problem->A.release()));
+
+  A_->AddTransposeBlockStructure();
+  auto block_structure = A_->block_structure();
+
+  // Several AppendRows and DeleteRowBlocks operations are applied to matrix,
+  // with regular and transpose block structures being compared after each
+  // operation.
+  //
+  // Non-negative values encode number of row blocks to remove
+  // -1 encodes appending matrix m
+  const int num_row_blocks_to_delete[] = {0, -1, 1, -1, 8, -1, 10};
+  for (auto& t : num_row_blocks_to_delete) {
+    if (t == -1) {
+      A_->AppendRows(*m);
+    } else if (t > 0) {
+      CHECK_GE(block_structure->rows.size(), t);
+      A_->DeleteRowBlocks(t);
+    }
+
+    auto block_structure = A_->block_structure();
+    auto transpose_block_structure = A_->transpose_block_structure();
+    ASSERT_NE(block_structure, nullptr);
+    ASSERT_NE(transpose_block_structure, nullptr);
+
+    EXPECT_EQ(block_structure->rows.size(),
+              transpose_block_structure->cols.size());
+    EXPECT_EQ(block_structure->cols.size(),
+              transpose_block_structure->rows.size());
+
+    std::vector<int> nnz_col(transpose_block_structure->rows.size());
+    for (int i = 0; i < block_structure->cols.size(); ++i) {
+      EXPECT_EQ(block_structure->cols[i].position,
+                transpose_block_structure->rows[i].block.position);
+      const int col_size = transpose_block_structure->rows[i].block.size;
+      EXPECT_EQ(block_structure->cols[i].size, col_size);
+
+      for (auto& col_cell : transpose_block_structure->rows[i].cells) {
+        int matches = 0;
+        const int row_block_id = col_cell.block_id;
+        nnz_col[i] +=
+            col_size * transpose_block_structure->cols[row_block_id].size;
+        for (auto& row_cell : block_structure->rows[row_block_id].cells) {
+          if (row_cell.block_id != i) continue;
+          EXPECT_EQ(row_cell.position, col_cell.position);
+          ++matches;
+        }
+        EXPECT_EQ(matches, 1);
+      }
+      EXPECT_EQ(nnz_col[i], transpose_block_structure->rows[i].nnz);
+      if (i > 0) {
+        nnz_col[i] += nnz_col[i - 1];
+      }
+      EXPECT_EQ(nnz_col[i], transpose_block_structure->rows[i].cumulative_nnz);
+    }
+    for (int i = 0; i < block_structure->rows.size(); ++i) {
+      EXPECT_EQ(block_structure->rows[i].block.position,
+                transpose_block_structure->cols[i].position);
+      EXPECT_EQ(block_structure->rows[i].block.size,
+                transpose_block_structure->cols[i].size);
+
+      for (auto& row_cell : block_structure->rows[i].cells) {
+        int matches = 0;
+        const int col_block_id = row_cell.block_id;
+        for (auto& col_cell :
+             transpose_block_structure->rows[col_block_id].cells) {
+          if (col_cell.block_id != i) continue;
+          EXPECT_EQ(col_cell.position, row_cell.position);
+          ++matches;
+        }
+        EXPECT_EQ(matches, 1);
+      }
+    }
+  }
+}
+
 TEST_F(BlockSparseMatrixTest, AppendAndDeleteBlockDiagonalMatrix) {
   const std::vector<Block>& column_blocks = A_->block_structure()->cols;
   const int num_cols =
@@ -365,6 +444,47 @@ TEST(BlockSparseMatrix, ToCRSMatrix) {
     for (int i = 0; i < values_expected.size(); ++i) {
       EXPECT_EQ(m_crs.values()[i], values_expected[i]);
     }
+  }
+}
+
+TEST(BlockSparseMatrix, CreateTranspose) {
+  constexpr int kNumtrials = 10;
+  BlockSparseMatrix::RandomMatrixOptions options;
+  options.num_col_blocks = 10;
+  options.min_col_block_size = 1;
+  options.max_col_block_size = 3;
+
+  options.num_row_blocks = 20;
+  options.min_row_block_size = 1;
+  options.max_row_block_size = 4;
+  options.block_density = 0.25;
+  std::mt19937 prng;
+
+  for (int trial = 0; trial < kNumtrials; ++trial) {
+    auto a = BlockSparseMatrix::CreateRandomMatrix(options, prng);
+
+    auto ap_bs = std::make_unique<CompressedRowBlockStructure>();
+    *ap_bs = *a->block_structure();
+    BlockSparseMatrix ap(ap_bs.release());
+    std::copy_n(a->values(), a->num_nonzeros(), ap.mutable_values());
+    ap.AddTransposeBlockStructure();
+
+    Vector x = Vector::Random(a->num_cols());
+    Vector y = Vector::Random(a->num_rows());
+    Vector a_x = Vector::Zero(a->num_rows());
+    Vector a_t_y = Vector::Zero(a->num_cols());
+    Vector ap_x = Vector::Zero(a->num_rows());
+    Vector ap_t_y = Vector::Zero(a->num_cols());
+    a->RightMultiplyAndAccumulate(x.data(), a_x.data());
+    ap.RightMultiplyAndAccumulate(x.data(), ap_x.data());
+    EXPECT_NEAR((a_x - ap_x).norm() / a_x.norm(),
+                0.0,
+                std::numeric_limits<double>::epsilon());
+    a->LeftMultiplyAndAccumulate(y.data(), a_t_y.data());
+    ap.LeftMultiplyAndAccumulate(y.data(), ap_t_y.data());
+    EXPECT_NEAR((a_t_y - ap_t_y).norm() / a_t_y.norm(),
+                0.0,
+                std::numeric_limits<double>::epsilon());
   }
 }
 

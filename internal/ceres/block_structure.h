@@ -81,6 +81,11 @@ struct CERES_NO_EXPORT CompressedList {
   explicit CompressedList(int num_cells) noexcept : cells(num_cells) {}
   Block block;
   std::vector<Cell> cells;
+  // Number of non-zeros in cells of this row block
+  int nnz{-1};
+  // Number of non-zeros in cells of this and every preceeding row block in
+  // block-sparse matrix
+  int cumulative_nnz{-1};
 };
 
 using CompressedRow = CompressedList;
