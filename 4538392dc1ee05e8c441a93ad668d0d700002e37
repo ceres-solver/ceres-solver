@@ -50,6 +50,24 @@
       "message": "Dmitriy,\nBefore I review the code I wanted to comment on your observation that the random matrix being used in the spmv benchmarks are not reflective of BAL problems. This is an important observation and worthy of being addressed sooner rather than later.\n\nI have filed https://github.com/ceres-solver/ceres-solver/issues/902 to track this and will work on this shortly.",
       "revId": "4538392dc1ee05e8c441a93ad668d0d700002e37",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6910f6c6_6322c386",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-24T16:16:05Z",
+      "side": 1,
+      "message": "I am trying to understand your numbers.  So I am trying one of the problems myself. First some baseline numbers.\n\n\nCeres at HEAD on my mac with problem-1778-993923-pre.txt\n\n1 thread\nPreprocessor                         0.464052\n\n  Residual only evaluation           2.197948 (10)\n  Jacobian \u0026 residual evaluation     7.617696 (8)\n  Linear solver                    252.885207 (10)\nMinimizer                          264.878859\n\nPostprocessor                        0.040558\nTotal                              265.383469\n\n10 threads\nPreprocessor                         0.515728\n\n  Residual only evaluation           0.510388 (10)\n  Jacobian \u0026 residual evaluation     1.931564 (8)\n  Linear solver                    174.145458 (10)\nMinimizer                          178.850336\n\nPostprocessor                        0.047150\nTotal                              179.413214\n\nOn my linux box\n1 thread\nPreprocessor                         2.923402\n\n  Residual only evaluation           5.462493 (10)\n  Jacobian \u0026 residual evaluation    27.160345 (8)\n  Linear solver                    855.228743 (10)\nMinimizer                          895.325036\n\nPostprocessor                        0.430332\nTotal                              898.678770\n\n10 threads: (this maybe affected by the presence of hyper threading)\nPreprocessor                         3.094938\n\n  Residual only evaluation           1.932398 (10)\n  Jacobian \u0026 residual evaluation     7.941716 (8)\n  Linear solver                    609.993293 (10)\nMinimizer                          629.474766\n\nPostprocessor                        0.444029\nTotal                              633.013735\n\nSo for the linear solver we see that with 10 threads on the mac we get a speedup of 1.45x and 1.4x.  \n\n\nComparing this to your numbers.\n\nproblem-1778-993923-pre 28 591.306498 612.196655 270.438620 291.002631 \nproblem-1778-993923-pre 8 695.940579 716.718042 416.592095 437.172780\nproblem-1778-993923-pre 1 818.310252 860.199554 823.812240 865.549156  \n\n8 threads  at HEAD 818/695 ~ 1.2x and with your changes 823/416 ~ 2x\n28 threads at HEAD 818/591 ~ 1.4x and with your changes 823/270 ~ 3x \n\nis this a correct interpretation?",
+      "parentUuid": "67d0d2b9_797e0232",
+      "revId": "4538392dc1ee05e8c441a93ad668d0d700002e37",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
