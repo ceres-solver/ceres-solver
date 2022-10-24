@@ -33,6 +33,23 @@
       "message": "wow dmitriy, this looks really interesting. I will send you a full review in the next few hours.",
       "revId": "4538392dc1ee05e8c441a93ad668d0d700002e37",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af3b6d9d_576eefa3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-24T13:48:52Z",
+      "side": 1,
+      "message": "Dmitriy,\nBefore I review the code I wanted to comment on your observation that the random matrix being used in the spmv benchmarks are not reflective of BAL problems. This is an important observation and worthy of being addressed sooner rather than later.\n\nI have filed https://github.com/ceres-solver/ceres-solver/issues/902 to track this and will work on this shortly.",
+      "revId": "4538392dc1ee05e8c441a93ad668d0d700002e37",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
