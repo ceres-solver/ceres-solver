@@ -86,6 +86,93 @@
       "parentUuid": "6910f6c6_6322c386",
       "revId": "4538392dc1ee05e8c441a93ad668d0d700002e37",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9d6e25c_344cd2df",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-24T17:00:16Z",
+      "side": 1,
+      "message": "won\u0027t storing the nnz count in each compressedrow/column work? I suppose we still need to compute and store the split. I am wondering if there is a simple way to cache it between calls to LeftMultiply.",
+      "parentUuid": "71daacd7_55f3f9cf",
+      "revId": "4538392dc1ee05e8c441a93ad668d0d700002e37",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0f403c4_439e33ad",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-24T17:00:16Z",
+      "side": 1,
+      "message": "It is odd to have this policy decision buried deep here. Since we are passing number of threads explicitly, shouldn\u0027t this be something that the caller should decide based on the types of matrices they are dealing with?",
+      "range": {
+        "startLine": 151,
+        "startChar": 20,
+        "endLine": 151,
+        "endChar": 61
+      },
+      "revId": "4538392dc1ee05e8c441a93ad668d0d700002e37",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "465fca3c_522a0174",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-24T17:00:16Z",
+      "side": 1,
+      "message": "I think it is reasonable to add an nnz count to CompressedRow \u003d CompresssedList.\n\n\nCurrently it is \n\n```\n\nstruct CERES_NO_EXPORT CompressedList {\n  Block block;\n  std::vector\u003cCell\u003e cells;\n};\n```\n\nand replace that with \n\n```\nstruct CERES_NO_EXPORT CompressedList {\n  Block block;\n  int nnz;\n  std::vector\u003cCell\u003e cells;\n};\n\n```\n\nWDYT? the semantics can be that nnz is -1 by default, but if its non-negative it should be correct?\n\nand we can make sure createtranspose populates it?",
+      "range": {
+        "startLine": 160,
+        "startChar": 23,
+        "endLine": 160,
+        "endChar": 24
+      },
+      "revId": "4538392dc1ee05e8c441a93ad668d0d700002e37",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "071a13d4_c983da3e",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-24T17:00:16Z",
+      "side": 1,
+      "message": "this chunk of the code should definitely be split into its own functions and tested.",
+      "range": {
+        "startLine": 164,
+        "startChar": 7,
+        "endLine": 164,
+        "endChar": 13
+      },
+      "revId": "4538392dc1ee05e8c441a93ad668d0d700002e37",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
