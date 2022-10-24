@@ -68,6 +68,24 @@
       "parentUuid": "67d0d2b9_797e0232",
       "revId": "4538392dc1ee05e8c441a93ad668d0d700002e37",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71daacd7_55f3f9cf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-10-24T16:33:25Z",
+      "side": 1,
+      "message": "Yes, your interpretation is correct.\n\nFor this part of table linear solver took \n\n```\n     1-core 8-core 28-core\nHEAD 818s   695s   591s\nCL   823s   416s   279s\n```\n\n\nDividing (818+823)/2 by this table yields speedup over single-threaded as\n\n```\n     1-core 8-core 28-core\nHEAD 1.00x  1.18x  1.39x\nCL   1.00x  1.97x  2.94x\n```\n\n\nTime is measured on 28-core/56-thread CPU inside a dual-cpu workstation (running debian sid), with a total memory bandwidth per cpu ~120Gbyte/s.\n\nThreads are pinned to a single cpu and all memory allocations are pinned to the memory attached to said CPU.",
+      "parentUuid": "6910f6c6_6322c386",
+      "revId": "4538392dc1ee05e8c441a93ad668d0d700002e37",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
