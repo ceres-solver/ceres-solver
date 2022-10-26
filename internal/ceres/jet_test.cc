@@ -174,6 +174,12 @@ const J x = MakeJet(2.3, -2.7, 1e-3);
 const J y = MakeJet(1.7, 0.5, 1e+2);
 const J z = MakeJet(1e-6, 1e-4, 1e-2);
 
+TEST(Jet, Constexpr) {
+  constexpr Jet<double, 1> kConstexprDefault;
+  constexpr Jet<double, 1> kConstexprOne(1.0);
+  constexpr Jet<double, 2> kConstexprY(1.0, 1);
+}
+
 TEST(Jet, Elementary) {
   EXPECT_THAT((x * y) / x, IsAlmostEqualTo(y));
   EXPECT_THAT(sqrt(x * x), IsAlmostEqualTo(x));
