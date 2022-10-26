@@ -16,6 +16,24 @@
       "message": "please add a test.",
       "revId": "c1071825009967bcece418827d8f28f60a2a3dd5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76763d4c_db071074",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6717
+      },
+      "writtenOn": "2022-10-26T13:11:51Z",
+      "side": 1,
+      "message": "Done. The test is dead simple and it just checks that constexpr Jets can be constructed and compile.\n\nI imagine this test could become more comprehensive to also test that the result of adding two constexpr Jets returns another constexpr Jet (but after we annotate the operator methods with constexpr).",
+      "parentUuid": "4c7c1e6c_806f2077",
+      "revId": "c1071825009967bcece418827d8f28f60a2a3dd5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
