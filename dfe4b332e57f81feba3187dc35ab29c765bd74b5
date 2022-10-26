@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff20cf3e_56454ebb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-26T18:10:37Z",
+      "side": 1,
+      "message": "I mean why not do a full constexpr pass in that case?",
+      "revId": "dfe4b332e57f81feba3187dc35ab29c765bd74b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
