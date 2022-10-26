@@ -16,6 +16,24 @@
       "message": "I mean why not do a full constexpr pass in that case?",
       "revId": "dfe4b332e57f81feba3187dc35ab29c765bd74b5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ecb7831_87e56962",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-10-26T19:18:08Z",
+      "side": 1,
+      "message": "Definitely. The problem is that at this point adding `constexpr` is only a cosmetical change because the underlying Eigen storage does not actually support `constexpr` expressions. At the same time, there\u0027s no performance penalty in the above template code when using `const` instead of `constexpr`. Therefore, I would suggest to hold off from providing any `constexpr` support until Eigen provides it.",
+      "parentUuid": "ff20cf3e_56454ebb",
+      "revId": "dfe4b332e57f81feba3187dc35ab29c765bd74b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
