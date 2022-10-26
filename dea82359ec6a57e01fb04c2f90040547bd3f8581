@@ -16,6 +16,86 @@
       "message": "Adds an option to check left/right multiplication routines on real data.\n\nJacobians in different formats are cached (and lazily created) in order to reduce overhead when running benchmarks with multiple repetitions / different numbers of frames; gpu-side jacobians are not cached due to video memory limits.\n\n\nI\u0027ve decided to keep the name of benchmark the same, assuming a bit different semantics (\"evaluation_benchmark\" meaning not \"problem evaluation benchmark\" but \"benchmark for evaluation on real data\").",
       "revId": "dea82359ec6a57e01fb04c2f90040547bd3f8581",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "901ae17b_40fb7571",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-26T15:26:24Z",
+      "side": 1,
+      "message": "Thanks Dmitriy, this is really nice. Just some minor readability nits. otherwise good to go. It would be nice to use this for tracking optimizations than the whole end to end shabang. \n\nI am wondering if we should remove the bundle adjustment versions of the spmv benchmarks since they are just creating confusion at this point.",
+      "revId": "dea82359ec6a57e01fb04c2f90040547bd3f8581",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38377685_70844ab1",
+        "filename": "internal/ceres/evaluation_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-26T15:26:24Z",
+      "side": 1,
+      "message": "nit: the first n in nnz already means num, so num_nnz is not quite right. You can just call it nnz.",
+      "range": {
+        "startLine": 92,
+        "startChar": 14,
+        "endLine": 92,
+        "endChar": 21
+      },
+      "revId": "dea82359ec6a57e01fb04c2f90040547bd3f8581",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14585970_578d76c4",
+        "filename": "internal/ceres/evaluation_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-26T15:26:24Z",
+      "side": 1,
+      "message": "nit: crs_jacobian reads better.",
+      "revId": "dea82359ec6a57e01fb04c2f90040547bd3f8581",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb431f2f_d0aff556",
+        "filename": "internal/ceres/evaluation_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-26T15:26:24Z",
+      "side": 1,
+      "message": "Odd alignment here and below, run clang-format?",
+      "range": {
+        "startLine": 200,
+        "startChar": 12,
+        "endLine": 200,
+        "endChar": 46
+      },
+      "revId": "dea82359ec6a57e01fb04c2f90040547bd3f8581",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
