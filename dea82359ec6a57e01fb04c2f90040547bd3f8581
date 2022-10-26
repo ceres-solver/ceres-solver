@@ -35,6 +35,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ad11a24_acab9e67",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-10-26T16:13:39Z",
+      "side": 1,
+      "message": "I like the fact that `spmv_benchmark` is self-contained (not relying on having some external data) and works relatively fast (BAL data for large problems takes some time to be parsed).\n\nIf there is a simple solution (maybe modelling number of observations per point with geometric or similar distribution), that captures key properties of real problems, it would be great to have a small self-contained synthetic benchmark.",
+      "parentUuid": "901ae17b_40fb7571",
+      "revId": "dea82359ec6a57e01fb04c2f90040547bd3f8581",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "38377685_70844ab1",
@@ -48,6 +66,30 @@
       "writtenOn": "2022-10-26T15:26:24Z",
       "side": 1,
       "message": "nit: the first n in nnz already means num, so num_nnz is not quite right. You can just call it nnz.",
+      "range": {
+        "startLine": 92,
+        "startChar": 14,
+        "endLine": 92,
+        "endChar": 21
+      },
+      "revId": "dea82359ec6a57e01fb04c2f90040547bd3f8581",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "100b870d_3826bd1a",
+        "filename": "internal/ceres/evaluation_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-10-26T16:13:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38377685_70844ab1",
       "range": {
         "startLine": 92,
         "startChar": 14,
@@ -75,6 +117,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "47cf9bef_488fd1e2",
+        "filename": "internal/ceres/evaluation_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-10-26T16:13:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14585970_578d76c4",
+      "revId": "dea82359ec6a57e01fb04c2f90040547bd3f8581",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cb431f2f_d0aff556",
@@ -88,6 +148,30 @@
       "writtenOn": "2022-10-26T15:26:24Z",
       "side": 1,
       "message": "Odd alignment here and below, run clang-format?",
+      "range": {
+        "startLine": 200,
+        "startChar": 12,
+        "endLine": 200,
+        "endChar": 46
+      },
+      "revId": "dea82359ec6a57e01fb04c2f90040547bd3f8581",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3efd929_2990aec3",
+        "filename": "internal/ceres/evaluation_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-10-26T16:13:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb431f2f_d0aff556",
       "range": {
         "startLine": 200,
         "startChar": 12,
