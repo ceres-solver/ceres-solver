@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ddd639b1_10fe7d88",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-10-26T13:08:04Z",
+      "side": 1,
+      "message": "Adds an option to check left/right multiplication routines on real data.\n\nJacobians in different formats are cached (and lazily created) in order to reduce overhead when running benchmarks with multiple repetitions / different numbers of frames; gpu-side jacobians are not cached due to video memory limits.\n\n\nI\u0027ve decided to keep the name of benchmark the same, assuming a bit different semantics (\"evaluation_benchmark\" meaning not \"problem evaluation benchmark\" but \"benchmark for evaluation on real data\").",
+      "revId": "dea82359ec6a57e01fb04c2f90040547bd3f8581",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
