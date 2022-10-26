@@ -151,10 +151,8 @@ TEST(CudaDsxpy, DoubleValues) {
   fp32_gpu_a.CopyFromCpuVector(fp32_cpu_a);
   CudaBuffer<double> fp64_gpu_b(&context);
   fp64_gpu_b.CopyFromCpuVector(fp64_cpu_b);
-  CudaDsxpy(fp64_gpu_b.data(),
-            fp32_gpu_a.data(),
-            fp32_gpu_a.size(),
-            context.stream_);
+  CudaDsxpy(
+      fp64_gpu_b.data(), fp32_gpu_a.data(), fp32_gpu_a.size(), context.stream_);
   fp64_gpu_b.CopyToCpu(fp64_cpu_b.data(), fp64_cpu_b.size());
   for (int i = 0; i < fp64_cpu_b.size(); ++i) {
     EXPECT_DOUBLE_EQ(fp64_cpu_b[i], 2.0 * fp32_cpu_a[i]);
@@ -174,11 +172,8 @@ TEST(CudaDtDxpy, ComputeFourItems) {
   y_gpu.CopyFromCpuVector(y_cpu);
   CudaBuffer<double> d_gpu(&context);
   d_gpu.CopyFromCpuVector(d_cpu);
-  CudaDtDxpy(y_gpu.data(),
-             d_gpu.data(),
-             x_gpu.data(),
-             y_gpu.size(),
-             context.stream_);
+  CudaDtDxpy(
+      y_gpu.data(), d_gpu.data(), x_gpu.data(), y_gpu.size(), context.stream_);
   y_gpu.CopyToCpu(y_cpu.data(), y_cpu.size());
   EXPECT_DOUBLE_EQ(y_cpu[0], 4.0 + 10.0 * 10.0 * 1.0);
   EXPECT_DOUBLE_EQ(y_cpu[1], 3.0 + 20.0 * 20.0 * 2.0);
