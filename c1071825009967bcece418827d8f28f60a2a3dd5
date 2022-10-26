@@ -34,6 +34,24 @@
       "parentUuid": "4c7c1e6c_806f2077",
       "revId": "c1071825009967bcece418827d8f28f60a2a3dd5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5557ebf_d1d0d64c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-26T15:16:04Z",
+      "side": 1,
+      "message": "why do that too? does that require more extensive code changes beyond just adding annotations?",
+      "parentUuid": "76763d4c_db071074",
+      "revId": "c1071825009967bcece418827d8f28f60a2a3dd5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
