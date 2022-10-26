@@ -33,7 +33,10 @@
 #include <vector>
 
 #include "benchmark/benchmark.h"
+#include "ceres/block_sparse_matrix.h"
 #include "ceres/bundle_adjustment_test_util.h"
+#include "ceres/cuda_sparse_matrix.h"
+#include "ceres/cuda_vector.h"
 #include "ceres/evaluator.h"
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"
@@ -43,9 +46,15 @@
 
 namespace ceres::internal {
 
+template <typename Derived, typename Base>
+std::unique_ptr<Derived> downcast_unique_ptr(std::unique_ptr<Base>& base) {
+  return std::unique_ptr<Derived>(dynamic_cast<Derived*>(base.release()));
+}
+
 // Benchmark library might invoke benchmark function multiple times.
 // In order to save time required to parse BAL data, we ensure that
 // each dataset is being loaded at most once.
+// Each type of jacobians is also cached after first creation
 struct BALData {
   explicit BALData(const std::string& path) {
     bal_problem = std::make_unique<BundleAdjustmentProblem>(path);
@@ -57,8 +66,68 @@ struct BALData {
     program->ParameterBlocksToStateVector(parameters.data());
   }
 
+  std::unique_ptr<BlockSparseMatrix> CreateBlockSparseJacobian(
+      ContextImpl* context) {
+    auto problem = bal_problem->mutable_problem();
+    auto problem_impl = problem->mutable_impl();
+    CHECK(problem_impl != nullptr);
+
+    Evaluator::Options options;
+    options.linear_solver_type = ITERATIVE_SCHUR;
+    options.num_threads = 1;
+    options.context = context;
+    options.num_eliminate_blocks = 0;
+
+    std::string error;
+    auto program = problem_impl->mutable_program();
+    auto evaluator = Evaluator::Create(options, program, &error);
+    CHECK(evaluator != nullptr);
+
+    auto jacobian = evaluator->CreateJacobian();
+    auto block_sparse = downcast_unique_ptr<BlockSparseMatrix>(jacobian);
+    CHECK_NE(block_sparse.get(), nullptr);
+
+    std::mt19937 rng;
+    std::normal_distribution<double> rnorm;
+    const int nnz = block_sparse->num_nonzeros();
+    auto values = block_sparse->mutable_values();
+    for (int i = 0; i < nnz; ++i) {
+      values[i] = rnorm(rng);
+    }
+    return block_sparse;
+  }
+
+  std::unique_ptr<CompressedRowSparseMatrix> CreateCompressedRowSparseJacobian(
+      ContextImpl* context) {
+    auto block_sparse = BlockSparseJacobian(context);
+    auto crs_jacobian = std::make_unique<CompressedRowSparseMatrix>(
+        block_sparse->num_rows(),
+        block_sparse->num_cols(),
+        block_sparse->num_nonzeros());
+
+    block_sparse->ToCompressedRowSparseMatrix(crs_jacobian.get());
+    return crs_jacobian;
+  }
+
+  const BlockSparseMatrix* BlockSparseJacobian(ContextImpl* context) {
+    if (!block_sparse_jacobian) {
+      block_sparse_jacobian = CreateBlockSparseJacobian(context);
+    }
+    return block_sparse_jacobian.get();
+  }
+
+  const CompressedRowSparseMatrix* CompressedRowSparseJacobian(
+      ContextImpl* context) {
+    if (!crs_jacobian) {
+      crs_jacobian = CreateCompressedRowSparseJacobian(context);
+    }
+    return crs_jacobian.get();
+  }
+
   Vector parameters;
   std::unique_ptr<BundleAdjustmentProblem> bal_problem;
+  std::unique_ptr<BlockSparseMatrix> block_sparse_jacobian;
+  std::unique_ptr<CompressedRowSparseMatrix> crs_jacobian;
 };
 
 static void Residuals(benchmark::State& state,
@@ -128,6 +197,87 @@ static void ResidualsAndJacobian(benchmark::State& state,
   }
 }
 
+static void JacobianRightMultiplyAndAccumulate(benchmark::State& state,
+                                               BALData* data,
+                                               ContextImpl* context) {
+  const int num_threads = state.range(0);
+
+  auto jacobian = data->BlockSparseJacobian(context);
+
+  Vector y = Vector::Zero(jacobian->num_rows());
+  Vector x = Vector::Random(jacobian->num_cols());
+
+  for (auto _ : state) {
+    jacobian->RightMultiplyAndAccumulate(
+        x.data(), y.data(), context, num_threads);
+  }
+  CHECK_GT(y.squaredNorm(), 0.);
+}
+
+static void JacobianLeftMultiplyAndAccumulate(benchmark::State& state,
+                                              BALData* data,
+                                              ContextImpl* context) {
+  auto jacobian = data->BlockSparseJacobian(context);
+
+  Vector y = Vector::Zero(jacobian->num_cols());
+  Vector x = Vector::Random(jacobian->num_rows());
+
+  for (auto _ : state) {
+    jacobian->LeftMultiplyAndAccumulate(x.data(), y.data());
+  }
+  CHECK_GT(y.squaredNorm(), 0.);
+}
+
+#ifndef CERES_NO_CUDA
+static void JacobianRightMultiplyAndAccumulateCuda(benchmark::State& state,
+                                                   BALData* data,
+                                                   ContextImpl* context) {
+  auto crs_jacobian = data->CompressedRowSparseJacobian(context);
+  CudaSparseMatrix cuda_jacobian(context, *crs_jacobian);
+  CudaVector cuda_x(context, 0);
+  CudaVector cuda_y(context, 0);
+
+  Vector x(crs_jacobian->num_cols());
+  Vector y(crs_jacobian->num_rows());
+  x.setRandom();
+  y.setRandom();
+
+  cuda_x.CopyFromCpu(x);
+  cuda_y.CopyFromCpu(y);
+  double sum = 0;
+  for (auto _ : state) {
+    cuda_jacobian.RightMultiplyAndAccumulate(cuda_x, &cuda_y);
+    sum += cuda_y.Norm();
+    CHECK_EQ(cudaDeviceSynchronize(), cudaSuccess);
+  }
+  CHECK_NE(sum, 0.0);
+}
+
+static void JacobianLeftMultiplyAndAccumulateCuda(benchmark::State& state,
+                                                  BALData* data,
+                                                  ContextImpl* context) {
+  auto crs_jacobian = data->CompressedRowSparseJacobian(context);
+  CudaSparseMatrix cuda_jacobian(context, *crs_jacobian);
+  CudaVector cuda_x(context, 0);
+  CudaVector cuda_y(context, 0);
+
+  Vector x(crs_jacobian->num_rows());
+  Vector y(crs_jacobian->num_cols());
+  x.setRandom();
+  y.setRandom();
+
+  cuda_x.CopyFromCpu(x);
+  cuda_y.CopyFromCpu(y);
+  double sum = 0;
+  for (auto _ : state) {
+    cuda_jacobian.LeftMultiplyAndAccumulate(cuda_x, &cuda_y);
+    sum += cuda_y.Norm();
+    CHECK_EQ(cudaDeviceSynchronize(), cudaSuccess);
+  }
+  CHECK_NE(sum, 0.0);
+}
+#endif
+
 }  // namespace ceres::internal
 
 // Older versions of benchmark library might come without ::benchmark::Shutdown
@@ -151,6 +301,10 @@ int main(int argc, char** argv) {
 
   ceres::internal::ContextImpl context;
   context.EnsureMinimumThreads(16);
+#ifndef CERES_NO_CUDA
+  std::string message;
+  context.InitCuda(&message);
+#endif
 
   for (int i = 1; i < argc; ++i) {
     const std::string path(argv[i]);
@@ -175,8 +329,50 @@ int main(int argc, char** argv) {
         ->Arg(4)
         ->Arg(8)
         ->Arg(16);
-  }
+    const std::string name_right_product =
+        "JacobianRightMultiplyAndAccumulate<" + path + ">";
+    ::benchmark::RegisterBenchmark(
+        name_right_product.c_str(),
+        ceres::internal::JacobianRightMultiplyAndAccumulate,
+        data,
+        &context)
+        ->Arg(1)
+        ->Arg(2)
+        ->Arg(4)
+        ->Arg(8)
+        ->Arg(16);
 
+#ifndef CERES_NO_CUDA
+    const std::string name_right_product_cuda =
+        "JacobianRightMultiplyAndAccumulateCuda<" + path + ">";
+    ::benchmark::RegisterBenchmark(
+        name_right_product_cuda.c_str(),
+        ceres::internal::JacobianRightMultiplyAndAccumulateCuda,
+        data,
+        &context)
+        ->Arg(1);
+#endif
+
+    const std::string name_left_product =
+        "JacobianLeftMultiplyAndAccumulate<" + path + ">";
+    ::benchmark::RegisterBenchmark(
+        name_left_product.c_str(),
+        ceres::internal::JacobianLeftMultiplyAndAccumulate,
+        data,
+        &context)
+        ->Arg(1);
+
+#ifndef CERES_NO_CUDA
+    const std::string name_left_product_cuda =
+        "JacobianLeftMultiplyAndAccumulateCuda<" + path + ">";
+    ::benchmark::RegisterBenchmark(
+        name_right_product_cuda.c_str(),
+        ceres::internal::JacobianLeftMultiplyAndAccumulateCuda,
+        data,
+        &context)
+        ->Arg(1);
+#endif
+  }
   ::benchmark::RunSpecifiedBenchmarks();
 
   using namespace ::benchmark;
