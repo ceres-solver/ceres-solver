@@ -85,7 +85,7 @@ struct BALData {
 
     auto jacobian = evaluator->CreateJacobian();
     auto block_sparse = downcast_unique_ptr<BlockSparseMatrix>(jacobian);
-    CHECK_NE(block_sparse.get(), nullptr);
+    CHECK(block_sparse != nullptr);
 
     std::mt19937 rng;
     std::normal_distribution<double> rnorm;
