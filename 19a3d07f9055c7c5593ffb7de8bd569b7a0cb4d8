@@ -16,6 +16,24 @@
       "message": "Looks like this CL triggers a linker error under Apple Clang:\n```\n: \u0026\u0026 /Applications/Xcode_14.0.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -flto  -Wmissing-declarations -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter -Wno-missing-field-initializers -Qunused-arguments -mllvm -inline-threshold\u003d600 -Wno-return-type-c-linkage -O3 -DNDEBUG -isysroot /Applications/Xcode_14.0.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names  internal/ceres/CMakeFiles/evaluation_benchmark.dir/evaluation_benchmark.cc.o -o bin/evaluation_benchmark  -Wl,-rpath,/usr/local/lib  /usr/local/lib/libbenchmark.a  lib/libceres_static.a  /usr/local/lib/libglog.0.6.0.dylib  /usr/local/lib/libgflags.2.2.2.dylib  /usr/local/lib/libspqr.dylib  /usr/local/lib/libcholmod.dylib  /usr/local/lib/libamd.dylib  /usr/local/lib/libcamd.dylib  /usr/local/lib/libccolamd.dylib  /usr/local/lib/libcolamd.dylib  /usr/local/lib/libsuitesparseconfig.dylib  /usr/local/lib/libmetis.dylib  -Xlinker -framework -Xlinker Accelerate  -lm  -ldl \u0026\u0026 :\nundef: __ZN6google22MakeCheckOpValueStringIDnEEvPNSt3__113basic_ostreamIcNS1_11char_traitsIcEEEERKT_\nUndefined symbols for architecture x86_64:\n  \"void google::MakeCheckOpValueString\u003cstd::nullptr_t\u003e(std::__1::basic_ostream\u003cchar, std::__1::char_traits\u003cchar\u003e \u003e*, std::nullptr_t const\u0026)\", referenced from:\n      std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e \u003e* google::MakeCheckOpString\u003cceres::internal::BlockSparseMatrix*, std::nullptr_t\u003e(ceres::internal::BlockSparseMatrix* const\u0026, std::nullptr_t const\u0026, char const*) in lto.o\nld: symbol(s) not found for architecture x86_64\nclang: error: linker command failed with exit code 1 (use -v to see invocation)\n```",
       "revId": "19a3d07f9055c7c5593ffb7de8bd569b7a0cb4d8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c20d3f20_61097983",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-26T23:44:53Z",
+      "side": 1,
+      "message": "Lemme look, I should be able to reproduce on my laptop.",
+      "tag": "mailMessageId\u003d\u003cCABqdRUC-sLTgVy2SwvESOMAWXD05J3okyiT7DWy2dfVRY5\u003dGYg@mail.gmail.com\u003e",
+      "revId": "19a3d07f9055c7c5593ffb7de8bd569b7a0cb4d8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
