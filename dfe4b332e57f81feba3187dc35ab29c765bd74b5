@@ -52,6 +52,24 @@
       "parentUuid": "1ecb7831_87e56962",
       "revId": "dfe4b332e57f81feba3187dc35ab29c765bd74b5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c0a51ad_078e4edb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-10-26T19:40:47Z",
+      "side": 1,
+      "message": "Correct. Adding `constexpr` to constructors only will only cause confusion because `constexpr` Jets will not be usable in `constexpr` context except during initialization.",
+      "parentUuid": "95f831d2_0cd16ee4",
+      "revId": "dfe4b332e57f81feba3187dc35ab29c765bd74b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
