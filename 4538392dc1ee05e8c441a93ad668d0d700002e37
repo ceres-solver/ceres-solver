@@ -263,6 +263,30 @@
       },
       "revId": "4538392dc1ee05e8c441a93ad668d0d700002e37",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b78232c3_a46b9bc0",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-27T16:54:07Z",
+      "side": 1,
+      "message": "I think there is plenty going on in this CL, we should think about prefetching on its own in a subsequent CL, perhaps after we have seen what paritionedmatrixview changes look like?\n\nI would also like to see how prefetching does across platforms x86 - arm. So lets come back to it.",
+      "parentUuid": "8426b5fd_18fa0ffb",
+      "range": {
+        "startLine": 164,
+        "startChar": 7,
+        "endLine": 164,
+        "endChar": 13
+      },
+      "revId": "4538392dc1ee05e8c441a93ad668d0d700002e37",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }

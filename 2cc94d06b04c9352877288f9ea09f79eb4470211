@@ -1,0 +1,268 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de67d129_8bccdc7a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-27T16:54:07Z",
+      "side": 1,
+      "message": "I have some preliminary comments, but as I was reviewing it I realized I was not doing a great job as this is a rather large CL now.\n\nHere is my suggestion for how to land it.\n\n1. One change for addtranspose\n1. One change for fair partition and threaded multiply - no prefetching.\n\nI will be able to do a much better job on reviewing this and iterating it with you without causing too much churn.",
+      "revId": "2cc94d06b04c9352877288f9ea09f79eb4470211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38219f12_bb93f367",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-27T16:54:07Z",
+      "side": 1,
+      "message": "do an early return on non-null to reduce a level of nesting here.",
+      "range": {
+        "startLine": 94,
+        "startChar": 36,
+        "endLine": 94,
+        "endChar": 43
+      },
+      "revId": "2cc94d06b04c9352877288f9ea09f79eb4470211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab210d15_fdfcc5b1",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-27T16:54:07Z",
+      "side": 1,
+      "message": "early return on transpose_rows.empty() is better",
+      "range": {
+        "startLine": 97,
+        "startChar": 8,
+        "endLine": 97,
+        "endChar": 22
+      },
+      "revId": "2cc94d06b04c9352877288f9ea09f79eb4470211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2492ffc0_4f024b6b",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-27T16:54:07Z",
+      "side": 1,
+      "message": "since the default value of max_num_nonzeroes_col_ is -1, in the case where there are no rows, shouldn\u0027t you still initialize it to zero?",
+      "range": {
+        "startLine": 102,
+        "startChar": 10,
+        "endLine": 102,
+        "endChar": 31
+      },
+      "revId": "2cc94d06b04c9352877288f9ea09f79eb4470211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2968fb02_aaa08f3a",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-27T16:54:07Z",
+      "side": 1,
+      "message": "isn\u0027t this the same number as num_nonzeros_?",
+      "range": {
+        "startLine": 184,
+        "startChar": 6,
+        "endLine": 184,
+        "endChar": 15
+      },
+      "revId": "2cc94d06b04c9352877288f9ea09f79eb4470211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f36eb4c3_727ce9ea",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-27T16:54:07Z",
+      "side": 1,
+      "message": "why 2 * num_threads, document your reasoning here.\nmore generally document the reasoning for how how you arrive at partition_size.",
+      "range": {
+        "startLine": 185,
+        "startChar": 27,
+        "endLine": 185,
+        "endChar": 28
+      },
+      "revId": "2cc94d06b04c9352877288f9ea09f79eb4470211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba3a460a_9612a6e0",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-27T16:54:07Z",
+      "side": 1,
+      "message": "odd variable name, what the word real mean here?",
+      "range": {
+        "startLine": 195,
+        "startChar": 12,
+        "endLine": 195,
+        "endChar": 31
+      },
+      "revId": "2cc94d06b04c9352877288f9ea09f79eb4470211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb481e9f_8fe6aa3f",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-27T16:54:07Z",
+      "side": 1,
+      "message": "see comment about prefetching. lets do this in a subsequent CL once we have both this and partitionedmatrixview done.",
+      "range": {
+        "startLine": 197,
+        "startChar": 8,
+        "endLine": 197,
+        "endChar": 19
+      },
+      "revId": "2cc94d06b04c9352877288f9ea09f79eb4470211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c2e219f_a342a3aa",
+        "filename": "internal/ceres/block_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-27T16:54:07Z",
+      "side": 1,
+      "message": "if you are going to add default initialization for one member, I recommend adding it for all members for consistency.\n\nsince this field is not always populated, what is the invariant here? if there is a transpose_block_structure, then this is non-zero? please document.",
+      "range": {
+        "startLine": 145,
+        "startChar": 6,
+        "endLine": 145,
+        "endChar": 27
+      },
+      "revId": "2cc94d06b04c9352877288f9ea09f79eb4470211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35ca9057_0a32965e",
+        "filename": "internal/ceres/block_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-27T16:54:07Z",
+      "side": 1,
+      "message": "equall -\u003e equal",
+      "range": {
+        "startLine": 179,
+        "startChar": 49,
+        "endLine": 179,
+        "endChar": 55
+      },
+      "revId": "2cc94d06b04c9352877288f9ea09f79eb4470211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb6224cc_ca28c705",
+        "filename": "internal/ceres/block_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-27T16:54:07Z",
+      "side": 1,
+      "message": "the convention we use for most code is start and end, instead of first and last.\n\nso start_rowb_block, end_row_block",
+      "range": {
+        "startLine": 191,
+        "startChar": 32,
+        "endLine": 191,
+        "endChar": 47
+      },
+      "revId": "2cc94d06b04c9352877288f9ea09f79eb4470211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11954c17_28986ab2",
+        "filename": "internal/ceres/block_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-27T16:54:07Z",
+      "side": 1,
+      "message": "is there a reason to pass this vector in and not just return the partition by value?",
+      "revId": "2cc94d06b04c9352877288f9ea09f79eb4470211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
