@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eebaf88d_a16fde57",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-10-27T20:18:29Z",
+      "side": 1,
+      "message": "Reverted multiplication-related changes and changes to benchmarks.\nShould only include structure-related changes \u0026 tests now.",
+      "parentUuid": "de67d129_8bccdc7a",
+      "revId": "2cc94d06b04c9352877288f9ea09f79eb4470211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "38219f12_bb93f367",
@@ -31,6 +49,30 @@
       "writtenOn": "2022-10-27T16:54:07Z",
       "side": 1,
       "message": "do an early return on non-null to reduce a level of nesting here.",
+      "range": {
+        "startLine": 94,
+        "startChar": 36,
+        "endLine": 94,
+        "endChar": 43
+      },
+      "revId": "2cc94d06b04c9352877288f9ea09f79eb4470211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c42442ed_de490f38",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-10-27T20:18:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38219f12_bb93f367",
       "range": {
         "startLine": 94,
         "startChar": 36,
@@ -64,6 +106,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "44f266f9_c7790572",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-10-27T20:18:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab210d15_fdfcc5b1",
+      "range": {
+        "startLine": 97,
+        "startChar": 8,
+        "endLine": 97,
+        "endChar": 22
+      },
+      "revId": "2cc94d06b04c9352877288f9ea09f79eb4470211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2492ffc0_4f024b6b",
@@ -77,6 +143,30 @@
       "writtenOn": "2022-10-27T16:54:07Z",
       "side": 1,
       "message": "since the default value of max_num_nonzeroes_col_ is -1, in the case where there are no rows, shouldn\u0027t you still initialize it to zero?",
+      "range": {
+        "startLine": 102,
+        "startChar": 10,
+        "endLine": 102,
+        "endChar": 31
+      },
+      "revId": "2cc94d06b04c9352877288f9ea09f79eb4470211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cff4274_e4855b6c",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-10-27T20:18:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2492ffc0_4f024b6b",
       "range": {
         "startLine": 102,
         "startChar": 10,
@@ -110,6 +200,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d05db2cf_94f8015a",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-10-27T20:18:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2968fb02_aaa08f3a",
+      "range": {
+        "startLine": 184,
+        "startChar": 6,
+        "endLine": 184,
+        "endChar": 15
+      },
+      "revId": "2cc94d06b04c9352877288f9ea09f79eb4470211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f36eb4c3_727ce9ea",
@@ -123,6 +237,30 @@
       "writtenOn": "2022-10-27T16:54:07Z",
       "side": 1,
       "message": "why 2 * num_threads, document your reasoning here.\nmore generally document the reasoning for how how you arrive at partition_size.",
+      "range": {
+        "startLine": 185,
+        "startChar": 27,
+        "endLine": 185,
+        "endChar": 28
+      },
+      "revId": "2cc94d06b04c9352877288f9ea09f79eb4470211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50fc0f57_030fad35",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-10-27T20:18:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f36eb4c3_727ce9ea",
       "range": {
         "startLine": 185,
         "startChar": 27,
@@ -156,6 +294,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a039548_66f50cc8",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-10-27T20:18:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ba3a460a_9612a6e0",
+      "range": {
+        "startLine": 195,
+        "startChar": 12,
+        "endLine": 195,
+        "endChar": 31
+      },
+      "revId": "2cc94d06b04c9352877288f9ea09f79eb4470211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fb481e9f_8fe6aa3f",
@@ -169,6 +331,30 @@
       "writtenOn": "2022-10-27T16:54:07Z",
       "side": 1,
       "message": "see comment about prefetching. lets do this in a subsequent CL once we have both this and partitionedmatrixview done.",
+      "range": {
+        "startLine": 197,
+        "startChar": 8,
+        "endLine": 197,
+        "endChar": 19
+      },
+      "revId": "2cc94d06b04c9352877288f9ea09f79eb4470211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "362d0d29_5dc48fb3",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-10-27T20:18:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fb481e9f_8fe6aa3f",
       "range": {
         "startLine": 197,
         "startChar": 8,
@@ -202,6 +388,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2dd526bf_8963fd4d",
+        "filename": "internal/ceres/block_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-10-27T20:18:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c2e219f_a342a3aa",
+      "range": {
+        "startLine": 145,
+        "startChar": 6,
+        "endLine": 145,
+        "endChar": 27
+      },
+      "revId": "2cc94d06b04c9352877288f9ea09f79eb4470211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "35ca9057_0a32965e",
@@ -215,6 +425,30 @@
       "writtenOn": "2022-10-27T16:54:07Z",
       "side": 1,
       "message": "equall -\u003e equal",
+      "range": {
+        "startLine": 179,
+        "startChar": 49,
+        "endLine": 179,
+        "endChar": 55
+      },
+      "revId": "2cc94d06b04c9352877288f9ea09f79eb4470211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9c9da67_6bbb1e7b",
+        "filename": "internal/ceres/block_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-10-27T20:18:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "35ca9057_0a32965e",
       "range": {
         "startLine": 179,
         "startChar": 49,
@@ -248,6 +482,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ea048dd_d2972d73",
+        "filename": "internal/ceres/block_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-10-27T20:18:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "eb6224cc_ca28c705",
+      "range": {
+        "startLine": 191,
+        "startChar": 32,
+        "endLine": 191,
+        "endChar": 47
+      },
+      "revId": "2cc94d06b04c9352877288f9ea09f79eb4470211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "11954c17_28986ab2",
@@ -261,6 +519,24 @@
       "writtenOn": "2022-10-27T16:54:07Z",
       "side": 1,
       "message": "is there a reason to pass this vector in and not just return the partition by value?",
+      "revId": "2cc94d06b04c9352877288f9ea09f79eb4470211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbf4c609_8f5bf9c4",
+        "filename": "internal/ceres/block_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-10-27T20:18:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "11954c17_28986ab2",
       "revId": "2cc94d06b04c9352877288f9ea09f79eb4470211",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }

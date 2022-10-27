@@ -287,6 +287,30 @@
       },
       "revId": "4538392dc1ee05e8c441a93ad668d0d700002e37",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "93049076_a56150f2",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-10-27T20:18:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b78232c3_a46b9bc0",
+      "range": {
+        "startLine": 164,
+        "startChar": 7,
+        "endLine": 164,
+        "endChar": 13
+      },
+      "revId": "4538392dc1ee05e8c441a93ad668d0d700002e37",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
