@@ -88,6 +88,24 @@
       "parentUuid": "1c0a51ad_078e4edb",
       "revId": "dfe4b332e57f81feba3187dc35ab29c765bd74b5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8bf496b5_326b6c88",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6717
+      },
+      "writtenOn": "2022-10-27T08:18:59Z",
+      "side": 1,
+      "message": "I didn\u0027t realize that Eigen didn\u0027t support constexpr yet!\nI\u0027ll describe my use case and let y\u0027all decide whether you want to approve.\n\nWe have templated error functors with constant literals. Jets are obviously one template type. Jets are the only type not supporting constexpr initialization.\n\nToday we have:\n\n```\nstatic const T kOne(1.0);\nt_template_fuction_param +\u003d kOne;\n```\n\nI\u0027d like to modernize this static variable to:\n\n```\nconstexpr T kOne(1.0);\nt_template_fuction_param +\u003d kOne;\n```\n\nI know the addition wouldn\u0027t be a constexpr operation (yet/ever), but constexpr feels more idiomatic for literals.",
+      "parentUuid": "f8fe3a74_cfd61c44",
+      "revId": "dfe4b332e57f81feba3187dc35ab29c765bd74b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
