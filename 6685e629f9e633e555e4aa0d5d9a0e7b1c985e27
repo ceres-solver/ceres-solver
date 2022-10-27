@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30fa14b6_1e213fda",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-10-27T23:25:30Z",
+      "side": 1,
+      "message": "Fixed problems mentioned in the review.",
+      "revId": "6685e629f9e633e555e4aa0d5d9a0e7b1c985e27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
