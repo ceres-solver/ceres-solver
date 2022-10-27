@@ -16,6 +16,264 @@
       "message": "Thank you Dmitriy, I will have a full review for you shortly.",
       "revId": "879db6bc0b10e4894a2b743f1bd82883375b4935",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c6c0157_6aaa02ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-27T21:46:45Z",
+      "side": 1,
+      "message": "This looks great Dmitriy, just some minor comments and it will be ready to go.",
+      "revId": "879db6bc0b10e4894a2b743f1bd82883375b4935",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d766b71_563e8c23",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-27T21:46:45Z",
+      "side": 1,
+      "message": "nit this is not the block_size. cell_nnz is a better name.",
+      "range": {
+        "startLine": 366,
+        "startChar": 16,
+        "endLine": 366,
+        "endChar": 26
+      },
+      "revId": "879db6bc0b10e4894a2b743f1bd82883375b4935",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ef953a2_bbcbbc34",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-27T21:46:45Z",
+      "side": 1,
+      "message": "use empty",
+      "range": {
+        "startLine": 416,
+        "startChar": 29,
+        "endLine": 416,
+        "endChar": 30
+      },
+      "revId": "879db6bc0b10e4894a2b743f1bd82883375b4935",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18858905_e8ef79c4",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-27T21:46:45Z",
+      "side": 1,
+      "message": "del_cell_nnz",
+      "range": {
+        "startLine": 422,
+        "startChar": 20,
+        "endLine": 422,
+        "endChar": 33
+      },
+      "revId": "879db6bc0b10e4894a2b743f1bd82883375b4935",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bac610aa_0f54942a",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-27T21:46:45Z",
+      "side": 1,
+      "message": "make this a function and use it here, AppendRows and CreateTranspose?",
+      "range": {
+        "startLine": 444,
+        "startChar": 2,
+        "endLine": 444,
+        "endChar": 16
+      },
+      "revId": "879db6bc0b10e4894a2b743f1bd82883375b4935",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7db18de_d225d45a",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-27T21:46:45Z",
+      "side": 1,
+      "message": "drop blank.",
+      "revId": "879db6bc0b10e4894a2b743f1bd82883375b4935",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1dac6e2_8e87df2f",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-27T21:46:45Z",
+      "side": 1,
+      "message": "see comment about refactoring into a function.",
+      "range": {
+        "startLine": 544,
+        "startChar": 2,
+        "endLine": 544,
+        "endChar": 11
+      },
+      "revId": "879db6bc0b10e4894a2b743f1bd82883375b4935",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "405e99c6_39537f33",
+        "filename": "internal/ceres/block_sparse_matrix_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-27T21:46:45Z",
+      "side": 1,
+      "message": "auto problem \u003d",
+      "range": {
+        "startLine": 231,
+        "startChar": 7,
+        "endLine": 231,
+        "endChar": 17
+      },
+      "revId": "879db6bc0b10e4894a2b743f1bd82883375b4935",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96502308_a589042e",
+        "filename": "internal/ceres/block_sparse_matrix_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-27T21:46:45Z",
+      "side": 1,
+      "message": "tests -\u003e num_row_blocks_to_delete",
+      "revId": "879db6bc0b10e4894a2b743f1bd82883375b4935",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c88b6e96_077eb5f7",
+        "filename": "internal/ceres/block_sparse_matrix_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-27T21:46:45Z",
+      "side": 1,
+      "message": "Add a check to ensure that m has enough row blocks to cover all the test cases.",
+      "range": {
+        "startLine": 237,
+        "startChar": 37,
+        "endLine": 237,
+        "endChar": 38
+      },
+      "revId": "879db6bc0b10e4894a2b743f1bd82883375b4935",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a406be5_3e40f364",
+        "filename": "internal/ceres/block_sparse_matrix_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-27T21:46:45Z",
+      "side": 1,
+      "message": "so you are using t in two different ways. you add as many as t copies of m, but you only remove t blocks, why?",
+      "range": {
+        "startLine": 244,
+        "startChar": 10,
+        "endLine": 244,
+        "endChar": 25
+      },
+      "revId": "879db6bc0b10e4894a2b743f1bd82883375b4935",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ec825c9_deb40d0b",
+        "filename": "internal/ceres/block_structure.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-27T21:46:45Z",
+      "side": 1,
+      "message": "I think it is worth expanding this comment. And explaining what this is precisely.\nFor example one subtle difference is that in many such definitions you start with 0 and the i^th entry is. the sum up to i-1 terms, but you are saving the first zero and i^th entry is actually sum up to the i^th list.\n\nAnd while this is called CompressedList, the only version of this that is actually used is CompressedRow, so you can talk in terms of CompressedRow for clarity. \n\nI may come back and just get rid of the aliases one of these days and just make this CompressedRow.",
+      "range": {
+        "startLine": 86,
+        "startChar": 39,
+        "endLine": 86,
+        "endChar": 44
+      },
+      "revId": "879db6bc0b10e4894a2b743f1bd82883375b4935",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
