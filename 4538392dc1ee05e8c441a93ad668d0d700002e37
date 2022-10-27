@@ -106,6 +106,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1dace43e_4b35dce1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-10-27T13:56:12Z",
+      "side": 1,
+      "message": "I think the source of discrepancy is different ratios of clock speed / memory bandwidth.\n\nFrom what I know, Apple CPUs have significantly larger CPU memory bandwidth (closer to GPU memory bandwidth), thus I expect lower performance boost in that case (because performance should be already higher in single-threaded case).\n\nOn regular PC I expect speedup to be significantly dependent on memory configuration (e.g. if all channels of memory controller are populated), because if there is no spare memory bandwidth - we cannot hide memory latency.\n\n\nI moved constant values (number of non-zeros in column block and cumulative number of non-zeros per column block) to `Block` data structure. This saves ~10..15% of a single left product (compared to the first version of patch set)\n\nFor left products I actually have 2 implementations: with and without prefetching.\nAdding prefetching results in ~10% performance increase, but makes things a bit ugly (since we might have very short column blocks, it is necessary to be able to prefetch across column blocks).\n\nI am not sure if it is worth to keep version with prefetching (both versions are present in current version of patchset under `#ifndef NO_PREFETCH` macro), given the fact that left products are (roughly) ~1/3 of computations per iteration, thus end-to-end benefits will be just a couple %.\n\nHere are results of `evaluation_benchmark` on my linux pc for problems from BAL dataset:\n\n\n```\n2022-10-27T13:00:04+03:00\nRunning ./bin/evaluation_benchmark\nRun on (112 X 1967.32 MHz CPU s)\nCPU Caches:\n  L1 Data 32 KiB (x56)\n  L1 Instruction 32 KiB (x56)\n  L2 Unified 1024 KiB (x56)\n  L3 Unified 39424 KiB (x2)\nLoad Average: 5.16, 7.12, 8.07\n---------------------------------------------------------------------------------------------------------------------------------\nBenchmark                                                                          Time (no prefetch) Time (prefetch)  Iterations                \n---------------------------------------------------------------------------------------------------------------------------------\n\u003d\u003d\u003dJacobian size: 5.2G\u003d\u003d\u003d\nJacobianLeftMultiplyAndAccumulate\u003cfinal/problem-13682-4456117-pre.txt\u003e/1                1271642579 ns   1311569601 ns           1\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cfinal/problem-13682-4456117-pre.txt\u003e/1   1270986589 ns   1308983594 ns           1\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cfinal/problem-13682-4456117-pre.txt\u003e/2   2202010881 ns   2063647854 ns           1\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cfinal/problem-13682-4456117-pre.txt\u003e/4   1249556460 ns   1171171724 ns           1\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cfinal/problem-13682-4456117-pre.txt\u003e/8    687959293 ns    609455402 ns           1\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cfinal/problem-13682-4456117-pre.txt\u003e/16   415798272 ns    351328332 ns           2\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cfinal/problem-13682-4456117-pre.txt\u003e/28   278714261 ns    243413635 ns           3\nJacobianLeftMultiplyAndAccumulateCuda\u003cfinal/problem-13682-4456117-pre.txt\u003e/1              31476824 ns     31497095 ns          18\n\n\u003d\u003d\u003dJacobian size: 894M\u003d\u003d\u003d\nJacobianLeftMultiplyAndAccumulate\u003cvenice/problem-1778-993923-pre.txt\u003e/1                  192819134 ns    196435024 ns           3\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cvenice/problem-1778-993923-pre.txt\u003e/1     192002792 ns    196920330 ns           3\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cvenice/problem-1778-993923-pre.txt\u003e/2     375078926 ns    335658985 ns           2\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cvenice/problem-1778-993923-pre.txt\u003e/4     205959026 ns    180423030 ns           4\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cvenice/problem-1778-993923-pre.txt\u003e/8     112865168 ns     99639744 ns           8\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cvenice/problem-1778-993923-pre.txt\u003e/16     66203928 ns     57652781 ns          13\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cvenice/problem-1778-993923-pre.txt\u003e/28     45258627 ns     40372653 ns          19\nJacobianLeftMultiplyAndAccumulateCuda\u003cvenice/problem-1778-993923-pre.txt\u003e/1                7758544 ns      7809085 ns          89\n\n\u003d\u003d\u003dJacobian size: 225M\u003d\u003d\u003d\nJacobianLeftMultiplyAndAccumulate\u003cladybug/problem-1723-156502-pre.txt\u003e/1                  25689299 ns     26157588 ns          27\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cladybug/problem-1723-156502-pre.txt\u003e/1     25543446 ns     26580940 ns          26\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cladybug/problem-1723-156502-pre.txt\u003e/2     49795964 ns     47222789 ns          15\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cladybug/problem-1723-156502-pre.txt\u003e/4     26389496 ns     24689688 ns          29\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cladybug/problem-1723-156502-pre.txt\u003e/8     14251311 ns     13110898 ns          55\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cladybug/problem-1723-156502-pre.txt\u003e/16     8108550 ns      7429310 ns         100\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cladybug/problem-1723-156502-pre.txt\u003e/28     5317511 ns      4840223 ns         152\nJacobianLeftMultiplyAndAccumulateCuda\u003cladybug/problem-1723-156502-pre.txt\u003e/1               1056215 ns      1063257 ns         689\n\n\u003d\u003d\u003dJacobian size: 121M\u003d\u003d\u003d\nJacobianLeftMultiplyAndAccumulate\u003cdubrovnik/problem-356-226730-pre.txt\u003e/1                 46358178 ns     47856841 ns          15\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cdubrovnik/problem-356-226730-pre.txt\u003e/1    46392521 ns     47865502 ns          14\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cdubrovnik/problem-356-226730-pre.txt\u003e/2    95934076 ns     83938500 ns           9\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cdubrovnik/problem-356-226730-pre.txt\u003e/4    50686589 ns     46908474 ns          16\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cdubrovnik/problem-356-226730-pre.txt\u003e/8    27269983 ns     24861424 ns          30\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cdubrovnik/problem-356-226730-pre.txt\u003e/16   15465312 ns     14317791 ns          55\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cdubrovnik/problem-356-226730-pre.txt\u003e/28   10375234 ns      9904395 ns          76\nJacobianLeftMultiplyAndAccumulateCuda\u003cdubrovnik/problem-356-226730-pre.txt\u003e/1              2064185 ns      2078196 ns         306\n\n\u003d\u003d\u003dJacobian size: 40M\u003d\u003d\u003d\nJacobianLeftMultiplyAndAccumulate\u003ctrafalgar/problem-257-65132-pre.txt\u003e/1                   7956211 ns      8170317 ns          87\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003ctrafalgar/problem-257-65132-pre.txt\u003e/1      8106384 ns      8333988 ns          82\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003ctrafalgar/problem-257-65132-pre.txt\u003e/2     15378342 ns     11640594 ns          61\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003ctrafalgar/problem-257-65132-pre.txt\u003e/4      6726719 ns      6004023 ns         117\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003ctrafalgar/problem-257-65132-pre.txt\u003e/8      3656245 ns      3247985 ns         228\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003ctrafalgar/problem-257-65132-pre.txt\u003e/16     2198320 ns      2057742 ns         414\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003ctrafalgar/problem-257-65132-pre.txt\u003e/28     1437994 ns      1347289 ns         630\nJacobianLeftMultiplyAndAccumulateCuda\u003ctrafalgar/problem-257-65132-pre.txt\u003e/1                529484 ns       519413 ns        1047\n```\n\nImprovement seem to be relatively uniform over all scenes except trafalgar (which fits into cache almost completely).\n\nSlowdown with relation to CUDA is ~8x, which suggests that there might be some place for improvement.",
+      "parentUuid": "71daacd7_55f3f9cf",
+      "revId": "4538392dc1ee05e8c441a93ad668d0d700002e37",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a0f403c4_439e33ad",
@@ -119,6 +137,30 @@
       "writtenOn": "2022-10-24T17:00:16Z",
       "side": 1,
       "message": "It is odd to have this policy decision buried deep here. Since we are passing number of threads explicitly, shouldn\u0027t this be something that the caller should decide based on the types of matrices they are dealing with?",
+      "range": {
+        "startLine": 151,
+        "startChar": 20,
+        "endLine": 151,
+        "endChar": 61
+      },
+      "revId": "4538392dc1ee05e8c441a93ad668d0d700002e37",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d70a9ec6_fa5c90b1",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-10-27T13:56:12Z",
+      "side": 1,
+      "message": "Done.\n\nI\u0027ve thought about it a bit - do you think it might be useful to provide user a way to set thread count for linear operators different from thread count for evaluation?",
+      "parentUuid": "a0f403c4_439e33ad",
       "range": {
         "startLine": 151,
         "startChar": 20,
@@ -152,6 +194,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f161504_7ba72c10",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-10-27T13:56:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "465fca3c_522a0174",
+      "range": {
+        "startLine": 160,
+        "startChar": 23,
+        "endLine": 160,
+        "endChar": 24
+      },
+      "revId": "4538392dc1ee05e8c441a93ad668d0d700002e37",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "071a13d4_c983da3e",
@@ -165,6 +231,30 @@
       "writtenOn": "2022-10-24T17:00:16Z",
       "side": 1,
       "message": "this chunk of the code should definitely be split into its own functions and tested.",
+      "range": {
+        "startLine": 164,
+        "startChar": 7,
+        "endLine": 164,
+        "endChar": 13
+      },
+      "revId": "4538392dc1ee05e8c441a93ad668d0d700002e37",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8426b5fd_18fa0ffb",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-10-27T13:56:12Z",
+      "side": 1,
+      "message": "Separated column partitioning into a separate function.\n\nIf we decide that prefetching does not worth keeping - this can be moved somewhere to ParallelFor implementation, providing a general-purpose parallel for with user-supplied estimates of cumulative relative costs for each loop iteration.",
+      "parentUuid": "071a13d4_c983da3e",
       "range": {
         "startLine": 164,
         "startChar": 7,
