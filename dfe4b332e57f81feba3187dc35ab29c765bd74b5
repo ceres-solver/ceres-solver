@@ -106,6 +106,24 @@
       "parentUuid": "f8fe3a74_cfd61c44",
       "revId": "dfe4b332e57f81feba3187dc35ab29c765bd74b5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6fbbc09_9b46a195",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-10-27T12:56:38Z",
+      "side": 1,
+      "message": "I think this is just syntactic sugar and in fact communicates the wrong thing about the underlying type T which may or may not be true. I suspect this sort of thing will lead to trouble down the road. I recommend not doing it for now.",
+      "parentUuid": "8bf496b5_326b6c88",
+      "revId": "dfe4b332e57f81feba3187dc35ab29c765bd74b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
