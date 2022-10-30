@@ -42,24 +42,51 @@
 
 namespace ceres {
 
-// Matchers and macros for help with testing Manifold objects.
+// Matchers and macros to simplify testing of custom Manifold objects using the
+// gtest testing framework.
 //
 // Testing a Manifold has two parts.
 //
-// 1. Checking that Manifold::Plus is correctly defined. This requires per
-// manifold tests.
+// 1. Checking that Manifold::Plus() and Manifold::Minus() are correctly
+//    defined. This requires per manifold tests.
 //
 // 2. The other methods of the manifold have mathematical properties that make
-// it compatible with Plus, as described in:
+//    them compatible with Plus() and Minus(), as described in [1].
 //
-// "Integrating Generic Sensor Fusion Algorithms with Sound State
-// Representations through Encapsulation of Manifolds"
-// By C. Hertzberg, R. Wagner, U. Frese and L. Schroder
-// https://arxiv.org/pdf/1107.1119.pdf
+// To verify these general requirements for a custom Manifold, use the
+// EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD() macro from within a gtest test. Note
+// that additional domain-specific tests may also be prudent, e.g to verify the
+// behaviour of a Quaternion Manifold about pi.
 //
-// These tests are implemented using generic matchers defined below which can
-// all be called by the macro EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x,
-// delta, y, tolerance). See manifold_test.cc for example usage.
+// [1] "Integrating Generic Sensor Fusion Algorithms with Sound State
+//     Representations through Encapsulation of Manifolds", C. Hertzberg,
+//     R. Wagner, U. Frese and L. Schroder, https://arxiv.org/pdf/1107.1119.pdf
+
+// Verifies the general requirements for a custom Manifold are satisfied to
+// within the specified (numerical) tolerance.
+//
+// Example usage for a custom Manifold: ExampleManifold:
+//
+//    TEST(ExampleManifold, ManifoldInvariantsHold) {
+//      constexpr double kTolerance = 1.0e-9;
+//      ExampleManifold manifold;
+//      ceres::Vector x = ceres::Vector::Zero(manifold.AmbientSize());
+//      ceres::Vector y = ceres::Vector::Zero(manifold.AmbientSize());
+//      ceres::Vector delta = ceres::Vector::Zero(manifold.TangentSize());
+//      EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
+//    }
+#define EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, tolerance) \
+  ::ceres::Vector zero_tangent = ::ceres::Vector::Zero(manifold.TangentSize()); \
+  EXPECT_THAT(manifold, ::ceres::XPlusZeroIsXAt(x, tolerance));         \
+  EXPECT_THAT(manifold, ::ceres::XMinusXIsZeroAt(x, tolerance));        \
+  EXPECT_THAT(manifold, ::ceres::MinusPlusIsIdentityAt(x, delta, tolerance)); \
+  EXPECT_THAT(manifold, ::ceres::MinusPlusIsIdentityAt(x, zero_tangent, tolerance)); \
+  EXPECT_THAT(manifold, ::ceres::PlusMinusIsIdentityAt(x, x, tolerance)); \
+  EXPECT_THAT(manifold, ::ceres::PlusMinusIsIdentityAt(x, y, tolerance)); \
+  EXPECT_THAT(manifold, ::ceres::HasCorrectPlusJacobianAt(x, tolerance)); \
+  EXPECT_THAT(manifold, ::ceres::HasCorrectMinusJacobianAt(x, tolerance)); \
+  EXPECT_THAT(manifold, ::ceres::MinusPlusJacobianIsIdentityAt(x, tolerance)); \
+  EXPECT_THAT(manifold, ::ceres::HasCorrectRightMultiplyByPlusJacobianAt(x, tolerance));
 
 // Checks that the invariant Plus(x, 0) == x holds.
 MATCHER_P2(XPlusZeroIsXAt, x, tolerance, "") {
@@ -311,18 +338,5 @@ MATCHER_P2(HasCorrectRightMultiplyByPlusJacobianAt, x, tolerance, "") {
   }
   return true;
 }
-
-#define EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, tolerance) \
-  Vector zero_tangent = Vector::Zero(manifold.TangentSize());                  \
-  EXPECT_THAT(manifold, XPlusZeroIsXAt(x, tolerance));                         \
-  EXPECT_THAT(manifold, XMinusXIsZeroAt(x, tolerance));                        \
-  EXPECT_THAT(manifold, MinusPlusIsIdentityAt(x, delta, tolerance));           \
-  EXPECT_THAT(manifold, MinusPlusIsIdentityAt(x, zero_tangent, tolerance));    \
-  EXPECT_THAT(manifold, PlusMinusIsIdentityAt(x, x, tolerance));               \
-  EXPECT_THAT(manifold, PlusMinusIsIdentityAt(x, y, tolerance));               \
-  EXPECT_THAT(manifold, HasCorrectPlusJacobianAt(x, tolerance));               \
-  EXPECT_THAT(manifold, HasCorrectMinusJacobianAt(x, tolerance));              \
-  EXPECT_THAT(manifold, MinusPlusJacobianIsIdentityAt(x, tolerance));          \
-  EXPECT_THAT(manifold, HasCorrectRightMultiplyByPlusJacobianAt(x, tolerance));
 
 }  // namespace ceres
