@@ -42,7 +42,6 @@
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
 #include "ceres/sparse_matrix.h"
-#include "gflags/gflags.h"
 
 namespace ceres::internal {
 
