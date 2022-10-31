@@ -165,6 +165,10 @@ cholmod_factor* SuiteSparse::AnalyzeCholesky(cholmod_sparse* A,
                                              std::string* message) {
   cc_.nmethods = 1;
   cc_.method[0].ordering = OrderingTypeToCHOLMODEnum(ordering_type);
+  if (ordering_type == OrderingType::NATURAL) {
+    cc_.postorder = 0;
+  }
+
   cholmod_factor* factor = cholmod_analyze(A, &cc_);
 
   if (cc_.status != CHOLMOD_OK) {
