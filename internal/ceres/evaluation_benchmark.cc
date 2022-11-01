@@ -29,6 +29,7 @@
 // Authors: dmitriy.korchemkin@gmail.com (Dmitriy Korchemkin)
 
 #include <memory>
+#include <random>
 #include <string>
 #include <vector>
 

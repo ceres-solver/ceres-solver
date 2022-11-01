@@ -30,8 +30,11 @@
 
 #include "ceres/block_sparse_matrix.h"
 
+#include <algorithm>
 #include <memory>
+#include <random>
 #include <string>
+#include <vector>
 
 #include "ceres/casts.h"
 #include "ceres/crs_matrix.h"

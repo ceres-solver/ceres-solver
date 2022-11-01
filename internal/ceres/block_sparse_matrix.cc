@@ -48,7 +48,7 @@ namespace ceres::internal {
 
 namespace {
 void ComputeCumulativeNumberOfNonZeros(std::vector<CompressedList>& rows) {
-  if (!rows.size()) {
+  if (rows.empty()) {
     return;
   }
   rows[0].cumulative_nnz = rows[0].nnz;
