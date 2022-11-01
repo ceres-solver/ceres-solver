@@ -124,6 +124,24 @@
       "parentUuid": "8bf496b5_326b6c88",
       "revId": "dfe4b332e57f81feba3187dc35ab29c765bd74b5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "952ea61a_b775ab38",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6717
+      },
+      "writtenOn": "2022-11-01T07:03:38Z",
+      "side": 1,
+      "message": "SG! Will revert (and keep an eye on Eigen to see if it becomes constexpr in the future)",
+      "parentUuid": "c6fbbc09_9b46a195",
+      "revId": "dfe4b332e57f81feba3187dc35ab29c765bd74b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
