@@ -32,6 +32,7 @@
 #ifndef CERES_INTERNAL_PARALLEL_FOR_H_
 #define CERES_INTERNAL_PARALLEL_FOR_H_
 
+#include <algorithm>
 #include <functional>
 #include <mutex>
 
@@ -93,6 +94,124 @@ template <typename F>
 void Invoke(int thread_id, int i, const F& function) {
   InvokeImpl<F, args_of_t<F>>::Invoke(thread_id, i, function);
 }
+
+// Check if it is possible to split range [start; end) into at most
+// max_num_partitions  contiguous partitions of cost not greater than
+// max_partition_cost. Inclusive integer cumulative costs are provided by
+// cumulative_cost_data objects, with cumulative_cost_offset being a total cost
+// of all indices (starting from zero) preceding start element. Cumulative costs
+// are returned by cumulative_cost_fun called with a reference to
+// cumulative_cost_data element with index from range[start; end), and should be
+// non-decreasing. Partition of the range is returned via partition argument
+template <typename CumulativeCostData, typename CumulativeCostFun>
+bool MaxPartitionCostIsFeasible(int start,
+                                int end,
+                                int max_num_partitions,
+                                int max_partition_cost,
+                                int cumulative_cost_offset,
+                                const CumulativeCostData* cumulative_cost_data,
+                                const CumulativeCostFun& cumulative_cost_fun,
+                                std::vector<int>* partition) {
+  partition->clear();
+  partition->push_back(start);
+  int partition_start = start;
+  int cost_offset = cumulative_cost_offset;
+
+  const CumulativeCostData* const range_end = cumulative_cost_data + end;
+  while (partition_start < end) {
+    // Already have max_num_partitions
+    if (partition->size() > max_num_partitions) {
+      return false;
+    }
+    const int target = max_partition_cost + cost_offset;
+    const int partition_end =
+        std::partition_point(
+            cumulative_cost_data + partition_start,
+            cumulative_cost_data + end,
+            [&cumulative_cost_fun, target](const CumulativeCostData& item) {
+              return cumulative_cost_fun(item) <= target;
+            }) -
+        cumulative_cost_data;
+    // Unable to make a partition from a single element
+    if (partition_end == partition_start) {
+      return false;
+    }
+
+    const int cost_last =
+        cumulative_cost_fun(cumulative_cost_data[partition_end - 1]);
+    partition->push_back(partition_end);
+    partition_start = partition_end;
+    cost_offset = cost_last;
+  }
+  return true;
+}
+
+// Split integer interval [start, end) into at most max_num_partitions
+// contiguous intervals, minimizing maximal total cost of a single interval.
+// Inclusive integer cumulative costs for each (zero-based) index are provided
+// by cumulative_cost_data objects, and are returned by cumulative_cost_fun call
+// with a reference to one of the objects from range [start, end)
+template <typename CumulativeCostData, typename CumulativeCostFun>
+std::vector<int> ComputePartition(
+    int start,
+    int end,
+    int max_num_partitions,
+    const CumulativeCostData* cumulative_cost_data,
+    const CumulativeCostFun& cumulative_cost_fun) {
+  // Given maximal partition cost, it is possible to verify if it is admissible
+  // and obtain corresponding partition using MaxPartitionCostIsFeasible
+  // function. In order to find the lowest admissible value, a binary search
+  // over all potentially optimal cost values is being performed
+  const int cumulative_cost_last =
+      cumulative_cost_fun(cumulative_cost_data[end - 1]);
+  const int cumulative_cost_offset =
+      start ? cumulative_cost_fun(cumulative_cost_data[start - 1]) : 0;
+  const int total_cost = cumulative_cost_last - cumulative_cost_offset;
+
+  // Minimal maximal partition cost is not smaller than the average
+  // We will use non-inclusive lower bound
+  int partition_cost_lower_bound = total_cost / max_num_partitions - 1;
+  // Minimal maximal partition cost is not larger than the total cost
+  // Upper bound is inclusive
+  int partition_cost_upper_bound = total_cost;
+
+  std::vector<int> partition, partition_upper_bound;
+  // Binary search over partition cost, returning the lowest admissible cost
+  while (partition_cost_upper_bound - partition_cost_lower_bound > 1) {
+    partition.reserve(max_num_partitions + 1);
+    const int partition_cost =
+        partition_cost_lower_bound +
+        (partition_cost_upper_bound - partition_cost_lower_bound) / 2;
+    bool admissible = MaxPartitionCostIsFeasible(start,
+                                                 end,
+                                                 max_num_partitions,
+                                                 partition_cost,
+                                                 cumulative_cost_offset,
+                                                 cumulative_cost_data,
+                                                 cumulative_cost_fun,
+                                                 &partition);
+    if (admissible) {
+      partition_cost_upper_bound = partition_cost;
+      std::swap(partition, partition_upper_bound);
+    } else {
+      partition_cost_lower_bound = partition_cost;
+    }
+  }
+
+  // After binary search over partition cost, interval
+  // (partition_cost_lower_bound, partition_cost_upper_bound] contains the only
+  // admissible partition cost value - partition_cost_upper_bound
+  //
+  // Partition for this cost value might have been already computed
+  if (partition_upper_bound.empty() == false) {
+    return partition_upper_bound;
+  }
+  // Partition for upper bound is not computed if and only if upper bound was
+  // never updated This is a simple case of a single interval containing all
+  // values, which we were not able to break into pieces
+  partition = {start, end};
+  return partition;
+}
 }  // namespace parallel_for_details
 
 // Forward declaration of parallel invocation function that is to be
@@ -131,6 +250,55 @@ void ParallelFor(ContextImpl* context,
   CHECK(context != nullptr);
   ParallelInvoke<F>(context, start, end, num_threads, function);
 }
+
+// Execute function for every element in the range [start, end) with at most
+// num_threads, taking into account user-provided integer cumulative costs of
+// iterations. Cumulative costs of iteration for indices in range [0, end) are
+// stored in objects from cumulative_cost_data. User-provided
+// cumulative_cost_fun returns non-decreasing integer values corresponding to
+// inclusive cumulative cost of loop iterations, provided with a reference to
+// user-defined object. Only indices from [start, end) will be referenced. This
+// routine assumes that cumulative_cost_fun is non-decreasing (in other words,
+// all costs are non-negative);
+template <typename F, typename CumulativeCostData, typename CumulativeCostFun>
+void ParallelFor(ContextImpl* context,
+                 int start,
+                 int end,
+                 int num_threads,
+                 const F& function,
+                 const CumulativeCostData* cumulative_cost_data,
+                 const CumulativeCostFun& cumulative_cost_fun) {
+  using namespace parallel_for_details;
+  CHECK_GT(num_threads, 0);
+  if (start >= end) {
+    return;
+  }
+  if (num_threads == 1 || end - start <= num_threads) {
+    ParallelFor(context, start, end, num_threads, function);
+    return;
+  }
+  // Creating several partitions allows us to tolerate imperfections of
+  // partitioning and user-supplied iteration costs up to a certain extent
+  const int kNumPartitionsPerThread = 4;
+  const int kMaxPartitions = num_threads * kNumPartitionsPerThread;
+  const std::vector<int> partitions = ComputePartition(
+      start, end, kMaxPartitions, cumulative_cost_data, cumulative_cost_fun);
+  CHECK_GT(partitions.size(), 1);
+  const int num_partitions = partitions.size() - 1;
+  ParallelFor(context,
+              0,
+              num_partitions,
+              num_threads,
+              [&function, &partitions](int thread_id, int partition_id) {
+                const int partition_start = partitions[partition_id];
+                const int partition_end = partitions[partition_id + 1];
+
+                for (int i = partition_start; i < partition_end; ++i) {
+                  Invoke<F>(thread_id, i, function);
+                }
+              });
+}
+
 }  // namespace ceres::internal
 
 // Backend-specific implementations of ParallelInvoke
