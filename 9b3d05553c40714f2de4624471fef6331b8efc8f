@@ -16,6 +16,276 @@
       "message": "Parallel-for with user-supplied [cumulative] costs, and `BlockSparseMatrix::LeftMultiplyAndAccumulate` as an example of usage.\n\nParallel for iterations are being partitioned into contiguous sets, in a way that minimizes maximal cost of a single partition.\nOptimal partitioning is computed using a nested binary search (outer estimates minimal possible maximal cost of a single partition, inner tries to partition range using a given threshold for the size of a single partition).\n\n\nFor `BlockSparseMatrix` cumulative non-zero counts introduced in a previous changeset are used.\n\nThe effect of supplying non-zeros counts for partitioning can be evaluated by omitting last 2 arguments in corresponding `ParallelFor` call.\n\n```\n-----------------------------------------------------------------------------------------------------------------\nBenchmark                                                                                         Time Iterations\n-----------------------------------------------------------------------------------------------------------------\nJacobianLeftMultiplyAndAccumulate\u003cfinal/problem-13682-4456117-pre.txt\u003e/1                 1278716821 ns          1\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cfinal/problem-13682-4456117-pre.txt\u003e/1    1281769452 ns          1\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cfinal/problem-13682-4456117-pre.txt\u003e/2    2109125918 ns          1\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cfinal/problem-13682-4456117-pre.txt\u003e/4    1106105153 ns          1\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cfinal/problem-13682-4456117-pre.txt\u003e/8     656461005 ns          1\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cfinal/problem-13682-4456117-pre.txt\u003e/16    325241754 ns          2\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cfinal/problem-13682-4456117-pre.txt\u003e/28    321631397 ns          2\nJacobianLeftMultiplyAndAccumulateCuda\u003cfinal/problem-13682-4456117-pre.txt\u003e/1               31611046 ns         22\n\nJacobianLeftMultiplyAndAccumulate\u003cvenice/problem-1778-993923-pre.txt\u003e/1                   193475356 ns          3\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cvenice/problem-1778-993923-pre.txt\u003e/1      192250011 ns          3\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cvenice/problem-1778-993923-pre.txt\u003e/2      340938361 ns          2\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cvenice/problem-1778-993923-pre.txt\u003e/4      181779860 ns          4\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cvenice/problem-1778-993923-pre.txt\u003e/8       96215315 ns          6\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cvenice/problem-1778-993923-pre.txt\u003e/16      60226803 ns         13\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cvenice/problem-1778-993923-pre.txt\u003e/28      54763234 ns         13\nJacobianLeftMultiplyAndAccumulateCuda\u003cvenice/problem-1778-993923-pre.txt\u003e/1                 7814382 ns         92\n\nJacobianLeftMultiplyAndAccumulate\u003cladybug/problem-1723-156502-pre.txt\u003e/1                   25400483 ns         27\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cladybug/problem-1723-156502-pre.txt\u003e/1      25584337 ns         24\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cladybug/problem-1723-156502-pre.txt\u003e/2      42614348 ns         17\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cladybug/problem-1723-156502-pre.txt\u003e/4      23980668 ns         30\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cladybug/problem-1723-156502-pre.txt\u003e/8      12806320 ns         55\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cladybug/problem-1723-156502-pre.txt\u003e/16      7688986 ns         93\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cladybug/problem-1723-156502-pre.txt\u003e/28      7135957 ns         98\nJacobianLeftMultiplyAndAccumulateCuda\u003cladybug/problem-1723-156502-pre.txt\u003e/1                1066891 ns        514\n\nJacobianLeftMultiplyAndAccumulate\u003cdubrovnik/problem-356-226730-pre.txt\u003e/1                  46936728 ns         15\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cdubrovnik/problem-356-226730-pre.txt\u003e/1     46453509 ns         15\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cdubrovnik/problem-356-226730-pre.txt\u003e/2     85747451 ns          9\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cdubrovnik/problem-356-226730-pre.txt\u003e/4     46889849 ns         15\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cdubrovnik/problem-356-226730-pre.txt\u003e/8     25061525 ns         28\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cdubrovnik/problem-356-226730-pre.txt\u003e/16    14815335 ns         47\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003cdubrovnik/problem-356-226730-pre.txt\u003e/28    13627840 ns         52\nJacobianLeftMultiplyAndAccumulateCuda\u003cdubrovnik/problem-356-226730-pre.txt\u003e/1               2079737 ns        318\n\nJacobianLeftMultiplyAndAccumulate\u003ctrafalgar/problem-257-65132-pre.txt\u003e/1                    7809908 ns         89\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003ctrafalgar/problem-257-65132-pre.txt\u003e/1       7942257 ns         87\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003ctrafalgar/problem-257-65132-pre.txt\u003e/2      10874393 ns         64\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003ctrafalgar/problem-257-65132-pre.txt\u003e/4       5609020 ns        123\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003ctrafalgar/problem-257-65132-pre.txt\u003e/8       3063288 ns        228\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003ctrafalgar/problem-257-65132-pre.txt\u003e/16      1841261 ns        361\nJacobianLeftMultiplyAndAccumulateWithTranspose\u003ctrafalgar/problem-257-65132-pre.txt\u003e/28      1758961 ns        396\nJacobianLeftMultiplyAndAccumulateCuda\u003ctrafalgar/problem-257-65132-pre.txt\u003e/1                 536210 ns       1034\n```",
       "revId": "9b3d05553c40714f2de4624471fef6331b8efc8f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "919237a7_8a334f8e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-02T19:04:08Z",
+      "side": 1,
+      "message": "Dmitriy, this looks quite good. My comments are primarily about some variable naming and documentation for the partitioning function.\n\nOne question I was wondering about is, should we think about a caching mechanism for this partitioning (atleast the max_partitioning cost) instead of doing it every iteration? it would require a slightly different API, but we can come back and think about this as a pure performance optimization.",
+      "revId": "9b3d05553c40714f2de4624471fef6331b8efc8f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea4b8701_967b0ba9",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-02T19:04:08Z",
+      "side": 1,
+      "message": "num_col_blocks not num_cols.",
+      "range": {
+        "startLine": 168,
+        "startChar": 12,
+        "endLine": 168,
+        "endChar": 20
+      },
+      "revId": "9b3d05553c40714f2de4624471fef6331b8efc8f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8147ff0c_274bc1c0",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-02T19:04:08Z",
+      "side": 1,
+      "message": "see comments about naming of these types below.",
+      "range": {
+        "startLine": 100,
+        "startChar": 20,
+        "endLine": 100,
+        "endChar": 21
+      },
+      "revId": "9b3d05553c40714f2de4624471fef6331b8efc8f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05c53a65_fb75419a",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-02T19:04:08Z",
+      "side": 1,
+      "message": "document the arguments of this function.\n\nI think TryPartition is not a great name. If I am reading this function correctly, you are trying to see if max_partition_cost can be used as an upper bound to split into max_num_partitions or less. \n\nTryPartitionCost maybe a better name.\n\nMaxPartitionCostIsFeasible is perhaps better\n\n\nminor optimization suggestion. during the binary search you don\u0027t really need the partition vector, since you are just keeping track of number of partitions.\n\nyou could have a simpler function which given a feasible max_partition_cost, just does the split thats needed, but as I said this is a minor nit, your call if this is actually worth it.",
+      "range": {
+        "startLine": 101,
+        "startChar": 5,
+        "endLine": 101,
+        "endChar": 17
+      },
+      "revId": "9b3d05553c40714f2de4624471fef6331b8efc8f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cd19cac_8d6c4963",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-02T19:04:08Z",
+      "side": 1,
+      "message": "why compute partition_cost when you don\u0027t do anything with it?",
+      "range": {
+        "startLine": 131,
+        "startChar": 10,
+        "endLine": 131,
+        "endChar": 13
+      },
+      "revId": "9b3d05553c40714f2de4624471fef6331b8efc8f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e387194_d7c8c7f9",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-02T19:04:08Z",
+      "side": 1,
+      "message": "document the arguments to this function and what is required of them.\n\nwhat does iteration_data actually mean? is it really abstract or something nore",
+      "range": {
+        "startLine": 141,
+        "startChar": 17,
+        "endLine": 141,
+        "endChar": 33
+      },
+      "revId": "9b3d05553c40714f2de4624471fef6331b8efc8f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5e0fcd5_c5beb897",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-02T19:04:08Z",
+      "side": 1,
+      "message": "I do not understand this comment.",
+      "range": {
+        "startLine": 146,
+        "startChar": 11,
+        "endLine": 146,
+        "endChar": 19
+      },
+      "revId": "9b3d05553c40714f2de4624471fef6331b8efc8f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6229a885_db8a7f5b",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-02T19:04:08Z",
+      "side": 1,
+      "message": "I think left and right are not great names. Now that I understand what TryPartition is doing, how about min_partition_cost, max_partition_cost?",
+      "range": {
+        "startLine": 157,
+        "startChar": 5,
+        "endLine": 157,
+        "endChar": 12
+      },
+      "revId": "9b3d05553c40714f2de4624471fef6331b8efc8f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e266f86_48221d91",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-02T19:04:08Z",
+      "side": 1,
+      "message": "larger",
+      "range": {
+        "startLine": 159,
+        "startChar": 43,
+        "endLine": 159,
+        "endChar": 50
+      },
+      "revId": "9b3d05553c40714f2de4624471fef6331b8efc8f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d0cfd27_1fb9c365",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-02T19:04:08Z",
+      "side": 1,
+      "message": "midpoint -\u003e partition_cost",
+      "range": {
+        "startLine": 165,
+        "startChar": 14,
+        "endLine": 165,
+        "endChar": 22
+      },
+      "revId": "9b3d05553c40714f2de4624471fef6331b8efc8f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56ef63dc_383e902e",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-02T19:04:08Z",
+      "side": 1,
+      "message": "document the requirement of iteration data and cumulative_cost_getter.",
+      "range": {
+        "startLine": 236,
+        "startChar": 5,
+        "endLine": 236,
+        "endChar": 16
+      },
+      "revId": "9b3d05553c40714f2de4624471fef6331b8efc8f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df5eff4a_f8fd9e7b",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-02T19:04:08Z",
+      "side": 1,
+      "message": "G is not a great name for this type.\n\nCumulativeCostFun",
+      "range": {
+        "startLine": 242,
+        "startChar": 24,
+        "endLine": 242,
+        "endChar": 25
+      },
+      "revId": "9b3d05553c40714f2de4624471fef6331b8efc8f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
