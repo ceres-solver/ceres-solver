@@ -32,6 +32,7 @@
 #ifndef CERES_INTERNAL_PARALLEL_FOR_H_
 #define CERES_INTERNAL_PARALLEL_FOR_H_
 
+#include <algorithm>
 #include <functional>
 #include <mutex>
 
@@ -93,6 +94,102 @@ template <typename F>
 void Invoke(int thread_id, int i, const F& function) {
   InvokeImpl<F, args_of_t<F>>::Invoke(thread_id, i, function);
 }
+
+// Try to split range into contiguous partitions within the threshold for
+// maximal cost
+template <typename T, typename G>
+bool TryPartition(int start,
+                  int end,
+                  int max_num_partitions,
+                  int max_partition_cost,
+                  int cumulative_cost_offset,
+                  const T* iteration_data,
+                  const G& cumulative_cost_getter,
+                  std::vector<int>* partition) {
+  partition->clear();
+  partition->push_back(start);
+  int partition_start = start;
+  int cost_offset = cumulative_cost_offset;
+
+  const T* const range_end = iteration_data + end;
+  while (partition_start < end) {
+    // Already have max_num_partitions
+    if (partition->size() > max_num_partitions) return false;
+    const int target = max_partition_cost + cost_offset;
+    const int partition_end =
+        std::partition_point(iteration_data + partition_start,
+                             iteration_data + end,
+                             [&cumulative_cost_getter, target](const T& item) {
+                               return cumulative_cost_getter(item) <= target;
+                             }) -
+        iteration_data;
+    // Unable to make a partition from a single element
+    if (partition_end == partition_start) return false;
+
+    const int cost_last =
+        cumulative_cost_getter(iteration_data[partition_end - 1]);
+    const int partition_cost = cost_last - cost_offset;
+    partition->push_back(partition_end);
+    partition_start = partition_end;
+    cost_offset = cost_last;
+  }
+  return true;
+}
+
+// Split workload into contiguous partitions with minimal maximal size
+template <typename T, typename G>
+std::vector<int> ComputePartition(int start,
+                                  int end,
+                                  int max_num_partitions,
+                                  const T* iteration_data,
+                                  const G& cumulative_cost_getter) {
+  // If we already have admissible value of maximal cost, we can compute
+  // partitions by launching binary search over cumulative cost
+  // max_num_partitions times
+  //
+  // Thus we perform a binary search over maximal cost
+  const int cumulative_cost_last =
+      cumulative_cost_getter(iteration_data[end - 1]);
+  const int cumulative_cost_offset =
+      start ? cumulative_cost_getter(iteration_data[start - 1]) : 0;
+  const int total_cost = cumulative_cost_last - cumulative_cost_offset;
+
+  // Minimal maximal partition cost is not smaller than the average
+  int partition_cost_left = total_cost / max_num_partitions - 1;
+  // Minimal maximal partition cost is not largerg than the total cost
+  int partition_cost_right = total_cost;
+
+  std::vector<int> partition;
+  partition.reserve(max_num_partitions + 1);
+  while (partition_cost_right - partition_cost_left > 1) {
+    const int midpoint =
+        partition_cost_left + (partition_cost_right - partition_cost_left) / 2;
+    bool admissible = TryPartition(start,
+                                   end,
+                                   max_num_partitions,
+                                   midpoint,
+                                   cumulative_cost_offset,
+                                   iteration_data,
+                                   cumulative_cost_getter,
+                                   &partition);
+    if (admissible) {
+      partition_cost_right = midpoint;
+    } else {
+      partition_cost_left = midpoint;
+    }
+  }
+
+  bool admissible = TryPartition(start,
+                                 end,
+                                 max_num_partitions,
+                                 partition_cost_right,
+                                 cumulative_cost_offset,
+                                 iteration_data,
+                                 cumulative_cost_getter,
+                                 &partition);
+  CHECK(admissible);
+  return partition;
+}
 }  // namespace parallel_for_details
 
 // Forward declaration of parallel invocation function that is to be
@@ -131,6 +228,49 @@ void ParallelFor(ContextImpl* context,
   CHECK(context != nullptr);
   ParallelInvoke<F>(context, start, end, num_threads, function);
 }
+
+// Execute function for every element in the range [start, end) with at most
+// num_threads, taking into account user-provided integer cumulative costs of
+// iterations
+template <typename F, typename T, typename G>
+void ParallelFor(ContextImpl* context,
+                 int start,
+                 int end,
+                 int num_threads,
+                 const F& function,
+                 const T* iteration_data,
+                 const G& cumulative_cost_getter) {
+  using namespace parallel_for_details;
+  CHECK_GT(num_threads, 0);
+  if (start >= end) {
+    return;
+  }
+  if (num_threads == 1 || end - start <= num_threads) {
+    ParallelFor(context, start, end, num_threads, function);
+    return;
+  }
+  // Creating several partitions allows us to tolerate imperfections of
+  // partitioning and user-supplied iteration costs up to a certain extent
+  const int kNumPartitionsPerThread = 4;
+  const int kMaxPartitions = num_threads * kNumPartitionsPerThread;
+  const std::vector<int> partitions = ComputePartition(
+      start, end, kMaxPartitions, iteration_data, cumulative_cost_getter);
+  CHECK_GT(partitions.size(), 1);
+  const int num_partitions = partitions.size() - 1;
+  ParallelFor(context,
+              0,
+              num_partitions,
+              num_threads,
+              [&function, &partitions](int thread_id, int partition_id) {
+                const int partition_start = partitions[partition_id];
+                const int partition_end = partitions[partition_id + 1];
+
+                for (int i = partition_start; i < partition_end; ++i) {
+                  Invoke<F>(thread_id, i, function);
+                }
+              });
+}
+
 }  // namespace ceres::internal
 
 // Backend-specific implementations of ParallelInvoke

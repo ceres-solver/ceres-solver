@@ -78,6 +78,10 @@ class CERES_NO_EXPORT BlockSparseMatrix final : public SparseMatrix {
                                   ContextImpl* context,
                                   int num_threads) const final;
   void LeftMultiplyAndAccumulate(const double* x, double* y) const final;
+  void LeftMultiplyAndAccumulate(const double* x,
+                                 double* y,
+                                 ContextImpl* context,
+                                 int num_threads) const final;
   void SquaredColumnNorm(double* x) const final;
   void ScaleColumns(const double* scale) final;
   void ToCompressedRowSparseMatrix(CompressedRowSparseMatrix* matrix) const;

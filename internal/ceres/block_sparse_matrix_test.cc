@@ -186,6 +186,22 @@ TEST_F(BlockSparseMatrixTest, LeftMultiplyAndAccumulateTest) {
   }
 }
 
+TEST_F(BlockSparseMatrixTest, LeftMultiplyAndAccumulateParallelTest) {
+  Vector y_0 = Vector::Random(A_->num_rows());
+  Vector y_s = y_0;
+  Vector y_p = y_0;
+
+  Vector x = Vector::Random(A_->num_cols());
+  A_->LeftMultiplyAndAccumulate(x.data(), y_s.data());
+
+  A_->AddTransposeBlockStructure();
+  A_->LeftMultiplyAndAccumulate(x.data(), y_p.data(), &context_, kNumThreads);
+
+  // Parallel implementation for left products uses a different order of
+  // traversal, thus results might be different
+  EXPECT_LT((y_s - y_p).norm(), 1e-12);
+}
+
 TEST_F(BlockSparseMatrixTest, SquaredColumnNormTest) {
   Vector y_a = Vector::Zero(A_->num_cols());
   Vector y_b = Vector::Zero(A_->num_cols());
