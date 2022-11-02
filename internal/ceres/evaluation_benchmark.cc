@@ -116,6 +116,16 @@ struct BALData {
     return block_sparse_jacobian.get();
   }
 
+  const BlockSparseMatrix* BlockSparseJacobianWithTranspose(
+      ContextImpl* context) {
+    if (!block_sparse_jacobian_with_transpose) {
+      auto regular = BlockSparseJacobian(context);
+      block_sparse_jacobian_with_transpose = CreateBlockSparseJacobian(context);
+      block_sparse_jacobian_with_transpose->AddTransposeBlockStructure();
+    }
+    return block_sparse_jacobian_with_transpose.get();
+  }
+
   const CompressedRowSparseMatrix* CompressedRowSparseJacobian(
       ContextImpl* context) {
     if (!crs_jacobian) {
@@ -127,6 +137,7 @@ struct BALData {
   Vector parameters;
   std::unique_ptr<BundleAdjustmentProblem> bal_problem;
   std::unique_ptr<BlockSparseMatrix> block_sparse_jacobian;
+  std::unique_ptr<BlockSparseMatrix> block_sparse_jacobian_with_transpose;
   std::unique_ptr<CompressedRowSparseMatrix> crs_jacobian;
 };
 
@@ -217,13 +228,32 @@ static void JacobianRightMultiplyAndAccumulate(benchmark::State& state,
 static void JacobianLeftMultiplyAndAccumulate(benchmark::State& state,
                                               BALData* data,
                                               ContextImpl* context) {
+  const int num_threads = state.range(0);
+
   auto jacobian = data->BlockSparseJacobian(context);
 
   Vector y = Vector::Zero(jacobian->num_cols());
   Vector x = Vector::Random(jacobian->num_rows());
 
   for (auto _ : state) {
-    jacobian->LeftMultiplyAndAccumulate(x.data(), y.data());
+    jacobian->LeftMultiplyAndAccumulate(
+        x.data(), y.data(), context, num_threads);
+  }
+  CHECK_GT(y.squaredNorm(), 0.);
+}
+
+static void JacobianLeftMultiplyAndAccumulateWithTranspose(
+    benchmark::State& state, BALData* data, ContextImpl* context) {
+  const int num_threads = state.range(0);
+
+  auto jacobian = data->BlockSparseJacobianWithTranspose(context);
+
+  Vector y = Vector::Zero(jacobian->num_cols());
+  Vector x = Vector::Random(jacobian->num_rows());
+
+  for (auto _ : state) {
+    jacobian->LeftMultiplyAndAccumulate(
+        x.data(), y.data(), context, num_threads);
   }
   CHECK_GT(y.squaredNorm(), 0.);
 }
@@ -362,11 +392,25 @@ int main(int argc, char** argv) {
         &context)
         ->Arg(1);
 
+    const std::string name_left_product_transpose =
+        "JacobianLeftMultiplyAndAccumulateWithTranspose<" + path + ">";
+    ::benchmark::RegisterBenchmark(
+        name_left_product_transpose.c_str(),
+        ceres::internal::JacobianLeftMultiplyAndAccumulateWithTranspose,
+        data,
+        &context)
+        ->Arg(1)
+        ->Arg(2)
+        ->Arg(4)
+        ->Arg(8)
+        ->Arg(16)
+        ->Arg(28);
+
 #ifndef CERES_NO_CUDA
     const std::string name_left_product_cuda =
         "JacobianLeftMultiplyAndAccumulateCuda<" + path + ">";
     ::benchmark::RegisterBenchmark(
-        name_right_product_cuda.c_str(),
+        name_left_product_cuda.c_str(),
         ceres::internal::JacobianLeftMultiplyAndAccumulateCuda,
         data,
         &context)
