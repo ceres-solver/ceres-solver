@@ -35,6 +35,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "af56b1ca_33d90f10",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-02T20:20:40Z",
+      "side": 1,
+      "message": "Partitioning has complexity `O(log(nnz) * [num_threads * log(num_col_blocks)])` with cost of one call to TryPartition in square braces.\n\nOn problems from BAL it takes \u003c1% / ~1.5% / ~6% / ~3% / ~6% of multiplication time for final / venice / ladybug / dubrovnik / trafalgar.\n\n\nThere is a sub-optimal solution via upper bound for minimal maximum partition size about 2 * max(maximal cost, total cost / number of partitions) that avoids search for optimal size threshold.",
+      "parentUuid": "919237a7_8a334f8e",
+      "revId": "9b3d05553c40714f2de4624471fef6331b8efc8f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ea4b8701_967b0ba9",
@@ -94,6 +112,30 @@
       "writtenOn": "2022-11-02T19:04:08Z",
       "side": 1,
       "message": "document the arguments of this function.\n\nI think TryPartition is not a great name. If I am reading this function correctly, you are trying to see if max_partition_cost can be used as an upper bound to split into max_num_partitions or less. \n\nTryPartitionCost maybe a better name.\n\nMaxPartitionCostIsFeasible is perhaps better\n\n\nminor optimization suggestion. during the binary search you don\u0027t really need the partition vector, since you are just keeping track of number of partitions.\n\nyou could have a simpler function which given a feasible max_partition_cost, just does the split thats needed, but as I said this is a minor nit, your call if this is actually worth it.",
+      "range": {
+        "startLine": 101,
+        "startChar": 5,
+        "endLine": 101,
+        "endChar": 17
+      },
+      "revId": "9b3d05553c40714f2de4624471fef6331b8efc8f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0288c966_3f0e990e",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-02T20:20:40Z",
+      "side": 1,
+      "message": "TryPartition tries to partition range into blocks in a greedy manner (if any solution to partitioning problem with a given maximal size exists, then greedy solution also exists [for contiguous intervals]), and provides partitioning as a side-product.\n\n\nIf we know a feasible max_partition_cost - it still makes sense to run binary search for computing partitions in a greedy manner, because this avoids visiting num_col_blocks column blocks explicitly (with as many as tens of thousands of column blocks per partition in part of jacobian corresponding to point positions, because it is just ~6 observations per point on average).\n\nPreserving max_partition_cost between multiplications will allow us to avoid the outer binary search in ComputePartition.",
+      "parentUuid": "05c53a65_fb75419a",
       "range": {
         "startLine": 101,
         "startChar": 5,
