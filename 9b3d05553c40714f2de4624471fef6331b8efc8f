@@ -53,6 +53,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "660b4ce3_a10bc038",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-02T20:26:22Z",
+      "side": 1,
+      "message": "I wouldn\u0027t want to fixate TOO much on BAL problems, especially for block sparse matrix since in that case its the partitioned matrix view that matters more. that said, I am okay with either of these two approaches (a simple upper bound or a more sophisticated binary search.",
+      "parentUuid": "af56b1ca_33d90f10",
+      "revId": "9b3d05553c40714f2de4624471fef6331b8efc8f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ea4b8701_967b0ba9",
