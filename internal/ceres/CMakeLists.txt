@@ -140,20 +140,19 @@ if (ACCELERATESPARSE AND AccelerateSparse_FOUND)
 endif()
 
 if (USE_CUDA)
-  list(APPEND
-       CERES_LIBRARY_PRIVATE_DEPENDENCIES
-       ${CUDA_LIBRARIES}
-       ${CUDA_cublas_LIBRARY}
-       ${CUDA_cusolver_LIBRARY}
-       ${CUDA_cusparse_LIBRARY})
+  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES
+    CUDA::cublas
+    CUDA::cudart
+    CUDA::cusolver
+    CUDA::cusparse)
   if (BUILD_TESTING AND GFLAGS)
     add_test(
         NAME cuda_memcheck_dense_qr_test
-        COMMAND ${CUDA_TOOLKIT_ROOT_DIR}/bin/cuda-memcheck --leak-check full
+        COMMAND ${CUDAToolkit_BIN_DIR}/cuda-memcheck --leak-check full
             $<TARGET_FILE:cuda_dense_qr_test>)
     add_test(
         NAME cuda_memcheck_dense_cholesky_test
-        COMMAND ${CUDA_TOOLKIT_ROOT_DIR}/bin/cuda-memcheck --leak-check full
+        COMMAND ${CUDAToolkit_BIN_DIR}/cuda-memcheck --leak-check full
             $<TARGET_FILE:cuda_dense_cholesky_test>)
   endif (BUILD_TESTING AND GFLAGS)
   set_source_files_properties(cuda_kernels.cu.cc PROPERTIES LANGUAGE CUDA)
@@ -393,10 +392,6 @@ if (ACCELERATESPARSE)
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS
     ${AccelerateSparse_INCLUDE_DIRS})
 endif()
-if (USE_CUDA)
-  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS
-    ${CUDA_INCLUDE_DIRS})
-endif()
 # Add include locations for optional dependencies to the Ceres target without
 # duplication.
 list(REMOVE_DUPLICATES CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS)
@@ -449,7 +444,11 @@ if (BUILD_TESTING AND GFLAGS)
     target_include_directories(${NAME}_test
       PRIVATE ${Ceres_SOURCE_DIR}/internal/ceres
               ${CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS})
-    target_link_libraries(${NAME}_test PRIVATE gtest test_util ceres_static)
+    # Some tests include direct references/includes of private dependency
+    # headers which are not propagated via the ceres targets, so link them
+    # explicitly.
+    target_link_libraries(${NAME}_test PRIVATE gtest test_util ceres_static
+      ${CERES_LIBRARY_PRIVATE_DEPENDENCIES})
 
     # covariance_test uses SuiteSparseQR.hpp. However, since SuiteSparse import
     # targets are private (link only) dependencies not propagated to consumers,
@@ -572,8 +571,11 @@ macro(add_dependencies_to_benchmark BENCHMARK_TARGET)
   target_include_directories(${BENCHMARK_TARGET}
     PRIVATE ${Ceres_SOURCE_DIR}/internal
             ${CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS})
+  # Benchmarks include direct references/includes of private dependency headers
+  # which are not propagated via the ceres targets, so link them explicitly.
   target_link_libraries(${BENCHMARK_TARGET}
-    PRIVATE benchmark::benchmark ceres_static)
+    PRIVATE benchmark::benchmark ceres_static
+            ${CERES_LIBRARY_PRIVATE_DEPENDENCIES})
 endmacro()
 
 if (BUILD_BENCHMARKS)
