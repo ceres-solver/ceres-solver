@@ -140,20 +140,19 @@ if (ACCELERATESPARSE AND AccelerateSparse_FOUND)
 endif()
 
 if (USE_CUDA)
-  list(APPEND
-       CERES_LIBRARY_PRIVATE_DEPENDENCIES
-       ${CUDA_LIBRARIES}
-       ${CUDA_cublas_LIBRARY}
-       ${CUDA_cusolver_LIBRARY}
-       ${CUDA_cusparse_LIBRARY})
+  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES
+    CUDA::cublas
+    CUDA::cudart
+    CUDA::cusolver
+    CUDA::cusparse)
   if (BUILD_TESTING AND GFLAGS)
     add_test(
         NAME cuda_memcheck_dense_qr_test
-        COMMAND ${CUDA_TOOLKIT_ROOT_DIR}/bin/cuda-memcheck --leak-check full
+        COMMAND ${CUDAToolkit_BIN_DIR}/cuda-memcheck --leak-check full
             $<TARGET_FILE:cuda_dense_qr_test>)
     add_test(
         NAME cuda_memcheck_dense_cholesky_test
-        COMMAND ${CUDA_TOOLKIT_ROOT_DIR}/bin/cuda-memcheck --leak-check full
+        COMMAND ${CUDAToolkit_BIN_DIR}/cuda-memcheck --leak-check full
             $<TARGET_FILE:cuda_dense_cholesky_test>)
   endif (BUILD_TESTING AND GFLAGS)
   set_source_files_properties(cuda_kernels.cu.cc PROPERTIES LANGUAGE CUDA)
@@ -392,10 +391,6 @@ endif()
 if (ACCELERATESPARSE)
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS
     ${AccelerateSparse_INCLUDE_DIRS})
-endif()
-if (USE_CUDA)
-  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS
-    ${CUDA_INCLUDE_DIRS})
 endif()
 # Add include locations for optional dependencies to the Ceres target without
 # duplication.
