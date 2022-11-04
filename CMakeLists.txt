@@ -29,7 +29,7 @@
 # Authors: keir@google.com (Keir Mierle)
 #          alexs.mac@gmail.com (Alex Stewart)
 
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.11)
 
 if (POLICY CMP0074) # Added in CMake 3.12
   # FindTBB.cmake uses TBB_ROOT in a way that is historical, but also compliant
@@ -231,27 +231,69 @@ if (Eigen3_FOUND)
 endif (Eigen3_FOUND)
 
 if (USE_CUDA)
-  find_package(CUDA QUIET)
-  if (CUDA_FOUND)
-    message("-- Found CUDA version ${CUDA_VERSION}: "
-        "${CUDA_LIBRARIES};"
-        "${CUDA_cusolver_LIBRARY};"
-        "${CUDA_cusparse_LIBRARY}")
-    if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.18")
-      # Support Maxwell, Pascal, Volta, Turing, and Ampere GPUs.
-      set(CMAKE_CUDA_ARCHITECTURES "50;60;70;80")
-      message("-- Setting CUDA Architecture to ${CMAKE_CUDA_ARCHITECTURES}")
-    endif()
-    enable_language(CUDA)
-  else (CUDA_FOUND)
-    message("-- Did not find CUDA library, disabling CUDA support.")
-    update_cache_variable(USE_CUDA OFF)
-    list(APPEND CERES_COMPILE_OPTIONS CERES_NO_CUDA)
-  endif (CUDA_FOUND)
-else (USE_CUDA)
+  if (CMAKE_VERSION VERSION_LESS 3.17)
+    # On older versions of CMake (20.04 default is 3.16) FindCUDAToolkit was
+    # not available, but FindCUDA was deprecated. To avoid special-case handling
+    # elsewhere, emulate the effects of FindCUDAToolkit locally in terms of the
+    # expected CMake imported targets and defined variables. This can be removed
+    # from as soon as the min CMake version is >= 3.17.
+    find_package(CUDA QUIET)
+    if (CUDA_FOUND)
+      message("-- Found CUDA version ${CUDA_VERSION} installed in: "
+        "${CUDA_TOOLKIT_ROOT_DIR} via legacy (< 3.17) CMake module. "
+        "Using the legacy CMake module means that any installation of "
+        "Ceres will require that the CUDA libraries be installed in a "
+        "location included in the LD_LIBRARY_PATH.")
+      enable_language(CUDA)
+
+      macro(DECLARE_IMPORTED_CUDA_TARGET COMPONENT)
+        add_library(CUDA::${COMPONENT} INTERFACE IMPORTED)
+        target_include_directories(
+          CUDA::${COMPONENT} INTERFACE ${CUDA_INCLUDE_DIRS})
+        target_link_libraries(
+          CUDA::${COMPONENT} INTERFACE ${CUDA_${COMPONENT}_LIBRARY} ${ARGN})
+      endmacro()
+
+      declare_imported_cuda_target(cublas)
+      declare_imported_cuda_target(cusolver)
+      declare_imported_cuda_target(cusparse)
+      declare_imported_cuda_target(cudart ${CUDA_LIBRARIES})
+
+      set(CUDAToolkit_BIN_DIR ${CUDA_TOOLKIT_ROOT_DIR}/bin)
+
+    else (CUDA_FOUND)
+      message("-- Did not find CUDA, disabling CUDA support.")
+      update_cache_variable(USE_CUDA OFF)
+    endif (CUDA_FOUND)
+  else (CMAKE_VERSION VERSION_LESS 3.17)
+    find_package(CUDAToolkit QUIET)
+    if (CUDAToolkit_FOUND)
+      message("-- Found CUDA version ${CUDAToolkit_VERSION} installed in: "
+        "${CUDAToolkit_TARGET_DIR}")
+      set(CUDAToolkit_DEPENDENCY
+        "find_dependency(CUDAToolkit ${CUDAToolkit_VERSION})")
+      enable_language(CUDA)
+      if (CMAKE_VERSION VERSION_GREATER_EQUAL "3.18")
+        # Support Maxwell, Pascal, Volta, Turing, and Ampere GPUs.
+        set(CMAKE_CUDA_ARCHITECTURES "50;60;70;80")
+        message("-- Setting CUDA Architecture to ${CMAKE_CUDA_ARCHITECTURES}")
+      endif()
+      list(APPEND CERES_CUDA_LIBRARIES
+        CUDA::cublas
+        CUDA::cudart
+        CUDA::cusolver
+        CUDA::cusparse)
+    else (CUDAToolkit_FOUND)
+      message("-- Did not find CUDA, disabling CUDA support.")
+      update_cache_variable(USE_CUDA OFF)
+    endif (CUDAToolkit_FOUND)
+  endif (CMAKE_VERSION VERSION_LESS 3.17)
+endif (USE_CUDA)
+if (NOT USE_CUDA)
   message("-- Building without CUDA.")
   list(APPEND CERES_COMPILE_OPTIONS CERES_NO_CUDA)
-endif (USE_CUDA)
+endif (NOT USE_CUDA)
+
 if (LAPACK)
   find_package(LAPACK QUIET)
   if (LAPACK_FOUND)
