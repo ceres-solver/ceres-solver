@@ -166,6 +166,8 @@ class CERES_NO_EXPORT ProblemImpl {
     return residual_block_set_;
   }
 
+  const Problem::Options & options() const { return options_; }
+
   ContextImpl* context() { return context_impl_; }
 
  private:

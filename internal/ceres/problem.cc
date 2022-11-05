@@ -212,6 +212,8 @@ void Problem::GetResidualBlocksForParameterBlock(
   impl_->GetResidualBlocksForParameterBlock(values, residual_blocks);
 }
 
+const Problem::Options & Problem::options() const { return impl_->options(); }
+
 internal::ProblemImpl* Problem::mutable_impl() { return impl_.get(); }
 
 }  // namespace ceres
