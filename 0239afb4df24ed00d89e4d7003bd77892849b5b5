@@ -34,6 +34,24 @@
       "parentUuid": "769b9280_98090158",
       "revId": "0239afb4df24ed00d89e4d7003bd77892849b5b5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "769c2422_accb601e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-11-05T23:53:32Z",
+      "side": 1,
+      "message": "Hmm I\u0027m still getting compiler errors, this time from GTest targets.\nOne such:\n```\nIn file included from /home/joydeepb/projects/ceres-solver/internal/ceres/block_sparse_matrix.h:42,\n                 from /home/joydeepb/projects/ceres-solver/internal/ceres/block_sparse_matrix_test.cc:31:\n/home/joydeepb/projects/ceres-solver/internal/ceres/context_impl.h:46:10: fatal error: cublas_v2.h: No such file or directory\n   46 | #include \"cublas_v2.h\"\n      |          ^~~~~~~~~~~~~\n```",
+      "parentUuid": "bff8eb2c_da75328c",
+      "revId": "0239afb4df24ed00d89e4d7003bd77892849b5b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
