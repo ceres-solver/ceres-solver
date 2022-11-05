@@ -16,6 +16,24 @@
       "message": "I\u0027m getting some errors with Cuda 11.7 on Ubuntu 22.04, with CMake 3.23.3:\n```\ncontext_impl.h:46:10: fatal error: cublas_v2.h: No such file or directory\n```\n\nThese errors only appear for the benchmark targets. Are there some missing flags for the Cuda benchmark targets?",
       "revId": "0239afb4df24ed00d89e4d7003bd77892849b5b5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bff8eb2c_da75328c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-11-05T23:34:58Z",
+      "side": 1,
+      "message": "Thanks Joydeep, I had benchmarks disabled on the CUDA-equipped machine I was testing on, this should be fixed in the latest patchset",
+      "parentUuid": "769b9280_98090158",
+      "revId": "0239afb4df24ed00d89e4d7003bd77892849b5b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
