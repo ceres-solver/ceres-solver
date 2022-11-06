@@ -52,6 +52,24 @@
       "parentUuid": "bff8eb2c_da75328c",
       "revId": "0239afb4df24ed00d89e4d7003bd77892849b5b5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f994e554_140ece8e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-11-06T00:01:58Z",
+      "side": 1,
+      "message": "OK, and I take it you are building statically?",
+      "parentUuid": "769c2422_accb601e",
+      "revId": "0239afb4df24ed00d89e4d7003bd77892849b5b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
