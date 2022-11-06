@@ -70,6 +70,24 @@
       "parentUuid": "769c2422_accb601e",
       "revId": "0239afb4df24ed00d89e4d7003bd77892849b5b5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db0fe220_02308990",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2022-11-06T00:06:28Z",
+      "side": 1,
+      "message": "OK, I can recreate this and have fixed it locally, the latest patchset should hopefully work for you as well",
+      "parentUuid": "f994e554_140ece8e",
+      "revId": "0239afb4df24ed00d89e4d7003bd77892849b5b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
