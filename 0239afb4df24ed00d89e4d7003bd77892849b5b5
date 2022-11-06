@@ -88,6 +88,24 @@
       "parentUuid": "f994e554_140ece8e",
       "revId": "0239afb4df24ed00d89e4d7003bd77892849b5b5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e4c1a34_d92f79ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-11-06T13:03:32Z",
+      "side": 1,
+      "message": "This fixed it, it compiles on both new and old versions of CMake on Ubuntu.",
+      "parentUuid": "db0fe220_02308990",
+      "revId": "0239afb4df24ed00d89e4d7003bd77892849b5b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
