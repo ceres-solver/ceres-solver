@@ -171,12 +171,12 @@ jobs:
         uses: actions/cache@v2
         with:
           path: suitesparse/
-          key: ${{matrix.msvc}}-suitesparse-5.12.0-cmake.3-${{matrix.arch}}-${{matrix.build_type}}-${{matrix.lib}}
+          key: ${{matrix.msvc}}-suitesparse-5.13.0-cmake.3-${{matrix.arch}}-${{matrix.build_type}}-${{matrix.lib}}
 
       - name: Download SuiteSparse
         if: steps.cache-suitesparse.outputs.cache-hit != 'true'
         run: |
-          (New-Object System.Net.WebClient).DownloadFile("https://github.com/sergiud/SuiteSparse/releases/download/5.12.0-cmake.3/SuiteSparse-5.12.0-cmake.3-${{matrix.marker}}-Win64-${{matrix.build_type}}-${{matrix.lib}}-gpl-metis.zip", "suitesparse.zip");
+          (New-Object System.Net.WebClient).DownloadFile("https://github.com/sergiud/SuiteSparse/releases/download/5.13.0-cmake.3/SuiteSparse-5.13.0-cmake.3-${{matrix.marker}}-Win64-${{matrix.build_type}}-${{matrix.lib}}-gpl-metis.zip", "suitesparse.zip");
           Expand-Archive -Path suitesparse.zip -DestinationPath ${{github.workspace}}/suitesparse;
 
       - name: Cache Eigen
