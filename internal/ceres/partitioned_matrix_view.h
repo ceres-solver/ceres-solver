@@ -70,9 +70,17 @@ class CERES_NO_EXPORT PartitionedMatrixViewBase {
 
   // y += E'x
   virtual void LeftMultiplyAndAccumulateE(const double* x, double* y) const = 0;
+  virtual void LeftMultiplyAndAccumulateE(const double* x,
+                                          double* y,
+                                          ContextImpl* context,
+                                          int num_threads) const = 0;
 
   // y += F'x
   virtual void LeftMultiplyAndAccumulateF(const double* x, double* y) const = 0;
+  virtual void LeftMultiplyAndAccumulateF(const double* x,
+                                          double* y,
+                                          ContextImpl* context,
+                                          int num_threads) const = 0;
 
   // y += Ex
   virtual void RightMultiplyAndAccumulateE(const double* x,
@@ -138,6 +146,14 @@ class CERES_NO_EXPORT PartitionedMatrixView final
 
   void LeftMultiplyAndAccumulateE(const double* x, double* y) const final;
   void LeftMultiplyAndAccumulateF(const double* x, double* y) const final;
+  void LeftMultiplyAndAccumulateE(const double* x,
+                                  double* y,
+                                  ContextImpl* context,
+                                  int num_threads) const final;
+  void LeftMultiplyAndAccumulateF(const double* x,
+                                  double* y,
+                                  ContextImpl* context,
+                                  int num_threads) const final;
   void RightMultiplyAndAccumulateE(const double* x, double* y) const final;
   void RightMultiplyAndAccumulateF(const double* x, double* y) const final;
   void RightMultiplyAndAccumulateE(const double* x,

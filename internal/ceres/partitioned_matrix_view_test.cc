@@ -177,30 +177,40 @@ TEST_F(PartitionedMatrixViewTest, BlockDiagonalFtF) {
 const int kMaxNumThreads = 8;
 class PartitionedMatrixViewParallelTest : public ::testing::TestWithParam<int> {
  protected:
+  static const int kNumProblems = 3;
   void SetUp() final {
-    std::unique_ptr<LinearLeastSquaresProblem> problem =
-        CreateLinearLeastSquaresProblemFromId(2);
-    CHECK(problem != nullptr);
-    A_ = std::move(problem->A);
+    int problem_ids[kNumProblems] = {2, 4, 6};
+    for (int i = 0; i < kNumProblems; ++i) {
+      auto problem = CreateLinearLeastSquaresProblemFromId(problem_ids[i]);
+      CHECK(problem != nullptr);
+      SetUpMatrix(i, problem.get());
+    }
 
-    num_cols_ = A_->num_cols();
-    num_rows_ = A_->num_rows();
-    num_eliminate_blocks_ = problem->num_eliminate_blocks;
-    LinearSolver::Options options;
-    options.elimination_groups.push_back(num_eliminate_blocks_);
-    pmv_ = PartitionedMatrixViewBase::Create(
-        options, *down_cast<BlockSparseMatrix*>(A_.get()));
     context_.EnsureMinimumThreads(kMaxNumThreads);
+  }
+
+  void SetUpMatrix(int id, LinearLeastSquaresProblem* problem) {
+    A_[id] = std::move(problem->A);
+    auto& A = A_[id];
+    auto block_sparse = down_cast<BlockSparseMatrix*>(A.get());
+    block_sparse->AddTransposeBlockStructure();
+
+    num_cols_[id] = A->num_cols();
+    num_rows_[id] = A->num_rows();
+    num_eliminate_blocks_[id] = problem->num_eliminate_blocks;
+    LinearSolver::Options options;
+    options.elimination_groups.push_back(num_eliminate_blocks_[id]);
+    pmv_[id] = PartitionedMatrixViewBase::Create(options, *block_sparse);
   }
 
   double RandDouble() { return distribution_(prng_); }
 
   ContextImpl context_;
-  int num_rows_;
-  int num_cols_;
-  int num_eliminate_blocks_;
-  std::unique_ptr<SparseMatrix> A_;
-  std::unique_ptr<PartitionedMatrixViewBase> pmv_;
+  int num_rows_[kNumProblems];
+  int num_cols_[kNumProblems];
+  int num_eliminate_blocks_[kNumProblems];
+  std::unique_ptr<SparseMatrix> A_[kNumProblems];
+  std::unique_ptr<PartitionedMatrixViewBase> pmv_[kNumProblems];
   std::mt19937 prng_;
   std::uniform_real_distribution<double> distribution_ =
       std::uniform_real_distribution<double>(0.0, 1.0);
@@ -208,23 +218,83 @@ class PartitionedMatrixViewParallelTest : public ::testing::TestWithParam<int> {
 
 TEST_P(PartitionedMatrixViewParallelTest, RightMultiplyAndAccumulateEParallel) {
   const int kNumThreads = GetParam();
-  Vector x1(pmv_->num_cols_e());
-  Vector x2(pmv_->num_cols());
-  x2.setZero();
+  for (int p = 0; p < kNumProblems; ++p) {
+    auto& pmv = pmv_[p];
+    auto& A = A_[p];
 
-  for (int i = 0; i < pmv_->num_cols_e(); ++i) {
-    x1(i) = x2(i) = RandDouble();
+    Vector x1(pmv->num_cols_e());
+    Vector x2(pmv->num_cols());
+    x2.setZero();
+
+    for (int i = 0; i < pmv->num_cols_e(); ++i) {
+      x1(i) = x2(i) = RandDouble();
+    }
+
+    Vector y1 = Vector::Zero(pmv->num_rows());
+    pmv->RightMultiplyAndAccumulateE(
+        x1.data(), y1.data(), &context_, kNumThreads);
+
+    Vector y2 = Vector::Zero(pmv->num_rows());
+    A->RightMultiplyAndAccumulate(x2.data(), y2.data());
+
+    for (int i = 0; i < pmv->num_rows(); ++i) {
+      EXPECT_NEAR(y1(i), y2(i), kEpsilon);
+    }
   }
+}
 
-  Vector y1 = Vector::Zero(pmv_->num_rows());
-  pmv_->RightMultiplyAndAccumulateE(
-      x1.data(), y1.data(), &context_, kNumThreads);
+TEST_P(PartitionedMatrixViewParallelTest, RightMultiplyAndAccumulateFParallel) {
+  const int kNumThreads = GetParam();
+  for (int p = 0; p < kNumProblems; ++p) {
+    auto& pmv = pmv_[p];
+    auto& A = A_[p];
+    Vector x1(pmv->num_cols_f());
+    Vector x2(pmv->num_cols());
+    x2.setZero();
 
-  Vector y2 = Vector::Zero(pmv_->num_rows());
-  A_->RightMultiplyAndAccumulate(x2.data(), y2.data());
+    for (int i = 0; i < pmv->num_cols_f(); ++i) {
+      x1(i) = x2(i + pmv->num_cols_e()) = RandDouble();
+    }
 
-  for (int i = 0; i < pmv_->num_rows(); ++i) {
-    EXPECT_NEAR(y1(i), y2(i), kEpsilon);
+    Vector y1 = Vector::Zero(pmv->num_rows());
+    pmv->RightMultiplyAndAccumulateF(
+        x1.data(), y1.data(), &context_, kNumThreads);
+
+    Vector y2 = Vector::Zero(pmv->num_rows());
+    A->RightMultiplyAndAccumulate(x2.data(), y2.data());
+
+    for (int i = 0; i < pmv->num_rows(); ++i) {
+      EXPECT_NEAR(y1(i), y2(i), kEpsilon);
+    }
+  }
+}
+
+TEST_P(PartitionedMatrixViewParallelTest, LeftMultiplyAndAccumulateParallel) {
+  const int kNumThreads = GetParam();
+  for (int p = 0; p < kNumProblems; ++p) {
+    auto& pmv = pmv_[p];
+    auto& A = A_[p];
+    Vector x = Vector::Zero(pmv->num_rows());
+    for (int i = 0; i < pmv->num_rows(); ++i) {
+      x(i) = RandDouble();
+    }
+    Vector x_pre = x;
+
+    Vector y = Vector::Zero(pmv->num_cols());
+    Vector y1 = Vector::Zero(pmv->num_cols_e());
+    Vector y2 = Vector::Zero(pmv->num_cols_f());
+
+    A->LeftMultiplyAndAccumulate(x.data(), y.data());
+    pmv->LeftMultiplyAndAccumulateE(
+        x.data(), y1.data(), &context_, kNumThreads);
+    pmv->LeftMultiplyAndAccumulateF(
+        x.data(), y2.data(), &context_, kNumThreads);
+
+    for (int i = 0; i < pmv->num_cols(); ++i) {
+      EXPECT_NEAR(y(i),
+                  (i < pmv->num_cols_e()) ? y1(i) : y2(i - pmv->num_cols_e()),
+                  kEpsilon);
+    }
   }
 }
 

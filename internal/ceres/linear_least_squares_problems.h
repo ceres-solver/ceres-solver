@@ -75,6 +75,8 @@ CERES_NO_EXPORT
 std::unique_ptr<LinearLeastSquaresProblem> LinearLeastSquaresProblem4();
 CERES_NO_EXPORT
 std::unique_ptr<LinearLeastSquaresProblem> LinearLeastSquaresProblem5();
+CERES_NO_EXPORT
+std::unique_ptr<LinearLeastSquaresProblem> LinearLeastSquaresProblem6();
 
 // Write the linear least squares problem to disk. The exact format
 // depends on dump_format_type.
