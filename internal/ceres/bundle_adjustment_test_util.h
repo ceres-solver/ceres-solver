@@ -84,14 +84,15 @@ class BundleAdjustmentProblem {
   Solver::Options* mutable_solver_options() { return &options_; }
 
   // clang-format off
-  int num_cameras()            const { return num_cameras_; }
-  int num_points()             const { return num_points_; }
-  int num_observations()       const { return num_observations_; }
-  const int* point_index()     const { return point_index_; }
-  const int* camera_index()    const { return camera_index_; }
-  const double* observations() const { return observations_; }
-  double* mutable_cameras()          { return parameters_; }
-  double* mutable_points()           { return parameters_ + 9 * num_cameras_; }
+  int num_cameras()                const { return num_cameras_; }
+  int num_points()                 const { return num_points_; }
+  int num_observations()           const { return num_observations_; }
+  const int* point_index()         const { return point_index_; }
+  const int* camera_index()        const { return camera_index_; }
+  const double* observations()     const { return observations_; }
+  double* mutable_cameras()              { return parameters_; }
+  double* mutable_points()               { return parameters_ + 9 * num_cameras_; }
+  const Solver::Options& options() const { return options_; }
   // clang-format on
 
   static double kResidualTolerance;

@@ -228,6 +228,50 @@ TEST_P(PartitionedMatrixViewParallelTest, RightMultiplyAndAccumulateEParallel) {
   }
 }
 
+TEST_P(PartitionedMatrixViewParallelTest, RightMultiplyAndAccumulateFParallel) {
+  const int kNumThreads = GetParam();
+  Vector x1(pmv_->num_cols_f());
+  Vector x2(pmv_->num_cols());
+  x2.setZero();
+
+  for (int i = 0; i < pmv_->num_cols_f(); ++i) {
+    x1(i) = x2(i + pmv_->num_cols_e()) = RandDouble();
+  }
+
+  Vector y1 = Vector::Zero(pmv_->num_rows());
+  pmv_->RightMultiplyAndAccumulateF(
+      x1.data(), y1.data(), &context_, kNumThreads);
+
+  Vector y2 = Vector::Zero(pmv_->num_rows());
+  A_->RightMultiplyAndAccumulate(x2.data(), y2.data());
+
+  for (int i = 0; i < pmv_->num_rows(); ++i) {
+    EXPECT_NEAR(y1(i), y2(i), kEpsilon);
+  }
+}
+
+TEST_P(PartitionedMatrixViewParallelTest, LeftMultiplyAndAccumulateParallel) {
+  const int kNumThreads = GetParam();
+  Vector x = Vector::Zero(pmv_->num_rows());
+  for (int i = 0; i < pmv_->num_rows(); ++i) {
+    x(i) = RandDouble();
+  }
+
+  Vector y = Vector::Zero(pmv_->num_cols());
+  Vector y1 = Vector::Zero(pmv_->num_cols_e());
+  Vector y2 = Vector::Zero(pmv_->num_cols_f());
+
+  A_->LeftMultiplyAndAccumulate(x.data(), y.data());
+  pmv_->LeftMultiplyAndAccumulateE(x.data(), y1.data(), &context_, kNumThreads);
+  pmv_->LeftMultiplyAndAccumulateF(x.data(), y2.data(), &context_, kNumThreads);
+
+  for (int i = 0; i < pmv_->num_cols(); ++i) {
+    EXPECT_NEAR(y(i),
+                (i < pmv_->num_cols_e()) ? y1(i) : y2(i - pmv_->num_cols_e()),
+                kEpsilon);
+  }
+}
+
 INSTANTIATE_TEST_SUITE_P(ParallelProducts,
                          PartitionedMatrixViewParallelTest,
                          ::testing::Values(1, 2, 4, 8),
