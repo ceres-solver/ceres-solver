@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ca6b40d_e5d8fbf6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-12T16:00:15Z",
+      "side": 1,
+      "message": "Mostly just fixes of \"cosmetic\" problems.\n\nI\u0027ve understood also that in ComputePartition an optimal partition is either already computed when searching for optimal cost, or is trivial (a complete interval), and removed redundant call.\n\nI didn\u0027t get any useful ideas about caching optimal partition cost - it depends on thread count, which we earlier decided not to store in the matrix itself. Probably will return to it later.",
+      "revId": "ad4fb9d11994933919a57d5e2a9f2ec7c0fba38e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
