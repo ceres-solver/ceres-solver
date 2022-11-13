@@ -181,6 +181,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "156fcd90_13170d8a",
+        "filename": "internal/ceres/partitioned_matrix_view_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-13T22:06:48Z",
+      "side": 1,
+      "message": "I think this is wrong, this is counting blocks, when you actually need number of scalar rows/columns.\n\nshouldn\u0027t this be \n\nblock_structure()-\u003erows[num_row_blocks_e_].block.position instead?",
+      "range": {
+        "startLine": 227,
+        "startChar": 31,
+        "endLine": 227,
+        "endChar": 48
+      },
+      "revId": "7f91249011103de971bce2bc93148b1b06371e9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "11429e12_a2fb3ee8",
         "filename": "internal/ceres/partitioned_matrix_view_impl.h",
         "patchSetId": 1
