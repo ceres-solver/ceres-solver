@@ -510,7 +510,7 @@ std::unique_ptr<BlockSparseMatrix> BlockSparseMatrix::CreateRandomMatrix(
       options.min_col_block_size, options.max_col_block_size);
   std::uniform_int_distribution<int> row_distribution(
       options.min_row_block_size, options.max_row_block_size);
-  auto* bs = new CompressedRowBlockStructure();
+  auto bs = std::make_unique<CompressedRowBlockStructure>();
   if (options.col_blocks.empty()) {
     CHECK_GT(options.num_col_blocks, 0);
     CHECK_GT(options.min_col_block_size, 0);
@@ -555,7 +555,7 @@ std::unique_ptr<BlockSparseMatrix> BlockSparseMatrix::CreateRandomMatrix(
     }
   }
 
-  auto matrix = std::make_unique<BlockSparseMatrix>(bs);
+  auto matrix = std::make_unique<BlockSparseMatrix>(bs.release());
   double* values = matrix->mutable_values();
   std::normal_distribution<double> standard_normal_distribution;
   std::generate_n(
