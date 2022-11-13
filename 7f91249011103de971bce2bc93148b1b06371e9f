@@ -35,6 +35,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "64316574_85a5acdf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-13T21:33:11Z",
+      "side": 1,
+      "message": "The bug is in   LeftMultiplyAndAccumulateE, because if I force it call the single threaded version things work fine. still investigating.",
+      "revId": "7f91249011103de971bce2bc93148b1b06371e9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7e9ae901_9ed17d4b",
