@@ -131,7 +131,6 @@ struct BALData {
   const BlockSparseMatrix* BlockSparseJacobianWithTranspose(
       ContextImpl* context) {
     if (!block_sparse_jacobian_with_transpose) {
-      auto regular = BlockSparseJacobian(context);
       block_sparse_jacobian_with_transpose = CreateBlockSparseJacobian(context);
       block_sparse_jacobian_with_transpose->AddTransposeBlockStructure();
     }
