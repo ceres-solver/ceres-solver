@@ -45,11 +45,14 @@ namespace ceres::internal {
 
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
 PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
-    PartitionedMatrixView(const BlockSparseMatrix& matrix, int num_col_blocks_e)
-    : matrix_(matrix), num_col_blocks_e_(num_col_blocks_e) {
+    PartitionedMatrixView(const LinearSolver::Options& options,
+                          const BlockSparseMatrix& matrix)
+
+    : options_(options), matrix_(matrix) {
   const CompressedRowBlockStructure* bs = matrix_.block_structure();
   CHECK(bs != nullptr);
 
+  num_col_blocks_e_ = options_.elimination_groups[0];
   num_col_blocks_f_ = bs->cols.size() - num_col_blocks_e_;
 
   // Compute the number of row blocks in E. The number of row blocks
@@ -79,6 +82,25 @@ PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
   }
 
   CHECK_EQ(num_cols_e_ + num_cols_f_, matrix_.num_cols());
+
+  auto transpose_bs = matrix_.transpose_block_structure();
+  const int num_threads = options_.num_threads;
+  if (transpose_bs != nullptr && num_threads > 1) {
+    int kMaxPartitions = num_threads * 4;
+    e_cols_partition_ = parallel_for_details::ComputePartition(
+        0,
+        num_col_blocks_e_,
+        num_threads * 4,
+        transpose_bs->rows.data(),
+        [](const CompressedRow& row) { return row.cumulative_nnz; });
+
+    f_cols_partition_ = parallel_for_details::ComputePartition(
+        num_col_blocks_e_,
+        num_col_blocks_e_ + num_col_blocks_f_,
+        num_threads * 4,
+        transpose_bs->rows.data(),
+        [](const CompressedRow& row) { return row.cumulative_nnz; });
+  }
 }
 
 // The next four methods don't seem to be particularly cache
@@ -89,23 +111,14 @@ PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
 void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
     RightMultiplyAndAccumulateE(const double* x, double* y) const {
-  RightMultiplyAndAccumulateE(x, y, nullptr, 1);
-}
-
-template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
-void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
-    RightMultiplyAndAccumulateE(const double* x,
-                                double* y,
-                                ContextImpl* context,
-                                int num_threads) const {
   // Iterate over the first num_row_blocks_e_ row blocks, and multiply
   // by the first cell in each row block.
   auto bs = matrix_.block_structure();
   const double* values = matrix_.values();
-  ParallelFor(context,
+  ParallelFor(options_.context,
               0,
               num_row_blocks_e_,
-              num_threads,
+              options_.num_threads,
               [values, bs, x, y](int row_block_id) {
                 const Cell& cell = bs->rows[row_block_id].cells[0];
                 const int row_block_pos = bs->rows[row_block_id].block.position;
@@ -125,15 +138,6 @@ void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
 void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
     RightMultiplyAndAccumulateF(const double* x, double* y) const {
-  RightMultiplyAndAccumulateF(x, y, nullptr, 1);
-}
-
-template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
-void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
-    RightMultiplyAndAccumulateF(const double* x,
-                                double* y,
-                                ContextImpl* context,
-                                int num_threads) const {
   // Iterate over row blocks, and if the row block is in E, then
   // multiply by all the cells except the first one which is of type
   // E. If the row block is not in E (i.e its in the bottom
@@ -143,10 +147,10 @@ void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
   const int num_row_blocks = bs->rows.size();
   const int num_cols_e = num_cols_e_;
   const double* values = matrix_.values();
-  ParallelFor(context,
+  ParallelFor(options_.context,
               0,
               num_row_blocks_e_,
-              num_threads,
+              options_.num_threads,
               [values, bs, num_cols_e, x, y](int row_block_id) {
                 const int row_block_pos = bs->rows[row_block_id].block.position;
                 const int row_block_size = bs->rows[row_block_id].block.size;
@@ -163,10 +167,10 @@ void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
                   // clang-format on
                 }
               });
-  ParallelFor(context,
+  ParallelFor(options_.context,
               num_row_blocks_e_,
               num_row_blocks,
-              num_threads,
+              options_.num_threads,
               [values, bs, num_cols_e, x, y](int row_block_id) {
                 const int row_block_pos = bs->rows[row_block_id].block.position;
                 const int row_block_size = bs->rows[row_block_id].block.size;
@@ -190,7 +194,17 @@ void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
     LeftMultiplyAndAccumulateE(const double* x, double* y) const {
   if (!num_col_blocks_e_) return;
   if (!num_row_blocks_e_) return;
+  if (options_.num_threads == 1) {
+    LeftMultiplyAndAccumulateESingleThreaded(x, y);
+  } else {
+    CHECK(options_.context != nullptr);
+    LeftMultiplyAndAccumulateEMultiThreaded(x, y);
+  }
+}
 
+template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
+void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
+    LeftMultiplyAndAccumulateESingleThreaded(const double* x, double* y) const {
   const CompressedRowBlockStructure* bs = matrix_.block_structure();
 
   // Iterate over the first num_row_blocks_e_ row blocks, and multiply
@@ -214,28 +228,19 @@ void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
 
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
 void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
-    LeftMultiplyAndAccumulateE(const double* x,
-                               double* y,
-                               ContextImpl* context,
-                               int num_threads) const {
-  if (!num_col_blocks_e_) return;
-  if (!num_row_blocks_e_) return;
-
+    LeftMultiplyAndAccumulateEMultiThreaded(const double* x, double* y) const {
   auto transpose_bs = matrix_.transpose_block_structure();
-  if (transpose_bs == nullptr || num_threads == 1) {
-    LeftMultiplyAndAccumulateE(x, y);
-    return;
-  }
+  CHECK(transpose_bs != nullptr);
 
   // Local copies of class members in order to avoid capturing pointer to the
   // whole object in lambda function
   auto values = matrix_.values();
   const int num_row_blocks_e = num_row_blocks_e_;
   ParallelFor(
-      context,
+      options_.context,
       0,
       num_col_blocks_e_,
-      num_threads,
+      options_.num_threads,
       [values, transpose_bs, num_row_blocks_e, x, y](int row_block_id) {
         int row_block_pos = transpose_bs->rows[row_block_id].block.position;
         int row_block_size = transpose_bs->rows[row_block_id].block.size;
@@ -254,14 +259,24 @@ void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
               y + row_block_pos);
         }
       },
-      transpose_bs->rows.data(),
-      [](const CompressedRow& row) { return row.cumulative_nnz; });
+      e_cols_partition());
 }
 
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
 void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
     LeftMultiplyAndAccumulateF(const double* x, double* y) const {
   if (!num_col_blocks_f_) return;
+  if (options_.num_threads == 1) {
+    LeftMultiplyAndAccumulateFSingleThreaded(x, y);
+  } else {
+    CHECK(options_.context != nullptr);
+    LeftMultiplyAndAccumulateFMultiThreaded(x, y);
+  }
+}
+
+template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
+void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
+    LeftMultiplyAndAccumulateFSingleThreaded(const double* x, double* y) const {
   const CompressedRowBlockStructure* bs = matrix_.block_structure();
 
   // Iterate over row blocks, and if the row block is in E, then
@@ -307,26 +322,19 @@ void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
 
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
 void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
-    LeftMultiplyAndAccumulateF(const double* x,
-                               double* y,
-                               ContextImpl* context,
-                               int num_threads) const {
-  if (!num_col_blocks_f_) return;
+    LeftMultiplyAndAccumulateFMultiThreaded(const double* x, double* y) const {
   auto transpose_bs = matrix_.transpose_block_structure();
-  if (transpose_bs == nullptr || num_threads == 1) {
-    LeftMultiplyAndAccumulateF(x, y);
-    return;
-  }
+  CHECK(transpose_bs != nullptr);
   // Local copies of class members  in order to avoid capturing pointer to the
   // whole object in lambda function
   auto values = matrix_.values();
   const int num_row_blocks_e = num_row_blocks_e_;
   const int num_cols_e = num_cols_e_;
   ParallelFor(
-      context,
+      options_.context,
       num_col_blocks_e_,
       num_col_blocks_e_ + num_col_blocks_f_,
-      num_threads,
+      options_.num_threads,
       [values, transpose_bs, num_row_blocks_e, num_cols_e, x, y](
           int row_block_id) {
         int row_block_pos = transpose_bs->rows[row_block_id].block.position;
@@ -362,8 +370,7 @@ void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
               y + row_block_pos - num_cols_e);
         }
       },
-      transpose_bs->rows.data(),
-      [](const CompressedRow& row) { return row.cumulative_nnz; });
+      f_cols_partition());
 }
 
 // Given a range of columns blocks of a matrix m, compute the block

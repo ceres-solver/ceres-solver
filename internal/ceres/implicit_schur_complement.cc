@@ -105,15 +105,11 @@ void ImplicitSchurComplement::RightMultiplyAndAccumulate(const double* x,
                                                          double* y) const {
   // y1 = F x
   tmp_rows_.setZero();
-  A_->RightMultiplyAndAccumulateF(
-      x, tmp_rows_.data(), options_.context, options_.num_threads);
+  A_->RightMultiplyAndAccumulateF(x, tmp_rows_.data());
 
   // y2 = E' y1
   tmp_e_cols_.setZero();
-  A_->LeftMultiplyAndAccumulateE(tmp_rows_.data(),
-                                 tmp_e_cols_.data(),
-                                 options_.context,
-                                 options_.num_threads);
+  A_->LeftMultiplyAndAccumulateE(tmp_rows_.data(), tmp_e_cols_.data());
 
   // y3 = -(E'E)^-1 y2
   tmp_e_cols_2_.setZero();
@@ -121,13 +117,11 @@ void ImplicitSchurComplement::RightMultiplyAndAccumulate(const double* x,
                                                           tmp_e_cols_2_.data(),
                                                           options_.context,
                                                           options_.num_threads);
+
   tmp_e_cols_2_ *= -1.0;
 
   // y1 = y1 + E y3
-  A_->RightMultiplyAndAccumulateE(tmp_e_cols_2_.data(),
-                                  tmp_rows_.data(),
-                                  options_.context,
-                                  options_.num_threads);
+  A_->RightMultiplyAndAccumulateE(tmp_e_cols_2_.data(), tmp_rows_.data());
 
   // y5 = D * x
   if (D_ != nullptr) {
@@ -140,8 +134,7 @@ void ImplicitSchurComplement::RightMultiplyAndAccumulate(const double* x,
   }
 
   // y = y5 + F' y1
-  A_->LeftMultiplyAndAccumulateF(
-      tmp_rows_.data(), y, options_.context, options_.num_threads);
+  A_->LeftMultiplyAndAccumulateF(tmp_rows_.data(), y);
 }
 
 void ImplicitSchurComplement::InversePowerSeriesOperatorRightMultiplyAccumulate(
@@ -149,15 +142,11 @@ void ImplicitSchurComplement::InversePowerSeriesOperatorRightMultiplyAccumulate(
   CHECK(compute_ftf_inverse_);
   // y1 = F x
   tmp_rows_.setZero();
-  A_->RightMultiplyAndAccumulateF(
-      x, tmp_rows_.data(), options_.context, options_.num_threads);
+  A_->RightMultiplyAndAccumulateF(x, tmp_rows_.data());
 
   // y2 = E' y1
   tmp_e_cols_.setZero();
-  A_->LeftMultiplyAndAccumulateE(tmp_rows_.data(),
-                                 tmp_e_cols_.data(),
-                                 options_.context,
-                                 options_.num_threads);
+  A_->LeftMultiplyAndAccumulateE(tmp_rows_.data(), tmp_e_cols_.data());
 
   // y3 = (E'E)^-1 y2
   tmp_e_cols_2_.setZero();
@@ -167,17 +156,11 @@ void ImplicitSchurComplement::InversePowerSeriesOperatorRightMultiplyAccumulate(
                                                           options_.num_threads);
   // y1 = E y3
   tmp_rows_.setZero();
-  A_->RightMultiplyAndAccumulateE(tmp_e_cols_2_.data(),
-                                  tmp_rows_.data(),
-                                  options_.context,
-                                  options_.num_threads);
+  A_->RightMultiplyAndAccumulateE(tmp_e_cols_2_.data(), tmp_rows_.data());
 
   // y4 = F' y1
   tmp_f_cols_.setZero();
-  A_->LeftMultiplyAndAccumulateF(tmp_rows_.data(),
-                                 tmp_f_cols_.data(),
-                                 options_.context,
-                                 options_.num_threads);
+  A_->LeftMultiplyAndAccumulateF(tmp_rows_.data(), tmp_f_cols_.data());
 
   // y += (F'F)^-1 y4
   block_diagonal_FtF_inverse_->RightMultiplyAndAccumulate(
@@ -219,18 +202,14 @@ void ImplicitSchurComplement::BackSubstitute(const double* x, double* y) {
 
   // y1 = F x
   tmp_rows_.setZero();
-  A_->RightMultiplyAndAccumulateF(
-      x, tmp_rows_.data(), options_.context, options_.num_threads);
+  A_->RightMultiplyAndAccumulateF(x, tmp_rows_.data());
 
   // y2 = b - y1
   tmp_rows_ = ConstVectorRef(b_, num_rows) - tmp_rows_;
 
   // y3 = E' y2
   tmp_e_cols_.setZero();
-  A_->LeftMultiplyAndAccumulateE(tmp_rows_.data(),
-                                 tmp_e_cols_.data(),
-                                 options_.context,
-                                 options_.num_threads);
+  A_->LeftMultiplyAndAccumulateE(tmp_rows_.data(), tmp_e_cols_.data());
 
   // y = (E'E)^-1 y3
   VectorRef(y, num_cols).setZero();
@@ -254,8 +233,7 @@ void ImplicitSchurComplement::BackSubstitute(const double* x, double* y) {
 void ImplicitSchurComplement::UpdateRhs() {
   // y1 = E'b
   tmp_e_cols_.setZero();
-  A_->LeftMultiplyAndAccumulateE(
-      b_, tmp_e_cols_.data(), options_.context, options_.num_threads);
+  A_->LeftMultiplyAndAccumulateE(b_, tmp_e_cols_.data());
 
   // y2 = (E'E)^-1 y1
   Vector y2 = Vector::Zero(A_->num_cols_e());
@@ -264,16 +242,14 @@ void ImplicitSchurComplement::UpdateRhs() {
 
   // y3 = E y2
   tmp_rows_.setZero();
-  A_->RightMultiplyAndAccumulateE(
-      y2.data(), tmp_rows_.data(), options_.context, options_.num_threads);
+  A_->RightMultiplyAndAccumulateE(y2.data(), tmp_rows_.data());
 
   // y3 = b - y3
   tmp_rows_ = ConstVectorRef(b_, A_->num_rows()) - tmp_rows_;
 
   // rhs = F' y3
   rhs_.setZero();
-  A_->LeftMultiplyAndAccumulateF(
-      tmp_rows_.data(), rhs_.data(), options_.context, options_.num_threads);
+  A_->LeftMultiplyAndAccumulateF(tmp_rows_.data(), rhs_.data());
 }
 
 }  // namespace ceres::internal

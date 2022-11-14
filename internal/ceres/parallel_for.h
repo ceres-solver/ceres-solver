@@ -299,6 +299,40 @@ void ParallelFor(ContextImpl* context,
               });
 }
 
+// Execute function for every element in the range [start, end) with at most
+// num_threads, using the user provided partitioning. taking into account
+// user-provided integer cumulative costs of iterations.
+template <typename F>
+void ParallelFor(ContextImpl* context,
+                 int start,
+                 int end,
+                 int num_threads,
+                 const F& function,
+                 const std::vector<int>& partitions) {
+  using namespace parallel_for_details;
+  CHECK_GT(num_threads, 0);
+  if (start >= end) {
+    return;
+  }
+  if (num_threads == 1 || end - start <= num_threads) {
+    ParallelFor(context, start, end, num_threads, function);
+    return;
+  }
+  CHECK_GT(partitions.size(), 1);
+  const int num_partitions = partitions.size() - 1;
+  ParallelFor(context,
+              0,
+              num_partitions,
+              num_threads,
+              [&function, &partitions](int thread_id, int partition_id) {
+                const int partition_start = partitions[partition_id];
+                const int partition_end = partitions[partition_id + 1];
+
+                for (int i = partition_start; i < partition_end; ++i) {
+                  Invoke<F>(thread_id, i, function);
+                }
+              });
+}
 }  // namespace ceres::internal
 
 // Backend-specific implementations of ParallelInvoke
