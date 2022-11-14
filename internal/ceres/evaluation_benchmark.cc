@@ -145,23 +145,20 @@ struct BALData {
     return crs_jacobian.get();
   }
 
-  const PartitionedView* PartitionedMatrixViewJacobian(ContextImpl* context) {
-    if (!partitioned_view_jacobian) {
-      auto block_sparse = BlockSparseJacobian(context);
-      partitioned_view_jacobian = std::make_unique<PartitionedView>(
-          *block_sparse, bal_problem->num_points());
-    }
+  const PartitionedView* PartitionedMatrixViewJacobian(
+      const LinearSolver::Options& options) {
+    auto block_sparse = BlockSparseJacobian(options.context);
+    partitioned_view_jacobian =
+        std::make_unique<PartitionedView>(options, *block_sparse);
     return partitioned_view_jacobian.get();
   }
 
   const PartitionedView* PartitionedMatrixViewJacobianWithTranspose(
-      ContextImpl* context) {
-    if (!partitioned_view_jacobian_with_transpose) {
-      auto block_sparse_transpose = BlockSparseJacobianWithTranspose(context);
-      partitioned_view_jacobian_with_transpose =
-          std::make_unique<PartitionedView>(*block_sparse_transpose,
-                                            bal_problem->num_points());
-    }
+      const LinearSolver::Options& options) {
+    auto block_sparse_transpose =
+        BlockSparseJacobianWithTranspose(options.context);
+    partitioned_view_jacobian_with_transpose =
+        std::make_unique<PartitionedView>(options, *block_sparse_transpose);
     return partitioned_view_jacobian_with_transpose.get();
   }
 
@@ -243,16 +240,17 @@ static void ResidualsAndJacobian(benchmark::State& state,
 static void PMVRightMultiplyAndAccumulateF(benchmark::State& state,
                                            BALData* data,
                                            ContextImpl* context) {
-  const int num_threads = state.range(0);
-
-  auto jacobian = data->PartitionedMatrixViewJacobian(context);
+  LinearSolver::Options options;
+  options.num_threads = state.range(0);
+  options.elimination_groups.push_back(data->bal_problem->num_points());
+  options.context = context;
+  auto jacobian = data->PartitionedMatrixViewJacobian(options);
 
   Vector y = Vector::Zero(jacobian->num_rows());
   Vector x = Vector::Random(jacobian->num_cols_f());
 
   for (auto _ : state) {
-    jacobian->RightMultiplyAndAccumulateF(
-        x.data(), y.data(), context, num_threads);
+    jacobian->RightMultiplyAndAccumulateF(x.data(), y.data());
   }
   CHECK_GT(y.squaredNorm(), 0.);
 }
@@ -260,49 +258,35 @@ static void PMVRightMultiplyAndAccumulateF(benchmark::State& state,
 static void PMVLeftMultiplyAndAccumulateF(benchmark::State& state,
                                           BALData* data,
                                           ContextImpl* context) {
-  const int num_threads = state.range(0);
-
-  auto jacobian = data->PartitionedMatrixViewJacobian(context);
-
-  Vector y = Vector::Zero(jacobian->num_cols_f());
-  Vector x = Vector::Random(jacobian->num_rows());
-
-  for (auto _ : state) {
-    jacobian->LeftMultiplyAndAccumulateF(
-        x.data(), y.data(), context, num_threads);
-  }
-  CHECK_GT(y.squaredNorm(), 0.);
-}
-
-static void PMVLeftMultiplyAndAccumulateWithTransposeF(benchmark::State& state,
-                                                       BALData* data,
-                                                       ContextImpl* context) {
-  const int num_threads = state.range(0);
-
-  auto jacobian = data->PartitionedMatrixViewJacobianWithTranspose(context);
+  LinearSolver::Options options;
+  options.num_threads = state.range(0);
+  options.elimination_groups.push_back(data->bal_problem->num_points());
+  options.context = context;
+  auto jacobian = data->PartitionedMatrixViewJacobianWithTranspose(options);
 
   Vector y = Vector::Zero(jacobian->num_cols_f());
   Vector x = Vector::Random(jacobian->num_rows());
 
   for (auto _ : state) {
-    jacobian->LeftMultiplyAndAccumulateF(
-        x.data(), y.data(), context, num_threads);
+    jacobian->LeftMultiplyAndAccumulateF(x.data(), y.data());
   }
   CHECK_GT(y.squaredNorm(), 0.);
 }
+
 static void PMVRightMultiplyAndAccumulateE(benchmark::State& state,
                                            BALData* data,
                                            ContextImpl* context) {
-  const int num_threads = state.range(0);
-
-  auto jacobian = data->PartitionedMatrixViewJacobian(context);
+  LinearSolver::Options options;
+  options.num_threads = state.range(0);
+  options.elimination_groups.push_back(data->bal_problem->num_points());
+  options.context = context;
+  auto jacobian = data->PartitionedMatrixViewJacobian(options);
 
   Vector y = Vector::Zero(jacobian->num_rows());
   Vector x = Vector::Random(jacobian->num_cols_e());
 
   for (auto _ : state) {
-    jacobian->RightMultiplyAndAccumulateE(
-        x.data(), y.data(), context, num_threads);
+    jacobian->RightMultiplyAndAccumulateE(x.data(), y.data());
   }
   CHECK_GT(y.squaredNorm(), 0.);
 }
@@ -310,33 +294,17 @@ static void PMVRightMultiplyAndAccumulateE(benchmark::State& state,
 static void PMVLeftMultiplyAndAccumulateE(benchmark::State& state,
                                           BALData* data,
                                           ContextImpl* context) {
-  const int num_threads = state.range(0);
-
-  auto jacobian = data->PartitionedMatrixViewJacobian(context);
-
-  Vector y = Vector::Zero(jacobian->num_cols_e());
-  Vector x = Vector::Random(jacobian->num_rows());
-
-  for (auto _ : state) {
-    jacobian->LeftMultiplyAndAccumulateE(
-        x.data(), y.data(), context, num_threads);
-  }
-  CHECK_GT(y.squaredNorm(), 0.);
-}
-
-static void PMVLeftMultiplyAndAccumulateWithTransposeE(benchmark::State& state,
-                                                       BALData* data,
-                                                       ContextImpl* context) {
-  const int num_threads = state.range(0);
-
-  auto jacobian = data->PartitionedMatrixViewJacobianWithTranspose(context);
+  LinearSolver::Options options;
+  options.num_threads = state.range(0);
+  options.elimination_groups.push_back(data->bal_problem->num_points());
+  options.context = context;
+  auto jacobian = data->PartitionedMatrixViewJacobianWithTranspose(options);
 
   Vector y = Vector::Zero(jacobian->num_cols_e());
   Vector x = Vector::Random(jacobian->num_rows());
 
   for (auto _ : state) {
-    jacobian->LeftMultiplyAndAccumulateE(
-        x.data(), y.data(), context, num_threads);
+    jacobian->LeftMultiplyAndAccumulateE(x.data(), y.data());
   }
   CHECK_GT(y.squaredNorm(), 0.);
 }
@@ -361,22 +329,6 @@ static void JacobianRightMultiplyAndAccumulate(benchmark::State& state,
 static void JacobianLeftMultiplyAndAccumulate(benchmark::State& state,
                                               BALData* data,
                                               ContextImpl* context) {
-  const int num_threads = state.range(0);
-
-  auto jacobian = data->BlockSparseJacobian(context);
-
-  Vector y = Vector::Zero(jacobian->num_cols());
-  Vector x = Vector::Random(jacobian->num_rows());
-
-  for (auto _ : state) {
-    jacobian->LeftMultiplyAndAccumulate(
-        x.data(), y.data(), context, num_threads);
-  }
-  CHECK_GT(y.squaredNorm(), 0.);
-}
-
-static void JacobianLeftMultiplyAndAccumulateWithTranspose(
-    benchmark::State& state, BALData* data, ContextImpl* context) {
   const int num_threads = state.range(0);
 
   auto jacobian = data->BlockSparseJacobianWithTranspose(context);
@@ -551,15 +503,6 @@ int main(int argc, char** argv) {
         ceres::internal::JacobianLeftMultiplyAndAccumulate,
         data,
         &context)
-        ->Arg(1);
-
-    const std::string name_left_product_transpose =
-        "JacobianLeftMultiplyAndAccumulateWithTranspose<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_left_product_transpose.c_str(),
-        ceres::internal::JacobianLeftMultiplyAndAccumulateWithTranspose,
-        data,
-        &context)
         ->Arg(1)
         ->Arg(2)
         ->Arg(4)
@@ -573,14 +516,6 @@ int main(int argc, char** argv) {
         ceres::internal::PMVLeftMultiplyAndAccumulateF,
         data,
         &context)
-        ->Arg(1);
-    const std::string name_left_product_partitioned_transpose_f =
-        "PMVLeftMultiplyAndAccumulateWithTransposeF<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_left_product_partitioned_transpose_f.c_str(),
-        ceres::internal::PMVLeftMultiplyAndAccumulateWithTransposeF,
-        data,
-        &context)
         ->Arg(1)
         ->Arg(2)
         ->Arg(4)
@@ -592,15 +527,6 @@ int main(int argc, char** argv) {
     ::benchmark::RegisterBenchmark(
         name_left_product_partitioned_e.c_str(),
         ceres::internal::PMVLeftMultiplyAndAccumulateE,
-        data,
-        &context)
-        ->Arg(1);
-
-    const std::string name_left_product_partitioned_transpose_e =
-        "PMVLeftMultiplyAndAccumulateWithTransposeE<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_left_product_partitioned_transpose_e.c_str(),
-        ceres::internal::PMVLeftMultiplyAndAccumulateWithTransposeE,
         data,
         &context)
         ->Arg(1)

@@ -109,8 +109,10 @@ CreateFakeBundleAdjustmentPartitionedJacobian(int num_cameras,
       PartitionedMatrixView<2, Eigen::Dynamic, Eigen::Dynamic>;
   auto block_sparse_matrix = CreateFakeBundleAdjustmentJacobian(
       num_cameras, num_points, camera_size, landmark_size, visibility, rng);
+  LinearSolver::Options options;
+  options.elimination_groups.push_back(num_points);
   auto partitioned_view =
-      std::make_unique<PartitionedView>(*block_sparse_matrix, num_points);
+      std::make_unique<PartitionedView>(options, *block_sparse_matrix);
   return std::make_pair(std::move(partitioned_view),
                         std::move(block_sparse_matrix));
 }

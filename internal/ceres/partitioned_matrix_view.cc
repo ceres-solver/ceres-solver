@@ -55,121 +55,121 @@ std::unique_ptr<PartitionedMatrixViewBase> PartitionedMatrixViewBase::Create(
      (options.e_block_size == 2) &&
      (options.f_block_size == 2)) {
     return std::make_unique<PartitionedMatrixView<2,2, 2>>(
-                   matrix, options.elimination_groups[0]);
+                   options, matrix);
   }
   if ((options.row_block_size == 2) &&
      (options.e_block_size == 2) &&
      (options.f_block_size == 3)) {
     return std::make_unique<PartitionedMatrixView<2,2, 3>>(
-                   matrix, options.elimination_groups[0]);
+                   options, matrix);
   }
   if ((options.row_block_size == 2) &&
      (options.e_block_size == 2) &&
      (options.f_block_size == 4)) {
     return std::make_unique<PartitionedMatrixView<2,2, 4>>(
-                   matrix, options.elimination_groups[0]);
+                   options, matrix);
   }
   if ((options.row_block_size == 2) &&
      (options.e_block_size == 2)) {
     return std::make_unique<PartitionedMatrixView<2,2, Eigen::Dynamic>>(
-                   matrix, options.elimination_groups[0]);
+                   options, matrix);
   }
   if ((options.row_block_size == 2) &&
      (options.e_block_size == 3) &&
      (options.f_block_size == 3)) {
     return std::make_unique<PartitionedMatrixView<2,3, 3>>(
-                   matrix, options.elimination_groups[0]);
+                   options, matrix);
   }
   if ((options.row_block_size == 2) &&
      (options.e_block_size == 3) &&
      (options.f_block_size == 4)) {
     return std::make_unique<PartitionedMatrixView<2,3, 4>>(
-                   matrix, options.elimination_groups[0]);
+                   options, matrix);
   }
   if ((options.row_block_size == 2) &&
      (options.e_block_size == 3) &&
      (options.f_block_size == 6)) {
     return std::make_unique<PartitionedMatrixView<2,3, 6>>(
-                   matrix, options.elimination_groups[0]);
+                   options, matrix);
   }
   if ((options.row_block_size == 2) &&
      (options.e_block_size == 3) &&
      (options.f_block_size == 9)) {
     return std::make_unique<PartitionedMatrixView<2,3, 9>>(
-                   matrix, options.elimination_groups[0]);
+                   options, matrix);
   }
   if ((options.row_block_size == 2) &&
      (options.e_block_size == 3)) {
     return std::make_unique<PartitionedMatrixView<2,3, Eigen::Dynamic>>(
-                   matrix, options.elimination_groups[0]);
+                   options, matrix);
   }
   if ((options.row_block_size == 2) &&
      (options.e_block_size == 4) &&
      (options.f_block_size == 3)) {
     return std::make_unique<PartitionedMatrixView<2,4, 3>>(
-                   matrix, options.elimination_groups[0]);
+                   options, matrix);
   }
   if ((options.row_block_size == 2) &&
      (options.e_block_size == 4) &&
      (options.f_block_size == 4)) {
     return std::make_unique<PartitionedMatrixView<2,4, 4>>(
-                   matrix, options.elimination_groups[0]);
+                   options, matrix);
   }
   if ((options.row_block_size == 2) &&
      (options.e_block_size == 4) &&
      (options.f_block_size == 6)) {
     return std::make_unique<PartitionedMatrixView<2,4, 6>>(
-                   matrix, options.elimination_groups[0]);
+                   options, matrix);
   }
   if ((options.row_block_size == 2) &&
      (options.e_block_size == 4) &&
      (options.f_block_size == 8)) {
     return std::make_unique<PartitionedMatrixView<2,4, 8>>(
-                   matrix, options.elimination_groups[0]);
+                   options, matrix);
   }
   if ((options.row_block_size == 2) &&
      (options.e_block_size == 4) &&
      (options.f_block_size == 9)) {
     return std::make_unique<PartitionedMatrixView<2,4, 9>>(
-                   matrix, options.elimination_groups[0]);
+                   options, matrix);
   }
   if ((options.row_block_size == 2) &&
      (options.e_block_size == 4)) {
     return std::make_unique<PartitionedMatrixView<2,4, Eigen::Dynamic>>(
-                   matrix, options.elimination_groups[0]);
+                   options, matrix);
   }
   if (options.row_block_size == 2) {
     return std::make_unique<PartitionedMatrixView<2,Eigen::Dynamic, Eigen::Dynamic>>(
-                   matrix, options.elimination_groups[0]);
+                   options, matrix);
   }
   if ((options.row_block_size == 3) &&
      (options.e_block_size == 3) &&
      (options.f_block_size == 3)) {
     return std::make_unique<PartitionedMatrixView<3,3, 3>>(
-                   matrix, options.elimination_groups[0]);
+                   options, matrix);
   }
   if ((options.row_block_size == 4) &&
      (options.e_block_size == 4) &&
      (options.f_block_size == 2)) {
     return std::make_unique<PartitionedMatrixView<4,4, 2>>(
-                   matrix, options.elimination_groups[0]);
+                   options, matrix);
   }
   if ((options.row_block_size == 4) &&
      (options.e_block_size == 4) &&
      (options.f_block_size == 3)) {
     return std::make_unique<PartitionedMatrixView<4,4, 3>>(
-                   matrix, options.elimination_groups[0]);
+                   options, matrix);
   }
   if ((options.row_block_size == 4) &&
      (options.e_block_size == 4) &&
      (options.f_block_size == 4)) {
     return std::make_unique<PartitionedMatrixView<4,4, 4>>(
-                   matrix, options.elimination_groups[0]);
+                   options, matrix);
   }
   if ((options.row_block_size == 4) &&
      (options.e_block_size == 4)) {
     return std::make_unique<PartitionedMatrixView<4,4, Eigen::Dynamic>>(
-                   matrix, options.elimination_groups[0]);
+                   options, matrix);
   }
 
 #endif
@@ -179,7 +179,7 @@ std::unique_ptr<PartitionedMatrixViewBase> PartitionedMatrixViewBase::Create(
   return std::make_unique<PartitionedMatrixView<Eigen::Dynamic,
                                                 Eigen::Dynamic,
                                                 Eigen::Dynamic>>(
-      matrix, options.elimination_groups[0]);
+      options, matrix);
 };
 
 }  // namespace ceres::internal
