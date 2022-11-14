@@ -70,33 +70,25 @@ class CERES_NO_EXPORT PartitionedMatrixViewBase {
 
   // y += E'x
   virtual void LeftMultiplyAndAccumulateE(const double* x, double* y) const = 0;
-  virtual void LeftMultiplyAndAccumulateE(const double* x,
-                                          double* y,
-                                          ContextImpl* context,
-                                          int num_threads) const = 0;
+  virtual void LeftMultiplyAndAccumulateESingleThreaded(const double* x,
+                                                        double* y) const = 0;
+  virtual void LeftMultiplyAndAccumulateEMultiThreaded(const double* x,
+                                                       double* y) const = 0;
 
   // y += F'x
   virtual void LeftMultiplyAndAccumulateF(const double* x, double* y) const = 0;
-  virtual void LeftMultiplyAndAccumulateF(const double* x,
-                                          double* y,
-                                          ContextImpl* context,
-                                          int num_threads) const = 0;
+  virtual void LeftMultiplyAndAccumulateFSingleThreaded(const double* x,
+                                                        double* y) const = 0;
+  virtual void LeftMultiplyAndAccumulateFMultiThreaded(const double* x,
+                                                       double* y) const = 0;
 
   // y += Ex
   virtual void RightMultiplyAndAccumulateE(const double* x,
                                            double* y) const = 0;
-  virtual void RightMultiplyAndAccumulateE(const double* x,
-                                           double* y,
-                                           ContextImpl* context,
-                                           int num_threads) const = 0;
 
   // y += Fx
   virtual void RightMultiplyAndAccumulateF(const double* x,
                                            double* y) const = 0;
-  virtual void RightMultiplyAndAccumulateF(const double* x,
-                                           double* y,
-                                           ContextImpl* context,
-                                           int num_threads) const = 0;
 
   // Create and return the block diagonal of the matrix E'E.
   virtual std::unique_ptr<BlockSparseMatrix> CreateBlockDiagonalEtE() const = 0;
@@ -128,6 +120,8 @@ class CERES_NO_EXPORT PartitionedMatrixViewBase {
   virtual int num_cols_f()       const = 0;
   virtual int num_rows()         const = 0;
   virtual int num_cols()         const = 0;
+  virtual const std::vector<int>& e_cols_partition() const = 0;
+  virtual const std::vector<int>& f_cols_partition() const = 0;
   // clang-format on
 
   static std::unique_ptr<PartitionedMatrixViewBase> Create(
@@ -141,29 +135,34 @@ class CERES_NO_EXPORT PartitionedMatrixView final
     : public PartitionedMatrixViewBase {
  public:
   // matrix = [E F], where the matrix E contains the first
-  // num_col_blocks_a column blocks.
-  PartitionedMatrixView(const BlockSparseMatrix& matrix, int num_col_blocks_e);
+  // options.elimination_groups[0] column blocks.
+  PartitionedMatrixView(const LinearSolver::Options& options,
+                        const BlockSparseMatrix& matrix);
 
-  void LeftMultiplyAndAccumulateE(const double* x, double* y) const final;
-  void LeftMultiplyAndAccumulateF(const double* x, double* y) const final;
-  void LeftMultiplyAndAccumulateE(const double* x,
-                                  double* y,
-                                  ContextImpl* context,
-                                  int num_threads) const final;
-  void LeftMultiplyAndAccumulateF(const double* x,
-                                  double* y,
-                                  ContextImpl* context,
-                                  int num_threads) const final;
-  void RightMultiplyAndAccumulateE(const double* x, double* y) const final;
-  void RightMultiplyAndAccumulateF(const double* x, double* y) const final;
-  void RightMultiplyAndAccumulateE(const double* x,
-                                   double* y,
-                                   ContextImpl* context,
-                                   int num_threads) const final;
-  void RightMultiplyAndAccumulateF(const double* x,
-                                   double* y,
-                                   ContextImpl* context,
-                                   int num_threads) const final;
+  // y += E'x
+  virtual void LeftMultiplyAndAccumulateE(const double* x,
+                                          double* y) const final;
+  virtual void LeftMultiplyAndAccumulateESingleThreaded(const double* x,
+                                                        double* y) const final;
+  virtual void LeftMultiplyAndAccumulateEMultiThreaded(const double* x,
+                                                       double* y) const final;
+
+  // y += F'x
+  virtual void LeftMultiplyAndAccumulateF(const double* x,
+                                          double* y) const final;
+  virtual void LeftMultiplyAndAccumulateFSingleThreaded(const double* x,
+                                                        double* y) const final;
+  virtual void LeftMultiplyAndAccumulateFMultiThreaded(const double* x,
+                                                       double* y) const final;
+
+  // y += Ex
+  virtual void RightMultiplyAndAccumulateE(const double* x,
+                                           double* y) const final;
+
+  // y += Fx
+  virtual void RightMultiplyAndAccumulateF(const double* x,
+                                           double* y) const final;
+
   std::unique_ptr<BlockSparseMatrix> CreateBlockDiagonalEtE() const final;
   std::unique_ptr<BlockSparseMatrix> CreateBlockDiagonalFtF() const final;
   void UpdateBlockDiagonalEtE(BlockSparseMatrix* block_diagonal) const final;
@@ -176,17 +175,26 @@ class CERES_NO_EXPORT PartitionedMatrixView final
   int num_rows()         const final { return matrix_.num_rows(); }
   int num_cols()         const final { return matrix_.num_cols(); }
   // clang-format on
+  const std::vector<int>& e_cols_partition() const final {
+    return e_cols_partition_;
+  }
+  const std::vector<int>& f_cols_partition() const final {
+    return f_cols_partition_;
+  }
 
  private:
   std::unique_ptr<BlockSparseMatrix> CreateBlockDiagonalMatrixLayout(
       int start_col_block, int end_col_block) const;
 
+  const LinearSolver::Options options_;
   const BlockSparseMatrix& matrix_;
   int num_row_blocks_e_;
   int num_col_blocks_e_;
   int num_col_blocks_f_;
   int num_cols_e_;
   int num_cols_f_;
+  std::vector<int> e_cols_partition_;
+  std::vector<int> f_cols_partition_;
 };
 
 }  // namespace ceres::internal
