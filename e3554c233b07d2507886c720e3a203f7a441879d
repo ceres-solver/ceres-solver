@@ -16,6 +16,29 @@
       "message": "Fixed problem with evaluation_benchmark failing in jacobian evaluation due to mixup of pre-processed and non-pre-processed problems; replaced col_block_pos with col_block_id in LeftMultiplyAndAccumulateE\n\nBy the way, do you think it makes sense to expose operation type (+\u003d,-\u003d,\u003d) in PartitionedMatrixView?\nIn ImplicitSchurComplement we might benefit from avoiding setting vectors to zero, negating them, etc.",
       "revId": "e3554c233b07d2507886c720e3a203f7a441879d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72ae8a58_d76ff3ad",
+        "filename": "internal/ceres/partitioned_matrix_view_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-14T14:20:39Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be col_block_id?\nin which case I have a suspicion that our tests are not good enough :/",
+      "range": {
+        "startLine": 343,
+        "startChar": 14,
+        "endLine": 343,
+        "endChar": 27
+      },
+      "revId": "e3554c233b07d2507886c720e3a203f7a441879d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
