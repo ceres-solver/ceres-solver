@@ -87,6 +87,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "61d6ce9e_584c7adb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-14T06:27:44Z",
+      "side": 1,
+      "message": "I think that was induced by adding pre-processing stage to evaluation benchmark.\n\nA non-pre-processed program was used with pre-processed jacobian structure, and I have to admit I haven\u0027t checked if other parts of benchmark still work.",
+      "parentUuid": "f110f62a_daa38bd7",
+      "revId": "7f91249011103de971bce2bc93148b1b06371e9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7e9ae901_9ed17d4b",
@@ -100,6 +118,30 @@
       "writtenOn": "2022-11-13T21:28:40Z",
       "side": 1,
       "message": "This can perhaps be made shorter JacobianPartitioned -\u003e PMV",
+      "range": {
+        "startLine": 246,
+        "startChar": 12,
+        "endLine": 246,
+        "endChar": 58
+      },
+      "revId": "7f91249011103de971bce2bc93148b1b06371e9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "183632b9_755012d0",
+        "filename": "internal/ceres/evaluation_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-14T06:27:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e9ae901_9ed17d4b",
       "range": {
         "startLine": 246,
         "startChar": 12,
@@ -133,6 +175,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfb222dc_75759817",
+        "filename": "internal/ceres/partitioned_matrix_view_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-14T06:27:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "49e89d81_8289e6c3",
+      "range": {
+        "startLine": 218,
+        "startChar": 22,
+        "endLine": 218,
+        "endChar": 29
+      },
+      "revId": "7f91249011103de971bce2bc93148b1b06371e9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2d9ab9c3_d406de9d",
@@ -146,6 +212,30 @@
       "writtenOn": "2022-11-13T21:28:40Z",
       "side": 1,
       "message": "should\u0027t this check on num_row_blocks_e_ come before the transpose_bs for an early exit?\n\nalso shouldn\u0027t both these checks be in the single threaded code too?",
+      "range": {
+        "startLine": 223,
+        "startChar": 7,
+        "endLine": 223,
+        "endChar": 24
+      },
+      "revId": "7f91249011103de971bce2bc93148b1b06371e9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd59f9e7_951f9d44",
+        "filename": "internal/ceres/partitioned_matrix_view_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-14T06:27:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d9ab9c3_d406de9d",
       "range": {
         "startLine": 223,
         "startChar": 7,
@@ -202,6 +292,54 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "500a7edd_a95af3f1",
+        "filename": "internal/ceres/partitioned_matrix_view_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-14T06:27:44Z",
+      "side": 1,
+      "message": "I\u0027ve mixed col_block_id with col_block_pos several lines after.",
+      "parentUuid": "156fcd90_13170d8a",
+      "range": {
+        "startLine": 227,
+        "startChar": 31,
+        "endLine": 227,
+        "endChar": 48
+      },
+      "revId": "7f91249011103de971bce2bc93148b1b06371e9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61f0a200_5fb0759c",
+        "filename": "internal/ceres/partitioned_matrix_view_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-14T06:27:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9dccdcd6_67726a05",
+      "range": {
+        "startLine": 227,
+        "startChar": 12,
+        "endLine": 227,
+        "endChar": 28
+      },
+      "revId": "7f91249011103de971bce2bc93148b1b06371e9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "11429e12_a2fb3ee8",
@@ -215,6 +353,24 @@
       "writtenOn": "2022-11-13T21:28:40Z",
       "side": 1,
       "message": "same comment as above.",
+      "revId": "7f91249011103de971bce2bc93148b1b06371e9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b9db3be_31e5e291",
+        "filename": "internal/ceres/partitioned_matrix_view_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-14T06:27:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11429e12_a2fb3ee8",
       "revId": "7f91249011103de971bce2bc93148b1b06371e9f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }

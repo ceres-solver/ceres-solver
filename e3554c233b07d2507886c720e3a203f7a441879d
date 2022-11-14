@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98606337_bffea666",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-14T06:27:44Z",
+      "side": 1,
+      "message": "Fixed problem with evaluation_benchmark failing in jacobian evaluation due to mixup of pre-processed and non-pre-processed problems; replaced col_block_pos with col_block_id in LeftMultiplyAndAccumulateE\n\nBy the way, do you think it makes sense to expose operation type (+\u003d,-\u003d,\u003d) in PartitionedMatrixView?\nIn ImplicitSchurComplement we might benefit from avoiding setting vectors to zero, negating them, etc.",
+      "revId": "e3554c233b07d2507886c720e3a203f7a441879d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
