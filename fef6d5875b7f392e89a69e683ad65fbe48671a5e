@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d03b44d7_8e16a9b2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-14T16:02:21Z",
+      "side": 1,
+      "message": "Added new test sample that triggers problem with E part.\n\nBug in F part is impossible(?) to catch via tests because blocks are still handled, but may be not as efficient as possible.",
+      "revId": "fef6d5875b7f392e89a69e683ad65fbe48671a5e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

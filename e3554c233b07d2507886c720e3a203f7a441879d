@@ -39,6 +39,30 @@
       },
       "revId": "e3554c233b07d2507886c720e3a203f7a441879d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa73db3a_80b0d38a",
+        "filename": "internal/ceres/partitioned_matrix_view_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-14T16:02:21Z",
+      "side": 1,
+      "message": "This one seems is impossible to catch (only results in slowdown due to dynamic sizing).\n\nAdded test with a different matrix for E part of the matrix.",
+      "parentUuid": "72ae8a58_d76ff3ad",
+      "range": {
+        "startLine": 343,
+        "startChar": 14,
+        "endLine": 343,
+        "endChar": 27
+      },
+      "revId": "e3554c233b07d2507886c720e3a203f7a441879d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
