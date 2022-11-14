@@ -132,7 +132,7 @@ std::unique_ptr<PartitionedMatrixViewBase> PartitionedMatrixViewBase::Create(
 #ifndef CERES_RESTRICT_SCHUR_SPECIALIZATION
 """
 FACTORY = """  return std::make_unique<PartitionedMatrixView<%s,%s, %s>>(
-                   matrix, options.elimination_groups[0]);"""
+                   options, matrix);"""
 
 FACTORY_FOOTER = """
 #endif
@@ -142,7 +142,7 @@ FACTORY_FOOTER = """
   return std::make_unique<PartitionedMatrixView<Eigen::Dynamic,
                                                 Eigen::Dynamic,
                                                 Eigen::Dynamic>>(
-      matrix, options.elimination_groups[0]);
+      options, matrix);
 };
 
 }  // namespace ceres::internal
