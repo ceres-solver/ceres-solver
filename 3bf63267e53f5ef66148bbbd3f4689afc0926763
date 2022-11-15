@@ -16,6 +16,74 @@
       "message": "ping?",
       "revId": "3bf63267e53f5ef66148bbbd3f4689afc0926763",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0299aeb_bcc60d6e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-15T18:27:04Z",
+      "side": 1,
+      "message": "Spotted a couple imperfections, overall looks good to me",
+      "revId": "3bf63267e53f5ef66148bbbd3f4689afc0926763",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "199a0ca8_9c463876",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-15T18:27:04Z",
+      "side": 1,
+      "message": "I think we should also check if partition is valid for given start and end (partition[0] \u003d start, partition[1] \u003d end)",
+      "revId": "3bf63267e53f5ef66148bbbd3f4689afc0926763",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "722b2a4b_8aad26e1",
+        "filename": "internal/ceres/partitioned_matrix_view_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-15T18:27:04Z",
+      "side": 1,
+      "message": "kMaxPartitions constant is not used (here and couple lines below)",
+      "revId": "3bf63267e53f5ef66148bbbd3f4689afc0926763",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e313284d_f0be96d2",
+        "filename": "internal/ceres/partitioned_matrix_view_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-15T18:27:04Z",
+      "side": 1,
+      "message": "Raises -Wmissing-declarations warning with gcc 12.2 if declared without static keyword",
+      "revId": "3bf63267e53f5ef66148bbbd3f4689afc0926763",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
