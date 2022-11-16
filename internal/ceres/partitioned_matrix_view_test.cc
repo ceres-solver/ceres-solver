@@ -32,6 +32,8 @@
 
 #include <memory>
 #include <random>
+#include <sstream>
+#include <string>
 #include <vector>
 
 #include "ceres/block_structure.h"
@@ -145,7 +147,6 @@ class PartitionedMatrixViewSpMVTest : public ::testing::TestWithParam<Param> {
   std::unique_ptr<LinearLeastSquaresProblem> problem_;
   std::unique_ptr<SparseMatrix> A_;
   std::unique_ptr<PartitionedMatrixViewBase> pmv_;
-  int num_cols_e;
   std::mt19937 prng_;
   std::uniform_real_distribution<double> distribution_ =
       std::uniform_real_distribution<double>(0.0, 1.0);
