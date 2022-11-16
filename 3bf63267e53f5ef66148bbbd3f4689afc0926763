@@ -70,6 +70,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bcf4dc22_67f9717e",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-16T00:34:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12876131_c8d1a500",
+      "revId": "3bf63267e53f5ef66148bbbd3f4689afc0926763",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "722b2a4b_8aad26e1",
@@ -87,6 +105,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5f97227_3909ac8f",
+        "filename": "internal/ceres/partitioned_matrix_view_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-16T00:34:23Z",
+      "side": 1,
+      "message": "oh I was screwing around with the value inline.",
+      "parentUuid": "722b2a4b_8aad26e1",
+      "revId": "3bf63267e53f5ef66148bbbd3f4689afc0926763",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e313284d_f0be96d2",
@@ -100,6 +136,24 @@
       "writtenOn": "2022-11-15T18:27:04Z",
       "side": 1,
       "message": "Raises -Wmissing-declarations warning with gcc 12.2 if declared without static keyword",
+      "revId": "3bf63267e53f5ef66148bbbd3f4689afc0926763",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d650f302_7876cf00",
+        "filename": "internal/ceres/partitioned_matrix_view_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-16T00:34:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e313284d_f0be96d2",
       "revId": "3bf63267e53f5ef66148bbbd3f4689afc0926763",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
