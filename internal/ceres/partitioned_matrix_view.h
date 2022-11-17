@@ -104,6 +104,10 @@ class CERES_NO_EXPORT PartitionedMatrixViewBase {
   // the block diagonal of E'E.
   virtual void UpdateBlockDiagonalEtE(
       BlockSparseMatrix* block_diagonal) const = 0;
+  virtual void UpdateBlockDiagonalEtESingleThreaded(
+      BlockSparseMatrix* block_diagonal) const = 0;
+  virtual void UpdateBlockDiagonalEtEMultiThreaded(
+      BlockSparseMatrix* block_diagonal) const = 0;
 
   // Compute the block diagonal of the matrix F'F and store it in
   // block_diagonal. The matrix block_diagonal is expected to have a
@@ -111,6 +115,10 @@ class CERES_NO_EXPORT PartitionedMatrixViewBase {
   // CreateBlockDiagonalMatrixFtF) which is has the same structure as
   // the block diagonal of F'F.
   virtual void UpdateBlockDiagonalFtF(
+      BlockSparseMatrix* block_diagonal) const = 0;
+  virtual void UpdateBlockDiagonalFtFSingleThreaded(
+      BlockSparseMatrix* block_diagonal) const = 0;
+  virtual void UpdateBlockDiagonalFtFMultiThreaded(
       BlockSparseMatrix* block_diagonal) const = 0;
 
   // clang-format off
@@ -166,7 +174,15 @@ class CERES_NO_EXPORT PartitionedMatrixView final
   std::unique_ptr<BlockSparseMatrix> CreateBlockDiagonalEtE() const final;
   std::unique_ptr<BlockSparseMatrix> CreateBlockDiagonalFtF() const final;
   void UpdateBlockDiagonalEtE(BlockSparseMatrix* block_diagonal) const final;
+  void UpdateBlockDiagonalEtESingleThreaded(
+      BlockSparseMatrix* block_diagonal) const final;
+  void UpdateBlockDiagonalEtEMultiThreaded(
+      BlockSparseMatrix* block_diagonal) const final;
   void UpdateBlockDiagonalFtF(BlockSparseMatrix* block_diagonal) const final;
+  void UpdateBlockDiagonalFtFSingleThreaded(
+      BlockSparseMatrix* block_diagonal) const final;
+  void UpdateBlockDiagonalFtFMultiThreaded(
+      BlockSparseMatrix* block_diagonal) const final;
   // clang-format off
   int num_col_blocks_e() const final { return num_col_blocks_e_;  }
   int num_col_blocks_f() const final { return num_col_blocks_f_;  }

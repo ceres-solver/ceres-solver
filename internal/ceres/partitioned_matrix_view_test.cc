@@ -215,6 +215,40 @@ TEST_P(PartitionedMatrixViewSpMVTest, LeftMultiplyAndAccumulate) {
   }
 }
 
+TEST_P(PartitionedMatrixViewSpMVTest, UpdateBlockDiagonalEtE) {
+  std::unique_ptr<BlockSparseMatrix> block_diagonal_ete(
+      pmv_->CreateBlockDiagonalEtE());
+  const CompressedRowBlockStructure* bs = block_diagonal_ete->block_structure();
+  const int num_cols = pmv_->num_cols_e();
+
+  Matrix multi_threaded(num_cols, num_cols);
+  pmv_->UpdateBlockDiagonalEtE(block_diagonal_ete.get());
+  block_diagonal_ete->ToDenseMatrix(&multi_threaded);
+
+  Matrix single_threaded(num_cols, num_cols);
+  pmv_->UpdateBlockDiagonalEtESingleThreaded(block_diagonal_ete.get());
+  block_diagonal_ete->ToDenseMatrix(&single_threaded);
+
+  EXPECT_NEAR((multi_threaded - single_threaded).norm(), 0., kEpsilon);
+}
+
+TEST_P(PartitionedMatrixViewSpMVTest, UpdateBlockDiagonalFtF) {
+  std::unique_ptr<BlockSparseMatrix> block_diagonal_ftf(
+      pmv_->CreateBlockDiagonalFtF());
+  const CompressedRowBlockStructure* bs = block_diagonal_ftf->block_structure();
+  const int num_cols = pmv_->num_cols_f();
+
+  Matrix multi_threaded(num_cols, num_cols);
+  pmv_->UpdateBlockDiagonalFtF(block_diagonal_ftf.get());
+  block_diagonal_ftf->ToDenseMatrix(&multi_threaded);
+
+  Matrix single_threaded(num_cols, num_cols);
+  pmv_->UpdateBlockDiagonalFtFSingleThreaded(block_diagonal_ftf.get());
+  block_diagonal_ftf->ToDenseMatrix(&single_threaded);
+
+  EXPECT_NEAR((multi_threaded - single_threaded).norm(), 0., kEpsilon);
+}
+
 INSTANTIATE_TEST_SUITE_P(
     ParallelProducts,
     PartitionedMatrixViewSpMVTest,
