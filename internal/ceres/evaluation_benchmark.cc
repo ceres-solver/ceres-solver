@@ -145,12 +145,10 @@ struct BALData {
     return crs_jacobian.get();
   }
 
-  const PartitionedView* PartitionedMatrixViewJacobian(
+  std::unique_ptr<PartitionedView> PartitionedMatrixViewJacobian(
       const LinearSolver::Options& options) {
     auto block_sparse = BlockSparseJacobianWithTranspose(options.context);
-    partitioned_view_jacobian =
-        std::make_unique<PartitionedView>(options, *block_sparse);
-    return partitioned_view_jacobian.get();
+    return std::make_unique<PartitionedView>(options, *block_sparse);
   }
 
   BlockSparseMatrix* BlockDiagonalEtE(const LinearSolver::Options& options) {
@@ -177,7 +175,6 @@ struct BALData {
   std::unique_ptr<BlockSparseMatrix> block_sparse_jacobian;
   std::unique_ptr<BlockSparseMatrix> block_sparse_jacobian_with_transpose;
   std::unique_ptr<CompressedRowSparseMatrix> crs_jacobian;
-  std::unique_ptr<PartitionedView> partitioned_view_jacobian;
   std::unique_ptr<BlockSparseMatrix> block_diagonal_ete;
   std::unique_ptr<BlockSparseMatrix> block_diagonal_ftf;
 };
