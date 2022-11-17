@@ -16,6 +16,138 @@
       "message": "Parallel updates of EtE and FtF using transpose block structure and column partitions.",
       "revId": "c0e234c458590cde1fbe2e5565ae0356db879289",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "814d35c7_848fff5b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-17T17:49:06Z",
+      "side": 1,
+      "message": "Thanks Dmitriy, just some minor cosmetic comments.",
+      "revId": "c0e234c458590cde1fbe2e5565ae0356db879289",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8f8a2c1_e079ab51",
+        "filename": "internal/ceres/evaluation_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-17T17:49:06Z",
+      "side": 1,
+      "message": "I think we can just assume that the partitionedmatrixview has the transpose in it no? and simplify code over this entire file.",
+      "range": {
+        "startLine": 339,
+        "startChar": 24,
+        "endLine": 339,
+        "endChar": 66
+      },
+      "revId": "c0e234c458590cde1fbe2e5565ae0356db879289",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa0d54f4_c19ce4e8",
+        "filename": "internal/ceres/partitioned_matrix_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-17T17:49:06Z",
+      "side": 1,
+      "message": "I am wondering if the actual implementation methods FooSingleThreaded and FooMultithreaded need to be virtual. WDYT?",
+      "range": {
+        "startLine": 177,
+        "startChar": 7,
+        "endLine": 177,
+        "endChar": 43
+      },
+      "revId": "c0e234c458590cde1fbe2e5565ae0356db879289",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98644bdf_0a1a4e5f",
+        "filename": "internal/ceres/partitioned_matrix_view_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-17T17:49:06Z",
+      "side": 1,
+      "message": "maybe just auto here for brevity?",
+      "range": {
+        "startLine": 478,
+        "startChar": 8,
+        "endLine": 478,
+        "endChar": 35
+      },
+      "revId": "c0e234c458590cde1fbe2e5565ae0356db879289",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aab50442_e4c50c64",
+        "filename": "internal/ceres/partitioned_matrix_view_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-17T17:49:06Z",
+      "side": 1,
+      "message": "auto.",
+      "range": {
+        "startLine": 589,
+        "startChar": 8,
+        "endLine": 589,
+        "endChar": 35
+      },
+      "revId": "c0e234c458590cde1fbe2e5565ae0356db879289",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c2f1796_43579775",
+        "filename": "internal/ceres/partitioned_matrix_view_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-17T17:49:06Z",
+      "side": 1,
+      "message": "maybe drop spmv from this since we are way past spmv now.",
+      "range": {
+        "startLine": 235,
+        "startChar": 7,
+        "endLine": 235,
+        "endChar": 36
+      },
+      "revId": "c0e234c458590cde1fbe2e5565ae0356db879289",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
