@@ -58,6 +58,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c8b86e4_75ac3588",
+        "filename": "internal/ceres/evaluation_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-17T20:19:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8f8a2c1_e079ab51",
+      "range": {
+        "startLine": 339,
+        "startChar": 24,
+        "endLine": 339,
+        "endChar": 66
+      },
+      "revId": "c0e234c458590cde1fbe2e5565ae0356db879289",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fa0d54f4_c19ce4e8",
@@ -71,6 +95,30 @@
       "writtenOn": "2022-11-17T17:49:06Z",
       "side": 1,
       "message": "I am wondering if the actual implementation methods FooSingleThreaded and FooMultithreaded need to be virtual. WDYT?",
+      "range": {
+        "startLine": 177,
+        "startChar": 7,
+        "endLine": 177,
+        "endChar": 43
+      },
+      "revId": "c0e234c458590cde1fbe2e5565ae0356db879289",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7082c967_be6005c0",
+        "filename": "internal/ceres/partitioned_matrix_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-17T20:19:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa0d54f4_c19ce4e8",
       "range": {
         "startLine": 177,
         "startChar": 7,
@@ -104,6 +152,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "82e04af3_6334362c",
+        "filename": "internal/ceres/partitioned_matrix_view_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-17T20:19:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98644bdf_0a1a4e5f",
+      "range": {
+        "startLine": 478,
+        "startChar": 8,
+        "endLine": 478,
+        "endChar": 35
+      },
+      "revId": "c0e234c458590cde1fbe2e5565ae0356db879289",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aab50442_e4c50c64",
@@ -127,6 +199,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "04c4d068_e28f0c0a",
+        "filename": "internal/ceres/partitioned_matrix_view_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-17T20:19:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aab50442_e4c50c64",
+      "range": {
+        "startLine": 589,
+        "startChar": 8,
+        "endLine": 589,
+        "endChar": 35
+      },
+      "revId": "c0e234c458590cde1fbe2e5565ae0356db879289",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0c2f1796_43579775",
@@ -140,6 +236,30 @@
       "writtenOn": "2022-11-17T17:49:06Z",
       "side": 1,
       "message": "maybe drop spmv from this since we are way past spmv now.",
+      "range": {
+        "startLine": 235,
+        "startChar": 7,
+        "endLine": 235,
+        "endChar": 36
+      },
+      "revId": "c0e234c458590cde1fbe2e5565ae0356db879289",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "224390af_07806520",
+        "filename": "internal/ceres/partitioned_matrix_view_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-17T20:19:57Z",
+      "side": 1,
+      "message": "This resulted in identical names, thus I moved remaining tests from the first test-fixture into parameterized one.",
+      "parentUuid": "0c2f1796_43579775",
       "range": {
         "startLine": 235,
         "startChar": 7,

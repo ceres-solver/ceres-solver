@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c85c0992_1419d850",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-17T20:19:57Z",
+      "side": 1,
+      "message": "Removed partitioned view without transposed structure, renamed tests.",
+      "revId": "77a54dd3d2f771051aa0c0e7639cfae8e47ed3ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
