@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65a09179_c392b65f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-17T22:12:05Z",
+      "side": 1,
+      "message": "Avoids reusing PartitionedMatrixView in evaluation_benchmark.\n\nPartitionedMatrixView needs to be re-created when updating LinearSolver::Options.\nTurns out this might lead to use-after-free, when benchmark is called with a subset of benchmarks without single-threaded.\n\nSince PartitionedMatrixView is a relatively thin wrapper around BlockSparseMatrix, we do not need to cache it.",
+      "revId": "0424615dcc725ffd10bb8495dcb84eb6b883f1e2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
