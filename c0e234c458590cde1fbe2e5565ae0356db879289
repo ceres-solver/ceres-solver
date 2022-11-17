@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b431a450_bc84adde",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-17T16:50:43Z",
+      "side": 1,
+      "message": "Parallel updates of EtE and FtF using transpose block structure and column partitions.",
+      "revId": "c0e234c458590cde1fbe2e5565ae0356db879289",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
