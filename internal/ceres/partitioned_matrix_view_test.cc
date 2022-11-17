@@ -49,63 +49,6 @@ namespace internal {
 
 const double kEpsilon = 1e-14;
 
-class PartitionedMatrixViewTest : public ::testing::Test {
- protected:
-  void SetUp() final {
-    std::unique_ptr<LinearLeastSquaresProblem> problem =
-        CreateLinearLeastSquaresProblemFromId(2);
-    CHECK(problem != nullptr);
-    A_ = std::move(problem->A);
-
-    num_cols_ = A_->num_cols();
-    num_rows_ = A_->num_rows();
-    num_eliminate_blocks_ = problem->num_eliminate_blocks;
-    LinearSolver::Options options;
-    options.elimination_groups.push_back(num_eliminate_blocks_);
-    pmv_ = PartitionedMatrixViewBase::Create(
-        options, *down_cast<BlockSparseMatrix*>(A_.get()));
-  }
-
-  double RandDouble() { return distribution_(prng_); }
-
-  int num_rows_;
-  int num_cols_;
-  int num_eliminate_blocks_;
-  std::unique_ptr<SparseMatrix> A_;
-  std::unique_ptr<PartitionedMatrixViewBase> pmv_;
-  std::mt19937 prng_;
-  std::uniform_real_distribution<double> distribution_ =
-      std::uniform_real_distribution<double>(0.0, 1.0);
-};
-
-TEST_F(PartitionedMatrixViewTest, BlockDiagonalEtE) {
-  std::unique_ptr<BlockSparseMatrix> block_diagonal_ee(
-      pmv_->CreateBlockDiagonalEtE());
-  const CompressedRowBlockStructure* bs = block_diagonal_ee->block_structure();
-
-  EXPECT_EQ(block_diagonal_ee->num_rows(), 2);
-  EXPECT_EQ(block_diagonal_ee->num_cols(), 2);
-  EXPECT_EQ(bs->cols.size(), 2);
-  EXPECT_EQ(bs->rows.size(), 2);
-
-  EXPECT_NEAR(block_diagonal_ee->values()[0], 10.0, kEpsilon);
-  EXPECT_NEAR(block_diagonal_ee->values()[1], 155.0, kEpsilon);
-}
-
-TEST_F(PartitionedMatrixViewTest, BlockDiagonalFtF) {
-  std::unique_ptr<BlockSparseMatrix> block_diagonal_ff(
-      pmv_->CreateBlockDiagonalFtF());
-  const CompressedRowBlockStructure* bs = block_diagonal_ff->block_structure();
-
-  EXPECT_EQ(block_diagonal_ff->num_rows(), 3);
-  EXPECT_EQ(block_diagonal_ff->num_cols(), 3);
-  EXPECT_EQ(bs->cols.size(), 3);
-  EXPECT_EQ(bs->rows.size(), 3);
-  EXPECT_NEAR(block_diagonal_ff->values()[0], 70.0, kEpsilon);
-  EXPECT_NEAR(block_diagonal_ff->values()[1], 17.0, kEpsilon);
-  EXPECT_NEAR(block_diagonal_ff->values()[2], 37.0, kEpsilon);
-}
-
 // Param = <problem_id, num_threads>
 using Param = ::testing::tuple<int, int>;
 
@@ -116,7 +59,7 @@ static std::string ParamInfoToString(testing::TestParamInfo<Param> info) {
   return ss.str();
 }
 
-class PartitionedMatrixViewSpMVTest : public ::testing::TestWithParam<Param> {
+class PartitionedMatrixViewTest : public ::testing::TestWithParam<Param> {
  protected:
   void SetUp() final {
     const int problem_id = ::testing::get<0>(GetParam());
@@ -131,6 +74,10 @@ class PartitionedMatrixViewSpMVTest : public ::testing::TestWithParam<Param> {
     options_.context = &context_;
     options_.elimination_groups.push_back(problem->num_eliminate_blocks);
     pmv_ = PartitionedMatrixViewBase::Create(options_, *block_sparse);
+
+    LinearSolver::Options options_single_threaded = options_;
+    options_single_threaded.num_threads = 1;
+    pmv_single_threaded_ = PartitionedMatrixViewBase::Create(options_, *block_sparse);
 
     EXPECT_EQ(pmv_->num_col_blocks_e(), problem->num_eliminate_blocks);
     EXPECT_EQ(pmv_->num_col_blocks_f(),
@@ -147,12 +94,13 @@ class PartitionedMatrixViewSpMVTest : public ::testing::TestWithParam<Param> {
   std::unique_ptr<LinearLeastSquaresProblem> problem_;
   std::unique_ptr<SparseMatrix> A_;
   std::unique_ptr<PartitionedMatrixViewBase> pmv_;
+  std::unique_ptr<PartitionedMatrixViewBase> pmv_single_threaded_;
   std::mt19937 prng_;
   std::uniform_real_distribution<double> distribution_ =
       std::uniform_real_distribution<double>(0.0, 1.0);
 };
 
-TEST_P(PartitionedMatrixViewSpMVTest, RightMultiplyAndAccumulateE) {
+TEST_P(PartitionedMatrixViewTest, RightMultiplyAndAccumulateE) {
   Vector x1(pmv_->num_cols_e());
   Vector x2(pmv_->num_cols());
   x2.setZero();
@@ -172,7 +120,7 @@ TEST_P(PartitionedMatrixViewSpMVTest, RightMultiplyAndAccumulateE) {
   }
 }
 
-TEST_P(PartitionedMatrixViewSpMVTest, RightMultiplyAndAccumulateF) {
+TEST_P(PartitionedMatrixViewTest, RightMultiplyAndAccumulateF) {
   Vector x1(pmv_->num_cols_f());
   Vector x2(pmv_->num_cols());
   x2.setZero();
@@ -192,7 +140,7 @@ TEST_P(PartitionedMatrixViewSpMVTest, RightMultiplyAndAccumulateF) {
   }
 }
 
-TEST_P(PartitionedMatrixViewSpMVTest, LeftMultiplyAndAccumulate) {
+TEST_P(PartitionedMatrixViewTest, LeftMultiplyAndAccumulate) {
   Vector x = Vector::Zero(pmv_->num_rows());
   for (int i = 0; i < pmv_->num_rows(); ++i) {
     x(i) = RandDouble();
@@ -215,9 +163,109 @@ TEST_P(PartitionedMatrixViewSpMVTest, LeftMultiplyAndAccumulate) {
   }
 }
 
+TEST_P(PartitionedMatrixViewTest, BlockDiagonalFtF) {
+  std::unique_ptr<BlockSparseMatrix> block_diagonal_ff(
+      pmv_->CreateBlockDiagonalFtF());
+  const auto bs_diagonal = block_diagonal_ff->block_structure();
+  const int num_rows = pmv_->num_rows();
+  const int num_cols_f = pmv_->num_cols_f();
+  const int num_cols_e = pmv_->num_cols_e();
+  const int num_col_blocks_f = pmv_->num_col_blocks_f();
+  const int num_col_blocks_e = pmv_->num_col_blocks_e();
+
+  CHECK_EQ(block_diagonal_ff->num_rows(), num_cols_f);
+  CHECK_EQ(block_diagonal_ff->num_cols(), num_cols_f);
+
+  EXPECT_EQ(bs_diagonal->cols.size(), num_col_blocks_f);
+  EXPECT_EQ(bs_diagonal->rows.size(), num_col_blocks_f);
+
+  Matrix EF;
+  A_->ToDenseMatrix(&EF);
+  const auto F = EF.topRightCorner(num_rows, num_cols_f);
+
+  Matrix expected_FtF = F.transpose() * F;
+  Matrix actual_FtF;
+  block_diagonal_ff->ToDenseMatrix(&actual_FtF);
+
+  // FtF might be not block-diagonal
+  auto bs = down_cast<BlockSparseMatrix*>(A_.get())->block_structure();
+  for (int i = 0; i < num_col_blocks_f; ++i) {
+    const auto col_block_f = bs->cols[num_col_blocks_e + i];
+    const int block_size = col_block_f.size;
+    const int block_pos = col_block_f.position - num_cols_e;
+    const auto cell_expected =
+        expected_FtF.block(block_pos, block_pos, block_size, block_size);
+    auto cell_actual =
+        actual_FtF.block(block_pos, block_pos, block_size, block_size);
+    cell_actual -= cell_expected;
+    EXPECT_NEAR(cell_actual.norm(), 0., kEpsilon);
+  }
+  // There should be nothing remaining outside block-diagonal
+  EXPECT_NEAR(actual_FtF.norm(), 0., kEpsilon);
+}
+
+TEST_P(PartitionedMatrixViewTest, BlockDiagonalEtE) {
+  std::unique_ptr<BlockSparseMatrix> block_diagonal_ee(
+      pmv_->CreateBlockDiagonalEtE());
+  const CompressedRowBlockStructure* bs = block_diagonal_ee->block_structure();
+  const int num_rows = pmv_->num_rows();
+  const int num_cols_e = pmv_->num_cols_e();
+  const int num_col_blocks_e = pmv_->num_col_blocks_e();
+
+  CHECK_EQ(block_diagonal_ee->num_rows(), num_cols_e);
+  CHECK_EQ(block_diagonal_ee->num_cols(), num_cols_e);
+
+  EXPECT_EQ(bs->cols.size(), num_col_blocks_e);
+  EXPECT_EQ(bs->rows.size(), num_col_blocks_e);
+
+  Matrix EF;
+  A_->ToDenseMatrix(&EF);
+  const auto E = EF.topLeftCorner(num_rows, num_cols_e);
+
+  Matrix expected_EtE = E.transpose() * E;
+  Matrix actual_EtE;
+  block_diagonal_ee->ToDenseMatrix(&actual_EtE);
+
+  EXPECT_NEAR((expected_EtE - actual_EtE).norm(), 0., kEpsilon);
+}
+
+TEST_P(PartitionedMatrixViewTest, UpdateBlockDiagonalEtE) {
+  std::unique_ptr<BlockSparseMatrix> block_diagonal_ete(
+      pmv_->CreateBlockDiagonalEtE());
+  const CompressedRowBlockStructure* bs = block_diagonal_ete->block_structure();
+  const int num_cols = pmv_->num_cols_e();
+
+  Matrix multi_threaded(num_cols, num_cols);
+  pmv_->UpdateBlockDiagonalEtE(block_diagonal_ete.get());
+  block_diagonal_ete->ToDenseMatrix(&multi_threaded);
+
+  Matrix single_threaded(num_cols, num_cols);
+  pmv_single_threaded_->UpdateBlockDiagonalEtE(block_diagonal_ete.get());
+  block_diagonal_ete->ToDenseMatrix(&single_threaded);
+
+  EXPECT_NEAR((multi_threaded - single_threaded).norm(), 0., kEpsilon);
+}
+
+TEST_P(PartitionedMatrixViewTest, UpdateBlockDiagonalFtF) {
+  std::unique_ptr<BlockSparseMatrix> block_diagonal_ftf(
+      pmv_->CreateBlockDiagonalFtF());
+  const CompressedRowBlockStructure* bs = block_diagonal_ftf->block_structure();
+  const int num_cols = pmv_->num_cols_f();
+
+  Matrix multi_threaded(num_cols, num_cols);
+  pmv_->UpdateBlockDiagonalFtF(block_diagonal_ftf.get());
+  block_diagonal_ftf->ToDenseMatrix(&multi_threaded);
+
+  Matrix single_threaded(num_cols, num_cols);
+  pmv_single_threaded_->UpdateBlockDiagonalFtF(block_diagonal_ftf.get());
+  block_diagonal_ftf->ToDenseMatrix(&single_threaded);
+
+  EXPECT_NEAR((multi_threaded - single_threaded).norm(), 0., kEpsilon);
+}
+
 INSTANTIATE_TEST_SUITE_P(
     ParallelProducts,
-    PartitionedMatrixViewSpMVTest,
+    PartitionedMatrixViewTest,
     ::testing::Combine(::testing::Values(2, 4, 6),
                        ::testing::Values(1, 2, 3, 4, 5, 6, 7, 8)),
     ParamInfoToString);

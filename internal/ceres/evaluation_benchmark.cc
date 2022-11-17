@@ -147,19 +147,28 @@ struct BALData {
 
   const PartitionedView* PartitionedMatrixViewJacobian(
       const LinearSolver::Options& options) {
-    auto block_sparse = BlockSparseJacobian(options.context);
+    auto block_sparse = BlockSparseJacobianWithTranspose(options.context);
     partitioned_view_jacobian =
         std::make_unique<PartitionedView>(options, *block_sparse);
     return partitioned_view_jacobian.get();
   }
 
-  const PartitionedView* PartitionedMatrixViewJacobianWithTranspose(
-      const LinearSolver::Options& options) {
-    auto block_sparse_transpose =
-        BlockSparseJacobianWithTranspose(options.context);
-    partitioned_view_jacobian_with_transpose =
-        std::make_unique<PartitionedView>(options, *block_sparse_transpose);
-    return partitioned_view_jacobian_with_transpose.get();
+  BlockSparseMatrix* BlockDiagonalEtE(const LinearSolver::Options& options) {
+    if (!block_diagonal_ete) {
+      auto partitioned_view =
+          PartitionedMatrixViewJacobian(options);
+      block_diagonal_ete = partitioned_view->CreateBlockDiagonalEtE();
+    }
+    return block_diagonal_ete.get();
+  }
+
+  BlockSparseMatrix* BlockDiagonalFtF(const LinearSolver::Options& options) {
+    if (!block_diagonal_ftf) {
+      auto partitioned_view =
+          PartitionedMatrixViewJacobian(options);
+      block_diagonal_ftf = partitioned_view->CreateBlockDiagonalFtF();
+    }
+    return block_diagonal_ftf.get();
   }
 
   Vector parameters;
@@ -169,7 +178,8 @@ struct BALData {
   std::unique_ptr<BlockSparseMatrix> block_sparse_jacobian_with_transpose;
   std::unique_ptr<CompressedRowSparseMatrix> crs_jacobian;
   std::unique_ptr<PartitionedView> partitioned_view_jacobian;
-  std::unique_ptr<PartitionedView> partitioned_view_jacobian_with_transpose;
+  std::unique_ptr<BlockSparseMatrix> block_diagonal_ete;
+  std::unique_ptr<BlockSparseMatrix> block_diagonal_ftf;
 };
 
 static void Residuals(benchmark::State& state,
@@ -262,7 +272,7 @@ static void PMVLeftMultiplyAndAccumulateF(benchmark::State& state,
   options.num_threads = state.range(0);
   options.elimination_groups.push_back(data->bal_problem->num_points());
   options.context = context;
-  auto jacobian = data->PartitionedMatrixViewJacobianWithTranspose(options);
+  auto jacobian = data->PartitionedMatrixViewJacobian(options);
 
   Vector y = Vector::Zero(jacobian->num_cols_f());
   Vector x = Vector::Random(jacobian->num_rows());
@@ -298,7 +308,7 @@ static void PMVLeftMultiplyAndAccumulateE(benchmark::State& state,
   options.num_threads = state.range(0);
   options.elimination_groups.push_back(data->bal_problem->num_points());
   options.context = context;
-  auto jacobian = data->PartitionedMatrixViewJacobianWithTranspose(options);
+  auto jacobian = data->PartitionedMatrixViewJacobian(options);
 
   Vector y = Vector::Zero(jacobian->num_cols_e());
   Vector x = Vector::Random(jacobian->num_rows());
@@ -307,6 +317,36 @@ static void PMVLeftMultiplyAndAccumulateE(benchmark::State& state,
     jacobian->LeftMultiplyAndAccumulateE(x.data(), y.data());
   }
   CHECK_GT(y.squaredNorm(), 0.);
+}
+
+static void PMVUpdateBlockDiagonalEtE(benchmark::State& state,
+                                      BALData* data,
+                                      ContextImpl* context) {
+  LinearSolver::Options options;
+  options.num_threads = state.range(0);
+  options.elimination_groups.push_back(data->bal_problem->num_points());
+  options.context = context;
+  auto jacobian = data->PartitionedMatrixViewJacobian(options);
+  auto block_diagonal_ete = data->BlockDiagonalEtE(options);
+
+  for (auto _ : state) {
+    jacobian->UpdateBlockDiagonalEtE(block_diagonal_ete);
+  }
+}
+
+static void PMVUpdateBlockDiagonalFtF(benchmark::State& state,
+                                      BALData* data,
+                                      ContextImpl* context) {
+  LinearSolver::Options options;
+  options.num_threads = state.range(0);
+  options.elimination_groups.push_back(data->bal_problem->num_points());
+  options.context = context;
+  auto jacobian = data->PartitionedMatrixViewJacobian(options);
+  auto block_diagonal_ftf = data->BlockDiagonalFtF(options);
+
+  for (auto _ : state) {
+    jacobian->UpdateBlockDiagonalFtF(block_diagonal_ftf);
+  }
 }
 
 static void JacobianRightMultiplyAndAccumulate(benchmark::State& state,
@@ -479,6 +519,30 @@ int main(int argc, char** argv) {
         ceres::internal::PMVRightMultiplyAndAccumulateE,
         data,
         &context)
+        ->Arg(1)
+        ->Arg(2)
+        ->Arg(4)
+        ->Arg(8)
+        ->Arg(16);
+
+    const std::string name_update_block_diagonal_ftf =
+        "PMVUpdateBlockDiagonalFtF<" + path + ">";
+    ::benchmark::RegisterBenchmark(name_update_block_diagonal_ftf.c_str(),
+                                   ceres::internal::PMVUpdateBlockDiagonalFtF,
+                                   data,
+                                   &context)
+        ->Arg(1)
+        ->Arg(2)
+        ->Arg(4)
+        ->Arg(8)
+        ->Arg(16);
+
+    const std::string name_update_block_diagonal_ete =
+        "PMVUpdateBlockDiagonalEtE<" + path + ">";
+    ::benchmark::RegisterBenchmark(name_update_block_diagonal_ete.c_str(),
+                                   ceres::internal::PMVUpdateBlockDiagonalEtE,
+                                   data,
+                                   &context)
         ->Arg(1)
         ->Arg(2)
         ->Arg(4)

@@ -166,7 +166,15 @@ class CERES_NO_EXPORT PartitionedMatrixView final
   std::unique_ptr<BlockSparseMatrix> CreateBlockDiagonalEtE() const final;
   std::unique_ptr<BlockSparseMatrix> CreateBlockDiagonalFtF() const final;
   void UpdateBlockDiagonalEtE(BlockSparseMatrix* block_diagonal) const final;
+  void UpdateBlockDiagonalEtESingleThreaded(
+      BlockSparseMatrix* block_diagonal) const;
+  void UpdateBlockDiagonalEtEMultiThreaded(
+      BlockSparseMatrix* block_diagonal) const;
   void UpdateBlockDiagonalFtF(BlockSparseMatrix* block_diagonal) const final;
+  void UpdateBlockDiagonalFtFSingleThreaded(
+      BlockSparseMatrix* block_diagonal) const;
+  void UpdateBlockDiagonalFtFMultiThreaded(
+      BlockSparseMatrix* block_diagonal) const;
   // clang-format off
   int num_col_blocks_e() const final { return num_col_blocks_e_;  }
   int num_col_blocks_f() const final { return num_col_blocks_f_;  }
