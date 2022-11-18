@@ -77,7 +77,8 @@ class PartitionedMatrixViewTest : public ::testing::TestWithParam<Param> {
 
     LinearSolver::Options options_single_threaded = options_;
     options_single_threaded.num_threads = 1;
-    pmv_single_threaded_ = PartitionedMatrixViewBase::Create(options_, *block_sparse);
+    pmv_single_threaded_ =
+        PartitionedMatrixViewBase::Create(options_, *block_sparse);
 
     EXPECT_EQ(pmv_->num_col_blocks_e(), problem->num_eliminate_blocks);
     EXPECT_EQ(pmv_->num_col_blocks_f(),
@@ -232,7 +233,6 @@ TEST_P(PartitionedMatrixViewTest, BlockDiagonalEtE) {
 TEST_P(PartitionedMatrixViewTest, UpdateBlockDiagonalEtE) {
   std::unique_ptr<BlockSparseMatrix> block_diagonal_ete(
       pmv_->CreateBlockDiagonalEtE());
-  const CompressedRowBlockStructure* bs = block_diagonal_ete->block_structure();
   const int num_cols = pmv_->num_cols_e();
 
   Matrix multi_threaded(num_cols, num_cols);
@@ -249,7 +249,6 @@ TEST_P(PartitionedMatrixViewTest, UpdateBlockDiagonalEtE) {
 TEST_P(PartitionedMatrixViewTest, UpdateBlockDiagonalFtF) {
   std::unique_ptr<BlockSparseMatrix> block_diagonal_ftf(
       pmv_->CreateBlockDiagonalFtF());
-  const CompressedRowBlockStructure* bs = block_diagonal_ftf->block_structure();
   const int num_cols = pmv_->num_cols_f();
 
   Matrix multi_threaded(num_cols, num_cols);
