@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19a51d22_1505a9ae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-11-26T18:56:31Z",
+      "side": 1,
+      "message": "This should resolve #922, #887",
+      "revId": "35ab69c6cc4feea78d63a9917760b480d3f71d56",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "501726f3_06846f0e",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-11-26T18:56:31Z",
+      "side": 1,
+      "message": "@alexs.mac@gmail.com\nDoes this seem sound? Empirically I\u0027ve had no issues on a Jetson TX2 and on an RTX 6000.",
+      "revId": "35ab69c6cc4feea78d63a9917760b480d3f71d56",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5bcd6546_283c72c2",
+        "filename": "internal/ceres/cuda_dense_cholesky_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-11-26T18:56:31Z",
+      "side": 1,
+      "message": "@sandwichmaker@gmail.com Sanity-check this analysis, please? Thanks. :-)",
+      "revId": "35ab69c6cc4feea78d63a9917760b480d3f71d56",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
