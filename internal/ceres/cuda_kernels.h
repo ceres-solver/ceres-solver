@@ -37,7 +37,9 @@
 
 #include "cuda_runtime.h"
 
-namespace ceres::internal {
+// Older versions of the CUDA compiler don't support nested namespaces, so the
+// Ceres CUDA kernel functions are in a non-nested namespace.
+namespace ceres_internal {
 
 // Convert an array of double (FP64) values to float (FP32). Both arrays must
 // already be on GPU memory.
@@ -72,7 +74,7 @@ void CudaDtDxpy(double* y,
                 const int size,
                 cudaStream_t stream);
 
-}  // namespace ceres::internal
+}  // namespace ceres_internal
 
 #endif  // CERES_NO_CUDA
 

@@ -30,7 +30,9 @@
 
 #include "cuda_runtime.h"
 
-namespace ceres::internal {
+// Older versions of the CUDA compiler don't support nested namespaces, so the
+// Ceres CUDA kernel functions are in a non-nested namespace.
+namespace ceres_internal {
 
 // As the CUDA Toolkit documentation says, "although arbitrary in this case, is
 // a common choice". This is determined by the warp size, max block size, and
@@ -122,4 +124,4 @@ void CudaDtDxpy(double* y,
   CudaDtDxpyKernel<<<num_blocks, kCudaBlockSize, 0, stream>>>(y, D, x, size);
 }
 
-}  // namespace ceres::internal
+}  // namespace ceres_internal

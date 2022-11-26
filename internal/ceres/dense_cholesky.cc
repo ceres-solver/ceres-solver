@@ -566,10 +566,10 @@ LinearSolverTerminationType CUDADenseCholeskyMixedPrecision::Factorize(
 
   // Create an fp32 copy of lhs, lhs_fp32.
   lhs_fp32_.Reserve(num_cols * num_cols);
-  CudaFP64ToFP32(lhs_fp64_.data(),
-                 lhs_fp32_.data(),
-                 num_cols * num_cols,
-                 context_->stream_);
+  ceres_internal::CudaFP64ToFP32(lhs_fp64_.data(),
+                                 lhs_fp32_.data(),
+                                 num_cols * num_cols,
+                                 context_->stream_);
 
   // Factorize lhs_fp32.
   factorize_result_ = CudaCholeskyFactorize(message);
@@ -592,7 +592,7 @@ LinearSolverTerminationType CUDADenseCholeskyMixedPrecision::Solve(
   residual_fp64_.Reserve(num_cols_);
 
   // Initialize x = 0.
-  CudaSetZeroFP64(x_fp64_.data(), num_cols_, context_->stream_);
+  ceres_internal::CudaSetZeroFP64(x_fp64_.data(), num_cols_, context_->stream_);
 
   // Initialize residual = rhs.
   rhs_fp64_.CopyFromCpu(rhs, num_cols_);
@@ -600,17 +600,17 @@ LinearSolverTerminationType CUDADenseCholeskyMixedPrecision::Solve(
 
   for (int i = 0; i <= max_num_refinement_iterations_; ++i) {
     // Cast residual from fp64 to fp32.
-    CudaFP64ToFP32(residual_fp64_.data(),
-                   residual_fp32_.data(),
-                   num_cols_,
-                   context_->stream_);
+    ceres_internal::CudaFP64ToFP32(residual_fp64_.data(),
+                                   residual_fp32_.data(),
+                                   num_cols_,
+                                   context_->stream_);
     // [fp32] c = lhs^-1 * residual.
     auto result = CudaCholeskySolve(message);
     if (result != LinearSolverTerminationType::SUCCESS) {
       return result;
     }
     // [fp64] x += c.
-    CudaDsxpy(
+    ceres_internal::CudaDsxpy(
         x_fp64_.data(), correction_fp32_.data(), num_cols_, context_->stream_);
     if (i < max_num_refinement_iterations_) {
       // [fp64] residual = rhs - lhs * x

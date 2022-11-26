@@ -54,13 +54,21 @@ TEST(CUDADenseCholesky, InvalidOptionOnCreate) {
 TEST(CUDADenseCholesky, Cholesky4x4Matrix) {
   Eigen::Matrix4d A;
   // clang-format off
-  A <<  4,  12, -16, 0,
-       12,  37, -43, 0,
-      -16, -43,  98, 0,
-        0,   0,   0, 1;
+  // A linear system with integer-only values and condition number 7.0278:
+  // L =[  6    0    0    0
+  //       2    6    0    0
+  //      -2   -6    7    0
+  //       0    0    0   10 ]
+  // A = L * L'
+  // b = [36 12 37 100]
+  // x = [1 1 1 1]
+  A << 36,  12, -12,   0,
+       12,  40, -40,   0,
+      -12, -40,  89,   0,
+        0,   0,   0, 100;
   // clang-format on
 
-  Vector b = Eigen::Vector4d::Ones();
+  const Eigen::Vector4d b(36.0, 12.0, 37.0, 100.0);
   LinearSolver::Options options;
   ContextImpl context;
   options.context = &context;
@@ -75,10 +83,11 @@ TEST(CUDADenseCholesky, Cholesky4x4Matrix) {
   Eigen::Vector4d x = Eigen::Vector4d::Zero();
   ASSERT_EQ(dense_cuda_solver->Solve(b.data(), x.data(), &error_string),
             LinearSolverTerminationType::SUCCESS);
-  EXPECT_NEAR(x(0), 113.75 / 3.0, std::numeric_limits<double>::epsilon() * 10);
-  EXPECT_NEAR(x(1), -31.0 / 3.0, std::numeric_limits<double>::epsilon() * 10);
-  EXPECT_NEAR(x(2), 5.0 / 3.0, std::numeric_limits<double>::epsilon() * 10);
-  EXPECT_NEAR(x(3), 1.0000, std::numeric_limits<double>::epsilon() * 10);
+  static const double kEpsilon = std::numeric_limits<double>::epsilon() * 4.0f;
+  EXPECT_NEAR(x(0), 1.0, kEpsilon);
+  EXPECT_NEAR(x(1), 1.0, kEpsilon);
+  EXPECT_NEAR(x(2), 1.0, kEpsilon);
+  EXPECT_NEAR(x(3), 1.0, kEpsilon);
 }
 
 TEST(CUDADenseCholesky, SingularMatrix) {
@@ -157,7 +166,11 @@ TEST(CUDADenseCholesky, Randomized1600x1600Tests) {
   for (int i = 0; i < kNumTrials; ++i) {
     LhsType lhs = LhsType::Random(kNumCols, kNumCols);
     lhs = lhs.transpose() * lhs;
-    lhs += 1e-3 * LhsType::Identity(kNumCols, kNumCols);
+    // The largest possible value in the diagonal of lhs is now kNumCols, and
+    // the smallest possible value is 0. Thus adding kNumCols to all the
+    // diagonal entries will ensure that the condition number is at most 2.
+    lhs += static_cast<double>(kNumCols) *
+        LhsType::Identity(kNumCols, kNumCols);
     SolutionType x_expected = SolutionType::Random(kNumCols);
     RhsType rhs = lhs * x_expected;
     SolutionType x_computed = SolutionType::Zero(kNumCols);
@@ -174,7 +187,7 @@ TEST(CUDADenseCholesky, Randomized1600x1600Tests) {
     summary.termination_type = dense_cholesky->FactorAndSolve(
         kNumCols, lhs.data(), rhs.data(), x_computed.data(), &summary.message);
     ASSERT_EQ(summary.termination_type, LinearSolverTerminationType::SUCCESS);
-    static const double kEpsilon = std::numeric_limits<double>::epsilon() * 2e5;
+    static const double kEpsilon = std::numeric_limits<double>::epsilon() * 4e1;
     ASSERT_NEAR(
         (x_computed - x_expected).norm() / x_expected.norm(), 0.0, kEpsilon);
   }
@@ -208,15 +221,21 @@ TEST(CUDADenseCholeskyMixedPrecision, InvalidOptionsOnCreate) {
 TEST(CUDADenseCholeskyMixedPrecision, Cholesky4x4Matrix1Step) {
   Eigen::Matrix4d A;
   // clang-format off
-  // A common test Cholesky decomposition test matrix, see :
-  // https://en.wikipedia.org/w/index.php?title=Cholesky_decomposition&oldid=1080607368#Example
-  A <<  4,  12, -16, 0,
-       12,  37, -43, 0,
-      -16, -43,  98, 0,
-        0,   0,   0, 1;
+  // A linear system with integer-only values and condition number 7.0278:
+  // L =[  6    0    0    0
+  //       2    6    0    0
+  //      -2   -6    7    0
+  //       0    0    0   10 ]
+  // A = L * L'
+  // b = [36 12 37 100]
+  // x = [1 1 1 1]
+  A << 36,  12, -12,   0,
+       12,  40, -40,   0,
+      -12, -40,  89,   0,
+        0,   0,   0, 100;
   // clang-format on
 
-  const Eigen::Vector4d b = Eigen::Vector4d::Ones();
+  const Eigen::Vector4d b(36.0, 12.0, 37.0, 100.0);
   LinearSolver::Options options;
   options.max_num_refinement_iterations = 0;
   ContextImpl context;
@@ -236,24 +255,32 @@ TEST(CUDADenseCholeskyMixedPrecision, Cholesky4x4Matrix1Step) {
   // A single step of the mixed precision solver will be equivalent to solving
   // in low precision (FP32). Hence the tolerance is defined w.r.t. FP32 epsilon
   // instead of FP64 epsilon.
-  static const double kEpsilon = std::numeric_limits<float>::epsilon() * 15.0f;
-  EXPECT_NEAR(x(0), 113.75 / 3.0, kEpsilon);
-  EXPECT_NEAR(x(1), -31.0 / 3.0, kEpsilon);
-  EXPECT_NEAR(x(2), 5.0 / 3.0, kEpsilon);
-  EXPECT_NEAR(x(3), 1.0000, kEpsilon);
+  static const double kEpsilon = std::numeric_limits<float>::epsilon() * 4.0f;
+  EXPECT_NEAR(x(0), 1.0, kEpsilon);
+  EXPECT_NEAR(x(1), 1.0, kEpsilon);
+  EXPECT_NEAR(x(2), 1.0, kEpsilon);
+  EXPECT_NEAR(x(3), 1.0, kEpsilon);
 }
 
 // Tests the CUDA Cholesky solver with a simple 4x4 matrix.
 TEST(CUDADenseCholeskyMixedPrecision, Cholesky4x4Matrix4Steps) {
   Eigen::Matrix4d A;
   // clang-format off
-  A <<  4,  12, -16, 0,
-       12,  37, -43, 0,
-      -16, -43,  98, 0,
-        0,   0,   0, 1;
+  // A linear system with integer-only values and condition number 7.0278:
+  // L =[  6    0    0    0
+  //       2    6    0    0
+  //      -2   -6    7    0
+  //       0    0    0   10 ]
+  // A = L * L'
+  // b = [36 12 37 100]
+  // x = [1 1 1 1]
+  A << 36,  12, -12,   0,
+       12,  40, -40,   0,
+      -12, -40,  89,   0,
+        0,   0,   0, 100;
   // clang-format on
 
-  const Eigen::Vector4d b = Eigen::Vector4d::Ones();
+  const Eigen::Vector4d b(36.0, 12.0, 37.0, 100.0);
   LinearSolver::Options options;
   options.max_num_refinement_iterations = 3;
   ContextImpl context;
@@ -272,11 +299,11 @@ TEST(CUDADenseCholeskyMixedPrecision, Cholesky4x4Matrix4Steps) {
             LinearSolverTerminationType::SUCCESS);
   // The error does not reduce beyond four iterations, and stagnates at this
   // level of precision.
-  static const double kEpsilon = std::numeric_limits<double>::epsilon() * 3e2;
-  EXPECT_NEAR(x(0), 113.75 / 3.0, kEpsilon);
-  EXPECT_NEAR(x(1), -31.0 / 3.0, kEpsilon);
-  EXPECT_NEAR(x(2), 5.0 / 3.0, kEpsilon);
-  EXPECT_NEAR(x(3), 1.0000, kEpsilon);
+  static const double kEpsilon = std::numeric_limits<double>::epsilon() * 4.0f;
+  EXPECT_NEAR(x(0), 1.0, kEpsilon);
+  EXPECT_NEAR(x(1), 1.0, kEpsilon);
+  EXPECT_NEAR(x(2), 1.0, kEpsilon);
+  EXPECT_NEAR(x(3), 1.0, kEpsilon);
 }
 
 TEST(CUDADenseCholeskyMixedPrecision, Randomized1600x1600Tests) {
@@ -300,7 +327,11 @@ TEST(CUDADenseCholeskyMixedPrecision, Randomized1600x1600Tests) {
   for (int i = 0; i < kNumTrials; ++i) {
     LhsType lhs = LhsType::Random(kNumCols, kNumCols);
     lhs = lhs.transpose() * lhs;
-    lhs += 1e-3 * LhsType::Identity(kNumCols, kNumCols);
+    // The largest possible value in the diagonal of lhs is now kNumCols, and
+    // the smallest possible value is 0. Thus adding kNumCols to all the
+    // diagonal entries will ensure that the condition number is at most 2.
+    lhs += static_cast<double>(kNumCols) *
+        LhsType::Identity(kNumCols, kNumCols);
     SolutionType x_expected = SolutionType::Random(kNumCols);
     RhsType rhs = lhs * x_expected;
     SolutionType x_computed = SolutionType::Zero(kNumCols);
@@ -317,7 +348,7 @@ TEST(CUDADenseCholeskyMixedPrecision, Randomized1600x1600Tests) {
     summary.termination_type = dense_cholesky->FactorAndSolve(
         kNumCols, lhs.data(), rhs.data(), x_computed.data(), &summary.message);
     ASSERT_EQ(summary.termination_type, LinearSolverTerminationType::SUCCESS);
-    static const double kEpsilon = std::numeric_limits<double>::epsilon() * 1e6;
+    static const double kEpsilon = std::numeric_limits<double>::epsilon() * 4.0;
     ASSERT_NEAR(
         (x_computed - x_expected).norm() / x_expected.norm(), 0.0, kEpsilon);
   }
