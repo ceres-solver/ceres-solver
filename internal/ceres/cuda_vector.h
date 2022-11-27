@@ -121,13 +121,31 @@ class CERES_NO_EXPORT CudaVector {
 // Blas1 operations on Cuda vectors. These functions are needed as an
 // abstraction layer so that we can use different versions of a vector style
 // object in the conjugate gradients linear solver.
-inline double Norm(const CudaVector& x) { return x.Norm(); }
-inline void SetZero(CudaVector& x) { x.SetZero(); }
+// Context and num_threads arguments are not used by CUDA implementation,
+// context embedded into CudaVector is used instead.
+inline double Norm(const CudaVector& x,
+                   ContextImpl* context = nullptr,
+                   int num_threads = 1) {
+  (void)context;
+  (void)num_threads;
+  return x.Norm();
+}
+inline void SetZero(CudaVector& x,
+                    ContextImpl* context = nullptr,
+                    int num_threads = 1) {
+  (void)context;
+  (void)num_threads;
+  x.SetZero();
+}
 inline void Axpby(double a,
                   const CudaVector& x,
                   double b,
                   const CudaVector& y,
-                  CudaVector& z) {
+                  CudaVector& z,
+                  ContextImpl* context = nullptr,
+                  int num_threads = 1) {
+  (void)context;
+  (void)num_threads;
   if (&x == &y && &y == &z) {
     // z = (a + b) * z;
     z.Scale(a + b);
@@ -146,8 +164,22 @@ inline void Axpby(double a,
     z.Axpby(a, x, b);
   }
 }
-inline double Dot(const CudaVector& x, const CudaVector& y) { return x.Dot(y); }
-inline void Copy(const CudaVector& from, CudaVector& to) { to = from; }
+inline double Dot(const CudaVector& x,
+                  const CudaVector& y,
+                  ContextImpl* context = nullptr,
+                  int num_threads = 1) {
+  (void)context;
+  (void)num_threads;
+  return x.Dot(y);
+}
+inline void Copy(const CudaVector& from,
+                 CudaVector& to,
+                 ContextImpl* context = nullptr,
+                 int num_threads = 1) {
+  (void)context;
+  (void)num_threads;
+  to = from;
+}
 
 }  // namespace ceres::internal
 

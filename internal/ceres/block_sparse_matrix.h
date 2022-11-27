@@ -71,7 +71,8 @@ class CERES_NO_EXPORT BlockSparseMatrix final : public SparseMatrix {
   void operator=(const BlockSparseMatrix&) = delete;
 
   // Implementation of SparseMatrix interface.
-  void SetZero() final;
+  void SetZero() override final;
+  void SetZero(ContextImpl* context, int num_threads) override final;
   void RightMultiplyAndAccumulate(const double* x, double* y) const final;
   void RightMultiplyAndAccumulate(const double* x,
                                   double* y,
@@ -83,7 +84,13 @@ class CERES_NO_EXPORT BlockSparseMatrix final : public SparseMatrix {
                                  ContextImpl* context,
                                  int num_threads) const final;
   void SquaredColumnNorm(double* x) const final;
+  void SquaredColumnNorm(double* x,
+                         ContextImpl* context,
+                         int num_threads) const final;
   void ScaleColumns(const double* scale) final;
+  void ScaleColumns(const double* scale,
+                    ContextImpl* context,
+                    int num_threads) final;
   void ToCompressedRowSparseMatrix(CompressedRowSparseMatrix* matrix) const;
   void ToDenseMatrix(Matrix* dense_matrix) const final;
   void ToTextFile(FILE* file) const final;

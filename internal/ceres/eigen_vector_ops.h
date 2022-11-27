@@ -31,21 +31,65 @@
 #ifndef CERES_INTERNAL_EIGEN_VECTOR_OPS_H_
 #define CERES_INTERNAL_EIGEN_VECTOR_OPS_H_
 
+#include <numeric>
+
 #include "ceres/internal/eigen.h"
+#include "ceres/parallel_for.h"
 
 namespace ceres::internal {
 
 // Blas1 operations on Eigen vectors. These functions are needed as an
 // abstraction layer so that we can use different versions of a vector style
 // object in the conjugate gradients linear solver.
-inline double Norm(const Vector& x) { return x.norm(); }
-inline void SetZero(Vector& x) { x.setZero(); }
-inline void Axpby(
-    double a, const Vector& x, double b, const Vector& y, Vector& z) {
-  z = a * x + b * y;
+inline double Norm(const Vector& x, ContextImpl* context, int num_threads) {
+  std::vector<double> norms(num_threads);
+  ParallelFor(context,
+              0,
+              x.rows(),
+              num_threads,
+              [&x, &norms](int thread_id, std::tuple<int, int> range) {
+                auto [start, end] = range;
+                norms[thread_id] += x.segment(start, end - start).squaredNorm();
+              });
+  return std::sqrt(std::accumulate(norms.begin(), norms.end(), 0.));
 }
-inline double Dot(const Vector& x, const Vector& y) { return x.dot(y); }
-inline void Copy(const Vector& from, Vector& to) { to = from; }
+inline void SetZero(Vector& x, ContextImpl* context, int num_threads) {
+  ParallelSetZero(context, num_threads, x);
+}
+inline void Axpby(double a,
+                  const Vector& x,
+                  double b,
+                  const Vector& y,
+                  Vector& z,
+                  ContextImpl* context,
+                  int num_threads) {
+  ParallelAssign(context, num_threads, z, a * x + b * y);
+}
+template <typename VectorLikeX, typename VectorLikeY>
+inline double Dot(const VectorLikeX& x,
+                  const VectorLikeY& y,
+                  ContextImpl* context,
+                  int num_threads) {
+  std::vector<double> dots(num_threads);
+  ParallelFor(context,
+              0,
+              x.rows(),
+              num_threads,
+              [&x, &y, &dots](int thread_id, std::tuple<int, int> range) {
+                auto [start, end] = range;
+                const int block_size = end - start;
+                const auto& x_block = x.segment(start, block_size);
+                const auto& y_block = y.segment(start, block_size);
+                dots[thread_id] += x_block.dot(y_block);
+              });
+  return std::accumulate(dots.begin(), dots.end(), 0.);
+}
+inline void Copy(const Vector& from,
+                 Vector& to,
+                 ContextImpl* context,
+                 int num_threads) {
+  ParallelAssign(context, num_threads, to, from);
+}
 
 }  // namespace ceres::internal
 

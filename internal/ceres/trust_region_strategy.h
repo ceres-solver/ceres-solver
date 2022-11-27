@@ -73,6 +73,9 @@ class CERES_NO_EXPORT TrustRegionStrategy {
 
     // Further specify which dogleg method to use
     DoglegType dogleg_type = TRADITIONAL_DOGLEG;
+
+    ContextImpl* context = nullptr;
+    int num_threads = 1;
   };
 
   // Factory.

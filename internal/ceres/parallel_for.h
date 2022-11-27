@@ -38,6 +38,7 @@
 
 #include "ceres/context_impl.h"
 #include "ceres/internal/disable_warnings.h"
+#include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
 #include "glog/logging.h"
 
@@ -61,7 +62,7 @@ int MaxNumThreadsAvailable();
 namespace parallel_for_details {
 // Get arguments of callable as a tuple
 template <typename F, typename... Args>
-std::tuple<Args...> args_of(void (F::*)(Args...) const);
+std::tuple<std::decay_t<Args>...> args_of(void (F::*)(Args...) const);
 
 template <typename F>
 using args_of_t = decltype(args_of(&F::operator()));
@@ -75,24 +76,58 @@ struct InvokeImpl;
 // For parallel for iterations of type [](int i) -> void
 template <typename F>
 struct InvokeImpl<F, std::tuple<int>> {
-  static void Invoke(int thread_id, int i, const F& function) {
+  static void InvokeOnSegment(int thread_id,
+                              int start,
+                              int end,
+                              const F& function) {
     (void)thread_id;
-    function(i);
+    for (int i = start; i < end; ++i) {
+      function(i);
+    }
   }
 };
 
 // For parallel for iterations of type [](int thread_id, int i) -> void
 template <typename F>
 struct InvokeImpl<F, std::tuple<int, int>> {
-  static void Invoke(int thread_id, int i, const F& function) {
-    function(thread_id, i);
+  static void InvokeOnSegment(int thread_id,
+                              int start,
+                              int end,
+                              const F& function) {
+    for (int i = start; i < end; ++i) {
+      function(thread_id, i);
+    }
+  }
+};
+
+// For parallel for iterations of type [](tuple<int, int> range) -> void
+template <typename F>
+struct InvokeImpl<F, std::tuple<std::tuple<int, int>>> {
+  static void InvokeOnSegment(int thread_id,
+                              int start,
+                              int end,
+                              const F& function) {
+    (void)thread_id;
+    function(std::make_tuple(start, end));
+  }
+};
+
+// For parallel for iterations of type [](int thread_id, tuple<int, int> range)
+// -> void
+template <typename F>
+struct InvokeImpl<F, std::tuple<int, std::tuple<int, int>>> {
+  static void InvokeOnSegment(int thread_id,
+                              int start,
+                              int end,
+                              const F& function) {
+    function(thread_id, std::make_tuple(start, end));
   }
 };
 
 // Invoke function passing thread_id only if required
 template <typename F>
-void Invoke(int thread_id, int i, const F& function) {
-  InvokeImpl<F, args_of_t<F>>::Invoke(thread_id, i, function);
+void InvokeOnSegment(int thread_id, int start, int end, const F& function) {
+  InvokeImpl<F, args_of_t<F>>::InvokeOnSegment(thread_id, start, end, function);
 }
 
 // Check if it is possible to split range [start; end) into at most
@@ -218,7 +253,8 @@ std::vector<int> ComputePartition(
 // implemented by each threading backend
 template <typename F>
 void ParallelInvoke(ContextImpl* context,
-                    int i,
+                    int start,
+                    int end,
                     int num_threads,
                     const F& function);
 
@@ -241,9 +277,7 @@ void ParallelFor(ContextImpl* context,
   }
 
   if (num_threads == 1 || end - start == 1) {
-    for (int i = start; i < end; ++i) {
-      Invoke<F>(0, i, function);
-    }
+    InvokeOnSegment<F>(0, start, end, function);
     return;
   }
 
@@ -293,9 +327,8 @@ void ParallelFor(ContextImpl* context,
                 const int partition_start = partitions[partition_id];
                 const int partition_end = partitions[partition_id + 1];
 
-                for (int i = partition_start; i < partition_end; ++i) {
-                  Invoke<F>(thread_id, i, function);
-                }
+                InvokeOnSegment<F>(
+                    thread_id, partition_start, partition_end, function);
               });
 }
 
@@ -330,11 +363,50 @@ void ParallelFor(ContextImpl* context,
                 const int partition_start = partitions[partition_id];
                 const int partition_end = partitions[partition_id + 1];
 
-                for (int i = partition_start; i < partition_end; ++i) {
-                  Invoke<F>(thread_id, i, function);
-                }
+                InvokeOnSegment<F>(
+                    thread_id, partition_start, partition_end, function);
               });
 }
+
+// Evaluate vector expression in parallel
+// Assuming LhsExpression and RhsExpression are some sort of
+// column-vector expression, assignment lhs = rhs
+// is eavluated over a set of contiguous blocks in parallel.
+// This is expected to work well in the case of vector-based
+// expressions (since they typically do not result into
+// temporaries).
+// This method expects lhs to be size-compatible with rhs
+template <typename LhsExpression, typename RhsExpression>
+void ParallelAssign(ContextImpl* context,
+                    int num_threads,
+                    LhsExpression& lhs,
+                    const RhsExpression& rhs) {
+  static_assert(LhsExpression::ColsAtCompileTime == 1);
+  static_assert(RhsExpression::ColsAtCompileTime == 1);
+  CHECK_EQ(lhs.rows(), rhs.rows());
+  const int num_rows = lhs.rows();
+  ParallelFor(context,
+              0,
+              num_rows,
+              num_threads,
+              [&lhs, &rhs](const std::tuple<int, int>& range) {
+                auto [start, end] = range;
+                lhs.segment(start, end - start) =
+                    rhs.segment(start, end - start);
+              });
+}
+
+// Set vector to zero using num_threads
+template <typename VectorType>
+void ParallelSetZero(ContextImpl* context,
+                     int num_threads,
+                     VectorType& vector) {
+  ParallelSetZero(context, num_threads, vector.data(), vector.rows());
+}
+void ParallelSetZero(ContextImpl* context,
+                     int num_threads,
+                     double* values,
+                     int num_values);
 }  // namespace ceres::internal
 
 // Backend-specific implementations of ParallelInvoke

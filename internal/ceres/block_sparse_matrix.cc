@@ -94,6 +94,7 @@ BlockSparseMatrix::BlockSparseMatrix(
   values_ = std::make_unique<double[]>(num_nonzeros_);
   max_num_nonzeros_ = num_nonzeros_;
   CHECK(values_ != nullptr);
+  AddTransposeBlockStructure();
 }
 
 void BlockSparseMatrix::AddTransposeBlockStructure() {
@@ -104,6 +105,10 @@ void BlockSparseMatrix::AddTransposeBlockStructure() {
 
 void BlockSparseMatrix::SetZero() {
   std::fill(values_.get(), values_.get() + num_nonzeros_, 0.0);
+}
+
+void BlockSparseMatrix::SetZero(ContextImpl* context, int num_threads) {
+  ParallelSetZero(context, num_threads, values_.get(), num_nonzeros_);
 }
 
 void BlockSparseMatrix::RightMultiplyAndAccumulate(const double* x,
@@ -148,6 +153,7 @@ void BlockSparseMatrix::RightMultiplyAndAccumulate(const double* x,
               });
 }
 
+// TODO: This method might benefit from caching column-block partition
 void BlockSparseMatrix::LeftMultiplyAndAccumulate(const double* x,
                                                   double* y,
                                                   ContextImpl* context,
@@ -238,6 +244,40 @@ void BlockSparseMatrix::SquaredColumnNorm(double* x) const {
   }
 }
 
+// TODO: This method might benefit from caching column-block partition
+void BlockSparseMatrix::SquaredColumnNorm(double* x,
+                                          ContextImpl* context,
+                                          int num_threads) const {
+  if (transpose_block_structure_ == nullptr || num_threads == 1) {
+    SquaredColumnNorm(x);
+    return;
+  }
+
+  CHECK(x != nullptr);
+  ParallelSetZero(context, num_threads, x, num_cols_);
+
+  auto transpose_bs = transpose_block_structure_.get();
+  const auto values = values_.get();
+  const int num_col_blocks = transpose_bs->rows.size();
+  ParallelFor(
+      context,
+      0,
+      num_col_blocks,
+      num_threads,
+      [values, transpose_bs, x](int row_block_id) {
+        const auto& row = transpose_bs->rows[row_block_id];
+
+        for (auto& cell : row.cells) {
+          const auto& col = transpose_bs->cols[cell.block_id];
+          const MatrixRef m(values + cell.position, col.size, row.block.size);
+          VectorRef(x + row.block.position, row.block.size) +=
+              m.colwise().squaredNorm();
+        }
+      },
+      transpose_bs->rows.data(),
+      [](const CompressedRow& row) { return row.cumulative_nnz; });
+}
+
 void BlockSparseMatrix::ScaleColumns(const double* scale) {
   CHECK(scale != nullptr);
 
@@ -253,6 +293,38 @@ void BlockSparseMatrix::ScaleColumns(const double* scale) {
       m *= ConstVectorRef(scale + col_block_pos, col_block_size).asDiagonal();
     }
   }
+}
+
+// TODO: This method might benefit from caching column-block partition
+void BlockSparseMatrix::ScaleColumns(const double* scale,
+                                     ContextImpl* context,
+                                     int num_threads) {
+  if (transpose_block_structure_ == nullptr || num_threads == 1) {
+    ScaleColumns(scale);
+    return;
+  }
+
+  CHECK(scale != nullptr);
+  auto transpose_bs = transpose_block_structure_.get();
+  auto values = values_.get();
+  const int num_col_blocks = transpose_bs->rows.size();
+  ParallelFor(
+      context,
+      0,
+      num_col_blocks,
+      num_threads,
+      [values, transpose_bs, scale](int row_block_id) {
+        const auto& row = transpose_bs->rows[row_block_id];
+
+        for (auto& cell : row.cells) {
+          const auto& col = transpose_bs->cols[cell.block_id];
+          MatrixRef m(values + cell.position, col.size, row.block.size);
+          m *= ConstVectorRef(scale + row.block.position, row.block.size)
+                   .asDiagonal();
+        }
+      },
+      transpose_bs->rows.data(),
+      [](const CompressedRow& row) { return row.cumulative_nnz; });
 }
 
 void BlockSparseMatrix::ToCompressedRowSparseMatrix(

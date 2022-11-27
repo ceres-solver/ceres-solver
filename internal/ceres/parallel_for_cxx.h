@@ -213,9 +213,7 @@ void ParallelInvoke(ContextImpl* context,
       const int curr_end = curr_start + base_block_size +
                            (block_id < num_base_p1_sized_blocks ? 1 : 0);
       // Perform each task in current block
-      for (int i = curr_start; i < curr_end; ++i) {
-        Invoke<F>(thread_id, i, function);
-      }
+      InvokeOnSegment<F>(thread_id, curr_start, curr_end, function);
     }
     shared_state->block_until_finished.Finished(num_jobs_finished);
   };

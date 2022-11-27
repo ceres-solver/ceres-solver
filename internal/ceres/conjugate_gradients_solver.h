@@ -82,6 +82,8 @@ struct ConjugateGradientsSolverOptions {
   int residual_reset_period = 10;
   double r_tolerance = 0.0;
   double q_tolerance = 0.0;
+  ContextImpl* context = nullptr;
+  int num_threads = 1;
 };
 
 // This function implements the now classical Conjugate Gradients algorithm of
@@ -125,9 +127,9 @@ LinearSolver::Summary ConjugateGradientsSolver(
   summary.message = "Maximum number of iterations reached.";
   summary.num_iterations = 0;
 
-  const double norm_rhs = Norm(rhs);
+  const double norm_rhs = Norm(rhs, options.context, options.num_threads);
   if (norm_rhs == 0.0) {
-    SetZero(solution);
+    SetZero(solution, options.context, options.num_threads);
     summary.termination_type = LinearSolverTerminationType::SUCCESS;
     summary.message = "Convergence. |b| = 0.";
     return summary;
@@ -135,13 +137,13 @@ LinearSolver::Summary ConjugateGradientsSolver(
 
   const double tol_r = options.r_tolerance * norm_rhs;
 
-  SetZero(tmp);
+  SetZero(tmp, options.context, options.num_threads);
   lhs.RightMultiplyAndAccumulate(solution, tmp);
 
   // r = rhs - tmp
-  Axpby(1.0, rhs, -1.0, tmp, r);
+  Axpby(1.0, rhs, -1.0, tmp, r, options.context, options.num_threads);
 
-  double norm_r = Norm(r);
+  double norm_r = Norm(r, options.context, options.num_threads);
   if (options.min_num_iterations == 0 && norm_r <= tol_r) {
     summary.termination_type = LinearSolverTerminationType::SUCCESS;
     summary.message =
@@ -153,16 +155,16 @@ LinearSolver::Summary ConjugateGradientsSolver(
 
   // Initial value of the quadratic model Q = x'Ax - 2 * b'x.
   // double Q0 = -1.0 * solution.dot(rhs + r);
-  Axpby(1.0, rhs, 1.0, r, tmp);
-  double Q0 = -Dot(solution, tmp);
+  Axpby(1.0, rhs, 1.0, r, tmp, options.context, options.num_threads);
+  double Q0 = -Dot(solution, tmp, options.context, options.num_threads);
 
   for (summary.num_iterations = 1;; ++summary.num_iterations) {
-    SetZero(z);
+    SetZero(z, options.context, options.num_threads);
     preconditioner.RightMultiplyAndAccumulate(r, z);
 
     const double last_rho = rho;
     // rho = r.dot(z);
-    rho = Dot(r, z);
+    rho = Dot(r, z, options.context, options.num_threads);
     if (IsZeroOrInfinity(rho)) {
       summary.termination_type = LinearSolverTerminationType::FAILURE;
       summary.message = StringPrintf("Numerical failure. rho = r'z = %e.", rho);
@@ -170,7 +172,7 @@ LinearSolver::Summary ConjugateGradientsSolver(
     }
 
     if (summary.num_iterations == 1) {
-      Copy(z, p);
+      Copy(z, p, options.context, options.num_threads);
     } else {
       const double beta = rho / last_rho;
       if (IsZeroOrInfinity(beta)) {
@@ -184,21 +186,21 @@ LinearSolver::Summary ConjugateGradientsSolver(
         break;
       }
       // p = z + beta * p;
-      Axpby(1.0, z, beta, p, p);
+      Axpby(1.0, z, beta, p, p, options.context, options.num_threads);
     }
 
     DenseVectorType& q = z;
-    SetZero(q);
+    SetZero(q, options.context, options.num_threads);
     lhs.RightMultiplyAndAccumulate(p, q);
-    const double pq = Dot(p, q);
+    const double pq = Dot(p, q, options.context, options.num_threads);
     if ((pq <= 0) || std::isinf(pq)) {
       summary.termination_type = LinearSolverTerminationType::NO_CONVERGENCE;
       summary.message = StringPrintf(
           "Matrix is indefinite, no more progress can be made. "
           "p'q = %e. |p| = %e, |q| = %e",
           pq,
-          Norm(p),
-          Norm(q));
+          Norm(p, options.context, options.num_threads),
+          Norm(q, options.context, options.num_threads));
       break;
     }
 
@@ -214,7 +216,13 @@ LinearSolver::Summary ConjugateGradientsSolver(
     }
 
     // solution = solution + alpha * p;
-    Axpby(1.0, solution, alpha, p, solution);
+    Axpby(1.0,
+          solution,
+          alpha,
+          p,
+          solution,
+          options.context,
+          options.num_threads);
 
     // Ideally we would just use the update r = r - alpha*q to keep
     // track of the residual vector. However this estimate tends to
@@ -224,20 +232,20 @@ LinearSolver::Summary ConjugateGradientsSolver(
     // requires an additional matrix vector multiply which would
     // double the complexity of the CG algorithm.
     if (summary.num_iterations % options.residual_reset_period == 0) {
-      SetZero(tmp);
+      SetZero(tmp, options.context, options.num_threads);
       lhs.RightMultiplyAndAccumulate(solution, tmp);
-      Axpby(1.0, rhs, -1.0, tmp, r);
+      Axpby(1.0, rhs, -1.0, tmp, r, options.context, options.num_threads);
       // r = rhs - tmp;
     } else {
-      Axpby(1.0, r, -alpha, q, r);
+      Axpby(1.0, r, -alpha, q, r, options.context, options.num_threads);
       // r = r - alpha * q;
     }
 
     // Quadratic model based termination.
     //   Q1 = x'Ax - 2 * b' x.
     // const double Q1 = -1.0 * solution.dot(rhs + r);
-    Axpby(1.0, rhs, 1.0, r, tmp);
-    const double Q1 = -Dot(solution, tmp);
+    Axpby(1.0, rhs, 1.0, r, tmp, options.context, options.num_threads);
+    const double Q1 = -Dot(solution, tmp, options.context, options.num_threads);
 
     // For PSD matrices A, let
     //
@@ -270,13 +278,13 @@ LinearSolver::Summary ConjugateGradientsSolver(
                        summary.num_iterations,
                        zeta,
                        options.q_tolerance,
-                       Norm(r));
+                       Norm(r, options.context, options.num_threads));
       break;
     }
     Q0 = Q1;
 
     // Residual based termination.
-    norm_r = Norm(r);
+    norm_r = Norm(r, options.context, options.num_threads);
     if (norm_r <= tol_r &&
         summary.num_iterations >= options.min_num_iterations) {
       summary.termination_type = LinearSolverTerminationType::SUCCESS;
