@@ -39,6 +39,7 @@
 #include "ceres/cuda_sparse_matrix.h"
 #include "ceres/cuda_vector.h"
 #include "ceres/evaluator.h"
+#include "ceres/implicit_schur_complement.h"
 #include "ceres/partitioned_matrix_view.h"
 #include "ceres/preprocessor.h"
 #include "ceres/problem.h"
@@ -76,6 +77,21 @@ struct BALData {
 
     parameters.resize(program->NumParameters());
     program->ParameterBlocksToStateVector(parameters.data());
+
+    const int num_residuals = program->NumResiduals();
+    b.resize(num_residuals);
+
+    std::mt19937 rng;
+    std::normal_distribution<double> rnorm;
+    for (int i = 0; i < num_residuals; ++i) {
+      b[i] = rnorm(rng);
+    }
+
+    const int num_parameters = program->NumParameters();
+    D.resize(num_parameters);
+    for (int i = 0; i < num_parameters; ++i) {
+      D[i] = rnorm(rng);
+    }
   }
 
   std::unique_ptr<BlockSparseMatrix> CreateBlockSparseJacobian(
@@ -169,7 +185,30 @@ struct BALData {
     return block_diagonal_ftf.get();
   }
 
+  const ImplicitSchurComplement* ImplicitSchurComplementWithoutDiagonal(
+      const LinearSolver::Options& options) {
+    auto block_sparse_transpose =
+        BlockSparseJacobianWithTranspose(options.context);
+    implicit_schur_complement =
+        std::make_unique<ImplicitSchurComplement>(options);
+    implicit_schur_complement->Init(*block_sparse_transpose, nullptr, b.data());
+    return implicit_schur_complement.get();
+  }
+
+  const ImplicitSchurComplement* ImplicitSchurComplementWithDiagonal(
+      const LinearSolver::Options& options) {
+    auto block_sparse_transpose =
+        BlockSparseJacobianWithTranspose(options.context);
+    implicit_schur_complement_diag =
+        std::make_unique<ImplicitSchurComplement>(options);
+    implicit_schur_complement_diag->Init(
+        *block_sparse_transpose, D.data(), b.data());
+    return implicit_schur_complement_diag.get();
+  }
+
   Vector parameters;
+  Vector D;
+  Vector b;
   std::unique_ptr<BundleAdjustmentProblem> bal_problem;
   std::unique_ptr<PreprocessedProblem> preprocessed_problem;
   std::unique_ptr<BlockSparseMatrix> block_sparse_jacobian;
@@ -177,6 +216,8 @@ struct BALData {
   std::unique_ptr<CompressedRowSparseMatrix> crs_jacobian;
   std::unique_ptr<BlockSparseMatrix> block_diagonal_ete;
   std::unique_ptr<BlockSparseMatrix> block_diagonal_ftf;
+  std::unique_ptr<ImplicitSchurComplement> implicit_schur_complement;
+  std::unique_ptr<ImplicitSchurComplement> implicit_schur_complement_diag;
 };
 
 static void Residuals(benchmark::State& state,
@@ -344,6 +385,41 @@ static void PMVUpdateBlockDiagonalFtF(benchmark::State& state,
   for (auto _ : state) {
     jacobian->UpdateBlockDiagonalFtF(block_diagonal_ftf);
   }
+}
+
+static void ISCRightMultiplyNoDiag(benchmark::State& state,
+                                   BALData* data,
+                                   ContextImpl* context) {
+  LinearSolver::Options options;
+  options.num_threads = state.range(0);
+  options.elimination_groups.push_back(data->bal_problem->num_points());
+  options.context = context;
+  auto jacobian = data->ImplicitSchurComplementWithoutDiagonal(options);
+
+  Vector y = Vector::Zero(jacobian->num_rows());
+  Vector x = Vector::Random(jacobian->num_cols());
+  for (auto _ : state) {
+    jacobian->RightMultiplyAndAccumulate(x.data(), y.data());
+  }
+  CHECK_GT(y.squaredNorm(), 0.);
+}
+
+static void ISCRightMultiplyDiag(benchmark::State& state,
+                                 BALData* data,
+                                 ContextImpl* context) {
+  LinearSolver::Options options;
+  options.num_threads = state.range(0);
+  options.elimination_groups.push_back(data->bal_problem->num_points());
+  options.context = context;
+
+  auto jacobian = data->ImplicitSchurComplementWithDiagonal(options);
+
+  Vector y = Vector::Zero(jacobian->num_rows());
+  Vector x = Vector::Random(jacobian->num_cols());
+  for (auto _ : state) {
+    jacobian->RightMultiplyAndAccumulate(x.data(), y.data());
+  }
+  CHECK_GT(y.squaredNorm(), 0.);
 }
 
 static void JacobianRightMultiplyAndAccumulate(benchmark::State& state,
@@ -534,10 +610,33 @@ int main(int argc, char** argv) {
         ->Arg(8)
         ->Arg(16);
 
+    const std::string name_isc_no_diag =
+        "ISCRightMultiplyAndAccumulate<" + path + ">";
+    ::benchmark::RegisterBenchmark(name_isc_no_diag.c_str(),
+                                   ceres::internal::ISCRightMultiplyNoDiag,
+                                   data,
+                                   &context)
+        ->Arg(1)
+        ->Arg(2)
+        ->Arg(4)
+        ->Arg(8)
+        ->Arg(16);
+
     const std::string name_update_block_diagonal_ete =
         "PMVUpdateBlockDiagonalEtE<" + path + ">";
     ::benchmark::RegisterBenchmark(name_update_block_diagonal_ete.c_str(),
                                    ceres::internal::PMVUpdateBlockDiagonalEtE,
+                                   data,
+                                   &context)
+        ->Arg(1)
+        ->Arg(2)
+        ->Arg(4)
+        ->Arg(8)
+        ->Arg(16);
+    const std::string name_isc_diag =
+        "ISCRightMultiplyAndAccumulateDiag<" + path + ">";
+    ::benchmark::RegisterBenchmark(name_isc_diag.c_str(),
+                                   ceres::internal::ISCRightMultiplyDiag,
                                    data,
                                    &context)
         ->Arg(1)
