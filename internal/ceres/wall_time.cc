@@ -30,13 +30,9 @@
 
 #include "ceres/wall_time.h"
 
-#include "ceres/internal/config.h"
-
-#ifdef CERES_USE_OPENMP
-#include <omp.h>
-#else
 #include <ctime>
-#endif
+
+#include "ceres/internal/config.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -47,9 +43,6 @@
 namespace ceres::internal {
 
 double WallTimeInSeconds() {
-#ifdef CERES_USE_OPENMP
-  return omp_get_wtime();
-#else
 #ifdef _WIN32
   LARGE_INTEGER count;
   LARGE_INTEGER frequency;
@@ -61,7 +54,6 @@ double WallTimeInSeconds() {
   timeval time_val;
   gettimeofday(&time_val, nullptr);
   return (time_val.tv_sec + time_val.tv_usec * 1e-6);
-#endif
 #endif
 }
 

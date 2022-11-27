@@ -672,17 +672,7 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
   // the Evaluator decides the storage for the Jacobian based on the
   // type of linear solver being used.
   evaluator_options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
-#ifdef CERES_NO_THREADS
-  if (evaluate_options.num_threads > 1) {
-    LOG(WARNING)
-        << "No threading support is compiled into this binary; "
-        << "only evaluate_options.num_threads = 1 is supported. Switching "
-        << "to single threaded mode.";
-  }
-  evaluator_options.num_threads = 1;
-#else
   evaluator_options.num_threads = evaluate_options.num_threads;
-#endif  // CERES_NO_THREADS
 
   // The main thread also does work so we only need to launch num_threads - 1.
   context_impl_->EnsureMinimumThreads(evaluator_options.num_threads - 1);

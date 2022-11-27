@@ -221,11 +221,6 @@ def generate_bundle_test(linear_solver,
     preprocessor_conditions_begin.append('#ifndef CERES_NO_CUDA')
     preprocessor_conditions_end.insert(0, '#endif  // CERES_NO_CUDA')
 
-  # Accumulate appropriate #ifdef/#ifndefs for threading conditions.
-  if thread_config == MULTI_THREADED:
-    preprocessor_conditions_begin.append('#ifndef CERES_NO_THREADS')
-    preprocessor_conditions_end.insert(0, '#endif  // CERES_NO_THREADS')
-
   # If there are #ifdefs, put newlines around them.
   if preprocessor_conditions_begin:
     preprocessor_conditions_begin.insert(0, '')

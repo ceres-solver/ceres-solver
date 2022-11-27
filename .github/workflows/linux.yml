@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   build:
-    name: ${{matrix.os}}-${{matrix.build_type}}-${{matrix.lib}}-${{matrix.threading_model}}
+    name: ${{matrix.os}}-${{matrix.build_type}}-${{matrix.lib}}
     runs-on: ubuntu-latest
     container: ${{matrix.os}}
     defaults:
@@ -25,10 +25,6 @@ jobs:
         lib:
           - shared
           - static
-        threading_model:
-          - CXX_THREADS
-          - NO_THREADS
-          - OPENMP
 
     steps:
       - uses: actions/checkout@v2
@@ -55,8 +51,8 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{env.CCACHE_DIR}}
-          key: ${{matrix.os}}-ccache-${{matrix.build_type}}-${{matrix.lib}}-${{matrix.threading_model}}-${{github.run_id}}
-          restore-keys: ${{matrix.os}}-ccache-${{matrix.build_type}}-${{matrix.lib}}-${{matrix.threading_model}}-
+          key: ${{matrix.os}}-ccache-${{matrix.build_type}}-${{matrix.lib}}-${{github.run_id}}
+          restore-keys: ${{matrix.os}}-ccache-${{matrix.build_type}}-${{matrix.lib}}-
 
       - name: Setup Environment
         if: matrix.build_type == 'Release'
@@ -67,7 +63,6 @@ jobs:
         run: |
           cmake -S . -B build_${{matrix.build_type}} \
                 -DBUILD_SHARED_LIBS=${{matrix.lib == 'shared'}} \
-                -DCERES_THREADING_MODEL=${{matrix.threading_model}} \
                 -DCMAKE_BUILD_TYPE=${{matrix.build_type}} \
                 -DCMAKE_C_COMPILER_LAUNCHER=$(which ccache) \
                 -DCMAKE_CXX_COMPILER_LAUNCHER=$(which ccache) \

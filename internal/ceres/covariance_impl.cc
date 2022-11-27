@@ -65,15 +65,6 @@ using CovarianceBlocks = std::vector<std::pair<const double*, const double*>>;
 
 CovarianceImpl::CovarianceImpl(const Covariance::Options& options)
     : options_(options), is_computed_(false), is_valid_(false) {
-#ifdef CERES_NO_THREADS
-  if (options_.num_threads > 1) {
-    LOG(WARNING) << "No threading support is compiled into this binary; "
-                 << "only options.num_threads = 1 is supported. Switching "
-                 << "to single threaded mode.";
-    options_.num_threads = 1;
-  }
-#endif
-
   evaluate_options_.num_threads = options_.num_threads;
   evaluate_options_.apply_loss_function = options_.apply_loss_function;
 }

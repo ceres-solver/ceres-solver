@@ -639,8 +639,6 @@ TEST_F(CovarianceTest, NormalBehavior) {
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
 }
 
-#ifdef CERES_USE_OPENMP
-
 TEST_F(CovarianceTest, ThreadedNormalBehavior) {
   // J
   //
@@ -690,8 +688,6 @@ TEST_F(CovarianceTest, ThreadedNormalBehavior) {
   options.sparse_linear_algebra_library_type = EIGEN_SPARSE;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
 }
-
-#endif  // CERES_USE_OPENMP
 
 TEST_F(CovarianceTest, ConstantParameterBlock) {
   problem_.SetParameterBlockConstant(parameters_);
@@ -1355,13 +1351,13 @@ class LargeScaleCovarianceTest : public ::testing::Test {
   vector<pair<const double*, const double*>> all_covariance_blocks_;
 };
 
-#if !defined(CERES_NO_SUITESPARSE) && defined(CERES_USE_OPENMP)
+#if !defined(CERES_NO_SUITESPARSE)
 
 TEST_F(LargeScaleCovarianceTest, Parallel) {
   ComputeAndCompare(SPARSE_QR, SUITE_SPARSE, 4);
 }
 
-#endif  // !defined(CERES_NO_SUITESPARSE) && defined(CERES_USE_OPENMP)
+#endif  // !defined(CERES_NO_SUITESPARSE)
 
 }  // namespace internal
 }  // namespace ceres

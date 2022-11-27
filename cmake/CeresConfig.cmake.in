@@ -178,10 +178,9 @@ set(CERES_VERSION @CERES_VERSION@)
 include(CMakeFindDependencyMacro)
 # Optional dependencies
 @METIS_DEPENDENCY@
-@OpenMP_DEPENDENCY@
 @SuiteSparse_DEPENDENCY@
-@Threads_DEPENDENCY@
 @CUDAToolkit_DEPENDENCY@
+@Threads_DEPENDENCY@
 
 # As imported CMake targets are not re-exported when a dependent target is
 # exported, we must invoke find_package(XXX) here to reload the definition

@@ -171,9 +171,9 @@ ContextImpl::~ContextImpl() {
   TearDown();
 #endif  // CERES_NO_CUDA
 }
+
 void ContextImpl::EnsureMinimumThreads(int num_threads) {
-#ifdef CERES_USE_CXX_THREADS
   thread_pool.Resize(num_threads);
-#endif  // CERES_USE_CXX_THREADS
 }
+
 }  // namespace ceres::internal
