@@ -72,6 +72,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8d3c6ecd_8a60597c",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-11-27T14:01:27Z",
+      "side": 1,
+      "message": "Unfortunately this does not work. I found a system where this fails.\nWe need a better way to do this, since the supported architectures will depend on the specific CUDA version. e.g. 10.2 does not know 80 or 90, while 11.8 knows 80 and 90 but does not support 50 anymore.",
+      "parentUuid": "501726f3_06846f0e",
+      "revId": "35ab69c6cc4feea78d63a9917760b480d3f71d56",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5bcd6546_283c72c2",
         "filename": "internal/ceres/cuda_dense_cholesky_test.cc",
         "patchSetId": 1
