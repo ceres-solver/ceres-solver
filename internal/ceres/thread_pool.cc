@@ -28,15 +28,12 @@
 //
 // Author: vitus@google.com (Michael Vitus)
 
-// This include must come before any #ifndef check on Ceres compile options.
-#include "ceres/internal/config.h"
-
-#ifdef CERES_USE_CXX_THREADS
+#include "ceres/thread_pool.h"
 
 #include <cmath>
 #include <limits>
 
-#include "ceres/thread_pool.h"
+#include "ceres/internal/config.h"
 
 namespace ceres::internal {
 namespace {
@@ -105,5 +102,3 @@ void ThreadPool::ThreadMainLoop() {
 void ThreadPool::Stop() { task_queue_.StopWaiters(); }
 
 }  // namespace ceres::internal
-
-#endif  // CERES_USE_CXX_THREADS

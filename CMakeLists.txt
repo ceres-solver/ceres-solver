@@ -118,23 +118,8 @@ read_ceres_version_from_source(${Ceres_SOURCE_DIR})
 
 enable_testing()
 
-include(CeresThreadingModels)
 include(CMakeDependentOption)
 include(PrettyPrintCMakeList)
-
-find_available_ceres_threading_models(CERES_THREADING_MODELS_AVAILABLE)
-pretty_print_cmake_list(PRETTY_CERES_THREADING_MODELS_AVAILABLE
-  ${CERES_THREADING_MODELS_AVAILABLE})
-message("-- Detected available Ceres threading models: "
-  "${PRETTY_CERES_THREADING_MODELS_AVAILABLE}")
-set(CERES_THREADING_MODEL "${CERES_THREADING_MODEL}" CACHE STRING
-  "Ceres threading back-end" FORCE)
-if (NOT CERES_THREADING_MODEL)
-  list(GET CERES_THREADING_MODELS_AVAILABLE 0 DEFAULT_THREADING_MODEL)
-  update_cache_variable(CERES_THREADING_MODEL ${DEFAULT_THREADING_MODEL})
-endif()
-set_property(CACHE CERES_THREADING_MODEL PROPERTY STRINGS
-  ${CERES_THREADING_MODELS_AVAILABLE})
 
 option(MINIGLOG "Use a stripped down version of glog." OFF)
 option(GFLAGS "Enable Google Flags." ON)
@@ -197,8 +182,8 @@ if (IOS)
   # Apple claims that the BLAS call dsyrk_ is a private API, and will not allow
   # you to submit to the Apple Store if the symbol is present.
   update_cache_variable(LAPACK OFF)
-  message(STATUS "Building for iOS: SuiteSparse, LAPACK, gflags, "
-    "and OpenMP are not available.")
+  message(STATUS "Building for iOS: SuiteSparse, LAPACK, gflags "
+    "are not available.")
 
   update_cache_variable(BUILD_EXAMPLES OFF)
   message(STATUS "Building for iOS: Will not build examples.")
@@ -488,8 +473,6 @@ if (NOT CUSTOM_BLAS)
   list(APPEND CERES_COMPILE_OPTIONS CERES_NO_CUSTOM_BLAS)
   message("-- Disabling custom blas")
 endif (NOT CUSTOM_BLAS)
-
-set_ceres_threading_model("${CERES_THREADING_MODEL}")
 
 if (BUILD_BENCHMARKS)
   # Version 1.3 was first to provide import targets

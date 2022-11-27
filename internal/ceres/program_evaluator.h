@@ -119,15 +119,6 @@ class ProgramEvaluator final : public Evaluator {
         jacobian_writer_(options, program),
         evaluate_preparers_(std::move(
             jacobian_writer_.CreateEvaluatePreparers(options.num_threads))) {
-#ifdef CERES_NO_THREADS
-    if (options_.num_threads > 1) {
-      LOG(WARNING) << "No threading support is compiled into this binary; "
-                   << "only options.num_threads = 1 is supported. Switching "
-                   << "to single threaded mode.";
-      options_.num_threads = 1;
-    }
-#endif  // CERES_NO_THREADS
-
     BuildResidualLayout(*program, &residual_layout_);
     evaluate_scratch_ = std::move(CreateEvaluatorScratch(
         *program, static_cast<unsigned>(options.num_threads)));

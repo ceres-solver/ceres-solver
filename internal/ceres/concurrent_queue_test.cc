@@ -28,15 +28,12 @@
 //
 // Author: vitus@google.com (Michael Vitus)
 
-// This include must come before any #ifndef check on Ceres compile options.
-#include "ceres/internal/config.h"
-
-#ifdef CERES_USE_CXX_THREADS
+#include "ceres/concurrent_queue.h"
 
 #include <chrono>
 #include <thread>
 
-#include "ceres/concurrent_queue.h"
+#include "ceres/internal/config.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
@@ -300,5 +297,3 @@ TEST(ConcurrentQueue, StopAndEnableWaiters) {
 }
 
 }  // namespace ceres::internal
-
-#endif  // CERES_USE_CXX_THREADS

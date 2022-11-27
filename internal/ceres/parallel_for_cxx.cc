@@ -28,17 +28,13 @@
 //
 // Author: vitus@google.com (Michael Vitus)
 
-// This include must come before any #ifndef check on Ceres compile options.
-#include "ceres/internal/config.h"
-
-#ifdef CERES_USE_CXX_THREADS
-
 #include <atomic>
 #include <cmath>
 #include <condition_variable>
 #include <memory>
 #include <mutex>
 
+#include "ceres/internal/config.h"
 #include "ceres/parallel_for.h"
 #include "glog/logging.h"
 
@@ -79,5 +75,3 @@ ThreadPoolState::ThreadPoolState(int start,
 int MaxNumThreadsAvailable() { return ThreadPool::MaxNumThreadsAvailable(); }
 
 }  // namespace ceres::internal
-
-#endif  // CERES_USE_CXX_THREADS

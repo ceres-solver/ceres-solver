@@ -78,12 +78,6 @@ constexpr char kVersion[] =
   "-no_schur_specializations"
 #endif
 
-#ifdef CERES_USE_OPENMP
-  "-openmp"
-#else
-  "-no_openmp"
-#endif
-
 #ifdef CERES_NO_CUSTOM_BLAS
   "-no_custom_blas"
 #endif
