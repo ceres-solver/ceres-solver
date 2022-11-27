@@ -35,6 +35,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2643a107_ac9a61b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-11-27T13:46:56Z",
+      "side": 1,
+      "message": "The CUDA Cholesky solver indeed produces subtly different results on the Jetson TX2 vs. on an RTX 6000.\nHere are the norm of the residuals for the previous test matrix at the beginning of each refinement iteration of the mixed-precision solver:\n```\n// Jetson TX2:\n0: 2.000000e+00\n1: 2.176802e-05\n2: 2.934464e-12\n3: 1.171857e-13\n\n// RTX 6000:\n0: 2.000000e+00\n1: 1.922340e-05\n2: 1.739074e-12\n3: 0.000000e+00\n```\n\nGiven that the CUDA solver is multi-threaded with a threading model that varies across GPUs, the different order of operations will result in subtly different results for ill-conditioned matrices. I\u0027m not too surprised by this.",
+      "parentUuid": "741001e4_1957dd02",
+      "revId": "35ab69c6cc4feea78d63a9917760b480d3f71d56",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "501726f3_06846f0e",
