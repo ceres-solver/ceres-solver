@@ -69,26 +69,24 @@ class CERES_NO_EXPORT PartitionedMatrixViewBase {
   virtual ~PartitionedMatrixViewBase();
 
   // y += E'x
-  virtual void LeftMultiplyAndAccumulateE(const double* x, double* y) const = 0;
-  virtual void LeftMultiplyAndAccumulateESingleThreaded(const double* x,
-                                                        double* y) const = 0;
-  virtual void LeftMultiplyAndAccumulateEMultiThreaded(const double* x,
-                                                       double* y) const = 0;
+  virtual void LeftMultiplyAndAccumulateE(const double* x,
+                                          double* y,
+                                          int operation) const = 0;
 
   // y += F'x
-  virtual void LeftMultiplyAndAccumulateF(const double* x, double* y) const = 0;
-  virtual void LeftMultiplyAndAccumulateFSingleThreaded(const double* x,
-                                                        double* y) const = 0;
-  virtual void LeftMultiplyAndAccumulateFMultiThreaded(const double* x,
-                                                       double* y) const = 0;
+  virtual void LeftMultiplyAndAccumulateF(const double* x,
+                                          double* y,
+                                          int operation) const = 0;
 
   // y += Ex
   virtual void RightMultiplyAndAccumulateE(const double* x,
-                                           double* y) const = 0;
+                                           double* y,
+                                           int operation) const = 0;
 
   // y += Fx
   virtual void RightMultiplyAndAccumulateF(const double* x,
-                                           double* y) const = 0;
+                                           double* y,
+                                           int operation) const = 0;
 
   // Create and return the block diagonal of the matrix E'E.
   virtual std::unique_ptr<BlockSparseMatrix> CreateBlockDiagonalEtE() const = 0;
@@ -141,27 +139,39 @@ class CERES_NO_EXPORT PartitionedMatrixView final
 
   // y += E'x
   virtual void LeftMultiplyAndAccumulateE(const double* x,
-                                          double* y) const final;
-  virtual void LeftMultiplyAndAccumulateESingleThreaded(const double* x,
-                                                        double* y) const final;
-  virtual void LeftMultiplyAndAccumulateEMultiThreaded(const double* x,
-                                                       double* y) const final;
+                                          double* y,
+                                          int operation) const final;
+  template <int kOperation>
+  void LeftMultiplyAndAccumulateESingleThreaded(const double* x,
+                                                double* y) const;
+  template <int kOperation>
+  void LeftMultiplyAndAccumulateEMultiThreaded(const double* x,
+                                               double* y) const;
 
   // y += F'x
   virtual void LeftMultiplyAndAccumulateF(const double* x,
-                                          double* y) const final;
-  virtual void LeftMultiplyAndAccumulateFSingleThreaded(const double* x,
-                                                        double* y) const final;
-  virtual void LeftMultiplyAndAccumulateFMultiThreaded(const double* x,
-                                                       double* y) const final;
+                                          double* y,
+                                          int operation) const final;
+  template <int kOperation>
+  void LeftMultiplyAndAccumulateFSingleThreaded(const double* x,
+                                                double* y) const;
+  template <int kOperation>
+  void LeftMultiplyAndAccumulateFMultiThreaded(const double* x,
+                                               double* y) const;
 
   // y += Ex
   virtual void RightMultiplyAndAccumulateE(const double* x,
-                                           double* y) const final;
+                                           double* y,
+                                           int operation) const final;
+  template <int kOperation>
+  void RightMultiplyAndAccumulateEImpl(const double* x, double* y) const;
 
   // y += Fx
   virtual void RightMultiplyAndAccumulateF(const double* x,
-                                           double* y) const final;
+                                           double* y,
+                                           int operation) const final;
+  template <int kOperation>
+  void RightMultiplyAndAccumulateFImpl(const double* x, double* y) const;
 
   std::unique_ptr<BlockSparseMatrix> CreateBlockDiagonalEtE() const final;
   std::unique_ptr<BlockSparseMatrix> CreateBlockDiagonalFtF() const final;

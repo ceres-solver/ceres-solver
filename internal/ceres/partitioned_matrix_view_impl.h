@@ -107,14 +107,37 @@ PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
 // friendly. This is an artifact of how the BlockStructure of the
 // input matrix is constructed. These methods will benefit from
 // multithreading as well as improved data layout.
+#define SWITCH_BY_OPERATION(method) \
+  CHECK_LE(std::abs(operation), 1); \
+  switch (operation) {              \
+    case 1:                         \
+      method<1>(x, y);              \
+      break;                        \
+    case -1:                        \
+      method<-1>(x, y);             \
+      break;                        \
+    default:                        \
+      method<0>(x, y);              \
+      break;                        \
+  }
 
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
 void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
-    RightMultiplyAndAccumulateE(const double* x, double* y) const {
+    RightMultiplyAndAccumulateE(const double* x,
+                                double* y,
+                                int operation) const {
+  SWITCH_BY_OPERATION(RightMultiplyAndAccumulateEImpl);
+}
+
+template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
+template <int kOperation>
+void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
+    RightMultiplyAndAccumulateEImpl(const double* x, double* y) const {
   // Iterate over the first num_row_blocks_e_ row blocks, and multiply
   // by the first cell in each row block.
   auto bs = matrix_.block_structure();
   const double* values = matrix_.values();
+
   ParallelFor(options_.context,
               0,
               num_row_blocks_e_,
@@ -127,17 +150,31 @@ void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
                 const int col_block_pos = bs->cols[col_block_id].position;
                 const int col_block_size = bs->cols[col_block_id].size;
                 // clang-format off
-                MatrixVectorMultiply<kRowBlockSize, kEBlockSize, 1>(
+                MatrixVectorMultiply<kRowBlockSize, kEBlockSize, kOperation>(
                     values + cell.position, row_block_size, col_block_size,
                     x + col_block_pos,
                     y + row_block_pos);
                 // clang-format on
               });
+  if (!kOperation && num_row_blocks_e_ != bs->rows.size()) {
+    const int first_non_e_row = bs->rows[num_row_blocks_e_].block.position;
+    const int rows_remaining = num_rows() - first_non_e_row;
+    VectorRef(y + first_non_e_row, rows_remaining).setZero();
+  }
 }
 
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
 void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
-    RightMultiplyAndAccumulateF(const double* x, double* y) const {
+    RightMultiplyAndAccumulateF(const double* x,
+                                double* y,
+                                int operation) const {
+  SWITCH_BY_OPERATION(RightMultiplyAndAccumulateFImpl);
+}
+
+template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
+template <int kOperation>
+void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
+    RightMultiplyAndAccumulateFImpl(const double* x, double* y) const {
   // Iterate over row blocks, and if the row block is in E, then
   // multiply by all the cells except the first one which is of type
   // E. If the row block is not in E (i.e its in the bottom
@@ -147,65 +184,119 @@ void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
   const int num_row_blocks = bs->rows.size();
   const int num_cols_e = num_cols_e_;
   const double* values = matrix_.values();
-  ParallelFor(options_.context,
-              0,
-              num_row_blocks_e_,
-              options_.num_threads,
-              [values, bs, num_cols_e, x, y](int row_block_id) {
-                const int row_block_pos = bs->rows[row_block_id].block.position;
-                const int row_block_size = bs->rows[row_block_id].block.size;
-                const auto& cells = bs->rows[row_block_id].cells;
-                for (int c = 1; c < cells.size(); ++c) {
-                  const int col_block_id = cells[c].block_id;
-                  const int col_block_pos = bs->cols[col_block_id].position;
-                  const int col_block_size = bs->cols[col_block_id].size;
-                  // clang-format off
-                  MatrixVectorMultiply<kRowBlockSize, kFBlockSize, 1>(
-                      values + cells[c].position, row_block_size, col_block_size,
-                      x + col_block_pos - num_cols_e,
-                      y + row_block_pos);
-                  // clang-format on
-                }
-              });
-  ParallelFor(options_.context,
-              num_row_blocks_e_,
-              num_row_blocks,
-              options_.num_threads,
-              [values, bs, num_cols_e, x, y](int row_block_id) {
-                const int row_block_pos = bs->rows[row_block_id].block.position;
-                const int row_block_size = bs->rows[row_block_id].block.size;
-                const auto& cells = bs->rows[row_block_id].cells;
-                for (const auto& cell : cells) {
-                  const int col_block_id = cell.block_id;
-                  const int col_block_pos = bs->cols[col_block_id].position;
-                  const int col_block_size = bs->cols[col_block_id].size;
-                  // clang-format off
-                  MatrixVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
-                      values + cell.position, row_block_size, col_block_size,
-                      x + col_block_pos - num_cols_e,
-                      y + row_block_pos);
-                  // clang-format on
-                }
-              });
+  constexpr int kLoopOperation = kOperation ? kOperation : 1;
+
+  ParallelFor(
+      options_.context,
+      0,
+      num_row_blocks_e_,
+      options_.num_threads,
+      [values, bs, num_cols_e, x, y](int row_block_id) {
+        const int row_block_pos = bs->rows[row_block_id].block.position;
+        const int row_block_size = bs->rows[row_block_id].block.size;
+        const auto& cells = bs->rows[row_block_id].cells;
+
+        const int num_cells = cells.size();
+        int cell_idx = 1;
+        if (!kOperation) {
+          if (cell_idx < num_cells) {
+            const int col_block_id = cells[cell_idx].block_id;
+            const int col_block_pos = bs->cols[col_block_id].position;
+            const int col_block_size = bs->cols[col_block_id].size;
+            // clang-format off
+            MatrixVectorMultiply<kRowBlockSize, kFBlockSize, kOperation>(
+                values + cells[cell_idx].position, row_block_size, col_block_size,
+                x + col_block_pos - num_cols_e,
+                y + row_block_pos);
+            // clang-format on
+            ++cell_idx;
+          } else {
+            VectorRef(y + row_block_pos, row_block_size).setZero();
+          }
+        }
+
+        for (; cell_idx < num_cells; ++cell_idx) {
+          const int col_block_id = cells[cell_idx].block_id;
+          const int col_block_pos = bs->cols[col_block_id].position;
+          const int col_block_size = bs->cols[col_block_id].size;
+          // clang-format off
+          MatrixVectorMultiply<kRowBlockSize, kFBlockSize, kLoopOperation>(
+              values + cells[cell_idx].position, row_block_size, col_block_size,
+              x + col_block_pos - num_cols_e,
+              y + row_block_pos);
+          // clang-format on
+        }
+      });
+  ParallelFor(
+      options_.context,
+      num_row_blocks_e_,
+      num_row_blocks,
+      options_.num_threads,
+      [values, bs, num_cols_e, x, y](int row_block_id) {
+        const int row_block_pos = bs->rows[row_block_id].block.position;
+        const int row_block_size = bs->rows[row_block_id].block.size;
+        const auto& cells = bs->rows[row_block_id].cells;
+
+        int cell_idx = 0;
+        const int num_cells = cells.size();
+        if (!kOperation) {
+          if (cell_idx < num_cells) {
+            const auto& cell = cells[cell_idx];
+            const int col_block_id = cell.block_id;
+            const int col_block_pos = bs->cols[col_block_id].position;
+            const int col_block_size = bs->cols[col_block_id].size;
+            // clang-format off
+            MatrixVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, kOperation>(
+                values + cell.position, row_block_size, col_block_size,
+                x + col_block_pos - num_cols_e,
+                y + row_block_pos);
+            // clang-format on
+            ++cell_idx;
+
+          } else {
+            VectorRef(y + row_block_pos, row_block_size).setZero();
+          }
+        }
+        for (; cell_idx < num_cells; ++cell_idx) {
+          const auto& cell = cells[cell_idx];
+          const int col_block_id = cell.block_id;
+          const int col_block_pos = bs->cols[col_block_id].position;
+          const int col_block_size = bs->cols[col_block_id].size;
+          // clang-format off
+          MatrixVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, kLoopOperation>(
+              values + cell.position, row_block_size, col_block_size,
+              x + col_block_pos - num_cols_e,
+              y + row_block_pos);
+          // clang-format on
+        }
+      });
 }
 
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
 void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
-    LeftMultiplyAndAccumulateE(const double* x, double* y) const {
+    LeftMultiplyAndAccumulateE(const double* x,
+                               double* y,
+                               int operation) const {
   if (!num_col_blocks_e_) return;
   if (!num_row_blocks_e_) return;
   if (options_.num_threads == 1) {
-    LeftMultiplyAndAccumulateESingleThreaded(x, y);
+    SWITCH_BY_OPERATION(LeftMultiplyAndAccumulateESingleThreaded);
   } else {
     CHECK(options_.context != nullptr);
-    LeftMultiplyAndAccumulateEMultiThreaded(x, y);
+    SWITCH_BY_OPERATION(LeftMultiplyAndAccumulateEMultiThreaded);
   }
 }
 
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
+template <int kOperation>
 void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
     LeftMultiplyAndAccumulateESingleThreaded(const double* x, double* y) const {
   const CompressedRowBlockStructure* bs = matrix_.block_structure();
+  constexpr int kLoopOperation = kOperation ? kOperation : 1;
+
+  if (!kOperation) {
+    VectorRef(y, num_cols_e_).setZero();
+  }
 
   // Iterate over the first num_row_blocks_e_ row blocks, and multiply
   // by the first cell in each row block.
@@ -218,7 +309,7 @@ void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
     const int col_block_pos = bs->cols[col_block_id].position;
     const int col_block_size = bs->cols[col_block_id].size;
     // clang-format off
-    MatrixTransposeVectorMultiply<kRowBlockSize, kEBlockSize, 1>(
+    MatrixTransposeVectorMultiply<kRowBlockSize, kEBlockSize, kLoopOperation>(
         values + cell.position, row_block_size, col_block_size,
         x + row_block_pos,
         y + col_block_pos);
@@ -227,10 +318,12 @@ void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
 }
 
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
+template <int kOperation>
 void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
     LeftMultiplyAndAccumulateEMultiThreaded(const double* x, double* y) const {
   auto transpose_bs = matrix_.transpose_block_structure();
   CHECK(transpose_bs != nullptr);
+  constexpr int kLoopOperation = kOperation ? kOperation : 1;
 
   // Local copies of class members in order to avoid capturing pointer to the
   // whole object in lambda function
@@ -246,17 +339,41 @@ void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
         int row_block_size = transpose_bs->rows[row_block_id].block.size;
         auto& cells = transpose_bs->rows[row_block_id].cells;
 
-        for (auto& cell : cells) {
+        int cell_idx = 0;
+        const int num_cells = cells.size();
+        if (!kOperation) {
+          if (cell_idx < num_cells) {
+            const auto& cell = cells[cell_idx];
+            const int col_block_id = cell.block_id;
+            const int col_block_size = transpose_bs->cols[col_block_id].size;
+            const int col_block_pos = transpose_bs->cols[col_block_id].position;
+            if (col_block_id < num_row_blocks_e) {
+              // clang-format off
+              MatrixTransposeVectorMultiply<kRowBlockSize, kEBlockSize, kOperation>(
+                  values + cell.position, col_block_size, row_block_size,
+                  x + col_block_pos,
+                  y + row_block_pos);
+              // clang-format on
+              ++cell_idx;
+            }
+          }
+          if (!cell_idx) {
+            VectorRef(y + row_block_pos, row_block_size).setZero();
+          }
+        }
+
+        for (; cell_idx < num_cells; ++cell_idx) {
+          auto& cell = cells[cell_idx];
           const int col_block_id = cell.block_id;
           const int col_block_size = transpose_bs->cols[col_block_id].size;
           const int col_block_pos = transpose_bs->cols[col_block_id].position;
           if (col_block_id >= num_row_blocks_e) break;
-          MatrixTransposeVectorMultiply<kRowBlockSize, kEBlockSize, 1>(
-              values + cell.position,
-              col_block_size,
-              row_block_size,
+          // clang-format off
+          MatrixTransposeVectorMultiply<kRowBlockSize, kEBlockSize, kLoopOperation>(
+              values + cell.position, col_block_size, row_block_size,
               x + col_block_pos,
               y + row_block_pos);
+          // clang-format on
         }
       },
       e_cols_partition());
@@ -264,20 +381,28 @@ void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
 
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
 void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
-    LeftMultiplyAndAccumulateF(const double* x, double* y) const {
+    LeftMultiplyAndAccumulateF(const double* x,
+                               double* y,
+                               int operation) const {
   if (!num_col_blocks_f_) return;
   if (options_.num_threads == 1) {
-    LeftMultiplyAndAccumulateFSingleThreaded(x, y);
+    SWITCH_BY_OPERATION(LeftMultiplyAndAccumulateFSingleThreaded);
   } else {
     CHECK(options_.context != nullptr);
-    LeftMultiplyAndAccumulateFMultiThreaded(x, y);
+    SWITCH_BY_OPERATION(LeftMultiplyAndAccumulateFMultiThreaded);
   }
 }
 
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
+template <int kOperation>
 void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
     LeftMultiplyAndAccumulateFSingleThreaded(const double* x, double* y) const {
   const CompressedRowBlockStructure* bs = matrix_.block_structure();
+
+  constexpr int kLoopOperation = kOperation ? kOperation : 1;
+  if (!kOperation) {
+    VectorRef(y, num_cols_f_).setZero();
+  }
 
   // Iterate over row blocks, and if the row block is in E, then
   // multiply by all the cells except the first one which is of type
@@ -294,7 +419,7 @@ void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
       const int col_block_pos = bs->cols[col_block_id].position;
       const int col_block_size = bs->cols[col_block_id].size;
       // clang-format off
-      MatrixTransposeVectorMultiply<kRowBlockSize, kFBlockSize, 1>(
+      MatrixTransposeVectorMultiply<kRowBlockSize, kFBlockSize, kLoopOperation>(
         values + cells[c].position, row_block_size, col_block_size,
         x + row_block_pos,
         y + col_block_pos - num_cols_e_);
@@ -311,7 +436,7 @@ void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
       const int col_block_pos = bs->cols[col_block_id].position;
       const int col_block_size = bs->cols[col_block_id].size;
       // clang-format off
-      MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
+      MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, kLoopOperation>(
         values + cell.position, row_block_size, col_block_size,
         x + row_block_pos,
         y + col_block_pos - num_cols_e_);
@@ -321,6 +446,7 @@ void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
 }
 
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
+template <int kOperation>
 void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
     LeftMultiplyAndAccumulateFMultiThreaded(const double* x, double* y) const {
   auto transpose_bs = matrix_.transpose_block_structure();
@@ -330,6 +456,7 @@ void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
   auto values = matrix_.values();
   const int num_row_blocks_e = num_row_blocks_e_;
   const int num_cols_e = num_cols_e_;
+  constexpr int kLoopOperation = kOperation ? kOperation : 1;
   ParallelFor(
       options_.context,
       num_col_blocks_e_,
@@ -343,6 +470,32 @@ void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
 
         const int num_cells = cells.size();
         int cell_idx = 0;
+        if (!kOperation) {
+          if (cell_idx < num_cells) {
+            auto& cell = cells[cell_idx];
+            const int col_block_id = cell.block_id;
+            const int col_block_size = transpose_bs->cols[col_block_id].size;
+            const int col_block_pos = transpose_bs->cols[col_block_id].position;
+            if (col_block_id < num_row_blocks_e) {
+              // clang-format off
+              MatrixTransposeVectorMultiply<kRowBlockSize, kFBlockSize, kOperation>(
+                values + cell.position, col_block_size, row_block_size,
+                x + col_block_pos,
+                y + row_block_pos - num_cols_e);
+              // clang-format on
+            } else {
+              // clang-format off
+              MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, kOperation>(
+                values + cell.position, col_block_size, row_block_size,
+                x + col_block_pos,
+                y + row_block_pos - num_cols_e);
+              // clang-format on
+            }
+            ++cell_idx;
+          } else {
+            VectorRef(y + row_block_pos - num_cols_e, row_block_size).setZero();
+          }
+        }
         for (; cell_idx < num_cells; ++cell_idx) {
           auto& cell = cells[cell_idx];
           const int col_block_id = cell.block_id;
@@ -350,24 +503,24 @@ void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
           const int col_block_pos = transpose_bs->cols[col_block_id].position;
           if (col_block_id >= num_row_blocks_e) break;
 
-          MatrixTransposeVectorMultiply<kRowBlockSize, kFBlockSize, 1>(
-              values + cell.position,
-              col_block_size,
-              row_block_size,
-              x + col_block_pos,
-              y + row_block_pos - num_cols_e);
+          // clang-format off
+          MatrixTransposeVectorMultiply<kRowBlockSize, kFBlockSize, kLoopOperation>(
+            values + cell.position, col_block_size, row_block_size,
+            x + col_block_pos,
+            y + row_block_pos - num_cols_e);
+          // clang-format on
         }
         for (; cell_idx < num_cells; ++cell_idx) {
           auto& cell = cells[cell_idx];
           const int col_block_id = cell.block_id;
           const int col_block_size = transpose_bs->cols[col_block_id].size;
           const int col_block_pos = transpose_bs->cols[col_block_id].position;
-          MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
-              values + cell.position,
-              col_block_size,
-              row_block_size,
-              x + col_block_pos,
-              y + row_block_pos - num_cols_e);
+          // clang-format off
+          MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, kLoopOperation>(
+            values + cell.position, col_block_size, row_block_size,
+            x + col_block_pos,
+            y + row_block_pos - num_cols_e);
+          // clang-format on
         }
       },
       f_cols_partition());

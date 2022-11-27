@@ -77,8 +77,7 @@ class PartitionedMatrixViewTest : public ::testing::TestWithParam<Param> {
 
     LinearSolver::Options options_single_threaded = options_;
     options_single_threaded.num_threads = 1;
-    pmv_single_threaded_ =
-        PartitionedMatrixViewBase::Create(options_, *block_sparse);
+    pmv_single_threaded_ = PartitionedMatrixViewBase::Create(options_, *block_sparse);
 
     EXPECT_EQ(pmv_->num_col_blocks_e(), problem->num_eliminate_blocks);
     EXPECT_EQ(pmv_->num_col_blocks_f(),
@@ -114,7 +113,7 @@ TEST_P(PartitionedMatrixViewTest, RightMultiplyAndAccumulateE) {
   A_->RightMultiplyAndAccumulate(x2.data(), expected.data());
 
   Vector actual = Vector::Zero(pmv_->num_rows());
-  pmv_->RightMultiplyAndAccumulateE(x1.data(), actual.data());
+  pmv_->RightMultiplyAndAccumulateE(x1.data(), actual.data(), 1);
 
   for (int i = 0; i < pmv_->num_rows(); ++i) {
     EXPECT_NEAR(actual(i), expected(i), kEpsilon);
@@ -131,7 +130,7 @@ TEST_P(PartitionedMatrixViewTest, RightMultiplyAndAccumulateF) {
   }
 
   Vector actual = Vector::Zero(pmv_->num_rows());
-  pmv_->RightMultiplyAndAccumulateF(x1.data(), actual.data());
+  pmv_->RightMultiplyAndAccumulateF(x1.data(), actual.data(), 1);
 
   Vector expected = Vector::Zero(pmv_->num_rows());
   A_->RightMultiplyAndAccumulate(x2.data(), expected.data());
@@ -153,8 +152,8 @@ TEST_P(PartitionedMatrixViewTest, LeftMultiplyAndAccumulate) {
   Vector f_actual = Vector::Zero(pmv_->num_cols_f());
 
   A_->LeftMultiplyAndAccumulate(x.data(), expected.data());
-  pmv_->LeftMultiplyAndAccumulateE(x.data(), e_actual.data());
-  pmv_->LeftMultiplyAndAccumulateF(x.data(), f_actual.data());
+  pmv_->LeftMultiplyAndAccumulateE(x.data(), e_actual.data(), 1);
+  pmv_->LeftMultiplyAndAccumulateF(x.data(), f_actual.data(), 1);
 
   for (int i = 0; i < pmv_->num_cols(); ++i) {
     EXPECT_NEAR(expected(i),
@@ -162,6 +161,20 @@ TEST_P(PartitionedMatrixViewTest, LeftMultiplyAndAccumulate) {
                                          : f_actual(i - pmv_->num_cols_e()),
                 kEpsilon);
   }
+
+  Vector e_actual_init = Vector::Random(pmv_->num_cols_e());
+  Vector f_actual_init = Vector::Random(pmv_->num_cols_f());
+  pmv_->LeftMultiplyAndAccumulateE(x.data(), e_actual_init.data(), 0);
+  pmv_->LeftMultiplyAndAccumulateF(x.data(), f_actual_init.data(), 0);
+  EXPECT_NEAR((e_actual - e_actual_init).norm(), 0., kEpsilon);
+  EXPECT_NEAR((f_actual - f_actual_init).norm(), 0., kEpsilon);
+
+  Vector e_actual_sub = Vector::Zero(pmv_->num_cols_e());
+  Vector f_actual_sub = Vector::Zero(pmv_->num_cols_f());
+  pmv_->LeftMultiplyAndAccumulateE(x.data(), e_actual_sub.data(), -1);
+  pmv_->LeftMultiplyAndAccumulateF(x.data(), f_actual_sub.data(), -1);
+  EXPECT_NEAR((e_actual + e_actual_sub).norm(), 0., kEpsilon);
+  EXPECT_NEAR((f_actual + f_actual_sub).norm(), 0., kEpsilon);
 }
 
 TEST_P(PartitionedMatrixViewTest, BlockDiagonalFtF) {
