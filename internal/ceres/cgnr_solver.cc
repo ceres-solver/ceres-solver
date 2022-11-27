@@ -104,7 +104,11 @@ class CERES_NO_EXPORT CgnrLinearOperator final
     // y = y + DtDx
     if (D_ != nullptr) {
       int n = A_.num_cols();
-      y.array() += ConstVectorRef(D_, n).array().square() * x.array();
+      ParallelAssign(
+          context_,
+          num_threads_,
+          y,
+          y.array() + ConstVectorRef(D_, n).array().square() * x.array());
     }
   }
 
@@ -156,6 +160,8 @@ LinearSolver::Summary CgnrSolver::SolveImpl(
     preconditioner_options.context = options_.context;
 
     if (options_.preconditioner_type == JACOBI) {
+      // TODO: BlockSparseJacobiPreconditioner::RightMultiply will benefit from
+      // multithreading
       preconditioner_ = std::make_unique<BlockSparseJacobiPreconditioner>(
           preconditioner_options, *A);
     } else if (options_.preconditioner_type == SUBSET) {
@@ -165,9 +171,6 @@ LinearSolver::Summary CgnrSolver::SolveImpl(
       preconditioner_ = std::make_unique<IdentityPreconditioner>(A->num_cols());
     }
   }
-  if (options_.num_threads > 1) {
-    A->AddTransposeBlockStructure();
-  }
   preconditioner_->Update(*A, per_solve_options.D);
 
   ConjugateGradientsSolverOptions cg_options;
@@ -176,6 +179,8 @@ LinearSolver::Summary CgnrSolver::SolveImpl(
   cg_options.residual_reset_period = options_.residual_reset_period;
   cg_options.q_tolerance = per_solve_options.q_tolerance;
   cg_options.r_tolerance = per_solve_options.r_tolerance;
+  cg_options.context = options_.context;
+  cg_options.num_threads = options_.num_threads;
 
   // lhs = AtA + DtD
   CgnrLinearOperator lhs(

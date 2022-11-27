@@ -47,6 +47,7 @@ class SparseMatrix;
 class TrustRegionStrategy;
 class CoordinateDescentMinimizer;
 class LinearSolver;
+class ContextImpl;
 
 // Interface for non-linear least squares solvers.
 class CERES_NO_EXPORT Minimizer {
@@ -113,6 +114,7 @@ class CERES_NO_EXPORT Minimizer {
     int max_num_iterations;
     double max_solver_time_in_seconds;
     int num_threads;
+    ContextImpl* context = nullptr;
 
     // Number of times the linear solver should be retried in case of
     // numerical failure. The retries are done by exponentially scaling up

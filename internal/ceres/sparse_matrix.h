@@ -69,19 +69,28 @@ class CERES_NO_EXPORT SparseMatrix : public LinearOperator {
   ~SparseMatrix() override;
 
   // y += Ax;
+  using LinearOperator::RightMultiplyAndAccumulate;
   void RightMultiplyAndAccumulate(const double* x,
                                   double* y) const override = 0;
+
   // y += A'x;
   void LeftMultiplyAndAccumulate(const double* x, double* y) const override = 0;
 
   // In MATLAB notation sum(A.*A, 1)
   virtual void SquaredColumnNorm(double* x) const = 0;
+  virtual void SquaredColumnNorm(double* x,
+                                 ContextImpl* context,
+                                 int num_threads) const;
   // A = A * diag(scale)
   virtual void ScaleColumns(const double* scale) = 0;
+  virtual void ScaleColumns(const double* scale,
+                            ContextImpl* context,
+                            int num_threads);
 
   // A = 0. A->num_nonzeros() == 0 is true after this call. The
   // sparsity pattern is preserved.
   virtual void SetZero() = 0;
+  virtual void SetZero(ContextImpl* contex, int num_threads) { SetZero(); }
 
   // Resize and populate dense_matrix with a dense version of the
   // sparse matrix.

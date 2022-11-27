@@ -42,9 +42,11 @@
 #include "Eigen/Core"
 #include "ceres/array_utils.h"
 #include "ceres/coordinate_descent_minimizer.h"
+#include "ceres/eigen_vector_ops.h"
 #include "ceres/evaluator.h"
 #include "ceres/file.h"
 #include "ceres/line_search.h"
+#include "ceres/parallel_for.h"
 #include "ceres/stringprintf.h"
 #include "ceres/types.h"
 #include "ceres/wall_time.h"
@@ -268,7 +270,8 @@ bool TrustRegionMinimizer::EvaluateGradientAndJacobian(
     }
 
     // jacobian = jacobian * diag(J'J) ^{-1}
-    jacobian_->ScaleColumns(jacobian_scaling_.data());
+    jacobian_->ScaleColumns(
+        jacobian_scaling_.data(), options_.context, options_.num_threads);
   }
 
   // The gradient exists in the local tangent space. To account for
@@ -419,11 +422,15 @@ bool TrustRegionMinimizer::ComputeTrustRegionStep() {
   //  = f'f/2  - 1/2 [ f'f + 2f'J * step + step' * J' * J * step]
   //  = -f'J * step - step' * J' * J * step / 2
   //  = -(J * step)'(f + J * step / 2)
-  model_residuals_.setZero();
+  ParallelSetZero(options_.context, options_.num_threads, model_residuals_);
   jacobian_->RightMultiplyAndAccumulate(trust_region_step_.data(),
-                                        model_residuals_.data());
-  model_cost_change_ =
-      -model_residuals_.dot(residuals_ + model_residuals_ / 2.0);
+                                        model_residuals_.data(),
+                                        options_.context,
+                                        options_.num_threads);
+  model_cost_change_ = -Dot(model_residuals_,
+                            residuals_ + model_residuals_ / 2.0,
+                            options_.context,
+                            options_.num_threads);
 
   // TODO(sameeragarwal)
   //
@@ -433,7 +440,10 @@ bool TrustRegionMinimizer::ComputeTrustRegionStep() {
   iteration_summary_.step_is_valid = (model_cost_change_ > 0.0);
   if (iteration_summary_.step_is_valid) {
     // Undo the Jacobian column scaling.
-    delta_ = (trust_region_step_.array() * jacobian_scaling_.array()).matrix();
+    ParallelAssign(options_.context,
+                   options_.num_threads,
+                   delta_,
+                   (trust_region_step_.array() * jacobian_scaling_.array()));
     num_consecutive_invalid_steps_ = 0;
   }
 

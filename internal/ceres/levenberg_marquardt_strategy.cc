@@ -38,6 +38,7 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/linear_solver.h"
+#include "ceres/parallel_for.h"
 #include "ceres/sparse_matrix.h"
 #include "ceres/trust_region_strategy.h"
 #include "ceres/types.h"
@@ -53,7 +54,9 @@ LevenbergMarquardtStrategy::LevenbergMarquardtStrategy(
       min_diagonal_(options.min_lm_diagonal),
       max_diagonal_(options.max_lm_diagonal),
       decrease_factor_(2.0),
-      reuse_diagonal_(false) {
+      reuse_diagonal_(false),
+      context_(options.context),
+      num_threads_(options.num_threads) {
   CHECK(linear_solver_ != nullptr);
   CHECK_GT(min_diagonal_, 0.0);
   CHECK_LE(min_diagonal_, max_diagonal_);
@@ -77,14 +80,18 @@ TrustRegionStrategy::Summary LevenbergMarquardtStrategy::ComputeStep(
       diagonal_.resize(num_parameters, 1);
     }
 
-    jacobian->SquaredColumnNorm(diagonal_.data());
-    for (int i = 0; i < num_parameters; ++i) {
-      diagonal_[i] =
-          std::min(std::max(diagonal_[i], min_diagonal_), max_diagonal_);
-    }
+    jacobian->SquaredColumnNorm(diagonal_.data(), context_, num_threads_);
+    ParallelAssign(context_,
+                   num_threads_,
+                   diagonal_,
+                   diagonal_.array().max(min_diagonal_).min(max_diagonal_));
   }
 
-  lm_diagonal_ = (diagonal_ / radius_).array().sqrt();
+  if (lm_diagonal_.size() == 0) {
+    lm_diagonal_.resize(num_parameters);
+  }
+  ParallelAssign(
+      context_, num_threads_, lm_diagonal_, (diagonal_ / radius_).cwiseSqrt());
 
   LinearSolver::PerSolveOptions solve_options;
   solve_options.D = lm_diagonal_.data();
@@ -98,7 +105,7 @@ TrustRegionStrategy::Summary LevenbergMarquardtStrategy::ComputeStep(
   // Invalidate the output array lm_step, so that we can detect if
   // the linear solver generated numerical garbage.  This is known
   // to happen for the DENSE_QR and then DENSE_SCHUR solver when
-  // the Jacobin is severely rank deficient and mu is too small.
+  // the Jacobian is severely rank deficient and mu is too small.
   InvalidateArray(num_parameters, step);
 
   // Instead of solving Jx = -r, solve Jy = r.
@@ -120,7 +127,8 @@ TrustRegionStrategy::Summary LevenbergMarquardtStrategy::ComputeStep(
     linear_solver_summary.termination_type =
         LinearSolverTerminationType::FAILURE;
   } else {
-    VectorRef(step, num_parameters) *= -1.0;
+    VectorRef step_vec(step, num_parameters);
+    ParallelAssign(context_, num_threads_, step_vec, -step_vec);
   }
   reuse_diagonal_ = true;
 

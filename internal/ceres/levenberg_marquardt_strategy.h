@@ -38,6 +38,8 @@
 
 namespace ceres::internal {
 
+class ContextImpl;
+
 // Levenberg-Marquardt step computation and trust region sizing
 // strategy based on on "Methods for Nonlinear Least Squares" by
 // K. Madsen, H.B. Nielsen and O. Tingleff. Available to download from
@@ -81,6 +83,8 @@ class CERES_NO_EXPORT LevenbergMarquardtStrategy final
   // allocations in every iteration and reuse when a step fails and
   // ComputeStep is called again.
   Vector lm_diagonal_;  // lm_diagonal_ = sqrt(diagonal_ / radius_);
+  ContextImpl* context_;
+  int num_threads_;
 };
 
 }  // namespace ceres::internal

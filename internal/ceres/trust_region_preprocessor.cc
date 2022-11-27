@@ -355,6 +355,8 @@ void SetupMinimizerOptions(PreprocessedProblem* pp) {
   strategy_options.trust_region_strategy_type =
       options.trust_region_strategy_type;
   strategy_options.dogleg_type = options.dogleg_type;
+  strategy_options.context = pp->problem->context();
+  strategy_options.num_threads = options.num_threads;
   pp->minimizer_options.trust_region_strategy =
       TrustRegionStrategy::Create(strategy_options);
   CHECK(pp->minimizer_options.trust_region_strategy != nullptr);

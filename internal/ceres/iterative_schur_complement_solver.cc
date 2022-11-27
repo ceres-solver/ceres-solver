@@ -130,7 +130,7 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
 
   Vector scratch[4];
   for (int i = 0; i < 4; ++i) {
-    scratch[i] = Vector::Zero(schur_complement_->num_cols());
+    scratch[i].resize(schur_complement_->num_cols());
   }
   Vector* scratch_ptr[4] = {&scratch[0], &scratch[1], &scratch[2], &scratch[3]};
 
@@ -180,15 +180,23 @@ void IterativeSchurComplementSolver::CreatePreconditioner(
       break;
     case JACOBI:
       preconditioner_ = std::make_unique<SparseMatrixPreconditionerWrapper>(
-          schur_complement_->block_diagonal_FtF_inverse());
+          schur_complement_->block_diagonal_FtF_inverse(),
+          preconditioner_options);
       break;
     case SCHUR_POWER_SERIES_EXPANSION:
       // Ignoring the value of spse_tolerance to ensure preconditioner stays
       // fixed during the iterations of cg.
+      // TODO: In PowerSeriesExpansionPreconditioner::RightMultiplyAndAccumulate
+      // only operations performed via ImplicitSchurComplement are threaded.
+      // PowerSeriesExpansionPreconditioner will benefit from multithreading
+      // applied to remaning operations (block-sparse right product and several
+      // vector operations)
       preconditioner_ = std::make_unique<PowerSeriesExpansionPreconditioner>(
           schur_complement_.get(), options_.max_num_spse_iterations, 0);
       break;
     case SCHUR_JACOBI:
+      // TODO: SchurJacobiPreconditioner::RightMultiply will benefit from
+      // multithreading
       preconditioner_ = std::make_unique<SchurJacobiPreconditioner>(
           *A->block_structure(), preconditioner_options);
       break;

@@ -47,8 +47,8 @@ PreconditionerType Preconditioner::PreconditionerForZeroEBlocks(
 }
 
 SparseMatrixPreconditionerWrapper::SparseMatrixPreconditionerWrapper(
-    const SparseMatrix* matrix)
-    : matrix_(matrix) {
+    const SparseMatrix* matrix, const Preconditioner::Options& options)
+    : matrix_(matrix), options_(options) {
   CHECK(matrix != nullptr);
 }
 
@@ -62,7 +62,8 @@ bool SparseMatrixPreconditionerWrapper::UpdateImpl(const SparseMatrix& A,
 
 void SparseMatrixPreconditionerWrapper::RightMultiplyAndAccumulate(
     const double* x, double* y) const {
-  matrix_->RightMultiplyAndAccumulate(x, y);
+  matrix_->RightMultiplyAndAccumulate(
+      x, y, options_.context, options_.num_threads);
 }
 
 int SparseMatrixPreconditionerWrapper::num_rows() const {

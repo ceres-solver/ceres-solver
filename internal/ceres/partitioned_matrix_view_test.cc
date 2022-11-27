@@ -68,7 +68,6 @@ class PartitionedMatrixViewTest : public ::testing::TestWithParam<Param> {
     CHECK(problem != nullptr);
     A_ = std::move(problem->A);
     auto block_sparse = down_cast<BlockSparseMatrix*>(A_.get());
-    block_sparse->AddTransposeBlockStructure();
 
     options_.num_threads = num_threads;
     options_.context = &context_;

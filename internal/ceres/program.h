@@ -46,6 +46,7 @@ class ParameterBlock;
 class ProblemImpl;
 class ResidualBlock;
 class TripletSparseMatrix;
+class ContextImpl;
 
 // A nonlinear least squares optimization problem. This is different from the
 // similarly-named "Problem" object, which offers a mutation interface for
@@ -86,7 +87,9 @@ class CERES_NO_EXPORT Program {
   // Update a state vector for the program given a delta.
   bool Plus(const double* state,
             const double* delta,
-            double* state_plus_delta) const;
+            double* state_plus_delta,
+            ContextImpl* context,
+            int num_threads) const;
 
   // Set the parameter indices and offsets. This permits mapping backward
   // from a ParameterBlock* to an index in the parameter_blocks() vector. For

@@ -136,10 +136,23 @@ class BlockSparseMatrixTest : public ::testing::Test {
     CHECK_EQ(A_->num_cols(), B_->num_cols());
     CHECK_EQ(A_->num_nonzeros(), B_->num_nonzeros());
     context_.EnsureMinimumThreads(kNumThreads);
+
+    BlockSparseMatrix::RandomMatrixOptions options;
+    options.num_row_blocks = 1000;
+    options.min_row_block_size = 1;
+    options.max_row_block_size = 8;
+    options.num_col_blocks = 100;
+    options.min_col_block_size = 1;
+    options.max_col_block_size = 8;
+    options.block_density = 0.05;
+
+    std::mt19937 rng;
+    C_ = BlockSparseMatrix::CreateRandomMatrix(options, rng);
   }
 
   std::unique_ptr<BlockSparseMatrix> A_;
   std::unique_ptr<TripletSparseMatrix> B_;
+  std::unique_ptr<BlockSparseMatrix> C_;
   ContextImpl context_;
 };
 
@@ -194,7 +207,6 @@ TEST_F(BlockSparseMatrixTest, LeftMultiplyAndAccumulateParallelTest) {
   Vector x = Vector::Random(A_->num_cols());
   A_->LeftMultiplyAndAccumulate(x.data(), y_s.data());
 
-  A_->AddTransposeBlockStructure();
   A_->LeftMultiplyAndAccumulate(x.data(), y_p.data(), &context_, kNumThreads);
 
   // Parallel implementation for left products uses a different order of
@@ -208,6 +220,47 @@ TEST_F(BlockSparseMatrixTest, SquaredColumnNormTest) {
   A_->SquaredColumnNorm(y_a.data());
   B_->SquaredColumnNorm(y_b.data());
   EXPECT_LT((y_a - y_b).norm(), 1e-12);
+}
+
+TEST_F(BlockSparseMatrixTest, SquaredColumnNormParallelTest) {
+  Vector y_a = Vector::Zero(C_->num_cols());
+  Vector y_b = Vector::Zero(C_->num_cols());
+  C_->SquaredColumnNorm(y_a.data());
+
+  C_->SquaredColumnNorm(y_b.data(), &context_, kNumThreads);
+  EXPECT_LT((y_a - y_b).norm(), 1e-12);
+}
+
+TEST_F(BlockSparseMatrixTest, ScaleColumnsTest) {
+  const Vector scale = Vector::Random(C_->num_cols()).cwiseAbs();
+
+  const Vector x = Vector::Random(C_->num_rows());
+  Vector y_expected = Vector::Zero(C_->num_cols());
+  C_->LeftMultiplyAndAccumulate(x.data(), y_expected.data());
+  y_expected.array() *= scale.array();
+
+  C_->ScaleColumns(scale.data());
+  Vector y_observed = Vector::Zero(C_->num_cols());
+  C_->LeftMultiplyAndAccumulate(x.data(), y_observed.data());
+
+  EXPECT_GT(y_expected.norm(), 1.);
+  EXPECT_LT((y_observed - y_expected).norm(), 1e-12 * y_expected.norm());
+}
+
+TEST_F(BlockSparseMatrixTest, ScaleColumnsParallelTest) {
+  const Vector scale = Vector::Random(C_->num_cols()).cwiseAbs();
+
+  const Vector x = Vector::Random(C_->num_rows());
+  Vector y_expected = Vector::Zero(C_->num_cols());
+  C_->LeftMultiplyAndAccumulate(x.data(), y_expected.data());
+  y_expected.array() *= scale.array();
+
+  C_->ScaleColumns(scale.data(), &context_, kNumThreads);
+  Vector y_observed = Vector::Zero(C_->num_cols());
+  C_->LeftMultiplyAndAccumulate(x.data(), y_observed.data());
+
+  EXPECT_GT(y_expected.norm(), 1.);
+  EXPECT_LT((y_observed - y_expected).norm(), 1e-12 * y_expected.norm());
 }
 
 TEST_F(BlockSparseMatrixTest, ToDenseMatrixTest) {
@@ -251,7 +304,6 @@ TEST_F(BlockSparseMatrixTest, AppendDeleteRowsTransposedStructure) {
   std::unique_ptr<BlockSparseMatrix> m(
       down_cast<BlockSparseMatrix*>(problem->A.release()));
 
-  A_->AddTransposeBlockStructure();
   auto block_structure = A_->block_structure();
 
   // Several AppendRows and DeleteRowBlocks operations are applied to matrix,
@@ -486,7 +538,6 @@ TEST(BlockSparseMatrix, CreateTranspose) {
     *ap_bs = *a->block_structure();
     BlockSparseMatrix ap(ap_bs.release());
     std::copy_n(a->values(), a->num_nonzeros(), ap.mutable_values());
-    ap.AddTransposeBlockStructure();
 
     Vector x = Vector::Random(a->num_cols());
     Vector y = Vector::Random(a->num_rows());
