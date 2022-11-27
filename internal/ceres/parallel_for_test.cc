@@ -133,8 +133,6 @@ TEST(ParallelForWithThreadId, NestedParallelForDeadlock) {
   }
 }
 
-// This test is only valid when multithreading support is enabled.
-#ifndef CERES_NO_THREADS
 TEST(ParallelForWithThreadId, UniqueThreadIds) {
   // Ensure the hardware supports more than 1 thread to ensure the test will
   // pass.
@@ -166,7 +164,6 @@ TEST(ParallelForWithThreadId, UniqueThreadIds) {
 
   EXPECT_THAT(x, UnorderedElementsAreArray({0, 1}));
 }
-#endif  // CERES_NO_THREADS
 
 // Helper function for partition tests
 bool BruteForcePartition(

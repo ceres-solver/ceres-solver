@@ -31,12 +31,9 @@
 #ifndef CERES_INTERNAL_THREAD_TOKEN_PROVIDER_H_
 #define CERES_INTERNAL_THREAD_TOKEN_PROVIDER_H_
 
+#include "ceres/concurrent_queue.h"
 #include "ceres/internal/config.h"
 #include "ceres/internal/export.h"
-
-#ifdef CERES_USE_CXX_THREADS
-#include "ceres/concurrent_queue.h"
-#endif
 
 namespace ceres::internal {
 
@@ -46,12 +43,6 @@ namespace ceres::internal {
 // resources in the parallelized code parts.  The sequence of tokens varies from
 // 0 to num_threads - 1 that can be acquired to identify the thread in a thread
 // pool.
-//
-// If CERES_NO_THREADS is defined, Acquire() always returns 0 and Release()
-// takes no action.
-//
-// If CERES_USE_OPENMP, omp_get_thread_num() is used to Acquire() with no action
-// in Release()
 //
 //
 // Example usage pseudocode:
@@ -77,15 +68,12 @@ class CERES_NO_EXPORT ThreadTokenProvider {
   void Release(int thread_id);
 
  private:
-#ifdef CERES_USE_CXX_THREADS
   // This queue initially holds a sequence from 0..num_threads-1. Every
   // Acquire() call the first number is removed from here. When the token is not
   // needed anymore it shall be given back with corresponding Release()
   // call. This concurrent queue is more expensive than TBB's version, so you
   // should not acquire the thread ID on every for loop iteration.
   ConcurrentQueue<int> pool_;
-#endif
-
   ThreadTokenProvider(ThreadTokenProvider&) = delete;
   ThreadTokenProvider& operator=(ThreadTokenProvider&) = delete;
 };

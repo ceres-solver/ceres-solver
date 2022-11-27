@@ -39,7 +39,6 @@
 #include "bundle_adjustment_test_util.h"
 
 #ifndef CERES_NO_ACCELERATE_SPARSE
-#ifndef CERES_NO_THREADS
 
 namespace ceres::internal {
 
@@ -61,5 +60,4 @@ TEST_F(BundleAdjustmentTest,
 
 }  // namespace ceres::internal
 
-#endif  // CERES_NO_THREADS
 #endif  // CERES_NO_ACCELERATE_SPARSE

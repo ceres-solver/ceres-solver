@@ -338,21 +338,7 @@ void ParallelFor(ContextImpl* context,
 }  // namespace ceres::internal
 
 // Backend-specific implementations of ParallelInvoke
-#include "ceres/parallel_for_cxx.h"
-#include "ceres/parallel_for_openmp.h"
-#ifdef CERES_NO_THREADS
-namespace ceres::internal {
-template <typename F>
-void ParallelInvoke(ContextImpl* context,
-                    int start,
-                    int end,
-                    int num_threads,
-                    const F& function) {
-  ParallelFor(context, start, end, 1, function);
-}
-}  // namespace ceres::internal
-#endif
-
 #include "ceres/internal/disable_warnings.h"
+#include "ceres/parallel_for_cxx.h"
 
 #endif  // CERES_INTERNAL_PARALLEL_FOR_H_
