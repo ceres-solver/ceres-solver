@@ -29,14 +29,8 @@
 // Authors: vitus@google.com (Michael Vitus),
 //          dmitriy.korchemkin@gmail.com (Dmitriy Korchemkin)
 
-// This include must come before any #ifndef check on Ceres compile options.
 #ifndef CERES_INTERNAL_PARALLEL_FOR_CXX_H_
 #define CERES_INTERNAL_PARALLEL_FOR_CXX_H_
-
-// This include must come before any #ifndef check on Ceres compile options.
-#include "ceres/internal/config.h"
-
-#ifdef CERES_USE_CXX_THREADS
 
 #include <atomic>
 #include <cmath>
@@ -44,6 +38,7 @@
 #include <memory>
 #include <mutex>
 
+#include "ceres/internal/config.h"
 #include "glog/logging.h"
 
 namespace ceres::internal {
@@ -243,6 +238,7 @@ void ParallelInvoke(ContextImpl* context,
   // Wait until all tasks have finished.
   shared_state->block_until_finished.Block();
 }
+
 }  // namespace ceres::internal
-#endif
-#endif
+
+#endif  // CERES_INTERNAL_PARALLEL_FOR_CXX_H_

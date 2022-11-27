@@ -28,17 +28,14 @@
 //
 // Author: vitus@google.com (Michael Vitus)
 
-// This include must come before any #ifndef check on Ceres compile options.
-#include "ceres/internal/config.h"
-
-#ifdef CERES_USE_CXX_THREADS
+#include "ceres/thread_pool.h"
 
 #include <chrono>
 #include <condition_variable>
 #include <mutex>
 #include <thread>
 
-#include "ceres/thread_pool.h"
+#include "ceres/internal/config.h"
 #include "glog/logging.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
@@ -193,5 +190,3 @@ TEST(ThreadPool, Resize) {
 }
 
 }  // namespace ceres::internal
-
-#endif  // CERES_USE_CXX_THREADS

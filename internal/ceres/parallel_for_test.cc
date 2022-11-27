@@ -28,11 +28,6 @@
 //
 // Author: vitus@google.com (Michael Vitus)
 
-// This include must come before any #ifndef check on Ceres compile options.
-// clang-format off
-#include "ceres/internal/config.h"
-// clang-format on
-
 #include "ceres/parallel_for.h"
 
 #include <cmath>
@@ -44,6 +39,7 @@
 #include <vector>
 
 #include "ceres/context_impl.h"
+#include "ceres/internal/config.h"
 #include "glog/logging.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
@@ -133,8 +129,6 @@ TEST(ParallelForWithThreadId, NestedParallelForDeadlock) {
   }
 }
 
-// This test is only valid when multithreading support is enabled.
-#ifndef CERES_NO_THREADS
 TEST(ParallelForWithThreadId, UniqueThreadIds) {
   // Ensure the hardware supports more than 1 thread to ensure the test will
   // pass.
@@ -166,7 +160,6 @@ TEST(ParallelForWithThreadId, UniqueThreadIds) {
 
   EXPECT_THAT(x, UnorderedElementsAreArray({0, 1}));
 }
-#endif  // CERES_NO_THREADS
 
 // Helper function for partition tests
 bool BruteForcePartition(

@@ -49,9 +49,7 @@
 #include "cusparse.h"
 #endif  // CERES_NO_CUDA
 
-#ifdef CERES_USE_CXX_THREADS
 #include "ceres/thread_pool.h"
-#endif  // CERES_USE_CXX_THREADS
 
 namespace ceres::internal {
 
@@ -67,9 +65,7 @@ class CERES_NO_EXPORT ContextImpl final : public Context {
   // defined by the hardware.  Otherwise this call is a no-op.
   void EnsureMinimumThreads(int num_threads);
 
-#ifdef CERES_USE_CXX_THREADS
   ThreadPool thread_pool;
-#endif  // CERES_USE_CXX_THREADS
 
 #ifndef CERES_NO_CUDA
   // Note on Ceres' use of CUDA Devices on multi-GPU systems:
