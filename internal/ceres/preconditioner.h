@@ -186,7 +186,8 @@ class CERES_NO_EXPORT SparseMatrixPreconditionerWrapper final
     : public SparseMatrixPreconditioner {
  public:
   // Wrapper does NOT take ownership of the matrix pointer.
-  explicit SparseMatrixPreconditionerWrapper(const SparseMatrix* matrix);
+  explicit SparseMatrixPreconditionerWrapper(
+      const SparseMatrix* matrix, const Preconditioner::Options& options);
   ~SparseMatrixPreconditionerWrapper() override;
 
   // Preconditioner interface
@@ -196,6 +197,7 @@ class CERES_NO_EXPORT SparseMatrixPreconditionerWrapper final
  private:
   bool UpdateImpl(const SparseMatrix& A, const double* D) override;
   const SparseMatrix* matrix_;
+  const Preconditioner::Options options_;
 };
 
 }  // namespace ceres::internal

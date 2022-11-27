@@ -70,6 +70,28 @@ TEST(ParallelFor, NumThreads) {
   }
 }
 
+// Tests parallel for loop with ranges
+TEST(ParallelForWithRange, NumThreads) {
+  ContextImpl context;
+  context.EnsureMinimumThreads(/*num_threads=*/2);
+
+  const int size = 16;
+  std::vector<int> expected_results(size, 0);
+  for (int i = 0; i < size; ++i) {
+    expected_results[i] = std::sqrt(i);
+  }
+
+  for (int num_threads = 1; num_threads <= 8; ++num_threads) {
+    std::vector<int> values(size, 0);
+    ParallelFor(
+        &context, 0, size, num_threads, [&values](std::tuple<int, int> range) {
+          auto [start, end] = range;
+          for (int i = start; i < end; ++i) values[i] = std::sqrt(i);
+        });
+    EXPECT_THAT(values, ElementsAreArray(expected_results));
+  }
+}
+
 // Tests the parallel for loop with the thread ID interface computes the correct
 // result for various number of threads.
 TEST(ParallelForWithThreadId, NumThreads) {
@@ -407,6 +429,42 @@ TEST(GuidedParallelFor, NumThreads) {
         cumulative_costs.data(),
         [](const int v) { return v; });
     EXPECT_THAT(values, ElementsAreArray(expected_results));
+  }
+}
+
+TEST(ParallelAssign, D2MulX) {
+  const int kVectorSize = 1024 * 1024;
+  const int kMaxNumThreads = 8;
+
+  const Vector D_full = Vector::Random(kVectorSize * 2);
+  const ConstVectorRef D(D_full.data() + kVectorSize, kVectorSize);
+  const Vector x = Vector::Random(kVectorSize);
+  const Vector y_expected = D.array().square() * x.array();
+  ContextImpl context;
+  context.EnsureMinimumThreads(kMaxNumThreads);
+
+  for (int num_threads = 1; num_threads <= kMaxNumThreads; ++num_threads) {
+    Vector y_observed(kVectorSize);
+    ParallelAssign(
+        &context, num_threads, y_observed, D.array().square() * x.array());
+
+    // Bit-exact result is expected
+    CHECK_EQ((y_expected - y_observed).squaredNorm(), 0.);
+  }
+}
+
+TEST(ParallelAssign, SetZero) {
+  const int kVectorSize = 1024 * 1024;
+  const int kMaxNumThreads = 8;
+
+  ContextImpl context;
+  context.EnsureMinimumThreads(kMaxNumThreads);
+
+  for (int num_threads = 1; num_threads <= kMaxNumThreads; ++num_threads) {
+    Vector x = Vector::Random(kVectorSize);
+    ParallelSetZero(&context, num_threads, x);
+
+    CHECK_EQ(x.squaredNorm(), 0.);
   }
 }
 

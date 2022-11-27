@@ -93,6 +93,9 @@ class CERES_NO_EXPORT TrustRegionStrategy {
     // CONSOLE then dump_filename_base will be ignored and the linear
     // system will be written to the standard error.
     std::string dump_filename_base;
+
+    int num_threads = 1;
+    ContextImpl* context = nullptr;
   };
 
   struct Summary {

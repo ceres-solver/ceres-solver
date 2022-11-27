@@ -176,6 +176,8 @@ LinearSolver::Summary CgnrSolver::SolveImpl(
   cg_options.residual_reset_period = options_.residual_reset_period;
   cg_options.q_tolerance = per_solve_options.q_tolerance;
   cg_options.r_tolerance = per_solve_options.r_tolerance;
+  cg_options.context = options_.context;
+  cg_options.num_threads = options_.num_threads;
 
   // lhs = AtA + DtD
   CgnrLinearOperator lhs(

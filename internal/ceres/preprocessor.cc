@@ -82,9 +82,11 @@ void SetupCommonMinimizerOptions(PreprocessedProblem* pp) {
   double* reduced_parameters = pp->reduced_parameters.data();
   program->ParameterBlocksToStateVector(reduced_parameters);
 
+  auto context = pp->problem->context();
   Minimizer::Options& minimizer_options = pp->minimizer_options;
   minimizer_options = Minimizer::Options(options);
   minimizer_options.evaluator = pp->evaluator;
+  minimizer_options.context = context;
 
   if (options.logging_type != SILENT) {
     pp->logging_callback = std::make_unique<LoggingCallback>(

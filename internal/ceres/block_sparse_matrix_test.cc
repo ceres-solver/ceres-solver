@@ -210,6 +210,16 @@ TEST_F(BlockSparseMatrixTest, SquaredColumnNormTest) {
   EXPECT_LT((y_a - y_b).norm(), 1e-12);
 }
 
+TEST_F(BlockSparseMatrixTest, SquaredColumnNormParallelTest) {
+  Vector y_a = Vector::Zero(A_->num_cols());
+  Vector y_b = Vector::Zero(A_->num_cols());
+  A_->SquaredColumnNorm(y_a.data());
+
+  A_->AddTransposeBlockStructure();
+  A_->SquaredColumnNorm(y_b.data(), &context_, kNumThreads);
+  EXPECT_LT((y_a - y_b).norm(), 1e-12);
+}
+
 TEST_F(BlockSparseMatrixTest, ToDenseMatrixTest) {
   Matrix m_a;
   Matrix m_b;

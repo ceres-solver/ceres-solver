@@ -38,6 +38,7 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/linear_solver.h"
+#include "ceres/parallel_for.h"
 #include "ceres/sparse_matrix.h"
 #include "ceres/trust_region_strategy.h"
 #include "ceres/types.h"
@@ -77,14 +78,22 @@ TrustRegionStrategy::Summary LevenbergMarquardtStrategy::ComputeStep(
       diagonal_.resize(num_parameters, 1);
     }
 
-    jacobian->SquaredColumnNorm(diagonal_.data());
+    jacobian->SquaredColumnNorm(diagonal_.data(),
+                                per_solve_options.context,
+                                per_solve_options.num_threads);
     for (int i = 0; i < num_parameters; ++i) {
       diagonal_[i] =
           std::min(std::max(diagonal_[i], min_diagonal_), max_diagonal_);
     }
   }
 
-  lm_diagonal_ = (diagonal_ / radius_).array().sqrt();
+  if (lm_diagonal_.size() == 0) {
+    lm_diagonal_.resize(num_parameters);
+  }
+  ParallelAssign(per_solve_options.context,
+                 per_solve_options.num_threads,
+                 lm_diagonal_,
+                 (diagonal_ / radius_).array().sqrt());
 
   LinearSolver::PerSolveOptions solve_options;
   solve_options.D = lm_diagonal_.data();

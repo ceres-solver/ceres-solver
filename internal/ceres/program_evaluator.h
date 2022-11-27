@@ -118,7 +118,8 @@ class ProgramEvaluator final : public Evaluator {
         program_(program),
         jacobian_writer_(options, program),
         evaluate_preparers_(std::move(
-            jacobian_writer_.CreateEvaluatePreparers(options.num_threads))) {
+            jacobian_writer_.CreateEvaluatePreparers(options.num_threads))),
+        num_parameters_(program->NumEffectiveParameters()) {
     BuildResidualLayout(*program, &residual_layout_);
     evaluate_scratch_ = std::move(CreateEvaluatorScratch(
         *program, static_cast<unsigned>(options.num_threads)));
@@ -155,20 +156,24 @@ class ProgramEvaluator final : public Evaluator {
     }
 
     if (residuals != nullptr) {
-      VectorRef(residuals, program_->NumResiduals()).setZero();
+      ParallelSetZero(options_.context,
+                      options_.num_threads,
+                      residuals,
+                      program_->NumResiduals());
     }
 
     if (jacobian != nullptr) {
-      jacobian->SetZero();
+      jacobian->SetZero(options_.context, options_.num_threads);
     }
 
     // Each thread gets it's own cost and evaluate scratch space.
     for (int i = 0; i < options_.num_threads; ++i) {
       evaluate_scratch_[i].cost = 0.0;
       if (gradient != nullptr) {
-        VectorRef(evaluate_scratch_[i].gradient.get(),
-                  program_->NumEffectiveParameters())
-            .setZero();
+        ParallelSetZero(options_.context,
+                        options_.num_threads,
+                        evaluate_scratch_[i].gradient.get(),
+                        num_parameters_);
       }
     }
 
@@ -251,18 +256,18 @@ class ProgramEvaluator final : public Evaluator {
         });
 
     if (!abort) {
-      const int num_parameters = program_->NumEffectiveParameters();
-
       // Sum the cost and gradient (if requested) from each thread.
       (*cost) = 0.0;
       if (gradient != nullptr) {
-        VectorRef(gradient, num_parameters).setZero();
+        auto gradient_vector = VectorRef(gradient, num_parameters_);
+        ParallelSetZero(
+            options_.context, options_.num_threads, gradient_vector);
       }
       for (int i = 0; i < options_.num_threads; ++i) {
         (*cost) += evaluate_scratch_[i].cost;
         if (gradient != nullptr) {
-          VectorRef(gradient, num_parameters) +=
-              VectorRef(evaluate_scratch_[i].gradient.get(), num_parameters);
+          VectorRef(gradient, num_parameters_) +=
+              VectorRef(evaluate_scratch_[i].gradient.get(), num_parameters_);
         }
       }
 
@@ -272,7 +277,7 @@ class ProgramEvaluator final : public Evaluator {
       // necessary.
       if (jacobian != nullptr) {
         JacobianFinalizer f;
-        f(jacobian, num_parameters);
+        f(jacobian, num_parameters_);
       }
     }
     return !abort;
@@ -361,6 +366,7 @@ class ProgramEvaluator final : public Evaluator {
   std::unique_ptr<EvaluatePreparer[]> evaluate_preparers_;
   std::unique_ptr<EvaluateScratch[]> evaluate_scratch_;
   std::vector<int> residual_layout_;
+  int num_parameters_;
   ::ceres::internal::ExecutionSummary execution_summary_;
 };
 
