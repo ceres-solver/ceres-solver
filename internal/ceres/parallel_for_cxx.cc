@@ -74,4 +74,12 @@ ThreadPoolState::ThreadPoolState(int start,
 
 int MaxNumThreadsAvailable() { return ThreadPool::MaxNumThreadsAvailable(); }
 
+void ParallelSetZero(ContextImpl* context,
+                     int num_threads,
+                     double* values,
+                     int num_values) {
+  VectorRef vector(values, num_values);
+  ParallelSetZero(context, num_threads, vector);
+}
+
 }  // namespace ceres::internal
