@@ -35,10 +35,119 @@
 #include "ceres/block_structure.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
+#include "ceres/parallel_for.h"
 #include "ceres/types.h"
 #include "glog/logging.h"
 
 namespace ceres::internal {
+
+namespace {
+// Dense operations on vectors might use vector instructions, thus we
+// split the whole vector into blocks of size being a multiple of power of two.
+const int kBlockSize = 1024 * 128;
+// Set vector to zero
+void SetZero(double* data,
+             int num_values,
+             ContextImpl* context,
+             int num_threads) {
+  const int NumBlocks = (num_values + kBlockSize - 1) / kBlockSize;
+  ParallelFor(context,
+              0,
+              NumBlocks,
+              num_threads,
+              [data, num_values](const int block_id) {
+                const int block_start = kBlockSize * block_id;
+                const int block_size =
+                    std::min(num_values - block_start, kBlockSize);
+                VectorRef(data + block_start, block_size).setZero();
+              });
+}
+
+// Negate vector
+void Negate(double* data,
+            int num_values,
+            ContextImpl* context,
+            int num_threads) {
+  const int NumBlocks = (num_values + kBlockSize - 1) / kBlockSize;
+  ParallelFor(context,
+              0,
+              NumBlocks,
+              num_threads,
+              [data, num_values](const int block_id) {
+                const int block_start = kBlockSize * block_id;
+                const int block_size =
+                    std::min(num_values - block_start, kBlockSize);
+                VectorRef vec(data + block_start, block_size);
+                vec = -vec;
+              });
+}
+
+// y = x - y
+void SubYXY(const double* x,
+            double* y,
+            int num_values,
+            ContextImpl* context,
+            int num_threads) {
+  const int NumBlocks = (num_values + kBlockSize - 1) / kBlockSize;
+  ParallelFor(context,
+              0,
+              NumBlocks,
+              num_threads,
+              [x, y, num_values](const int block_id) {
+                const int block_start = kBlockSize * block_id;
+                const int block_size =
+                    std::min(num_values - block_start, kBlockSize);
+                ConstVectorRef block_x(x + block_start, block_size);
+                VectorRef block_y(y + block_start, block_size);
+                block_y = block_x - block_y;
+              });
+}
+
+// y = x
+void Assign(const double* x,
+            double* y,
+            int num_values,
+            ContextImpl* context,
+            int num_threads) {
+  const int NumBlocks = (num_values + kBlockSize - 1) / kBlockSize;
+  ParallelFor(context,
+              0,
+              NumBlocks,
+              num_threads,
+              [x, y, num_values](const int block_id) {
+                const int block_start = kBlockSize * block_id;
+                const int block_size =
+                    std::min(num_values - block_start, kBlockSize);
+                ConstVectorRef block_x(x + block_start, block_size);
+                VectorRef block_y(y + block_start, block_size);
+                block_y = block_x;
+              });
+}
+
+// y = D^2 * x
+void D2X(const double* D,
+         const double* x,
+         double* y,
+         int num_values,
+         ContextImpl* context,
+         int num_threads) {
+  const int NumBlocks = (num_values + kBlockSize - 1) / kBlockSize;
+  ParallelFor(context,
+              0,
+              NumBlocks,
+              num_threads,
+              [D, x, y, num_values](const int block_id) {
+                const int block_start = kBlockSize * block_id;
+                const int block_size =
+                    std::min(num_values - block_start, kBlockSize);
+                ConstVectorRef block_D(D + block_start, block_size);
+                ConstVectorRef block_x(x + block_start, block_size);
+                VectorRef block_y(y + block_start, block_size);
+                block_y = block_D.array().square() * block_x.array();
+              });
+}
+
+}  // namespace
 
 ImplicitSchurComplement::ImplicitSchurComplement(
     const LinearSolver::Options& options)
@@ -104,33 +213,47 @@ void ImplicitSchurComplement::Init(const BlockSparseMatrix& A,
 void ImplicitSchurComplement::RightMultiplyAndAccumulate(const double* x,
                                                          double* y) const {
   // y1 = F x
-  tmp_rows_.setZero();
+  SetZero(tmp_rows_.data(),
+          tmp_rows_.size(),
+          options_.context,
+          options_.num_threads);
   A_->RightMultiplyAndAccumulateF(x, tmp_rows_.data());
 
   // y2 = E' y1
-  tmp_e_cols_.setZero();
+  SetZero(tmp_e_cols_.data(),
+          tmp_e_cols_.size(),
+          options_.context,
+          options_.num_threads);
   A_->LeftMultiplyAndAccumulateE(tmp_rows_.data(), tmp_e_cols_.data());
 
   // y3 = -(E'E)^-1 y2
-  tmp_e_cols_2_.setZero();
+  SetZero(tmp_e_cols_2_.data(),
+          tmp_e_cols_2_.size(),
+          options_.context,
+          options_.num_threads);
   block_diagonal_EtE_inverse_->RightMultiplyAndAccumulate(tmp_e_cols_.data(),
                                                           tmp_e_cols_2_.data(),
                                                           options_.context,
                                                           options_.num_threads);
 
-  tmp_e_cols_2_ *= -1.0;
+  Negate(tmp_e_cols_2_.data(),
+         tmp_e_cols_2_.size(),
+         options_.context,
+         options_.num_threads);
 
   // y1 = y1 + E y3
   A_->RightMultiplyAndAccumulateE(tmp_e_cols_2_.data(), tmp_rows_.data());
 
   // y5 = D * x
   if (D_ != nullptr) {
-    ConstVectorRef Dref(D_ + A_->num_cols_e(), num_cols());
-    VectorRef(y, num_cols()) =
-        (Dref.array().square() * ConstVectorRef(x, num_cols()).array())
-            .matrix();
+    D2X(D_ + A_->num_cols_e(),
+        x,
+        y,
+        num_cols(),
+        options_.context,
+        options_.num_threads);
   } else {
-    VectorRef(y, num_cols()).setZero();
+    SetZero(y, num_cols(), options_.context, options_.num_threads);
   }
 
   // y = y5 + F' y1
@@ -141,25 +264,40 @@ void ImplicitSchurComplement::InversePowerSeriesOperatorRightMultiplyAccumulate(
     const double* x, double* y) const {
   CHECK(compute_ftf_inverse_);
   // y1 = F x
-  tmp_rows_.setZero();
+  SetZero(tmp_rows_.data(),
+          tmp_rows_.size(),
+          options_.context,
+          options_.num_threads);
   A_->RightMultiplyAndAccumulateF(x, tmp_rows_.data());
 
   // y2 = E' y1
-  tmp_e_cols_.setZero();
+  SetZero(tmp_e_cols_.data(),
+          tmp_e_cols_.size(),
+          options_.context,
+          options_.num_threads);
   A_->LeftMultiplyAndAccumulateE(tmp_rows_.data(), tmp_e_cols_.data());
 
   // y3 = (E'E)^-1 y2
-  tmp_e_cols_2_.setZero();
+  SetZero(tmp_e_cols_2_.data(),
+          tmp_e_cols_2_.size(),
+          options_.context,
+          options_.num_threads);
   block_diagonal_EtE_inverse_->RightMultiplyAndAccumulate(tmp_e_cols_.data(),
                                                           tmp_e_cols_2_.data(),
                                                           options_.context,
                                                           options_.num_threads);
   // y1 = E y3
-  tmp_rows_.setZero();
+  SetZero(tmp_rows_.data(),
+          tmp_rows_.size(),
+          options_.context,
+          options_.num_threads);
   A_->RightMultiplyAndAccumulateE(tmp_e_cols_2_.data(), tmp_rows_.data());
 
   // y4 = F' y1
-  tmp_f_cols_.setZero();
+  SetZero(tmp_f_cols_.data(),
+          tmp_f_cols_.size(),
+          options_.context,
+          options_.num_threads);
   A_->LeftMultiplyAndAccumulateF(tmp_rows_.data(), tmp_f_cols_.data());
 
   // y += (F'F)^-1 y4
@@ -201,18 +339,25 @@ void ImplicitSchurComplement::BackSubstitute(const double* x, double* y) {
   const int num_rows = A_->num_rows();
 
   // y1 = F x
-  tmp_rows_.setZero();
+  SetZero(tmp_rows_.data(),
+          tmp_rows_.size(),
+          options_.context,
+          options_.num_threads);
   A_->RightMultiplyAndAccumulateF(x, tmp_rows_.data());
 
   // y2 = b - y1
-  tmp_rows_ = ConstVectorRef(b_, num_rows) - tmp_rows_;
+  SubYXY(
+      b_, tmp_rows_.data(), num_rows, options_.context, options_.num_threads);
 
   // y3 = E' y2
-  tmp_e_cols_.setZero();
+  SetZero(tmp_e_cols_.data(),
+          tmp_e_cols_.size(),
+          options_.context,
+          options_.num_threads);
   A_->LeftMultiplyAndAccumulateE(tmp_rows_.data(), tmp_e_cols_.data());
 
   // y = (E'E)^-1 y3
-  VectorRef(y, num_cols).setZero();
+  SetZero(y, num_cols, options_.context, options_.num_threads);
   block_diagonal_EtE_inverse_->RightMultiplyAndAccumulate(
       tmp_e_cols_.data(), y, options_.context, options_.num_threads);
 
@@ -221,7 +366,7 @@ void ImplicitSchurComplement::BackSubstitute(const double* x, double* y) {
   // computed via back substitution. The second block of variables
   // corresponds to the Schur complement system, so we just copy those
   // values from the solution to the Schur complement.
-  VectorRef(y + num_cols_e, num_cols_f) = ConstVectorRef(x, num_cols_f);
+  Assign(x, y + num_cols_e, num_cols_f, options_.context, options_.num_threads);
 }
 
 // Compute the RHS of the Schur complement system.
@@ -232,23 +377,38 @@ void ImplicitSchurComplement::BackSubstitute(const double* x, double* y) {
 // this using a series of matrix vector products.
 void ImplicitSchurComplement::UpdateRhs() {
   // y1 = E'b
-  tmp_e_cols_.setZero();
+  SetZero(tmp_e_cols_.data(),
+          tmp_e_cols_.size(),
+          options_.context,
+          options_.num_threads);
   A_->LeftMultiplyAndAccumulateE(b_, tmp_e_cols_.data());
 
   // y2 = (E'E)^-1 y1
-  Vector y2 = Vector::Zero(A_->num_cols_e());
-  block_diagonal_EtE_inverse_->RightMultiplyAndAccumulate(
-      tmp_e_cols_.data(), y2.data(), options_.context, options_.num_threads);
+  SetZero(tmp_e_cols_2_.data(),
+          tmp_e_cols_2_.size(),
+          options_.context,
+          options_.num_threads);
+  block_diagonal_EtE_inverse_->RightMultiplyAndAccumulate(tmp_e_cols_.data(),
+                                                          tmp_e_cols_2_.data(),
+                                                          options_.context,
+                                                          options_.num_threads);
 
   // y3 = E y2
-  tmp_rows_.setZero();
-  A_->RightMultiplyAndAccumulateE(y2.data(), tmp_rows_.data());
+  SetZero(tmp_rows_.data(),
+          tmp_rows_.size(),
+          options_.context,
+          options_.num_threads);
+  A_->RightMultiplyAndAccumulateE(tmp_e_cols_2_.data(), tmp_rows_.data());
 
   // y3 = b - y3
-  tmp_rows_ = ConstVectorRef(b_, A_->num_rows()) - tmp_rows_;
+  SubYXY(b_,
+         tmp_rows_.data(),
+         A_->num_rows(),
+         options_.context,
+         options_.num_threads);
 
   // rhs = F' y3
-  rhs_.setZero();
+  SetZero(rhs_.data(), rhs_.size(), options_.context, options_.num_threads);
   A_->LeftMultiplyAndAccumulateF(tmp_rows_.data(), rhs_.data());
 }
 
