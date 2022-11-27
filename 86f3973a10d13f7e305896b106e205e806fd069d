@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77187010_d577030e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-27T00:14:56Z",
+      "side": 1,
+      "message": "Dmitriy FYI there was some discussion around using two copies of the matrix to improve the spmv perf on some of the older nvidia gpus (like the one I have in my desktop)",
+      "revId": "86f3973a10d13f7e305896b106e205e806fd069d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
