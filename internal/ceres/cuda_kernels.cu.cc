@@ -30,7 +30,8 @@
 
 #include "cuda_runtime.h"
 
-namespace ceres::internal {
+namespace ceres {
+namespace internal {
 
 // As the CUDA Toolkit documentation says, "although arbitrary in this case, is
 // a common choice". This is determined by the warp size, max block size, and
@@ -122,4 +123,5 @@ void CudaDtDxpy(double* y,
   CudaDtDxpyKernel<<<num_blocks, kCudaBlockSize, 0, stream>>>(y, D, x, size);
 }
 
-}  // namespace ceres::internal
+}  // namespace internal
+}  // namespace ceres

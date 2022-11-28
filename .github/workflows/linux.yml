@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   build:
-    name: ${{matrix.os}}-${{matrix.build_type}}-${{matrix.lib}}
+    name: ${{matrix.os}}-${{matrix.build_type}}-${{matrix.lib}}-${{matrix.cuda}}
     runs-on: ubuntu-latest
     container: ${{matrix.os}}
     defaults:
@@ -25,6 +25,9 @@ jobs:
         lib:
           - shared
           - static
+        cuda:
+          - use_cuda
+          - no_cuda
 
     steps:
       - uses: actions/checkout@v2
@@ -46,13 +49,21 @@ jobs:
             libsuitesparse-dev \
             ninja-build
 
+      - name: Setup CUDA toolkit
+        if: matrix.cuda == 'use_cuda'
+        run: |
+          apt-get install -y \
+            nvidia-cuda-dev \
+            nvidia-cuda-toolkit
+
+
       - name: Cache Build
         id: cache-build
         uses: actions/cache@v2
         with:
           path: ${{env.CCACHE_DIR}}
-          key: ${{matrix.os}}-ccache-${{matrix.build_type}}-${{matrix.lib}}-${{github.run_id}}
-          restore-keys: ${{matrix.os}}-ccache-${{matrix.build_type}}-${{matrix.lib}}-
+          key: ${{matrix.os}}-ccache-${{matrix.build_type}}-${{matrix.lib}}-${{matrix.cuda}}-${{github.run_id}}
+          restore-keys: ${{matrix.os}}-ccache-${{matrix.build_type}}-${{matrix.lib}}-${{matrix.cuda}}-
 
       - name: Setup Environment
         if: matrix.build_type == 'Release'
@@ -63,6 +74,7 @@ jobs:
         run: |
           cmake -S . -B build_${{matrix.build_type}} \
                 -DBUILD_SHARED_LIBS=${{matrix.lib == 'shared'}} \
+                -DUSE_CUDA=${{matrix.cuda == 'use_cuda' && 'ON' || 'OFF'}} \
                 -DCMAKE_BUILD_TYPE=${{matrix.build_type}} \
                 -DCMAKE_C_COMPILER_LAUNCHER=$(which ccache) \
                 -DCMAKE_CXX_COMPILER_LAUNCHER=$(which ccache) \
@@ -74,6 +86,7 @@ jobs:
                 --config ${{matrix.build_type}}
 
       - name: Test
+        if: ${{matrix.cuda == 'no_cuda'}}
         run: |
           cd build_${{matrix.build_type}}/
           ctest --config ${{matrix.build_type}} \
