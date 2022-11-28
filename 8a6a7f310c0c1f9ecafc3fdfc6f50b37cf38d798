@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "184ada40_a90a9dc3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-28T17:17:07Z",
+      "side": 1,
+      "message": "This is an alternative version (parallelization of vector operations in `ImplicitSchurComplement`).\n\nCheck https://ceres-solver-review.googlesource.com/c/ceres-solver/+/23620 for details and benchmark results",
+      "revId": "8a6a7f310c0c1f9ecafc3fdfc6f50b37cf38d798",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
