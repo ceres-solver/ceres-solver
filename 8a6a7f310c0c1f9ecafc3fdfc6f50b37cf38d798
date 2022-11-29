@@ -16,6 +16,69 @@
       "message": "This is an alternative version (parallelization of vector operations in `ImplicitSchurComplement`).\n\nCheck https://ceres-solver-review.googlesource.com/c/ceres-solver/+/23620 for details and benchmark results",
       "revId": "8a6a7f310c0c1f9ecafc3fdfc6f50b37cf38d798",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "755006a1_b14eab54",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-29T19:15:48Z",
+      "side": 1,
+      "message": "I think this CL is a pretty straightforward win, I see not reason not to do this regardless of what we end up doing with partitionedmatrixview. no?",
+      "revId": "8a6a7f310c0c1f9ecafc3fdfc6f50b37cf38d798",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d20f6ac_cbd8f82a",
+        "filename": "internal/ceres/implicit_schur_complement.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-29T19:15:48Z",
+      "side": 1,
+      "message": "is there a reason for this particular block size? should we have platform specific values here? should this be related to the L1 cache?",
+      "range": {
+        "startLine": 47,
+        "startChar": 29,
+        "endLine": 47,
+        "endChar": 30
+      },
+      "revId": "8a6a7f310c0c1f9ecafc3fdfc6f50b37cf38d798",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f81e304_dc01fadf",
+        "filename": "internal/ceres/implicit_schur_complement.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-29T19:15:48Z",
+      "side": 1,
+      "message": "I think it is worth pulling these out into its own file and then they can perhaps be used more broadly? also easier testing.",
+      "range": {
+        "startLine": 49,
+        "startChar": 5,
+        "endLine": 49,
+        "endChar": 12
+      },
+      "revId": "8a6a7f310c0c1f9ecafc3fdfc6f50b37cf38d798",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
