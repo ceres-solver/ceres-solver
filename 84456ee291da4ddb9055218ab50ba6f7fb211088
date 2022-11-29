@@ -136,6 +136,24 @@
       "message": "Thanks Dmitriy! I have a couple of suggestions.",
       "revId": "84456ee291da4ddb9055218ab50ba6f7fb211088",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe396fb6_5fa59907",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-29T17:51:12Z",
+      "side": 1,
+      "message": "I am curious as to why InitCuda is failing, is it because the machines don\u0027t actually have GPUs?",
+      "parentUuid": "22208cbc_7f69b4f3",
+      "revId": "84456ee291da4ddb9055218ab50ba6f7fb211088",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
