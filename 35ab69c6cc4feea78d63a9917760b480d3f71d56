@@ -121,6 +121,24 @@
       "message": "@sandwichmaker@gmail.com Sanity-check this analysis, please? Thanks. :-)",
       "revId": "35ab69c6cc4feea78d63a9917760b480d3f71d56",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "977aae47_d471d29f",
+        "filename": "internal/ceres/cuda_dense_cholesky_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-29T02:19:41Z",
+      "side": 1,
+      "message": "lhs \u003d Random(kNumCols, kNumCols);\n\ngives you a matrix with values in the range [-1,1] of size knumcols x knumcols.\n\nso its frobenius norm if kNumCols, which is an upper bound on its largest singular value.\n\nthe lower bound on the smallest singular value is of course zero.\n\nlhs \u003d lhs.transpose() * lhs\n\nmeans that the lhs now has the largest singular value to be kNumCols^2\n\nadding kNumCols to the diagonal means that the condition number is upper bounded by\n\n(kNumCols^2 + kNumCols)/kNumCols \u003d kNumCols + 1\n\nso I do not think your analysis is right, unless you can somehow prove that the largest singular value/eigenvalue of lhs.transpose()  * lhs is actually kNumCols, which I do not think is the case.\n\nlhs \u003d ones(kNumCols, kNumCols) is the counter example.",
+      "parentUuid": "5bcd6546_283c72c2",
+      "revId": "35ab69c6cc4feea78d63a9917760b480d3f71d56",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
