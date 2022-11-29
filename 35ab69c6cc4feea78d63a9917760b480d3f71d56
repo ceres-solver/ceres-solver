@@ -71,6 +71,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a73226f_cc78b3bf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-11-29T15:41:01Z",
+      "side": 1,
+      "message": "Dmitriy pointed out a good suggestion.\nWhy don\u0027t we do this: let\u0027s close this CL. \nI\u0027ll make a CL with just the namespace changes. We can defer changes to the precision failures to after we reach a conclusion on the email thread.",
+      "revId": "35ab69c6cc4feea78d63a9917760b480d3f71d56",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "501726f3_06846f0e",
@@ -172,6 +189,30 @@
       "writtenOn": "2022-11-29T15:27:29Z",
       "side": 1,
       "message": "As far as I understand, only nested namespace definition syntax introduced with c++17:\n\n```\nnamespace ceres::internal {\n...\n}\n```\nis not supported by older versions of nvcc.\n\nBut regular nested namespaces:\n\n```\nnamespace ceres {\nnamespace internal {\n...\n}\n}\n```\nare supported, so we can use an older syntax in order to maintain naming uniformity.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 26
+      },
+      "revId": "35ab69c6cc4feea78d63a9917760b480d3f71d56",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b539633_e093f9ed",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-11-29T15:41:01Z",
+      "side": 1,
+      "message": "Yes, you\u0027re right, that works!",
+      "parentUuid": "3beff8cb_ae5fe432",
       "range": {
         "startLine": 42,
         "startChar": 0,
