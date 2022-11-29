@@ -16,6 +16,52 @@
       "message": "There are a couple of non-parallelized operations left in `ImplicitSchurComplement::RightMultiplyAndAcumulate` function.\n\nMost of them correspond to \"level-1 BLAS\"-like operations on vectors, and can be tackled in two ways:\n - Propagate operation type (-\u003d, \u003d, +\u003d) down to kernels computing matrix-vector products (this CL)\n - Parallelize operations on vectors (submitted as a separate CL: https://ceres-solver-review.googlesource.com/c/ceres-solver/+/23621 )\n\nAt high core-counts both of those approaches result in ~20% performance boost on my linux desktop (for problems except trafalgar, which almost fits into cache).\nWhile propagating operation is better than just parallelization of vector operations, the difference is just a couple %.\n\nI would like to get your opinion on whether those gains worth the effort (and if those changes give a positive effect on your machines, and which way is more appealing.\n\nTable below provides benchmark results for `ImplicitSchurComplement::RightMultiplyAndAcumulate` function (`control` \u003d current version, `op.prop` \u003d operation type propagation, `l1blas` \u003d parallelization of vector functions, `op.prop.imp` \u003d improvement of `op.prop` over `control` (in %), `l1blas.imp` \u003d improvement of `l1blas` over `control` (in %)):\n\n\n```\n                                                                        benchmark    control    op.prop     l1blas op.prop.imp  l1blas.imp\n      ISCRightMultiplyAndAccumulate\u003cfinal/problem-13682-4456117-pre.txt\u003e/1_median 2551436545 2583537813 2552102865 -1.24253138 -0.02610867\n      ISCRightMultiplyAndAccumulate\u003cfinal/problem-13682-4456117-pre.txt\u003e/2_median 2938034304 2838975866 2875656935  3.48923142  2.16915197\n      ISCRightMultiplyAndAccumulate\u003cfinal/problem-13682-4456117-pre.txt\u003e/4_median 1647180027 1528778207 1554629730  7.74486577  5.95320514\n      ISCRightMultiplyAndAccumulate\u003cfinal/problem-13682-4456117-pre.txt\u003e/8_median  967846052  822758414  836030454 17.63429404 15.76684167\n     ISCRightMultiplyAndAccumulate\u003cfinal/problem-13682-4456117-pre.txt\u003e/16_median  602391892  467798393  477859315 28.77168905 26.06051051\n     ISCRightMultiplyAndAccumulate\u003cfinal/problem-13682-4456117-pre.txt\u003e/28_median  592608512  461883301  469937344 28.30264933 26.10372842\n\n       ISCRightMultiplyAndAccumulate\u003cvenice/problem-1778-993923-pre.txt\u003e/1_median  415813148  415289204  414271491  0.12616365  0.37213688\n       ISCRightMultiplyAndAccumulate\u003cvenice/problem-1778-993923-pre.txt\u003e/2_median  496751650  475099472  480095610  4.55739888  3.46931729\n       ISCRightMultiplyAndAccumulate\u003cvenice/problem-1778-993923-pre.txt\u003e/4_median  272864213  252785043  255210855  7.94317961  6.91716581\n       ISCRightMultiplyAndAccumulate\u003cvenice/problem-1778-993923-pre.txt\u003e/8_median  154932272  133577875  135053448 15.98647755 14.71922731\n      ISCRightMultiplyAndAccumulate\u003cvenice/problem-1778-993923-pre.txt\u003e/16_median  100049670   77514748   79356147 29.07178644 26.07677386\n      ISCRightMultiplyAndAccumulate\u003cvenice/problem-1778-993923-pre.txt\u003e/28_median   98052772   75322203   77011411 30.17778038 27.32239382\n\n      ISCRightMultiplyAndAccumulate\u003cladybug/problem-1723-156502-pre.txt\u003e/1_median   54787672   56233494   55405252 -2.57110469 -1.11465967\n      ISCRightMultiplyAndAccumulate\u003cladybug/problem-1723-156502-pre.txt\u003e/2_median   63050253   61663109   61949180  2.24955248  1.77738107\n      ISCRightMultiplyAndAccumulate\u003cladybug/problem-1723-156502-pre.txt\u003e/4_median   34742239   32715026   33133189  6.19658074  4.85630888\n      ISCRightMultiplyAndAccumulate\u003cladybug/problem-1723-156502-pre.txt\u003e/8_median   19829625   17714348   18360412 11.94103785  8.00206989\n     ISCRightMultiplyAndAccumulate\u003cladybug/problem-1723-156502-pre.txt\u003e/16_median   12688378    9995267   10379491 26.94386253 22.24470352\n     ISCRightMultiplyAndAccumulate\u003cladybug/problem-1723-156502-pre.txt\u003e/28_median   12375748    9319216    9667765 32.79816671 28.01043468\n\n     ISCRightMultiplyAndAccumulate\u003cdubrovnik/problem-356-226730-pre.txt\u003e/1_median  101738936   99826715  100589641  1.91554034  1.14255801\n     ISCRightMultiplyAndAccumulate\u003cdubrovnik/problem-356-226730-pre.txt\u003e/2_median  120397966  116747979  118651805  3.12638131  1.47166830\n     ISCRightMultiplyAndAccumulate\u003cdubrovnik/problem-356-226730-pre.txt\u003e/4_median   66054372   62517783   63430680  5.65693284  4.13631385\n     ISCRightMultiplyAndAccumulate\u003cdubrovnik/problem-356-226730-pre.txt\u003e/8_median   37436841   33719717   34227633 11.02359192  9.37607342\n    ISCRightMultiplyAndAccumulate\u003cdubrovnik/problem-356-226730-pre.txt\u003e/16_median   23891375   19167378   19696631 24.64602618 21.29675882\n    ISCRightMultiplyAndAccumulate\u003cdubrovnik/problem-356-226730-pre.txt\u003e/28_median   23360689   18707563   19322972 24.87296715 20.89594189\n\n      ISCRightMultiplyAndAccumulate\u003ctrafalgar/problem-257-65132-pre.txt\u003e/1_median   17548997   17487127   17513245  0.35380311  0.20414264\n      ISCRightMultiplyAndAccumulate\u003ctrafalgar/problem-257-65132-pre.txt\u003e/2_median   18310095   17860495   18053008  2.51728745  1.42406739\n      ISCRightMultiplyAndAccumulate\u003ctrafalgar/problem-257-65132-pre.txt\u003e/4_median   10466911    9996141   10449396  4.70951740  0.16761734\n      ISCRightMultiplyAndAccumulate\u003ctrafalgar/problem-257-65132-pre.txt\u003e/8_median    6380611    5842293    6211508  9.21415615  2.72241459\n     ISCRightMultiplyAndAccumulate\u003ctrafalgar/problem-257-65132-pre.txt\u003e/16_median    4041509    3346257    3772061 20.77700547  7.14325670\n     ISCRightMultiplyAndAccumulate\u003ctrafalgar/problem-257-65132-pre.txt\u003e/28_median    3984888    3159852    3559421 26.10995705 11.95326431\n\n```\n\nTable below summarizes end-to-end improvements for 20 optimization iterations on various BAL scenes.\nThe largest impact is achieved on scenes with higher number of CG iterations.\n\n```\n                                           control                   op-prop                 l1blas\n                                     Linear sol  Minimizer | Linear sol  Minimizer | Linear sol  Minimizer\n final/problem-13682-4456117-pre.txt 145.800467 284.816855 | 113.181221 253.037623 | 114.533653 254.276246\n  venice/problem-1778-993923-pre.txt 356.881243 388.640942 | 242.886369 275.026348 | 243.773961 275.854594\n ladybug/problem-1723-156502-pre.txt   3.628322   6.994754 |   2.797099   6.053293 |   2.843951   6.130471\ndubrovnik/problem-356-226730-pre.txt  86.319440  94.719459 |  60.532958  68.843258 |  68.097615  76.513205\n trafalgar/problem-257-65132-pre.txt  24.295651  25.983565 |  15.553748  17.229627 |  19.522707  21.237687\n```",
       "revId": "dbfe06e227ce913cf392470d7e0cfbf89e51ae60",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bc92feb_274a0b19",
+        "filename": "internal/ceres/implicit_schur_complement.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-29T19:08:50Z",
+      "side": 1,
+      "message": "this does not seem right, since the same operation gets passed to the individual matrix-vector multiplies. isn\u0027t it the case that we should have y1 \u003d 0 and then all the matrix-vector blocks accumulate into y1?",
+      "range": {
+        "startLine": 173,
+        "startChar": 55,
+        "endLine": 173,
+        "endChar": 56
+      },
+      "revId": "dbfe06e227ce913cf392470d7e0cfbf89e51ae60",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6701e921_23d161fd",
+        "filename": "internal/ceres/partitioned_matrix_view_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-11-29T19:08:50Z",
+      "side": 1,
+      "message": "I do not think it is ever the case that we should be passing kOperation \u003d 0 to these Matrix-Vector multiplies no? the only exception is the case is when we are right multiplying by E, in which case we know there is exactly one e-block per row.\n\n+1/-1 are the only legit values that should be passed to MatrixVectorMultiply in general.",
+      "range": {
+        "startLine": 153,
+        "startChar": 65,
+        "endLine": 153,
+        "endChar": 75
+      },
+      "revId": "dbfe06e227ce913cf392470d7e0cfbf89e51ae60",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
