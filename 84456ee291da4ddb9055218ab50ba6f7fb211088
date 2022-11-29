@@ -1,6 +1,109 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc60dc46_7b9dca16",
+        "filename": ".github/workflows/linux.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-11-29T15:41:24Z",
+      "side": 1,
+      "message": "Call the dimension `gpu` to avoid repetitions in checks below.",
+      "range": {
+        "startLine": 28,
+        "startChar": 8,
+        "endLine": 28,
+        "endChar": 12
+      },
+      "revId": "84456ee291da4ddb9055218ab50ba6f7fb211088",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff9d1578_50e5f6ab",
+        "filename": ".github/workflows/linux.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-11-29T15:41:24Z",
+      "side": 1,
+      "message": "`cuda` to shorten the overall job names.",
+      "revId": "84456ee291da4ddb9055218ab50ba6f7fb211088",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbd77534_7805736a",
+        "filename": ".github/workflows/linux.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-11-29T15:41:24Z",
+      "side": 1,
+      "message": "I would prefer `no-cuda`, i.e., a dash instead of an underscore.",
+      "revId": "84456ee291da4ddb9055218ab50ba6f7fb211088",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7294b083_2b1ada83",
+        "filename": ".github/workflows/linux.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-11-29T15:41:24Z",
+      "side": 1,
+      "message": "`ON` and `OFF` are redundant. The expression already evaluates to a boolean.",
+      "range": {
+        "startLine": 77,
+        "startChar": 30,
+        "endLine": 77,
+        "endChar": 72
+      },
+      "revId": "84456ee291da4ddb9055218ab50ba6f7fb211088",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1854b755_377a3cbf",
+        "filename": ".github/workflows/linux.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-11-29T15:41:24Z",
+      "side": 1,
+      "message": "Dereferencing the expression is not necessary, use: `matrix.gpu \u003d\u003d \u0027cuda\u0027`",
+      "range": {
+        "startLine": 89,
+        "startChar": 12,
+        "endLine": 89,
+        "endChar": 41
+      },
+      "revId": "84456ee291da4ddb9055218ab50ba6f7fb211088",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "22208cbc_7f69b4f3",
@@ -14,6 +117,23 @@
       "writtenOn": "2022-11-29T15:11:14Z",
       "side": 1,
       "message": "Add CUDA-enabled build to github actions.\n\nSample run with both Ubuntu 20.04 and Ubuntu 22.04 succeding: https://github.com/DmitriyKorchemkin/ceres-solver/actions/runs/3574423123\n\nSample run with Ubuntu 20.04 failing due to nested namespaces being unsupported with nvcc of particular version: https://github.com/DmitriyKorchemkin/ceres-solver/actions/runs/3572754285\n\nTests are being turned off completely in cuda-enabled runs because call to ContextImpl::InitCuda  will fail, even if we manage to exclude all test-cases corresponding to cuda.",
+      "revId": "84456ee291da4ddb9055218ab50ba6f7fb211088",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7f38637_e919063c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-11-29T15:41:24Z",
+      "side": 1,
+      "message": "Thanks Dmitriy! I have a couple of suggestions.",
       "revId": "84456ee291da4ddb9055218ab50ba6f7fb211088",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
