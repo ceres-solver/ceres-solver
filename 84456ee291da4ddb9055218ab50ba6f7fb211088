@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22208cbc_7f69b4f3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-29T15:11:14Z",
+      "side": 1,
+      "message": "Add CUDA-enabled build to github actions.\n\nSample run with both Ubuntu 20.04 and Ubuntu 22.04 succeding: https://github.com/DmitriyKorchemkin/ceres-solver/actions/runs/3574423123\n\nSample run with Ubuntu 20.04 failing due to nested namespaces being unsupported with nvcc of particular version: https://github.com/DmitriyKorchemkin/ceres-solver/actions/runs/3572754285\n\nTests are being turned off completely in cuda-enabled runs because call to ContextImpl::InitCuda  will fail, even if we manage to exclude all test-cases corresponding to cuda.",
+      "revId": "84456ee291da4ddb9055218ab50ba6f7fb211088",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
