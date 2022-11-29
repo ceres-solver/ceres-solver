@@ -139,6 +139,24 @@
       "parentUuid": "5bcd6546_283c72c2",
       "revId": "35ab69c6cc4feea78d63a9917760b480d3f71d56",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "874a27db_22973a56",
+        "filename": "internal/ceres/cuda_dense_cholesky_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-11-29T03:10:03Z",
+      "side": 1,
+      "message": "Ah, thanks for the analysis and good counter example. \nBut this seems to indicate that previously the random tests were generating matrices with condition number upper-bounded by (kNumCols^2 + 1e-3)/1e-3 ~\u003d 1e3 * kNumCols^2 which is really bad.\n\nThe difference in sampling between [-1, 1] and (-1, 1) seems to be significant. Here\u0027s a test Matlab script:\n```\nN \u003d 1600;\nfor i \u003d 1:100\n  % Note that this will sample from (-1, 1) not [-1, 1]\n  A \u003d 2.0 * (rand(N)-0.5);\n  A \u003d A * A\u0027;\n  fprintf(\"%15e %15e %f\\n\", cond(A), cond(A + N * eye(N)));\nend\n```\nThis seems to produce max condition numbers around 2.33",
+      "parentUuid": "977aae47_d471d29f",
+      "revId": "35ab69c6cc4feea78d63a9917760b480d3f71d56",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
