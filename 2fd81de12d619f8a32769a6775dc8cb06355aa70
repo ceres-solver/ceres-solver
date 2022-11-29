@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a082e31_97418f44",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-29T18:18:38Z",
+      "side": 1,
+      "message": "Fixed naming issues, here is an example of run with updated namings: https://github.com/DmitriyKorchemkin/ceres-solver/actions/runs/3575732180",
+      "revId": "2fd81de12d619f8a32769a6775dc8cb06355aa70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

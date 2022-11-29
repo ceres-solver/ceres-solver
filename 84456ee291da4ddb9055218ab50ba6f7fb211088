@@ -24,6 +24,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9a81749_48c29f60",
+        "filename": ".github/workflows/linux.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-29T18:18:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc60dc46_7b9dca16",
+      "range": {
+        "startLine": 28,
+        "startChar": 8,
+        "endLine": 28,
+        "endChar": 12
+      },
+      "revId": "84456ee291da4ddb9055218ab50ba6f7fb211088",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ff9d1578_50e5f6ab",
@@ -41,6 +65,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "778b57b1_6decedbf",
+        "filename": ".github/workflows/linux.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-29T18:18:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff9d1578_50e5f6ab",
+      "revId": "84456ee291da4ddb9055218ab50ba6f7fb211088",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fbd77534_7805736a",
@@ -54,6 +96,24 @@
       "writtenOn": "2022-11-29T15:41:24Z",
       "side": 1,
       "message": "I would prefer `no-cuda`, i.e., a dash instead of an underscore.",
+      "revId": "84456ee291da4ddb9055218ab50ba6f7fb211088",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab9c2651_d5738ee6",
+        "filename": ".github/workflows/linux.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-29T18:18:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbd77534_7805736a",
       "revId": "84456ee291da4ddb9055218ab50ba6f7fb211088",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -81,6 +141,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c8e253d_952ce811",
+        "filename": ".github/workflows/linux.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-29T18:18:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7294b083_2b1ada83",
+      "range": {
+        "startLine": 77,
+        "startChar": 30,
+        "endLine": 77,
+        "endChar": 72
+      },
+      "revId": "84456ee291da4ddb9055218ab50ba6f7fb211088",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1854b755_377a3cbf",
@@ -94,6 +178,30 @@
       "writtenOn": "2022-11-29T15:41:24Z",
       "side": 1,
       "message": "Dereferencing the expression is not necessary, use: `matrix.gpu \u003d\u003d \u0027cuda\u0027`",
+      "range": {
+        "startLine": 89,
+        "startChar": 12,
+        "endLine": 89,
+        "endChar": 41
+      },
+      "revId": "84456ee291da4ddb9055218ab50ba6f7fb211088",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03cca88d_176a22a1",
+        "filename": ".github/workflows/linux.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-29T18:18:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1854b755_377a3cbf",
       "range": {
         "startLine": 89,
         "startChar": 12,
@@ -152,6 +260,24 @@
       "side": 1,
       "message": "I am curious as to why InitCuda is failing, is it because the machines don\u0027t actually have GPUs?",
       "parentUuid": "22208cbc_7f69b4f3",
+      "revId": "84456ee291da4ddb9055218ab50ba6f7fb211088",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e11d24f_c69faf61",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-29T18:18:38Z",
+      "side": 1,
+      "message": "`InitCuda` in the first couple of lines requires `cudaGetDevice` to return `cudaSuccess` value.\n\nWhen there is no gpu available - `cudaGetDevice` returns failure code 100.\n\nThus, for example, if we run `dense_qr_test` with `--gtest_filter\u003d\u0027*EIGEN\u0027`, it will still fail with \"Check failed...\" message, if there is no CUDA gpu available.",
+      "parentUuid": "fe396fb6_5fa59907",
       "revId": "84456ee291da4ddb9055218ab50ba6f7fb211088",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
