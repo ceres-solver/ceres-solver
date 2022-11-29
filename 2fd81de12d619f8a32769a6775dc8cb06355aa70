@@ -33,6 +33,23 @@
       "message": "Sergiu, if you are good with this, I will merge it.",
       "revId": "2fd81de12d619f8a32769a6775dc8cb06355aa70",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e129e1db_cc1aca0e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2022-11-29T18:25:36Z",
+      "side": 1,
+      "message": "Looks great. Thanks!",
+      "revId": "2fd81de12d619f8a32769a6775dc8cb06355aa70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
