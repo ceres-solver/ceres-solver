@@ -157,6 +157,29 @@
       "parentUuid": "977aae47_d471d29f",
       "revId": "35ab69c6cc4feea78d63a9917760b480d3f71d56",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3beff8cb_ae5fe432",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-11-29T15:27:29Z",
+      "side": 1,
+      "message": "As far as I understand, only nested namespace definition syntax introduced with c++17:\n\n```\nnamespace ceres::internal {\n...\n}\n```\nis not supported by older versions of nvcc.\n\nBut regular nested namespaces:\n\n```\nnamespace ceres {\nnamespace internal {\n...\n}\n}\n```\nare supported, so we can use an older syntax in order to maintain naming uniformity.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 26
+      },
+      "revId": "35ab69c6cc4feea78d63a9917760b480d3f71d56",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
