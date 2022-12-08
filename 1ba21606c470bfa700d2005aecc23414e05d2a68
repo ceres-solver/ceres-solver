@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a01a285c_5c3f52aa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-08T19:29:51Z",
+      "side": 1,
+      "message": "I decided to utilize lazy evaluation of Eigen expressions.\n\nExpression in the form `lhs \u003d rhs;` transforms into a call to `ParallelEvaluate(context, num_threads, lhs, rhs)`\n\nThere is, however one caveat: since lhs is used by non-const reference, not every use-case when lhs is an expression is supported.\n\n\n\nI think that a more beautiful way would be to make a deeper dive into Eigen (by adding a special expression and evaluator classes) in order to have `lhs \u003d ParallelEvaluator(rhs);` syntax, but I haven\u0027t managed to get this working yet.\n\n\nI have added a small benchmark for several vector-operations from ISC:\n\n```\n-------------------------------------------------------------\nBenchmark                   Time             CPU   Iterations\n-------------------------------------------------------------\nSetZero               9832418 ns      9832333 ns           73\nSetZeroParallel/1     6063837 ns      6063462 ns          116\nSetZeroParallel/2     3183456 ns      3126834 ns          224\nSetZeroParallel/4     1645465 ns      1616541 ns          430\nSetZeroParallel/8     1020421 ns       984973 ns          695\nSetZeroParallel/16     770841 ns       739225 ns          926\n\nNegate                5830365 ns      5829621 ns          120\nNegateParallel/1      5886958 ns      5885886 ns          120\nNegateParallel/2      3184665 ns      3158320 ns          227\nNegateParallel/4      1690816 ns      1551063 ns          456\nNegateParallel/8      1040571 ns       960613 ns          736\nNegateParallel/16      808874 ns       727450 ns         1000\n\nAssign               13290358 ns     13290306 ns           49\nAssignParallel/1     10945638 ns     10945530 ns           58\nAssignParallel/2      5538354 ns      5486730 ns          115\nAssignParallel/4      2953912 ns      2923447 ns          251\nAssignParallel/8      2098615 ns      2047684 ns          336\nAssignParallel/16     1935174 ns      1816640 ns          384\n\nD2X                  14918280 ns     14918087 ns           44\nD2XParallel/1        15203023 ns     15199746 ns           43\nD2XParallel/2         7852668 ns      7773736 ns           83\nD2XParallel/4         4166785 ns      3992421 ns          174\nD2XParallel/8         2920911 ns      2860503 ns          244\nD2XParallel/16        2694386 ns      2649985 ns          260\n```\n\nThere is a discrepancy between \"regular\" and \"parallel\" code in single-threaded execution for `SetZero` and `Assign` benchmarks. I was not able to identify the exact reason for this yet.",
+      "revId": "1ba21606c470bfa700d2005aecc23414e05d2a68",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
