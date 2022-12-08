@@ -107,6 +107,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0685945f_0e8ec82a",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-08T21:04:26Z",
+      "side": 1,
+      "message": "ah okay.",
+      "parentUuid": "de93b2b4_2fba5ba8",
+      "range": {
+        "startLine": 378,
+        "startChar": 48,
+        "endLine": 378,
+        "endChar": 53
+      },
+      "revId": "1ba21606c470bfa700d2005aecc23414e05d2a68",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0cbe16a4_7f9dc3e0",
         "filename": "internal/ceres/parallel_for.h",
         "patchSetId": 2
@@ -142,6 +166,30 @@
       "side": 1,
       "message": "All variants end up as a size calculation followed by memset, with a couple instructions spent on:\n\n - checking for non-emptiness once (in case of std::fill)\n - checking for non-emptiness twice (in case of Eigen)\n\nhttps://godbolt.org/z/qj1f8Y3b9\n\nThis makes memset the best solution, right?",
       "parentUuid": "0cbe16a4_7f9dc3e0",
+      "range": {
+        "startLine": 390,
+        "startChar": 2,
+        "endLine": 390,
+        "endChar": 18
+      },
+      "revId": "1ba21606c470bfa700d2005aecc23414e05d2a68",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad7bda51_2ab24143",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-08T21:04:26Z",
+      "side": 1,
+      "message": "I think std::fill is the canonical c++ way to do this, lets use that.\nno need to bring in eigen into it.",
+      "parentUuid": "9ce7996f_ca52924f",
       "range": {
         "startLine": 390,
         "startChar": 2,
