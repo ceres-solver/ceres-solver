@@ -83,6 +83,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "de93b2b4_2fba5ba8",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-08T21:02:53Z",
+      "side": 1,
+      "message": "We cannot use two separate integer arguments because this is already reserved for (thread_id, loop_index) variant.",
+      "parentUuid": "2a1f45fa_1b5b0ccd",
+      "range": {
+        "startLine": 378,
+        "startChar": 48,
+        "endLine": 378,
+        "endChar": 53
+      },
+      "revId": "1ba21606c470bfa700d2005aecc23414e05d2a68",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0cbe16a4_7f9dc3e0",
         "filename": "internal/ceres/parallel_for.h",
         "patchSetId": 2
@@ -94,6 +118,30 @@
       "writtenOn": "2022-12-08T20:22:42Z",
       "side": 1,
       "message": "I think for setzero you maybe able to do something even simpler/nicer no? since zero is a special value, it should just translate into a memset? it should not require any eigen at all. why not just cast to bytes and call memset on the blocks?\n\nor std::fill should do the trick too.",
+      "range": {
+        "startLine": 390,
+        "startChar": 2,
+        "endLine": 390,
+        "endChar": 18
+      },
+      "revId": "1ba21606c470bfa700d2005aecc23414e05d2a68",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ce7996f_ca52924f",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-08T21:02:53Z",
+      "side": 1,
+      "message": "All variants end up as a size calculation followed by memset, with a couple instructions spent on:\n\n - checking for non-emptiness once (in case of std::fill)\n - checking for non-emptiness twice (in case of Eigen)\n\nhttps://godbolt.org/z/qj1f8Y3b9\n\nThis makes memset the best solution, right?",
+      "parentUuid": "0cbe16a4_7f9dc3e0",
       "range": {
         "startLine": 390,
         "startChar": 2,
