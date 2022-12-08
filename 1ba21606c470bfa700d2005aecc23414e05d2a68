@@ -18,6 +18,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8df4c553_66d7bda6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-08T21:05:00Z",
+      "side": 1,
+      "message": "it may also be worth looking to see where large calls to setzero are being made elsewhere in the code base, and they can be replaced with the parallel call.",
+      "revId": "1ba21606c470bfa700d2005aecc23414e05d2a68",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "813ad526_7afe1ff7",
