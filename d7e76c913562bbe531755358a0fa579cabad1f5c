@@ -163,6 +163,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "051ce9f8_004a3fb9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6197
+      },
+      "writtenOn": "2022-12-13T10:16:01Z",
+      "side": 1,
+      "message": "Dear Sameer, it is would be really nice to extend manifold API to also solve the issue in this thread https://groups.google.com/g/ceres-solver/c/fLONN_E9c88\n\nSorry for out of topic.",
+      "parentUuid": "4f2e311c_de4fb3a3",
+      "revId": "d7e76c913562bbe531755358a0fa579cabad1f5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7b357d74_3934ae65",
         "filename": "include/ceres/marginalization.h",
         "patchSetId": 11
