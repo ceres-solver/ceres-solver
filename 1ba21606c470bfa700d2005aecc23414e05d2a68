@@ -340,6 +340,24 @@
       "parentUuid": "3cefad86_9ec71c8b",
       "revId": "1ba21606c470bfa700d2005aecc23414e05d2a68",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e911369f_db370809",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-15T14:24:14Z",
+      "side": 1,
+      "message": "I think a separate CL would be good.",
+      "parentUuid": "b6a25d84_634bb97d",
+      "revId": "1ba21606c470bfa700d2005aecc23414e05d2a68",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
