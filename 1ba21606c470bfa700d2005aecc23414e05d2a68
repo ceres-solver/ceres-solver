@@ -82,6 +82,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a86fc4f_0cb2b000",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-15T14:26:58Z",
+      "side": 1,
+      "message": "do you think it would make sense in a subsequent CL to replace the (int start, int end) variants with the tuple\u003cint, int\u003e variants?",
+      "parentUuid": "3d10c4a9_5eec524e",
+      "range": {
+        "startLine": 97,
+        "startChar": 20,
+        "endLine": 97,
+        "endChar": 30
+      },
+      "revId": "1ba21606c470bfa700d2005aecc23414e05d2a68",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2da16ddd_eafa94b2",
