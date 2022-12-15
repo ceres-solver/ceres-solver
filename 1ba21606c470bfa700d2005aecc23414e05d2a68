@@ -58,6 +58,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d10c4a9_5eec524e",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-15T11:46:46Z",
+      "side": 1,
+      "message": "The following functions are supported for parallel for:\n\n - (int loop_index)\n - (int thread_id, int loop_index)\n - (std::tuple\u003cint, int\u003e loop_range)\n - (int thread_id, std::tuple\u003cint, int\u003e loop_range)",
+      "parentUuid": "813ad526_7afe1ff7",
+      "range": {
+        "startLine": 97,
+        "startChar": 20,
+        "endLine": 97,
+        "endChar": 30
+      },
+      "revId": "1ba21606c470bfa700d2005aecc23414e05d2a68",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2da16ddd_eafa94b2",
@@ -71,6 +95,24 @@
       "writtenOn": "2022-12-08T20:22:42Z",
       "side": 1,
       "message": "So looking at the callsites at how it is being used, I think ParallelEvaluate is a confusing name. A better name IMO is ParallelAssign, since what you are really doing is assigning the rhs block wise to the rhs. It will make \n\nParallelEvaluate(options_.context, \n                 options_.num_threads, \n                 tmp_e_cols_2_, \n                 -tmp_e_cols_2_);\n\n\nParallelAssign(options_.context, \n               options_.num_threads, \n               tmp_e_cols_2_, \n               -tmp_e_cols_2_);\n               \n               \nwhich I think is clearer.",
+      "revId": "1ba21606c470bfa700d2005aecc23414e05d2a68",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eaa06103_0448a26a",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-15T11:46:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2da16ddd_eafa94b2",
       "revId": "1ba21606c470bfa700d2005aecc23414e05d2a68",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -136,6 +178,30 @@
       "side": 1,
       "message": "ah okay.",
       "parentUuid": "de93b2b4_2fba5ba8",
+      "range": {
+        "startLine": 378,
+        "startChar": 48,
+        "endLine": 378,
+        "endChar": 53
+      },
+      "revId": "1ba21606c470bfa700d2005aecc23414e05d2a68",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "75bfb49a_b73ffc16",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-15T11:46:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0685945f_0e8ec82a",
       "range": {
         "startLine": 378,
         "startChar": 48,
@@ -217,6 +283,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "10284324_0590c6be",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-15T11:46:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad7bda51_2ab24143",
+      "range": {
+        "startLine": 390,
+        "startChar": 2,
+        "endLine": 390,
+        "endChar": 18
+      },
+      "revId": "1ba21606c470bfa700d2005aecc23414e05d2a68",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3cefad86_9ec71c8b",
@@ -230,6 +320,24 @@
       "writtenOn": "2022-12-08T20:22:42Z",
       "side": 1,
       "message": "should we think about refactoring these two header files, parallel_for and parallel_for_cxx into one file? the current structure is a remanent of having multiple backends in the past.",
+      "revId": "1ba21606c470bfa700d2005aecc23414e05d2a68",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6a25d84_634bb97d",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-15T11:46:46Z",
+      "side": 1,
+      "message": "Yes, that makes sense.\nWould you prefer this being done as a separate CL (this one seems to be getting too large already)?",
+      "parentUuid": "3cefad86_9ec71c8b",
       "revId": "1ba21606c470bfa700d2005aecc23414e05d2a68",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }

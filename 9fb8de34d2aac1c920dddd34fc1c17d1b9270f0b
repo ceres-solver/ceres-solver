@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9191cee4_ae733d24",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-15T11:46:46Z",
+      "side": 1,
+      "message": "Added more similar changes:\n\n - Changed a bunch of vector operations outside of ISC to parallel\n - Propagated number of threads and context to SparseMatrixPreconditionerWrapper\n - Parallelized ScaleColumns and SquaredColumnNorm method of BlockSparseMatrix\n - Propagated number of threads and context to LevenbergMarguardtStrategy::ComputeStep\n\n\nThe most interesting effect is reduction of time spent on residual and jacobian evaluation.\n\n\nDo you think it makes sense to cache position of both tangent \u0026 ambient vector of parameter block? We would be able to parallelize Program::Plus then.\n\nCould you please confirm if my assumption that we can cache and Program-\u003eNumEffectiveParameters() in ProgramEvaluator is correct?",
+      "revId": "9fb8de34d2aac1c920dddd34fc1c17d1b9270f0b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
