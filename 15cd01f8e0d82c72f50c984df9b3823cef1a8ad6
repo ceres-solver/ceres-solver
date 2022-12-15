@@ -18,6 +18,92 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "066b365e_1c6d423e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-15T19:25:29Z",
+      "side": 1,
+      "message": "Here is the second pass I promised.",
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f0056b7_b4eefdc1",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-15T19:25:29Z",
+      "side": 1,
+      "message": "Adding auto\u0026 row \u003d transpose_ba-\u003erows[row_block_id];\nwill make the subsequent code shorter and easier to read.",
+      "range": {
+        "startLine": 265,
+        "startChar": 42,
+        "endLine": 265,
+        "endChar": 46
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c8d37f4_6a4df5bd",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-15T19:25:29Z",
+      "side": 1,
+      "message": "const int",
+      "range": {
+        "startLine": 265,
+        "startChar": 8,
+        "endLine": 265,
+        "endChar": 11
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d197709_62bbb039",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-15T19:25:29Z",
+      "side": 1,
+      "message": "const int",
+      "range": {
+        "startLine": 266,
+        "startChar": 8,
+        "endLine": 266,
+        "endChar": 11
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "06be054b_11ef627b",
@@ -43,6 +129,46 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bbe3afd6_8736fed6",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-15T19:25:29Z",
+      "side": 1,
+      "message": "same comments as above for this block of code too.",
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f61b83c_81f6c930",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-15T19:25:29Z",
+      "side": 1,
+      "message": "I imagine that there will be some benefit to caching the partitioning here? instead of computing it from scratch everytime? but I am not sure what the right API for that is.",
+      "range": {
+        "startLine": 331,
+        "startChar": 19,
+        "endLine": 331,
+        "endChar": 20
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "02c497ee_ea068dea",
         "filename": "internal/ceres/block_sparse_matrix_test.cc",
         "patchSetId": 4
@@ -59,6 +185,191 @@
         "startChar": 0,
         "endLine": 213,
         "endChar": 6
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f794eb5a_d05c0957",
+        "filename": "internal/ceres/block_sparse_matrix_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-15T19:25:29Z",
+      "side": 1,
+      "message": "also we need tests for the column scaling too. A random block sparsematrix should suffice.",
+      "parentUuid": "02c497ee_ea068dea",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 6
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7d03ae5_c8667ab6",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-15T19:25:29Z",
+      "side": 1,
+      "message": "this should be threaded too?",
+      "range": {
+        "startLine": 107,
+        "startChar": 37,
+        "endLine": 107,
+        "endChar": 38
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc8b383f_c781866a",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-15T19:25:29Z",
+      "side": 1,
+      "message": "I noticed that BlockSparseJacobiPreconditioner\u0027s RightMultiply method is not threaded either. this can be a follow up CL, but worth dropping a todo here.",
+      "range": {
+        "startLine": 159,
+        "startChar": 29,
+        "endLine": 159,
+        "endChar": 40
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4399e9e_75cc0430",
+        "filename": "internal/ceres/eigen_vector_ops.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-15T19:25:29Z",
+      "side": 1,
+      "message": "I think the tests for these functions should be expanded to be large enough to make the parallelization matter.",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 13
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16773c7c_987d0408",
+        "filename": "internal/ceres/implicit_schur_complement.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-15T19:25:29Z",
+      "side": 1,
+      "message": "so -tmp_e_cols_2_ is an expression which does not get evaluated?",
+      "range": {
+        "startLine": 123,
+        "startChar": 46,
+        "endLine": 123,
+        "endChar": 59
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a63e443_b11b4617",
+        "filename": "internal/ceres/implicit_schur_complement.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-15T19:25:29Z",
+      "side": 1,
+      "message": "setZero() should not happen no?",
+      "range": {
+        "startLine": 168,
+        "startChar": 58,
+        "endLine": 168,
+        "endChar": 65
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c6fc495_33f641ec",
+        "filename": "internal/ceres/iterative_schur_complement_solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-15T19:25:29Z",
+      "side": 1,
+      "message": "I think PowerSeriesExpansionPreconditioner also can be threaded internally, it should likely take a PreconditionerOptions as input too. drop a todo here for now?",
+      "range": {
+        "startLine": 189,
+        "startChar": 41,
+        "endLine": 189,
+        "endChar": 75
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c259e0f_16c7c4ce",
+        "filename": "internal/ceres/iterative_schur_complement_solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-15T19:25:29Z",
+      "side": 1,
+      "message": "same here.",
+      "range": {
+        "startLine": 193,
+        "startChar": 41,
+        "endLine": 193,
+        "endChar": 66
       },
       "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
@@ -128,6 +439,29 @@
         "startChar": 30,
         "endLine": 269,
         "endChar": 45
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66ac2442_d4e01361",
+        "filename": "internal/ceres/sparse_matrix.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-15T19:25:29Z",
+      "side": 1,
+      "message": "it is worth going through the various subclasses of SparseMatrix to see where it would make sense to specialize these three methods. This can be a follow up cl.",
+      "range": {
+        "startLine": 81,
+        "startChar": 15,
+        "endLine": 81,
+        "endChar": 32
       },
       "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
