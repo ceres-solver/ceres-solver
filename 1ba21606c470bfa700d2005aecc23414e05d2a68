@@ -106,6 +106,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0732b4b3_cdbc2335",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-16T22:46:38Z",
+      "side": 1,
+      "message": "Do you mean just changing InvokeImpl\u003c...\u003e::Invoke signature to (thread_id, std::tuple\u003cint, int\u003e range, function) ?",
+      "parentUuid": "7a86fc4f_0cb2b000",
+      "range": {
+        "startLine": 97,
+        "startChar": 20,
+        "endLine": 97,
+        "endChar": 30
+      },
+      "revId": "1ba21606c470bfa700d2005aecc23414e05d2a68",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2da16ddd_eafa94b2",
@@ -380,6 +404,24 @@
       "side": 1,
       "message": "I think a separate CL would be good.",
       "parentUuid": "b6a25d84_634bb97d",
+      "revId": "1ba21606c470bfa700d2005aecc23414e05d2a68",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4119d6ff_f032fcc3",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-16T22:46:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e911369f_db370809",
       "revId": "1ba21606c470bfa700d2005aecc23414e05d2a68",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }

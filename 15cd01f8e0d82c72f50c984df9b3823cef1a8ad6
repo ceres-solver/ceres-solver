@@ -81,6 +81,54 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "30fb7e03_4b0c6ecd",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-16T22:46:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c8d37f4_6a4df5bd",
+      "range": {
+        "startLine": 265,
+        "startChar": 8,
+        "endLine": 265,
+        "endChar": 11
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32572ba6_054c37ce",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-16T22:46:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f0056b7_b4eefdc1",
+      "range": {
+        "startLine": 265,
+        "startChar": 42,
+        "endLine": 265,
+        "endChar": 46
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4d197709_62bbb039",
@@ -94,6 +142,30 @@
       "writtenOn": "2022-12-15T19:25:29Z",
       "side": 1,
       "message": "const int",
+      "range": {
+        "startLine": 266,
+        "startChar": 8,
+        "endLine": 266,
+        "endChar": 11
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8df2ac6b_9c5c72d8",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-16T22:46:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d197709_62bbb039",
       "range": {
         "startLine": 266,
         "startChar": 8,
@@ -127,6 +199,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "73e0d9b4_9f9e59fb",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-16T22:46:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06be054b_11ef627b",
+      "range": {
+        "startLine": 309,
+        "startChar": 7,
+        "endLine": 309,
+        "endChar": 19
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bbe3afd6_8736fed6",
@@ -144,6 +240,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c3feaab_231ba8c9",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-16T22:46:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbe3afd6_8736fed6",
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0f61b83c_81f6c930",
@@ -157,6 +271,30 @@
       "writtenOn": "2022-12-15T19:25:29Z",
       "side": 1,
       "message": "I imagine that there will be some benefit to caching the partitioning here? instead of computing it from scratch everytime? but I am not sure what the right API for that is.",
+      "range": {
+        "startLine": 331,
+        "startChar": 19,
+        "endLine": 331,
+        "endChar": 20
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f5f3ee5_c629a763",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-16T22:46:38Z",
+      "side": 1,
+      "message": "There will be some benefit, but it seem to be quite small, and we only call this function twice per successful iteration.",
+      "parentUuid": "0f61b83c_81f6c930",
       "range": {
         "startLine": 331,
         "startChar": 19,
@@ -214,6 +352,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e6f3502_c8c3ae9f",
+        "filename": "internal/ceres/block_sparse_matrix_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-16T22:46:38Z",
+      "side": 1,
+      "message": "Done (added tests on larger random matrix).\n\nThere is no lower limit on how small partition size can be.\nMatrix A_ will be split into 4 partitions of 1,1,1,2 column blocks.",
+      "parentUuid": "02c497ee_ea068dea",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 6
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f7d03ae5_c8667ab6",
@@ -237,6 +399,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4deef43d_792bf04f",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-16T22:46:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7d03ae5_c8667ab6",
+      "range": {
+        "startLine": 107,
+        "startChar": 37,
+        "endLine": 107,
+        "endChar": 38
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dc8b383f_c781866a",
@@ -250,6 +436,30 @@
       "writtenOn": "2022-12-15T19:25:29Z",
       "side": 1,
       "message": "I noticed that BlockSparseJacobiPreconditioner\u0027s RightMultiply method is not threaded either. this can be a follow up CL, but worth dropping a todo here.",
+      "range": {
+        "startLine": 159,
+        "startChar": 29,
+        "endLine": 159,
+        "endChar": 40
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "17af0ecb_a021e237",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-16T22:46:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc8b383f_c781866a",
       "range": {
         "startLine": 159,
         "startChar": 29,
@@ -285,6 +495,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "41110eec_f53e1a6e",
+        "filename": "internal/ceres/eigen_vector_ops.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-16T22:46:38Z",
+      "side": 1,
+      "message": "Added benchmarks for Norm, Dot and Axpby to parallel_vector_operations_benchmark",
+      "parentUuid": "f4399e9e_75cc0430",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 13
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "16773c7c_987d0408",
         "filename": "internal/ceres/implicit_schur_complement.cc",
         "patchSetId": 4
@@ -296,6 +530,30 @@
       "writtenOn": "2022-12-15T19:25:29Z",
       "side": 1,
       "message": "so -tmp_e_cols_2_ is an expression which does not get evaluated?",
+      "range": {
+        "startLine": 123,
+        "startChar": 46,
+        "endLine": 123,
+        "endChar": 59
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a2eba33_aebe6cf9",
+        "filename": "internal/ceres/implicit_schur_complement.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-16T22:46:38Z",
+      "side": 1,
+      "message": "Eigen evaluates expressions very lazily (evaluation gets postponed till assignment to a matrix).\nTemporaries (if required) are also created only at final assignment site.\n\n\nAt the moment of invocation of ParallelAssign -tmp_e_cols_2_ will have a type Eigen::CwiseUnaryOp\u003cEigen::internal::scalar_opposite_op\u003cdouble\u003e, ...\u003e, which holds a const reference to underlying expression (tmp_e_cols_2_).\n\n\nEvaluation will happen only inside ParallelAssign, when expression gets assigned to some dense matrix. And by this moment original rhs expression will be wrapped into Eigen::VectorBlock\u003c...\u003e (as a result of .segment(...) call), thus each thread will only evaluate part of the expression.",
+      "parentUuid": "16773c7c_987d0408",
       "range": {
         "startLine": 123,
         "startChar": 46,
@@ -329,6 +587,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b3e9a3a_355a3d8e",
+        "filename": "internal/ceres/implicit_schur_complement.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-16T22:46:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a63e443_b11b4617",
+      "range": {
+        "startLine": 168,
+        "startChar": 58,
+        "endLine": 168,
+        "endChar": 65
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5c6fc495_33f641ec",
@@ -352,6 +634,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d40fc68d_83857059",
+        "filename": "internal/ceres/iterative_schur_complement_solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-16T22:46:38Z",
+      "side": 1,
+      "message": "Done\n\nIt is partly threaded via ImplicitSchurComplement (which has context and number of threads inside), with a single block-sparse product and several vector operations remaining single-threaded.",
+      "parentUuid": "5c6fc495_33f641ec",
+      "range": {
+        "startLine": 189,
+        "startChar": 41,
+        "endLine": 189,
+        "endChar": 75
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2c259e0f_16c7c4ce",
@@ -365,6 +671,30 @@
       "writtenOn": "2022-12-15T19:25:29Z",
       "side": 1,
       "message": "same here.",
+      "range": {
+        "startLine": 193,
+        "startChar": 41,
+        "endLine": 193,
+        "endChar": 66
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "58240491_bb8aaa24",
+        "filename": "internal/ceres/iterative_schur_complement_solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-16T22:46:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c259e0f_16c7c4ce",
       "range": {
         "startLine": 193,
         "startChar": 41,
@@ -400,6 +730,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "62ca09f1_76e74b2a",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-16T22:46:38Z",
+      "side": 1,
+      "message": "This was added in order to discard const/ref specifiers on argument types when selecting an appropriate specialization.\n\nWithout std::decay_t F being [](const int \u0026a) and F being [](int a) will result into different args_of_t types, and only the second one would compile; with std::decay_t both options will work.",
+      "parentUuid": "aea7acd9_a1d27a8e",
+      "range": {
+        "startLine": 65,
+        "startChar": 16,
+        "endLine": 65,
+        "endChar": 23
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e1d1064e_ffd15e2c",
         "filename": "internal/ceres/parallel_for.h",
         "patchSetId": 4
@@ -411,6 +765,30 @@
       "writtenOn": "2022-12-15T14:24:14Z",
       "side": 1,
       "message": "I think Invoke is the wrong name for this function it used to be that you used it to call the function/invoke the function once, but now you call it on a segment of indices. How about InvokeOnSegment ? I am open to tother ideas.",
+      "range": {
+        "startLine": 353,
+        "startChar": 16,
+        "endLine": 353,
+        "endChar": 22
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00df2e19_8bfe3be3",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-16T22:46:38Z",
+      "side": 1,
+      "message": "I\u0027ve decided to rename only Invoke\u003c...\u003e(...) and InvokeImpl\u003c...\u003e::Invoke methods, leaving ParallelInvoke method and InvokeImpl class as-is.\n\nWould you like to have ParallelInvoke and InvokeImpl to be renamed as well?",
+      "parentUuid": "e1d1064e_ffd15e2c",
       "range": {
         "startLine": 353,
         "startChar": 16,
@@ -444,6 +822,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d85e44f_c4f36a8b",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-16T22:46:38Z",
+      "side": 1,
+      "message": "Done.\n\nDo you think it might make sense trying a single left-product in the end instead?\nIt is not multithreaded for CompressedRowSparseMatrix though.",
+      "parentUuid": "ea3b3548_24b71d36",
+      "range": {
+        "startLine": 269,
+        "startChar": 30,
+        "endLine": 269,
+        "endChar": 45
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "66ac2442_d4e01361",
@@ -457,6 +859,30 @@
       "writtenOn": "2022-12-15T19:25:29Z",
       "side": 1,
       "message": "it is worth going through the various subclasses of SparseMatrix to see where it would make sense to specialize these three methods. This can be a follow up cl.",
+      "range": {
+        "startLine": 81,
+        "startChar": 15,
+        "endLine": 81,
+        "endChar": 32
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1e71e1c_e46243ac",
+        "filename": "internal/ceres/sparse_matrix.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-16T22:46:38Z",
+      "side": 1,
+      "message": "As far as I understand, we only need to do this for:\n - `DenseSparseMatrix`\n - `CompressedRowSparseMatrix`",
+      "parentUuid": "66ac2442_d4e01361",
       "range": {
         "startLine": 81,
         "startChar": 15,
@@ -490,6 +916,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "191977b3_25d4c1db",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-16T22:46:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae27ac6d_e355f858",
+      "range": {
+        "startLine": 381,
+        "startChar": 20,
+        "endLine": 381,
+        "endChar": 31
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "17c9082f_93277914",
@@ -503,6 +953,30 @@
       "writtenOn": "2022-12-15T14:24:14Z",
       "side": 1,
       "message": "move these into Options and get them at the time of construction.",
+      "range": {
+        "startLine": 97,
+        "startChar": 8,
+        "endLine": 97,
+        "endChar": 19
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "155c035b_2fb8f7d8",
+        "filename": "internal/ceres/trust_region_strategy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-16T22:46:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17c9082f_93277914",
       "range": {
         "startLine": 97,
         "startChar": 8,

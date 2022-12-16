@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d69c6e9d_0b25d104",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-16T22:46:38Z",
+      "side": 1,
+      "message": "Added more tests and benchmarks, renamed ::Invoke\u003c...\u003e method, reworked BSM::ScaleColumns and BSM::SquaredColumnNorm.\n\nTransposed structure is now always added in BlockSparseMatrix constructor.",
+      "revId": "77e933d0b31d10fd2b4bd0291c68ef9b846325bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
