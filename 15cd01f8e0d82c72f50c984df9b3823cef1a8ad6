@@ -305,6 +305,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eab61411_5bcb637e",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-17T00:37:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2f5f3ee5_c629a763",
+      "range": {
+        "startLine": 331,
+        "startChar": 19,
+        "endLine": 331,
+        "endChar": 20
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "02c497ee_ea068dea",
@@ -564,6 +588,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4d123f4_64f95e01",
+        "filename": "internal/ceres/implicit_schur_complement.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-17T00:37:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4a2eba33_aebe6cf9",
+      "range": {
+        "startLine": 123,
+        "startChar": 46,
+        "endLine": 123,
+        "endChar": 59
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5a63e443_b11b4617",
@@ -752,6 +800,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f61ca39_f7c558cd",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-17T00:37:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "62ca09f1_76e74b2a",
+      "range": {
+        "startLine": 65,
+        "startChar": 16,
+        "endLine": 65,
+        "endChar": 23
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e1d1064e_ffd15e2c",
@@ -789,6 +861,30 @@
       "side": 1,
       "message": "I\u0027ve decided to rename only Invoke\u003c...\u003e(...) and InvokeImpl\u003c...\u003e::Invoke methods, leaving ParallelInvoke method and InvokeImpl class as-is.\n\nWould you like to have ParallelInvoke and InvokeImpl to be renamed as well?",
       "parentUuid": "e1d1064e_ffd15e2c",
+      "range": {
+        "startLine": 353,
+        "startChar": 16,
+        "endLine": 353,
+        "endChar": 22
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f82dee8_4b9f2ca4",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-17T00:37:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "00df2e19_8bfe3be3",
       "range": {
         "startLine": 353,
         "startChar": 16,
@@ -883,6 +979,30 @@
       "side": 1,
       "message": "As far as I understand, we only need to do this for:\n - `DenseSparseMatrix`\n - `CompressedRowSparseMatrix`",
       "parentUuid": "66ac2442_d4e01361",
+      "range": {
+        "startLine": 81,
+        "startChar": 15,
+        "endLine": 81,
+        "endChar": 32
+      },
+      "revId": "15cd01f8e0d82c72f50c984df9b3823cef1a8ad6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "769d9d25_2c1f8c4b",
+        "filename": "internal/ceres/sparse_matrix.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-17T00:37:50Z",
+      "side": 1,
+      "message": "that sounds about right. we can come back to it in the future.",
+      "parentUuid": "a1e71e1c_e46243ac",
       "range": {
         "startLine": 81,
         "startChar": 15,

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7569ee84_53b39852",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-17T00:37:50Z",
+      "side": 1,
+      "message": "Dmitry, this is a lovely piece of work. Thank you for contributing it. More importantly I did not think that l1 blas operations were a large enough chunk of work inside ceres since they are so diffuse and hard to see in profiles.",
+      "revId": "b158515089a85be8425db66ed43546605f86a00e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
