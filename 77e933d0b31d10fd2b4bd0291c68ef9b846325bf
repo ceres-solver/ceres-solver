@@ -16,6 +16,23 @@
       "message": "Added more tests and benchmarks, renamed ::Invoke\u003c...\u003e method, reworked BSM::ScaleColumns and BSM::SquaredColumnNorm.\n\nTransposed structure is now always added in BlockSparseMatrix constructor.",
       "revId": "77e933d0b31d10fd2b4bd0291c68ef9b846325bf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff6cd9e6_ca6a1f49",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-17T00:44:58Z",
+      "side": 1,
+      "message": "Full logs of bundle_adjuster: https://drive.google.com/drive/folders/1i-n6OuaxOXcyUGn3oYxyaf__pxJmhxPz?usp\u003dshare_link\n(last line is output of time command)\n\nBenchmark results \u0026 summary of end-to-end improvements is available in updated commit message.",
+      "revId": "77e933d0b31d10fd2b4bd0291c68ef9b846325bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
