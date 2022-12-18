@@ -36,6 +36,7 @@
 #include <numeric>
 #include <random>
 #include <thread>
+#include <tuple>
 #include <vector>
 
 #include "ceres/context_impl.h"

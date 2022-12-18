@@ -73,6 +73,8 @@ class SchurEliminatorBase;
 //   preconditioner.Update(A, nullptr);
 //   preconditioner.RightMultiplyAndAccumulate(x, y);
 //
+// TODO(https://github.com/ceres-solver/ceres-solver/issues/935):
+// SchurJacobiPreconditioner::RightMultiply will benefit from multithreading
 class CERES_NO_EXPORT SchurJacobiPreconditioner
     : public BlockSparseMatrixPreconditioner {
  public:

@@ -28,11 +28,13 @@
 //
 // Author: vitus@google.com (Michael Vitus)
 
+#include <algorithm>
 #include <atomic>
 #include <cmath>
 #include <condition_variable>
 #include <memory>
 #include <mutex>
+#include <tuple>
 
 #include "ceres/internal/config.h"
 #include "ceres/parallel_for.h"

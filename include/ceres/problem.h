@@ -538,7 +538,7 @@ class CERES_EXPORT Problem {
       double** jacobians) const;
 
   // Returns reference to the options with which the Problem was constructed.
-  const Options & options() const;
+  const Options& options() const;
 
   // Returns pointer to Problem implementation
   internal::ProblemImpl* mutable_impl();

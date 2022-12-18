@@ -153,7 +153,8 @@ void BlockSparseMatrix::RightMultiplyAndAccumulate(const double* x,
               });
 }
 
-// TODO: This method might benefit from caching column-block partition
+// TODO(https://github.com/ceres-solver/ceres-solver/issues/933): This method
+// might benefit from caching column-block partition
 void BlockSparseMatrix::LeftMultiplyAndAccumulate(const double* x,
                                                   double* y,
                                                   ContextImpl* context,
@@ -244,7 +245,8 @@ void BlockSparseMatrix::SquaredColumnNorm(double* x) const {
   }
 }
 
-// TODO: This method might benefit from caching column-block partition
+// TODO(https://github.com/ceres-solver/ceres-solver/issues/933): This method
+// might benefit from caching column-block partition
 void BlockSparseMatrix::SquaredColumnNorm(double* x,
                                           ContextImpl* context,
                                           int num_threads) const {
@@ -295,7 +297,8 @@ void BlockSparseMatrix::ScaleColumns(const double* scale) {
   }
 }
 
-// TODO: This method might benefit from caching column-block partition
+// TODO(https://github.com/ceres-solver/ceres-solver/issues/933): This method
+// might benefit from caching column-block partition
 void BlockSparseMatrix::ScaleColumns(const double* scale,
                                      ContextImpl* context,
                                      int num_threads) {

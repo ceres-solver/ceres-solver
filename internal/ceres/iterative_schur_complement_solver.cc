@@ -186,17 +186,10 @@ void IterativeSchurComplementSolver::CreatePreconditioner(
     case SCHUR_POWER_SERIES_EXPANSION:
       // Ignoring the value of spse_tolerance to ensure preconditioner stays
       // fixed during the iterations of cg.
-      // TODO: In PowerSeriesExpansionPreconditioner::RightMultiplyAndAccumulate
-      // only operations performed via ImplicitSchurComplement are threaded.
-      // PowerSeriesExpansionPreconditioner will benefit from multithreading
-      // applied to remaning operations (block-sparse right product and several
-      // vector operations)
       preconditioner_ = std::make_unique<PowerSeriesExpansionPreconditioner>(
           schur_complement_.get(), options_.max_num_spse_iterations, 0);
       break;
     case SCHUR_JACOBI:
-      // TODO: SchurJacobiPreconditioner::RightMultiply will benefit from
-      // multithreading
       preconditioner_ = std::make_unique<SchurJacobiPreconditioner>(
           *A->block_structure(), preconditioner_options);
       break;

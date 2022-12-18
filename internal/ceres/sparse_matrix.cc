@@ -42,12 +42,12 @@ void SparseMatrix::SquaredColumnNorm(double* x,
   SquaredColumnNorm(x);
 }
 
-void SparseMatrix::ScaleColumns(const double* x,
+void SparseMatrix::ScaleColumns(const double* scale,
                                 ContextImpl* context,
                                 int num_threads) {
   (void)context;
   (void)num_threads;
-  ScaleColumns(x);
+  ScaleColumns(scale);
 }
 
 }  // namespace ceres::internal

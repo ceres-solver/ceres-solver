@@ -48,6 +48,10 @@ class CompressedRowSparseMatrix;
 
 // This version of the preconditioner is for use with BlockSparseMatrix
 // Jacobians.
+//
+// TODO(https://github.com/ceres-solver/ceres-solver/issues/936):
+// BlockSparseJacobiPreconditioner::RightMultiply will benefit from
+// multithreading
 class CERES_NO_EXPORT BlockSparseJacobiPreconditioner
     : public BlockSparseMatrixPreconditioner {
  public:

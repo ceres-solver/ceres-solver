@@ -126,15 +126,15 @@ class BlockSparseMatrixTest : public ::testing::Test {
     std::unique_ptr<LinearLeastSquaresProblem> problem =
         CreateLinearLeastSquaresProblemFromId(2);
     CHECK(problem != nullptr);
-    A_.reset(down_cast<BlockSparseMatrix*>(problem->A.release()));
+    a_.reset(down_cast<BlockSparseMatrix*>(problem->A.release()));
 
     problem = CreateLinearLeastSquaresProblemFromId(1);
     CHECK(problem != nullptr);
-    B_.reset(down_cast<TripletSparseMatrix*>(problem->A.release()));
+    b_.reset(down_cast<TripletSparseMatrix*>(problem->A.release()));
 
-    CHECK_EQ(A_->num_rows(), B_->num_rows());
-    CHECK_EQ(A_->num_cols(), B_->num_cols());
-    CHECK_EQ(A_->num_nonzeros(), B_->num_nonzeros());
+    CHECK_EQ(a_->num_rows(), b_->num_rows());
+    CHECK_EQ(a_->num_cols(), b_->num_cols());
+    CHECK_EQ(a_->num_nonzeros(), b_->num_nonzeros());
     context_.EnsureMinimumThreads(kNumThreads);
 
     BlockSparseMatrix::RandomMatrixOptions options;
@@ -147,67 +147,67 @@ class BlockSparseMatrixTest : public ::testing::Test {
     options.block_density = 0.05;
 
     std::mt19937 rng;
-    C_ = BlockSparseMatrix::CreateRandomMatrix(options, rng);
+    c_ = BlockSparseMatrix::CreateRandomMatrix(options, rng);
   }
 
-  std::unique_ptr<BlockSparseMatrix> A_;
-  std::unique_ptr<TripletSparseMatrix> B_;
-  std::unique_ptr<BlockSparseMatrix> C_;
+  std::unique_ptr<BlockSparseMatrix> a_;
+  std::unique_ptr<TripletSparseMatrix> b_;
+  std::unique_ptr<BlockSparseMatrix> c_;
   ContextImpl context_;
 };
 
 TEST_F(BlockSparseMatrixTest, SetZeroTest) {
-  A_->SetZero();
-  EXPECT_EQ(13, A_->num_nonzeros());
+  a_->SetZero();
+  EXPECT_EQ(13, a_->num_nonzeros());
 }
 
 TEST_F(BlockSparseMatrixTest, RightMultiplyAndAccumulateTest) {
-  Vector y_a = Vector::Zero(A_->num_rows());
-  Vector y_b = Vector::Zero(A_->num_rows());
-  for (int i = 0; i < A_->num_cols(); ++i) {
-    Vector x = Vector::Zero(A_->num_cols());
+  Vector y_a = Vector::Zero(a_->num_rows());
+  Vector y_b = Vector::Zero(a_->num_rows());
+  for (int i = 0; i < a_->num_cols(); ++i) {
+    Vector x = Vector::Zero(a_->num_cols());
     x[i] = 1.0;
-    A_->RightMultiplyAndAccumulate(x.data(), y_a.data());
-    B_->RightMultiplyAndAccumulate(x.data(), y_b.data());
+    a_->RightMultiplyAndAccumulate(x.data(), y_a.data());
+    b_->RightMultiplyAndAccumulate(x.data(), y_b.data());
     EXPECT_LT((y_a - y_b).norm(), 1e-12);
   }
 }
 
 TEST_F(BlockSparseMatrixTest, RightMultiplyAndAccumulateParallelTest) {
-  Vector y_0 = Vector::Random(A_->num_rows());
+  Vector y_0 = Vector::Random(a_->num_rows());
   Vector y_s = y_0;
   Vector y_p = y_0;
 
-  Vector x = Vector::Random(A_->num_cols());
-  A_->RightMultiplyAndAccumulate(x.data(), y_s.data());
+  Vector x = Vector::Random(a_->num_cols());
+  a_->RightMultiplyAndAccumulate(x.data(), y_s.data());
 
-  A_->RightMultiplyAndAccumulate(x.data(), y_p.data(), &context_, kNumThreads);
+  a_->RightMultiplyAndAccumulate(x.data(), y_p.data(), &context_, kNumThreads);
 
   // Current parallel implementation is expected to be bit-exact
   EXPECT_EQ((y_s - y_p).norm(), 0.);
 }
 
 TEST_F(BlockSparseMatrixTest, LeftMultiplyAndAccumulateTest) {
-  Vector y_a = Vector::Zero(A_->num_cols());
-  Vector y_b = Vector::Zero(A_->num_cols());
-  for (int i = 0; i < A_->num_rows(); ++i) {
-    Vector x = Vector::Zero(A_->num_rows());
+  Vector y_a = Vector::Zero(a_->num_cols());
+  Vector y_b = Vector::Zero(a_->num_cols());
+  for (int i = 0; i < a_->num_rows(); ++i) {
+    Vector x = Vector::Zero(a_->num_rows());
     x[i] = 1.0;
-    A_->LeftMultiplyAndAccumulate(x.data(), y_a.data());
-    B_->LeftMultiplyAndAccumulate(x.data(), y_b.data());
+    a_->LeftMultiplyAndAccumulate(x.data(), y_a.data());
+    b_->LeftMultiplyAndAccumulate(x.data(), y_b.data());
     EXPECT_LT((y_a - y_b).norm(), 1e-12);
   }
 }
 
 TEST_F(BlockSparseMatrixTest, LeftMultiplyAndAccumulateParallelTest) {
-  Vector y_0 = Vector::Random(A_->num_cols());
+  Vector y_0 = Vector::Random(a_->num_cols());
   Vector y_s = y_0;
   Vector y_p = y_0;
 
-  Vector x = Vector::Random(A_->num_rows());
-  A_->LeftMultiplyAndAccumulate(x.data(), y_s.data());
+  Vector x = Vector::Random(a_->num_rows());
+  a_->LeftMultiplyAndAccumulate(x.data(), y_s.data());
 
-  A_->LeftMultiplyAndAccumulate(x.data(), y_p.data(), &context_, kNumThreads);
+  a_->LeftMultiplyAndAccumulate(x.data(), y_p.data(), &context_, kNumThreads);
 
   // Parallel implementation for left products uses a different order of
   // traversal, thus results might be different
@@ -215,49 +215,49 @@ TEST_F(BlockSparseMatrixTest, LeftMultiplyAndAccumulateParallelTest) {
 }
 
 TEST_F(BlockSparseMatrixTest, SquaredColumnNormTest) {
-  Vector y_a = Vector::Zero(A_->num_cols());
-  Vector y_b = Vector::Zero(A_->num_cols());
-  A_->SquaredColumnNorm(y_a.data());
-  B_->SquaredColumnNorm(y_b.data());
+  Vector y_a = Vector::Zero(a_->num_cols());
+  Vector y_b = Vector::Zero(a_->num_cols());
+  a_->SquaredColumnNorm(y_a.data());
+  b_->SquaredColumnNorm(y_b.data());
   EXPECT_LT((y_a - y_b).norm(), 1e-12);
 }
 
 TEST_F(BlockSparseMatrixTest, SquaredColumnNormParallelTest) {
-  Vector y_a = Vector::Zero(C_->num_cols());
-  Vector y_b = Vector::Zero(C_->num_cols());
-  C_->SquaredColumnNorm(y_a.data());
+  Vector y_a = Vector::Zero(c_->num_cols());
+  Vector y_b = Vector::Zero(c_->num_cols());
+  c_->SquaredColumnNorm(y_a.data());
 
-  C_->SquaredColumnNorm(y_b.data(), &context_, kNumThreads);
+  c_->SquaredColumnNorm(y_b.data(), &context_, kNumThreads);
   EXPECT_LT((y_a - y_b).norm(), 1e-12);
 }
 
 TEST_F(BlockSparseMatrixTest, ScaleColumnsTest) {
-  const Vector scale = Vector::Random(C_->num_cols()).cwiseAbs();
+  const Vector scale = Vector::Random(c_->num_cols()).cwiseAbs();
 
-  const Vector x = Vector::Random(C_->num_rows());
-  Vector y_expected = Vector::Zero(C_->num_cols());
-  C_->LeftMultiplyAndAccumulate(x.data(), y_expected.data());
+  const Vector x = Vector::Random(c_->num_rows());
+  Vector y_expected = Vector::Zero(c_->num_cols());
+  c_->LeftMultiplyAndAccumulate(x.data(), y_expected.data());
   y_expected.array() *= scale.array();
 
-  C_->ScaleColumns(scale.data());
-  Vector y_observed = Vector::Zero(C_->num_cols());
-  C_->LeftMultiplyAndAccumulate(x.data(), y_observed.data());
+  c_->ScaleColumns(scale.data());
+  Vector y_observed = Vector::Zero(c_->num_cols());
+  c_->LeftMultiplyAndAccumulate(x.data(), y_observed.data());
 
   EXPECT_GT(y_expected.norm(), 1.);
   EXPECT_LT((y_observed - y_expected).norm(), 1e-12 * y_expected.norm());
 }
 
 TEST_F(BlockSparseMatrixTest, ScaleColumnsParallelTest) {
-  const Vector scale = Vector::Random(C_->num_cols()).cwiseAbs();
+  const Vector scale = Vector::Random(c_->num_cols()).cwiseAbs();
 
-  const Vector x = Vector::Random(C_->num_rows());
-  Vector y_expected = Vector::Zero(C_->num_cols());
-  C_->LeftMultiplyAndAccumulate(x.data(), y_expected.data());
+  const Vector x = Vector::Random(c_->num_rows());
+  Vector y_expected = Vector::Zero(c_->num_cols());
+  c_->LeftMultiplyAndAccumulate(x.data(), y_expected.data());
   y_expected.array() *= scale.array();
 
-  C_->ScaleColumns(scale.data(), &context_, kNumThreads);
-  Vector y_observed = Vector::Zero(C_->num_cols());
-  C_->LeftMultiplyAndAccumulate(x.data(), y_observed.data());
+  c_->ScaleColumns(scale.data(), &context_, kNumThreads);
+  Vector y_observed = Vector::Zero(c_->num_cols());
+  c_->LeftMultiplyAndAccumulate(x.data(), y_observed.data());
 
   EXPECT_GT(y_expected.norm(), 1.);
   EXPECT_LT((y_observed - y_expected).norm(), 1e-12 * y_expected.norm());
@@ -266,8 +266,8 @@ TEST_F(BlockSparseMatrixTest, ScaleColumnsParallelTest) {
 TEST_F(BlockSparseMatrixTest, ToDenseMatrixTest) {
   Matrix m_a;
   Matrix m_b;
-  A_->ToDenseMatrix(&m_a);
-  B_->ToDenseMatrix(&m_b);
+  a_->ToDenseMatrix(&m_a);
+  b_->ToDenseMatrix(&m_b);
   EXPECT_LT((m_a - m_b).norm(), 1e-12);
 }
 
@@ -276,25 +276,25 @@ TEST_F(BlockSparseMatrixTest, AppendRows) {
       CreateLinearLeastSquaresProblemFromId(2);
   std::unique_ptr<BlockSparseMatrix> m(
       down_cast<BlockSparseMatrix*>(problem->A.release()));
-  A_->AppendRows(*m);
-  EXPECT_EQ(A_->num_rows(), 2 * m->num_rows());
-  EXPECT_EQ(A_->num_cols(), m->num_cols());
+  a_->AppendRows(*m);
+  EXPECT_EQ(a_->num_rows(), 2 * m->num_rows());
+  EXPECT_EQ(a_->num_cols(), m->num_cols());
 
   problem = CreateLinearLeastSquaresProblemFromId(1);
   std::unique_ptr<TripletSparseMatrix> m2(
       down_cast<TripletSparseMatrix*>(problem->A.release()));
-  B_->AppendRows(*m2);
+  b_->AppendRows(*m2);
 
-  Vector y_a = Vector::Zero(A_->num_rows());
-  Vector y_b = Vector::Zero(A_->num_rows());
-  for (int i = 0; i < A_->num_cols(); ++i) {
-    Vector x = Vector::Zero(A_->num_cols());
+  Vector y_a = Vector::Zero(a_->num_rows());
+  Vector y_b = Vector::Zero(a_->num_rows());
+  for (int i = 0; i < a_->num_cols(); ++i) {
+    Vector x = Vector::Zero(a_->num_cols());
     x[i] = 1.0;
     y_a.setZero();
     y_b.setZero();
 
-    A_->RightMultiplyAndAccumulate(x.data(), y_a.data());
-    B_->RightMultiplyAndAccumulate(x.data(), y_b.data());
+    a_->RightMultiplyAndAccumulate(x.data(), y_a.data());
+    b_->RightMultiplyAndAccumulate(x.data(), y_b.data());
     EXPECT_LT((y_a - y_b).norm(), 1e-12);
   }
 }
@@ -304,7 +304,7 @@ TEST_F(BlockSparseMatrixTest, AppendDeleteRowsTransposedStructure) {
   std::unique_ptr<BlockSparseMatrix> m(
       down_cast<BlockSparseMatrix*>(problem->A.release()));
 
-  auto block_structure = A_->block_structure();
+  auto block_structure = a_->block_structure();
 
   // Several AppendRows and DeleteRowBlocks operations are applied to matrix,
   // with regular and transpose block structures being compared after each
@@ -315,14 +315,14 @@ TEST_F(BlockSparseMatrixTest, AppendDeleteRowsTransposedStructure) {
   const int num_row_blocks_to_delete[] = {0, -1, 1, -1, 8, -1, 10};
   for (auto& t : num_row_blocks_to_delete) {
     if (t == -1) {
-      A_->AppendRows(*m);
+      a_->AppendRows(*m);
     } else if (t > 0) {
       CHECK_GE(block_structure->rows.size(), t);
-      A_->DeleteRowBlocks(t);
+      a_->DeleteRowBlocks(t);
     }
 
-    auto block_structure = A_->block_structure();
-    auto transpose_block_structure = A_->transpose_block_structure();
+    auto block_structure = a_->block_structure();
+    auto transpose_block_structure = a_->transpose_block_structure();
     ASSERT_NE(block_structure, nullptr);
     ASSERT_NE(transpose_block_structure, nullptr);
 
@@ -378,7 +378,7 @@ TEST_F(BlockSparseMatrixTest, AppendDeleteRowsTransposedStructure) {
 }
 
 TEST_F(BlockSparseMatrixTest, AppendAndDeleteBlockDiagonalMatrix) {
-  const std::vector<Block>& column_blocks = A_->block_structure()->cols;
+  const std::vector<Block>& column_blocks = a_->block_structure()->cols;
   const int num_cols =
       column_blocks.back().size + column_blocks.back().position;
   Vector diagonal(num_cols);
@@ -388,39 +388,39 @@ TEST_F(BlockSparseMatrixTest, AppendAndDeleteBlockDiagonalMatrix) {
   std::unique_ptr<BlockSparseMatrix> appendage(
       BlockSparseMatrix::CreateDiagonalMatrix(diagonal.data(), column_blocks));
 
-  A_->AppendRows(*appendage);
+  a_->AppendRows(*appendage);
   Vector y_a, y_b;
-  y_a.resize(A_->num_rows());
-  y_b.resize(A_->num_rows());
-  for (int i = 0; i < A_->num_cols(); ++i) {
-    Vector x = Vector::Zero(A_->num_cols());
+  y_a.resize(a_->num_rows());
+  y_b.resize(a_->num_rows());
+  for (int i = 0; i < a_->num_cols(); ++i) {
+    Vector x = Vector::Zero(a_->num_cols());
     x[i] = 1.0;
     y_a.setZero();
     y_b.setZero();
 
-    A_->RightMultiplyAndAccumulate(x.data(), y_a.data());
-    B_->RightMultiplyAndAccumulate(x.data(), y_b.data());
-    EXPECT_LT((y_a.head(B_->num_rows()) - y_b.head(B_->num_rows())).norm(),
+    a_->RightMultiplyAndAccumulate(x.data(), y_a.data());
+    b_->RightMultiplyAndAccumulate(x.data(), y_b.data());
+    EXPECT_LT((y_a.head(b_->num_rows()) - y_b.head(b_->num_rows())).norm(),
               1e-12);
-    Vector expected_tail = Vector::Zero(A_->num_cols());
+    Vector expected_tail = Vector::Zero(a_->num_cols());
     expected_tail(i) = diagonal(i);
-    EXPECT_LT((y_a.tail(A_->num_cols()) - expected_tail).norm(), 1e-12);
+    EXPECT_LT((y_a.tail(a_->num_cols()) - expected_tail).norm(), 1e-12);
   }
 
-  A_->DeleteRowBlocks(column_blocks.size());
-  EXPECT_EQ(A_->num_rows(), B_->num_rows());
-  EXPECT_EQ(A_->num_cols(), B_->num_cols());
+  a_->DeleteRowBlocks(column_blocks.size());
+  EXPECT_EQ(a_->num_rows(), b_->num_rows());
+  EXPECT_EQ(a_->num_cols(), b_->num_cols());
 
-  y_a.resize(A_->num_rows());
-  y_b.resize(A_->num_rows());
-  for (int i = 0; i < A_->num_cols(); ++i) {
-    Vector x = Vector::Zero(A_->num_cols());
+  y_a.resize(a_->num_rows());
+  y_b.resize(a_->num_rows());
+  for (int i = 0; i < a_->num_cols(); ++i) {
+    Vector x = Vector::Zero(a_->num_cols());
     x[i] = 1.0;
     y_a.setZero();
     y_b.setZero();
 
-    A_->RightMultiplyAndAccumulate(x.data(), y_a.data());
-    B_->RightMultiplyAndAccumulate(x.data(), y_b.data());
+    a_->RightMultiplyAndAccumulate(x.data(), y_a.data());
+    b_->RightMultiplyAndAccumulate(x.data(), y_b.data());
     EXPECT_LT((y_a - y_b).norm(), 1e-12);
   }
 }

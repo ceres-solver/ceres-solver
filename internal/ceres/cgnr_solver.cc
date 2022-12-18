@@ -160,8 +160,6 @@ LinearSolver::Summary CgnrSolver::SolveImpl(
     preconditioner_options.context = options_.context;
 
     if (options_.preconditioner_type == JACOBI) {
-      // TODO: BlockSparseJacobiPreconditioner::RightMultiply will benefit from
-      // multithreading
       preconditioner_ = std::make_unique<BlockSparseJacobiPreconditioner>(
           preconditioner_options, *A);
     } else if (options_.preconditioner_type == SUBSET) {

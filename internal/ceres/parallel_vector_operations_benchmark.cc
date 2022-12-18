@@ -25,6 +25,9 @@
 // CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
+
+#include <algorithm>
+
 #include "benchmark/benchmark.h"
 #include "ceres/eigen_vector_ops.h"
 #include "ceres/parallel_for.h"

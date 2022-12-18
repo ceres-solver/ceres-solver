@@ -76,17 +76,20 @@ namespace ceres {
 //      EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
 //    }
 #define EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, tolerance) \
-  ::ceres::Vector zero_tangent = ::ceres::Vector::Zero(manifold.TangentSize()); \
-  EXPECT_THAT(manifold, ::ceres::XPlusZeroIsXAt(x, tolerance));         \
-  EXPECT_THAT(manifold, ::ceres::XMinusXIsZeroAt(x, tolerance));        \
-  EXPECT_THAT(manifold, ::ceres::MinusPlusIsIdentityAt(x, delta, tolerance)); \
-  EXPECT_THAT(manifold, ::ceres::MinusPlusIsIdentityAt(x, zero_tangent, tolerance)); \
-  EXPECT_THAT(manifold, ::ceres::PlusMinusIsIdentityAt(x, x, tolerance)); \
-  EXPECT_THAT(manifold, ::ceres::PlusMinusIsIdentityAt(x, y, tolerance)); \
-  EXPECT_THAT(manifold, ::ceres::HasCorrectPlusJacobianAt(x, tolerance)); \
-  EXPECT_THAT(manifold, ::ceres::HasCorrectMinusJacobianAt(x, tolerance)); \
+  ::ceres::Vector zero_tangent =                                               \
+      ::ceres::Vector::Zero(manifold.TangentSize());                           \
+  EXPECT_THAT(manifold, ::ceres::XPlusZeroIsXAt(x, tolerance));                \
+  EXPECT_THAT(manifold, ::ceres::XMinusXIsZeroAt(x, tolerance));               \
+  EXPECT_THAT(manifold, ::ceres::MinusPlusIsIdentityAt(x, delta, tolerance));  \
+  EXPECT_THAT(manifold,                                                        \
+              ::ceres::MinusPlusIsIdentityAt(x, zero_tangent, tolerance));     \
+  EXPECT_THAT(manifold, ::ceres::PlusMinusIsIdentityAt(x, x, tolerance));      \
+  EXPECT_THAT(manifold, ::ceres::PlusMinusIsIdentityAt(x, y, tolerance));      \
+  EXPECT_THAT(manifold, ::ceres::HasCorrectPlusJacobianAt(x, tolerance));      \
+  EXPECT_THAT(manifold, ::ceres::HasCorrectMinusJacobianAt(x, tolerance));     \
   EXPECT_THAT(manifold, ::ceres::MinusPlusJacobianIsIdentityAt(x, tolerance)); \
-  EXPECT_THAT(manifold, ::ceres::HasCorrectRightMultiplyByPlusJacobianAt(x, tolerance));
+  EXPECT_THAT(manifold,                                                        \
+              ::ceres::HasCorrectRightMultiplyByPlusJacobianAt(x, tolerance));
 
 // Checks that the invariant Plus(x, 0) == x holds.
 MATCHER_P2(XPlusZeroIsXAt, x, tolerance, "") {
