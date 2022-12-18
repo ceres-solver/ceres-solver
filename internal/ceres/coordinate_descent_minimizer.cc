@@ -167,9 +167,11 @@ void CoordinateDescentMinimizer::Minimize(const Minimizer::Options& options,
           ParameterBlock* parameter_block = parameter_blocks_[j];
           const int old_index = parameter_block->index();
           const int old_delta_offset = parameter_block->delta_offset();
+          const int old_state_offset = parameter_block->state_offset();
           parameter_block->SetVarying();
           parameter_block->set_index(0);
           parameter_block->set_delta_offset(0);
+          parameter_block->set_state_offset(0);
 
           Program inner_program;
           inner_program.mutable_parameter_blocks()->push_back(parameter_block);
@@ -186,11 +188,12 @@ void CoordinateDescentMinimizer::Minimize(const Minimizer::Options& options,
           Solver::Summary inner_summary;
           Solve(&inner_program,
                 linear_solvers[thread_id].get(),
-                parameters + parameter_block->state_offset(),
+                parameters + old_state_offset,
                 &inner_summary);
 
           parameter_block->set_index(old_index);
           parameter_block->set_delta_offset(old_delta_offset);
+          parameter_block->set_state_offset(old_state_offset);
           parameter_block->SetState(parameters +
                                     parameter_block->state_offset());
           parameter_block->SetConstant();
