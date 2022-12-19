@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2018 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -26,50 +26,38 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: sameeragarwal@google.com (Sameer Agarwal)
+// Author: vitus@google.com (Michael Vitus)
 
-#include "ceres/block_random_access_dense_matrix.h"
+#include "ceres/parallel_for.h"
 
-#include <utility>
-#include <vector>
+#include <algorithm>
+#include <atomic>
+#include <cmath>
+#include <condition_variable>
+#include <memory>
+#include <mutex>
+#include <tuple>
 
-#include "ceres/internal/eigen.h"
+#include "ceres/internal/config.h"
 #include "ceres/parallel_vector_ops.h"
 #include "glog/logging.h"
 
 namespace ceres::internal {
 
-BlockRandomAccessDenseMatrix::BlockRandomAccessDenseMatrix(
-    std::vector<Block> blocks, ContextImpl* context, int num_threads)
-    : blocks_(std::move(blocks)), context_(context), num_threads_(num_threads) {
-  const int num_blocks = blocks_.size();
-  num_rows_ = NumScalarEntries(blocks_);
-  values_ = std::make_unique<double[]>(num_rows_ * num_rows_);
-  cell_infos_ = std::make_unique<CellInfo[]>(num_blocks * num_blocks);
-  for (int i = 0; i < num_blocks * num_blocks; ++i) {
-    cell_infos_[i].values = values_.get();
-  }
+int MaxNumThreadsAvailable() { return ThreadPool::MaxNumThreadsAvailable(); }
 
-  SetZero();
-}
-
-CellInfo* BlockRandomAccessDenseMatrix::GetCell(const int row_block_id,
-                                                const int col_block_id,
-                                                int* row,
-                                                int* col,
-                                                int* row_stride,
-                                                int* col_stride) {
-  *row = blocks_[row_block_id].position;
-  *col = blocks_[col_block_id].position;
-  *row_stride = num_rows_;
-  *col_stride = num_rows_;
-  return &cell_infos_[row_block_id * blocks_.size() + col_block_id];
-}
-
-// Assume that the user does not hold any locks on any cell blocks
-// when they are calling SetZero.
-void BlockRandomAccessDenseMatrix::SetZero() {
-  ParallelSetZero(context_, num_threads_, values_.get(), num_rows_ * num_rows_);
+void ParallelSetZero(ContextImpl* context,
+                     int num_threads,
+                     double* values,
+                     int num_values) {
+  ParallelFor(context,
+              0,
+              num_values,
+              num_threads,
+              [values](std::tuple<int, int> range) {
+                auto [start, end] = range;
+                std::fill(values + start, values + end, 0.);
+              });
 }
 
 }  // namespace ceres::internal

@@ -37,7 +37,7 @@
 #include <vector>
 
 #include "ceres/internal/export.h"
-#include "ceres/parallel_for.h"
+#include "ceres/parallel_vector_ops.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
 #include "glog/logging.h"
