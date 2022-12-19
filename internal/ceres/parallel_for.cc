@@ -28,6 +28,8 @@
 //
 // Author: vitus@google.com (Michael Vitus)
 
+#include "ceres/parallel_for.h"
+
 #include <algorithm>
 #include <atomic>
 #include <cmath>
@@ -37,7 +39,7 @@
 #include <tuple>
 
 #include "ceres/internal/config.h"
-#include "ceres/parallel_for.h"
+#include "ceres/parallel_vector_ops.h"
 #include "glog/logging.h"
 
 namespace ceres::internal {

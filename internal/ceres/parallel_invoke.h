@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2018 Google Inc. All rights reserved.
+// Copyright 2022 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -29,92 +29,93 @@
 // Authors: vitus@google.com (Michael Vitus),
 //          dmitriy.korchemkin@gmail.com (Dmitriy Korchemkin)
 
-#ifndef CERES_INTERNAL_PARALLEL_FOR_CXX_H_
-#define CERES_INTERNAL_PARALLEL_FOR_CXX_H_
+#ifndef CERES_INTERNAL_PARALLEL_INVOKE_H_
+#define CERES_INTERNAL_PARALLEL_INVOKE_H_
 
-#include <atomic>
-#include <cmath>
-#include <condition_variable>
 #include <memory>
-#include <mutex>
+#include <tuple>
+#include <type_traits>
 
-#include "ceres/internal/config.h"
-#include "glog/logging.h"
+#include "ceres/parallel_for_synchronization.h"
 
 namespace ceres::internal {
-// This class creates a thread safe barrier which will block until a
-// pre-specified number of threads call Finished.  This allows us to block the
-// main thread until all the parallel threads are finished processing all the
-// work.
-class BlockUntilFinished {
- public:
-  explicit BlockUntilFinished(int num_total_jobs);
 
-  // Increment the number of jobs that have been processed by the number of
-  // jobs processed by caller and signal the blocking thread if all jobs
-  // have finished.
-  void Finished(int num_jobs_finished);
+// Get arguments of callable as a tuple
+template <typename F, typename... Args>
+std::tuple<std::decay_t<Args>...> args_of(void (F::*)(Args...) const);
 
-  // Block until receiving confirmation of all jobs being finished.
-  void Block();
+template <typename F>
+using args_of_t = decltype(args_of(&F::operator()));
 
- private:
-  std::mutex mutex_;
-  std::condition_variable condition_;
-  int num_total_jobs_finished_;
-  int num_total_jobs_;
+// Parallelizable functions might require passing thread_id as the first
+// argument. This class supplies thread_id argument to functions that
+// support it and ignores it otherwise.
+template <typename F, typename Args>
+struct InvokeImpl;
+
+// For parallel for iterations of type [](int i) -> void
+template <typename F>
+struct InvokeImpl<F, std::tuple<int>> {
+  static void InvokeOnSegment(int thread_id,
+                              std::tuple<int, int> range,
+                              const F& function) {
+    (void)thread_id;
+    auto [start, end] = range;
+    for (int i = start; i < end; ++i) {
+      function(i);
+    }
+  }
 };
 
-// Shared state between the parallel tasks. Each thread will use this
-// information to get the next block of work to be performed.
-struct ThreadPoolState {
-  // The entire range [start, end) is split into num_work_blocks contiguous
-  // disjoint intervals (blocks), which are as equal as possible given
-  // total index count and requested number of  blocks.
-  //
-  // Those num_work_blocks blocks are then processed by num_workers
-  // workers
-  //
-  // Total number of integer indices in interval [start, end) is
-  // end - start, and when splitting them into num_work_blocks blocks
-  // we can either
-  //  - Split into equal blocks when (end - start) is divisible by
-  //    num_work_blocks
-  //  - Split into blocks with size difference at most 1:
-  //     - Size of the smallest block(s) is (end - start) / num_work_blocks
-  //     - (end - start) % num_work_blocks will need to be 1 index larger
-  //
-  // Note that this splitting is optimal in the sense of maximal difference
-  // between block sizes, since splitting into equal blocks is possible
-  // if and only if number of indices is divisible by number of blocks.
-  ThreadPoolState(int start, int end, int num_work_blocks);
-
-  // The start and end index of the for loop.
-  const int start;
-  const int end;
-  // The number of blocks that need to be processed.
-  const int num_work_blocks;
-  // Size of the smallest block
-  const int base_block_size;
-  // Number of blocks of size base_block_size + 1
-  const int num_base_p1_sized_blocks;
-
-  // The next block of work to be assigned to a worker.  The parallel for loop
-  // range is split into num_work_blocks blocks of work, with a single block of
-  // work being of size
-  //  - base_block_size + 1 for the first num_base_p1_sized_blocks blocks
-  //  - base_block_size for the rest of the blocks
-  //  blocks of indices are contiguous and disjoint
-  std::atomic<int> block_id;
-
-  // Provides a unique thread ID among all active threads
-  // We do not schedule more than num_threads threads via thread pool
-  // and caller thread might steal one ID
-  std::atomic<int> thread_id;
-
-  // Used to signal when all the work has been completed.  Thread safe.
-  BlockUntilFinished block_until_finished;
+// For parallel for iterations of type [](int thread_id, int i) -> void
+template <typename F>
+struct InvokeImpl<F, std::tuple<int, int>> {
+  static void InvokeOnSegment(int thread_id,
+                              std::tuple<int, int> range,
+                              const F& function) {
+    auto [start, end] = range;
+    for (int i = start; i < end; ++i) {
+      function(thread_id, i);
+    }
+  }
 };
+
+// For parallel for iterations of type [](tuple<int, int> range) -> void
+template <typename F>
+struct InvokeImpl<F, std::tuple<std::tuple<int, int>>> {
+  static void InvokeOnSegment(int thread_id,
+                              std::tuple<int, int> range,
+                              const F& function) {
+    (void)thread_id;
+    function(range);
+  }
+};
+
+// For parallel for iterations of type [](int thread_id, tuple<int, int> range)
+// -> void
+template <typename F>
+struct InvokeImpl<F, std::tuple<int, std::tuple<int, int>>> {
+  static void InvokeOnSegment(int thread_id,
+                              std::tuple<int, int> range,
+                              const F& function) {
+    function(thread_id, range);
+  }
+};
+
+// Invoke function on indices from contiguous range according to function
+// signature. The following signatures are supported:
+//  - Functions processing single index per call:
+//    - [](int index) -> void
+//    - [](int thread_id, int index) -> void
+//  - Functions processing contiguous range [start, end) of indices per call:
+//    - [](std::tuple<int, int> range) -> void
+// Function arguments might have reference type and const qualifier
+template <typename F>
+void InvokeOnSegment(int thread_id,
+                     std::tuple<int, int> range,
+                     const F& function) {
+  InvokeImpl<F, args_of_t<F>>::InvokeOnSegment(thread_id, range, function);
+}
 
 // This implementation uses a fixed size max worker pool with a shared task
 // queue. The problem of executing the function for the interval of [start, end)
@@ -140,7 +141,6 @@ void ParallelInvoke(ContextImpl* context,
                     int end,
                     int num_threads,
                     const F& function) {
-  using namespace parallel_for_details;
   CHECK(context != nullptr);
 
   // Maximal number of work items scheduled for a single thread
@@ -159,8 +159,8 @@ void ParallelInvoke(ContextImpl* context,
   // We use a std::shared_ptr because the main thread can finish all
   // the work before the tasks have been popped off the queue.  So the
   // shared state needs to exist for the duration of all the tasks.
-  std::shared_ptr<ThreadPoolState> shared_state(
-      new ThreadPoolState(start, end, num_work_blocks));
+  auto shared_state =
+      std::make_shared<ThreadPoolState>(start, end, num_work_blocks);
 
   // A function which tries to perform several chunks of work.
   auto task = [shared_state, num_threads, &function]() {
@@ -213,7 +213,8 @@ void ParallelInvoke(ContextImpl* context,
       const int curr_end = curr_start + base_block_size +
                            (block_id < num_base_p1_sized_blocks ? 1 : 0);
       // Perform each task in current block
-      InvokeOnSegment<F>(thread_id, curr_start, curr_end, function);
+      const auto range = std::make_tuple(curr_start, curr_end);
+      InvokeOnSegment<F>(thread_id, range, function);
     }
     shared_state->block_until_finished.Finished(num_jobs_finished);
   };
@@ -239,4 +240,4 @@ void ParallelInvoke(ContextImpl* context,
 
 }  // namespace ceres::internal
 
-#endif  // CERES_INTERNAL_PARALLEL_FOR_CXX_H_
+#endif
