@@ -253,7 +253,6 @@ static void Axpby(benchmark::State& state) {
   const double a = 3.1415;
   const double b = 1.2345;
 
-  double total = 0.;
   for (auto _ : state) {
     z = a * x + b * y;
   }
@@ -272,7 +271,6 @@ static void AxpbyParallel(benchmark::State& state) {
   const double a = 3.1415;
   const double b = 1.2345;
 
-  double total = 0.;
   for (auto _ : state) {
     Axpby(a, x, b, y, z, &context, num_threads);
   }
