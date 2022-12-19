@@ -16,6 +16,24 @@
       "message": "Looks good to me.\n\nBy the way, is there some list of things to check except the tests?\n\nI only check that BAL bundle adjustment example produces consistent results, but next time I definitely can check that other examples run the same way on some input data.",
       "revId": "9beea728f6c1007483ce81e0f5add57860a05a1a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08942926_96b9204a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-19T14:02:06Z",
+      "side": 1,
+      "message": "as I said, fruits of my sins :).\n\nI promise tests for inner iterations/coordinate descent minimizer are coming.\n\nSameer",
+      "tag": "mailMessageId\u003d\u003cCABqdRUDmU6PA-eV3fY9B0QQ6B3GROhGPJnRKROw66Ktjat6z_g@mail.gmail.com\u003e",
+      "revId": "9beea728f6c1007483ce81e0f5add57860a05a1a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
