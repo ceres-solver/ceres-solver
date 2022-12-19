@@ -28,6 +28,8 @@
 //
 // Author: vitus@google.com (Michael Vitus)
 
+#include "ceres/parallel_for.h"
+
 #include <algorithm>
 #include <atomic>
 #include <cmath>
@@ -37,7 +39,6 @@
 #include <tuple>
 
 #include "ceres/internal/config.h"
-#include "ceres/parallel_for.h"
 #include "glog/logging.h"
 
 namespace ceres::internal {
@@ -47,10 +48,11 @@ BlockUntilFinished::BlockUntilFinished(int num_total_jobs)
 
 void BlockUntilFinished::Finished(int num_jobs_finished) {
   if (num_jobs_finished == 0) return;
-  std::lock_guard<std::mutex> lock(mutex_);
-  num_total_jobs_finished_ += num_jobs_finished;
-  CHECK_LE(num_total_jobs_finished_, num_total_jobs_);
+  int num_total_jobs_finished = num_total_jobs_finished_.fetch_add(
+      num_jobs_finished, std::memory_order_seq_cst);
+  CHECK_LE(num_total_jobs_finished, num_total_jobs_);
   if (num_total_jobs_finished_ == num_total_jobs_) {
+    std::lock_guard<std::mutex> lock(mutex_);
     condition_.notify_one();
   }
 }
