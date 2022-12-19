@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac64d5a7_715216a3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-19T13:48:52Z",
+      "side": 1,
+      "message": "Looks good to me.\n\nBy the way, is there some list of things to check except the tests?\n\nI only check that BAL bundle adjustment example produces consistent results, but next time I definitely can check that other examples run the same way on some input data.",
+      "revId": "9beea728f6c1007483ce81e0f5add57860a05a1a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
