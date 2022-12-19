@@ -35,6 +35,7 @@
 
 #include "ceres/internal/eigen.h"
 #include "ceres/parallel_for.h"
+#include "ceres/parallel_vector_ops.h"
 
 namespace ceres::internal {
 

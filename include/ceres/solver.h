@@ -991,8 +991,7 @@ class CERES_EXPORT Solver {
     int num_threads_given = -1;
 
     // Number of threads actually used by the solver for Jacobian and
-    // residual evaluation. This number is not equal to
-    // num_threads_given if OpenMP is not available.
+    // residual evaluation.
     int num_threads_used = -1;
 
     // Type of the linear solver requested by the user.
