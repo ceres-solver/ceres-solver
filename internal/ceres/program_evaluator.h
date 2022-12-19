@@ -43,7 +43,7 @@
 // residual jacobians are written directly into their final position in the
 // block sparse matrix by the user's CostFunction; there is no copying.
 //
-// The evaluation is threaded with OpenMP or C++ threads.
+// The evaluation is threaded with C++ threads.
 //
 // The EvaluatePreparer and JacobianWriter interfaces are as follows:
 //
