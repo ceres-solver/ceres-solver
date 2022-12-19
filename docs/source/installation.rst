@@ -663,11 +663,6 @@ Options controlling Ceres configuration
    gains in the ``SPARSE_SCHUR`` solver, you can disable some of the
    template specializations by turning this ``OFF``.
 
-#. ``CERES_THREADING_MODEL [Default: CXX_THREADS > OPENMP > NO_THREADS]``:
-   Multi-threading backend Ceres should be compiled with.  This will
-   automatically be set to only accept the available subset of threading
-   options in the CMake GUI.
-
 #. ``BUILD_SHARED_LIBS [Default: OFF]``: By default Ceres is built as
    a static library, turn this ``ON`` to instead build Ceres as a
    shared library.
@@ -859,11 +854,6 @@ The Ceres components which can be specified are:
 
 #. ``SchurSpecializations``: Ceres built with Schur specializations
    (``SCHUR_SPECIALIZATIONS=ON``).
-
-#. ``OpenMP``: Ceres built with OpenMP (``CERES_THREADING_MODEL=OPENMP``).
-
-#. ``Multithreading``: Ceres built with *a* multithreading library.
-   This is equivalent to (``CERES_THREAD != NO_THREADS``).
 
 To specify one/multiple Ceres components use the ``COMPONENTS`` argument to
 `find_package()

@@ -2298,9 +2298,7 @@ The three arrays will be:
 .. member:: int Solver::Summary::num_threads_used
 
    Number of threads actually used by the solver for Jacobian and
-   residual evaluation. This number is not equal to
-   :member:`Solver::Summary::num_threads_given` if none of `OpenMP`
-   or `CXX_THREADS` is available.
+   residual evaluation.
 
 .. member:: LinearSolverType Solver::Summary::linear_solver_type_given
 

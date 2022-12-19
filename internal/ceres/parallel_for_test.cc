@@ -41,6 +41,7 @@
 
 #include "ceres/context_impl.h"
 #include "ceres/internal/config.h"
+#include "ceres/parallel_vector_ops.h"
 #include "glog/logging.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
@@ -190,8 +191,6 @@ bool BruteForcePartition(
 // Basic test if MaxPartitionCostIsFeasible and BruteForcePartition agree on
 // simple test-cases
 TEST(GuidedParallelFor, MaxPartitionCostIsFeasible) {
-  using parallel_for_details::MaxPartitionCostIsFeasible;
-
   std::vector<int> costs, cumulative_costs, partition;
   costs = {1, 2, 3, 5, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0};
   cumulative_costs.resize(costs.size());
@@ -242,8 +241,6 @@ TEST(GuidedParallelFor, MaxPartitionCostIsFeasible) {
 
 // Randomized tests for MaxPartitionCostIsFeasible
 TEST(GuidedParallelFor, MaxPartitionCostIsFeasibleRandomized) {
-  using parallel_for_details::MaxPartitionCostIsFeasible;
-
   std::vector<int> costs, cumulative_costs, partition;
   const auto dummy_getter = [](const int v) { return v; };
 
@@ -315,9 +312,7 @@ TEST(GuidedParallelFor, MaxPartitionCostIsFeasibleRandomized) {
   }
 }
 
-TEST(GuidedParallelFor, ComputePartition) {
-  using parallel_for_details::ComputePartition;
-
+TEST(GuidedParallelFor, PartitionRangeForParallelFor) {
   std::vector<int> costs, cumulative_costs, partition;
   const auto dummy_getter = [](const int v) { return v; };
 
@@ -359,8 +354,8 @@ TEST(GuidedParallelFor, ComputePartition) {
       }
     }
     EXPECT_TRUE(first_admissible != 0 || total == 0);
-    partition =
-        ComputePartition(start, end, M, cumulative_costs.data(), dummy_getter);
+    partition = PartitionRangeForParallelFor(
+        start, end, M, cumulative_costs.data(), dummy_getter);
     ASSERT_GT(partition.size(), 1);
     EXPECT_EQ(partition.front(), start);
     EXPECT_EQ(partition.back(), end);

@@ -43,7 +43,7 @@
 // residual jacobians are written directly into their final position in the
 // block sparse matrix by the user's CostFunction; there is no copying.
 //
-// The evaluation is threaded with OpenMP or C++ threads.
+// The evaluation is threaded with C++ threads.
 //
 // The EvaluatePreparer and JacobianWriter interfaces are as follows:
 //
@@ -96,6 +96,7 @@
 #include "ceres/execution_summary.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/parallel_for.h"
+#include "ceres/parallel_vector_ops.h"
 #include "ceres/parameter_block.h"
 #include "ceres/program.h"
 #include "ceres/residual_block.h"

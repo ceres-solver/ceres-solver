@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2018 Google Inc. All rights reserved.
+// Copyright 2023 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -38,6 +38,7 @@
 
 #include "ceres/internal/config.h"
 #include "ceres/parallel_for.h"
+#include "ceres/parallel_vector_ops.h"
 #include "glog/logging.h"
 
 namespace ceres::internal {
@@ -61,7 +62,9 @@ void BlockUntilFinished::Block() {
       lock, [&]() { return num_total_jobs_finished_ == num_total_jobs_; });
 }
 
-ThreadPoolState::ThreadPoolState(int start, int end, int num_work_blocks)
+ParallelInvokeState::ParallelInvokeState(int start,
+                                         int end,
+                                         int num_work_blocks)
     : start(start),
       end(end),
       num_work_blocks(num_work_blocks),
@@ -70,21 +73,5 @@ ThreadPoolState::ThreadPoolState(int start, int end, int num_work_blocks)
       block_id(0),
       thread_id(0),
       block_until_finished(num_work_blocks) {}
-
-int MaxNumThreadsAvailable() { return ThreadPool::MaxNumThreadsAvailable(); }
-
-void ParallelSetZero(ContextImpl* context,
-                     int num_threads,
-                     double* values,
-                     int num_values) {
-  ParallelFor(context,
-              0,
-              num_values,
-              num_threads,
-              [values](std::tuple<int, int> range) {
-                auto [start, end] = range;
-                std::fill(values + start, values + end, 0.);
-              });
-}
 
 }  // namespace ceres::internal
