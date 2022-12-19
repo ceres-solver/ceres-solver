@@ -37,6 +37,7 @@
 #include "ceres/block_structure.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/parallel_for.h"
+#include "ceres/parallel_for_partition.h"
 #include "ceres/partitioned_matrix_view.h"
 #include "ceres/small_blas.h"
 #include "glog/logging.h"
@@ -87,14 +88,14 @@ PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
   const int num_threads = options_.num_threads;
   if (transpose_bs != nullptr && num_threads > 1) {
     int kMaxPartitions = num_threads * 4;
-    e_cols_partition_ = parallel_for_details::ComputePartition(
+    e_cols_partition_ = ComputePartition(
         0,
         num_col_blocks_e_,
         kMaxPartitions,
         transpose_bs->rows.data(),
         [](const CompressedRow& row) { return row.cumulative_nnz; });
 
-    f_cols_partition_ = parallel_for_details::ComputePartition(
+    f_cols_partition_ = ComputePartition(
         num_col_blocks_e_,
         num_col_blocks_e_ + num_col_blocks_f_,
         kMaxPartitions,

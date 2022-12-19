@@ -219,7 +219,7 @@ add_library(ceres_internal OBJECT
     linear_solver.cc
     low_rank_inverse_hessian.cc
     minimizer.cc
-    parallel_for_cxx.cc
+    parallel_for.cc
     parallel_utils.cc
     parameter_block_ordering.cc
     partitioned_matrix_view.cc

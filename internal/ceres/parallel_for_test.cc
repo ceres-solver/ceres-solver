@@ -190,8 +190,6 @@ bool BruteForcePartition(
 // Basic test if MaxPartitionCostIsFeasible and BruteForcePartition agree on
 // simple test-cases
 TEST(GuidedParallelFor, MaxPartitionCostIsFeasible) {
-  using parallel_for_details::MaxPartitionCostIsFeasible;
-
   std::vector<int> costs, cumulative_costs, partition;
   costs = {1, 2, 3, 5, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0};
   cumulative_costs.resize(costs.size());
@@ -242,8 +240,6 @@ TEST(GuidedParallelFor, MaxPartitionCostIsFeasible) {
 
 // Randomized tests for MaxPartitionCostIsFeasible
 TEST(GuidedParallelFor, MaxPartitionCostIsFeasibleRandomized) {
-  using parallel_for_details::MaxPartitionCostIsFeasible;
-
   std::vector<int> costs, cumulative_costs, partition;
   const auto dummy_getter = [](const int v) { return v; };
 
@@ -316,8 +312,6 @@ TEST(GuidedParallelFor, MaxPartitionCostIsFeasibleRandomized) {
 }
 
 TEST(GuidedParallelFor, ComputePartition) {
-  using parallel_for_details::ComputePartition;
-
   std::vector<int> costs, cumulative_costs, partition;
   const auto dummy_getter = [](const int v) { return v; };
 
