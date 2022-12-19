@@ -47,7 +47,7 @@ Why?
     linear system. To this end Ceres ships with a variety of linear
     solvers - dense QR and dense Cholesky factorization (using
     `Eigen`_, `LAPACK`_ or `CUDA`_) for dense problems, sparse
-    Cholesky factorization (`SuiteSparse`_, `Accelerate`_, `Eigen`_)
+    Cholesky factorization (`SuiteSparse`_, `Apple's Accelerate`_, `Eigen`_)
     for large sparse problems, custom Schur complement based dense,
     sparse, and iterative linear solvers for `bundle adjustment`_
     problems.
@@ -59,9 +59,8 @@ Why?
     of Non-linear Conjugate Gradients, BFGS and LBFGS.
 
 * **Speed** - Ceres Solver has been extensively optimized, with C++
-  templating, hand written linear algebra routines and OpenMP or
-  modern C++ threads based multithreading of the Jacobian evaluation
-  and the linear solvers.
+  templating, hand written linear algebra routines and modern C++ threads
+  based multithreading of the Jacobian evaluation and the linear solvers.
 
 * **GPU Acceleration** If your system supports `CUDA`_ then Ceres
   Solver can use the Nvidia GPU on your system to speed up the solver.
