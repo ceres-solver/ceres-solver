@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6cd21c75_7b5d4df1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2022-12-20T13:26:12Z",
+      "side": 1,
+      "message": "Reorganized ParallelFor files according to discussion in previous CL, updated docs removing nonexistent build options, updated comments that mentioned OpenMP.\n \n - Merged header files into one (discussion in previous CL: https://ceres-solver-review.googlesource.com/c/ceres-solver/+/23621/2..6/internal/ceres/parallel_for.h#b400 )\n - Changed InvokeImpl calls to accept range bounds as tuple (discussion in previous CL: https://ceres-solver-review.googlesource.com/c/ceres-solver/+/23621/2..6/internal/ceres/parallel_for.h#b97 )\n - Changed ParallelFor call with partitioning to call ParallelFor with user-supplied partitions\n - There was lock acquiring for each thread in BlockUntilFinished::Finished, changed it to atomic increment followed by acquiring lock only for the thread that actually signals to the waiting thread\n - Updated comment about clock resolution on windows: according to https://learn.microsoft.com/en-us/windows/win32/api/profileapi/nf-profileapi-queryperformancecounter timestamp resolution on windows also has resolution \u003c\u003d 1-microsecond\n - Updated cmake and bazel build configurations\n\nDo you think it makes sense to add forward declarations of all \"user\"-facing methods ( ParallelFor / ParallelEvaluate / ParallelSetZero ) to the top of the file (in current version everything is declared according to dependency order, and those are deep inside of the header file)?",
+      "revId": "b5ac47fe8765ca93f208017c355bdce01476e4d0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
