@@ -16,6 +16,64 @@
       "message": "Reorganized ParallelFor files according to discussion in previous CL, updated docs removing nonexistent build options, updated comments that mentioned OpenMP.\n \n - Merged header files into one (discussion in previous CL: https://ceres-solver-review.googlesource.com/c/ceres-solver/+/23621/2..6/internal/ceres/parallel_for.h#b400 )\n - Changed InvokeImpl calls to accept range bounds as tuple (discussion in previous CL: https://ceres-solver-review.googlesource.com/c/ceres-solver/+/23621/2..6/internal/ceres/parallel_for.h#b97 )\n - Changed ParallelFor call with partitioning to call ParallelFor with user-supplied partitions\n - There was lock acquiring for each thread in BlockUntilFinished::Finished, changed it to atomic increment followed by acquiring lock only for the thread that actually signals to the waiting thread\n - Updated comment about clock resolution on windows: according to https://learn.microsoft.com/en-us/windows/win32/api/profileapi/nf-profileapi-queryperformancecounter timestamp resolution on windows also has resolution \u003c\u003d 1-microsecond\n - Updated cmake and bazel build configurations\n\nDo you think it makes sense to add forward declarations of all \"user\"-facing methods ( ParallelFor / ParallelEvaluate / ParallelSetZero ) to the top of the file (in current version everything is declared according to dependency order, and those are deep inside of the header file)?",
       "revId": "b5ac47fe8765ca93f208017c355bdce01476e4d0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8960175_99bcc032",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-20T17:03:20Z",
+      "side": 1,
+      "message": "Thanks Dmitriy, this looks very good. Yes forward declarations would be great. \n\nAlso adding documentation an example at the top of the file about what the user should be using is a good idea.\n\nTo this end, here is another idea.\n\nWhat if the top part of parallel_for.h is pulled into parallel_invoke_impl.h or two files, one for invoke and the other for the threadpoolstate etc. With those out of the way, the only thing visible to the user needs to be ParallelFor and the user can read the docs and work with that? \n\nI am curious what you think?\n\nMy other thought is as I mentioned in parallel_for.h, do we actually need all four variants of ParallelInvoke?",
+      "parentUuid": "6cd21c75_7b5d4df1",
+      "revId": "b5ac47fe8765ca93f208017c355bdce01476e4d0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f6ff802_9a0f79bc",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-20T17:03:20Z",
+      "side": 1,
+      "message": "do we really need this many variants of InvokeOnSegment? I understand we are using all these variants, but perhaps we can audit the usage and bring them down to fewer variants? the overloading here is making my brain hurt.",
+      "range": {
+        "startLine": 81,
+        "startChar": 20,
+        "endLine": 81,
+        "endChar": 30
+      },
+      "revId": "b5ac47fe8765ca93f208017c355bdce01476e4d0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff5380f2_e6f7decd",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-20T17:03:20Z",
+      "side": 1,
+      "message": "drop blank.",
+      "revId": "b5ac47fe8765ca93f208017c355bdce01476e4d0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
