@@ -38,12 +38,15 @@
 namespace ceres::internal {
 
 TEST(BlockRandomAccessDenseMatrix, GetCell) {
+  ContextImpl context;
+  constexpr int num_threads = 1;
+
   std::vector<Block> blocks;
   blocks.emplace_back(3, 0);
   blocks.emplace_back(4, 3);
   blocks.emplace_back(5, 7);
-  const int num_rows = 3 + 4 + 5;
-  BlockRandomAccessDenseMatrix m(blocks);
+  constexpr int num_rows = 3 + 4 + 5;
+  BlockRandomAccessDenseMatrix m(blocks, &context, num_threads);
   EXPECT_EQ(m.num_rows(), num_rows);
   EXPECT_EQ(m.num_cols(), num_rows);
 
@@ -67,13 +70,16 @@ TEST(BlockRandomAccessDenseMatrix, GetCell) {
 }
 
 TEST(BlockRandomAccessDenseMatrix, WriteCell) {
+  ContextImpl context;
+  constexpr int num_threads = 1;
+
   std::vector<Block> blocks;
   blocks.emplace_back(3, 0);
   blocks.emplace_back(4, 3);
   blocks.emplace_back(5, 7);
-  const int num_rows = 3 + 4 + 5;
+  constexpr int num_rows = 3 + 4 + 5;
 
-  BlockRandomAccessDenseMatrix m(blocks);
+  BlockRandomAccessDenseMatrix m(blocks, &context, num_threads);
 
   // Fill the cell (i,j) with (i + 1) * (j + 1)
   for (int i = 0; i < blocks.size(); ++i) {

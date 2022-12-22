@@ -75,7 +75,7 @@ class ImplicitSchurComplementTest : public ::testing::Test {
     const CompressedRowBlockStructure* bs = A_->block_structure();
     const int num_col_blocks = bs->cols.size();
     auto blocks = Tail(bs->cols, num_col_blocks - num_eliminate_blocks_);
-    BlockRandomAccessDenseMatrix blhs(blocks);
+    BlockRandomAccessDenseMatrix blhs(blocks, &context_, 1);
     const int num_schur_rows = blhs.num_rows();
 
     LinearSolver::Options options;
@@ -216,6 +216,7 @@ class ImplicitSchurComplementTest : public ::testing::Test {
     return testing::AssertionSuccess();
   }
 
+  ContextImpl context_;
   int num_rows_;
   int num_cols_;
   int num_eliminate_blocks_;

@@ -43,11 +43,13 @@
 namespace ceres::internal {
 
 TEST(BlockRandomAccessSparseMatrix, GetCell) {
+  ContextImpl context;
+  constexpr int num_threads = 1;
   std::vector<Block> blocks;
   blocks.emplace_back(3, 0);
   blocks.emplace_back(4, 3);
   blocks.emplace_back(5, 7);
-  const int num_rows = 3 + 4 + 5;
+  constexpr int num_rows = 3 + 4 + 5;
 
   std::set<std::pair<int, int>> block_pairs;
   int num_nonzeros = 0;
@@ -63,7 +65,7 @@ TEST(BlockRandomAccessSparseMatrix, GetCell) {
   block_pairs.emplace(0, 2);
   num_nonzeros += blocks[2].size * blocks[0].size;
 
-  BlockRandomAccessSparseMatrix m(blocks, block_pairs);
+  BlockRandomAccessSparseMatrix m(blocks, block_pairs, &context, num_threads);
   EXPECT_EQ(m.num_rows(), num_rows);
   EXPECT_EQ(m.num_cols(), num_rows);
 
@@ -138,7 +140,8 @@ class BlockRandomAccessSparseMatrixTest : public ::testing::Test {
     blocks.emplace_back(1, 0);
     std::set<std::pair<int, int>> block_pairs;
     block_pairs.emplace(0, 0);
-    m_ = std::make_unique<BlockRandomAccessSparseMatrix>(blocks, block_pairs);
+    m_ = std::make_unique<BlockRandomAccessSparseMatrix>(
+        blocks, block_pairs, &context_, 1);
   }
 
   void CheckIntPairToLong(int a, int b) {
@@ -163,6 +166,7 @@ class BlockRandomAccessSparseMatrixTest : public ::testing::Test {
   }
 
  private:
+  ContextImpl context_;
   std::unique_ptr<BlockRandomAccessSparseMatrix> m_;
 };
 

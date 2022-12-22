@@ -37,6 +37,7 @@
 #include <vector>
 
 #include "ceres/internal/export.h"
+#include "ceres/parallel_for.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
 #include "glog/logging.h"
@@ -45,8 +46,13 @@ namespace ceres::internal {
 
 BlockRandomAccessSparseMatrix::BlockRandomAccessSparseMatrix(
     const std::vector<Block>& blocks,
-    const std::set<std::pair<int, int>>& block_pairs)
-    : kMaxRowBlocks(10 * 1000 * 1000), blocks_(blocks) {
+    const std::set<std::pair<int, int>>& block_pairs,
+    ContextImpl* context,
+    int num_threads)
+    : kMaxRowBlocks(10 * 1000 * 1000),
+      blocks_(blocks),
+      context_(context),
+      num_threads_(num_threads) {
   CHECK_LT(blocks.size(), kMaxRowBlocks);
 
   const int num_cols = NumScalarEntries(blocks);
@@ -77,7 +83,7 @@ BlockRandomAccessSparseMatrix::BlockRandomAccessSparseMatrix(
     const int col_block_size = blocks_[block_pair.second].size;
     cell_values_.emplace_back(block_pair, values + pos);
     layout_[IntPairToLong(block_pair.first, block_pair.second)] =
-        new CellInfo(values + pos);
+        std::make_unique<CellInfo>(values + pos);
     pos += row_block_size * col_block_size;
   }
 
@@ -101,14 +107,6 @@ BlockRandomAccessSparseMatrix::BlockRandomAccessSparseMatrix(
   }
 }
 
-// Assume that the user does not hold any locks on any cell blocks
-// when they are calling SetZero.
-BlockRandomAccessSparseMatrix::~BlockRandomAccessSparseMatrix() {
-  for (const auto& entry : layout_) {
-    delete entry.second;
-  }
-}
-
 CellInfo* BlockRandomAccessSparseMatrix::GetCell(int row_block_id,
                                                  int col_block_id,
                                                  int* row,
@@ -125,15 +123,14 @@ CellInfo* BlockRandomAccessSparseMatrix::GetCell(int row_block_id,
   *col = 0;
   *row_stride = blocks_[row_block_id].size;
   *col_stride = blocks_[col_block_id].size;
-  return it->second;
+  return it->second.get();
 }
 
 // Assume that the user does not hold any locks on any cell blocks
 // when they are calling SetZero.
 void BlockRandomAccessSparseMatrix::SetZero() {
-  if (tsm_->num_nonzeros()) {
-    VectorRef(tsm_->mutable_values(), tsm_->num_nonzeros()).setZero();
-  }
+  ParallelSetZero(
+      context_, num_threads_, tsm_->mutable_values(), tsm_->num_nonzeros());
 }
 
 void BlockRandomAccessSparseMatrix::SymmetricRightMultiplyAndAccumulate(

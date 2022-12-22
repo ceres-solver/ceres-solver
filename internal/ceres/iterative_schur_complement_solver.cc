@@ -68,9 +68,8 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
   EventLogger event_logger("IterativeSchurComplementSolver::Solve");
 
   CHECK(A->block_structure() != nullptr);
-  if (options_.num_threads != 1) {
-    A->AddTransposeBlockStructure();
-  }
+  CHECK(A->transpose_block_structure() != nullptr);
+
   const int num_eliminate_blocks = options_.elimination_groups[0];
   // Initialize a ImplicitSchurComplement object.
   if (schur_complement_ == nullptr) {
