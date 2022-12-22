@@ -36,6 +36,7 @@
 
 #include "ceres/block_random_access_matrix.h"
 #include "ceres/block_structure.h"
+#include "ceres/context_impl.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
 
@@ -56,13 +57,11 @@ class CERES_NO_EXPORT BlockRandomAccessDenseMatrix
  public:
   // blocks is a vector of block sizes. The resulting matrix has
   // blocks.size() * blocks.size() cells.
-  explicit BlockRandomAccessDenseMatrix(std::vector<Block> blocks);
-  BlockRandomAccessDenseMatrix(const BlockRandomAccessDenseMatrix&) = delete;
-  void operator=(const BlockRandomAccessDenseMatrix&) = delete;
+  explicit BlockRandomAccessDenseMatrix(std::vector<Block> blocks,
+                                        ContextImpl* context,
+                                        int num_threads);
 
-  // The destructor is not thread safe. It assumes that no one is
-  // modifying any cells when the matrix is being destroyed.
-  ~BlockRandomAccessDenseMatrix() override;
+  ~BlockRandomAccessDenseMatrix() override = default;
 
   // BlockRandomAccessMatrix interface.
   CellInfo* GetCell(int row_block_id,
@@ -72,8 +71,6 @@ class CERES_NO_EXPORT BlockRandomAccessDenseMatrix
                     int* row_stride,
                     int* col_stride) final;
 
-  // This is not a thread safe method, it assumes that no cell is
-  // locked.
   void SetZero() final;
 
   // Since the matrix is square with the same row and column block
@@ -86,8 +83,10 @@ class CERES_NO_EXPORT BlockRandomAccessDenseMatrix
   double* mutable_values() { return values_.get(); }
 
  private:
-  int num_rows_;
   std::vector<Block> blocks_;
+  ContextImpl* context_ = nullptr;
+  int num_threads_ = -1;
+  int num_rows_ = -1;
   std::unique_ptr<double[]> values_;
   std::unique_ptr<CellInfo[]> cell_infos_;
 };
