@@ -40,6 +40,7 @@
 
 #include "ceres/block_random_access_matrix.h"
 #include "ceres/block_structure.h"
+#include "ceres/context_impl.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
 #include "ceres/small_blas.h"
@@ -60,13 +61,13 @@ class CERES_NO_EXPORT BlockRandomAccessSparseMatrix
   // of this matrix.
   BlockRandomAccessSparseMatrix(
       const std::vector<Block>& blocks,
-      const std::set<std::pair<int, int>>& block_pairs);
-  BlockRandomAccessSparseMatrix(const BlockRandomAccessSparseMatrix&) = delete;
-  void operator=(const BlockRandomAccessSparseMatrix&) = delete;
+      const std::set<std::pair<int, int>>& block_pairs,
+      ContextImpl* context,
+      int num_threads);
 
   // The destructor is not thread safe. It assumes that no one is
   // modifying any cells when the matrix is being destroyed.
-  ~BlockRandomAccessSparseMatrix() override;
+  ~BlockRandomAccessSparseMatrix() override = default;
 
   // BlockRandomAccessMatrix Interface.
   CellInfo* GetCell(int row_block_id,
@@ -108,14 +109,16 @@ class CERES_NO_EXPORT BlockRandomAccessSparseMatrix
 
   // row/column block sizes.
   const std::vector<Block> blocks_;
+  ContextImpl* context_ = nullptr;
+  const int num_threads_ = 1;
 
   // A mapping from <row_block_id, col_block_id> to the position in
   // the values array of tsm_ where the block is stored.
-  using LayoutType = std::unordered_map<long, CellInfo*>;
+  using LayoutType = std::unordered_map<long, std::unique_ptr<CellInfo>>;
   LayoutType layout_;
 
   // In order traversal of contents of the matrix. This allows us to
-  // implement a matrix-vector which is 20% faster than using the
+  // implement a matrix-vector product which is 20% faster than using the
   // iterator in the Layout object instead.
   std::vector<std::pair<std::pair<int, int>, double*>> cell_values_;
   // The underlying matrix object which actually stores the cells.

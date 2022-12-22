@@ -170,7 +170,8 @@ void DenseSchurComplementSolver::InitStorage(
   const int num_eliminate_blocks = options().elimination_groups[0];
   const int num_col_blocks = bs->cols.size();
   auto blocks = Tail(bs->cols, num_col_blocks - num_eliminate_blocks);
-  set_lhs(std::make_unique<BlockRandomAccessDenseMatrix>(blocks));
+  set_lhs(std::make_unique<BlockRandomAccessDenseMatrix>(
+      blocks, options().context, options().num_threads));
   ResizeRhs(lhs()->num_rows());
 }
 
@@ -280,8 +281,8 @@ void SparseSchurComplementSolver::InitStorage(
     }
   }
 
-  set_lhs(
-      std::make_unique<BlockRandomAccessSparseMatrix>(blocks_, block_pairs));
+  set_lhs(std::make_unique<BlockRandomAccessSparseMatrix>(
+      blocks_, block_pairs, options().context, options().num_threads));
   ResizeRhs(lhs()->num_rows());
 }
 
@@ -345,8 +346,8 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingConjugateGradients(
   CHECK_EQ(options().preconditioner_type, SCHUR_JACOBI);
 
   if (preconditioner_ == nullptr) {
-    preconditioner_ =
-        std::make_unique<BlockRandomAccessDiagonalMatrix>(blocks_);
+    preconditioner_ = std::make_unique<BlockRandomAccessDiagonalMatrix>(
+        blocks_, options().context, options().num_threads);
   }
 
   auto* sc = down_cast<BlockRandomAccessSparseMatrix*>(mutable_lhs());

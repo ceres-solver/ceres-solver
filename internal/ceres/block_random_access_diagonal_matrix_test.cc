@@ -52,7 +52,8 @@ class BlockRandomAccessDiagonalMatrixTest : public ::testing::Test {
     const int num_rows = 3 + 4 + 5;
     num_nonzeros_ = 3 * 3 + 4 * 4 + 5 * 5;
 
-    m_ = std::make_unique<BlockRandomAccessDiagonalMatrix>(blocks);
+    m_ =
+        std::make_unique<BlockRandomAccessDiagonalMatrix>(blocks, &context_, 1);
 
     EXPECT_EQ(m_->num_rows(), num_rows);
     EXPECT_EQ(m_->num_cols(), num_rows);
@@ -97,17 +98,17 @@ class BlockRandomAccessDiagonalMatrixTest : public ::testing::Test {
   }
 
  protected:
+  ContextImpl context_;
   int num_nonzeros_;
   std::unique_ptr<BlockRandomAccessDiagonalMatrix> m_;
 };
 
 TEST_F(BlockRandomAccessDiagonalMatrixTest, MatrixContents) {
-  const TripletSparseMatrix* tsm = m_->matrix();
-  EXPECT_EQ(tsm->num_nonzeros(), num_nonzeros_);
-  EXPECT_EQ(tsm->max_num_nonzeros(), num_nonzeros_);
+  auto* crsm = m_->matrix();
+  EXPECT_EQ(crsm->num_nonzeros(), num_nonzeros_);
 
   Matrix dense;
-  tsm->ToDenseMatrix(&dense);
+  crsm->ToDenseMatrix(&dense);
 
   double kTolerance = 1e-14;
 
@@ -141,9 +142,9 @@ TEST_F(BlockRandomAccessDiagonalMatrixTest, MatrixContents) {
 
 TEST_F(BlockRandomAccessDiagonalMatrixTest, RightMultiplyAndAccumulate) {
   double kTolerance = 1e-14;
-  const TripletSparseMatrix* tsm = m_->matrix();
+  auto* crsm = m_->matrix();
   Matrix dense;
-  tsm->ToDenseMatrix(&dense);
+  crsm->ToDenseMatrix(&dense);
   Vector x = Vector::Random(dense.rows());
   Vector expected_y = dense * x;
   Vector actual_y = Vector::Zero(dense.rows());
@@ -153,14 +154,14 @@ TEST_F(BlockRandomAccessDiagonalMatrixTest, RightMultiplyAndAccumulate) {
 
 TEST_F(BlockRandomAccessDiagonalMatrixTest, Invert) {
   double kTolerance = 1e-14;
-  const TripletSparseMatrix* tsm = m_->matrix();
+  auto* crsm = m_->matrix();
   Matrix dense;
-  tsm->ToDenseMatrix(&dense);
+  crsm->ToDenseMatrix(&dense);
   Matrix expected_inverse =
       dense.llt().solve(Matrix::Identity(dense.rows(), dense.rows()));
 
   m_->Invert();
-  tsm->ToDenseMatrix(&dense);
+  crsm->ToDenseMatrix(&dense);
 
   EXPECT_NEAR((expected_inverse - dense).norm(), 0.0, kTolerance);
 }

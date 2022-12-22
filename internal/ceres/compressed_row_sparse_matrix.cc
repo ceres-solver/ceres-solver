@@ -578,7 +578,9 @@ CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(
   for (auto& block : blocks) {
     for (int r = 0; r < block.size; ++r) {
       *(rows++) = idx_cursor;
-      values[idx_cursor + r] = diagonal[col_cursor + r];
+      if (diagonal != nullptr) {
+        values[idx_cursor + r] = diagonal[col_cursor + r];
+      }
       for (int c = 0; c < block.size; ++c, ++idx_cursor) {
         *(cols++) = col_cursor + c;
       }
