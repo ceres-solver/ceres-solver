@@ -127,7 +127,7 @@ class SchurEliminatorTest : public ::testing::Test {
     const CompressedRowBlockStructure* bs = A->block_structure();
     const int num_col_blocks = bs->cols.size();
     auto blocks = Tail(bs->cols, num_col_blocks - num_eliminate_blocks);
-    BlockRandomAccessDenseMatrix lhs(blocks);
+    BlockRandomAccessDenseMatrix lhs(blocks, &context_, 1);
 
     const int num_cols = A->num_cols();
     const int schur_size = lhs.num_rows();
@@ -135,8 +135,7 @@ class SchurEliminatorTest : public ::testing::Test {
     Vector rhs(schur_size);
 
     LinearSolver::Options options;
-    ContextImpl context;
-    options.context = &context;
+    options.context = &context_;
     options.elimination_groups.push_back(num_eliminate_blocks);
     if (use_static_structure) {
       DetectStructure(*bs,
@@ -177,6 +176,8 @@ class SchurEliminatorTest : public ::testing::Test {
                 0.0,
                 relative_tolerance);
   }
+
+  ContextImpl context_;
 
   std::unique_ptr<BlockSparseMatrix> A;
   std::unique_ptr<double[]> b;
@@ -223,6 +224,8 @@ TEST(SchurEliminatorForOneFBlock, MatchesSchurEliminator) {
   constexpr int kEBlockSize = 3;
   constexpr int kFBlockSize = 6;
   constexpr int num_e_blocks = 5;
+
+  ContextImpl context;
 
   auto* bs = new CompressedRowBlockStructure;
   bs->cols.resize(num_e_blocks + 1);
@@ -294,8 +297,8 @@ TEST(SchurEliminatorForOneFBlock, MatchesSchurEliminator) {
 
   std::vector<Block> blocks;
   blocks.emplace_back(kFBlockSize, 0);
-  BlockRandomAccessDenseMatrix actual_lhs(blocks);
-  BlockRandomAccessDenseMatrix expected_lhs(blocks);
+  BlockRandomAccessDenseMatrix actual_lhs(blocks, &context, 1);
+  BlockRandomAccessDenseMatrix expected_lhs(blocks, &context, 1);
   Vector actual_rhs(kFBlockSize);
   Vector expected_rhs(kFBlockSize);
 
@@ -307,7 +310,6 @@ TEST(SchurEliminatorForOneFBlock, MatchesSchurEliminator) {
   expected_e_sol.setZero();
 
   {
-    ContextImpl context;
     LinearSolver::Options linear_solver_options;
     linear_solver_options.e_block_size = kEBlockSize;
     linear_solver_options.row_block_size = kRowBlockSize;

@@ -102,7 +102,7 @@ class BenchmarkData {
 
     std::vector<Block> blocks;
     blocks.emplace_back(kFBlockSize, 0);
-    lhs_ = std::make_unique<BlockRandomAccessDenseMatrix>(blocks);
+    lhs_ = std::make_unique<BlockRandomAccessDenseMatrix>(blocks, &context_, 1);
     diagonal_.resize(matrix_->num_cols());
     diagonal_.setOnes();
     rhs_.resize(kFBlockSize);
@@ -121,7 +121,11 @@ class BenchmarkData {
   Vector* mutable_y() { return &y_; }
   Vector* mutable_z() { return &z_; }
 
+  ContextImpl* context() { return &context_; }
+
  private:
+  ContextImpl context_;
+
   std::unique_ptr<BlockSparseMatrix> matrix_;
   Vector b_;
   std::unique_ptr<BlockRandomAccessDenseMatrix> lhs_;
@@ -137,12 +141,11 @@ static void BM_SchurEliminatorEliminate(benchmark::State& state) {
   const int num_e_blocks = state.range(0);
   BenchmarkData data(num_e_blocks);
 
-  ContextImpl context;
   LinearSolver::Options linear_solver_options;
   linear_solver_options.e_block_size = kEBlockSize;
   linear_solver_options.row_block_size = kRowBlockSize;
   linear_solver_options.f_block_size = kFBlockSize;
-  linear_solver_options.context = &context;
+  linear_solver_options.context = data.context();
   std::unique_ptr<SchurEliminatorBase> eliminator(
       SchurEliminatorBase::Create(linear_solver_options));
 
@@ -160,12 +163,11 @@ static void BM_SchurEliminatorBackSubstitute(benchmark::State& state) {
   const int num_e_blocks = state.range(0);
   BenchmarkData data(num_e_blocks);
 
-  ContextImpl context;
   LinearSolver::Options linear_solver_options;
   linear_solver_options.e_block_size = kEBlockSize;
   linear_solver_options.row_block_size = kRowBlockSize;
   linear_solver_options.f_block_size = kFBlockSize;
-  linear_solver_options.context = &context;
+  linear_solver_options.context = data.context();
   std::unique_ptr<SchurEliminatorBase> eliminator(
       SchurEliminatorBase::Create(linear_solver_options));
 

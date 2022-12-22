@@ -37,47 +37,25 @@
 #include <vector>
 
 #include "Eigen/Dense"
+#include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/internal/export.h"
+#include "ceres/parallel_for.h"
 #include "ceres/stl_util.h"
-#include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
 #include "glog/logging.h"
 
 namespace ceres::internal {
 
-// TODO(sameeragarwal): Drop the dependence on TripletSparseMatrix.
-
 BlockRandomAccessDiagonalMatrix::BlockRandomAccessDiagonalMatrix(
-    std::vector<Block> blocks)
-    : blocks_(std::move(blocks)) {
-  const int num_cols = NumScalarEntries(blocks_);
-  const int num_nonzeros = SumSquaredSizes(blocks_);
-  VLOG(1) << "Matrix Size [" << num_cols << "," << num_cols << "] "
-          << num_nonzeros;
-
-  tsm_ =
-      std::make_unique<TripletSparseMatrix>(num_cols, num_cols, num_nonzeros);
-  tsm_->set_num_nonzeros(num_nonzeros);
-  int* rows = tsm_->mutable_rows();
-  int* cols = tsm_->mutable_cols();
-  double* values = tsm_->mutable_values();
-
-  int pos = 0;
-  for (auto& block : blocks_) {
-    layout_.push_back(new CellInfo(values + pos));
-    for (int r = 0; r < block.size; ++r) {
-      for (int c = 0; c < block.size; ++c, ++pos) {
-        rows[pos] = block.position + r;
-        cols[pos] = block.position + c;
-      }
-    }
+    const std::vector<Block>& blocks, ContextImpl* context, int num_threads)
+    : context_(context), num_threads_(num_threads) {
+  m_ = CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(nullptr, blocks);
+  double* values = m_->mutable_values();
+  layout_.reserve(blocks.size());
+  for (auto& block : blocks) {
+    layout_.emplace_back(std::make_unique<CellInfo>(values));
+    values += block.size * block.size;
   }
-}
-
-// Assume that the user does not hold any locks on any cell blocks
-// when they are calling SetZero.
-BlockRandomAccessDiagonalMatrix::~BlockRandomAccessDiagonalMatrix() {
-  STLDeleteContainerPointers(layout_.begin(), layout_.end());
 }
 
 CellInfo* BlockRandomAccessDiagonalMatrix::GetCell(int row_block_id,
@@ -89,46 +67,51 @@ CellInfo* BlockRandomAccessDiagonalMatrix::GetCell(int row_block_id,
   if (row_block_id != col_block_id) {
     return nullptr;
   }
-  const int stride = blocks_[row_block_id].size;
+
+  auto& blocks = m_->row_blocks();
+  const int stride = blocks[row_block_id].size;
 
   // Each cell is stored contiguously as its own little dense matrix.
   *row = 0;
   *col = 0;
   *row_stride = stride;
   *col_stride = stride;
-  return layout_[row_block_id];
+  return layout_[row_block_id].get();
 }
 
 // Assume that the user does not hold any locks on any cell blocks
 // when they are calling SetZero.
 void BlockRandomAccessDiagonalMatrix::SetZero() {
-  if (tsm_->num_nonzeros()) {
-    VectorRef(tsm_->mutable_values(), tsm_->num_nonzeros()).setZero();
-  }
+  ParallelSetZero(
+      context_, num_threads_, m_->mutable_values(), m_->num_nonzeros());
 }
 
 void BlockRandomAccessDiagonalMatrix::Invert() {
-  double* values = tsm_->mutable_values();
-  for (auto& block : blocks_) {
-    MatrixRef b(values, block.size, block.size);
+  auto& blocks = m_->row_blocks();
+  const int num_blocks = blocks.size();
+  ParallelFor(context_, 0, num_blocks, num_threads_, [this, blocks](int i) {
+    auto* cell_info = layout_[i].get();
+    auto& block = blocks[i];
+    MatrixRef b(cell_info->values, block.size, block.size);
     b = b.selfadjointView<Eigen::Upper>().llt().solve(
         Matrix::Identity(block.size, block.size));
-    values += block.size * block.size;
-  }
+  });
 }
 
 void BlockRandomAccessDiagonalMatrix::RightMultiplyAndAccumulate(
     const double* x, double* y) const {
   CHECK(x != nullptr);
   CHECK(y != nullptr);
-  const double* values = tsm_->values();
-  for (auto& block : blocks_) {
-    ConstMatrixRef b(values, block.size, block.size);
-    VectorRef(y, block.size).noalias() += b * ConstVectorRef(x, block.size);
-    x += block.size;
-    y += block.size;
-    values += block.size * block.size;
-  }
+  auto& blocks = m_->row_blocks();
+  const int num_blocks = blocks.size();
+  ParallelFor(
+      context_, 0, num_blocks, num_threads_, [this, blocks, x, y](int i) {
+        auto* cell_info = layout_[i].get();
+        auto& block = blocks[i];
+        ConstMatrixRef b(cell_info->values, block.size, block.size);
+        VectorRef(y + block.position, block.size).noalias() +=
+            b * ConstVectorRef(x + block.position, block.size);
+      });
 }
 
 }  // namespace ceres::internal

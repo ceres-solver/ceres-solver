@@ -59,7 +59,8 @@ SchurJacobiPreconditioner::SchurJacobiPreconditioner(
     position += blocks[i].size;
   }
 
-  m_ = std::make_unique<BlockRandomAccessDiagonalMatrix>(blocks);
+  m_ = std::make_unique<BlockRandomAccessDiagonalMatrix>(
+      blocks, options.context, options.num_threads);
   InitEliminator(bs);
 }
 

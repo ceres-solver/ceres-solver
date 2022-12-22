@@ -157,7 +157,8 @@ void VisibilityBasedPreconditioner::ComputeClusterTridiagonalSparsity(
 void VisibilityBasedPreconditioner::InitStorage(
     const CompressedRowBlockStructure& bs) {
   ComputeBlockPairsInPreconditioner(bs);
-  m_ = std::make_unique<BlockRandomAccessSparseMatrix>(blocks_, block_pairs_);
+  m_ = std::make_unique<BlockRandomAccessSparseMatrix>(
+      blocks_, block_pairs_, options_.context, options_.num_threads);
 }
 
 // Call the canonical views algorithm and cluster the cameras based on

@@ -34,13 +34,14 @@
 #include <vector>
 
 #include "ceres/internal/eigen.h"
+#include "ceres/parallel_for.h"
 #include "glog/logging.h"
 
 namespace ceres::internal {
 
 BlockRandomAccessDenseMatrix::BlockRandomAccessDenseMatrix(
-    std::vector<Block> blocks)
-    : blocks_(std::move(blocks)) {
+    std::vector<Block> blocks, ContextImpl* context, int num_threads)
+    : blocks_(std::move(blocks)), context_(context), num_threads_(num_threads) {
   const int num_blocks = blocks_.size();
   num_rows_ = NumScalarEntries(blocks_);
   values_ = std::make_unique<double[]>(num_rows_ * num_rows_);
@@ -51,10 +52,6 @@ BlockRandomAccessDenseMatrix::BlockRandomAccessDenseMatrix(
 
   SetZero();
 }
-
-// Assume that the user does not hold any locks on any cell blocks
-// when they are calling SetZero.
-BlockRandomAccessDenseMatrix::~BlockRandomAccessDenseMatrix() = default;
 
 CellInfo* BlockRandomAccessDenseMatrix::GetCell(const int row_block_id,
                                                 const int col_block_id,
@@ -72,9 +69,7 @@ CellInfo* BlockRandomAccessDenseMatrix::GetCell(const int row_block_id,
 // Assume that the user does not hold any locks on any cell blocks
 // when they are calling SetZero.
 void BlockRandomAccessDenseMatrix::SetZero() {
-  if (num_rows_) {
-    VectorRef(values_.get(), num_rows_ * num_rows_).setZero();
-  }
+  ParallelSetZero(context_, num_threads_, values_.get(), num_rows_ * num_rows_);
 }
 
 }  // namespace ceres::internal
