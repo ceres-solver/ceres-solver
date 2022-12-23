@@ -69,6 +69,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f5b80a4_9643ae27",
+        "filename": "internal/ceres/block_random_access_dense_matrix_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-23T14:40:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56f702bd_09b8a9bb",
+      "revId": "1284c215e67847cb25220d4646aab9093ddf3a86",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9bfbd6e9_f445a627",
@@ -86,6 +104,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f70753dd_effec2f3",
+        "filename": "internal/ceres/block_random_access_dense_matrix_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-23T14:40:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bfbd6e9_f445a627",
+      "revId": "1284c215e67847cb25220d4646aab9093ddf3a86",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b133ee33_3e9de32e",
@@ -99,6 +135,30 @@
       "writtenOn": "2022-12-22T18:51:04Z",
       "side": 1,
       "message": "`constexpr`",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 7
+      },
+      "revId": "1284c215e67847cb25220d4646aab9093ddf3a86",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0a139a5_8f5855af",
+        "filename": "internal/ceres/block_random_access_sparse_matrix_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-23T14:40:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b133ee33_3e9de32e",
       "range": {
         "startLine": 47,
         "startChar": 2,
