@@ -52,6 +52,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d795e229_e7572e41",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-23T14:43:58Z",
+      "side": 1,
+      "message": "This has come up before and its a bit tricky.\nWe have a context object that carries the threadpool -- which can be used across solves. independent of that we allow the user to specify the number of threads which can change from solve to solve.\nso storing num_threads inside contextimpl seems odd from that perspective.\nI am open to ideas on how we go about resolving this.",
+      "parentUuid": "27ec5fa6_9cc1c294",
+      "revId": "1284c215e67847cb25220d4646aab9093ddf3a86",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "56f702bd_09b8a9bb",
