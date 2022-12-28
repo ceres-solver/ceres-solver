@@ -75,10 +75,12 @@ TEST(CUDADenseCholesky, Cholesky4x4Matrix) {
   Eigen::Vector4d x = Eigen::Vector4d::Zero();
   ASSERT_EQ(dense_cuda_solver->Solve(b.data(), x.data(), &error_string),
             LinearSolverTerminationType::SUCCESS);
-  EXPECT_NEAR(x(0), 113.75 / 3.0, std::numeric_limits<double>::epsilon() * 10);
-  EXPECT_NEAR(x(1), -31.0 / 3.0, std::numeric_limits<double>::epsilon() * 10);
-  EXPECT_NEAR(x(2), 5.0 / 3.0, std::numeric_limits<double>::epsilon() * 10);
-  EXPECT_NEAR(x(3), 1.0000, std::numeric_limits<double>::epsilon() * 10);
+  static const double kEpsilon = std::numeric_limits<double>::epsilon() * 10;
+  const Eigen::Vector4d x_expected(113.75 / 3.0, -31.0 / 3.0, 5.0 / 3.0, 1.0);
+  EXPECT_NEAR((x[0] - x_expected[0]) / x_expected[0], 0.0, kEpsilon);
+  EXPECT_NEAR((x[1] - x_expected[1]) / x_expected[1], 0.0, kEpsilon);
+  EXPECT_NEAR((x[2] - x_expected[2]) / x_expected[2], 0.0, kEpsilon);
+  EXPECT_NEAR((x[3] - x_expected[3]) / x_expected[3], 0.0, kEpsilon);
 }
 
 TEST(CUDADenseCholesky, SingularMatrix) {
@@ -174,7 +176,7 @@ TEST(CUDADenseCholesky, Randomized1600x1600Tests) {
     summary.termination_type = dense_cholesky->FactorAndSolve(
         kNumCols, lhs.data(), rhs.data(), x_computed.data(), &summary.message);
     ASSERT_EQ(summary.termination_type, LinearSolverTerminationType::SUCCESS);
-    static const double kEpsilon = std::numeric_limits<double>::epsilon() * 2e5;
+    static const double kEpsilon = std::numeric_limits<double>::epsilon() * 3e5;
     ASSERT_NEAR(
         (x_computed - x_expected).norm() / x_expected.norm(), 0.0, kEpsilon);
   }
@@ -236,11 +238,12 @@ TEST(CUDADenseCholeskyMixedPrecision, Cholesky4x4Matrix1Step) {
   // A single step of the mixed precision solver will be equivalent to solving
   // in low precision (FP32). Hence the tolerance is defined w.r.t. FP32 epsilon
   // instead of FP64 epsilon.
-  static const double kEpsilon = std::numeric_limits<float>::epsilon() * 15.0f;
-  EXPECT_NEAR(x(0), 113.75 / 3.0, kEpsilon);
-  EXPECT_NEAR(x(1), -31.0 / 3.0, kEpsilon);
-  EXPECT_NEAR(x(2), 5.0 / 3.0, kEpsilon);
-  EXPECT_NEAR(x(3), 1.0000, kEpsilon);
+  static const double kEpsilon = std::numeric_limits<float>::epsilon() * 10;
+  const Eigen::Vector4d x_expected(113.75 / 3.0, -31.0 / 3.0, 5.0 / 3.0, 1.0);
+  EXPECT_NEAR((x[0] - x_expected[0]) / x_expected[0], 0.0, kEpsilon);
+  EXPECT_NEAR((x[1] - x_expected[1]) / x_expected[1], 0.0, kEpsilon);
+  EXPECT_NEAR((x[2] - x_expected[2]) / x_expected[2], 0.0, kEpsilon);
+  EXPECT_NEAR((x[3] - x_expected[3]) / x_expected[3], 0.0, kEpsilon);
 }
 
 // Tests the CUDA Cholesky solver with a simple 4x4 matrix.
@@ -272,11 +275,12 @@ TEST(CUDADenseCholeskyMixedPrecision, Cholesky4x4Matrix4Steps) {
             LinearSolverTerminationType::SUCCESS);
   // The error does not reduce beyond four iterations, and stagnates at this
   // level of precision.
-  static const double kEpsilon = std::numeric_limits<double>::epsilon() * 3e2;
-  EXPECT_NEAR(x(0), 113.75 / 3.0, kEpsilon);
-  EXPECT_NEAR(x(1), -31.0 / 3.0, kEpsilon);
-  EXPECT_NEAR(x(2), 5.0 / 3.0, kEpsilon);
-  EXPECT_NEAR(x(3), 1.0000, kEpsilon);
+  static const double kEpsilon = std::numeric_limits<double>::epsilon() * 100;
+  const Eigen::Vector4d x_expected(113.75 / 3.0, -31.0 / 3.0, 5.0 / 3.0, 1.0);
+  EXPECT_NEAR((x[0] - x_expected[0]) / x_expected[0], 0.0, kEpsilon);
+  EXPECT_NEAR((x[1] - x_expected[1]) / x_expected[1], 0.0, kEpsilon);
+  EXPECT_NEAR((x[2] - x_expected[2]) / x_expected[2], 0.0, kEpsilon);
+  EXPECT_NEAR((x[3] - x_expected[3]) / x_expected[3], 0.0, kEpsilon);
 }
 
 TEST(CUDADenseCholeskyMixedPrecision, Randomized1600x1600Tests) {
