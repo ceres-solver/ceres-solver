@@ -76,10 +76,8 @@ TEST(CUDADenseQR, QR4x4Matrix) {
             LinearSolverTerminationType::SUCCESS);
   // Empirically observed accuracy of cuSolverDN's QR solver.
   const double kEpsilon = 1e-11;
-  EXPECT_NEAR(x(0), 113.75 / 3.0, kEpsilon);
-  EXPECT_NEAR(x(1), -31.0 / 3.0, kEpsilon);
-  EXPECT_NEAR(x(2), 5.0 / 3.0, kEpsilon);
-  EXPECT_NEAR(x(3), 1.0000, kEpsilon);
+  const Eigen::Vector4d x_expected(113.75 / 3.0, -31.0 / 3.0, 5.0 / 3.0, 1.0);
+  EXPECT_NEAR((x - x_expected).norm() / x_expected.norm(), 0.0, kEpsilon);
 }
 
 // Tests the CUDA QR solver with a simple 4x4 matrix.
@@ -109,10 +107,11 @@ TEST(CUDADenseQR, QR4x2Matrix) {
   ASSERT_EQ(dense_cuda_solver->Solve(b.data(), x.data(), &error_string),
             LinearSolverTerminationType::SUCCESS);
   // Empirically observed accuracy of cuSolverDN's QR solver.
-  const double kEpsilon = 1e-11;
+  const double kEpsilon = std::numeric_limits<double>::epsilon() * 10.0;
   // Solution values computed with Octave.
-  EXPECT_NEAR(x[0], -1.143410852713177, kEpsilon);
-  EXPECT_NEAR(x[1], 0.4031007751937981, kEpsilon);
+  const Eigen::Vector2d x_expected(-1.143410852713177, 0.4031007751937981);
+  EXPECT_NEAR((x[0] - x_expected[0]) / x_expected[0], 0.0, kEpsilon);
+  EXPECT_NEAR((x[1] - x_expected[1]) / x_expected[1], 0.0, kEpsilon);
 }
 
 TEST(CUDADenseQR, MustFactorizeBeforeSolve) {
