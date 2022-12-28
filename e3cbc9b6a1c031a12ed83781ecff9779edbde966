@@ -58,6 +58,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfde221b_c30a6318",
+        "filename": "internal/ceres/cuda_dense_cholesky_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-12-28T18:08:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e74c5a03_96f451d7",
+      "range": {
+        "startLine": 78,
+        "startChar": 78,
+        "endLine": 78,
+        "endChar": 79
+      },
+      "revId": "e3cbc9b6a1c031a12ed83781ecff9779edbde966",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "720025d3_173c6731",
@@ -104,6 +128,54 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ebed52a_d5750860",
+        "filename": "internal/ceres/cuda_dense_cholesky_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-12-28T18:08:49Z",
+      "side": 1,
+      "message": "The solver interface is in double, and x is returned in double, hence the double data type. The precision is in float though since internally a single-precision solver is used for a single solve in this test, hence the \u003cfloat\u003e.",
+      "parentUuid": "720025d3_173c6731",
+      "range": {
+        "startLine": 241,
+        "startChar": 15,
+        "endLine": 241,
+        "endChar": 21
+      },
+      "revId": "e3cbc9b6a1c031a12ed83781ecff9779edbde966",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b274e7c_bac79f27",
+        "filename": "internal/ceres/cuda_dense_cholesky_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-12-28T18:08:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "764549d4_fa09e9fb",
+      "range": {
+        "startLine": 241,
+        "startChar": 73,
+        "endLine": 241,
+        "endChar": 78
+      },
+      "revId": "e3cbc9b6a1c031a12ed83781ecff9779edbde966",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a96c88d7_02d1eaaf",
@@ -117,6 +189,30 @@
       "writtenOn": "2022-12-28T16:46:45Z",
       "side": 1,
       "message": "100",
+      "range": {
+        "startLine": 278,
+        "startChar": 74,
+        "endLine": 278,
+        "endChar": 77
+      },
+      "revId": "e3cbc9b6a1c031a12ed83781ecff9779edbde966",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28b357b5_e4bd9357",
+        "filename": "internal/ceres/cuda_dense_cholesky_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-12-28T18:08:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a96c88d7_02d1eaaf",
       "range": {
         "startLine": 278,
         "startChar": 74,
@@ -150,6 +246,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e40ffe01_6f437ae2",
+        "filename": "internal/ceres/cuda_dense_qr_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-12-28T18:08:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d3ac513_380014f8",
+      "range": {
+        "startLine": 78,
+        "startChar": 25,
+        "endLine": 78,
+        "endChar": 26
+      },
+      "revId": "e3cbc9b6a1c031a12ed83781ecff9779edbde966",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fa4fc786_d115f090",
@@ -163,6 +283,30 @@
       "writtenOn": "2022-12-28T16:46:45Z",
       "side": 1,
       "message": "10",
+      "range": {
+        "startLine": 110,
+        "startChar": 67,
+        "endLine": 110,
+        "endChar": 71
+      },
+      "revId": "e3cbc9b6a1c031a12ed83781ecff9779edbde966",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61c1eb5f_099d46f5",
+        "filename": "internal/ceres/cuda_dense_qr_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2022-12-28T18:08:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa4fc786_d115f090",
       "range": {
         "startLine": 110,
         "startChar": 67,
