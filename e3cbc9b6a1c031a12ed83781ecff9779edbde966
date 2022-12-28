@@ -16,6 +16,161 @@
       "message": "Updates to resolve the cuda test errors.",
       "revId": "e3cbc9b6a1c031a12ed83781ecff9779edbde966",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a9981c8_5b4fb8e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-28T16:46:45Z",
+      "side": 1,
+      "message": "minor nits.\nalso hello from maui 😊",
+      "revId": "e3cbc9b6a1c031a12ed83781ecff9779edbde966",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e74c5a03_96f451d7",
+        "filename": "internal/ceres/cuda_dense_cholesky_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-28T16:46:45Z",
+      "side": 1,
+      "message": "10.0 -\u003e 10",
+      "range": {
+        "startLine": 78,
+        "startChar": 78,
+        "endLine": 78,
+        "endChar": 79
+      },
+      "revId": "e3cbc9b6a1c031a12ed83781ecff9779edbde966",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "720025d3_173c6731",
+        "filename": "internal/ceres/cuda_dense_cholesky_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-28T16:46:45Z",
+      "side": 1,
+      "message": "float",
+      "range": {
+        "startLine": 241,
+        "startChar": 15,
+        "endLine": 241,
+        "endChar": 21
+      },
+      "revId": "e3cbc9b6a1c031a12ed83781ecff9779edbde966",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "764549d4_fa09e9fb",
+        "filename": "internal/ceres/cuda_dense_cholesky_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-28T16:46:45Z",
+      "side": 1,
+      "message": "10.0f -\u003e 10",
+      "range": {
+        "startLine": 241,
+        "startChar": 73,
+        "endLine": 241,
+        "endChar": 78
+      },
+      "revId": "e3cbc9b6a1c031a12ed83781ecff9779edbde966",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a96c88d7_02d1eaaf",
+        "filename": "internal/ceres/cuda_dense_cholesky_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-28T16:46:45Z",
+      "side": 1,
+      "message": "100",
+      "range": {
+        "startLine": 278,
+        "startChar": 74,
+        "endLine": 278,
+        "endChar": 77
+      },
+      "revId": "e3cbc9b6a1c031a12ed83781ecff9779edbde966",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d3ac513_380014f8",
+        "filename": "internal/ceres/cuda_dense_qr_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-28T16:46:45Z",
+      "side": 1,
+      "message": "phrase this in terms of epsilon?",
+      "range": {
+        "startLine": 78,
+        "startChar": 25,
+        "endLine": 78,
+        "endChar": 26
+      },
+      "revId": "e3cbc9b6a1c031a12ed83781ecff9779edbde966",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa4fc786_d115f090",
+        "filename": "internal/ceres/cuda_dense_qr_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2022-12-28T16:46:45Z",
+      "side": 1,
+      "message": "10",
+      "range": {
+        "startLine": 110,
+        "startChar": 67,
+        "endLine": 110,
+        "endChar": 71
+      },
+      "revId": "e3cbc9b6a1c031a12ed83781ecff9779edbde966",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
