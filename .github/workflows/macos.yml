@@ -33,7 +33,6 @@ jobs:
       - name: Setup Dependencies (iOS)
         if: matrix.target == 'ios'
         run: |
-          brew update
           brew install \
             ccache \
             eigen \
@@ -42,7 +41,6 @@ jobs:
       - name: Setup Dependencies (Host)
         if: matrix.target == 'host'
         run: |
-          brew update
           brew install \
             ccache \
             eigen \
