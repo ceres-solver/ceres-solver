@@ -24,7 +24,7 @@ jobs:
             env: x86_64
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Setup Dependencies
       uses: msys2/setup-msys2@v2
@@ -49,7 +49,7 @@ jobs:
 
     - name: Cache Build
       id: cache-build
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: ${{env.CCACHE_DIR}}
         key: ${{runner.os}}-${{matrix.sys}}-${{matrix.env}}-${{matrix.build_type}}-${{matrix.lib}}-ccache-${{github.run_id}}
@@ -115,11 +115,11 @@ jobs:
             marker: vc17
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Cache gflags
         id: cache-gflags
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: gflags/
           key: ${{matrix.msvc}}-gflags-2.2.2-${{matrix.arch}}-${{matrix.build_type}}-${{matrix.lib}}
@@ -143,7 +143,7 @@ jobs:
 
       - name: Cache glog
         id: cache-glog
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: glog/
           key: ${{matrix.msvc}}-glog-0.6.0-${{matrix.arch}}-${{matrix.build_type}}-${{matrix.lib}}
@@ -168,7 +168,7 @@ jobs:
 
       - name: Cache SuiteSparse
         id: cache-suitesparse
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: suitesparse/
           key: ${{matrix.msvc}}-suitesparse-5.13.0-cmake.3-${{matrix.arch}}-${{matrix.build_type}}-${{matrix.lib}}
@@ -181,7 +181,7 @@ jobs:
 
       - name: Cache Eigen
         id: cache-eigen
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: eigen/
           key: ${{runner.os}}-eigen-3.4.0
