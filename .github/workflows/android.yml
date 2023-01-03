@@ -32,12 +32,7 @@ jobs:
           - '28'
 
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Setup Ninja
-        uses: ashutoshvarma/setup-ninja@master
-        with:
-          version: 1.10.0
+      - uses: actions/checkout@v3
 
       - name: Setup Dependencies
         run: |
@@ -58,7 +53,7 @@ jobs:
 
       - name: Cache Eigen
         id: cache-eigen
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: eigen/
           key: NDK-${{matrix.os}}-eigen-3.4.0-${{matrix.abi}}
@@ -87,7 +82,7 @@ jobs:
 
       - name: Cache gflags
         id: cache-gflags
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: gflags/
           key: NDK-${{matrix.os}}-gflags-2.2.2-${{matrix.abi}}-${{matrix.build_type}}-${{matrix.lib}}
@@ -116,7 +111,7 @@ jobs:
 
       - name: Cache glog
         id: cache-glog
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: glog/
           key: NDK-${{matrix.os}}-glog-0.5-${{matrix.abi}}-${{matrix.build_type}}-${{matrix.lib}}
@@ -146,7 +141,7 @@ jobs:
 
       - name: Cache Build
         id: cache-build
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{env.CCACHE_DIR}}
           key: NDK-${{matrix.os}}-ccache-${{matrix.abi}}-${{matrix.build_type}}-${{matrix.lib}}-${{github.run_id}}
