@@ -30,6 +30,7 @@
 
 #include "ceres/schur_jacobi_preconditioner.h"
 
+#include <memory>
 #include <utility>
 #include <vector>
 
@@ -60,7 +61,7 @@ SchurJacobiPreconditioner::SchurJacobiPreconditioner(
   }
 
   m_ = std::make_unique<BlockRandomAccessDiagonalMatrix>(
-      blocks, options.context, options.num_threads);
+      blocks, options_.context, options_.num_threads);
   InitEliminator(bs);
 }
 

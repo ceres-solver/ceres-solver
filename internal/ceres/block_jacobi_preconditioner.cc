@@ -50,7 +50,7 @@ BlockSparseJacobiPreconditioner::BlockSparseJacobiPreconditioner(
     Preconditioner::Options options, const BlockSparseMatrix& A)
     : options_(std::move(options)) {
   m_ = std::make_unique<BlockRandomAccessDiagonalMatrix>(
-      A.block_structure()->cols, options.context, options.num_threads);
+      A.block_structure()->cols, options_.context, options_.num_threads);
 }
 
 BlockSparseJacobiPreconditioner::~BlockSparseJacobiPreconditioner() = default;
