@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a6454ae_2804e05e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-01-05T23:31:29Z",
+      "side": 1,
+      "message": "Very nice cleanup, thanks Sergiu. two minor questions.",
+      "revId": "cb6b3066235af8d04ef41ddeed631b10494f8344",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35312126_1a8eee80",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-01-05T23:31:29Z",
+      "side": 1,
+      "message": "we do not need a T(1) here do we?",
+      "range": {
+        "startLine": 749,
+        "startChar": 21,
+        "endLine": 749,
+        "endChar": 22
+      },
+      "revId": "cb6b3066235af8d04ef41ddeed631b10494f8344",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
