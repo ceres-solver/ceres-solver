@@ -22,6 +22,30 @@
       },
       "revId": "1e2a24a8bdb0c8148ec2af1fbbe628c6f264810d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14a4560d_79651f43",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1203,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-05T23:52:47Z",
+      "side": 0,
+      "message": "To be honest, I didn\u0027t even notice the bug. 😊 The reason the test never fails is simply because `norm2` does not depend on any other precondition but rather defines the expected squared norm chosen from the coefficient of the last axis. This is basically an arbitrary choice that is never checked.",
+      "parentUuid": "a4cf181f_696d9c07",
+      "range": {
+        "startLine": 1203,
+        "startChar": 15,
+        "endLine": 1203,
+        "endChar": 16
+      },
+      "revId": "1e2a24a8bdb0c8148ec2af1fbbe628c6f264810d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }

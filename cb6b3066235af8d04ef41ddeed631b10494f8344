@@ -39,6 +39,30 @@
       },
       "revId": "cb6b3066235af8d04ef41ddeed631b10494f8344",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9dda018a_9600bafc",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-05T23:52:47Z",
+      "side": 1,
+      "message": "We do if we want to continue supporting Jets. As an alternative, I can replace the reciprocal multiplication by division which would eliminate the constant.",
+      "parentUuid": "35312126_1a8eee80",
+      "range": {
+        "startLine": 749,
+        "startChar": 21,
+        "endLine": 749,
+        "endChar": 22
+      },
+      "revId": "cb6b3066235af8d04ef41ddeed631b10494f8344",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
