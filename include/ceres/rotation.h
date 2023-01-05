@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2019 Google Inc. All rights reserved.
+// Copyright 2023 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -47,7 +47,6 @@
 
 #include <algorithm>
 #include <cmath>
-#include <limits>
 
 #include "ceres/constants.h"
 #include "ceres/internal/euler_angles.h"
@@ -314,14 +313,15 @@ MatrixAdapter<T, 3, 1> RowMajorAdapter3x3(T* pointer) {
 
 template <typename T>
 inline void AngleAxisToQuaternion(const T* angle_axis, T* quaternion) {
+  using std::fpclassify;
+  using std::hypot;
   const T& a0 = angle_axis[0];
   const T& a1 = angle_axis[1];
   const T& a2 = angle_axis[2];
-  const T theta_squared = a0 * a0 + a1 * a1 + a2 * a2;
+  const T theta = hypot(a0, a1, a2);
 
   // For points not at the origin, the full conversion is numerically stable.
-  if (theta_squared > T(0.0)) {
-    const T theta = sqrt(theta_squared);
+  if (fpclassify(theta) != FP_ZERO) {
     const T half_theta = theta * T(0.5);
     const T k = sin(half_theta) / theta;
     quaternion[0] = cos(half_theta);
@@ -343,15 +343,16 @@ inline void AngleAxisToQuaternion(const T* angle_axis, T* quaternion) {
 
 template <typename T>
 inline void QuaternionToAngleAxis(const T* quaternion, T* angle_axis) {
+  using std::fpclassify;
+  using std::hypot;
   const T& q1 = quaternion[1];
   const T& q2 = quaternion[2];
   const T& q3 = quaternion[3];
-  const T sin_squared_theta = q1 * q1 + q2 * q2 + q3 * q3;
+  const T sin_theta = hypot(q1, q2, q3);
 
   // For quaternions representing non-zero rotation, the conversion
   // is numerically stable.
-  if (sin_squared_theta > T(0.0)) {
-    const T sin_theta = sqrt(sin_squared_theta);
+  if (fpclassify(sin_theta) != FP_ZERO) {
     const T& cos_theta = quaternion[0];
 
     // If cos_theta is negative, theta is greater than pi/2, which
@@ -452,13 +453,14 @@ inline void AngleAxisToRotationMatrix(const T* angle_axis, T* R) {
 template <typename T, int row_stride, int col_stride>
 void AngleAxisToRotationMatrix(
     const T* angle_axis, const MatrixAdapter<T, row_stride, col_stride>& R) {
+  using std::fpclassify;
+  using std::hypot;
   static const T kOne = T(1.0);
-  const T theta2 = DotProduct(angle_axis, angle_axis);
-  if (theta2 > T(std::numeric_limits<double>::epsilon())) {
+  const T theta = hypot(angle_axis[0], angle_axis[1], angle_axis[2]);
+  if (fpclassify(theta) != FP_ZERO) {
     // We want to be careful to only evaluate the square root if the
     // norm of the angle_axis vector is greater than zero. Otherwise
     // we get a division by zero.
-    const T theta = sqrt(theta2);
     const T wx = angle_axis[0] / theta;
     const T wy = angle_axis[1] / theta;
     const T wz = angle_axis[2] / theta;
@@ -478,7 +480,7 @@ void AngleAxisToRotationMatrix(
     R(2, 2) =     costheta   + wz*wz*(kOne -    costheta);
     // clang-format on
   } else {
-    // Near zero, we switch to using the first order Taylor expansion.
+    // At zero, we switch to using the first order Taylor expansion.
     R(0, 0) = kOne;
     R(1, 0) = angle_axis[2];
     R(2, 0) = -angle_axis[1];
@@ -741,10 +743,10 @@ inline void UnitQuaternionRotatePoint(const T q[4],
 template <typename T>
 inline void QuaternionRotatePoint(const T q[4], const T pt[3], T result[3]) {
   DCHECK_NE(pt, result) << "Inplace rotation is not supported.";
+  using std::hypot;
 
   // 'scale' is 1 / norm(q).
-  const T scale =
-      T(1) / sqrt(q[0] * q[0] + q[1] * q[1] + q[2] * q[2] + q[3] * q[3]);
+  const T scale = T(1) / hypot(q[0], q[1], hypot(q[2], q[3]));
 
   // Make unit-norm version of q.
   const T unit[4] = {
@@ -791,9 +793,12 @@ inline void AngleAxisRotatePoint(const T angle_axis[3],
                                  const T pt[3],
                                  T result[3]) {
   DCHECK_NE(pt, result) << "Inplace rotation is not supported.";
+  using std::fpclassify;
+  using std::hypot;
 
-  const T theta2 = DotProduct(angle_axis, angle_axis);
-  if (theta2 > T(std::numeric_limits<double>::epsilon())) {
+  const T theta = hypot(angle_axis[0], angle_axis[1], angle_axis[2]);
+
+  if (fpclassify(theta) != FP_ZERO) {
     // Away from zero, use the rodriguez formula
     //
     //   result = pt costheta +
@@ -804,7 +809,6 @@ inline void AngleAxisRotatePoint(const T angle_axis[3],
     // norm of the angle_axis vector is greater than zero. Otherwise
     // we get a division by zero.
     //
-    const T theta = sqrt(theta2);
     const T costheta = cos(theta);
     const T sintheta = sin(theta);
     const T theta_inverse = T(1.0) / theta;
@@ -825,7 +829,7 @@ inline void AngleAxisRotatePoint(const T angle_axis[3],
     result[1] = pt[1] * costheta + w_cross_pt[1] * sintheta + w[1] * tmp;
     result[2] = pt[2] * costheta + w_cross_pt[2] * sintheta + w[2] * tmp;
   } else {
-    // Near zero, the first order Taylor approximation of the rotation
+    // At zero, the first order Taylor approximation of the rotation
     // matrix R corresponding to a vector w and angle theta is
     //
     //   R = I + hat(w) * sin(theta)
@@ -837,7 +841,7 @@ inline void AngleAxisRotatePoint(const T angle_axis[3],
     // and actually performing multiplication with the point pt, gives us
     // R * pt = pt + angle_axis x pt.
     //
-    // Switching to the Taylor expansion near zero provides meaningful
+    // Switching to the Taylor expansion at zero provides meaningful
     // derivatives when evaluated using Jets.
     //
     // Explicitly inlined evaluation of the cross product for

@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2022 Google Inc. All rights reserved.
+// Copyright 2023 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -309,9 +309,7 @@ TEST(Rotation, QuaternionToAngleAxisAngleIsLessThanPi) {
   quaternion[2] = 0.0;
   quaternion[3] = 0.0;
   QuaternionToAngleAxis(quaternion, angle_axis);
-  const double angle =
-      sqrt(angle_axis[0] * angle_axis[0] + angle_axis[1] * angle_axis[1] +
-           angle_axis[2] * angle_axis[2]);
+  const double angle = std::hypot(angle_axis[0], angle_axis[1], angle_axis[2]);
   EXPECT_LE(angle, kPi);
 }
 
@@ -1196,14 +1194,13 @@ TEST(AngleAxis, RotatePointGivesSameAnswerAsRotationMatrix) {
   for (int i = 0; i < 10000; ++i) {
     double theta = (2.0 * i * 0.0011 - 1.0) * kPi;
     for (int j = 0; j < 50; ++j) {
-      double norm2 = 0.0;
       for (int k = 0; k < 3; ++k) {
         angle_axis[k] = uniform_distribution(prng);
         p[k] = uniform_distribution(prng);
-        norm2 = angle_axis[k] * angle_axis[k];
       }
 
-      const double inv_norm = theta / sqrt(norm2);
+      const double inv_norm =
+          theta / std::hypot(angle_axis[0], angle_axis[1], angle_axis[2]);
       for (double& angle_axi : angle_axis) {
         angle_axi *= inv_norm;
       }
