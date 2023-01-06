@@ -36,6 +36,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3936639_b2c74c55",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-01-06T01:34:52Z",
+      "side": 1,
+      "message": "happy new year Dmitriy, and a gentle ping on this CL.",
+      "revId": "b5ac47fe8765ca93f208017c355bdce01476e4d0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9f6ff802_9a0f79bc",
