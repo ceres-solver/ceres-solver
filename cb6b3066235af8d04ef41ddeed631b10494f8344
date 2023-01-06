@@ -63,6 +63,30 @@
       },
       "revId": "cb6b3066235af8d04ef41ddeed631b10494f8344",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03b808eb_267acbd6",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-01-06T01:34:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9dda018a_9600bafc",
+      "range": {
+        "startLine": 749,
+        "startChar": 21,
+        "endLine": 749,
+        "endChar": 22
+      },
+      "revId": "cb6b3066235af8d04ef41ddeed631b10494f8344",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
