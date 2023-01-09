@@ -78,7 +78,7 @@ cc_binary(
     name = "pose_graph_2d",
     srcs = [
         "slam/common/read_g2o.h",
-        "slam/pose_graph_2d/angle_local_parameterization.h",
+        "slam/pose_graph_2d/angle_manifold.h",
         "slam/pose_graph_2d/normalize_angle.h",
         "slam/pose_graph_2d/pose_graph_2d.cc",
         "slam/pose_graph_2d/pose_graph_2d_error_term.h",
