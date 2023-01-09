@@ -163,7 +163,7 @@ void LevenbergMarquardtStrategy::StepAccepted(double step_quality) {
   reuse_diagonal_ = false;
 }
 
-void LevenbergMarquardtStrategy::StepRejected(double step_quality) {
+void LevenbergMarquardtStrategy::StepRejected(double /*step_quality*/) {
   radius_ = radius_ / decrease_factor_;
   decrease_factor_ *= 2.0;
   reuse_diagonal_ = true;

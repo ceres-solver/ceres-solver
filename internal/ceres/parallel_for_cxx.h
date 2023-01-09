@@ -87,7 +87,7 @@ struct ThreadPoolState {
   // Note that this splitting is optimal in the sense of maximal difference
   // between block sizes, since splitting into equal blocks is possible
   // if and only if number of indices is divisible by number of blocks.
-  ThreadPoolState(int start, int end, int num_work_blocks, int num_workers);
+  ThreadPoolState(int start, int end, int num_work_blocks);
 
   // The start and end index of the for loop.
   const int start;
@@ -160,7 +160,7 @@ void ParallelInvoke(ContextImpl* context,
   // the work before the tasks have been popped off the queue.  So the
   // shared state needs to exist for the duration of all the tasks.
   std::shared_ptr<ThreadPoolState> shared_state(
-      new ThreadPoolState(start, end, num_work_blocks, num_threads));
+      new ThreadPoolState(start, end, num_work_blocks));
 
   // A function which tries to perform several chunks of work.
   auto task = [shared_state, num_threads, &function]() {

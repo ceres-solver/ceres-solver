@@ -245,7 +245,7 @@ bool Program::IsFeasible(std::string* message) const {
               "\nFirst infeasible value is at index: %d."
               "\nLower bound: %e, value: %e, upper bound: %e"
               "\nParameter block values: ",
-              parameters,
+              reinterpret_cast<const void*>(parameters),
               size,
               j,
               lower_bound,
@@ -269,7 +269,7 @@ bool Program::IsFeasible(std::string* message) const {
               "\nFirst infeasible bound is at index: %d."
               "\nLower bound: %e, upper bound: %e"
               "\nParameter block values: ",
-              parameters,
+              reinterpret_cast<const void*>(parameters),
               size,
               j,
               lower_bound,
