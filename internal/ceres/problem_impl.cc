@@ -292,7 +292,7 @@ ResidualBlockId ProblemImpl::AddResidualBlock(
     if (has_duplicate_items) {
       std::string blocks;
       for (int i = 0; i < num_parameter_blocks; ++i) {
-        blocks += StringPrintf(" %p ", parameter_blocks[i]);
+        blocks += StringPrintf(" %p ", reinterpret_cast<const void*>(parameter_blocks[i]));
       }
 
       LOG(FATAL) << "Duplicate parameter blocks in a residual parameter "
@@ -359,7 +359,7 @@ void ProblemImpl::AddParameterBlock(double* values, int size) {
   InternalAddParameterBlock(values, size);
 }
 
-void ProblemImpl::InternalSetManifold(double* values,
+void ProblemImpl::InternalSetManifold(double* /*values*/,
                                       ParameterBlock* parameter_block,
                                       Manifold* manifold) {
   if (manifold != nullptr && options_.manifold_ownership == TAKE_OWNERSHIP) {
@@ -417,7 +417,7 @@ void ProblemImpl::RemoveResidualBlock(ResidualBlock* residual_block) {
       "depend on that parameter block, and was thus removed.\n"
       " 3) residual_block referred to a residual that has already "
       "been removed from the problem (by the user).",
-      residual_block);
+      reinterpret_cast<const void*>(residual_block));
   if (options_.enable_fast_removal) {
     CHECK(residual_block_set_.find(residual_block) != residual_block_set_.end())
         << residual_not_found_message;

@@ -136,7 +136,7 @@ GradientCheckingIterationCallback::GradientCheckingIterationCallback()
     : gradient_error_detected_(false) {}
 
 CallbackReturnType GradientCheckingIterationCallback::operator()(
-    const IterationSummary& summary) {
+    const IterationSummary& /*summary*/) {
   if (gradient_error_detected_) {
     LOG(ERROR) << "Gradient error detected. Terminating solver.";
     return SOLVER_ABORT;
@@ -240,7 +240,8 @@ std::unique_ptr<ProblemImpl> CreateGradientCheckingProblemImpl(
     for (int j = 0; j < residual_block->NumParameterBlocks(); ++j) {
       ParameterBlock* parameter_block = residual_block->parameter_blocks()[j];
       parameter_blocks.push_back(parameter_block->mutable_user_state());
-      StringAppendF(&extra_info, "%p", parameter_block->mutable_user_state());
+      StringAppendF(
+          &extra_info, "%p", reinterpret_cast<const void*>(parameter_block->mutable_user_state()));
       extra_info += (j < residual_block->NumParameterBlocks() - 1) ? ", " : "]";
       manifolds.push_back(
           problem_impl->GetManifold(parameter_block->mutable_user_state()));

@@ -473,7 +473,7 @@ bool CovarianceImpl::ComputeCovarianceSparsity(
 
     // TODO(sameeragarwal): num_columns is being computed but not
     // being used.
-    int num_columns = 0;
+    [[maybe_unused]] int num_columns = 0;
     for (int j = i; j < covariance_blocks.size(); ++j, ++num_col_blocks) {
       const std::pair<const double*, const double*>& block_pair =
           covariance_blocks[j];

@@ -196,7 +196,7 @@ bool SubsetManifold::Plus(const double* x,
   return true;
 }
 
-bool SubsetManifold::PlusJacobian(const double* x,
+bool SubsetManifold::PlusJacobian(const double* /*x*/,
                                   double* plus_jacobian) const {
   if (tangent_size_ == 0) {
     return true;
@@ -213,7 +213,7 @@ bool SubsetManifold::PlusJacobian(const double* x,
   return true;
 }
 
-bool SubsetManifold::RightMultiplyByPlusJacobian(const double* x,
+bool SubsetManifold::RightMultiplyByPlusJacobian(const double* /*x*/,
                                                  const int num_rows,
                                                  const double* ambient_matrix,
                                                  double* tangent_matrix) const {
@@ -249,7 +249,7 @@ bool SubsetManifold::Minus(const double* y,
   return true;
 }
 
-bool SubsetManifold::MinusJacobian(const double* x,
+bool SubsetManifold::MinusJacobian(const double* /*x*/,
                                    double* minus_jacobian) const {
   const int ambient_size = AmbientSize();
   MatrixRef m(minus_jacobian, tangent_size_, ambient_size);
