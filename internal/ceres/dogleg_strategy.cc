@@ -632,7 +632,7 @@ void DoglegStrategy::StepAccepted(double step_quality) {
   reuse_ = false;
 }
 
-void DoglegStrategy::StepRejected(double step_quality) {
+void DoglegStrategy::StepRejected(double /*step_quality*/) {
   radius_ *= 0.5;
   reuse_ = true;
 }

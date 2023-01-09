@@ -152,7 +152,6 @@ bool MaxPartitionCostIsFeasible(int start,
   int partition_start = start;
   int cost_offset = cumulative_cost_offset;
 
-  const CumulativeCostData* const range_end = cumulative_cost_data + end;
   while (partition_start < end) {
     // Already have max_num_partitions
     if (partition->size() > max_num_partitions) {

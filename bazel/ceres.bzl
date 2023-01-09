@@ -186,6 +186,7 @@ def ceres_library(name,
             ]),
         copts = [
             "-I" + internal,
+            "-Wunused-parameter",
             "-Wno-sign-compare",
         ] + schur_eliminator_copts,
 

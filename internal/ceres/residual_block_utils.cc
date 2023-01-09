@@ -117,10 +117,15 @@ string EvaluationToString(const ResidualBlock& block,
 }
 
 bool IsEvaluationValid(const ResidualBlock& block,
-                       double const* const* parameters,
+                       double const* const* /*parameters*/,
                        double* cost,
                        double* residuals,
                        double** jacobians) {
+  // Cost value is not checked here since according to residual_block.cc cost value is
+  // estimated after residual block evaluation e.g. after call to this function so here
+  // we only make simple null check
+  CHECK(cost != nullptr);
+
   const int num_parameter_blocks = block.NumParameterBlocks();
   const int num_residuals = block.NumResiduals();
 

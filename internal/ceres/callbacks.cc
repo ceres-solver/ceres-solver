@@ -48,7 +48,7 @@ StateUpdatingCallback::StateUpdatingCallback(Program* program,
 StateUpdatingCallback::~StateUpdatingCallback() = default;
 
 CallbackReturnType StateUpdatingCallback::operator()(
-    const IterationSummary& summary) {
+    const IterationSummary& /*summary*/) {
   program_->StateVectorToParameterBlocks(parameters_);
   program_->CopyParameterBlockStateToUserState();
   return SOLVER_CONTINUE;

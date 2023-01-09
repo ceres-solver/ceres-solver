@@ -42,7 +42,7 @@ namespace ceres::internal {
 
 class CERES_NO_EXPORT SteepestDescent final : public LineSearchDirection {
  public:
-  bool NextDirection(const LineSearchMinimizer::State& previous,
+  bool NextDirection(const LineSearchMinimizer::State& /*previous*/,
                      const LineSearchMinimizer::State& current,
                      Vector* search_direction) override {
     *search_direction = -current.gradient;
