@@ -116,9 +116,11 @@ string EvaluationToString(const ResidualBlock& block,
   return result;
 }
 
+// TODO(sameeragarwal) Also check cost value validness here
+// Cost value is a part of evaluation but not checked here since according to residual_block.cc
+// but it is not valid at the time this method is called
 bool IsEvaluationValid(const ResidualBlock& block,
-                       double const* const* parameters,
-                       double* cost,
+                       double const* const* /*parameters*/,
                        double* residuals,
                        double** jacobians) {
   const int num_parameter_blocks = block.NumParameterBlocks();

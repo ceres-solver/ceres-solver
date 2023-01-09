@@ -63,7 +63,6 @@ void InvalidateEvaluation(const ResidualBlock& block,
 CERES_NO_EXPORT
 bool IsEvaluationValid(const ResidualBlock& block,
                        double const* const* parameters,
-                       double* cost,
                        double* residuals,
                        double** jacobians);
 

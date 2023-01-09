@@ -359,7 +359,7 @@ void ProblemImpl::AddParameterBlock(double* values, int size) {
   InternalAddParameterBlock(values, size);
 }
 
-void ProblemImpl::InternalSetManifold(double* values,
+void ProblemImpl::InternalSetManifold(double* /*values*/,
                                       ParameterBlock* parameter_block,
                                       Manifold* manifold) {
   if (manifold != nullptr && options_.manifold_ownership == TAKE_OWNERSHIP) {

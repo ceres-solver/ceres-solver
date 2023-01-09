@@ -63,8 +63,7 @@ void BlockUntilFinished::Block() {
 
 ThreadPoolState::ThreadPoolState(int start,
                                  int end,
-                                 int num_work_blocks,
-                                 int num_workers)
+                                 int num_work_blocks)
     : start(start),
       end(end),
       num_work_blocks(num_work_blocks),
