@@ -131,7 +131,7 @@ GradientCheckingIterationCallback::GradientCheckingIterationCallback()
     : gradient_error_detected_(false) {}
 
 CallbackReturnType GradientCheckingIterationCallback::operator()(
-    const IterationSummary& summary) {
+    const IterationSummary& /*summary*/) {
   if (gradient_error_detected_) {
     LOG(ERROR) << "Gradient error detected. Terminating solver.";
     return SOLVER_ABORT;

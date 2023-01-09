@@ -113,8 +113,7 @@ bool ResidualBlock::Evaluate(const bool apply_loss_function,
     return false;
   }
 
-  if (!IsEvaluationValid(
-          *this, parameters.data(), cost, residuals, eval_jacobians)) {
+  if (!IsEvaluationValid(*this, parameters.data(), residuals, eval_jacobians)) {
     // clang-format off
     std::string message =
         "\n\n"

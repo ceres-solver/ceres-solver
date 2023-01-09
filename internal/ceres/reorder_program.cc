@@ -113,6 +113,12 @@ void OrderingForSparseNormalCholeskyUsingSuiteSparse(
     const ParameterBlockOrdering& parameter_block_ordering,
     int* ordering) {
 #ifdef CERES_NO_SUITESPARSE
+  // "Void"ing values to avoid compiler warnings about unused parameters
+  (void) linear_solver_ordering_type;
+  (void) tsm_block_jacobian_transpose;
+  (void) parameter_blocks;
+  (void) parameter_block_ordering;
+  (void) ordering;
   LOG(FATAL) << "Congratulations, you found a Ceres bug! "
              << "Please report this error to the developers.";
 #else
@@ -243,7 +249,7 @@ bool ApplyOrdering(const ProblemImpl::ParameterMap& parameter_map,
 bool LexicographicallyOrderResidualBlocks(
     const int size_of_first_elimination_group,
     Program* program,
-    std::string* error) {
+    std::string* /*error*/) {
   CHECK_GE(size_of_first_elimination_group, 1)
       << "Congratulations, you found a Ceres bug! Please report this error "
       << "to the developers.";
@@ -324,8 +330,13 @@ bool LexicographicallyOrderResidualBlocks(
 // Pre-order the columns corresponding to the Schur complement if
 // possible.
 static void ReorderSchurComplementColumnsUsingSuiteSparse(
-    const ParameterBlockOrdering& parameter_block_ordering, Program* program) {
-#ifndef CERES_NO_SUITESPARSE
+    const ParameterBlockOrdering& parameter_block_ordering,
+    Program* program) {
+#ifdef CERES_NO_SUITESPARSE
+  // "Void"ing values to avoid compiler warnings about unused parameters
+  (void) parameter_block_ordering;
+  (void) program;
+#else
   SuiteSparse ss;
   std::vector<int> constraints;
   std::vector<ParameterBlock*>& parameter_blocks =
@@ -365,7 +376,7 @@ static void ReorderSchurComplementColumnsUsingSuiteSparse(
 static void ReorderSchurComplementColumnsUsingEigen(
     LinearSolverOrderingType ordering_type,
     const int size_of_first_elimination_group,
-    const ProblemImpl::ParameterMap& parameter_map,
+    const ProblemImpl::ParameterMap& /*parameter_map*/,
     Program* program) {
 #if defined(CERES_USE_EIGEN_SPARSE)
   std::unique_ptr<TripletSparseMatrix> tsm_block_jacobian_transpose(

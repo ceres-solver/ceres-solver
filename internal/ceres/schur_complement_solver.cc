@@ -179,7 +179,7 @@ void DenseSchurComplementSolver::InitStorage(
 // BlockRandomAccessDenseMatrix. The linear system is solved using
 // Eigen's Cholesky factorization.
 LinearSolver::Summary DenseSchurComplementSolver::SolveReducedLinearSystem(
-    const LinearSolver::PerSolveOptions& per_solve_options, double* solution) {
+    const LinearSolver::PerSolveOptions& /*per_solve_options*/, double* solution) {
   LinearSolver::Summary summary;
   summary.num_iterations = 0;
   summary.termination_type = LinearSolverTerminationType::SUCCESS;
