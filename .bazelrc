@@ -1,0 +1,2 @@
+# Compiling with C++ 17 standard
+build --cxxopt='-std=c++17'
