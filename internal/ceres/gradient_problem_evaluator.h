@@ -52,10 +52,10 @@ class CERES_NO_EXPORT GradientProblemEvaluator final : public Evaluator {
 
   std::unique_ptr<SparseMatrix> CreateJacobian() const final { return nullptr; }
 
-  bool Evaluate(const EvaluateOptions& evaluate_options,
+  bool Evaluate(const EvaluateOptions& /*evaluate_options*/,
                 const double* state,
                 double* cost,
-                double* residuals,
+                double* /*residuals*/,
                 double* gradient,
                 SparseMatrix* jacobian) final {
     CHECK(jacobian == nullptr);

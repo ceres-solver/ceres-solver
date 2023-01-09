@@ -62,7 +62,7 @@ bool CoordinateDescentMinimizer::Init(
     const Program& program,
     const ProblemImpl::ParameterMap& parameter_map,
     const ParameterBlockOrdering& ordering,
-    std::string* error) {
+    std::string* /*error*/) {
   parameter_blocks_.clear();
   independent_set_offsets_.clear();
   independent_set_offsets_.push_back(0);
@@ -118,7 +118,7 @@ bool CoordinateDescentMinimizer::Init(
 
 void CoordinateDescentMinimizer::Minimize(const Minimizer::Options& options,
                                           double* parameters,
-                                          Solver::Summary* summary) {
+                                          Solver::Summary* /*summary*/) {
   // Set the state and mark all parameter blocks constant.
   for (auto* parameter_block : parameter_blocks_) {
     parameter_block->SetState(parameters + parameter_block->state_offset());

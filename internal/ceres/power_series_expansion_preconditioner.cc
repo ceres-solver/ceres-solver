@@ -43,8 +43,8 @@ PowerSeriesExpansionPreconditioner::PowerSeriesExpansionPreconditioner(
 PowerSeriesExpansionPreconditioner::~PowerSeriesExpansionPreconditioner() =
     default;
 
-bool PowerSeriesExpansionPreconditioner::Update(const LinearOperator& A,
-                                                const double* D) {
+bool PowerSeriesExpansionPreconditioner::Update(const LinearOperator& /*A*/,
+                                                const double* /*D*/) {
   return true;
 }
 

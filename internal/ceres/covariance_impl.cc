@@ -468,17 +468,12 @@ bool CovarianceImpl::ComputeCovarianceSparsity(
     // Iterate over the covariance blocks contained in this row block
     // and count the number of columns in this row block.
     int num_col_blocks = 0;
-
-    // TODO(sameeragarwal): num_columns is being computed but not
-    // being used.
-    int num_columns = 0;
     for (int j = i; j < covariance_blocks.size(); ++j, ++num_col_blocks) {
       const std::pair<const double*, const double*>& block_pair =
           covariance_blocks[j];
       if (block_pair.first != row_block) {
         break;
       }
-      num_columns += problem->ParameterBlockTangentSize(block_pair.second);
     }
 
     // Fill out all the compressed rows for this parameter block.
