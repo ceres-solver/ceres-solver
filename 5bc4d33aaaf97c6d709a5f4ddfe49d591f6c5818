@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a50b539b_b8218315",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-09T11:53:37Z",
+      "side": 1,
+      "message": "Locally configured full bazel build with `clang-14` and started to enable some compiler checks. First of all enabled `-Wunused-parameter` and commented those parameters which are not used within functions. IMHO it improves readibility a bit since it allows to recognize unused paramters by glance just looking on the top of function.\n\nActually this option is also present in `gcc` so there is no much sense in enabling clang build just for the sake of `-Wunused-parameter` but `clang` provides multiple addional options to check type conversions. I found them especially useful when tried to increase maximum size problem (`int num_nonzeros_ -\u003e std::int64_t num_nonzeros_` in sparse matrices).",
+      "revId": "5bc4d33aaaf97c6d709a5f4ddfe49d591f6c5818",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
