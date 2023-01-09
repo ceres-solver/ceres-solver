@@ -117,8 +117,8 @@ string EvaluationToString(const ResidualBlock& block,
 }
 
 bool IsEvaluationValid(const ResidualBlock& block,
-                       double const* const* parameters,
-                       double* cost,
+                       double const* const* /*parameters*/,
+                       double* /*cost*/,
                        double* residuals,
                        double** jacobians) {
   const int num_parameter_blocks = block.NumParameterBlocks();

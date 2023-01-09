@@ -147,7 +147,7 @@ class CERES_NO_EXPORT IdentityPreconditioner : public Preconditioner {
  public:
   IdentityPreconditioner(int num_rows) : num_rows_(num_rows) {}
 
-  bool Update(const LinearOperator& A, const double* D) final { return true; }
+  bool Update(const LinearOperator& /*A*/, const double* /*D*/) final { return true; }
 
   void RightMultiplyAndAccumulate(const double* x, double* y) const final {
     VectorRef(y, num_rows_) += ConstVectorRef(x, num_rows_);

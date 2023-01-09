@@ -932,7 +932,7 @@ bool DumpLinearLeastSquaresProblemToConsole(const SparseMatrix* A,
                                             const double* D,
                                             const double* b,
                                             const double* x,
-                                            int num_eliminate_blocks) {
+                                            int /*num_eliminate_blocks*/) {
   CHECK(A != nullptr);
   Matrix AA;
   A->ToDenseMatrix(&AA);
@@ -970,7 +970,7 @@ bool DumpLinearLeastSquaresProblemToTextFile(const string& filename_base,
                                              const double* D,
                                              const double* b,
                                              const double* x,
-                                             int num_eliminate_blocks) {
+                                             int /*num_eliminate_blocks*/) {
   CHECK(A != nullptr);
   LOG(INFO) << "writing to: " << filename_base << "*";
 

@@ -383,7 +383,7 @@ class CERES_NO_EXPORT SchurEliminatorForOneFBlock final
     : public SchurEliminatorBase {
  public:
   void Init(int num_eliminate_blocks,
-            bool assume_full_rank_ete,
+            bool /*assume_full_rank_ete*/,
             const CompressedRowBlockStructure* bs) override {
     CHECK_GT(num_eliminate_blocks, 0)
         << "SchurComplementSolver cannot be initialized with "
@@ -569,7 +569,7 @@ class CERES_NO_EXPORT SchurEliminatorForOneFBlock final
   // y_i = e_t_e_inverse * sum_i e_i^T * (b_i - f_i * z);
   void BackSubstitute(const BlockSparseMatrixData& A,
                       const double* b,
-                      const double* D,
+                      const double* /*D*/,
                       const double* z_ptr,
                       double* y) override {
     typename EigenTypes<kFBlockSize>::ConstVectorRef z(z_ptr, kFBlockSize);

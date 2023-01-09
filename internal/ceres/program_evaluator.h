@@ -105,7 +105,7 @@ namespace ceres {
 namespace internal {
 
 struct NullJacobianFinalizer {
-  void operator()(SparseMatrix* jacobian, int num_parameters) {}
+  void operator()(SparseMatrix* /*jacobian*/, int /*num_parameters*/) {}
 };
 
 template <typename EvaluatePreparer,
