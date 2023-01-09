@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "524d29ef_ebd344c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-09T06:53:47Z",
+      "side": 1,
+      "message": "Small fixes to make bazel build work. Actually I am looking for a way to use system Eigen instead of downloading local headers with bazel http_archive but started with small changes",
+      "revId": "f982d3071d41493088f52499c02b814e529afa52",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
