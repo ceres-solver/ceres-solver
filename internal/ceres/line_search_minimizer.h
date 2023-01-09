@@ -46,7 +46,7 @@ namespace ceres::internal {
 class CERES_NO_EXPORT LineSearchMinimizer final : public Minimizer {
  public:
   struct State {
-    State(int num_parameters, int num_effective_parameters)
+    State(int /*num_parameters*/, int num_effective_parameters)
         : cost(0.0),
           gradient(num_effective_parameters),
           gradient_squared_norm(0.0),

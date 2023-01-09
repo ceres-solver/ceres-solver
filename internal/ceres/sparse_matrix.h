@@ -90,7 +90,7 @@ class CERES_NO_EXPORT SparseMatrix : public LinearOperator {
   // A = 0. A->num_nonzeros() == 0 is true after this call. The
   // sparsity pattern is preserved.
   virtual void SetZero() = 0;
-  virtual void SetZero(ContextImpl* contex, int num_threads) { SetZero(); }
+  virtual void SetZero(ContextImpl* /*context*/, int /*num_threads*/) { SetZero(); }
 
   // Resize and populate dense_matrix with a dense version of the
   // sparse matrix.
