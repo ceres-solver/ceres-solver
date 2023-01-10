@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b819930f_6c39868b",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-01-10T22:37:48Z",
+      "side": 1,
+      "message": "this comment and this variable can also be deleted no?",
+      "range": {
+        "startLine": 470,
+        "startChar": 15,
+        "endLine": 470,
+        "endChar": 19
+      },
+      "revId": "39abdd99f402c50f6b98c418590a8c34290a0df6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b6bb359_7848cb84",
+        "filename": "internal/ceres/residual_block_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-01-10T22:37:48Z",
+      "side": 1,
+      "message": "This null check is not useful, and I do not understand the comment.\nwhy won\u0027t we check that the cost value is valid?",
+      "range": {
+        "startLine": 125,
+        "startChar": 15,
+        "endLine": 125,
+        "endChar": 20
+      },
+      "revId": "39abdd99f402c50f6b98c418590a8c34290a0df6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
