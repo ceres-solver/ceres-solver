@@ -58,6 +58,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "db516ba3_0e22ca1f",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-10T12:48:04Z",
+      "side": 1,
+      "message": "Will remove",
+      "parentUuid": "1f3a851a_80b5bc52",
+      "range": {
+        "startLine": 476,
+        "startChar": 6,
+        "endLine": 476,
+        "endChar": 18
+      },
+      "revId": "5bc4d33aaaf97c6d709a5f4ddfe49d591f6c5818",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "84adf902_f8a1ddbc",
@@ -71,6 +95,30 @@
       "writtenOn": "2023-01-09T14:19:05Z",
       "side": 1,
       "message": "why does this require a const void* cast?",
+      "range": {
+        "startLine": 244,
+        "startChar": 59,
+        "endLine": 244,
+        "endChar": 74
+      },
+      "revId": "5bc4d33aaaf97c6d709a5f4ddfe49d591f6c5818",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5fc5dbc_c685a287",
+        "filename": "internal/ceres/gradient_checking_cost_function.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-10T12:48:04Z",
+      "side": 1,
+      "message": "I suppose it is better to remove right now until -Wpedantic is used",
+      "parentUuid": "84adf902_f8a1ddbc",
       "range": {
         "startLine": 244,
         "startChar": 59,
@@ -104,6 +152,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fb2b698_b6bec9bb",
+        "filename": "internal/ceres/parallel_for_cxx.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-10T12:48:04Z",
+      "side": 1,
+      "message": "Will fix",
+      "parentUuid": "2e9d8a26_fa2344a8",
+      "range": {
+        "startLine": 67,
+        "startChar": 39,
+        "endLine": 67,
+        "endChar": 50
+      },
+      "revId": "5bc4d33aaaf97c6d709a5f4ddfe49d591f6c5818",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bc656111_7233906a",
@@ -117,6 +189,30 @@
       "writtenOn": "2023-01-09T14:19:05Z",
       "side": 1,
       "message": "these casts should not be needed.",
+      "range": {
+        "startLine": 258,
+        "startChar": 31,
+        "endLine": 258,
+        "endChar": 35
+      },
+      "revId": "5bc4d33aaaf97c6d709a5f4ddfe49d591f6c5818",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af5dfdf1_aaba8e22",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-10T12:48:04Z",
+      "side": 1,
+      "message": "Hmm... That happened because of `-Wpedantic` in my code (I forgot to disable it). Actually this cast happens implicitly since `%p` is for `void*` or `const void*` only. Cast to const void* is required when pointer is to const pointer (const double*). \n\nI will remove it from the pull request but nevertheless it makes sense to return in the future (just to avoid implicit casts)",
+      "parentUuid": "bc656111_7233906a",
       "range": {
         "startLine": 258,
         "startChar": 31,
@@ -150,6 +246,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2afe966_ffeffee9",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-10T12:48:04Z",
+      "side": 1,
+      "message": "Fixed",
+      "parentUuid": "c838891b_d6f40ecc",
+      "range": {
+        "startLine": 295,
+        "startChar": 56,
+        "endLine": 295,
+        "endChar": 61
+      },
+      "revId": "5bc4d33aaaf97c6d709a5f4ddfe49d591f6c5818",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b734a6a4_3f1a8de1",
@@ -163,6 +283,30 @@
       "writtenOn": "2023-01-09T14:19:05Z",
       "side": 1,
       "message": "same question here and below.",
+      "range": {
+        "startLine": 201,
+        "startChar": 40,
+        "endLine": 201,
+        "endChar": 45
+      },
+      "revId": "5bc4d33aaaf97c6d709a5f4ddfe49d591f6c5818",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8ce23fe_73ce6559",
+        "filename": "internal/ceres/program.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-10T12:48:04Z",
+      "side": 1,
+      "message": "Removed for now (until -Wpedantic)",
+      "parentUuid": "b734a6a4_3f1a8de1",
       "range": {
         "startLine": 201,
         "startChar": 40,
@@ -196,6 +340,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d90b6d8_71f9ca18",
+        "filename": "internal/ceres/residual_block_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-10T12:48:04Z",
+      "side": 1,
+      "message": "I assume that right now it is better to create TODO here and fix little bit later since I was not diving into details here. \n\nBut if it is only about `IsArrayValid(1, cost)` then not a problem to fix right now\n\nInvestigated problem a bit and it seems that everything is ok here. Cost shall not be checked for validness since according to residual_block.cc cost is estimated after this function call so I added just simple not null check",
+      "parentUuid": "c46f772c_cdb57d25",
+      "range": {
+        "startLine": 121,
+        "startChar": 33,
+        "endLine": 121,
+        "endChar": 37
+      },
+      "revId": "5bc4d33aaaf97c6d709a5f4ddfe49d591f6c5818",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d16f0969_b25e2716",
@@ -209,6 +377,30 @@
       "writtenOn": "2023-01-09T14:19:05Z",
       "side": 1,
       "message": "hmm this used to be used, that it is not being used anymore is odd!",
+      "range": {
+        "startLine": 386,
+        "startChar": 19,
+        "endLine": 386,
+        "endChar": 39
+      },
+      "revId": "5bc4d33aaaf97c6d709a5f4ddfe49d591f6c5818",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ebe4f16_66b41eaf",
+        "filename": "internal/ceres/schur_eliminator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-10T12:48:04Z",
+      "side": 1,
+      "message": "Againg, I will set TODO here",
+      "parentUuid": "d16f0969_b25e2716",
       "range": {
         "startLine": 386,
         "startChar": 19,
