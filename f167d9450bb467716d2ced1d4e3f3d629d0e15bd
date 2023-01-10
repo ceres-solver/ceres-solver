@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2878280_61048baa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-10T06:18:29Z",
+      "side": 1,
+      "message": "Now command `bazel build //...` uses `-std\u003dc++17` option. Without this option bazel build does not working",
+      "revId": "f167d9450bb467716d2ced1d4e3f3d629d0e15bd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
