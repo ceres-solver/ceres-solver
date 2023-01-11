@@ -48,6 +48,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8afe43c5_3204c7da",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-01-11T14:24:04Z",
+      "side": 1,
+      "message": "oh sorry I misread the code, you are right.",
+      "parentUuid": "c0013ad7_d2bc1a6b",
+      "range": {
+        "startLine": 470,
+        "startChar": 15,
+        "endLine": 470,
+        "endChar": 19
+      },
+      "revId": "39abdd99f402c50f6b98c418590a8c34290a0df6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0b6bb359_7848cb84",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "Because according to the content of residual_block.cc it can be invalid:\n* residual_block.cc:110 At this line computations are invalidated with call to `InvalidateEvaluation` (including `cost`)\n* residual_block.cc:112 Here we evaluate residuals and jacobians but not `cost` so invalidated value remains invalidated\n* residual_block.cc:116 Call to `IsEvaluationValid` but at this time cost may be invalid and that is why it is not checked here\n* residual_block.cc:161 Actual calculation of `cost`. Only after this line it can be checked for validness\n\nHere is the point to decide what to do:\n* Remove cost completely from `IsEvaluationValid`\n* Write comment about why this function does not check cost",
       "parentUuid": "0b6bb359_7848cb84",
+      "range": {
+        "startLine": 125,
+        "startChar": 15,
+        "endLine": 125,
+        "endChar": 20
+      },
+      "revId": "39abdd99f402c50f6b98c418590a8c34290a0df6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "161c3dfe_3a28f2cf",
+        "filename": "internal/ceres/residual_block_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-01-11T14:24:04Z",
+      "side": 1,
+      "message": "you are right, at the point at which IsEvaluationValid is called cost has not been filled, this is done much later. This is technically a bug in the code, and the signature of the function is misleading.\n\nTwo things need done here.\n\n1. Drop parameters as well as cost from the function signature, since they are not used.\n2. Add a TODO in residual_block.cc about checking the validity of cost and assign it to me please.",
+      "parentUuid": "bdf497e7_e8e326d0",
       "range": {
         "startLine": 125,
         "startChar": 15,
