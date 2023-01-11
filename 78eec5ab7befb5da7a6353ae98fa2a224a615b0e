@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5af44d40_4cecf257",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-11T12:31:51Z",
+      "side": 1,
+      "message": "Draft of self written `numeric_cast` (following the proposal I made here https://groups.google.com/g/ceres-solver/c/ltqdhu8JLP8/m/pXbVhWWWAQAJ?utm_medium\u003demail\u0026utm_source\u003dfooter). It still requires some work on comments, styles, file headers but enough for demonstration\n\nThe main idea is shown in `numeric_cast_test.cc`: incorrect casts result in exception (I have chosen `std::runtime_error` for simplicity). \n\nIt seems to be a good way to check multiple casts between `(unsigned) long`s (`std::size_t`) and `int`s. `clang` with `-Wshorten-64-to-32` (`https://clang.llvm.org/docs/DiagnosticsReference.html#id766`) option have shown hundreds of such conversions and it is almost impossible to check all of them manually (but why not to use compile time and runtime checks?). If someone is concerned about possible peformance (personally I didn\u0027t observed any changes while working with lidar SLAM). But all performance penalties can be overcome if we define special compile option like `-DNUMERIC_CAST`:\n* if `-DNUMERIC_CAST` is provided then new casts with runtime checks are used\n* if no option is provided then the following definition is used\n```\ntemplate \u003ctypename TargetT, typename SourceT\u003e\nconstexpr TargetT numeric_cast(SourceT src) {\n    return static_cast\u003cTargetT\u003e(src);\n}\n```\nso no penalties at all (but at cost of safety)",
+      "revId": "78eec5ab7befb5da7a6353ae98fa2a224a615b0e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
