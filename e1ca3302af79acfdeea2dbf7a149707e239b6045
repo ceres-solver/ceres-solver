@@ -51,6 +51,23 @@
       "parentUuid": "2747f758_8d122b21",
       "revId": "e1ca3302af79acfdeea2dbf7a149707e239b6045",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fb69e47_207c8848",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-01-11T14:53:45Z",
+      "side": 1,
+      "message": "blaze -c opt test :all should make things MUCH faster.",
+      "revId": "e1ca3302af79acfdeea2dbf7a149707e239b6045",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
