@@ -122,6 +122,7 @@ CERES_TESTS = [
     "loss_function",
     "minimizer",
     "normal_prior",
+    "numeric_cast",
     "numeric_diff_cost_function",
     "ordered_groups",
     "parallel_for",
