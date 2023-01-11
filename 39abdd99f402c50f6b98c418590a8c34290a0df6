@@ -141,6 +141,30 @@
       },
       "revId": "39abdd99f402c50f6b98c418590a8c34290a0df6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5bd72be_caaebba7",
+        "filename": "internal/ceres/residual_block_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-11T14:49:29Z",
+      "side": 1,
+      "message": "I will fix it within several hours",
+      "parentUuid": "161c3dfe_3a28f2cf",
+      "range": {
+        "startLine": 125,
+        "startChar": 15,
+        "endLine": 125,
+        "endChar": 20
+      },
+      "revId": "39abdd99f402c50f6b98c418590a8c34290a0df6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
