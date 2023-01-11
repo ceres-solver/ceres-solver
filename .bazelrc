@@ -1,2 +1,5 @@
 # Compiling with C++ 17 standard
 build --cxxopt='-std=c++17'
+
+# Building in optimized mode
+build -c opt
