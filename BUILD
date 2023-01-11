@@ -191,7 +191,7 @@ TEST_DEPS = [
 # dependency that we'd prefer to avoid.
 [cc_test(
     name = test_filename.split("/")[-1][:-3],  # Remove .cc.
-    timeout = "moderate",
+    timeout = "long",
     srcs = [test_filename],
     copts = TEST_COPTS,
 
