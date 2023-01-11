@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25925460_7eee7644",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-11T16:59:49Z",
+      "side": 1,
+      "message": "Just remove `using std::...` at places where thery are not needed (based on proposal\nhttps://groups.google.com/g/ceres-solver/c/mFCIOJ5zUt0)",
+      "revId": "53df5ddcfd08207089b2535d24b82dfce9cc36d2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
