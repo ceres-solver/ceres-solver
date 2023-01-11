@@ -42,6 +42,7 @@
 #include "ceres/detect_structure.h"
 #include "ceres/implicit_schur_complement.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/internal/numeric_cast.h"
 #include "ceres/linear_solver.h"
 #include "ceres/power_series_expansion_preconditioner.h"
 #include "ceres/preconditioner.h"
@@ -83,7 +84,7 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
   schur_complement_->Init(*A, per_solve_options.D, b);
 
   const int num_schur_complement_blocks =
-      A->block_structure()->cols.size() - num_eliminate_blocks;
+      numeric_cast<int>(A->block_structure()->cols.size()) - num_eliminate_blocks;
   if (num_schur_complement_blocks == 0) {
     VLOG(2) << "No parameter blocks left in the schur complement.";
     LinearSolver::Summary summary;

@@ -38,6 +38,7 @@
 #include "Eigen/Dense"
 #include "ceres/function_sample.h"
 #include "ceres/internal/export.h"
+#include "ceres/internal/numeric_cast.h"
 #include "glog/logging.h"
 
 namespace ceres::internal {
@@ -54,7 +55,7 @@ void BalanceCompanionMatrix(Matrix* companion_matrix_ptr) {
   Matrix companion_matrix_offdiagonal = companion_matrix;
   companion_matrix_offdiagonal.diagonal().setZero();
 
-  const int degree = companion_matrix.rows();
+  const int degree = numeric_cast<int>(companion_matrix.rows());
 
   // gamma <= 1 controls how much a change in the scaling has to
   // lower the 1-norm of the companion matrix to be accepted.
@@ -104,7 +105,7 @@ void BuildCompanionMatrix(const Vector& polynomial,
   CHECK(companion_matrix_ptr != nullptr);
   Matrix& companion_matrix = *companion_matrix_ptr;
 
-  const int degree = polynomial.size() - 1;
+  const int degree = numeric_cast<int>(polynomial.size()) - 1;
 
   companion_matrix.resize(degree, degree);
   companion_matrix.setZero();
@@ -188,7 +189,7 @@ bool FindPolynomialRoots(const Vector& polynomial_in,
   }
 
   Vector polynomial = RemoveLeadingZeros(polynomial_in);
-  const int degree = polynomial.size() - 1;
+  const int degree = numeric_cast<int>(polynomial.size()) - 1;
 
   VLOG(3) << "Input polynomial: " << polynomial_in.transpose();
   if (polynomial.size() != polynomial_in.size()) {
@@ -251,7 +252,7 @@ bool FindPolynomialRoots(const Vector& polynomial_in,
 }
 
 Vector DifferentiatePolynomial(const Vector& polynomial) {
-  const int degree = polynomial.rows() - 1;
+  const int degree = numeric_cast<int>(polynomial.rows()) - 1;
   CHECK_GE(degree, 0);
 
   // Degree zero polynomials are constants, and their derivative does
@@ -324,7 +325,7 @@ void MinimizePolynomial(const Vector& polynomial,
 }
 
 Vector FindInterpolatingPolynomial(const std::vector<FunctionSample>& samples) {
-  const int num_samples = samples.size();
+  const int num_samples = numeric_cast<int>(samples.size());
   int num_constraints = 0;
   for (int i = 0; i < num_samples; ++i) {
     if (samples[i].value_is_valid) {

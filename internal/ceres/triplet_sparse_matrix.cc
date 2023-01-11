@@ -38,6 +38,7 @@
 #include "ceres/crs_matrix.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
+#include "ceres/internal/numeric_cast.h"
 #include "ceres/types.h"
 #include "glog/logging.h"
 
@@ -69,8 +70,8 @@ TripletSparseMatrix::TripletSparseMatrix(const int num_rows,
                                          const std::vector<double>& values)
     : num_rows_(num_rows),
       num_cols_(num_cols),
-      max_num_nonzeros_(values.size()),
-      num_nonzeros_(values.size()) {
+      max_num_nonzeros_(numeric_cast<int>(values.size())),
+      num_nonzeros_(numeric_cast<int>(values.size())) {
   // All the sizes should at least be zero
   CHECK_GE(num_rows, 0);
   CHECK_GE(num_cols, 0);

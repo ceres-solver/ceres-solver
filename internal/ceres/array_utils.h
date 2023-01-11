@@ -52,12 +52,12 @@ namespace ceres::internal {
 
 // Fill the array x with an impossible value that the user code is
 // never expected to compute.
-CERES_NO_EXPORT void InvalidateArray(int size, double* x);
+CERES_NO_EXPORT void InvalidateArray(const int size, double* x);
 
 // Check if all the entries of the array x are valid, i.e. all the
 // values in the array should be finite and none of them should be
 // equal to the "impossible" value used by InvalidateArray.
-CERES_NO_EXPORT bool IsArrayValid(int size, const double* x);
+CERES_NO_EXPORT bool IsArrayValid(const int size, const double* x);
 
 // If the array contains an invalid value, return the index for it,
 // otherwise return size.
@@ -82,7 +82,7 @@ CERES_NO_EXPORT void AppendArrayToString(const int size,
 // gets mapped to
 //
 // [1 0 2 3 0 1 3]
-CERES_NO_EXPORT void MapValuesToContiguousRange(int size, int* array);
+CERES_NO_EXPORT void MapValuesToContiguousRange(const int size, int* array);
 
 }  // namespace ceres::internal
 

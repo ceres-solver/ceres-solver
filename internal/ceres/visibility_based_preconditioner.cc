@@ -71,13 +71,13 @@ VisibilityBasedPreconditioner::VisibilityBasedPreconditioner(
   CHECK_GT(options_.elimination_groups[0], 0);
   CHECK(options_.type == CLUSTER_JACOBI || options_.type == CLUSTER_TRIDIAGONAL)
       << "Unknown preconditioner type: " << options_.type;
-  num_blocks_ = bs.cols.size() - options_.elimination_groups[0];
+  num_blocks_ = numeric_cast<int>(bs.cols.size()) - options_.elimination_groups[0];
   CHECK_GT(num_blocks_, 0) << "Jacobian should have at least 1 f_block for "
                            << "visibility based preconditioning.";
   CHECK(options_.context != nullptr);
 
   // Vector of camera block sizes
-  blocks_ = Tail(bs.cols, bs.cols.size() - options_.elimination_groups[0]);
+  blocks_ = Tail(bs.cols, numeric_cast<int>(bs.cols.size()) - options_.elimination_groups[0]);
 
   const time_t start_time = time(nullptr);
   switch (options_.type) {
@@ -182,7 +182,7 @@ void VisibilityBasedPreconditioner::ClusterCameras(
         kCanonicalViewsSimilarityPenaltyWeight;
     ComputeCanonicalViewsClustering(
         clustering_options, *schur_complement_graph, &centers, &membership);
-    num_clusters_ = centers.size();
+    num_clusters_ = numeric_cast<int>(centers.size());
   } else if (options_.visibility_clustering_type == SINGLE_LINKAGE) {
     SingleLinkageClusteringOptions clustering_options;
     clustering_options.min_similarity = kSingleLinkageMinSimilarity;
@@ -225,7 +225,7 @@ void VisibilityBasedPreconditioner::ComputeBlockPairsInPreconditioner(
   }
 
   int r = 0;
-  const int num_row_blocks = bs.rows.size();
+  const int num_row_blocks = numeric_cast<int>(bs.rows.size());
   const int num_eliminate_blocks = options_.elimination_groups[0];
 
   // Iterate over each row of the matrix. The block structure of the
@@ -554,7 +554,7 @@ void VisibilityBasedPreconditioner::FlattenMembershipMap(
     }
 
     const int index = FindWithDefault(
-        cluster_id_to_index, cluster_id, cluster_id_to_index.size());
+        cluster_id_to_index, cluster_id, numeric_cast<int>(cluster_id_to_index.size()));
 
     if (index == cluster_id_to_index.size()) {
       cluster_id_to_index[cluster_id] = index;

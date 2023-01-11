@@ -32,6 +32,8 @@
 
 #include <cstring>
 
+#include "ceres/internal/numeric_cast.h"
+
 namespace ceres::internal {
 
 DynamicCompressedRowSparseMatrix::DynamicCompressedRowSparseMatrix(
@@ -80,7 +82,7 @@ void DynamicCompressedRowSparseMatrix::Finalize(int num_additional_elements) {
   int index_into_values_and_cols = 0;
   for (int i = 0; i < num_rows(); ++i) {
     mutable_rows()[i] = index_into_values_and_cols;
-    const int num_nonzero_columns = dynamic_cols_[i].size();
+    const int num_nonzero_columns = numeric_cast<int>(dynamic_cols_[i].size());
     if (num_nonzero_columns > 0) {
       memcpy(mutable_cols() + index_into_values_and_cols,
              &dynamic_cols_[i][0],

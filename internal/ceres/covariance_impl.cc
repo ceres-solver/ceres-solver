@@ -285,7 +285,7 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
 
   const ProblemImpl::ParameterMap& parameter_map = problem_->parameter_map();
   // For OpenMP compatibility we need to define these vectors in advance
-  const int num_parameters = parameters.size();
+  const int num_parameters = numeric_cast<int>(parameters.size());
   std::vector<int> parameter_sizes;
   std::vector<int> cum_parameter_size;
   parameter_sizes.reserve(num_parameters);
@@ -549,7 +549,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
   // Construct a compressed column form of the Jacobian.
   const int num_rows = jacobian.num_rows;
   const int num_cols = jacobian.num_cols;
-  const int num_nonzeros = jacobian.values.size();
+  const int num_nonzeros = numeric_cast<int>(jacobian.values.size());
 
   std::vector<SuiteSparse_long> transpose_rows(num_cols + 1, 0);
   std::vector<SuiteSparse_long> transpose_cols(num_nonzeros, 0);
@@ -566,14 +566,14 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
   for (int r = 0; r < num_rows; ++r) {
     for (int idx = jacobian.rows[r]; idx < jacobian.rows[r + 1]; ++idx) {
       const int c = jacobian.cols[idx];
-      const int transpose_idx = transpose_rows[c];
+      const int transpose_idx = numeric_cast<int>(transpose_rows[c]);
       transpose_cols[transpose_idx] = r;
       transpose_values[transpose_idx] = jacobian.values[idx];
       ++transpose_rows[c];
     }
   }
 
-  for (int i = transpose_rows.size() - 1; i > 0; --i) {
+  for (int i = numeric_cast<int>(transpose_rows.size()) - 1; i > 0; --i) {
     transpose_rows[i] = transpose_rows[i - 1];
   }
   transpose_rows[0] = 0;
@@ -643,11 +643,11 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
   std::vector<int> inverse_permutation(num_cols);
   if (permutation) {
     for (SuiteSparse_long i = 0; i < num_cols; ++i) {
-      inverse_permutation[permutation[i]] = i;
+      inverse_permutation[permutation[i]] = numeric_cast<int>(i);
     }
   } else {
     for (SuiteSparse_long i = 0; i < num_cols; ++i) {
-      inverse_permutation[i] = i;
+      inverse_permutation[i] = numeric_cast<int>(i);
     }
   }
 
@@ -729,7 +729,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingDenseSVD() {
   event_logger.AddEvent("SingularValueDecomposition");
 
   const Vector singular_values = svd.singularValues();
-  const int num_singular_values = singular_values.rows();
+  const int num_singular_values = numeric_cast<int>(singular_values.rows());
   Vector inverse_squared_singular_values(num_singular_values);
   inverse_squared_singular_values.setZero();
 

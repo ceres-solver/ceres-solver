@@ -36,6 +36,7 @@
 
 #include "ceres/block_random_access_diagonal_matrix.h"
 #include "ceres/block_sparse_matrix.h"
+#include "ceres/internal/numeric_cast.h"
 #include "ceres/linear_solver.h"
 #include "ceres/schur_eliminator.h"
 #include "glog/logging.h"
@@ -47,7 +48,7 @@ SchurJacobiPreconditioner::SchurJacobiPreconditioner(
     : options_(std::move(options)) {
   CHECK_GT(options_.elimination_groups.size(), 1);
   CHECK_GT(options_.elimination_groups[0], 0);
-  const int num_blocks = bs.cols.size() - options_.elimination_groups[0];
+  const int num_blocks = numeric_cast<int>(bs.cols.size()) - options_.elimination_groups[0];
   CHECK_GT(num_blocks, 0) << "Jacobian should have at least 1 f_block for "
                           << "SCHUR_JACOBI preconditioner.";
   CHECK(options_.context != nullptr);

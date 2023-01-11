@@ -43,6 +43,7 @@
 #include "ceres/context_impl.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
+#include "ceres/internal/numeric_cast.h"
 #include "ceres/small_blas.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
@@ -101,8 +102,8 @@ class CERES_NO_EXPORT BlockRandomAccessSparseMatrix
   }
 
   void LongToIntPair(int64_t index, int* row, int* col) const {
-    *row = index / kMaxRowBlocks;
-    *col = index % kMaxRowBlocks;
+    *row = numeric_cast<int>(index / kMaxRowBlocks);
+    *col = numeric_cast<int>(index % kMaxRowBlocks);
   }
 
   const int64_t kMaxRowBlocks;

@@ -73,7 +73,7 @@ class ImplicitSchurComplementTest : public ::testing::Test {
                                       Vector* rhs,
                                       Vector* solution) {
     const CompressedRowBlockStructure* bs = A_->block_structure();
-    const int num_col_blocks = bs->cols.size();
+    const int num_col_blocks = numeric_cast<int>(bs->cols.size());
     auto blocks = Tail(bs->cols, num_col_blocks - num_eliminate_blocks_);
     BlockRandomAccessDenseMatrix blhs(blocks, &context_, 1);
     const int num_schur_rows = blhs.num_rows();
@@ -131,7 +131,7 @@ class ImplicitSchurComplementTest : public ::testing::Test {
     ImplicitSchurComplement isc(options);
     isc.Init(*A_, D, b_.get());
 
-    const int num_f_cols = lhs.cols();
+    const int num_f_cols = numeric_cast<int>(lhs.cols());
     const int num_e_cols = num_cols_ - num_f_cols;
 
     Matrix A_dense, E, F, DE, DF;

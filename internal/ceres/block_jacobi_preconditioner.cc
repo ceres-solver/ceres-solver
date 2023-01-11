@@ -63,7 +63,7 @@ bool BlockSparseJacobiPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
 
   ParallelFor(options_.context,
               0,
-              bs->rows.size(),
+              numeric_cast<int>(bs->rows.size()),
               options_.num_threads,
               [this, bs, values](int i) {
                 const int row_block_size = bs->rows[i].block.size;
@@ -93,7 +93,7 @@ bool BlockSparseJacobiPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
     // Add the diagonal.
     ParallelFor(options_.context,
                 0,
-                bs->cols.size(),
+                numeric_cast<int>(bs->cols.size()),
                 options_.num_threads,
                 [this, bs, D](int i) {
                   const int block_size = bs->cols[i].size;
@@ -124,7 +124,7 @@ BlockCRSJacobiPreconditioner::BlockCRSJacobiPreconditioner(
   m_ = std::make_unique<CompressedRowSparseMatrix>(
       A.num_cols(), A.num_cols(), m_nnz);
 
-  const int num_col_blocks = col_blocks.size();
+  const int num_col_blocks = numeric_cast<int>(col_blocks.size());
 
   // Populate the sparsity structure of the preconditioner matrix.
   int* m_cols = m_->mutable_cols();
@@ -159,8 +159,8 @@ bool BlockCRSJacobiPreconditioner::UpdateImpl(
     const CompressedRowSparseMatrix& A, const double* D) {
   const auto& col_blocks = A.col_blocks();
   const auto& row_blocks = A.row_blocks();
-  const int num_col_blocks = col_blocks.size();
-  const int num_row_blocks = row_blocks.size();
+  const int num_col_blocks = numeric_cast<int>(col_blocks.size());
+  const int num_row_blocks = numeric_cast<int>(row_blocks.size());
 
   const int* a_rows = A.rows();
   const int* a_cols = A.cols();

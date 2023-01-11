@@ -40,6 +40,7 @@
 #include "ceres/inner_product_computer.h"
 #include "ceres/internal/config.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/internal/numeric_cast.h"
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
@@ -102,7 +103,7 @@ class SubsetPreconditionerTest : public ::testing::TestWithParam<Param> {
     options.block_density = 0.9;
 
     m_ = BlockSparseMatrix::CreateRandomMatrix(options, prng_);
-    start_row_block_ = m_->block_structure()->rows.size();
+    start_row_block_ = numeric_cast<int>(m_->block_structure()->rows.size());
 
     // Ensure that the bottom part of the matrix has the same column
     // block structure.

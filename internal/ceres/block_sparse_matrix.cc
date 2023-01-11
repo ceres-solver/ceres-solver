@@ -129,7 +129,7 @@ void BlockSparseMatrix::RightMultiplyAndAccumulate(const double* x,
 
   ParallelFor(context,
               0,
-              num_row_blocks,
+              numeric_cast<int>(num_row_blocks),
               num_threads,
               [values, block_structure, x, y](int row_block_id) {
                 const int row_block_pos =
@@ -172,7 +172,7 @@ void BlockSparseMatrix::LeftMultiplyAndAccumulate(const double* x,
 
   auto transpose_bs = transpose_block_structure_.get();
   const auto values = values_.get();
-  const int num_col_blocks = transpose_bs->rows.size();
+  const int num_col_blocks = numeric_cast<int>(transpose_bs->rows.size());
   if (!num_col_blocks) {
     return;
   }
@@ -260,7 +260,7 @@ void BlockSparseMatrix::SquaredColumnNorm(double* x,
 
   auto transpose_bs = transpose_block_structure_.get();
   const auto values = values_.get();
-  const int num_col_blocks = transpose_bs->rows.size();
+  const int num_col_blocks = numeric_cast<int>(transpose_bs->rows.size());
   ParallelFor(
       context,
       0,
@@ -310,7 +310,7 @@ void BlockSparseMatrix::ScaleColumns(const double* scale,
   CHECK(scale != nullptr);
   auto transpose_bs = transpose_block_structure_.get();
   auto values = values_.get();
-  const int num_col_blocks = transpose_bs->rows.size();
+  const int num_col_blocks = numeric_cast<int>(transpose_bs->rows.size());
   ParallelFor(
       context,
       0,
@@ -339,14 +339,14 @@ void BlockSparseMatrix::ToCompressedRowSparseMatrix(
         *CompressedRowSparseMatrix::FromTripletSparseMatrix(ts_matrix);
   }
 
-  int num_row_blocks = block_structure_->rows.size();
+  int num_row_blocks = numeric_cast<int>(block_structure_->rows.size());
   auto& row_blocks = *crs_matrix->mutable_row_blocks();
   row_blocks.resize(num_row_blocks);
   for (int i = 0; i < num_row_blocks; ++i) {
     row_blocks[i] = block_structure_->rows[i].block;
   }
 
-  int num_col_blocks = block_structure_->cols.size();
+  int num_col_blocks = numeric_cast<int>(block_structure_->cols.size());
   auto& col_blocks = *crs_matrix->mutable_col_blocks();
   col_blocks.resize(num_col_blocks);
   for (int i = 0; i < num_col_blocks; ++i) {
@@ -483,7 +483,7 @@ void BlockSparseMatrix::AppendRows(const BlockSparseMatrix& m) {
   CHECK_EQ(m_bs->cols.size(), block_structure_->cols.size());
 
   const int old_num_nonzeros = num_nonzeros_;
-  const int old_num_row_blocks = block_structure_->rows.size();
+  const int old_num_row_blocks = numeric_cast<int>(block_structure_->rows.size());
   block_structure_->rows.resize(old_num_row_blocks + m_bs->rows.size());
 
   for (int i = 0; i < m_bs->rows.size(); ++i) {
@@ -531,7 +531,7 @@ void BlockSparseMatrix::AppendRows(const BlockSparseMatrix& m) {
 }
 
 void BlockSparseMatrix::DeleteRowBlocks(const int delta_row_blocks) {
-  const int num_row_blocks = block_structure_->rows.size();
+  const int num_row_blocks = numeric_cast<int>(block_structure_->rows.size());
   const int new_num_row_blocks = num_row_blocks - delta_row_blocks;
   int delta_num_nonzeros = 0;
   int delta_num_rows = 0;

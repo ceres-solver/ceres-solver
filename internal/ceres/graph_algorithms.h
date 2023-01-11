@@ -42,6 +42,7 @@
 
 #include "ceres/graph.h"
 #include "ceres/internal/export.h"
+#include "ceres/internal/numeric_cast.h"
 #include "ceres/wall_time.h"
 #include "glog/logging.h"
 
@@ -98,7 +99,7 @@ template <typename Vertex>
 int IndependentSetOrdering(const Graph<Vertex>& graph,
                            std::vector<Vertex>* ordering) {
   const std::unordered_set<Vertex>& vertices = graph.vertices();
-  const int num_vertices = vertices.size();
+  const int num_vertices = numeric_cast<int>(vertices.size());
 
   CHECK(ordering != nullptr);
   ordering->clear();
@@ -136,7 +137,7 @@ int IndependentSetOrdering(const Graph<Vertex>& graph,
     }
   }
 
-  int independent_set_size = ordering->size();
+  int independent_set_size = numeric_cast<int>(ordering->size());
 
   // Iterate over the vertices and add all the grey vertices to the
   // ordering. At this stage there should only be black or grey
@@ -167,7 +168,7 @@ int StableIndependentSetOrdering(const Graph<Vertex>& graph,
                                  std::vector<Vertex>* ordering) {
   CHECK(ordering != nullptr);
   const std::unordered_set<Vertex>& vertices = graph.vertices();
-  const int num_vertices = vertices.size();
+  const int num_vertices = numeric_cast<int>(vertices.size());
   CHECK_EQ(vertices.size(), ordering->size());
 
   // Colors for labeling the graph during the BFS.
@@ -205,7 +206,7 @@ int StableIndependentSetOrdering(const Graph<Vertex>& graph,
     }
   }
 
-  int independent_set_size = ordering->size();
+  int independent_set_size = numeric_cast<int>(ordering->size());
 
   // Iterate over the vertices and add all the grey vertices to the
   // ordering. At this stage there should only be black or grey

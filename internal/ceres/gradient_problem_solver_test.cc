@@ -31,6 +31,7 @@
 #include "ceres/gradient_problem_solver.h"
 
 #include "ceres/gradient_problem.h"
+#include "ceres/internal/numeric_cast.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
@@ -109,7 +110,7 @@ TEST(Solver, UpdateStateEveryIterationOption) {
 
   // First try: no updating.
   ceres::Solve(options, problem, &x, &summary);
-  num_iterations = summary.iterations.size() - 1;
+  num_iterations = numeric_cast<int>(summary.iterations.size()) - 1;
   EXPECT_GT(num_iterations, 1);
   for (double value : callback.x_values) {
     EXPECT_EQ(50.0, value);
@@ -120,7 +121,7 @@ TEST(Solver, UpdateStateEveryIterationOption) {
   options.update_state_every_iteration = true;
   callback.x_values.clear();
   ceres::Solve(options, problem, &x, &summary);
-  num_iterations = summary.iterations.size() - 1;
+  num_iterations = numeric_cast<int>(summary.iterations.size()) - 1;
   EXPECT_GT(num_iterations, 1);
   EXPECT_EQ(original_x, callback.x_values[0]);
   EXPECT_NE(original_x, callback.x_values[1]);

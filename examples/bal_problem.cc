@@ -39,6 +39,7 @@
 #include <vector>
 
 #include "Eigen/Core"
+#include "ceres/internal/numeric_cast.h"
 #include "ceres/rotation.h"
 #include "glog/logging.h"
 
@@ -62,7 +63,7 @@ void PerturbPoint3(std::function<double()> dist, double* point) {
 }
 
 double Median(std::vector<double>* data) {
-  int n = data->size();
+  int n = numeric_cast<int>(data->size());
   auto mid_point = data->begin() + n / 2;
   std::nth_element(data->begin(), mid_point, data->end());
   return *mid_point;

@@ -89,7 +89,7 @@ class SchurEliminatorTest : public ::testing::Test {
     H.noalias() += J.transpose() * J;
 
     const Vector g = J.transpose() * f;
-    const int schur_size = J.cols() - num_eliminate_cols;
+    const int schur_size = numeric_cast<int>(J.cols()) - num_eliminate_cols;
 
     lhs_expected.resize(schur_size, schur_size);
     lhs_expected.setZero();
@@ -125,7 +125,7 @@ class SchurEliminatorTest : public ::testing::Test {
                                 bool use_static_structure,
                                 const double relative_tolerance) {
     const CompressedRowBlockStructure* bs = A->block_structure();
-    const int num_col_blocks = bs->cols.size();
+    const int num_col_blocks = numeric_cast<int>(bs->cols.size());
     auto blocks = Tail(bs->cols, num_col_blocks - num_eliminate_blocks);
     BlockRandomAccessDenseMatrix lhs(blocks, &context_, 1);
 

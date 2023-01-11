@@ -34,6 +34,7 @@
 #include <vector>
 
 #include "ceres/internal/export.h"
+#include "ceres/internal/numeric_cast.h"
 #include "glog/logging.h"
 
 namespace ceres::internal {
@@ -49,7 +50,7 @@ void CompressedColumnScalarMatrixToBlockMatrix(
   CHECK(block_cols != nullptr);
   block_rows->clear();
   block_cols->clear();
-  const int num_col_blocks = col_blocks.size();
+  const int num_col_blocks = numeric_cast<int>(col_blocks.size());
 
   // This loop extracts the block sparsity of the scalar sparse matrix
   // It does so by iterating over the columns, but only considering
@@ -80,7 +81,7 @@ void CompressedColumnScalarMatrixToBlockMatrix(
         continue;
       }
 
-      block_rows->push_back(it - row_blocks.begin());
+      block_rows->push_back(numeric_cast<int>(it - row_blocks.begin()));
       ++column_size;
     }
     block_cols->push_back(block_cols->back() + column_size);
@@ -92,7 +93,7 @@ void BlockOrderingToScalarOrdering(const std::vector<Block>& blocks,
                                    const std::vector<int>& block_ordering,
                                    std::vector<int>* scalar_ordering) {
   CHECK_EQ(blocks.size(), block_ordering.size());
-  const int num_blocks = blocks.size();
+  const int num_blocks = numeric_cast<int>(blocks.size());
   scalar_ordering->resize(NumScalarEntries(blocks));
   int cursor = 0;
   for (int i = 0; i < num_blocks; ++i) {

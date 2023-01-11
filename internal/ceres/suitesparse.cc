@@ -39,6 +39,7 @@
 
 #include "ceres/compressed_col_sparse_matrix_utils.h"
 #include "ceres/compressed_row_sparse_matrix.h"
+#include "ceres/internal/numeric_cast.h"
 #include "ceres/linear_solver.h"
 #include "ceres/suitesparse.h"
 #include "ceres/triplet_sparse_matrix.h"
@@ -224,8 +225,8 @@ bool SuiteSparse::BlockOrdering(const cholmod_sparse* A,
     return true;
   }
 
-  const int num_row_blocks = row_blocks.size();
-  const int num_col_blocks = col_blocks.size();
+  const int num_row_blocks = numeric_cast<int>(row_blocks.size());
+  const int num_col_blocks = numeric_cast<int>(col_blocks.size());
 
   // Arrays storing the compressed column structure of the matrix
   // encoding the block sparsity of A.
@@ -448,7 +449,7 @@ LinearSolverTerminationType SuiteSparseCholesky::Solve(const double* rhs,
     return LinearSolverTerminationType::FATAL_ERROR;
   }
 
-  const int num_cols = factor_->n;
+  const int num_cols = numeric_cast<int>(factor_->n);
   cholmod_dense cholmod_rhs = ss_.CreateDenseVectorView(rhs, num_cols);
   cholmod_dense* cholmod_dense_solution =
       ss_.Solve(factor_, &cholmod_rhs, message);

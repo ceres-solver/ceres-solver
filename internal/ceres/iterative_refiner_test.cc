@@ -35,6 +35,7 @@
 #include "Eigen/Dense"
 #include "ceres/dense_cholesky.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/internal/numeric_cast.h"
 #include "ceres/sparse_cholesky.h"
 #include "ceres/sparse_matrix.h"
 #include "glog/logging.h"
@@ -69,9 +70,9 @@ class FakeSparseMatrix : public SparseMatrix {
 
   double* mutable_values() final { return m_.data(); }
   const double* values() const final { return m_.data(); }
-  int num_rows() const final { return m_.cols(); }
-  int num_cols() const final { return m_.cols(); }
-  int num_nonzeros() const final { return m_.cols() * m_.cols(); }
+  int num_rows() const final { return numeric_cast<int>(m_.cols()); }
+  int num_cols() const final { return numeric_cast<int>(m_.cols()); }
+  int num_nonzeros() const final { return numeric_cast<int>(m_.cols() * m_.cols()); }
 
   // The following methods are not needed for tests in this file.
   void SquaredColumnNorm(double* x) const final DO_NOT_CALL;
@@ -95,7 +96,7 @@ class FakeSparseCholesky : public SparseCholesky {
   LinearSolverTerminationType Solve(const double* rhs_ptr,
                                     double* solution_ptr,
                                     std::string* message) final {
-    const int num_cols = lhs_.cols();
+    const int num_cols = numeric_cast<int>(lhs_.cols());
     VectorRef solution(solution_ptr, num_cols);
     ConstVectorRef rhs(rhs_ptr, num_cols);
     auto llt = lhs_.llt();
@@ -127,7 +128,7 @@ class FakeDenseCholesky : public DenseCholesky {
   LinearSolverTerminationType Solve(const double* rhs_ptr,
                                     double* solution_ptr,
                                     std::string* message) final {
-    const int num_cols = lhs_.cols();
+    const int num_cols = numeric_cast<int>(lhs_.cols());
     VectorRef solution(solution_ptr, num_cols);
     ConstVectorRef rhs(rhs_ptr, num_cols);
     solution = lhs_.llt().solve(rhs.cast<Scalar>()).template cast<double>();
@@ -221,7 +222,7 @@ TEST_F(DenseIterativeRefinerTest,
   DenseIterativeRefiner refiner(max_num_iterations_);
   Vector refined_solution(num_cols_);
   refined_solution.setRandom();
-  refiner.Refine(lhs.cols(),
+  refiner.Refine(numeric_cast<int>(lhs.cols()),
                  lhs.data(),
                  rhs_.data(),
                  &dense_cholesky,
@@ -240,7 +241,7 @@ TEST_F(DenseIterativeRefinerTest,
   DenseIterativeRefiner refiner(max_num_iterations_);
   Vector refined_solution(num_cols_);
   refined_solution.setRandom();
-  refiner.Refine(lhs.cols(),
+  refiner.Refine(numeric_cast<int>(lhs.cols()),
                  lhs.data(),
                  rhs_.data(),
                  &dense_cholesky,

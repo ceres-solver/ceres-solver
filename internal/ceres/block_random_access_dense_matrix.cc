@@ -42,7 +42,7 @@ namespace ceres::internal {
 BlockRandomAccessDenseMatrix::BlockRandomAccessDenseMatrix(
     std::vector<Block> blocks, ContextImpl* context, int num_threads)
     : blocks_(std::move(blocks)), context_(context), num_threads_(num_threads) {
-  const int num_blocks = blocks_.size();
+  const int num_blocks = numeric_cast<int>(blocks_.size());
   num_rows_ = NumScalarEntries(blocks_);
   values_ = std::make_unique<double[]>(num_rows_ * num_rows_);
   cell_infos_ = std::make_unique<CellInfo[]>(num_blocks * num_blocks);

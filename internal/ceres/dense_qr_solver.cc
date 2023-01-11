@@ -36,6 +36,7 @@
 #include "ceres/dense_qr.h"
 #include "ceres/dense_sparse_matrix.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/internal/numeric_cast.h"
 #include "ceres/linear_solver.h"
 #include "ceres/types.h"
 #include "ceres/wall_time.h"
@@ -73,7 +74,8 @@ LinearSolver::Summary DenseQRSolver::SolveImpl(
 
   LinearSolver::Summary summary;
   summary.termination_type = dense_qr_->FactorAndSolve(
-      lhs_.rows(), lhs_.cols(), lhs_.data(), rhs_.data(), x, &summary.message);
+      numeric_cast<int>(lhs_.rows()), numeric_cast<int>(lhs_.cols()), lhs_.data(),
+      rhs_.data(), x, &summary.message);
   summary.num_iterations = 1;
   event_logger.AddEvent("Solve");
 

@@ -40,6 +40,7 @@
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
+#include "ceres/internal/numeric_cast.h"
 #include "glog/logging.h"
 
 namespace ceres::internal {
@@ -158,14 +159,14 @@ bool MaxPartitionCostIsFeasible(int start,
       return false;
     }
     const int target = max_partition_cost + cost_offset;
-    const int partition_end =
+    const int partition_end = numeric_cast<int>(
         std::partition_point(
             cumulative_cost_data + partition_start,
             cumulative_cost_data + end,
             [&cumulative_cost_fun, target](const CumulativeCostData& item) {
               return cumulative_cost_fun(item) <= target;
             }) -
-        cumulative_cost_data;
+        cumulative_cost_data);
     // Unable to make a partition from a single element
     if (partition_end == partition_start) {
       return false;
@@ -317,7 +318,7 @@ void ParallelFor(ContextImpl* context,
   const std::vector<int> partitions = ComputePartition(
       start, end, kMaxPartitions, cumulative_cost_data, cumulative_cost_fun);
   CHECK_GT(partitions.size(), 1);
-  const int num_partitions = partitions.size() - 1;
+  const int num_partitions = numeric_cast<int>(partitions.size()) - 1;
   ParallelFor(context,
               0,
               num_partitions,
@@ -353,7 +354,7 @@ void ParallelFor(ContextImpl* context,
     return;
   }
   CHECK_GT(partitions.size(), 1);
-  const int num_partitions = partitions.size() - 1;
+  const int num_partitions = numeric_cast<int>(partitions.size()) - 1;
   ParallelFor(context,
               0,
               num_partitions,
@@ -383,7 +384,7 @@ void ParallelAssign(ContextImpl* context,
   static_assert(LhsExpression::ColsAtCompileTime == 1);
   static_assert(RhsExpression::ColsAtCompileTime == 1);
   CHECK_EQ(lhs.rows(), rhs.rows());
-  const int num_rows = lhs.rows();
+  const int num_rows = numeric_cast<int>(lhs.rows());
   ParallelFor(context,
               0,
               num_rows,
@@ -400,7 +401,7 @@ template <typename VectorType>
 void ParallelSetZero(ContextImpl* context,
                      int num_threads,
                      VectorType& vector) {
-  ParallelSetZero(context, num_threads, vector.data(), vector.rows());
+  ParallelSetZero(context, num_threads, vector.data(), numeric_cast<int>(vector.rows()));
 }
 void ParallelSetZero(ContextImpl* context,
                      int num_threads,

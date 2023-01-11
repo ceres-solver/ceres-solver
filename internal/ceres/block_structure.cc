@@ -32,6 +32,7 @@
 
 #include <vector>
 
+#include "ceres/internal/numeric_cast.h"
 #include "glog/logging.h"
 
 namespace ceres::internal {
@@ -46,7 +47,7 @@ bool CellLessThan(const Cell& lhs, const Cell& rhs) {
 std::vector<Block> Tail(const std::vector<Block>& blocks, int n) {
   CHECK_LE(n, blocks.size());
   std::vector<Block> tail;
-  const int num_blocks = blocks.size();
+  const int num_blocks = numeric_cast<int>(blocks.size());
   const int start = num_blocks - n;
 
   int position = 0;

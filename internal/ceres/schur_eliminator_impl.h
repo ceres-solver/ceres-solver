@@ -59,6 +59,7 @@
 #include "ceres/block_structure.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/fixed_array.h"
+#include "ceres/internal/numeric_cast.h"
 #include "ceres/invert_psd_matrix.h"
 #include "ceres/map_util.h"
 #include "ceres/parallel_for.h"
@@ -88,8 +89,8 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::Init(
   num_eliminate_blocks_ = num_eliminate_blocks;
   assume_full_rank_ete_ = assume_full_rank_ete;
 
-  const int num_col_blocks = bs->cols.size();
-  const int num_row_blocks = bs->rows.size();
+  const int num_col_blocks = numeric_cast<int>(bs->cols.size());
+  const int num_row_blocks = numeric_cast<int>(bs->rows.size());
 
   buffer_size_ = 1;
   chunks_.clear();
@@ -188,7 +189,7 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::Eliminate(
   }
 
   const CompressedRowBlockStructure* bs = A.block_structure();
-  const int num_col_blocks = bs->cols.size();
+  const int num_col_blocks = numeric_cast<int>(bs->cols.size());
 
   // Add the diagonal to the schur complement.
   if (D != nullptr) {
@@ -453,7 +454,7 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::
   const double* values = A.values();
 
   int b_pos = bs->rows[row_block_counter].block.position;
-  const int e_block_size = ete->rows();
+  const int e_block_size = numeric_cast<int>(ete->rows());
 
   // Iterate over the rows in this chunk, for each row, compute the
   // contribution of its F blocks to the Schur complement, the
@@ -520,7 +521,7 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::
   // code. Profiling experiments reveal that the bottleneck is not the
   // computation of the right-hand matrix product, but memory
   // references to the left hand side.
-  const int e_block_size = inverse_ete.rows();
+  const int e_block_size = numeric_cast<int>(inverse_ete.rows());
   auto it1 = buffer_layout.begin();
 
   double* b1_transpose_inverse_ete =

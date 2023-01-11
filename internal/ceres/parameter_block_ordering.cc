@@ -172,7 +172,7 @@ void OrderingToGroupSizes(const ParameterBlockOrdering* ordering,
   const std::map<int, std::set<double*>>& group_to_elements =
       ordering->group_to_elements();
   for (const auto& g_t_e : group_to_elements) {
-    group_sizes->push_back(g_t_e.second.size());
+    group_sizes->push_back(numeric_cast<int>(g_t_e.second.size()));
   }
 }
 

@@ -37,6 +37,7 @@
 #include <vector>
 
 #include "ceres/internal/export.h"
+#include "ceres/internal/numeric_cast.h"
 #include "glog/logging.h"
 
 namespace ceres {
@@ -162,13 +163,13 @@ class OrderedGroups {
   // group for every integer.
   int GroupSize(const int group) const {
     auto it = group_to_elements_.find(group);
-    return (it == group_to_elements_.end()) ? 0 : it->second.size();
+    return (it == group_to_elements_.end()) ? 0 : numeric_cast<int>(it->second.size());
   }
 
-  int NumElements() const { return element_to_group_.size(); }
+  int NumElements() const { return numeric_cast<int>(element_to_group_.size()); }
 
   // Number of groups with one or more elements.
-  int NumGroups() const { return group_to_elements_.size(); }
+  int NumGroups() const { return numeric_cast<int>(group_to_elements_.size()); }
 
   // The first group with one or more elements. Calling this when
   // there are no groups with non-zero elements will result in a

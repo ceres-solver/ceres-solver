@@ -36,6 +36,7 @@
 #include "ceres/casts.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/internal/numeric_cast.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "gtest/gtest.h"
@@ -97,7 +98,7 @@ class DynamicCompressedRowSparseMatrixTest : public ::testing::Test {
     std::copy(rows.begin(), rows.end(), tsm->mutable_rows());
     std::copy(cols.begin(), cols.end(), tsm->mutable_cols());
     std::copy(values.begin(), values.end(), tsm->mutable_values());
-    tsm->set_num_nonzeros(values.size());
+    tsm->set_num_nonzeros(numeric_cast<int>(values.size()));
 
     Matrix dense_from_tsm;
     tsm->ToDenseMatrix(&dense_from_tsm);

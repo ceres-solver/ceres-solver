@@ -53,7 +53,7 @@ PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
   CHECK(bs != nullptr);
 
   num_col_blocks_e_ = options_.elimination_groups[0];
-  num_col_blocks_f_ = bs->cols.size() - num_col_blocks_e_;
+  num_col_blocks_f_ = numeric_cast<int>(bs->cols.size()) - num_col_blocks_e_;
 
   // Compute the number of row blocks in E. The number of row blocks
   // in E maybe less than the number of row blocks in the input matrix
@@ -144,7 +144,7 @@ void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
   // num_row_blocks - num_row_blocks_e row blocks), then all the cells
   // are of type F and multiply by them all.
   const CompressedRowBlockStructure* bs = matrix_.block_structure();
-  const int num_row_blocks = bs->rows.size();
+  const int num_row_blocks = numeric_cast<int>(bs->rows.size());
   const int num_cols_e = num_cols_e_;
   const double* values = matrix_.values();
   ParallelFor(options_.context,
@@ -341,7 +341,7 @@ void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
         int row_block_size = transpose_bs->rows[row_block_id].block.size;
         auto& cells = transpose_bs->rows[row_block_id].cells;
 
-        const int num_cells = cells.size();
+        const int num_cells = numeric_cast<int>(cells.size());
         int cell_idx = 0;
         for (; cell_idx < num_cells; ++cell_idx) {
           auto& cell = cells[cell_idx];
@@ -612,7 +612,7 @@ void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
         MatrixRef(cell_values, col_block_size, col_block_size).setZero();
 
         auto& cells = transpose_block_structure->rows[col_block_id].cells;
-        const int num_cells = cells.size();
+        const int num_cells = numeric_cast<int>(cells.size());
         int i = 0;
         for (; i < num_cells; ++i) {
           auto& cell = cells[i];

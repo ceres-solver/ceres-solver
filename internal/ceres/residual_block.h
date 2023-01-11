@@ -42,6 +42,7 @@
 #include "ceres/cost_function.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
+#include "ceres/internal/numeric_cast.h"
 #include "ceres/stringprintf.h"
 #include "ceres/types.h"
 
@@ -117,7 +118,7 @@ class CERES_NO_EXPORT ResidualBlock {
 
   // Number of variable blocks that this residual term depends on.
   int NumParameterBlocks() const {
-    return cost_function_->parameter_block_sizes().size();
+    return numeric_cast<int>(cost_function_->parameter_block_sizes().size());
   }
 
   // The size of the residual vector returned by this residual function.

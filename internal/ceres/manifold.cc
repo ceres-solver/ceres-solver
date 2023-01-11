@@ -5,6 +5,7 @@
 
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/fixed_array.h"
+#include "ceres/internal/numeric_cast.h"
 #include "glog/logging.h"
 
 namespace ceres {
@@ -157,7 +158,7 @@ bool Manifold::RightMultiplyByPlusJacobian(const double* x,
 SubsetManifold::SubsetManifold(const int size,
                                const std::vector<int>& constant_parameters)
 
-    : tangent_size_(size - constant_parameters.size()),
+    : tangent_size_(size - numeric_cast<int>(constant_parameters.size())),
       constancy_mask_(size, false) {
   if (constant_parameters.empty()) {
     return;
@@ -178,7 +179,7 @@ SubsetManifold::SubsetManifold(const int size,
   }
 }
 
-int SubsetManifold::AmbientSize() const { return constancy_mask_.size(); }
+int SubsetManifold::AmbientSize() const { return numeric_cast<int>(constancy_mask_.size()); }
 
 int SubsetManifold::TangentSize() const { return tangent_size_; }
 

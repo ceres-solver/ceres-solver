@@ -138,7 +138,7 @@ class BenchmarkData {
 };
 
 static void BM_SchurEliminatorEliminate(benchmark::State& state) {
-  const int num_e_blocks = state.range(0);
+  const int num_e_blocks = numeric_cast<int>(state.range(0));
   BenchmarkData data(num_e_blocks);
 
   LinearSolver::Options linear_solver_options;
@@ -160,7 +160,7 @@ static void BM_SchurEliminatorEliminate(benchmark::State& state) {
 }
 
 static void BM_SchurEliminatorBackSubstitute(benchmark::State& state) {
-  const int num_e_blocks = state.range(0);
+  const int num_e_blocks = numeric_cast<int>(state.range(0));
   BenchmarkData data(num_e_blocks);
 
   LinearSolver::Options linear_solver_options;
@@ -187,7 +187,7 @@ static void BM_SchurEliminatorBackSubstitute(benchmark::State& state) {
 }
 
 static void BM_SchurEliminatorForOneFBlockEliminate(benchmark::State& state) {
-  const int num_e_blocks = state.range(0);
+  const int num_e_blocks = numeric_cast<int>(state.range(0));
   BenchmarkData data(num_e_blocks);
   SchurEliminatorForOneFBlock<2, 3, 6> eliminator;
   eliminator.Init(num_e_blocks, true, data.matrix().block_structure());
@@ -202,7 +202,7 @@ static void BM_SchurEliminatorForOneFBlockEliminate(benchmark::State& state) {
 
 static void BM_SchurEliminatorForOneFBlockBackSubstitute(
     benchmark::State& state) {
-  const int num_e_blocks = state.range(0);
+  const int num_e_blocks = numeric_cast<int>(state.range(0));
   BenchmarkData data(num_e_blocks);
   SchurEliminatorForOneFBlock<2, 3, 6> eliminator;
   eliminator.Init(num_e_blocks, true, data.matrix().block_structure());

@@ -77,8 +77,8 @@ TEST(DynamicNumericdiffCostFunctionTest, TestResiduals) {
   std::vector<double> param_block_1(5, 0.0);
   DynamicNumericDiffCostFunction<MyCostFunctor> cost_function(
       new MyCostFunctor());
-  cost_function.AddParameterBlock(param_block_0.size());
-  cost_function.AddParameterBlock(param_block_1.size());
+  cost_function.AddParameterBlock(numeric_cast<int>(param_block_0.size()));
+  cost_function.AddParameterBlock(numeric_cast<int>(param_block_1.size()));
   cost_function.SetNumResiduals(21);
 
   // Test residual computation.
@@ -104,8 +104,8 @@ TEST(DynamicNumericdiffCostFunctionTest, TestJacobian) {
   std::vector<double> param_block_1(5, 0.0);
   DynamicNumericDiffCostFunction<MyCostFunctor> cost_function(
       new MyCostFunctor());
-  cost_function.AddParameterBlock(param_block_0.size());
-  cost_function.AddParameterBlock(param_block_1.size());
+  cost_function.AddParameterBlock(numeric_cast<int>(param_block_0.size()));
+  cost_function.AddParameterBlock(numeric_cast<int>(param_block_1.size()));
   cost_function.SetNumResiduals(21);
 
   // Prepare the residuals.
@@ -171,8 +171,8 @@ TEST(DynamicNumericdiffCostFunctionTest,
   std::vector<double> param_block_1(5, 0.0);
   DynamicNumericDiffCostFunction<MyCostFunctor> cost_function(
       new MyCostFunctor());
-  cost_function.AddParameterBlock(param_block_0.size());
-  cost_function.AddParameterBlock(param_block_1.size());
+  cost_function.AddParameterBlock(numeric_cast<int>(param_block_0.size()));
+  cost_function.AddParameterBlock(numeric_cast<int>(param_block_1.size()));
   cost_function.SetNumResiduals(21);
 
   // Prepare the residuals.
@@ -221,8 +221,8 @@ TEST(DynamicNumericdiffCostFunctionTest,
   std::vector<double> param_block_1(5, 0.0);
   DynamicNumericDiffCostFunction<MyCostFunctor> cost_function(
       new MyCostFunctor());
-  cost_function.AddParameterBlock(param_block_0.size());
-  cost_function.AddParameterBlock(param_block_1.size());
+  cost_function.AddParameterBlock(numeric_cast<int>(param_block_0.size()));
+  cost_function.AddParameterBlock(numeric_cast<int>(param_block_1.size()));
   cost_function.SetNumResiduals(21);
 
   // Prepare the residuals.

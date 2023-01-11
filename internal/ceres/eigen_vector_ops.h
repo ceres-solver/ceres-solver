@@ -45,7 +45,7 @@ inline double Norm(const Vector& x, ContextImpl* context, int num_threads) {
   std::vector<double> norms(num_threads);
   ParallelFor(context,
               0,
-              x.rows(),
+              numeric_cast<int>(x.rows()),
               num_threads,
               [&x, &norms](int thread_id, std::tuple<int, int> range) {
                 auto [start, end] = range;
@@ -73,7 +73,7 @@ inline double Dot(const VectorLikeX& x,
   std::vector<double> dots(num_threads);
   ParallelFor(context,
               0,
-              x.rows(),
+              numeric_cast<int>(x.rows()),
               num_threads,
               [&x, &y, &dots](int thread_id, std::tuple<int, int> range) {
                 auto [start, end] = range;

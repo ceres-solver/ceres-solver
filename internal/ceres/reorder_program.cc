@@ -41,6 +41,7 @@
 #include "Eigen/SparseCore"
 #include "ceres/internal/config.h"
 #include "ceres/internal/export.h"
+#include "ceres/internal/numeric_cast.h"
 #include "ceres/ordered_groups.h"
 #include "ceres/parameter_block.h"
 #include "ceres/parameter_block_ordering.h"
@@ -146,7 +147,7 @@ void OrderingForSparseNormalCholeskyUsingSuiteSparse(
       // Renumber the entries of constraints to be contiguous integers
       // as CAMD requires that the group ids be in the range [0,
       // parameter_blocks.size() - 1].
-      MapValuesToContiguousRange(constraints.size(), constraints.data());
+      MapValuesToContiguousRange(numeric_cast<int>(constraints.size()), constraints.data());
       ss.ConstrainedApproximateMinimumDegreeOrdering(
           block_jacobian_transpose, constraints.data(), ordering);
     }
@@ -356,7 +357,7 @@ static void ReorderSchurComplementColumnsUsingSuiteSparse(
   // Renumber the entries of constraints to be contiguous integers as
   // CAMD requires that the group ids be in the range [0,
   // parameter_blocks.size() - 1].
-  MapValuesToContiguousRange(constraints.size(), constraints.data());
+  MapValuesToContiguousRange(numeric_cast<int>(constraints.size()), constraints.data());
 
   // Compute a block sparse presentation of J'.
   std::unique_ptr<TripletSparseMatrix> tsm_block_jacobian_transpose(
@@ -390,8 +391,8 @@ static void ReorderSchurComplementColumnsUsingEigen(
   using SparseMatrix = Eigen::SparseMatrix<int>;
   const SparseMatrix block_jacobian =
       CreateBlockJacobian(*tsm_block_jacobian_transpose);
-  const int num_rows = block_jacobian.rows();
-  const int num_cols = block_jacobian.cols();
+  const int num_rows = numeric_cast<int>(block_jacobian.rows());
+  const int num_cols = numeric_cast<int>(block_jacobian.cols());
 
   // Vertically partition the jacobian in parameter blocks of type E
   // and F.
@@ -510,8 +511,8 @@ bool ReorderProgramForSchurTypeLinearSolver(
 
   program->SetParameterOffsetsAndIndex();
 
-  const int size_of_first_elimination_group =
-      parameter_block_ordering->group_to_elements().begin()->second.size();
+  const int size_of_first_elimination_group = numeric_cast<int>(
+      parameter_block_ordering->group_to_elements().begin()->second.size());
 
   if (linear_solver_type == SPARSE_SCHUR) {
     if (sparse_linear_algebra_library_type == SUITE_SPARSE &&
@@ -603,7 +604,7 @@ int ReorderResidualBlocksByPartition(
                            [&bottom_residual_blocks](ResidualBlock* r) {
                              return bottom_residual_blocks.count(r) == 0;
                            });
-  return it - residual_blocks->begin();
+  return numeric_cast<int>(it - residual_blocks->begin());
 }
 
 bool AreJacobianColumnsOrdered(

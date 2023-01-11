@@ -35,6 +35,7 @@
 
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
+#include "ceres/internal/numeric_cast.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "glog/logging.h"
 
@@ -75,8 +76,8 @@ void DenseSparseMatrix::SquaredColumnNorm(double* x) const {
   // x = m_.colwise().square().sum(), likely because m_
   // is a row major matrix.
 
-  const int num_rows = m_.rows();
-  const int num_cols = m_.cols();
+  const int num_rows = numeric_cast<int>(m_.rows());
+  const int num_cols = numeric_cast<int>(m_.cols());
   std::fill_n(x, num_cols, 0.0);
   const double* m = m_.data();
   for (int i = 0; i < num_rows; ++i) {
@@ -94,11 +95,14 @@ void DenseSparseMatrix::ToDenseMatrix(Matrix* dense_matrix) const {
   *dense_matrix = m_;
 }
 
-int DenseSparseMatrix::num_rows() const { return m_.rows(); }
+int DenseSparseMatrix::num_rows() const { return numeric_cast<int>(m_.rows()); }
 
-int DenseSparseMatrix::num_cols() const { return m_.cols(); }
+int DenseSparseMatrix::num_cols() const { return numeric_cast<int>(m_.cols()); }
 
-int DenseSparseMatrix::num_nonzeros() const { return m_.rows() * m_.cols(); }
+int DenseSparseMatrix::num_nonzeros() const {
+  return numeric_cast<int>(
+      numeric_cast<int64_t>(m_.rows()) * numeric_cast<int64_t>(m_.cols()));
+}
 
 const Matrix& DenseSparseMatrix::matrix() const { return m_; }
 

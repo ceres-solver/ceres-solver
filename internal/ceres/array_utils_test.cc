@@ -34,6 +34,7 @@
 #include <limits>
 #include <vector>
 
+#include "ceres/internal/numeric_cast.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
@@ -77,14 +78,14 @@ TEST(MapValuesToContiguousRange, ContiguousEntries) {
   array.push_back(0);
   array.push_back(1);
   std::vector<int> expected = array;
-  MapValuesToContiguousRange(array.size(), &array[0]);
+  MapValuesToContiguousRange(numeric_cast<int>(array.size()), &array[0]);
   EXPECT_EQ(array, expected);
   array.clear();
 
   array.push_back(1);
   array.push_back(0);
   expected = array;
-  MapValuesToContiguousRange(array.size(), &array[0]);
+  MapValuesToContiguousRange(numeric_cast<int>(array.size()), &array[0]);
   EXPECT_EQ(array, expected);
 }
 
@@ -95,7 +96,7 @@ TEST(MapValuesToContiguousRange, NonContiguousEntries) {
   std::vector<int> expected;
   expected.push_back(0);
   expected.push_back(1);
-  MapValuesToContiguousRange(array.size(), &array[0]);
+  MapValuesToContiguousRange(numeric_cast<int>(array.size()), &array[0]);
   EXPECT_EQ(array, expected);
 }
 
@@ -114,7 +115,7 @@ TEST(MapValuesToContiguousRange, NonContiguousRepeatingEntries) {
   expected.push_back(0);
   expected.push_back(0);
   expected.push_back(3);
-  MapValuesToContiguousRange(array.size(), &array[0]);
+  MapValuesToContiguousRange(numeric_cast<int>(array.size()), &array[0]);
   EXPECT_EQ(array, expected);
 }
 

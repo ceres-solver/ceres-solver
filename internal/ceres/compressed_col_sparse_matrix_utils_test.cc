@@ -36,6 +36,7 @@
 
 #include "Eigen/SparseCore"
 #include "ceres/internal/export.h"
+#include "ceres/internal/numeric_cast.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "glog/logging.h"
 #include "gtest/gtest.h"
@@ -136,7 +137,7 @@ TEST_F(SolveUpperTriangularTest, SolveInPlace) {
   double rhs_and_solution[] = {1.0, 1.0, 2.0, 2.0};
   const double expected[] = {-1.4706, -1.0962, 6.6667, 2.2477};
 
-  SolveUpperTriangularInPlace<int>(cols().size() - 1,
+  SolveUpperTriangularInPlace<int>(numeric_cast<int>(cols().size()) - 1,
                                    rows().data(),
                                    cols().data(),
                                    values().data(),
@@ -151,7 +152,7 @@ TEST_F(SolveUpperTriangularTest, TransposeSolveInPlace) {
   double rhs_and_solution[] = {1.0, 1.0, 2.0, 2.0};
   double expected[] = {1.970288, 1.242498, 6.081864, -0.057255};
 
-  SolveUpperTriangularTransposeInPlace<int>(cols().size() - 1,
+  SolveUpperTriangularTransposeInPlace<int>(numeric_cast<int>(cols().size()) - 1,
                                             rows().data(),
                                             cols().data(),
                                             values().data(),
@@ -172,7 +173,7 @@ TEST_F(SolveUpperTriangularTest, RTRSolveWithSparseRHS) {
   // clang-format on
 
   for (int i = 0; i < 4; ++i) {
-    SolveRTRWithSparseRHS<int>(cols().size() - 1,
+    SolveRTRWithSparseRHS<int>(numeric_cast<int>(cols().size()) - 1,
                                rows().data(),
                                cols().data(),
                                values().data(),

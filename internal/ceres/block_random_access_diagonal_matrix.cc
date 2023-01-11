@@ -88,7 +88,7 @@ void BlockRandomAccessDiagonalMatrix::SetZero() {
 
 void BlockRandomAccessDiagonalMatrix::Invert() {
   auto& blocks = m_->row_blocks();
-  const int num_blocks = blocks.size();
+  const int num_blocks = numeric_cast<int>(blocks.size());
   ParallelFor(context_, 0, num_blocks, num_threads_, [this, blocks](int i) {
     auto* cell_info = layout_[i].get();
     auto& block = blocks[i];
@@ -103,7 +103,7 @@ void BlockRandomAccessDiagonalMatrix::RightMultiplyAndAccumulate(
   CHECK(x != nullptr);
   CHECK(y != nullptr);
   auto& blocks = m_->row_blocks();
-  const int num_blocks = blocks.size();
+  const int num_blocks = numeric_cast<int>(blocks.size());
   ParallelFor(
       context_, 0, num_blocks, num_threads_, [this, blocks, x, y](int i) {
         auto* cell_info = layout_[i].get();

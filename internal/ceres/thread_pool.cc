@@ -34,6 +34,7 @@
 #include <limits>
 
 #include "ceres/internal/config.h"
+#include "ceres/internal/numeric_cast.h"
 
 namespace ceres::internal {
 namespace {
@@ -70,7 +71,7 @@ ThreadPool::~ThreadPool() {
 void ThreadPool::Resize(int num_threads) {
   std::lock_guard<std::mutex> lock(thread_pool_mutex_);
 
-  const int num_current_threads = thread_pool_.size();
+  const int num_current_threads = numeric_cast<int>(thread_pool_.size());
   if (num_current_threads >= num_threads) {
     return;
   }
@@ -89,7 +90,7 @@ void ThreadPool::AddTask(const std::function<void()>& func) {
 
 int ThreadPool::Size() {
   std::lock_guard<std::mutex> lock(thread_pool_mutex_);
-  return thread_pool_.size();
+  return numeric_cast<int>(thread_pool_.size());
 }
 
 void ThreadPool::ThreadMainLoop() {

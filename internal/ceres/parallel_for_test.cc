@@ -200,44 +200,44 @@ TEST(GuidedParallelFor, MaxPartitionCostIsFeasible) {
 
   // [1, 2, 3] [5], [0 ... 0, 7, 0, ... 0]
   EXPECT_TRUE(MaxPartitionCostIsFeasible(0,
-                                         costs.size(),
+                                         numeric_cast<int>(costs.size()),
                                          3,
                                          7,
                                          0,
                                          cumulative_costs.data(),
                                          dummy_getter,
                                          &partition));
-  EXPECT_TRUE(BruteForcePartition(costs.data(), 0, costs.size(), 3, 7));
+  EXPECT_TRUE(BruteForcePartition(costs.data(), 0, numeric_cast<int>(costs.size()), 3, 7));
   // [1, 2, 3, 5, 0 ... 0, 7, 0, ... 0]
   EXPECT_TRUE(MaxPartitionCostIsFeasible(0,
-                                         costs.size(),
+                                         numeric_cast<int>(costs.size()),
                                          3,
                                          18,
                                          0,
                                          cumulative_costs.data(),
                                          dummy_getter,
                                          &partition));
-  EXPECT_TRUE(BruteForcePartition(costs.data(), 0, costs.size(), 3, 18));
+  EXPECT_TRUE(BruteForcePartition(costs.data(), 0, numeric_cast<int>(costs.size()), 3, 18));
   // Impossible since there is item of cost 7
   EXPECT_FALSE(MaxPartitionCostIsFeasible(0,
-                                          costs.size(),
+                                          numeric_cast<int>(costs.size()),
                                           3,
                                           6,
                                           0,
                                           cumulative_costs.data(),
                                           dummy_getter,
                                           &partition));
-  EXPECT_FALSE(BruteForcePartition(costs.data(), 0, costs.size(), 3, 6));
+  EXPECT_FALSE(BruteForcePartition(costs.data(), 0, numeric_cast<int>(costs.size()), 3, 6));
   // Impossible
   EXPECT_FALSE(MaxPartitionCostIsFeasible(0,
-                                          costs.size(),
+                                          numeric_cast<int>(costs.size()),
                                           2,
                                           10,
                                           0,
                                           cumulative_costs.data(),
                                           dummy_getter,
                                           &partition));
-  EXPECT_FALSE(BruteForcePartition(costs.data(), 0, costs.size(), 2, 10));
+  EXPECT_FALSE(BruteForcePartition(costs.data(), 0, numeric_cast<int>(costs.size()), 2, 10));
 }
 
 // Randomized tests for MaxPartitionCostIsFeasible
@@ -299,7 +299,7 @@ TEST(GuidedParallelFor, MaxPartitionCostIsFeasibleRandomized) {
         EXPECT_EQ(partition.front(), start);
         EXPECT_EQ(partition.back(), end);
 
-        const int num_partitions = partition.size() - 1;
+        const int num_partitions = numeric_cast<int>(partition.size()) - 1;
         EXPECT_LE(num_partitions, M);
         for (int j = 0; j < num_partitions; ++j) {
           int total = 0;
@@ -365,7 +365,7 @@ TEST(GuidedParallelFor, ComputePartition) {
     EXPECT_EQ(partition.front(), start);
     EXPECT_EQ(partition.back(), end);
 
-    const int num_partitions = partition.size() - 1;
+    const int num_partitions = numeric_cast<int>(partition.size()) - 1;
     EXPECT_LE(num_partitions, M);
     for (int j = 0; j < num_partitions; ++j) {
       int total = 0;

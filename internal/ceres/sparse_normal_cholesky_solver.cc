@@ -38,6 +38,7 @@
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/inner_product_computer.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/internal/numeric_cast.h"
 #include "ceres/iterative_refiner.h"
 #include "ceres/linear_solver.h"
 #include "ceres/sparse_cholesky.h"
@@ -97,7 +98,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
   event_logger.AddEvent("InnerProductComputer::Compute");
 
   if (per_solve_options.D != nullptr) {
-    A->DeleteRowBlocks(A->block_structure()->cols.size());
+    A->DeleteRowBlocks(numeric_cast<int>(A->block_structure()->cols.size()));
   }
 
   summary.termination_type = sparse_cholesky_->FactorAndSolve(

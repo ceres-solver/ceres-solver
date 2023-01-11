@@ -44,6 +44,7 @@
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
+#include "ceres/internal/numeric_cast.h"
 #include "ceres/linear_solver.h"
 
 namespace ceres::internal {
@@ -392,7 +393,7 @@ class CERES_NO_EXPORT SchurEliminatorForOneFBlock final
     CHECK_EQ(bs->cols.size() - num_eliminate_blocks, 1);
 
     num_eliminate_blocks_ = num_eliminate_blocks;
-    const int num_row_blocks = bs->rows.size();
+    const int num_row_blocks = numeric_cast<int>(bs->rows.size());
     chunks_.clear();
     int r = 0;
     // Iterate over the row blocks of A, and detect the chunks. The

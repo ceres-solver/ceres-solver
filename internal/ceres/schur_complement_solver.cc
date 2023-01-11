@@ -107,7 +107,7 @@ LinearSolver::Summary SchurComplementSolver::SolveImpl(
   const CompressedRowBlockStructure* bs = A->block_structure();
   if (eliminator_ == nullptr) {
     const int num_eliminate_blocks = options_.elimination_groups[0];
-    const int num_f_blocks = bs->cols.size() - num_eliminate_blocks;
+    const int num_f_blocks = numeric_cast<int>(bs->cols.size()) - num_eliminate_blocks;
 
     InitStorage(bs);
     DetectStructure(*bs,
@@ -168,7 +168,7 @@ DenseSchurComplementSolver::~DenseSchurComplementSolver() = default;
 void DenseSchurComplementSolver::InitStorage(
     const CompressedRowBlockStructure* bs) {
   const int num_eliminate_blocks = options().elimination_groups[0];
-  const int num_col_blocks = bs->cols.size();
+  const int num_col_blocks = numeric_cast<int>(bs->cols.size());
   auto blocks = Tail(bs->cols, num_col_blocks - num_eliminate_blocks);
   set_lhs(std::make_unique<BlockRandomAccessDenseMatrix>(
       blocks, options().context, options().num_threads));
@@ -223,8 +223,8 @@ SparseSchurComplementSolver::~SparseSchurComplementSolver() {
 void SparseSchurComplementSolver::InitStorage(
     const CompressedRowBlockStructure* bs) {
   const int num_eliminate_blocks = options().elimination_groups[0];
-  const int num_col_blocks = bs->cols.size();
-  const int num_row_blocks = bs->rows.size();
+  const int num_col_blocks = numeric_cast<int>(bs->cols.size());
+  const int num_row_blocks = numeric_cast<int>(bs->rows.size());
 
   blocks_ = Tail(bs->cols, num_col_blocks - num_eliminate_blocks);
 

@@ -40,6 +40,8 @@
 #include "cusolverDn.h"
 #endif  // CERES_NO_CUDA
 
+#include "ceres/internal/numeric_cast.h"
+
 #ifndef CERES_NO_LAPACK
 
 // LAPACK routines for solving a linear least squares problem using QR
@@ -255,7 +257,7 @@ LinearSolverTerminationType LAPACKDenseQR::Solve(const double* rhs,
   const char side = 'L';
   char trans = 'T';
   const int num_c_cols = 1;
-  const int lwork = work_.size();
+  const int lwork = numeric_cast<int>(work_.size());
   int info = 0;
   dormqr_(&side,
           &trans,

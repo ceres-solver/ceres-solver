@@ -153,7 +153,7 @@ class BlockRandomAccessSparseMatrixTest : public ::testing::Test {
 
   void CheckLongToIntPair() {
     uint64_t max_rows = m_->kMaxRowBlocks;
-    for (int row = max_rows - 10; row < max_rows; ++row) {
+    for (int row = numeric_cast<int>(max_rows) - 10; row < max_rows; ++row) {
       for (int col = 0; col < 10; ++col) {
         int row_computed;
         int col_computed;

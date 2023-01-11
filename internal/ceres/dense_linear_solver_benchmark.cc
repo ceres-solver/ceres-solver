@@ -33,6 +33,7 @@
 #include "ceres/context_impl.h"
 #include "ceres/dense_sparse_matrix.h"
 #include "ceres/internal/config.h"
+#include "ceres/internal/numeric_cast.h"
 #include "ceres/linear_solver.h"
 
 namespace ceres::internal {
@@ -40,8 +41,8 @@ namespace ceres::internal {
 template <ceres::DenseLinearAlgebraLibraryType kLibraryType,
           ceres::LinearSolverType kSolverType>
 static void BM_DenseSolver(benchmark::State& state) {
-  const int num_rows = state.range(0);
-  const int num_cols = state.range(1);
+  const int num_rows = numeric_cast<int>(state.range(0));
+  const int num_cols = numeric_cast<int>(state.range(1));
   DenseSparseMatrix jacobian(num_rows, num_cols);
   *jacobian.mutable_matrix() = Eigen::MatrixXd::Random(num_rows, num_cols);
   Eigen::VectorXd rhs = Eigen::VectorXd::Random(num_rows, 1);

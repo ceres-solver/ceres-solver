@@ -177,7 +177,7 @@ static void CheckDimensions(const GradientChecker::ProbeResults& results,
                             const std::vector<int>& local_parameter_sizes,
                             int residual_size) {
   CHECK_EQ(parameter_sizes.size(), local_parameter_sizes.size());
-  int num_parameters = parameter_sizes.size();
+  int num_parameters = numeric_cast<int>(parameter_sizes.size());
   ASSERT_EQ(residual_size, results.residuals.size());
   ASSERT_EQ(num_parameters, results.local_jacobians.size());
   ASSERT_EQ(num_parameters, results.local_numeric_jacobians.size());
@@ -295,7 +295,7 @@ class LinearCostFunction : public CostFunction {
  public:
   explicit LinearCostFunction(Vector residuals_offset)
       : residuals_offset_(std::move(residuals_offset)) {
-    set_num_residuals(residuals_offset_.size());
+    set_num_residuals(numeric_cast<int>(residuals_offset_.size()));
   }
 
   bool Evaluate(double const* const* parameter_ptrs,
@@ -307,7 +307,7 @@ class LinearCostFunction : public CostFunction {
 
     for (size_t i = 0; i < residual_J_params_.size(); ++i) {
       const Matrix& residual_J_param = residual_J_params_[i];
-      int parameter_size = residual_J_param.cols();
+      int parameter_size = numeric_cast<int>(residual_J_param.cols());
       ConstVectorRef param(parameter_ptrs[i], parameter_size);
 
       // Compute residual.
@@ -318,8 +318,8 @@ class LinearCostFunction : public CostFunction {
         Eigen::Map<Matrix> residual_J_param_out(residual_J_params[i],
                                                 residual_J_param.rows(),
                                                 residual_J_param.cols());
-        if (jacobian_offsets_.count(i) != 0) {
-          residual_J_param_out = residual_J_param + jacobian_offsets_.at(i);
+        if (jacobian_offsets_.count(numeric_cast<int>(i)) != 0) {
+          residual_J_param_out = residual_J_param + jacobian_offsets_.at(numeric_cast<int>(i));
         } else {
           residual_J_param_out = residual_J_param;
         }
@@ -331,7 +331,7 @@ class LinearCostFunction : public CostFunction {
   void AddParameter(const Matrix& residual_J_param) {
     CHECK_EQ(num_residuals(), residual_J_param.rows());
     residual_J_params_.push_back(residual_J_param);
-    mutable_parameter_block_sizes()->push_back(residual_J_param.cols());
+    mutable_parameter_block_sizes()->push_back(numeric_cast<int>(residual_J_param.cols()));
   }
 
   /// Add offset to the given Jacobian before returning it from Evaluate(),
@@ -340,7 +340,7 @@ class LinearCostFunction : public CostFunction {
     CHECK_LT(index, residual_J_params_.size());
     CHECK_EQ(residual_J_params_[index].rows(), offset.rows());
     CHECK_EQ(residual_J_params_[index].cols(), offset.cols());
-    jacobian_offsets_[index] = offset;
+    jacobian_offsets_[numeric_cast<int>(index)] = offset;
   }
 
  private:
@@ -353,7 +353,7 @@ class LinearCostFunction : public CostFunction {
 static void ExpectMatricesClose(Matrix p, Matrix q, double tolerance) {
   ASSERT_EQ(p.rows(), q.rows());
   ASSERT_EQ(p.cols(), q.cols());
-  ExpectArraysClose(p.size(), p.data(), q.data(), tolerance);
+  ExpectArraysClose(numeric_cast<int>(p.size()), p.data(), q.data(), tolerance);
 }
 
 // Helper manifold that multiplies the delta vector by the given
@@ -384,8 +384,8 @@ class MatrixManifold : public Manifold {
     return true;
   }
 
-  int AmbientSize() const final { return global_to_local_.rows(); }
-  int TangentSize() const final { return global_to_local_.cols(); }
+  int AmbientSize() const final { return numeric_cast<int>(global_to_local_.rows()); }
+  int TangentSize() const final { return numeric_cast<int>(global_to_local_.cols()); }
 
   Matrix global_to_local_;
 };

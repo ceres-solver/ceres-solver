@@ -33,6 +33,7 @@
 #include <algorithm>
 #include <memory>
 
+#include "ceres/internal/numeric_cast.h"
 #include "ceres/small_blas.h"
 
 namespace ceres::internal {
@@ -118,7 +119,7 @@ std::unique_ptr<InnerProductComputer> InnerProductComputer::Create(
     const BlockSparseMatrix& m,
     CompressedRowSparseMatrix::StorageType product_storage_type) {
   return InnerProductComputer::Create(
-      m, 0, m.block_structure()->rows.size(), product_storage_type);
+      m, 0, numeric_cast<int>(m.block_structure()->rows.size()), product_storage_type);
 }
 
 std::unique_ptr<InnerProductComputer> InnerProductComputer::Create(
@@ -161,7 +162,7 @@ void InnerProductComputer::Init(
         c2_end = c1 + 1;
       } else {
         c2_begin = c1;
-        c2_end = row.cells.size();
+        c2_end = numeric_cast<int>(row.cells.size());
       }
 
       for (int c2 = c2_begin; c2 < c2_end; ++c2) {
@@ -310,7 +311,7 @@ void InnerProductComputer::Compute() {
         c2_end = c1 + 1;
       } else {
         c2_begin = c1;
-        c2_end = m_row.cells.size();
+        c2_end = numeric_cast<int>(m_row.cells.size());
       }
 
       for (int c2 = c2_begin; c2 < c2_end; ++c2, ++cursor) {

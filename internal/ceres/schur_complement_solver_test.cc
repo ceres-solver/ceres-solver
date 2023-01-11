@@ -97,7 +97,7 @@ class SchurComplementSolverTest : public ::testing::Test {
     SetUpFromProblemId(problem_id);
     LinearSolver::Options options;
     options.elimination_groups.push_back(num_eliminate_blocks);
-    options.elimination_groups.push_back(A->block_structure()->cols.size() -
+    options.elimination_groups.push_back(numeric_cast<int>(A->block_structure()->cols.size()) -
                                          num_eliminate_blocks);
     options.type = linear_solver_type;
     options.dense_linear_algebra_library_type =

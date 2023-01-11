@@ -633,6 +633,8 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "Clang") # Matches Clang & AppleClang.
   # option, so check for its presence before adding it to the default flags set.
   check_cxx_compiler_flag("-Wno-return-type-c-linkage"
                           HAVE_RETURN_TYPE_C_LINKAGE)
+
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wshorten-64-to-32")
   if (HAVE_RETURN_TYPE_C_LINKAGE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-return-type-c-linkage")
   endif(HAVE_RETURN_TYPE_C_LINKAGE)

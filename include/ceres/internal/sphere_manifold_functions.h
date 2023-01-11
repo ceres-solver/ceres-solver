@@ -85,8 +85,8 @@ inline void ComputeSphereManifoldPlusJacobian(const VT& x,
                                               JacobianT* jacobian) {
   constexpr int AmbientSpaceDim = VT::RowsAtCompileTime;
   using AmbientVector = Eigen::Matrix<double, AmbientSpaceDim, 1>;
-  const int ambient_size = x.size();
-  const int tangent_size = x.size() - 1;
+  const int ambient_size = numeric_cast<int>(x.size());
+  const int tangent_size = numeric_cast<int>(x.size()) - 1;
 
   AmbientVector v(ambient_size);
   double beta;
@@ -113,7 +113,7 @@ inline void ComputeSphereManifoldMinus(
       AmbientSpaceDim == Eigen::Dynamic ? Eigen::Dynamic : AmbientSpaceDim - 1;
   using AmbientVector = Eigen::Matrix<double, AmbientSpaceDim, 1>;
 
-  const int tangent_size = v.size() - 1;
+  const int tangent_size = numeric_cast<int>(v.size()) - 1;
 
   const AmbientVector hy = ApplyHouseholderVector(y, v, beta) / x.norm();
 
@@ -134,8 +134,8 @@ inline void ComputeSphereManifoldMinusJacobian(const VT& x,
                                                JacobianT* jacobian) {
   constexpr int AmbientSpaceDim = VT::RowsAtCompileTime;
   using AmbientVector = Eigen::Matrix<double, AmbientSpaceDim, 1>;
-  const int ambient_size = x.size();
-  const int tangent_size = x.size() - 1;
+  const int ambient_size = numeric_cast<int>(x.size());
+  const int tangent_size = numeric_cast<int>(x.size()) - 1;
 
   AmbientVector v(ambient_size);
   double beta;

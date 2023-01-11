@@ -31,6 +31,7 @@
 #include "ceres/detect_structure.h"
 
 #include "ceres/internal/eigen.h"
+#include "ceres/internal/numeric_cast.h"
 #include "glog/logging.h"
 
 namespace ceres::internal {
@@ -40,7 +41,7 @@ void DetectStructure(const CompressedRowBlockStructure& bs,
                      int* row_block_size,
                      int* e_block_size,
                      int* f_block_size) {
-  const int num_row_blocks = bs.rows.size();
+  const int num_row_blocks = numeric_cast<int>(bs.rows.size());
   *row_block_size = 0;
   *e_block_size = 0;
   *f_block_size = 0;

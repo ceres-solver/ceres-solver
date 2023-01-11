@@ -43,6 +43,7 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/numeric_diff.h"
 #include "ceres/internal/parameter_dims.h"
+#include "ceres/internal/numeric_cast.h"
 #include "ceres/numeric_diff_options.h"
 #include "ceres/types.h"
 #include "glog/logging.h"
@@ -143,7 +144,7 @@ class DynamicNumericDiffCostFunction final : public DynamicCostFunction {
                                                 residuals,
                                                 options_,
                                                 this->num_residuals(),
-                                                block,
+                                                numeric_cast<int>(block),
                                                 block_sizes[block],
                                                 &parameters_references_copy[0],
                                                 jacobians[block])) {

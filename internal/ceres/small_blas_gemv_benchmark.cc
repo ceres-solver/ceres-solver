@@ -30,6 +30,7 @@
 
 #include "Eigen/Dense"
 #include "benchmark/benchmark.h"
+#include "ceres/internal/numeric_cast.h"
 #include "ceres/small_blas.h"
 
 namespace ceres {
@@ -79,8 +80,8 @@ static void MatrixSizeArguments(benchmark::internal::Benchmark* benchmark) {
 }
 
 static void BM_MatrixVectorMultiply(benchmark::State& state) {
-  const int rows = state.range(0);
-  const int cols = state.range(1);
+  const int rows = numeric_cast<int>(state.range(0));
+  const int cols = numeric_cast<int>(state.range(1));
   MatrixVectorMultiplyData data(rows, cols);
   const int num_elements = data.num_elements();
   int iter = 0;
@@ -95,8 +96,8 @@ static void BM_MatrixVectorMultiply(benchmark::State& state) {
 BENCHMARK(BM_MatrixVectorMultiply)->Apply(MatrixSizeArguments);
 
 static void BM_MatrixTransposeVectorMultiply(benchmark::State& state) {
-  const int rows = state.range(0);
-  const int cols = state.range(1);
+  const int rows = numeric_cast<int>(state.range(0));
+  const int cols = numeric_cast<int>(state.range(1));
   MatrixVectorMultiplyData data(cols, rows);
   const int num_elements = data.num_elements();
   int iter = 0;

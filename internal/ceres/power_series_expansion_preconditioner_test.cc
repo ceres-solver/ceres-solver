@@ -33,6 +33,7 @@
 #include <memory>
 
 #include "Eigen/Dense"
+#include "ceres/internal/numeric_cast.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "gtest/gtest.h"
 
@@ -51,7 +52,7 @@ class PowerSeriesExpansionPreconditionerTest : public ::testing::Test {
     options_.preconditioner_type = SCHUR_POWER_SERIES_EXPANSION;
     isc_ = std::make_unique<ImplicitSchurComplement>(options_);
     isc_->Init(*A, D, problem_->b.get());
-    num_f_cols_ = isc_->rhs().rows();
+    num_f_cols_ = numeric_cast<int>(isc_->rhs().rows());
     const int num_rows = A->num_rows(), num_cols = A->num_cols(),
               num_e_cols = num_cols - num_f_cols_;
 

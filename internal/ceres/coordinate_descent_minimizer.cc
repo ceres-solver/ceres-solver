@@ -83,10 +83,10 @@ bool CoordinateDescentMinimizer::Init(
     for (double* parameter_block : elements) {
       parameter_blocks_.push_back(parameter_map.find(parameter_block)->second);
       parameter_block_index[parameter_blocks_.back()] =
-          parameter_blocks_.size() - 1;
+          numeric_cast<int>(parameter_blocks_.size()) - 1;
     }
-    independent_set_offsets_.push_back(independent_set_offsets_.back() +
-                                       elements.size());
+    independent_set_offsets_.push_back(numeric_cast<int>(
+        numeric_cast<std::size_t>(independent_set_offsets_.back()) + elements.size()));
   }
 
   // The ordering does not have to contain all parameter blocks, so

@@ -35,6 +35,7 @@
 #include <vector>
 
 #include "ceres/internal/eigen.h"
+#include "ceres/internal/numeric_cast.h"
 #include "ceres/types.h"
 #include "glog/logging.h"
 
@@ -44,8 +45,8 @@ NormalPrior::NormalPrior(const Matrix& A, Vector b) : A_(A), b_(std::move(b)) {
   CHECK_GT(b_.rows(), 0);
   CHECK_GT(A_.rows(), 0);
   CHECK_EQ(b_.rows(), A.cols());
-  set_num_residuals(A_.rows());
-  mutable_parameter_block_sizes()->push_back(b_.rows());
+  set_num_residuals(numeric_cast<int>(A_.rows()));
+  mutable_parameter_block_sizes()->push_back(numeric_cast<int>(b_.rows()));
 }
 
 bool NormalPrior::Evaluate(double const* const* parameters,

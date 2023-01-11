@@ -36,6 +36,7 @@
 #include <string>
 #include <vector>
 
+#include "ceres/internal/numeric_cast.h"
 #include "ceres/stringprintf.h"
 #include "ceres/types.h"
 
@@ -95,9 +96,9 @@ void MapValuesToContiguousRange(const int size, int* array) {
                       unique_values.end());
 
   for (int i = 0; i < size; ++i) {
-    array[i] =
+    array[i] = numeric_cast<int>(
         std::lower_bound(unique_values.begin(), unique_values.end(), array[i]) -
-        unique_values.begin();
+        unique_values.begin());
   }
 }
 

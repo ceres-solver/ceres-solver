@@ -161,7 +161,7 @@ ParameterBlock* ProblemImpl::InternalAddParameterBlock(double* values,
   // Pass the index of the new parameter block as well to keep the index in
   // sync with the position of the parameter in the program's parameter vector.
   auto* new_parameter_block =
-      new ParameterBlock(values, size, program_->parameter_blocks_.size());
+      new ParameterBlock(values, size, numeric_cast<int>(program_->parameter_blocks_.size()));
 
   // For dynamic problems, add the list of dependent residual blocks, which is
   // empty to start.
@@ -325,7 +325,7 @@ ResidualBlockId ProblemImpl::AddResidualBlock(
       new ResidualBlock(cost_function,
                         loss_function,
                         parameter_block_ptrs,
-                        program_->residual_blocks_.size());
+                        numeric_cast<int>(program_->residual_blocks_.size()));
 
   // Add dependencies on the residual to the parameter blocks.
   if (options_.enable_fast_removal) {

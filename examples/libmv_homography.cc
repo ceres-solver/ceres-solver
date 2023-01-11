@@ -203,7 +203,7 @@ bool Homography2DFromCorrespondencesLinearEuc(const Mat& x1,
   assert(x1.rows() == x2.rows());
   assert(x1.cols() == x2.cols());
 
-  int n = x1.cols();
+  int n = ceres::numeric_cast<int>(x1.cols());
   MatX8 L = Mat::Zero(n * 3, 8);
   Mat b = Mat::Zero(n * 3, 1);
   for (int i = 0; i < n; ++i) {

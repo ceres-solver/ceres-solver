@@ -265,10 +265,10 @@ bool SetupEvaluator(PreprocessedProblem* pp) {
       options.sparse_linear_algebra_library_type;
   pp->evaluator_options.num_eliminate_blocks = 0;
   if (IsSchurType(options.linear_solver_type)) {
-    pp->evaluator_options.num_eliminate_blocks =
+    pp->evaluator_options.num_eliminate_blocks = numeric_cast<int>(
         options.linear_solver_ordering->group_to_elements()
             .begin()
-            ->second.size();
+            ->second.size());
   }
 
   pp->evaluator_options.num_threads = options.num_threads;

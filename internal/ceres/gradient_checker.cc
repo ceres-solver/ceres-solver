@@ -39,6 +39,7 @@
 #include <string>
 #include <vector>
 
+#include "ceres/internal/numeric_cast.h"
 #include "ceres/is_close.h"
 #include "ceres/stringprintf.h"
 #include "ceres/types.h"
@@ -63,7 +64,7 @@ bool EvaluateCostFunction(const CostFunction* function,
   CHECK(local_jacobians != nullptr);
 
   const std::vector<int32_t>& block_sizes = function->parameter_block_sizes();
-  const int num_parameter_blocks = block_sizes.size();
+  const int num_parameter_blocks = numeric_cast<int>(block_sizes.size());
 
   // Allocate Jacobian matrices in tangent space.
   local_jacobians->resize(num_parameter_blocks);
@@ -129,7 +130,7 @@ GradientChecker::GradientChecker(const CostFunction* function,
           function, DO_NOT_TAKE_OWNERSHIP, options);
   const std::vector<int32_t>& parameter_block_sizes =
       function->parameter_block_sizes();
-  const int num_parameter_blocks = parameter_block_sizes.size();
+  const int num_parameter_blocks = numeric_cast<int>(parameter_block_sizes.size());
   for (int i = 0; i < num_parameter_blocks; ++i) {
     finite_diff_cost_function->AddParameterBlock(parameter_block_sizes[i]);
   }

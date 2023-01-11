@@ -181,7 +181,7 @@ void ImplicitSchurComplement::AddDiagonalAndInvert(
       block_diagonal->block_structure();
   ParallelFor(options_.context,
               0,
-              block_diagonal_structure->rows.size(),
+              numeric_cast<int>(block_diagonal_structure->rows.size()),
               options_.num_threads,
               [block_diagonal_structure, D, block_diagonal](int row_block_id) {
                 auto& row = block_diagonal_structure->rows[row_block_id];

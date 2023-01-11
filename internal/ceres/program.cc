@@ -117,7 +117,7 @@ bool Program::Plus(const double* state,
   ParallelFor(
       context,
       0,
-      parameter_blocks_.size(),
+      numeric_cast<int>(parameter_blocks_.size()),
       num_threads,
       [&abort, state, delta, state_plus_delta, parameter_blocks](int block_id) {
         if (abort) {
@@ -476,9 +476,9 @@ Program::CreateJacobianBlockSparsityTranspose(int start_residual_block) const {
   return tsm;
 }
 
-int Program::NumResidualBlocks() const { return residual_blocks_.size(); }
+int Program::NumResidualBlocks() const { return numeric_cast<int>(residual_blocks_.size()); }
 
-int Program::NumParameterBlocks() const { return parameter_blocks_.size(); }
+int Program::NumParameterBlocks() const { return numeric_cast<int>(parameter_blocks_.size()); }
 
 int Program::NumResiduals() const {
   int num_residuals = 0;

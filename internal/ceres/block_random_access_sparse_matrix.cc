@@ -93,8 +93,8 @@ BlockRandomAccessSparseMatrix::BlockRandomAccessSparseMatrix(
     const int col_block_id = block_pair.second;
     const int row_block_size = blocks_[row_block_id].size;
     const int col_block_size = blocks_[col_block_id].size;
-    int pos =
-        layout_[IntPairToLong(row_block_id, col_block_id)]->values - values;
+    int pos = numeric_cast<int>(
+        layout_[IntPairToLong(row_block_id, col_block_id)]->values - values);
     for (int r = 0; r < row_block_size; ++r) {
       for (int c = 0; c < col_block_size; ++c, ++pos) {
         rows[pos] = blocks_[row_block_id].position + r;

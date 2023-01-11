@@ -39,6 +39,7 @@
 #include "ceres/casts.h"
 #include "ceres/crs_matrix.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/internal/numeric_cast.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "glog/logging.h"
@@ -407,7 +408,7 @@ TEST_F(BlockSparseMatrixTest, AppendAndDeleteBlockDiagonalMatrix) {
     EXPECT_LT((y_a.tail(a_->num_cols()) - expected_tail).norm(), 1e-12);
   }
 
-  a_->DeleteRowBlocks(column_blocks.size());
+  a_->DeleteRowBlocks(numeric_cast<int>(column_blocks.size()));
   EXPECT_EQ(a_->num_rows(), b_->num_rows());
   EXPECT_EQ(a_->num_cols(), b_->num_cols());
 

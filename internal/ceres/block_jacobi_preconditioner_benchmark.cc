@@ -38,6 +38,7 @@
 #include "ceres/fake_bundle_adjustment_jacobian.h"
 #include "ceres/internal/config.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/internal/numeric_cast.h"
 
 namespace ceres::internal {
 
@@ -63,7 +64,7 @@ static void BM_BlockSparseJacobiPreconditionerBA(benchmark::State& state) {
   Preconditioner::Options preconditioner_options;
   ContextImpl context;
   preconditioner_options.context = &context;
-  preconditioner_options.num_threads = state.range(0);
+  preconditioner_options.num_threads = numeric_cast<int>(state.range(0));
   context.EnsureMinimumThreads(preconditioner_options.num_threads);
   BlockSparseJacobiPreconditioner p(preconditioner_options, *jacobian);
 
@@ -91,7 +92,7 @@ static void BM_BlockCRSJacobiPreconditionerBA(benchmark::State& state) {
   Preconditioner::Options preconditioner_options;
   ContextImpl context;
   preconditioner_options.context = &context;
-  preconditioner_options.num_threads = state.range(0);
+  preconditioner_options.num_threads = numeric_cast<int>(state.range(0));
   context.EnsureMinimumThreads(preconditioner_options.num_threads);
   BlockCRSJacobiPreconditioner p(preconditioner_options, jacobian_crs);
 
@@ -124,7 +125,7 @@ static void BM_BlockSparseJacobiPreconditionerUnstructured(
   Preconditioner::Options preconditioner_options;
   ContextImpl context;
   preconditioner_options.context = &context;
-  preconditioner_options.num_threads = state.range(0);
+  preconditioner_options.num_threads = numeric_cast<int>(state.range(0));
   context.EnsureMinimumThreads(preconditioner_options.num_threads);
   BlockSparseJacobiPreconditioner p(preconditioner_options, *jacobian);
 
@@ -160,7 +161,7 @@ static void BM_BlockCRSJacobiPreconditionerUnstructured(
   Preconditioner::Options preconditioner_options;
   ContextImpl context;
   preconditioner_options.context = &context;
-  preconditioner_options.num_threads = state.range(0);
+  preconditioner_options.num_threads = numeric_cast<int>(state.range(0));
   context.EnsureMinimumThreads(preconditioner_options.num_threads);
   BlockCRSJacobiPreconditioner p(preconditioner_options, jacobian_crs);
 

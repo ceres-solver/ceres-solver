@@ -36,6 +36,7 @@
 
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/inner_product_computer.h"
+#include "ceres/internal/numeric_cast.h"
 #include "ceres/linear_solver.h"
 #include "ceres/sparse_cholesky.h"
 #include "ceres/types.h"
@@ -87,7 +88,7 @@ bool SubsetPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
     inner_product_computer_ = InnerProductComputer::Create(
         *m,
         options_.subset_preconditioner_start_row_block,
-        bs->rows.size(),
+        numeric_cast<int>(bs->rows.size()),
         sparse_cholesky_->StorageType());
   }
 
@@ -98,7 +99,7 @@ bool SubsetPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
   if (D != nullptr) {
     // A = [P]
     //     [Q]
-    m->DeleteRowBlocks(bs->cols.size());
+    m->DeleteRowBlocks(numeric_cast<int>(bs->cols.size()));
   }
 
   std::string message;

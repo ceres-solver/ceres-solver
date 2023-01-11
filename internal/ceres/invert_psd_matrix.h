@@ -33,6 +33,7 @@
 
 #include "Eigen/Dense"
 #include "ceres/internal/eigen.h"
+#include "ceres/internal/numeric_cast.h"
 #include "glog/logging.h"
 
 namespace ceres::internal {
@@ -51,7 +52,7 @@ typename EigenTypes<kSize, kSize>::Matrix InvertPSDMatrix(
     const bool assume_full_rank,
     const typename EigenTypes<kSize, kSize>::Matrix& m) {
   using MType = typename EigenTypes<kSize, kSize>::Matrix;
-  const int size = m.rows();
+  const int size = numeric_cast<int>(m.rows());
 
   // If the matrix can be assumed to be full rank, then if it is small
   // (< 5) and fixed size, use Eigen's optimized inverse()

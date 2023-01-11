@@ -33,6 +33,7 @@
 #include <list>
 
 #include "ceres/internal/eigen.h"
+#include "ceres/internal/numeric_cast.h"
 #include "glog/logging.h"
 
 namespace ceres::internal {
@@ -96,7 +97,7 @@ bool LowRankInverseHessian::Update(const Vector& delta_x,
     return false;
   }
 
-  int next = indices_.size();
+  int next = numeric_cast<int>(indices_.size());
   // Once the size of the list reaches max_num_corrections_, simulate
   // a circular buffer by removing the first element of the list and
   // making it the next position where the LBFGS history is stored.
@@ -121,7 +122,7 @@ void LowRankInverseHessian::RightMultiplyAndAccumulate(const double* x_ptr,
 
   search_direction = gradient;
 
-  const int num_corrections = indices_.size();
+  const int num_corrections = numeric_cast<int>(indices_.size());
   Vector alpha(num_corrections);
 
   for (auto it = indices_.rbegin(); it != indices_.rend(); ++it) {

@@ -36,6 +36,7 @@
 #include <cmath>
 #include <fstream>
 
+#include "ceres/internal/numeric_cast.h"
 #include "pgm_image.h"
 
 namespace ceres::examples {
@@ -53,7 +54,7 @@ FieldsOfExpertsCost::FieldsOfExpertsCost(const std::vector<double>& filter)
 bool FieldsOfExpertsCost::Evaluate(double const* const* parameters,
                                    double* residuals,
                                    double** jacobians) const {
-  int num_variables = filter_.size();
+  int num_variables = numeric_cast<int>(filter_.size());
   residuals[0] = 0;
   for (int i = 0; i < num_variables; ++i) {
     residuals[0] += filter_[i] * parameters[i][0];

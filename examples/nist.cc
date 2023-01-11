@@ -219,7 +219,7 @@ class NISTProblem {
     // Get the first line of initial and final parameter values to
     // determine the number of tries.
     GetAndSplitLine(ifs, &pieces);
-    const int kNumTries = pieces.size() - 4;
+    const int kNumTries = numeric_cast<int>(pieces.size()) - 4;
 
     predictor_.resize(kNumObservations, kNumPredictors);
     response_.resize(kNumObservations, kNumResponses);
@@ -272,11 +272,11 @@ class NISTProblem {
   Matrix final_parameters() const { return final_parameters_; }
   Matrix predictor() const { return predictor_; }
   Matrix response() const { return response_; }
-  int predictor_size() const { return predictor_.cols(); }
-  int num_observations() const { return predictor_.rows(); }
-  int response_size() const { return response_.cols(); }
-  int num_parameters() const { return initial_parameters_.cols(); }
-  int num_starts() const { return initial_parameters_.rows(); }
+  int predictor_size() const { return numeric_cast<int>(predictor_.cols()); }
+  int num_observations() const { return numeric_cast<int>(predictor_.rows()); }
+  int response_size() const { return numeric_cast<int>(response_.cols()); }
+  int num_parameters() const { return numeric_cast<int>(initial_parameters_.cols()); }
+  int num_starts() const { return numeric_cast<int>(initial_parameters_.rows()); }
   double certified_cost() const { return certified_cost_; }
 
  private:

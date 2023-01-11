@@ -37,6 +37,7 @@
 #include "Eigen/SparseCore"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/internal/numeric_cast.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "glog/logging.h"
 #include "gtest/gtest.h"
@@ -173,7 +174,7 @@ TEST(InnerProductComputer, SubMatrix) {
 
     const std::vector<CompressedRow>& row_blocks =
         random_matrix->block_structure()->rows;
-    const int num_row_blocks = row_blocks.size();
+    const int num_row_blocks = numeric_cast<int>(row_blocks.size());
 
     for (int start_row_block = 0; start_row_block < num_row_blocks - 1;
          ++start_row_block) {
