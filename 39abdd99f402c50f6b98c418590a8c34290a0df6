@@ -24,6 +24,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0013ad7_d2bc1a6b",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-11T08:03:59Z",
+      "side": 1,
+      "message": "No, it is used in for loop (line 473) and after that in line 495",
+      "parentUuid": "b819930f_6c39868b",
+      "range": {
+        "startLine": 470,
+        "startChar": 15,
+        "endLine": 470,
+        "endChar": 19
+      },
+      "revId": "39abdd99f402c50f6b98c418590a8c34290a0df6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0b6bb359_7848cb84",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-01-10T22:37:48Z",
       "side": 1,
       "message": "This null check is not useful, and I do not understand the comment.\nwhy won\u0027t we check that the cost value is valid?",
+      "range": {
+        "startLine": 125,
+        "startChar": 15,
+        "endLine": 125,
+        "endChar": 20
+      },
+      "revId": "39abdd99f402c50f6b98c418590a8c34290a0df6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bdf497e7_e8e326d0",
+        "filename": "internal/ceres/residual_block_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-11T08:03:59Z",
+      "side": 1,
+      "message": "Because according to the content of residual_block.cc it can be invalid:\n* residual_block.cc:110 At this line computations are invalidated with call to `InvalidateEvaluation` (including `cost`)\n* residual_block.cc:112 Here we evaluate residuals and jacobians but not `cost` so invalidated value remains invalidated\n* residual_block.cc:116 Call to `IsEvaluationValid` but at this time cost may be invalid and that is why it is not checked here\n* residual_block.cc:161 Actual calculation of `cost`. Only after this line it can be checked for validness\n\nHere is the point to decide what to do:\n* Remove cost completely from `IsEvaluationValid`\n* Write comment about why this function does not check cost",
+      "parentUuid": "0b6bb359_7848cb84",
       "range": {
         "startLine": 125,
         "startChar": 15,
