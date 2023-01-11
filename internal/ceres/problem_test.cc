@@ -52,8 +52,6 @@
 
 namespace ceres::internal {
 
-using std::vector;
-
 // The following three classes are for the purposes of defining
 // function signatures. They have dummy Evaluate functions.
 
@@ -624,14 +622,14 @@ TEST(Problem, ParameterBlockQueryTestUsingManifold) {
   problem.AddParameterBlock(x, 3);
   problem.AddParameterBlock(y, 4);
 
-  vector<int> constant_parameters;
+  std::vector<int> constant_parameters;
   constant_parameters.push_back(0);
   problem.SetManifold(x, new SubsetManifold(3, constant_parameters));
   EXPECT_EQ(problem.ParameterBlockSize(x), 3);
   EXPECT_EQ(problem.ParameterBlockTangentSize(x), 2);
   EXPECT_EQ(problem.ParameterBlockTangentSize(y), 4);
 
-  vector<double*> parameter_blocks;
+  std::vector<double*> parameter_blocks;
   problem.GetParameterBlocks(&parameter_blocks);
   EXPECT_EQ(parameter_blocks.size(), 2);
   EXPECT_NE(parameter_blocks[0], parameter_blocks[1]);
@@ -653,14 +651,14 @@ TEST(Problem, ParameterBlockQueryTest) {
   problem.AddParameterBlock(x, 3);
   problem.AddParameterBlock(y, 4);
 
-  vector<int> constant_parameters;
+  std::vector<int> constant_parameters;
   constant_parameters.push_back(0);
   problem.SetManifold(x, new SubsetManifold(3, constant_parameters));
   EXPECT_EQ(problem.ParameterBlockSize(x), 3);
   EXPECT_EQ(problem.ParameterBlockTangentSize(x), 2);
   EXPECT_EQ(problem.ParameterBlockTangentSize(y), 4);
 
-  vector<double*> parameter_blocks;
+  std::vector<double*> parameter_blocks;
   problem.GetParameterBlocks(&parameter_blocks);
   EXPECT_EQ(parameter_blocks.size(), 2);
   EXPECT_NE(parameter_blocks[0], parameter_blocks[1]);
@@ -978,7 +976,7 @@ TEST_P(DynamicProblem, RemoveInvalidResidualBlockDies) {
 
 // Check that a null-terminated array, a, has the same elements as b.
 template <typename T>
-void ExpectVectorContainsUnordered(const T* a, const vector<T>& b) {
+void ExpectVectorContainsUnordered(const T* a, const std::vector<T>& b) {
   // Compute the size of a.
   int size = 0;
   while (a[size]) {
@@ -987,12 +985,12 @@ void ExpectVectorContainsUnordered(const T* a, const vector<T>& b) {
   ASSERT_EQ(size, b.size());
 
   // Sort a.
-  vector<T> a_sorted(size);
+  std::vector<T> a_sorted(size);
   copy(a, a + size, a_sorted.begin());
   sort(a_sorted.begin(), a_sorted.end());
 
   // Sort b.
-  vector<T> b_sorted(b);
+  std::vector<T> b_sorted(b);
   sort(b_sorted.begin(), b_sorted.end());
 
   // Compare.
@@ -1004,7 +1002,7 @@ void ExpectVectorContainsUnordered(const T* a, const vector<T>& b) {
 static void ExpectProblemHasResidualBlocks(
     const ProblemImpl& problem,
     const ResidualBlockId* expected_residual_blocks) {
-  vector<ResidualBlockId> residual_blocks;
+  std::vector<ResidualBlockId> residual_blocks;
   problem.GetResidualBlocks(&residual_blocks);
   ExpectVectorContainsUnordered(expected_residual_blocks, residual_blocks);
 }
@@ -1065,8 +1063,8 @@ TEST_P(DynamicProblem, GetXXXBlocksForYYYBlock) {
     ExpectProblemHasResidualBlocks(*problem, expected_residuals);
   }
 
-  vector<double*> parameter_blocks;
-  vector<ResidualBlockId> residual_blocks;
+  std::vector<double*> parameter_blocks;
+  std::vector<ResidualBlockId> residual_blocks;
 
   // Check GetResidualBlocksForParameterBlock() for all parameter blocks.
   struct GetResidualBlocksForParameterBlockTestCase {
@@ -1208,8 +1206,8 @@ class ProblemEvaluateTest : public ::testing::Test {
                           const double* expected_gradient,
                           const double* expected_jacobian) {
     double cost;
-    vector<double> residuals;
-    vector<double> gradient;
+    std::vector<double> residuals;
+    std::vector<double> gradient;
     CRSMatrix jacobian;
 
     EXPECT_TRUE(
@@ -1264,8 +1262,8 @@ class ProblemEvaluateTest : public ::testing::Test {
 
   ProblemImpl problem_;
   double parameters_[6];
-  vector<double*> parameter_blocks_;
-  vector<ResidualBlockId> residual_blocks_;
+  std::vector<double*> parameter_blocks_;
+  std::vector<ResidualBlockId> residual_blocks_;
 };
 
 TEST_F(ProblemEvaluateTest, MultipleParameterAndResidualBlocks) {
@@ -1591,7 +1589,7 @@ TEST_F(ProblemEvaluateTest, Manifold) {
   };
   // clang-format on
 
-  vector<int> constant_parameters;
+  std::vector<int> constant_parameters;
   constant_parameters.push_back(0);
   problem_.SetManifold(parameters_ + 2,
                        new SubsetManifold(2, constant_parameters));

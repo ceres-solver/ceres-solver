@@ -40,7 +40,6 @@
 
 namespace ceres::internal {
 
-using std::vector;
 const double kTolerance = 1e-18;
 
 static void ExpectCostFunctionsAreEqual(
@@ -49,9 +48,9 @@ static void ExpectCostFunctionsAreEqual(
   EXPECT_EQ(cost_function.num_residuals(),
             actual_cost_function.num_residuals());
   const int num_residuals = cost_function.num_residuals();
-  const vector<int32_t>& parameter_block_sizes =
+  const std::vector<int32_t>& parameter_block_sizes =
       cost_function.parameter_block_sizes();
-  const vector<int32_t>& actual_parameter_block_sizes =
+  const std::vector<int32_t>& actual_parameter_block_sizes =
       actual_cost_function.parameter_block_sizes();
   EXPECT_EQ(parameter_block_sizes.size(), actual_parameter_block_sizes.size());
 

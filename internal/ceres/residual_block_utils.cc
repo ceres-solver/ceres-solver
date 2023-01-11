@@ -44,8 +44,6 @@
 
 namespace ceres::internal {
 
-using std::string;
-
 void InvalidateEvaluation(const ResidualBlock& block,
                           double* cost,
                           double* residuals,
@@ -63,7 +61,7 @@ void InvalidateEvaluation(const ResidualBlock& block,
   }
 }
 
-string EvaluationToString(const ResidualBlock& block,
+std::string EvaluationToString(const ResidualBlock& block,
                           double const* const* parameters,
                           double* cost,
                           double* residuals,
@@ -73,7 +71,7 @@ string EvaluationToString(const ResidualBlock& block,
 
   const int num_parameter_blocks = block.NumParameterBlocks();
   const int num_residuals = block.NumResiduals();
-  string result = "";
+  std::string result = "";
 
   // clang-format off
   StringAppendF(&result,
@@ -88,7 +86,7 @@ string EvaluationToString(const ResidualBlock& block,
       "to Inf or NaN is also an error.  \n\n"; // NOLINT
   // clang-format on
 
-  string space = "Residuals:     ";
+  std::string space = "Residuals:     ";
   result += space;
   AppendArrayToString(num_residuals, residuals, &result);
   StringAppendF(&result, "\n\n");

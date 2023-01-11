@@ -37,8 +37,6 @@
 
 namespace ceres::internal {
 
-using std::list;
-
 // The (L)BFGS algorithm explicitly requires that the secant equation:
 //
 //   B_{k+1} * s_k = y_k

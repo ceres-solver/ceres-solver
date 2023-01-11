@@ -39,8 +39,6 @@
 
 namespace ceres::internal {
 
-using std::vector;
-
 // Takes 2 parameter blocks:
 //     parameters[0] is size 10.
 //     parameters[1] is size 5.
@@ -74,8 +72,8 @@ class MyCostFunctor {
 };
 
 TEST(DynamicAutodiffCostFunctionTest, TestResiduals) {
-  vector<double> param_block_0(10, 0.0);
-  vector<double> param_block_1(5, 0.0);
+  std::vector<double> param_block_0(10, 0.0);
+  std::vector<double> param_block_1(5, 0.0);
   DynamicAutoDiffCostFunction<MyCostFunctor, 3> cost_function(
       new MyCostFunctor());
   cost_function.AddParameterBlock(param_block_0.size());
@@ -83,8 +81,8 @@ TEST(DynamicAutodiffCostFunctionTest, TestResiduals) {
   cost_function.SetNumResiduals(21);
 
   // Test residual computation.
-  vector<double> residuals(21, -100000);
-  vector<double*> parameter_blocks(2);
+  std::vector<double> residuals(21, -100000);
+  std::vector<double*> parameter_blocks(2);
   parameter_blocks[0] = &param_block_0[0];
   parameter_blocks[1] = &param_block_1[0];
   EXPECT_TRUE(
@@ -98,11 +96,11 @@ TEST(DynamicAutodiffCostFunctionTest, TestResiduals) {
 
 TEST(DynamicAutodiffCostFunctionTest, TestJacobian) {
   // Test the residual counting.
-  vector<double> param_block_0(10, 0.0);
+  std::vector<double> param_block_0(10, 0.0);
   for (int i = 0; i < 10; ++i) {
     param_block_0[i] = 2 * i;
   }
-  vector<double> param_block_1(5, 0.0);
+  std::vector<double> param_block_1(5, 0.0);
   DynamicAutoDiffCostFunction<MyCostFunctor, 3> cost_function(
       new MyCostFunctor());
   cost_function.AddParameterBlock(param_block_0.size());
@@ -110,18 +108,18 @@ TEST(DynamicAutodiffCostFunctionTest, TestJacobian) {
   cost_function.SetNumResiduals(21);
 
   // Prepare the residuals.
-  vector<double> residuals(21, -100000);
+  std::vector<double> residuals(21, -100000);
 
   // Prepare the parameters.
-  vector<double*> parameter_blocks(2);
+  std::vector<double*> parameter_blocks(2);
   parameter_blocks[0] = &param_block_0[0];
   parameter_blocks[1] = &param_block_1[0];
 
   // Prepare the jacobian.
-  vector<vector<double>> jacobian_vect(2);
+  std::vector<std::vector<double>> jacobian_vect(2);
   jacobian_vect[0].resize(21 * 10, -100000);
   jacobian_vect[1].resize(21 * 5, -100000);
-  vector<double*> jacobian;
+  std::vector<double*> jacobian;
   jacobian.push_back(jacobian_vect[0].data());
   jacobian.push_back(jacobian_vect[1].data());
 
@@ -164,11 +162,11 @@ TEST(DynamicAutodiffCostFunctionTest, TestJacobian) {
 
 TEST(DynamicAutodiffCostFunctionTest, JacobianWithFirstParameterBlockConstant) {
   // Test the residual counting.
-  vector<double> param_block_0(10, 0.0);
+  std::vector<double> param_block_0(10, 0.0);
   for (int i = 0; i < 10; ++i) {
     param_block_0[i] = 2 * i;
   }
-  vector<double> param_block_1(5, 0.0);
+  std::vector<double> param_block_1(5, 0.0);
   DynamicAutoDiffCostFunction<MyCostFunctor, 3> cost_function(
       new MyCostFunctor());
   cost_function.AddParameterBlock(param_block_0.size());
@@ -176,18 +174,18 @@ TEST(DynamicAutodiffCostFunctionTest, JacobianWithFirstParameterBlockConstant) {
   cost_function.SetNumResiduals(21);
 
   // Prepare the residuals.
-  vector<double> residuals(21, -100000);
+  std::vector<double> residuals(21, -100000);
 
   // Prepare the parameters.
-  vector<double*> parameter_blocks(2);
+  std::vector<double*> parameter_blocks(2);
   parameter_blocks[0] = &param_block_0[0];
   parameter_blocks[1] = &param_block_1[0];
 
   // Prepare the jacobian.
-  vector<vector<double>> jacobian_vect(2);
+  std::vector<std::vector<double>> jacobian_vect(2);
   jacobian_vect[0].resize(21 * 10, -100000);
   jacobian_vect[1].resize(21 * 5, -100000);
-  vector<double*> jacobian;
+  std::vector<double*> jacobian;
   jacobian.push_back(nullptr);
   jacobian.push_back(jacobian_vect[1].data());
 
@@ -214,11 +212,11 @@ TEST(DynamicAutodiffCostFunctionTest, JacobianWithFirstParameterBlockConstant) {
 TEST(DynamicAutodiffCostFunctionTest,
      JacobianWithSecondParameterBlockConstant) {  // NOLINT
   // Test the residual counting.
-  vector<double> param_block_0(10, 0.0);
+  std::vector<double> param_block_0(10, 0.0);
   for (int i = 0; i < 10; ++i) {
     param_block_0[i] = 2 * i;
   }
-  vector<double> param_block_1(5, 0.0);
+  std::vector<double> param_block_1(5, 0.0);
   DynamicAutoDiffCostFunction<MyCostFunctor, 3> cost_function(
       new MyCostFunctor());
   cost_function.AddParameterBlock(param_block_0.size());
@@ -226,18 +224,18 @@ TEST(DynamicAutodiffCostFunctionTest,
   cost_function.SetNumResiduals(21);
 
   // Prepare the residuals.
-  vector<double> residuals(21, -100000);
+  std::vector<double> residuals(21, -100000);
 
   // Prepare the parameters.
-  vector<double*> parameter_blocks(2);
+  std::vector<double*> parameter_blocks(2);
   parameter_blocks[0] = &param_block_0[0];
   parameter_blocks[1] = &param_block_1[0];
 
   // Prepare the jacobian.
-  vector<vector<double>> jacobian_vect(2);
+  std::vector<std::vector<double>> jacobian_vect(2);
   jacobian_vect[0].resize(21 * 10, -100000);
   jacobian_vect[1].resize(21 * 5, -100000);
-  vector<double*> jacobian;
+  std::vector<double*> jacobian;
   jacobian.push_back(jacobian_vect[0].data());
   jacobian.push_back(nullptr);
 
@@ -408,25 +406,25 @@ class ThreeParameterCostFunctorTest : public ::testing::Test {
   }
 
  protected:
-  vector<double> x_;
-  vector<double> y_;
-  vector<double> z_;
+  std::vector<double> x_;
+  std::vector<double> y_;
+  std::vector<double> z_;
 
-  vector<double*> parameter_blocks_;
+  std::vector<double*> parameter_blocks_;
 
   std::unique_ptr<CostFunction> cost_function_;
 
-  vector<vector<double>> jacobian_vect_;
+  std::vector<std::vector<double>> jacobian_vect_;
 
-  vector<double> expected_residuals_;
+  std::vector<double> expected_residuals_;
 
-  vector<double> expected_jacobian_x_;
-  vector<double> expected_jacobian_y_;
-  vector<double> expected_jacobian_z_;
+  std::vector<double> expected_jacobian_x_;
+  std::vector<double> expected_jacobian_y_;
+  std::vector<double> expected_jacobian_z_;
 };
 
 TEST_F(ThreeParameterCostFunctorTest, TestThreeParameterResiduals) {
-  vector<double> residuals(7, -100000);
+  std::vector<double> residuals(7, -100000);
   EXPECT_TRUE(cost_function_->Evaluate(
       parameter_blocks_.data(), residuals.data(), nullptr));
   for (int i = 0; i < 7; ++i) {
@@ -435,9 +433,9 @@ TEST_F(ThreeParameterCostFunctorTest, TestThreeParameterResiduals) {
 }
 
 TEST_F(ThreeParameterCostFunctorTest, TestThreeParameterJacobian) {
-  vector<double> residuals(7, -100000);
+  std::vector<double> residuals(7, -100000);
 
-  vector<double*> jacobian;
+  std::vector<double*> jacobian;
   jacobian.push_back(jacobian_vect_[0].data());
   jacobian.push_back(jacobian_vect_[1].data());
   jacobian.push_back(jacobian_vect_[2].data());
@@ -464,9 +462,9 @@ TEST_F(ThreeParameterCostFunctorTest, TestThreeParameterJacobian) {
 
 TEST_F(ThreeParameterCostFunctorTest,
        ThreeParameterJacobianWithFirstAndLastParameterBlockConstant) {
-  vector<double> residuals(7, -100000);
+  std::vector<double> residuals(7, -100000);
 
-  vector<double*> jacobian;
+  std::vector<double*> jacobian;
   jacobian.push_back(nullptr);
   jacobian.push_back(jacobian_vect_[1].data());
   jacobian.push_back(nullptr);
@@ -485,9 +483,9 @@ TEST_F(ThreeParameterCostFunctorTest,
 
 TEST_F(ThreeParameterCostFunctorTest,
        ThreeParameterJacobianWithSecondParameterBlockConstant) {
-  vector<double> residuals(7, -100000);
+  std::vector<double> residuals(7, -100000);
 
-  vector<double*> jacobian;
+  std::vector<double*> jacobian;
   jacobian.push_back(jacobian_vect_[0].data());
   jacobian.push_back(nullptr);
   jacobian.push_back(jacobian_vect_[2].data());
@@ -654,18 +652,18 @@ class SixParameterCostFunctorTest : public ::testing::Test {
   double z1_;
   double z2_;
 
-  vector<double*> parameter_blocks_;
+  std::vector<double*> parameter_blocks_;
 
   std::unique_ptr<CostFunction> cost_function_;
 
-  vector<vector<double>> jacobian_vect_;
+  std::vector<std::vector<double>> jacobian_vect_;
 
-  vector<double> expected_residuals_;
-  vector<vector<double>> expected_jacobians_;
+  std::vector<double> expected_residuals_;
+  std::vector<std::vector<double>> expected_jacobians_;
 };
 
 TEST_F(SixParameterCostFunctorTest, TestSixParameterResiduals) {
-  vector<double> residuals(7, -100000);
+  std::vector<double> residuals(7, -100000);
   EXPECT_TRUE(cost_function_->Evaluate(
       parameter_blocks_.data(), residuals.data(), nullptr));
   for (int i = 0; i < 7; ++i) {
@@ -674,9 +672,9 @@ TEST_F(SixParameterCostFunctorTest, TestSixParameterResiduals) {
 }
 
 TEST_F(SixParameterCostFunctorTest, TestSixParameterJacobian) {
-  vector<double> residuals(7, -100000);
+  std::vector<double> residuals(7, -100000);
 
-  vector<double*> jacobian;
+  std::vector<double*> jacobian;
   jacobian.push_back(jacobian_vect_[0].data());
   jacobian.push_back(jacobian_vect_[1].data());
   jacobian.push_back(jacobian_vect_[2].data());
@@ -699,9 +697,9 @@ TEST_F(SixParameterCostFunctorTest, TestSixParameterJacobian) {
 }
 
 TEST_F(SixParameterCostFunctorTest, TestSixParameterJacobianVVCVVC) {
-  vector<double> residuals(7, -100000);
+  std::vector<double> residuals(7, -100000);
 
-  vector<double*> jacobian;
+  std::vector<double*> jacobian;
   jacobian.push_back(jacobian_vect_[0].data());
   jacobian.push_back(jacobian_vect_[1].data());
   jacobian.push_back(nullptr);
@@ -729,9 +727,9 @@ TEST_F(SixParameterCostFunctorTest, TestSixParameterJacobianVVCVVC) {
 }
 
 TEST_F(SixParameterCostFunctorTest, TestSixParameterJacobianVCCVCV) {
-  vector<double> residuals(7, -100000);
+  std::vector<double> residuals(7, -100000);
 
-  vector<double*> jacobian;
+  std::vector<double*> jacobian;
   jacobian.push_back(jacobian_vect_[0].data());
   jacobian.push_back(nullptr);
   jacobian.push_back(nullptr);

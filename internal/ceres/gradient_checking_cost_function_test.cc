@@ -51,7 +51,6 @@
 
 namespace ceres::internal {
 
-using std::vector;
 using testing::_;
 using testing::AllOf;
 using testing::AnyNumber;
@@ -128,7 +127,7 @@ class TestTerm : public CostFunction {
 
  private:
   int arity_;
-  vector<vector<double>> a_;
+  std::vector<std::vector<double>> a_;
 };
 
 TEST(GradientCheckingCostFunction, ResidualsAndJacobiansArePreservedTest) {
@@ -137,7 +136,7 @@ TEST(GradientCheckingCostFunction, ResidualsAndJacobiansArePreservedTest) {
   int const dim[arity] = {2, 3, 4};
 
   // Make a random set of blocks.
-  vector<double*> parameters(arity);
+  std::vector<double*> parameters(arity);
   std::mt19937 prng;
   std::uniform_real_distribution<double> distribution(-1.0, 1.0);
   auto randu = [&prng, &distribution] { return distribution(prng); };
@@ -150,8 +149,8 @@ TEST(GradientCheckingCostFunction, ResidualsAndJacobiansArePreservedTest) {
 
   double original_residual;
   double residual;
-  vector<double*> original_jacobians(arity);
-  vector<double*> jacobians(arity);
+  std::vector<double*> original_jacobians(arity);
+  std::vector<double*> jacobians(arity);
 
   for (int j = 0; j < arity; ++j) {
     // Since residual is one dimensional the jacobians have the same
@@ -195,7 +194,7 @@ TEST(GradientCheckingCostFunction, SmokeTest) {
   int const dim[arity] = {2, 3, 4};
 
   // Make a random set of blocks.
-  vector<double*> parameters(arity);
+  std::vector<double*> parameters(arity);
   std::mt19937 prng;
   std::uniform_real_distribution<double> distribution(-1.0, 1.0);
   auto randu = [&prng, &distribution] { return distribution(prng); };
@@ -207,7 +206,7 @@ TEST(GradientCheckingCostFunction, SmokeTest) {
   }
 
   double residual;
-  vector<double*> jacobians(arity);
+  std::vector<double*> jacobians(arity);
   for (int j = 0; j < arity; ++j) {
     // Since residual is one dimensional the jacobians have the same size as the
     // parameter blocks.

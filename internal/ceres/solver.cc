@@ -61,17 +61,14 @@ namespace {
 
 using internal::StringAppendF;
 using internal::StringPrintf;
-using std::map;
-using std::string;
-using std::vector;
 
 #define OPTION_OP(x, y, OP)                                          \
   if (!(options.x OP y)) {                                           \
     std::stringstream ss;                                            \
     ss << "Invalid configuration. ";                                 \
-    ss << string("Solver::Options::" #x " = ") << options.x << ". "; \
+    ss << std::string("Solver::Options::" #x " = ") << options.x << ". "; \
     ss << "Violated constraint: ";                                   \
-    ss << string("Solver::Options::" #x " " #OP " " #y);             \
+    ss << std::string("Solver::Options::" #x " " #OP " " #y);             \
     *error = ss.str();                                               \
     return false;                                                    \
   }
@@ -80,11 +77,11 @@ using std::vector;
   if (!(options.x OP options.y)) {                                   \
     std::stringstream ss;                                            \
     ss << "Invalid configuration. ";                                 \
-    ss << string("Solver::Options::" #x " = ") << options.x << ". "; \
-    ss << string("Solver::Options::" #y " = ") << options.y << ". "; \
+    ss << std::string("Solver::Options::" #x " = ") << options.x << ". "; \
+    ss << std::string("Solver::Options::" #y " = ") << options.y << ". "; \
     ss << "Violated constraint: ";                                   \
-    ss << string("Solver::Options::" #x);                            \
-    ss << string(#OP " Solver::Options::" #y ".");                   \
+    ss << std::string("Solver::Options::" #x);                            \
+    ss << std::string(#OP " Solver::Options::" #y ".");                   \
     *error = ss.str();                                               \
     return false;                                                    \
   }
@@ -96,7 +93,7 @@ using std::vector;
 #define OPTION_LE_OPTION(x, y) OPTION_OP_OPTION(x, y, <=)
 #define OPTION_LT_OPTION(x, y) OPTION_OP_OPTION(x, y, <)
 
-bool CommonOptionsAreValid(const Solver::Options& options, string* error) {
+bool CommonOptionsAreValid(const Solver::Options& options, std::string* error) {
   OPTION_GE(max_num_iterations, 0);
   OPTION_GE(max_solver_time_in_seconds, 0.0);
   OPTION_GE(function_tolerance, 0.0);
@@ -123,7 +120,7 @@ bool IsIterativeSolver(LinearSolverType type) {
 }
 
 bool OptionsAreValidForDenseSolver(const Solver::Options& options,
-                                   string* error) {
+                                   std::string* error) {
   const char* library_name = DenseLinearAlgebraLibraryTypeToString(
       options.dense_linear_algebra_library_type);
   const char* solver_name =
@@ -141,7 +138,7 @@ bool OptionsAreValidForDenseSolver(const Solver::Options& options,
 }
 
 bool OptionsAreValidForSparseCholeskyBasedSolver(const Solver::Options& options,
-                                                 string* error) {
+                                                 std::string* error) {
   const char* library_name = SparseLinearAlgebraLibraryTypeToString(
       options.sparse_linear_algebra_library_type);
   // Sparse factorization based solvers and some preconditioners require a
@@ -199,12 +196,12 @@ bool OptionsAreValidForSparseCholeskyBasedSolver(const Solver::Options& options,
 }
 
 bool OptionsAreValidForDenseNormalCholesky(const Solver::Options& options,
-                                           string* error) {
+                                           std::string* error) {
   CHECK_EQ(options.linear_solver_type, DENSE_NORMAL_CHOLESKY);
   return OptionsAreValidForDenseSolver(options, error);
 }
 
-bool OptionsAreValidForDenseQr(const Solver::Options& options, string* error) {
+bool OptionsAreValidForDenseQr(const Solver::Options& options, std::string* error) {
   CHECK_EQ(options.linear_solver_type, DENSE_QR);
 
   if (!OptionsAreValidForDenseSolver(options, error)) {
@@ -220,13 +217,13 @@ bool OptionsAreValidForDenseQr(const Solver::Options& options, string* error) {
 }
 
 bool OptionsAreValidForSparseNormalCholesky(const Solver::Options& options,
-                                            string* error) {
+                                            std::string* error) {
   CHECK_EQ(options.linear_solver_type, SPARSE_NORMAL_CHOLESKY);
   return OptionsAreValidForSparseCholeskyBasedSolver(options, error);
 }
 
 bool OptionsAreValidForDenseSchur(const Solver::Options& options,
-                                  string* error) {
+                                  std::string* error) {
   CHECK_EQ(options.linear_solver_type, DENSE_SCHUR);
 
   if (options.dynamic_sparsity) {
@@ -242,7 +239,7 @@ bool OptionsAreValidForDenseSchur(const Solver::Options& options,
 }
 
 bool OptionsAreValidForSparseSchur(const Solver::Options& options,
-                                   string* error) {
+                                   std::string* error) {
   CHECK_EQ(options.linear_solver_type, SPARSE_SCHUR);
   if (options.dynamic_sparsity) {
     *error = "Dynamic sparsity is only supported with SPARSE_NORMAL_CHOLESKY.";
@@ -252,7 +249,7 @@ bool OptionsAreValidForSparseSchur(const Solver::Options& options,
 }
 
 bool OptionsAreValidForIterativeSchur(const Solver::Options& options,
-                                      string* error) {
+                                      std::string* error) {
   CHECK_EQ(options.linear_solver_type, ITERATIVE_SCHUR);
   if (options.dynamic_sparsity) {
     *error = "Dynamic sparsity is only supported with SPARSE_NORMAL_CHOLESKY.";
@@ -305,7 +302,7 @@ bool OptionsAreValidForIterativeSchur(const Solver::Options& options,
   return true;
 }
 
-bool OptionsAreValidForCgnr(const Solver::Options& options, string* error) {
+bool OptionsAreValidForCgnr(const Solver::Options& options, std::string* error) {
   CHECK_EQ(options.linear_solver_type, CGNR);
 
   if (options.preconditioner_type != IDENTITY &&
@@ -361,7 +358,7 @@ bool OptionsAreValidForCgnr(const Solver::Options& options, string* error) {
 }
 
 bool OptionsAreValidForLinearSolver(const Solver::Options& options,
-                                    string* error) {
+                                    std::string* error) {
   switch (options.linear_solver_type) {
     case DENSE_NORMAL_CHOLESKY:
       return OptionsAreValidForDenseNormalCholesky(options, error);
@@ -386,7 +383,7 @@ bool OptionsAreValidForLinearSolver(const Solver::Options& options,
   return false;
 }
 
-bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
+bool TrustRegionOptionsAreValid(const Solver::Options& options, std::string* error) {
   OPTION_GT(initial_trust_region_radius, 0.0);
   OPTION_GT(min_trust_region_radius, 0.0);
   OPTION_GT(max_trust_region_radius, 0.0);
@@ -434,7 +431,7 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
   return true;
 }
 
-bool LineSearchOptionsAreValid(const Solver::Options& options, string* error) {
+bool LineSearchOptionsAreValid(const Solver::Options& options, std::string* error) {
   OPTION_GT(max_lbfgs_rank, 0);
   OPTION_GT(min_line_search_step_size, 0.0);
   OPTION_GT(max_line_search_step_contraction, 0.0);
@@ -454,9 +451,9 @@ bool LineSearchOptionsAreValid(const Solver::Options& options, string* error) {
        options.line_search_direction_type == ceres::LBFGS) &&
       options.line_search_type != ceres::WOLFE) {
     *error =
-        string("Invalid configuration: Solver::Options::line_search_type = ") +
-        string(LineSearchTypeToString(options.line_search_type)) +
-        string(
+        std::string("Invalid configuration: Solver::Options::line_search_type = ") +
+        std::string(LineSearchTypeToString(options.line_search_type)) +
+        std::string(
             ". When using (L)BFGS, "
             "Solver::Options::line_search_type must be set to WOLFE.");
     return false;
@@ -490,7 +487,7 @@ bool LineSearchOptionsAreValid(const Solver::Options& options, string* error) {
 #undef OPTION_LE_OPTION
 #undef OPTION_LT_OPTION
 
-void StringifyOrdering(const vector<int>& ordering, string* report) {
+void StringifyOrdering(const std::vector<int>& ordering, std::string* report) {
   if (ordering.empty()) {
     internal::StringAppendF(report, "AUTOMATIC");
     return;
@@ -590,7 +587,7 @@ void PostSolveSummarize(const internal::PreprocessedProblem& pp,
   // not contain any parameter blocks. Thus, only extract the
   // evaluator statistics if one exists.
   if (pp.evaluator != nullptr) {
-    const map<string, CallStatistics>& evaluator_statistics =
+    const std::map<std::string, CallStatistics>& evaluator_statistics =
         pp.evaluator->Statistics();
     {
       const CallStatistics& call_stats = FindWithDefault(
@@ -612,7 +609,7 @@ void PostSolveSummarize(const internal::PreprocessedProblem& pp,
   // solver from which we can extract run time statistics. In
   // particular the line search solver does not use a linear solver.
   if (pp.linear_solver != nullptr) {
-    const map<string, CallStatistics>& linear_solver_statistics =
+    const std::map<std::string, CallStatistics>& linear_solver_statistics =
         pp.linear_solver->Statistics();
     const CallStatistics& call_stats = FindWithDefault(
         linear_solver_statistics, "LinearSolver::Solve", CallStatistics());
@@ -684,7 +681,7 @@ bool IsCudaRequired(const Solver::Options& options) {
 
 }  // namespace
 
-bool Solver::Options::IsValid(string* error) const {
+bool Solver::Options::IsValid(std::string* error) const {
   if (!CommonOptionsAreValid(*this, error)) {
     return false;
   }
@@ -833,7 +830,7 @@ void Solve(const Solver::Options& options,
   solver.Solve(options, problem, summary);
 }
 
-string Solver::Summary::BriefReport() const {
+std::string Solver::Summary::BriefReport() const {
   return StringPrintf(
       "Ceres Solver Report: "
       "Iterations: %d, "
@@ -846,12 +843,12 @@ string Solver::Summary::BriefReport() const {
       TerminationTypeToString(termination_type));
 }
 
-string Solver::Summary::FullReport() const {
+std::string Solver::Summary::FullReport() const {
   using internal::VersionString;
 
   // NOTE operator+ is not usable for concatenating a string and a string_view.
-  string report =
-      string{"\nSolver Summary (v "}.append(VersionString()) + ")\n\n";
+  std::string report =
+      std::string{"\nSolver Summary (v "}.append(VersionString()) + ")\n\n";
 
   StringAppendF(&report, "%45s    %21s\n", "Original", "Reduced");
   StringAppendF(&report,
@@ -967,9 +964,9 @@ string Solver::Summary::FullReport() const {
                   num_threads_given,
                   num_threads_used);
 
-    string given;
+    std::string given;
     StringifyOrdering(linear_solver_ordering_given, &given);
-    string used;
+    std::string used;
     StringifyOrdering(linear_solver_ordering_used, &used);
     StringAppendF(&report,
                   "Linear solver ordering %22s %24s\n",
@@ -990,9 +987,9 @@ string Solver::Summary::FullReport() const {
     }
 
     if (inner_iterations_used) {
-      string given;
+      std::string given;
       StringifyOrdering(inner_iteration_ordering_given, &given);
-      string used;
+      std::string used;
       StringifyOrdering(inner_iteration_ordering_used, &used);
       StringAppendF(&report,
                     "Inner iteration ordering %20s %24s\n",
@@ -1003,7 +1000,7 @@ string Solver::Summary::FullReport() const {
     // LINE_SEARCH HEADER
     StringAppendF(&report, "\nMinimizer                 %19s\n", "LINE_SEARCH");
 
-    string line_search_direction_string;
+    std::string line_search_direction_string;
     if (line_search_direction_type == LBFGS) {
       line_search_direction_string = StringPrintf("LBFGS (%d)", max_lbfgs_rank);
     } else if (line_search_direction_type == NONLINEAR_CONJUGATE_GRADIENT) {
@@ -1018,7 +1015,7 @@ string Solver::Summary::FullReport() const {
                   "Line search direction     %19s\n",
                   line_search_direction_string.c_str());
 
-    const string line_search_type_string = StringPrintf(
+    const std::string line_search_type_string = StringPrintf(
         "%s %s",
         LineSearchInterpolationTypeToString(line_search_interpolation_type),
         LineSearchTypeToString(line_search_type));

@@ -46,7 +46,6 @@
 
 namespace ceres::internal {
 
-using std::vector;
 const double kTolerance = 1e-12;
 
 // We pick a (non-quadratic) function whose derivative are easy:
@@ -115,7 +114,7 @@ class GoodTestTerm : public CostFunction {
  private:
   int arity_;
   bool return_value_;
-  vector<vector<double>> a_;  // our vectors.
+  std::vector<std::vector<double>> a_;  // our vectors.
 };
 
 class BadTestTerm : public CostFunction {
@@ -170,7 +169,7 @@ class BadTestTerm : public CostFunction {
 
  private:
   int arity_;
-  vector<vector<double>> a_;  // our vectors.
+  std::vector<std::vector<double>> a_;  // our vectors.
 };
 
 static void CheckDimensions(const GradientChecker::ProbeResults& results,

@@ -44,8 +44,6 @@
 namespace ceres {
 namespace internal {
 
-using std::vector;
-
 // Templated base class for the CostFunction signatures.
 template <int kNumResiduals, int... Ns>
 class MockCostFunctionBase : public SizedCostFunction<kNumResiduals, Ns...> {
@@ -88,10 +86,10 @@ TEST(_, ReorderResidualBlockNormalFunction) {
   options.linear_solver_type = DENSE_SCHUR;
   options.linear_solver_ordering = linear_solver_ordering;
 
-  const vector<ResidualBlock*>& residual_blocks =
+  const std::vector<ResidualBlock*>& residual_blocks =
       problem.program().residual_blocks();
 
-  vector<ResidualBlock*> expected_residual_blocks;
+  std::vector<ResidualBlock*> expected_residual_blocks;
 
   // This is a bit fragile, but it serves the purpose. We know the
   // bucketing algorithm that the reordering function uses, so we
@@ -156,7 +154,7 @@ TEST(_, ApplyOrderingNormal) {
 
   EXPECT_TRUE(ApplyOrdering(
       problem.parameter_map(), linear_solver_ordering, program, &message));
-  const vector<ParameterBlock*>& parameter_blocks = program->parameter_blocks();
+  const std::vector<ParameterBlock*>& parameter_blocks = program->parameter_blocks();
 
   EXPECT_EQ(parameter_blocks.size(), 3);
   EXPECT_EQ(parameter_blocks[0]->user_state(), &x);
@@ -180,7 +178,7 @@ class ReorderProgramForSparseCholeskyUsingSuiteSparseTest
   void ComputeAndValidateOrdering(
       const ParameterBlockOrdering& linear_solver_ordering) {
     Program* program = problem_.mutable_program();
-    vector<ParameterBlock*> unordered_parameter_blocks =
+    std::vector<ParameterBlock*> unordered_parameter_blocks =
         program->parameter_blocks();
 
     std::string error;
@@ -190,7 +188,7 @@ class ReorderProgramForSparseCholeskyUsingSuiteSparseTest
                                                 0, /* use all rows */
                                                 program,
                                                 &error));
-    const vector<ParameterBlock*>& ordered_parameter_blocks =
+    const std::vector<ParameterBlock*>& ordered_parameter_blocks =
         program->parameter_blocks();
     EXPECT_EQ(ordered_parameter_blocks.size(),
               unordered_parameter_blocks.size());

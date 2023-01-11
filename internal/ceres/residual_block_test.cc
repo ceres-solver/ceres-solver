@@ -40,8 +40,6 @@
 
 namespace ceres::internal {
 
-using std::vector;
-
 // Trivial cost function that accepts three arguments.
 class TernaryCostFunction : public CostFunction {
  public:
@@ -87,7 +85,7 @@ TEST(ResidualBlock, EvaluateWithNoLossFunctionOrManifolds) {
   double values_z[4];
   ParameterBlock z(values_z, 4, -1);
 
-  vector<ParameterBlock*> parameters;
+  std::vector<ParameterBlock*> parameters;
   parameters.push_back(&x);
   parameters.push_back(&y);
   parameters.push_back(&z);
@@ -212,19 +210,19 @@ TEST(ResidualBlock, EvaluateWithManifolds) {
   double values_z[4];
   ParameterBlock z(values_z, 4, -1);
 
-  vector<ParameterBlock*> parameters;
+  std::vector<ParameterBlock*> parameters;
   parameters.push_back(&x);
   parameters.push_back(&y);
   parameters.push_back(&z);
 
   // Make x have the first component fixed.
-  vector<int> x_fixed;
+  std::vector<int> x_fixed;
   x_fixed.push_back(0);
   SubsetManifold x_manifold(2, x_fixed);
   x.SetManifold(&x_manifold);
 
   // Make z have the last and last component fixed.
-  vector<int> z_fixed;
+  std::vector<int> z_fixed;
   z_fixed.push_back(2);
   SubsetManifold z_manifold(4, z_fixed);
   z.SetManifold(&z_manifold);

@@ -43,8 +43,6 @@
 
 namespace ceres::internal {
 
-using std::vector;
-
 namespace {
 
 // Given the residual block ordering, build a lookup table to determine which
@@ -59,9 +57,9 @@ namespace {
 // instead of num_eliminate_blocks.
 void BuildJacobianLayout(const Program& program,
                          int num_eliminate_blocks,
-                         vector<int*>* jacobian_layout,
-                         vector<int>* jacobian_layout_storage) {
-  const vector<ResidualBlock*>& residual_blocks = program.residual_blocks();
+                         std::vector<int*>* jacobian_layout,
+                         std::vector<int>* jacobian_layout_storage) {
+  const std::vector<ResidualBlock*>& residual_blocks = program.residual_blocks();
 
   // Iterate over all the active residual blocks and determine how many E blocks
   // are there. This will determine where the F blocks start in the jacobian
@@ -153,7 +151,7 @@ BlockJacobianWriter::CreateEvaluatePreparers(unsigned num_threads) {
 std::unique_ptr<SparseMatrix> BlockJacobianWriter::CreateJacobian() const {
   auto* bs = new CompressedRowBlockStructure;
 
-  const vector<ParameterBlock*>& parameter_blocks =
+  const std::vector<ParameterBlock*>& parameter_blocks =
       program_->parameter_blocks();
 
   // Construct the column blocks.
@@ -167,7 +165,7 @@ std::unique_ptr<SparseMatrix> BlockJacobianWriter::CreateJacobian() const {
   }
 
   // Construct the cells in each row.
-  const vector<ResidualBlock*>& residual_blocks = program_->residual_blocks();
+  const std::vector<ResidualBlock*>& residual_blocks = program_->residual_blocks();
   int row_block_position = 0;
   bs->rows.resize(residual_blocks.size());
   for (int i = 0; i < residual_blocks.size(); ++i) {

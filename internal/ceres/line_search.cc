@@ -47,20 +47,15 @@
 
 namespace ceres::internal {
 
-using std::map;
-using std::ostream;
-using std::string;
-using std::vector;
-
 namespace {
 // Precision used for floating point values in error message output.
 const int kErrorMessageNumericPrecision = 8;
 }  // namespace
 
-ostream& operator<<(ostream& os, const FunctionSample& sample);
+std::ostream& operator<<(std::ostream& os, const FunctionSample& sample);
 
 // Convenience stream operator for pushing FunctionSamples into log messages.
-ostream& operator<<(ostream& os, const FunctionSample& sample) {
+std::ostream& operator<<(std::ostream& os, const FunctionSample& sample) {
   os << sample.ToDebugString();
   return os;
 }
@@ -73,16 +68,16 @@ LineSearch::LineSearch(const LineSearch::Options& options)
 std::unique_ptr<LineSearch> LineSearch::Create(
     const LineSearchType line_search_type,
     const LineSearch::Options& options,
-    string* error) {
+    std::string* error) {
   switch (line_search_type) {
     case ceres::ARMIJO:
       return std::make_unique<ArmijoLineSearch>(options);
     case ceres::WOLFE:
       return std::make_unique<WolfeLineSearch>(options);
     default:
-      *error = string("Invalid line search algorithm type: ") +
+      *error = std::string("Invalid line search algorithm type: ") +
                LineSearchTypeToString(line_search_type) +
-               string(", unable to create line search.");
+               std::string(", unable to create line search.");
   }
   return nullptr;
 }
@@ -149,7 +144,7 @@ double LineSearchFunction::DirectionInfinityNorm() const {
 }
 
 void LineSearchFunction::ResetTimeStatistics() {
-  const map<string, CallStatistics> evaluator_statistics =
+  const std::map<std::string, CallStatistics> evaluator_statistics =
       evaluator_->Statistics();
 
   initial_evaluator_residual_time_in_seconds =
@@ -165,7 +160,7 @@ void LineSearchFunction::ResetTimeStatistics() {
 void LineSearchFunction::TimeStatistics(
     double* cost_evaluation_time_in_seconds,
     double* gradient_evaluation_time_in_seconds) const {
-  const map<string, CallStatistics> evaluator_time_statistics =
+  const std::map<std::string, CallStatistics> evaluator_time_statistics =
       evaluator_->Statistics();
   *cost_evaluation_time_in_seconds =
       FindWithDefault(
@@ -242,7 +237,7 @@ double LineSearch::InterpolatingPolynomialMinimizingStepSize(
 
   // Select step size by interpolating the function and gradient values
   // and minimizing the corresponding polynomial.
-  vector<FunctionSample> samples;
+  std::vector<FunctionSample> samples;
   samples.push_back(lowerbound);
 
   if (interpolation_type == QUADRATIC) {

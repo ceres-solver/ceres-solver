@@ -42,9 +42,6 @@
 namespace ceres {
 namespace internal {
 
-using std::copy;
-using std::vector;
-
 class DynamicCompressedRowSparseMatrixTest : public ::testing::Test {
  protected:
   void SetUp() final {
@@ -82,8 +79,8 @@ class DynamicCompressedRowSparseMatrixTest : public ::testing::Test {
   }
 
   void InitialiseSparseMatrixReferences() {
-    vector<int> rows, cols;
-    vector<double> values;
+    std::vector<int> rows, cols;
+    std::vector<double> values;
     for (int i = 0; i < (num_rows * num_cols); ++i) {
       const int r = i / num_cols, c = i % num_cols;
       if (r != c) {
@@ -96,9 +93,9 @@ class DynamicCompressedRowSparseMatrixTest : public ::testing::Test {
 
     tsm = std::make_unique<TripletSparseMatrix>(
         num_rows, num_cols, expected_num_nonzeros);
-    copy(rows.begin(), rows.end(), tsm->mutable_rows());
-    copy(cols.begin(), cols.end(), tsm->mutable_cols());
-    copy(values.begin(), values.end(), tsm->mutable_values());
+    std::copy(rows.begin(), rows.end(), tsm->mutable_rows());
+    std::copy(cols.begin(), cols.end(), tsm->mutable_cols());
+    std::copy(values.begin(), values.end(), tsm->mutable_values());
     tsm->set_num_nonzeros(values.size());
 
     Matrix dense_from_tsm;

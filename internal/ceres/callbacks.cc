@@ -39,8 +39,6 @@
 
 namespace ceres::internal {
 
-using std::string;
-
 StateUpdatingCallback::StateUpdatingCallback(Program* program,
                                              double* parameters)
     : program_(program), parameters_(parameters) {}
@@ -82,7 +80,7 @@ LoggingCallback::~LoggingCallback() = default;
 
 CallbackReturnType LoggingCallback::operator()(
     const IterationSummary& summary) {
-  string output;
+  std::string output;
   if (minimizer_type == LINE_SEARCH) {
     output = StringPrintf(
         "% 4d: f:% 8e d:% 3.2e g:% 3.2e h:% 3.2e s:% 3.2e e:% 3d it:% 3.2e "

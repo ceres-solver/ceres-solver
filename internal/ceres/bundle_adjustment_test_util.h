@@ -51,9 +51,6 @@
 namespace ceres {
 namespace internal {
 
-using std::string;
-using std::vector;
-
 const bool kAutomaticOrdering = true;
 const bool kUserOrdering = false;
 
@@ -68,7 +65,7 @@ class BundleAdjustmentProblem {
     BuildProblem();
   }
   BundleAdjustmentProblem() {
-    const string input_file = TestFileAbsolutePath("problem-16-22106-pre.txt");
+    const std::string input_file = TestFileAbsolutePath("problem-16-22106-pre.txt");
     ReadData(input_file);
     BuildProblem();
   }
@@ -98,7 +95,7 @@ class BundleAdjustmentProblem {
   static double kResidualTolerance;
 
  private:
-  void ReadData(const string& filename) {
+  void ReadData(const std::string& filename) {
     FILE* fptr = fopen(filename.c_str(), "r");
 
     if (!fptr) {

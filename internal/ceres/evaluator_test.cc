@@ -52,9 +52,6 @@
 namespace ceres {
 namespace internal {
 
-using std::string;
-using std::vector;
-
 // TODO(keir): Consider pushing this into a common test utils file.
 template <int kFactor, int kNumResiduals, int... Ns>
 class ParameterIgnoringCostFunction
@@ -122,7 +119,7 @@ struct EvaluatorTest : public ::testing::TestWithParam<EvaluatorTestOptions> {
     program->SetParameterOffsetsAndIndex();
 
     if (VLOG_IS_ON(1)) {
-      string report;
+      std::string report;
       StringAppendF(&report,
                     "Creating evaluator with type: %d",
                     GetParam().linear_solver_type);
@@ -140,7 +137,7 @@ struct EvaluatorTest : public ::testing::TestWithParam<EvaluatorTestOptions> {
     options.num_eliminate_blocks = GetParam().num_eliminate_blocks;
     options.dynamic_sparsity = GetParam().dynamic_sparsity;
     options.context = problem.context();
-    string error;
+    std::string error;
     return Evaluator::Create(options, program, &error);
   }
 
@@ -171,7 +168,7 @@ struct EvaluatorTest : public ::testing::TestWithParam<EvaluatorTestOptions> {
     ASSERT_EQ(expected_num_rows, jacobian->num_rows());
     ASSERT_EQ(expected_num_cols, jacobian->num_cols());
 
-    vector<double> state(evaluator->NumParameters());
+    std::vector<double> state(evaluator->NumParameters());
 
     // clang-format off
     ASSERT_TRUE(evaluator->Evaluate(
@@ -399,12 +396,12 @@ TEST_P(EvaluatorTest, MultipleResidualsWithManifolds) {
   problem.AddParameterBlock(x, 2);
 
   // Fix y's first dimension.
-  vector<int> y_fixed;
+  std::vector<int> y_fixed;
   y_fixed.push_back(0);
   problem.AddParameterBlock(y, 3, new SubsetManifold(3, y_fixed));
 
   // Fix z's second dimension.
-  vector<int> z_fixed;
+  std::vector<int> z_fixed;
   z_fixed.push_back(1);
   problem.AddParameterBlock(z, 4, new SubsetManifold(4, z_fixed));
 
@@ -486,7 +483,7 @@ TEST_P(EvaluatorTest, MultipleResidualProblemWithSomeConstantParameters) {
   // Normally, the preprocessing of the program that happens in solver_impl
   // takes care of this, but we don't want to invoke the solver here.
   Program reduced_program;
-  vector<ParameterBlock*>* parameter_blocks =
+  std::vector<ParameterBlock*>* parameter_blocks =
       problem.mutable_program()->mutable_parameter_blocks();
 
   // "z" is the last parameter; save it for later and pop it off temporarily.
@@ -620,7 +617,7 @@ TEST(Evaluator, EvaluatorRespectsParameterChanges) {
   options.linear_solver_type = DENSE_QR;
   options.num_eliminate_blocks = 0;
   options.context = problem.context();
-  string error;
+  std::string error;
   std::unique_ptr<Evaluator> evaluator(
       Evaluator::Create(options, program, &error));
   std::unique_ptr<SparseMatrix> jacobian(evaluator->CreateJacobian());

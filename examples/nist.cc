@@ -159,17 +159,10 @@ using Eigen::RowMajor;
 using Vector = Eigen::Matrix<double, Dynamic, 1>;
 using Matrix = Eigen::Matrix<double, Dynamic, Dynamic, RowMajor>;
 
-using std::atof;
-using std::atoi;
-using std::cout;
-using std::ifstream;
-using std::string;
-using std::vector;
-
-void SplitStringUsingChar(const string& full,
+void SplitStringUsingChar(const std::string& full,
                           const char delim,
-                          vector<string>* result) {
-  std::back_insert_iterator<vector<string>> it(*result);
+                          std::vector<std::string>* result) {
+  std::back_insert_iterator<std::vector<std::string>> it(*result);
 
   const char* p = full.data();
   const char* end = p + full.size();
@@ -181,20 +174,20 @@ void SplitStringUsingChar(const string& full,
       while (++p != end && *p != delim) {
         // Skip to the next occurrence of the delimiter.
       }
-      *it++ = string(start, p - start);
+      *it++ = std::string(start, p - start);
     }
   }
 }
 
-bool GetAndSplitLine(ifstream& ifs, vector<string>* pieces) {
+bool GetAndSplitLine(std::ifstream& ifs, std::vector<std::string>* pieces) {
   pieces->clear();
   char buf[256];
   ifs.getline(buf, 256);
-  SplitStringUsingChar(string(buf), ' ', pieces);
+  SplitStringUsingChar(std::string(buf), ' ', pieces);
   return true;
 }
 
-void SkipLines(ifstream& ifs, int num_lines) {
+void SkipLines(std::ifstream& ifs, int num_lines) {
   char buf[256];
   for (int i = 0; i < num_lines; ++i) {
     ifs.getline(buf, 256);
@@ -203,24 +196,24 @@ void SkipLines(ifstream& ifs, int num_lines) {
 
 class NISTProblem {
  public:
-  explicit NISTProblem(const string& filename) {
-    ifstream ifs(filename.c_str(), ifstream::in);
+  explicit NISTProblem(const std::string& filename) {
+    std::ifstream ifs(filename.c_str(), std::ifstream::in);
     CHECK(ifs) << "Unable to open : " << filename;
 
-    vector<string> pieces;
+    std::vector<std::string> pieces;
     SkipLines(ifs, 24);
     GetAndSplitLine(ifs, &pieces);
-    const int kNumResponses = atoi(pieces[1].c_str());
+    const int kNumResponses = std::atoi(pieces[1].c_str());
 
     GetAndSplitLine(ifs, &pieces);
-    const int kNumPredictors = atoi(pieces[0].c_str());
+    const int kNumPredictors = std::atoi(pieces[0].c_str());
 
     GetAndSplitLine(ifs, &pieces);
-    const int kNumObservations = atoi(pieces[0].c_str());
+    const int kNumObservations = std::atoi(pieces[0].c_str());
 
     SkipLines(ifs, 4);
     GetAndSplitLine(ifs, &pieces);
-    const int kNumParameters = atoi(pieces[0].c_str());
+    const int kNumParameters = std::atoi(pieces[0].c_str());
     SkipLines(ifs, 8);
 
     // Get the first line of initial and final parameter values to
@@ -236,24 +229,24 @@ class NISTProblem {
     // Parse the line for parameter b1.
     int parameter_id = 0;
     for (int i = 0; i < kNumTries; ++i) {
-      initial_parameters_(i, parameter_id) = atof(pieces[i + 2].c_str());
+      initial_parameters_(i, parameter_id) = std::atof(pieces[i + 2].c_str());
     }
-    final_parameters_(0, parameter_id) = atof(pieces[2 + kNumTries].c_str());
+    final_parameters_(0, parameter_id) = std::atof(pieces[2 + kNumTries].c_str());
 
     // Parse the remaining parameter lines.
     for (int parameter_id = 1; parameter_id < kNumParameters; ++parameter_id) {
       GetAndSplitLine(ifs, &pieces);
       // b2, b3, ....
       for (int i = 0; i < kNumTries; ++i) {
-        initial_parameters_(i, parameter_id) = atof(pieces[i + 2].c_str());
+        initial_parameters_(i, parameter_id) = std::atof(pieces[i + 2].c_str());
       }
-      final_parameters_(0, parameter_id) = atof(pieces[2 + kNumTries].c_str());
+      final_parameters_(0, parameter_id) = std::atof(pieces[2 + kNumTries].c_str());
     }
 
     // Certified cost
     SkipLines(ifs, 1);
     GetAndSplitLine(ifs, &pieces);
-    certified_cost_ = atof(pieces[4].c_str()) / 2.0;
+    certified_cost_ = std::atof(pieces[4].c_str()) / 2.0;
 
     // Read the observations.
     SkipLines(ifs, 18 - kNumParameters);
@@ -261,12 +254,12 @@ class NISTProblem {
       GetAndSplitLine(ifs, &pieces);
       // Response.
       for (int j = 0; j < kNumResponses; ++j) {
-        response_(i, j) = atof(pieces[j].c_str());
+        response_(i, j) = std::atof(pieces[j].c_str());
       }
 
       // Predictor variables.
       for (int j = 0; j < kNumPredictors; ++j) {
-        predictor_(i, j) = atof(pieces[j + kNumResponses].c_str());
+        predictor_(i, j) = std::atof(pieces[j + kNumResponses].c_str());
       }
     }
   }
@@ -507,7 +500,7 @@ void SetMinimizerOptions(ceres::Solver::Options* options) {
   options->parameter_tolerance = std::numeric_limits<double>::epsilon();
 }
 
-string JoinPath(const string& dirname, const string& basename) {
+std::string JoinPath(const std::string& dirname, const std::string& basename) {
 #ifdef _WIN32
   static const char separator = '\\';
 #else
@@ -519,7 +512,7 @@ string JoinPath(const string& dirname, const string& basename) {
   } else if (dirname[dirname.size() - 1] == separator) {
     return dirname + basename;
   } else {
-    return dirname + string(&separator, 1) + basename;
+    return dirname + std::string(&separator, 1) + basename;
   }
 }
 
@@ -583,7 +576,7 @@ double ComputeLRE(const Matrix& expected, const Matrix& actual) {
 }
 
 template <typename Model, int num_parameters>
-int RegressionDriver(const string& filename) {
+int RegressionDriver(const std::string& filename) {
   NISTProblem nist_problem(
       JoinPath(CERES_GET_FLAG(FLAGS_nist_data_dir), filename));
   CHECK_EQ(num_parameters, nist_problem.num_parameters());
@@ -663,7 +656,7 @@ void SolveNISTProblems() {
     LOG(FATAL) << "Must specify the directory containing the NIST problems";
   }
 
-  cout << "Lower Difficulty\n";
+  std::cout << "Lower Difficulty\n";
   int easy_success = 0;
   easy_success += RegressionDriver<Misra1a, 2>("Misra1a.dat");
   easy_success += RegressionDriver<Chwirut, 3>("Chwirut1.dat");
@@ -674,7 +667,7 @@ void SolveNISTProblems() {
   easy_success += RegressionDriver<DanWood, 2>("DanWood.dat");
   easy_success += RegressionDriver<Misra1b, 2>("Misra1b.dat");
 
-  cout << "\nMedium Difficulty\n";
+  std::cout << "\nMedium Difficulty\n";
   int medium_success = 0;
   medium_success += RegressionDriver<Kirby2, 5>("Kirby2.dat");
   medium_success += RegressionDriver<Hahn1, 7>("Hahn1.dat");
@@ -688,7 +681,7 @@ void SolveNISTProblems() {
   medium_success += RegressionDriver<Roszman1, 4>("Roszman1.dat");
   medium_success += RegressionDriver<ENSO, 9>("ENSO.dat");
 
-  cout << "\nHigher Difficulty\n";
+  std::cout << "\nHigher Difficulty\n";
   int hard_success = 0;
   hard_success += RegressionDriver<MGH09, 4>("MGH09.dat");
   hard_success += RegressionDriver<Thurber, 7>("Thurber.dat");
@@ -699,11 +692,11 @@ void SolveNISTProblems() {
   hard_success += RegressionDriver<Rat43, 4>("Rat43.dat");
   hard_success += RegressionDriver<Bennet5, 3>("Bennett5.dat");
 
-  cout << "\n";
-  cout << "Easy    : " << easy_success << "/16\n";
-  cout << "Medium  : " << medium_success << "/22\n";
-  cout << "Hard    : " << hard_success << "/16\n";
-  cout << "Total   : " << easy_success + medium_success + hard_success
+  std::cout << "\n";
+  std::cout << "Easy    : " << easy_success << "/16\n";
+  std::cout << "Medium  : " << medium_success << "/22\n";
+  std::cout << "Hard    : " << hard_success << "/16\n";
+  std::cout << "Total   : " << easy_success + medium_success + hard_success
        << "/54\n";
 }
 

@@ -143,8 +143,6 @@ using ceres::LossFunction;
 using ceres::Problem;
 using ceres::Solve;
 using ceres::Solver;
-using std::min;
-using std::vector;
 
 DEFINE_double(corridor_length,
               30.0,
@@ -215,8 +213,8 @@ struct RangeConstraint {
   // conveniently add to a ceres problem.
   static RangeCostFunction* Create(const int pose_index,
                                    const double range_reading,
-                                   vector<double>* odometry_values,
-                                   vector<double*>* parameter_blocks) {
+                                   std::vector<double>* odometry_values,
+                                   std::vector<double*>* parameter_blocks) {
     auto* constraint =
         new RangeConstraint(pose_index,
                             range_reading,
@@ -241,8 +239,8 @@ struct RangeConstraint {
 
 namespace {
 
-void SimulateRobot(vector<double>* odometry_values,
-                   vector<double>* range_readings) {
+void SimulateRobot(std::vector<double>* odometry_values,
+                   std::vector<double>* range_readings) {
   const int num_steps =
       static_cast<int>(ceil(CERES_GET_FLAG(FLAGS_corridor_length) /
                             CERES_GET_FLAG(FLAGS_pose_separation)));
@@ -256,8 +254,8 @@ void SimulateRobot(vector<double>* odometry_values,
   double robot_location = 0.0;
   for (int i = 0; i < num_steps; ++i) {
     const double actual_odometry_value =
-        min(CERES_GET_FLAG(FLAGS_pose_separation),
-            CERES_GET_FLAG(FLAGS_corridor_length) - robot_location);
+        std::min(CERES_GET_FLAG(FLAGS_pose_separation),
+                 CERES_GET_FLAG(FLAGS_corridor_length) - robot_location);
     robot_location += actual_odometry_value;
     const double actual_range =
         CERES_GET_FLAG(FLAGS_corridor_length) - robot_location;
@@ -269,8 +267,8 @@ void SimulateRobot(vector<double>* odometry_values,
   }
 }
 
-void PrintState(const vector<double>& odometry_readings,
-                const vector<double>& range_readings) {
+void PrintState(const std::vector<double>& odometry_readings,
+                const std::vector<double>& range_readings) {
   CHECK_EQ(odometry_readings.size(), range_readings.size());
   double robot_location = 0.0;
   printf("pose: location     odom    range  r.error  o.error\n");
@@ -301,8 +299,8 @@ int main(int argc, char** argv) {
   CHECK_GT(CERES_GET_FLAG(FLAGS_odometry_stddev), 0.0);
   CHECK_GT(CERES_GET_FLAG(FLAGS_range_stddev), 0.0);
 
-  vector<double> odometry_values;
-  vector<double> range_readings;
+  std::vector<double> odometry_values;
+  std::vector<double> range_readings;
   SimulateRobot(&odometry_values, &range_readings);
 
   printf("Initial values:\n");
@@ -312,7 +310,7 @@ int main(int argc, char** argv) {
   for (int i = 0; i < odometry_values.size(); ++i) {
     // Create and add a DynamicAutoDiffCostFunction for the RangeConstraint from
     // pose i.
-    vector<double*> parameter_blocks;
+    std::vector<double*> parameter_blocks;
     RangeConstraint::RangeCostFunction* range_cost_function =
         RangeConstraint::Create(
             i, range_readings[i], &odometry_values, &parameter_blocks);

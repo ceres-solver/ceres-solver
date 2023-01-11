@@ -50,11 +50,6 @@
 namespace ceres {
 namespace internal {
 
-using std::make_pair;
-using std::map;
-using std::pair;
-using std::vector;
-
 class UnaryCostFunction : public CostFunction {
  public:
   UnaryCostFunction(const int num_residuals,
@@ -84,7 +79,7 @@ class UnaryCostFunction : public CostFunction {
   }
 
  private:
-  vector<double> jacobian_;
+  std::vector<double> jacobian_;
 };
 
 class BinaryCostFunction : public CostFunction {
@@ -126,8 +121,8 @@ class BinaryCostFunction : public CostFunction {
   }
 
  private:
-  vector<double> jacobian1_;
-  vector<double> jacobian2_;
+  std::vector<double> jacobian1_;
+  std::vector<double> jacobian2_;
 };
 
 TEST(CovarianceImpl, ComputeCovarianceSparsity) {
@@ -184,7 +179,7 @@ TEST(CovarianceImpl, ComputeCovarianceSparsity) {
                          6, 7, 8, 9};
   // clang-format on
 
-  vector<pair<const double*, const double*>> covariance_blocks;
+  std::vector<std::pair<const double*, const double*>> covariance_blocks;
   covariance_blocks.emplace_back(block1, block1);
   covariance_blocks.emplace_back(block4, block4);
   covariance_blocks.emplace_back(block2, block2);
@@ -265,7 +260,7 @@ TEST(CovarianceImpl, ComputeCovarianceSparsityWithConstantParameterBlock) {
                          3, 4, 5, 6};
   // clang-format on
 
-  vector<pair<const double*, const double*>> covariance_blocks;
+  std::vector<std::pair<const double*, const double*>> covariance_blocks;
   covariance_blocks.emplace_back(block1, block1);
   covariance_blocks.emplace_back(block4, block4);
   covariance_blocks.emplace_back(block2, block2);
@@ -344,7 +339,7 @@ TEST(CovarianceImpl, ComputeCovarianceSparsityWithFreeParameterBlock) {
                          3, 4, 5, 6};
   // clang-format on
 
-  vector<pair<const double*, const double*>> covariance_blocks;
+  std::vector<std::pair<const double*, const double*>> covariance_blocks;
   covariance_blocks.emplace_back(block1, block1);
   covariance_blocks.emplace_back(block4, block4);
   covariance_blocks.emplace_back(block2, block2);
@@ -409,7 +404,7 @@ class PolynomialManifold : public Manifold {
 
 class CovarianceTest : public ::testing::Test {
  protected:
-  using BoundsMap = map<const double*, pair<int, int>>;
+  using BoundsMap = std::map<const double*, std::pair<int, int>>;
 
   void SetUp() override {
     double* x = parameters_;
@@ -462,9 +457,9 @@ class CovarianceTest : public ::testing::Test {
     all_covariance_blocks_.emplace_back(x, z);
     all_covariance_blocks_.emplace_back(y, z);
 
-    column_bounds_[x] = make_pair(0, 2);
-    column_bounds_[y] = make_pair(2, 5);
-    column_bounds_[z] = make_pair(5, 6);
+    column_bounds_[x] = std::make_pair(0, 2);
+    column_bounds_[y] = std::make_pair(2, 5);
+    column_bounds_[z] = std::make_pair(5, 6);
   }
 
   // Computes covariance in ambient space.
@@ -492,7 +487,7 @@ class CovarianceTest : public ::testing::Test {
     // Generate all possible combination of block pairs and check if the
     // covariance computation is correct.
     for (int i = 0; i <= 64; ++i) {
-      vector<pair<const double*, const double*>> covariance_blocks;
+      std::vector<std::pair<const double*, const double*>> covariance_blocks;
       if (i & 1) {
         covariance_blocks.push_back(all_covariance_blocks_[0]);
       }
@@ -585,7 +580,7 @@ class CovarianceTest : public ::testing::Test {
 
   double parameters_[6];
   Problem problem_;
-  vector<pair<const double*, const double*>> all_covariance_blocks_;
+  std::vector<std::pair<const double*, const double*>> all_covariance_blocks_;
   BoundsMap column_bounds_;
   BoundsMap local_column_bounds_;
 };
@@ -746,7 +741,7 @@ TEST_F(CovarianceTest, Manifold) {
 
   problem_.SetManifold(x, new PolynomialManifold);
 
-  vector<int> subset;
+  std::vector<int> subset;
   subset.push_back(2);
   problem_.SetManifold(y, new SubsetManifold(3, subset));
 
@@ -806,13 +801,13 @@ TEST_F(CovarianceTest, ManifoldInTangentSpace) {
 
   problem_.SetManifold(x, new PolynomialManifold);
 
-  vector<int> subset;
+  std::vector<int> subset;
   subset.push_back(2);
   problem_.SetManifold(y, new SubsetManifold(3, subset));
 
-  local_column_bounds_[x] = make_pair(0, 1);
-  local_column_bounds_[y] = make_pair(1, 3);
-  local_column_bounds_[z] = make_pair(3, 4);
+  local_column_bounds_[x] = std::make_pair(0, 1);
+  local_column_bounds_[y] = std::make_pair(1, 3);
+  local_column_bounds_[z] = std::make_pair(3, 4);
 
   // Raw Jacobian: J
   //
@@ -870,14 +865,14 @@ TEST_F(CovarianceTest, ManifoldInTangentSpaceWithConstantBlocks) {
   problem_.SetManifold(x, new PolynomialManifold);
   problem_.SetParameterBlockConstant(x);
 
-  vector<int> subset;
+  std::vector<int> subset;
   subset.push_back(2);
   problem_.SetManifold(y, new SubsetManifold(3, subset));
   problem_.SetParameterBlockConstant(y);
 
-  local_column_bounds_[x] = make_pair(0, 1);
-  local_column_bounds_[y] = make_pair(1, 3);
-  local_column_bounds_[z] = make_pair(3, 4);
+  local_column_bounds_[x] = std::make_pair(0, 1);
+  local_column_bounds_[y] = std::make_pair(1, 3);
+  local_column_bounds_[z] = std::make_pair(3, 4);
 
   // Raw Jacobian: J
   //
@@ -987,7 +982,7 @@ TEST_F(CovarianceTest, DenseCovarianceMatrixFromSetOfParameters) {
   double* x = parameters_;
   double* y = x + 2;
   double* z = y + 3;
-  vector<const double*> parameter_blocks;
+  std::vector<const double*> parameter_blocks;
   parameter_blocks.push_back(x);
   parameter_blocks.push_back(y);
   parameter_blocks.push_back(z);
@@ -1016,7 +1011,7 @@ TEST_F(CovarianceTest, DenseCovarianceMatrixFromSetOfParametersThreaded) {
   double* x = parameters_;
   double* y = x + 2;
   double* z = y + 3;
-  vector<const double*> parameter_blocks;
+  std::vector<const double*> parameter_blocks;
   parameter_blocks.push_back(x);
   parameter_blocks.push_back(y);
   parameter_blocks.push_back(z);
@@ -1047,15 +1042,15 @@ TEST_F(CovarianceTest, DenseCovarianceMatrixFromSetOfParametersInTangentSpace) {
 
   problem_.SetManifold(x, new PolynomialManifold);
 
-  vector<int> subset;
+  std::vector<int> subset;
   subset.push_back(2);
   problem_.SetManifold(y, new SubsetManifold(3, subset));
 
-  local_column_bounds_[x] = make_pair(0, 1);
-  local_column_bounds_[y] = make_pair(1, 3);
-  local_column_bounds_[z] = make_pair(3, 4);
+  local_column_bounds_[x] = std::make_pair(0, 1);
+  local_column_bounds_[y] = std::make_pair(1, 3);
+  local_column_bounds_[z] = std::make_pair(3, 4);
 
-  vector<const double*> parameter_blocks;
+  std::vector<const double*> parameter_blocks;
   parameter_blocks.push_back(x);
   parameter_blocks.push_back(y);
   parameter_blocks.push_back(z);
@@ -1084,7 +1079,7 @@ TEST_F(CovarianceTest, ComputeCovarianceFailure) {
   Covariance covariance(options);
   double* x = parameters_;
   double* y = x + 2;
-  vector<const double*> parameter_blocks;
+  std::vector<const double*> parameter_blocks;
   parameter_blocks.push_back(x);
   parameter_blocks.push_back(x);
   parameter_blocks.push_back(y);
@@ -1092,7 +1087,7 @@ TEST_F(CovarianceTest, ComputeCovarianceFailure) {
   EXPECT_DEATH_IF_SUPPORTED(covariance.Compute(parameter_blocks, &problem_),
                             "Covariance::Compute called with duplicate blocks "
                             "at indices \\(0, 1\\) and \\(2, 3\\)");
-  vector<pair<const double*, const double*>> covariance_blocks;
+  std::vector<std::pair<const double*, const double*>> covariance_blocks;
   covariance_blocks.emplace_back(x, x);
   covariance_blocks.emplace_back(x, x);
   covariance_blocks.emplace_back(y, y);
@@ -1148,9 +1143,9 @@ class RankDeficientCovarianceTest : public CovarianceTest {
     all_covariance_blocks_.emplace_back(x, z);
     all_covariance_blocks_.emplace_back(y, z);
 
-    column_bounds_[x] = make_pair(0, 2);
-    column_bounds_[y] = make_pair(2, 5);
-    column_bounds_[z] = make_pair(5, 6);
+    column_bounds_[x] = std::make_pair(0, 2);
+    column_bounds_[y] = std::make_pair(2, 5);
+    column_bounds_[z] = std::make_pair(5, 6);
   }
 };
 
@@ -1217,7 +1212,7 @@ TEST(Covariance, ZeroSizedManifoldGetCovariance) {
   Covariance::Options options;
   options.algorithm_type = DENSE_SVD;
   Covariance covariance(options);
-  vector<pair<const double*, const double*>> covariance_blocks;
+  std::vector<std::pair<const double*, const double*>> covariance_blocks;
   covariance_blocks.emplace_back(&x, &x);
   covariance_blocks.emplace_back(&x, &y);
   covariance_blocks.emplace_back(&y, &x);
@@ -1252,7 +1247,7 @@ TEST(Covariance, ZeroSizedManifoldGetCovarianceInTangentSpace) {
   Covariance::Options options;
   options.algorithm_type = DENSE_SVD;
   Covariance covariance(options);
-  vector<pair<const double*, const double*>> covariance_blocks;
+  std::vector<std::pair<const double*, const double*>> covariance_blocks;
   covariance_blocks.emplace_back(&x, &x);
   covariance_blocks.emplace_back(&x, &y);
   covariance_blocks.emplace_back(&y, &x);
@@ -1348,7 +1343,7 @@ class LargeScaleCovarianceTest : public ::testing::Test {
   int num_parameter_blocks_;
 
   Problem problem_;
-  vector<pair<const double*, const double*>> all_covariance_blocks_;
+  std::vector<std::pair<const double*, const double*>> all_covariance_blocks_;
 };
 
 #if !defined(CERES_NO_SUITESPARSE)

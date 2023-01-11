@@ -42,8 +42,6 @@
 
 namespace ceres::internal {
 
-using std::vector;
-
 namespace {
 
 // For IEEE-754 doubles, machine precision is about 2e-16.
@@ -314,7 +312,7 @@ TEST(Polymomial, ConstantInterpolatingPolynomial) {
   Vector true_polynomial(1);
   true_polynomial << 1.0;
 
-  vector<FunctionSample> samples;
+  std::vector<FunctionSample> samples;
   FunctionSample sample;
   sample.x = 1.0;
   sample.value = 1.0;
@@ -330,7 +328,7 @@ TEST(Polynomial, LinearInterpolatingPolynomial) {
   Vector true_polynomial(2);
   true_polynomial << 2.0, -1.0;
 
-  vector<FunctionSample> samples;
+  std::vector<FunctionSample> samples;
   FunctionSample sample;
   sample.x = 1.0;
   sample.value = 1.0;
@@ -348,7 +346,7 @@ TEST(Polynomial, QuadraticInterpolatingPolynomial) {
   Vector true_polynomial(3);
   true_polynomial << 2.0, 3.0, 2.0;
 
-  vector<FunctionSample> samples;
+  std::vector<FunctionSample> samples;
   {
     FunctionSample sample;
     sample.x = 1.0;
@@ -376,7 +374,7 @@ TEST(Polynomial, DeficientCubicInterpolatingPolynomial) {
   Vector true_polynomial(4);
   true_polynomial << 0.0, 2.0, 3.0, 2.0;
 
-  vector<FunctionSample> samples;
+  std::vector<FunctionSample> samples;
   {
     FunctionSample sample;
     sample.x = 1.0;
@@ -406,7 +404,7 @@ TEST(Polynomial, CubicInterpolatingPolynomialFromValues) {
   Vector true_polynomial(4);
   true_polynomial << 1.0, 2.0, 3.0, 2.0;
 
-  vector<FunctionSample> samples;
+  std::vector<FunctionSample> samples;
   {
     FunctionSample sample;
     sample.x = 1.0;
@@ -449,7 +447,7 @@ TEST(Polynomial, CubicInterpolatingPolynomialFromValuesAndOneGradient) {
   true_polynomial << 1.0, 2.0, 3.0, 2.0;
   Vector true_gradient_polynomial = DifferentiatePolynomial(true_polynomial);
 
-  vector<FunctionSample> samples;
+  std::vector<FunctionSample> samples;
   {
     FunctionSample sample;
     sample.x = 1.0;
@@ -486,7 +484,7 @@ TEST(Polynomial, CubicInterpolatingPolynomialFromValuesAndGradients) {
   true_polynomial << 1.0, 2.0, 3.0, 2.0;
   Vector true_gradient_polynomial = DifferentiatePolynomial(true_polynomial);
 
-  vector<FunctionSample> samples;
+  std::vector<FunctionSample> samples;
   {
     FunctionSample sample;
     sample.x = -3.0;

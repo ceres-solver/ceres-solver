@@ -46,19 +46,17 @@
 
 namespace ceres::internal {
 
-using std::string;
-
 TEST(SolverOptions, DefaultTrustRegionOptionsAreValid) {
   Solver::Options options;
   options.minimizer_type = TRUST_REGION;
-  string error;
+  std::string error;
   EXPECT_TRUE(options.IsValid(&error)) << error;
 }
 
 TEST(SolverOptions, DefaultLineSearchOptionsAreValid) {
   Solver::Options options;
   options.minimizer_type = LINE_SEARCH;
-  string error;
+  std::string error;
   EXPECT_TRUE(options.IsValid(&error)) << error;
 }
 

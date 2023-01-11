@@ -41,9 +41,6 @@
 
 namespace ceres::internal {
 
-using std::pair;
-using std::vector;
-
 std::unique_ptr<ScratchEvaluatePreparer[]>
 DynamicCompressedRowJacobianWriter::CreateEvaluatePreparers(int num_threads) {
   return ScratchEvaluatePreparer::Create(*program_, num_threads);
@@ -68,7 +65,7 @@ void DynamicCompressedRowJacobianWriter::Write(int residual_id,
       program_->residual_blocks()[residual_id];
   const int num_residuals = residual_block->NumResiduals();
 
-  vector<pair<int, int>> evaluated_jacobian_blocks;
+  std::vector<std::pair<int, int>> evaluated_jacobian_blocks;
   CompressedRowJacobianWriter::GetOrderedParameterBlocks(
       program_, residual_id, &evaluated_jacobian_blocks);
 

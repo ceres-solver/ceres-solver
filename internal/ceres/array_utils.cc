@@ -38,9 +38,8 @@
 
 #include "ceres/stringprintf.h"
 #include "ceres/types.h"
-namespace ceres::internal {
 
-using std::string;
+namespace ceres::internal {
 
 bool IsArrayValid(const int size, const double* x) {
   if (x != nullptr) {
@@ -75,7 +74,7 @@ void InvalidateArray(const int size, double* x) {
   }
 }
 
-void AppendArrayToString(const int size, const double* x, string* result) {
+void AppendArrayToString(const int size, const double* x, std::string* result) {
   for (int i = 0; i < size; ++i) {
     if (x == nullptr) {
       StringAppendF(result, "Not Computed  ");

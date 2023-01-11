@@ -51,13 +51,6 @@
 
 namespace ceres::internal {
 
-using std::map;
-using std::max;
-using std::min;
-using std::set;
-using std::string;
-using std::vector;
-
 CoordinateDescentMinimizer::CoordinateDescentMinimizer(ContextImpl* context)
     : context_(context) {
   CHECK(context_ != nullptr);
@@ -69,15 +62,15 @@ bool CoordinateDescentMinimizer::Init(
     const Program& program,
     const ProblemImpl::ParameterMap& parameter_map,
     const ParameterBlockOrdering& ordering,
-    string* error) {
+    std::string* error) {
   parameter_blocks_.clear();
   independent_set_offsets_.clear();
   independent_set_offsets_.push_back(0);
 
   // Serialize the OrderedGroups into a vector of parameter block
   // offsets for parallel access.
-  map<ParameterBlock*, int> parameter_block_index;
-  map<int, set<double*>> group_to_elements = ordering.group_to_elements();
+  std::map<ParameterBlock*, int> parameter_block_index;
+  std::map<int, std::set<double*>> group_to_elements = ordering.group_to_elements();
   for (const auto& g_t_e : group_to_elements) {
     const auto& elements = g_t_e.second;
     for (double* parameter_block : elements) {
@@ -92,7 +85,7 @@ bool CoordinateDescentMinimizer::Init(
   // The ordering does not have to contain all parameter blocks, so
   // assign zero offsets/empty independent sets to these parameter
   // blocks.
-  const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
+  const std::vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
   for (auto* parameter_block : parameter_blocks) {
     if (!ordering.IsMember(parameter_block->mutable_user_state())) {
       parameter_blocks_.push_back(parameter_block);
@@ -103,7 +96,7 @@ bool CoordinateDescentMinimizer::Init(
   // Compute the set of residual blocks that depend on each parameter
   // block.
   residual_blocks_.resize(parameter_block_index.size());
-  const vector<ResidualBlock*>& residual_blocks = program.residual_blocks();
+  const std::vector<ResidualBlock*>& residual_blocks = program.residual_blocks();
   for (auto* residual_block : residual_blocks) {
     const int num_parameter_blocks = residual_block->NumParameterBlocks();
     for (int j = 0; j < num_parameter_blocks; ++j) {
@@ -152,9 +145,9 @@ void CoordinateDescentMinimizer::Minimize(const Minimizer::Options& options,
     }
 
     const int num_inner_iteration_threads =
-        min(options.num_threads, num_problems);
+        std::min(options.num_threads, num_problems);
     evaluator_options_.num_threads =
-        max(1, options.num_threads / num_inner_iteration_threads);
+        std::max(1, options.num_threads / num_inner_iteration_threads);
 
     // The parameter blocks in each independent set can be optimized
     // in parallel, since they do not co-occur in any residual block.
@@ -214,7 +207,7 @@ void CoordinateDescentMinimizer::Solve(Program* program,
   summary->initial_cost = 0.0;
   summary->fixed_cost = 0.0;
   summary->final_cost = 0.0;
-  string error;
+  std::string error;
 
   Minimizer::Options minimizer_options;
   minimizer_options.evaluator =
@@ -237,8 +230,8 @@ void CoordinateDescentMinimizer::Solve(Program* program,
 bool CoordinateDescentMinimizer::IsOrderingValid(
     const Program& program,
     const ParameterBlockOrdering& ordering,
-    string* message) {
-  const map<int, set<double*>>& group_to_elements =
+    std::string* message) {
+  const std::map<int, std::set<double*>>& group_to_elements =
       ordering.group_to_elements();
 
   // Verify that each group is an independent set

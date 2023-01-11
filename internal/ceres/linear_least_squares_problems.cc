@@ -46,8 +46,6 @@
 
 namespace ceres::internal {
 
-using std::string;
-
 std::unique_ptr<LinearLeastSquaresProblem>
 CreateLinearLeastSquaresProblemFromId(int id) {
   switch (id) {
@@ -952,7 +950,7 @@ bool DumpLinearLeastSquaresProblemToConsole(const SparseMatrix* A,
   return true;
 }
 
-void WriteArrayToFileOrDie(const string& filename,
+void WriteArrayToFileOrDie(const std::string& filename,
                            const double* x,
                            const int size) {
   CHECK(x != nullptr);
@@ -965,7 +963,7 @@ void WriteArrayToFileOrDie(const string& filename,
   fclose(fptr);
 }
 
-bool DumpLinearLeastSquaresProblemToTextFile(const string& filename_base,
+bool DumpLinearLeastSquaresProblemToTextFile(const std::string& filename_base,
                                              const SparseMatrix* A,
                                              const double* D,
                                              const double* b,
@@ -974,14 +972,14 @@ bool DumpLinearLeastSquaresProblemToTextFile(const string& filename_base,
   CHECK(A != nullptr);
   LOG(INFO) << "writing to: " << filename_base << "*";
 
-  string matlab_script;
+  std::string matlab_script;
   StringAppendF(&matlab_script,
                 "function lsqp = load_trust_region_problem()\n");
   StringAppendF(&matlab_script, "lsqp.num_rows = %d;\n", A->num_rows());
   StringAppendF(&matlab_script, "lsqp.num_cols = %d;\n", A->num_cols());
 
   {
-    string filename = filename_base + "_A.txt";
+    std::string filename = filename_base + "_A.txt";
     FILE* fptr = fopen(filename.c_str(), "w");
     CHECK(fptr != nullptr);
     A->ToTextFile(fptr);
@@ -996,33 +994,33 @@ bool DumpLinearLeastSquaresProblemToTextFile(const string& filename_base,
   }
 
   if (D != nullptr) {
-    string filename = filename_base + "_D.txt";
+    std::string filename = filename_base + "_D.txt";
     WriteArrayToFileOrDie(filename, D, A->num_cols());
     StringAppendF(
         &matlab_script, "lsqp.D = load('%s', '-ascii');\n", filename.c_str());
   }
 
   if (b != nullptr) {
-    string filename = filename_base + "_b.txt";
+    std::string filename = filename_base + "_b.txt";
     WriteArrayToFileOrDie(filename, b, A->num_rows());
     StringAppendF(
         &matlab_script, "lsqp.b = load('%s', '-ascii');\n", filename.c_str());
   }
 
   if (x != nullptr) {
-    string filename = filename_base + "_x.txt";
+    std::string filename = filename_base + "_x.txt";
     WriteArrayToFileOrDie(filename, x, A->num_cols());
     StringAppendF(
         &matlab_script, "lsqp.x = load('%s', '-ascii');\n", filename.c_str());
   }
 
-  string matlab_filename = filename_base + ".m";
+  std::string matlab_filename = filename_base + ".m";
   WriteStringToFileOrDie(matlab_script, matlab_filename);
   return true;
 }
 }  // namespace
 
-bool DumpLinearLeastSquaresProblem(const string& filename_base,
+bool DumpLinearLeastSquaresProblem(const std::string& filename_base,
                                    DumpFormatType dump_format_type,
                                    const SparseMatrix* A,
                                    const double* D,

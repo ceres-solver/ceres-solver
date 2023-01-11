@@ -64,11 +64,6 @@
 
 namespace ceres::internal {
 
-using std::map;
-using std::set;
-using std::string;
-using std::vector;
-
 namespace {
 
 // Find the minimum index of any parameter block to the given
@@ -99,7 +94,7 @@ Eigen::SparseMatrix<int> CreateBlockJacobian(
   const int* rows = block_jacobian_transpose.rows();
   const int* cols = block_jacobian_transpose.cols();
   int num_nonzeros = block_jacobian_transpose.num_nonzeros();
-  vector<Triplet> triplets;
+  std::vector<Triplet> triplets;
   triplets.reserve(num_nonzeros);
   for (int i = 0; i < num_nonzeros; ++i) {
     triplets.emplace_back(cols[i], rows[i], 1);
@@ -114,7 +109,7 @@ Eigen::SparseMatrix<int> CreateBlockJacobian(
 void OrderingForSparseNormalCholeskyUsingSuiteSparse(
     const LinearSolverOrderingType linear_solver_ordering_type,
     const TripletSparseMatrix& tsm_block_jacobian_transpose,
-    const vector<ParameterBlock*>& parameter_blocks,
+    const std::vector<ParameterBlock*>& parameter_blocks,
     const ParameterBlockOrdering& parameter_block_ordering,
     int* ordering) {
 #ifdef CERES_NO_SUITESPARSE
@@ -132,7 +127,7 @@ void OrderingForSparseNormalCholeskyUsingSuiteSparse(
       ss.Ordering(block_jacobian_transpose, OrderingType::AMD, ordering);
     } else {
       // The user supplied an ordering, so use CAMD.
-      vector<int> constraints;
+      std::vector<int> constraints;
       constraints.reserve(parameter_blocks.size());
       for (auto* parameter_block : parameter_blocks) {
         constraints.push_back(parameter_block_ordering.GroupId(
@@ -210,7 +205,7 @@ void OrderingForSparseNormalCholeskyUsingEigenSparse(
 bool ApplyOrdering(const ProblemImpl::ParameterMap& parameter_map,
                    const ParameterBlockOrdering& ordering,
                    Program* program,
-                   string* error) {
+                   std::string* error) {
   const int num_parameter_blocks = program->NumParameterBlocks();
   if (ordering.NumElements() != num_parameter_blocks) {
     *error = StringPrintf(
@@ -222,13 +217,13 @@ bool ApplyOrdering(const ProblemImpl::ParameterMap& parameter_map,
     return false;
   }
 
-  vector<ParameterBlock*>* parameter_blocks =
+  std::vector<ParameterBlock*>* parameter_blocks =
       program->mutable_parameter_blocks();
   parameter_blocks->clear();
 
-  const map<int, set<double*>>& groups = ordering.group_to_elements();
+  const std::map<int, std::set<double*>>& groups = ordering.group_to_elements();
   for (const auto& p : groups) {
-    const set<double*>& group = p.second;
+    const std::set<double*>& group = p.second;
     for (double* parameter_block_ptr : group) {
       auto it = parameter_map.find(parameter_block_ptr);
       if (it == parameter_map.end()) {
@@ -248,16 +243,16 @@ bool ApplyOrdering(const ProblemImpl::ParameterMap& parameter_map,
 bool LexicographicallyOrderResidualBlocks(
     const int size_of_first_elimination_group,
     Program* program,
-    string* error) {
+    std::string* error) {
   CHECK_GE(size_of_first_elimination_group, 1)
       << "Congratulations, you found a Ceres bug! Please report this error "
       << "to the developers.";
 
   // Create a histogram of the number of residuals for each E block. There is an
   // extra bucket at the end to catch all non-eliminated F blocks.
-  vector<int> residual_blocks_per_e_block(size_of_first_elimination_group + 1);
-  vector<ResidualBlock*>* residual_blocks = program->mutable_residual_blocks();
-  vector<int> min_position_per_residual(residual_blocks->size());
+  std::vector<int> residual_blocks_per_e_block(size_of_first_elimination_group + 1);
+  std::vector<ResidualBlock*>* residual_blocks = program->mutable_residual_blocks();
+  std::vector<int> min_position_per_residual(residual_blocks->size());
   for (int i = 0; i < residual_blocks->size(); ++i) {
     ResidualBlock* residual_block = (*residual_blocks)[i];
     int position =
@@ -270,7 +265,7 @@ bool LexicographicallyOrderResidualBlocks(
   // Run a cumulative sum on the histogram, to obtain offsets to the start of
   // each histogram bucket (where each bucket is for the residuals for that
   // E-block).
-  vector<int> offsets(size_of_first_elimination_group + 1);
+  std::vector<int> offsets(size_of_first_elimination_group + 1);
   std::partial_sum(residual_blocks_per_e_block.begin(),
                    residual_blocks_per_e_block.end(),
                    offsets.begin());
@@ -291,7 +286,7 @@ bool LexicographicallyOrderResidualBlocks(
   // from each offset as a residual block is placed in the bucket. When the
   // filling is finished, the offset pointers should have shifted down one
   // entry (this is verified below).
-  vector<ResidualBlock*> reordered_residual_blocks(
+  std::vector<ResidualBlock*> reordered_residual_blocks(
       (*residual_blocks).size(), static_cast<ResidualBlock*>(nullptr));
   for (int i = 0; i < residual_blocks->size(); ++i) {
     int bucket = min_position_per_residual[i];
@@ -332,8 +327,8 @@ static void ReorderSchurComplementColumnsUsingSuiteSparse(
     const ParameterBlockOrdering& parameter_block_ordering, Program* program) {
 #ifndef CERES_NO_SUITESPARSE
   SuiteSparse ss;
-  vector<int> constraints;
-  vector<ParameterBlock*>& parameter_blocks =
+  std::vector<int> constraints;
+  std::vector<ParameterBlock*>& parameter_blocks =
       *(program->mutable_parameter_blocks());
 
   for (auto* parameter_block : parameter_blocks) {
@@ -353,12 +348,12 @@ static void ReorderSchurComplementColumnsUsingSuiteSparse(
   cholmod_sparse* block_jacobian_transpose =
       ss.CreateSparseMatrix(tsm_block_jacobian_transpose.get());
 
-  vector<int> ordering(parameter_blocks.size(), 0);
+  std::vector<int> ordering(parameter_blocks.size(), 0);
   ss.ConstrainedApproximateMinimumDegreeOrdering(
       block_jacobian_transpose, constraints.data(), ordering.data());
   ss.Free(block_jacobian_transpose);
 
-  const vector<ParameterBlock*> parameter_blocks_copy(parameter_blocks);
+  const std::vector<ParameterBlock*> parameter_blocks_copy(parameter_blocks);
   for (int i = 0; i < program->NumParameterBlocks(); ++i) {
     parameter_blocks[i] = parameter_blocks_copy[ordering[i]];
   }
@@ -408,8 +403,8 @@ static void ReorderSchurComplementColumnsUsingEigen(
 #endif
   }
 
-  const vector<ParameterBlock*>& parameter_blocks = program->parameter_blocks();
-  vector<ParameterBlock*> ordering(num_cols);
+  const std::vector<ParameterBlock*>& parameter_blocks = program->parameter_blocks();
+  std::vector<ParameterBlock*> ordering(num_cols);
 
   // The ordering of the first size_of_first_elimination_group does
   // not matter, so we preserve the existing ordering.
@@ -435,7 +430,7 @@ bool ReorderProgramForSchurTypeLinearSolver(
     const ProblemImpl::ParameterMap& parameter_map,
     ParameterBlockOrdering* parameter_block_ordering,
     Program* program,
-    string* error) {
+    std::string* error) {
   if (parameter_block_ordering->NumElements() !=
       program->NumParameterBlocks()) {
     *error = StringPrintf(
@@ -453,7 +448,7 @@ bool ReorderProgramForSchurTypeLinearSolver(
     // parameter block ordering as it sees fit. For Schur type solvers,
     // this means that the user wishes for Ceres to identify the
     // e_blocks, which we do by computing a maximal independent set.
-    vector<ParameterBlock*> schur_ordering;
+    std::vector<ParameterBlock*> schur_ordering;
     const int size_of_first_elimination_group =
         ComputeStableSchurOrdering(*program, &schur_ordering);
 
@@ -476,7 +471,7 @@ bool ReorderProgramForSchurTypeLinearSolver(
     // group.
 
     // Verify that the first elimination group is an independent set.
-    const set<double*>& first_elimination_group =
+    const std::set<double*>& first_elimination_group =
         parameter_block_ordering->group_to_elements().begin()->second;
     if (!program->IsParameterBlockSetIndependent(first_elimination_group)) {
       *error = StringPrintf(
@@ -527,7 +522,7 @@ bool ReorderProgramForSparseCholesky(
     const ParameterBlockOrdering& parameter_block_ordering,
     int start_row_block,
     Program* program,
-    string* error) {
+    std::string* error) {
   if (parameter_block_ordering.NumElements() != program->NumParameterBlocks()) {
     *error = StringPrintf(
         "The program has %d parameter blocks, but the parameter block "
@@ -541,8 +536,8 @@ bool ReorderProgramForSparseCholesky(
   std::unique_ptr<TripletSparseMatrix> tsm_block_jacobian_transpose(
       program->CreateJacobianBlockSparsityTranspose(start_row_block));
 
-  vector<int> ordering(program->NumParameterBlocks(), 0);
-  vector<ParameterBlock*>& parameter_blocks =
+  std::vector<int> ordering(program->NumParameterBlocks(), 0);
+  std::vector<ParameterBlock*>& parameter_blocks =
       *(program->mutable_parameter_blocks());
 
   if (sparse_linear_algebra_library_type == SUITE_SPARSE) {
@@ -569,7 +564,7 @@ bool ReorderProgramForSparseCholesky(
   }
 
   // Apply ordering.
-  const vector<ParameterBlock*> parameter_blocks_copy(parameter_blocks);
+  const std::vector<ParameterBlock*> parameter_blocks_copy(parameter_blocks);
   for (int i = 0; i < program->NumParameterBlocks(); ++i) {
     parameter_blocks[i] = parameter_blocks_copy[ordering[i]];
   }

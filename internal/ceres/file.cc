@@ -38,9 +38,7 @@
 
 namespace ceres::internal {
 
-using std::string;
-
-void WriteStringToFileOrDie(const string& data, const string& filename) {
+void WriteStringToFileOrDie(const std::string& data, const std::string& filename) {
   FILE* file_descriptor = fopen(filename.c_str(), "wb");
   if (!file_descriptor) {
     LOG(FATAL) << "Couldn't write to file: " << filename;
@@ -49,7 +47,7 @@ void WriteStringToFileOrDie(const string& data, const string& filename) {
   fclose(file_descriptor);
 }
 
-void ReadFileToStringOrDie(const string& filename, string* data) {
+void ReadFileToStringOrDie(const std::string& filename, std::string* data) {
   FILE* file_descriptor = fopen(filename.c_str(), "r");
 
   if (!file_descriptor) {
@@ -73,7 +71,7 @@ void ReadFileToStringOrDie(const string& filename, string* data) {
   fclose(file_descriptor);
 }
 
-string JoinPath(const string& dirname, const string& basename) {
+std::string JoinPath(const std::string& dirname, const std::string& basename) {
 #ifdef _WIN32
   static const char separator = '\\';
 #else
@@ -85,7 +83,7 @@ string JoinPath(const string& dirname, const string& basename) {
   } else if (dirname[dirname.size() - 1] == separator) {
     return dirname + basename;
   } else {
-    return dirname + string(&separator, 1) + basename;
+    return dirname + std::string(&separator, 1) + basename;
   }
 }
 

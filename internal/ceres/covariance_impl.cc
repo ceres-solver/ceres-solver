@@ -59,8 +59,6 @@
 
 namespace ceres::internal {
 
-using std::swap;
-
 using CovarianceBlocks = std::vector<std::pair<const double*, const double*>>;
 
 CovarianceImpl::CovarianceImpl(const Covariance::Options& options)
@@ -166,7 +164,7 @@ bool CovarianceImpl::GetCovarianceBlockInTangentOrAmbientSpace(
   const double* parameter_block2 = original_parameter_block2;
   const bool transpose = parameter_block1 > parameter_block2;
   if (transpose) {
-    swap(parameter_block1, parameter_block2);
+    std::swap(parameter_block1, parameter_block2);
   }
 
   // Find where in the covariance matrix the block is located.

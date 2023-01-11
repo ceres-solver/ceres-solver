@@ -39,9 +39,6 @@
 
 namespace ceres {
 
-using std::pair;
-using std::vector;
-
 Covariance::Covariance(const Covariance::Options& options) {
   impl_ = std::make_unique<internal::CovarianceImpl>(options);
 }
@@ -49,12 +46,12 @@ Covariance::Covariance(const Covariance::Options& options) {
 Covariance::~Covariance() = default;
 
 bool Covariance::Compute(
-    const vector<pair<const double*, const double*>>& covariance_blocks,
+    const std::vector<std::pair<const double*, const double*>>& covariance_blocks,
     Problem* problem) {
   return impl_->Compute(covariance_blocks, problem->mutable_impl());
 }
 
-bool Covariance::Compute(const vector<const double*>& parameter_blocks,
+bool Covariance::Compute(const std::vector<const double*>& parameter_blocks,
                          Problem* problem) {
   return impl_->Compute(parameter_blocks, problem->mutable_impl());
 }
@@ -79,7 +76,7 @@ bool Covariance::GetCovarianceBlockInTangentSpace(
 }
 
 bool Covariance::GetCovarianceMatrix(
-    const vector<const double*>& parameter_blocks,
+    const std::vector<const double*>& parameter_blocks,
     double* covariance_matrix) const {
   return impl_->GetCovarianceMatrixInTangentOrAmbientSpace(parameter_blocks,
                                                            true,  // ambient
