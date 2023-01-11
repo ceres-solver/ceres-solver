@@ -69,6 +69,24 @@
       "tag": "mailMessageId\u003d\u003cCABqdRUDHr_xfDk7fOp8\u003dMuPC6yJxmJ8NYAEhn5ZkUMRGuY24XA@mail.gmail.com\u003e",
       "revId": "f167d9450bb467716d2ced1d4e3f3d629d0e15bd",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8599b628_17befde8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-11T15:14:45Z",
+      "side": 1,
+      "message": "Can you please show where to put it. I see several README.md files but they seem to be about something else. An appropriate place is this page http://ceres-solver.org/installation.html but I do not see a way to edit it. I can create BAZEL.md file at the root of the project. Is it acceptable?",
+      "parentUuid": "4e01bd9d_68cf328e",
+      "revId": "f167d9450bb467716d2ced1d4e3f3d629d0e15bd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
