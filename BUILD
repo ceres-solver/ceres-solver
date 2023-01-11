@@ -191,7 +191,7 @@ TEST_DEPS = [
 # dependency that we'd prefer to avoid.
 [cc_test(
     name = test_filename.split("/")[-1][:-3],  # Remove .cc.
-    timeout = "long",
+    timeout = "moderate",  # If these tests take too much time consider building in optimized mode
     srcs = [test_filename],
     copts = TEST_COPTS,
 
