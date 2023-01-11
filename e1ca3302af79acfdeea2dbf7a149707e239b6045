@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6461d9a0_26605c01",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-11T13:55:58Z",
+      "side": 1,
+      "message": "Failed to run locally `bazel test //...` because some of `ba_...` tests take more than 300 seconds. Increased `timeout` to `long` (15 minutes) and all tests passed (https://bazel.build/reference/be/common-definitions)",
+      "revId": "e1ca3302af79acfdeea2dbf7a149707e239b6045",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
