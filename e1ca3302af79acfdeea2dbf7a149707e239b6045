@@ -33,6 +33,24 @@
       "message": "BTW one reason these tests maybe running slow is because by default bazel does not compile in opt mode, and that is a problem with numerical code performance.",
       "revId": "e1ca3302af79acfdeea2dbf7a149707e239b6045",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da1b6617_8a4ad61b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-11T14:48:39Z",
+      "side": 1,
+      "message": "Hmm, didn\u0027t think about it. Will try to enable optimizations",
+      "parentUuid": "2747f758_8d122b21",
+      "revId": "e1ca3302af79acfdeea2dbf7a149707e239b6045",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
