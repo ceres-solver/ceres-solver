@@ -16,6 +16,23 @@
       "message": "Failed to run locally `bazel test //...` because some of `ba_...` tests take more than 300 seconds. Increased `timeout` to `long` (15 minutes) and all tests passed (https://bazel.build/reference/be/common-definitions)",
       "revId": "e1ca3302af79acfdeea2dbf7a149707e239b6045",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2747f758_8d122b21",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-01-11T14:24:57Z",
+      "side": 1,
+      "message": "BTW one reason these tests maybe running slow is because by default bazel does not compile in opt mode, and that is a problem with numerical code performance.",
+      "revId": "e1ca3302af79acfdeea2dbf7a149707e239b6045",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
