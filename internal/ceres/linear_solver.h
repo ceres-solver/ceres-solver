@@ -392,10 +392,10 @@ class TypedLinearSolver : public LinearSolver {
 // Linear solvers that depend on access to the low level structure of
 // a SparseMatrix.
 // clang-format off
-typedef TypedLinearSolver<BlockSparseMatrix>         BlockSparseMatrixSolver;          // NOLINT
-typedef TypedLinearSolver<CompressedRowSparseMatrix> CompressedRowSparseMatrixSolver;  // NOLINT
-typedef TypedLinearSolver<DenseSparseMatrix>         DenseSparseMatrixSolver;          // NOLINT
-typedef TypedLinearSolver<TripletSparseMatrix>       TripletSparseMatrixSolver;        // NOLINT
+using BlockSparseMatrixSolver = TypedLinearSolver<BlockSparseMatrix>;                  // NOLINT
+using CompressedRowSparseMatrixSolver = TypedLinearSolver<CompressedRowSparseMatrix>;  // NOLINT
+using DenseSparseMatrixSolver = TypedLinearSolver<DenseSparseMatrix>;                  // NOLINT
+using TripletSparseMatrixSolver = TypedLinearSolver<TripletSparseMatrix>;              // NOLINT
 // clang-format on
 
 }  // namespace ceres::internal

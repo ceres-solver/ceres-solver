@@ -274,7 +274,7 @@ class CERES_NO_EXPORT SuiteSparseCholesky final : public SparseCholesky {
 
 #else  // CERES_NO_SUITESPARSE
 
-typedef void cholmod_factor;
+using cholmod_factor = void;
 
 #include "ceres/internal/disable_warnings.h"
 

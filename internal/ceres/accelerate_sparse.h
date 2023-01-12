@@ -55,18 +55,18 @@ struct SparseTypesTrait {};
 
 template <>
 struct SparseTypesTrait<double> {
-  typedef DenseVector_Double DenseVector;
-  typedef SparseMatrix_Double SparseMatrix;
-  typedef SparseOpaqueSymbolicFactorization SymbolicFactorization;
-  typedef SparseOpaqueFactorization_Double NumericFactorization;
+  using DenseVector = DenseVector_Double;
+  using SparseMatrix = SparseMatrix_Double;
+  using SymbolicFactorization = SparseOpaqueSymbolicFactorization;
+  using NumericFactorization = SparseOpaqueFactorization_Double;
 };
 
 template <>
 struct SparseTypesTrait<float> {
-  typedef DenseVector_Float DenseVector;
-  typedef SparseMatrix_Float SparseMatrix;
-  typedef SparseOpaqueSymbolicFactorization SymbolicFactorization;
-  typedef SparseOpaqueFactorization_Float NumericFactorization;
+  using DenseVector = DenseVector_Float;
+  using SparseMatrix = SparseMatrix_Float;
+  using SymbolicFactorization = SparseOpaqueSymbolicFactorization;
+  using NumericFactorization = SparseOpaqueFactorization_Float;
 };
 
 template <typename Scalar>
