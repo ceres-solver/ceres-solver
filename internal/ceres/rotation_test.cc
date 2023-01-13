@@ -30,6 +30,7 @@
 
 #include "ceres/rotation.h"
 
+#include <array>
 #include <cmath>
 #include <limits>
 #include <random>
@@ -969,8 +970,8 @@ void ExpectJetArraysClose(const Jet<double, N>* x, const Jet<double, N>* y) {
 }
 
 // Log-10 of a value well below machine precision.
-static const int kSmallTinyCutoff =
-    static_cast<int>(2 * log(std::numeric_limits<double>::epsilon()) / log(10.0));
+static const int kSmallTinyCutoff = static_cast<int>(
+    2 * log(std::numeric_limits<double>::epsilon()) / log(10.0));
 
 // Log-10 of a value just below values representable by double.
 static const int kTinyZeroLimit =
@@ -1218,6 +1219,23 @@ TEST(AngleAxis, RotatePointGivesSameAnswerAsRotationMatrix) {
         // clang-format on
       }
     }
+  }
+}
+
+TEST(Quaternion, UnitQuaternion) {
+  using Jet = ceres::Jet<double, 4>;
+  std::array<Jet, 4> quaternion = {
+      Jet(1.0, 0), Jet(0.0, 1), Jet(0.0, 2), Jet(0.0, 3)};
+  std::array<Jet, 3> point = {Jet(0.0), Jet(0.0), Jet(0.0)};
+  Eigen::Vector3<Jet> rotated_point;
+  QuaternionRotatePoint(quaternion.data(), point.data(), rotated_point.data());
+  LOG(INFO) << rotated_point[0];
+  LOG(INFO) << rotated_point[1];
+  LOG(INFO) << rotated_point[2];
+
+  for (int i = 0; i < 3; ++i) {
+    EXPECT_EQ(rotated_point[i], point[i]);
+    EXPECT_FALSE(rotated_point[i].v.array().isNaN().any());
   }
 }
 
