@@ -1227,12 +1227,8 @@ TEST(Quaternion, UnitQuaternion) {
   std::array<Jet, 4> quaternion = {
       Jet(1.0, 0), Jet(0.0, 1), Jet(0.0, 2), Jet(0.0, 3)};
   std::array<Jet, 3> point = {Jet(0.0), Jet(0.0), Jet(0.0)};
-  Eigen::Vector3<Jet> rotated_point;
+  std::array<Jet, 3> rotated_point;
   QuaternionRotatePoint(quaternion.data(), point.data(), rotated_point.data());
-  LOG(INFO) << rotated_point[0];
-  LOG(INFO) << rotated_point[1];
-  LOG(INFO) << rotated_point[2];
-
   for (int i = 0; i < 3; ++i) {
     EXPECT_EQ(rotated_point[i], point[i]);
     EXPECT_FALSE(rotated_point[i].v.array().isNaN().any());
