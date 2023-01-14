@@ -17,6 +17,24 @@
       "tag": "mailMessageId\u003d\u003cCABqdRUAHtJO\u003dc5jJDOf8TKVCxvx97ch05-hMJ0_jEDbWqWLbAg@mail.gmail.com\u003e",
       "revId": "79a554ffcf33156b81f3098e4e67821da867e2d6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97778907_2b88e1ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-01-14T13:30:15Z",
+      "side": 1,
+      "message": "Alexander,\n\nIt\u0027s not just large values that hypot is good for, but so small values. It prevents underflow which will happen with naively squaring the arguments.\n\nSameer",
+      "tag": "mailMessageId\u003d\u003cCABqdRUC2H6oapEXAk5z8qwB+VB2cNn8yiNN0DjgHtNYUn6PVzw@mail.gmail.com\u003e",
+      "revId": "79a554ffcf33156b81f3098e4e67821da867e2d6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
