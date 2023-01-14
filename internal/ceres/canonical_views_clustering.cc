@@ -61,8 +61,8 @@ class CERES_NO_EXPORT CanonicalViewsClustering {
 
  private:
   void FindValidViews(IntSet* valid_views) const;
-  double ComputeClusteringQualityDifference(const int candidate,
-                                            const std::vector<int>& centers) const;
+  double ComputeClusteringQualityDifference(
+      const int candidate, const std::vector<int>& centers) const;
   void UpdateCanonicalViewAssignments(const int canonical_view);
   void ComputeClusterMembership(const std::vector<int>& centers,
                                 IntMap* membership) const;

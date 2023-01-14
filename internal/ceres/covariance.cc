@@ -46,7 +46,8 @@ Covariance::Covariance(const Covariance::Options& options) {
 Covariance::~Covariance() = default;
 
 bool Covariance::Compute(
-    const std::vector<std::pair<const double*, const double*>>& covariance_blocks,
+    const std::vector<std::pair<const double*, const double*>>&
+        covariance_blocks,
     Problem* problem) {
   return impl_->Compute(covariance_blocks, problem->mutable_impl());
 }

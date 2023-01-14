@@ -52,7 +52,8 @@ int ComputeStableSchurOrdering(const Program& program,
   auto graph = CreateHessianGraph(program);
   event_logger.AddEvent("CreateHessianGraph");
 
-  const std::vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
+  const std::vector<ParameterBlock*>& parameter_blocks =
+      program.parameter_blocks();
   const std::unordered_set<ParameterBlock*>& vertices = graph->vertices();
   for (auto* parameter_block : parameter_blocks) {
     if (vertices.count(parameter_block) > 0) {
@@ -82,7 +83,8 @@ int ComputeSchurOrdering(const Program& program,
 
   auto graph = CreateHessianGraph(program);
   int independent_set_size = IndependentSetOrdering(*graph, ordering);
-  const std::vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
+  const std::vector<ParameterBlock*>& parameter_blocks =
+      program.parameter_blocks();
 
   // Add the excluded blocks to back of the ordering vector.
   for (auto* parameter_block : parameter_blocks) {
@@ -98,7 +100,8 @@ void ComputeRecursiveIndependentSetOrdering(const Program& program,
                                             ParameterBlockOrdering* ordering) {
   CHECK(ordering != nullptr);
   ordering->Clear();
-  const std::vector<ParameterBlock*> parameter_blocks = program.parameter_blocks();
+  const std::vector<ParameterBlock*> parameter_blocks =
+      program.parameter_blocks();
   auto graph = CreateHessianGraph(program);
 
   int num_covered = 0;
@@ -121,14 +124,16 @@ std::unique_ptr<Graph<ParameterBlock*>> CreateHessianGraph(
     const Program& program) {
   auto graph = std::make_unique<Graph<ParameterBlock*>>();
   CHECK(graph != nullptr);
-  const std::vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
+  const std::vector<ParameterBlock*>& parameter_blocks =
+      program.parameter_blocks();
   for (auto* parameter_block : parameter_blocks) {
     if (!parameter_block->IsConstant()) {
       graph->AddVertex(parameter_block);
     }
   }
 
-  const std::vector<ResidualBlock*>& residual_blocks = program.residual_blocks();
+  const std::vector<ResidualBlock*>& residual_blocks =
+      program.residual_blocks();
   for (auto* residual_block : residual_blocks) {
     const int num_parameter_blocks = residual_block->NumParameterBlocks();
     ParameterBlock* const* parameter_blocks =

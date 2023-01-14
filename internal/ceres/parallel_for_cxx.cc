@@ -61,9 +61,7 @@ void BlockUntilFinished::Block() {
       lock, [&]() { return num_total_jobs_finished_ == num_total_jobs_; });
 }
 
-ThreadPoolState::ThreadPoolState(int start,
-                                 int end,
-                                 int num_work_blocks)
+ThreadPoolState::ThreadPoolState(int start, int end, int num_work_blocks)
     : start(start),
       end(end),
       num_work_blocks(num_work_blocks),

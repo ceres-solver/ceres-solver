@@ -176,7 +176,8 @@ bool GradientChecker::Probe(double const* const* parameters,
 
   // Evaluate the derivative using numeric derivatives.
   std::vector<Matrix>& numeric_jacobians = results->numeric_jacobians;
-  std::vector<Matrix>& local_numeric_jacobians = results->local_numeric_jacobians;
+  std::vector<Matrix>& local_numeric_jacobians =
+      results->local_numeric_jacobians;
   Vector finite_diff_residuals;
   if (!EvaluateCostFunction(finite_diff_cost_function_.get(),
                             parameters,

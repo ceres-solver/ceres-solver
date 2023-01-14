@@ -114,11 +114,11 @@ void OrderingForSparseNormalCholeskyUsingSuiteSparse(
     int* ordering) {
 #ifdef CERES_NO_SUITESPARSE
   // "Void"ing values to avoid compiler warnings about unused parameters
-  (void) linear_solver_ordering_type;
-  (void) tsm_block_jacobian_transpose;
-  (void) parameter_blocks;
-  (void) parameter_block_ordering;
-  (void) ordering;
+  (void)linear_solver_ordering_type;
+  (void)tsm_block_jacobian_transpose;
+  (void)parameter_blocks;
+  (void)parameter_block_ordering;
+  (void)ordering;
   LOG(FATAL) << "Congratulations, you found a Ceres bug! "
              << "Please report this error to the developers.";
 #else
@@ -256,8 +256,10 @@ bool LexicographicallyOrderResidualBlocks(
 
   // Create a histogram of the number of residuals for each E block. There is an
   // extra bucket at the end to catch all non-eliminated F blocks.
-  std::vector<int> residual_blocks_per_e_block(size_of_first_elimination_group + 1);
-  std::vector<ResidualBlock*>* residual_blocks = program->mutable_residual_blocks();
+  std::vector<int> residual_blocks_per_e_block(size_of_first_elimination_group +
+                                               1);
+  std::vector<ResidualBlock*>* residual_blocks =
+      program->mutable_residual_blocks();
   std::vector<int> min_position_per_residual(residual_blocks->size());
   for (int i = 0; i < residual_blocks->size(); ++i) {
     ResidualBlock* residual_block = (*residual_blocks)[i];
@@ -330,12 +332,11 @@ bool LexicographicallyOrderResidualBlocks(
 // Pre-order the columns corresponding to the Schur complement if
 // possible.
 static void ReorderSchurComplementColumnsUsingSuiteSparse(
-    const ParameterBlockOrdering& parameter_block_ordering,
-    Program* program) {
+    const ParameterBlockOrdering& parameter_block_ordering, Program* program) {
 #ifdef CERES_NO_SUITESPARSE
   // "Void"ing values to avoid compiler warnings about unused parameters
-  (void) parameter_block_ordering;
-  (void) program;
+  (void)parameter_block_ordering;
+  (void)program;
 #else
   SuiteSparse ss;
   std::vector<int> constraints;
@@ -414,7 +415,8 @@ static void ReorderSchurComplementColumnsUsingEigen(
 #endif
   }
 
-  const std::vector<ParameterBlock*>& parameter_blocks = program->parameter_blocks();
+  const std::vector<ParameterBlock*>& parameter_blocks =
+      program->parameter_blocks();
   std::vector<ParameterBlock*> ordering(num_cols);
 
   // The ordering of the first size_of_first_elimination_group does

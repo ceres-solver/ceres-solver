@@ -65,7 +65,8 @@ class BundleAdjustmentProblem {
     BuildProblem();
   }
   BundleAdjustmentProblem() {
-    const std::string input_file = TestFileAbsolutePath("problem-16-22106-pre.txt");
+    const std::string input_file =
+        TestFileAbsolutePath("problem-16-22106-pre.txt");
     ReadData(input_file);
     BuildProblem();
   }

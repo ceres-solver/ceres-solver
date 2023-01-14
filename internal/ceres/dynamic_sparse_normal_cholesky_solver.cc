@@ -175,8 +175,8 @@ LinearSolver::Summary
 DynamicSparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
     CompressedRowSparseMatrix* A, double* rhs_and_solution) {
 #ifdef CERES_NO_SUITESPARSE
-  (void) A;
-  (void) rhs_and_solution;
+  (void)A;
+  (void)rhs_and_solution;
 
   LinearSolver::Summary summary;
   summary.num_iterations = 0;

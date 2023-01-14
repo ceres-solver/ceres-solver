@@ -62,28 +62,28 @@ namespace {
 using internal::StringAppendF;
 using internal::StringPrintf;
 
-#define OPTION_OP(x, y, OP)                                          \
-  if (!(options.x OP y)) {                                           \
-    std::stringstream ss;                                            \
-    ss << "Invalid configuration. ";                                 \
+#define OPTION_OP(x, y, OP)                                               \
+  if (!(options.x OP y)) {                                                \
+    std::stringstream ss;                                                 \
+    ss << "Invalid configuration. ";                                      \
     ss << std::string("Solver::Options::" #x " = ") << options.x << ". "; \
-    ss << "Violated constraint: ";                                   \
+    ss << "Violated constraint: ";                                        \
     ss << std::string("Solver::Options::" #x " " #OP " " #y);             \
-    *error = ss.str();                                               \
-    return false;                                                    \
+    *error = ss.str();                                                    \
+    return false;                                                         \
   }
 
-#define OPTION_OP_OPTION(x, y, OP)                                   \
-  if (!(options.x OP options.y)) {                                   \
-    std::stringstream ss;                                            \
-    ss << "Invalid configuration. ";                                 \
+#define OPTION_OP_OPTION(x, y, OP)                                        \
+  if (!(options.x OP options.y)) {                                        \
+    std::stringstream ss;                                                 \
+    ss << "Invalid configuration. ";                                      \
     ss << std::string("Solver::Options::" #x " = ") << options.x << ". "; \
     ss << std::string("Solver::Options::" #y " = ") << options.y << ". "; \
-    ss << "Violated constraint: ";                                   \
+    ss << "Violated constraint: ";                                        \
     ss << std::string("Solver::Options::" #x);                            \
     ss << std::string(#OP " Solver::Options::" #y ".");                   \
-    *error = ss.str();                                               \
-    return false;                                                    \
+    *error = ss.str();                                                    \
+    return false;                                                         \
   }
 
 #define OPTION_GE(x, y) OPTION_OP(x, y, >=);
@@ -201,7 +201,8 @@ bool OptionsAreValidForDenseNormalCholesky(const Solver::Options& options,
   return OptionsAreValidForDenseSolver(options, error);
 }
 
-bool OptionsAreValidForDenseQr(const Solver::Options& options, std::string* error) {
+bool OptionsAreValidForDenseQr(const Solver::Options& options,
+                               std::string* error) {
   CHECK_EQ(options.linear_solver_type, DENSE_QR);
 
   if (!OptionsAreValidForDenseSolver(options, error)) {
@@ -302,7 +303,8 @@ bool OptionsAreValidForIterativeSchur(const Solver::Options& options,
   return true;
 }
 
-bool OptionsAreValidForCgnr(const Solver::Options& options, std::string* error) {
+bool OptionsAreValidForCgnr(const Solver::Options& options,
+                            std::string* error) {
   CHECK_EQ(options.linear_solver_type, CGNR);
 
   if (options.preconditioner_type != IDENTITY &&
@@ -383,7 +385,8 @@ bool OptionsAreValidForLinearSolver(const Solver::Options& options,
   return false;
 }
 
-bool TrustRegionOptionsAreValid(const Solver::Options& options, std::string* error) {
+bool TrustRegionOptionsAreValid(const Solver::Options& options,
+                                std::string* error) {
   OPTION_GT(initial_trust_region_radius, 0.0);
   OPTION_GT(min_trust_region_radius, 0.0);
   OPTION_GT(max_trust_region_radius, 0.0);
@@ -431,7 +434,8 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, std::string* err
   return true;
 }
 
-bool LineSearchOptionsAreValid(const Solver::Options& options, std::string* error) {
+bool LineSearchOptionsAreValid(const Solver::Options& options,
+                               std::string* error) {
   OPTION_GT(max_lbfgs_rank, 0);
   OPTION_GT(min_line_search_step_size, 0.0);
   OPTION_GT(max_line_search_step_contraction, 0.0);
@@ -451,7 +455,8 @@ bool LineSearchOptionsAreValid(const Solver::Options& options, std::string* erro
        options.line_search_direction_type == ceres::LBFGS) &&
       options.line_search_type != ceres::WOLFE) {
     *error =
-        std::string("Invalid configuration: Solver::Options::line_search_type = ") +
+        std::string(
+            "Invalid configuration: Solver::Options::line_search_type = ") +
         std::string(LineSearchTypeToString(options.line_search_type)) +
         std::string(
             ". When using (L)BFGS, "

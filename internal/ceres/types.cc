@@ -314,7 +314,8 @@ const char* NumericDiffMethodTypeToString(NumericDiffMethodType type) {
   }
 }
 
-bool StringToNumericDiffMethodType(std::string value, NumericDiffMethodType* type) {
+bool StringToNumericDiffMethodType(std::string value,
+                                   NumericDiffMethodType* type) {
   UpperCase(&value);
   STRENUM(CENTRAL);
   STRENUM(FORWARD);

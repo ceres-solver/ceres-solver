@@ -635,9 +635,10 @@ std::vector<Vec6> PackCamerasRotationAndTranslation(
 }
 
 // Convert cameras rotations fro mangle axis back to rotation matrix.
-void UnpackCamerasRotationAndTranslation(const std::vector<Marker>& all_markers,
-                                         const std::vector<Vec6>& all_cameras_R_t,
-                                         std::vector<EuclideanCamera>* all_cameras) {
+void UnpackCamerasRotationAndTranslation(
+    const std::vector<Marker>& all_markers,
+    const std::vector<Vec6>& all_cameras_R_t,
+    std::vector<EuclideanCamera>* all_cameras) {
   int max_image = MaxImage(all_markers);
 
   for (int i = 0; i <= max_image; i++) {

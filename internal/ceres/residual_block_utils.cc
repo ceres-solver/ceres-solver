@@ -62,10 +62,10 @@ void InvalidateEvaluation(const ResidualBlock& block,
 }
 
 std::string EvaluationToString(const ResidualBlock& block,
-                          double const* const* parameters,
-                          double* cost,
-                          double* residuals,
-                          double** jacobians) {
+                               double const* const* parameters,
+                               double* cost,
+                               double* residuals,
+                               double** jacobians) {
   CHECK(cost != nullptr);
   CHECK(residuals != nullptr);
 
@@ -115,8 +115,8 @@ std::string EvaluationToString(const ResidualBlock& block,
 }
 
 // TODO(sameeragarwal) Check cost value validness here
-// Cost value is a part of evaluation but not checked here since according to residual_block.cc
-// cost is not valid at the time this method is called
+// Cost value is a part of evaluation but not checked here since according to
+// residual_block.cc cost is not valid at the time this method is called
 bool IsEvaluationValid(const ResidualBlock& block,
                        double const* const* /*parameters*/,
                        double* residuals,

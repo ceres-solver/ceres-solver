@@ -38,7 +38,8 @@
 
 namespace ceres::internal {
 
-void WriteStringToFileOrDie(const std::string& data, const std::string& filename) {
+void WriteStringToFileOrDie(const std::string& data,
+                            const std::string& filename) {
   FILE* file_descriptor = fopen(filename.c_str(), "wb");
   if (!file_descriptor) {
     LOG(FATAL) << "Couldn't write to file: " << filename;

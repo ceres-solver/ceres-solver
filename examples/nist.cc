@@ -231,7 +231,8 @@ class NISTProblem {
     for (int i = 0; i < kNumTries; ++i) {
       initial_parameters_(i, parameter_id) = std::atof(pieces[i + 2].c_str());
     }
-    final_parameters_(0, parameter_id) = std::atof(pieces[2 + kNumTries].c_str());
+    final_parameters_(0, parameter_id) =
+        std::atof(pieces[2 + kNumTries].c_str());
 
     // Parse the remaining parameter lines.
     for (int parameter_id = 1; parameter_id < kNumParameters; ++parameter_id) {
@@ -240,7 +241,8 @@ class NISTProblem {
       for (int i = 0; i < kNumTries; ++i) {
         initial_parameters_(i, parameter_id) = std::atof(pieces[i + 2].c_str());
       }
-      final_parameters_(0, parameter_id) = std::atof(pieces[2 + kNumTries].c_str());
+      final_parameters_(0, parameter_id) =
+          std::atof(pieces[2 + kNumTries].c_str());
     }
 
     // Certified cost
@@ -697,7 +699,7 @@ void SolveNISTProblems() {
   std::cout << "Medium  : " << medium_success << "/22\n";
   std::cout << "Hard    : " << hard_success << "/16\n";
   std::cout << "Total   : " << easy_success + medium_success + hard_success
-       << "/54\n";
+            << "/54\n";
 }
 
 }  // namespace

@@ -99,7 +99,8 @@ class GradientCheckingCostFunction final : public CostFunction {
     MatrixRef(residuals, num_residuals, 1) = results.residuals;
 
     // Copy the original jacobian blocks into the jacobians array.
-    const std::vector<int32_t>& block_sizes = function_->parameter_block_sizes();
+    const std::vector<int32_t>& block_sizes =
+        function_->parameter_block_sizes();
     for (int k = 0; k < block_sizes.size(); k++) {
       if (jacobians[k] != nullptr) {
         MatrixRef(jacobians[k],
@@ -192,7 +193,8 @@ std::unique_ptr<ProblemImpl> CreateGradientCheckingProblemImpl(
 
   // For every ParameterBlock in problem_impl, create a new parameter block with
   // the same manifold and constancy.
-  const std::vector<ParameterBlock*>& parameter_blocks = program->parameter_blocks();
+  const std::vector<ParameterBlock*>& parameter_blocks =
+      program->parameter_blocks();
   for (auto* parameter_block : parameter_blocks) {
     gradient_checking_problem_impl->AddParameterBlock(
         parameter_block->mutable_user_state(),
@@ -219,7 +221,8 @@ std::unique_ptr<ProblemImpl> CreateGradientCheckingProblemImpl(
   // For every ResidualBlock in problem_impl, create a new
   // ResidualBlock by wrapping its CostFunction inside a
   // GradientCheckingCostFunction.
-  const std::vector<ResidualBlock*>& residual_blocks = program->residual_blocks();
+  const std::vector<ResidualBlock*>& residual_blocks =
+      program->residual_blocks();
   for (int i = 0; i < residual_blocks.size(); ++i) {
     ResidualBlock* residual_block = residual_blocks[i];
 
