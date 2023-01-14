@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2be96b5d_42e8fc64",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-01-14T13:00:53Z",
+      "side": 1,
+      "message": "Why can\u0027t the scalar part be zero? Quaternions live on the unit 4 sphere.",
+      "tag": "mailMessageId\u003d\u003cCABqdRUAHtJO\u003dc5jJDOf8TKVCxvx97ch05-hMJ0_jEDbWqWLbAg@mail.gmail.com\u003e",
+      "revId": "79a554ffcf33156b81f3098e4e67821da867e2d6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
