@@ -89,6 +89,23 @@
       "parentUuid": "145a381a_e2d158b5",
       "revId": "79a554ffcf33156b81f3098e4e67821da867e2d6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13dd308b_36aeb045",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1230,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-14T13:59:41Z",
+      "side": 1,
+      "message": "Missed this one: `Vector3` is defined only starting Eigen 3.4.0. This is why the build fails.",
+      "revId": "79a554ffcf33156b81f3098e4e67821da867e2d6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
