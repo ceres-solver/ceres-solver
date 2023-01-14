@@ -71,6 +71,24 @@
       "tag": "mailMessageId\u003d\u003cCABqdRUCpk9AYqWhnO6B-s6DGHPUvXGusJN0rfpvQ5D1\u003d1sDvXg@mail.gmail.com\u003e",
       "revId": "79a554ffcf33156b81f3098e4e67821da867e2d6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2dfa0487_2e9ef37a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-14T13:42:12Z",
+      "side": 1,
+      "message": "Sure, fine with me.",
+      "parentUuid": "145a381a_e2d158b5",
+      "revId": "79a554ffcf33156b81f3098e4e67821da867e2d6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
