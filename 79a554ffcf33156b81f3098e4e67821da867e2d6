@@ -35,6 +35,24 @@
       "tag": "mailMessageId\u003d\u003cCABqdRUC2H6oapEXAk5z8qwB+VB2cNn8yiNN0DjgHtNYUn6PVzw@mail.gmail.com\u003e",
       "revId": "79a554ffcf33156b81f3098e4e67821da867e2d6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a4aff80_f6038ae6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-14T13:32:47Z",
+      "side": 1,
+      "message": "Sorry, brain fart. Agreed, the scalar part can be zero.\n\nI mean to say that at least one of the coefficients must be non-zero. Therefore, I see two solutions:\n1. Revert (as is)\n2. Use conditional nested `hypot` expressions depending on which coefficients are non-zero.",
+      "parentUuid": "2be96b5d_42e8fc64",
+      "revId": "79a554ffcf33156b81f3098e4e67821da867e2d6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }

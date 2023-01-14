@@ -52,6 +52,24 @@
       "parentUuid": "9d8b10b0_cb276918",
       "revId": "f1113c08abec23462182a5a8235f8ab47277ec4d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ab03a95_3219c2ce",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-14T13:32:47Z",
+      "side": 0,
+      "message": "Are you claiming that the scaling performed by `hypot` considerably slows down computations? Can you provide a benchmark that confirms this claim?\n\n`hypot` is not only useful for avoiding over/underflows but also behaves numerically better in general than naive computation which here is important particularly for quaternions close to identity.\n\nConsider the following example (https://godbolt.org/z/494rcz4dq):\n\n```\n#include \u003ccmath\u003e\n#include \u003ciostream\u003e\n#include \u003ccassert\u003e\n\ndouble naive_norm(double a, double b)\n{\n    return std::sqrt(a * a + b * b);\n}\n\nint main()\n{\n    constexpr double a \u003d 5e-8;\n    constexpr double b \u003d 0.9999;\n\n    double c1 \u003d naive_norm(a, b);\n    double c2 \u003d std::hypot(a, b);\n    \n    std::cout \u003c\u003c std::abs(c1 - c2) \u003c\u003c std::endl;\n\n    assert(c1 \u003d\u003d c2);\n}\n```\n\nwhich does not produce the same results with a difference of 1.11022e-16 on my x86_64 machine. We could, of course, discuss whether such differences are significant.",
+      "parentUuid": "69a257b3_b456a8ac",
+      "revId": "f1113c08abec23462182a5a8235f8ab47277ec4d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
