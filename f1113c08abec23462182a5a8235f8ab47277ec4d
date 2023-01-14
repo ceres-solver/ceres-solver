@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d8b10b0_cb276918",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-14T09:40:37Z",
+      "side": 0,
+      "message": "I incorrectly assumed that the scalar part is in the first coefficient not in the last one. Due to split terms, the denominator in the 2-argument `hypot` can therefore become zero. Since we deal with a unit quaternion, a more straightforward solution would be to exchange the nesting of expressions as follows:\n```\nhypot(hypot(q[0], q[1], q[2]), q[3])\n```\nUnless the scalar part is zero this should ensure an equivalent result.",
+      "revId": "f1113c08abec23462182a5a8235f8ab47277ec4d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
