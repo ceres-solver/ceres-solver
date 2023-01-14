@@ -34,6 +34,24 @@
       "parentUuid": "9d8b10b0_cb276918",
       "revId": "f1113c08abec23462182a5a8235f8ab47277ec4d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69a257b3_b456a8ac",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-14T12:42:45Z",
+      "side": 0,
+      "message": "I hope you don\u0027t mind if I make a comment.\n\nDoes it worthy to use hypot here (and in the same places)?\n\nI mean that additinal operations with `Jet`s introduce additional calculations with their `.v` components. Especially here when we initially calculate `sqrt(x^2 + y^2 + z^2)` when raise it to power 2 and again take a squre root. Personally I often use `stride\u003d32` for big tasks where there is almost impossible estimate jacobians numerically and it is hard to predict how much slower the code will become because of `hypot`. I know that `hypot` is safe for large values but here we are dealing with quaternion `x,y,z,w` and they are not expected to be very big (or am I wrong?).\n\nIf `x,y,z,w` are small usage of hypot again does not save us from division by small number\n\nSo `hypot` slows down the code both for `Jet`s and `double` (`hypot` much slower than `sqrt(...)`). As seems to me it should be used only in places where we may expect so large `double`s so that their power of 2 does not fit into `double` range",
+      "parentUuid": "9d8b10b0_cb276918",
+      "revId": "f1113c08abec23462182a5a8235f8ab47277ec4d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
