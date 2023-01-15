@@ -745,8 +745,7 @@ inline void QuaternionRotatePoint(const T q[4], const T pt[3], T result[3]) {
   DCHECK_NE(pt, result) << "Inplace rotation is not supported.";
 
   // 'scale' is 1 / norm(q).
-  const T scale =
-      T(1) / sqrt(q[0] * q[0] + q[1] * q[1] + q[2] * q[2] + q[3] * q[3]);
+  const T scale = T(1) / hypot(q[0], q[1], q[2], q[3]);
 
   // Make unit-norm version of q.
   const T unit[4] = {

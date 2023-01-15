@@ -459,6 +459,14 @@ using std::sqrt;
 using std::tan;
 using std::tanh;
 
+// Computes sqrt(x^2 + y^2 + z^2 + w^2)
+// Standard does not propose std::hypot implementation for 4 arguments but it is needed
+// to enable transparent usage of expressions like "hypot(x, y, z, w)" where arguments
+// either scalars or Jets. 4 arguments hypot implementation for Jets is below in this file.
+double hypot(double x, double y, double z, double w) noexcept {
+  return ::std::hypot(::std::hypot(x, y, z), w);
+}
+
 // MSVC (up to 1930) defines quiet comparison functions as template functions
 // which causes compilation errors due to ambiguity in the template parameter
 // type resolution for using declarations in the ceres namespace. Workaround the
@@ -743,6 +751,24 @@ inline Jet<T, N> hypot(const Jet<T, N>& x,
   const T tmp = hypot(x.a, y.a, z.a);
   return Jet<T, N>(tmp, x.a / tmp * x.v + y.a / tmp * y.v + z.a / tmp * z.v);
 }
+
+// Like sqrt(x^2 + y^2 + z^2 + w^2),
+// but acts to prevent underflow/overflow for small/large x/y/z/w.
+// Note that the function is non-smooth at x=y=z=w=0,
+// so the derivative is undefined there.
+//
+// Attention! Expressing "hypot(x, y, z, w)" for 4 Jet arguments as "hypot(hypot(x, y, z), w)"
+// or same is not safe since may result in incorrect derivatives (in the provided example
+// when x=y=z=0) so the special 4 arguments implemenation is provided.
+template <typename T, int N>
+inline Jet<T, N> hypot(const Jet<T, N>& x,
+                       const Jet<T, N>& y,
+                       const Jet<T, N>& z,
+                       const Jet<T, N>& w) {
+  const T tmp = hypot(x.a, y.a, z.a, w.a);
+  return Jet<T, N>(tmp, x.a / tmp * x.v + y.a / tmp * y.v + z.a / tmp * z.v + w.a / tmp * w.v);
+}
+
 
 // Like x * y + z but rounded only once.
 template <typename T, int N>
