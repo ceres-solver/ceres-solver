@@ -70,6 +70,24 @@
       "parentUuid": "69a257b3_b456a8ac",
       "revId": "f1113c08abec23462182a5a8235f8ab47277ec4d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "893cf3ea_52828bb6",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-15T15:27:54Z",
+      "side": 0,
+      "message": "Actually my point was not about numerical differences (I am sure they are present). I am talking about silently changing performance for `Jet`s.  Below I\u0027ve written small benchmark which\n* compares `std::hypot(x, y)` and `std::hypot(x, y, z)` with corresponding `std::sqrt`-based computations for scalar types. Spoiler: `std::hypot` may be significantly slower than `std::sqrt`.\n* compares 3 ways of calculating `hypot(x, y, z, w)` where `x`, `y`, `z`, `w` are `Jet`s. Spoiler: fastest way is to write norm calculation as \n```\nT norm \u003d sqrt(x*x + y*y + z*z + w*w);\n```\n\n\nI didn\u0027t found a way to attach files so just provided links to my google disk:\n* Benchmark source code file here https://drive.google.com/file/d/1utwoHHTGwzbq1xuCN_emq8b0Bgqg27Zy/view?usp\u003dshare_link. Put it into `ceres/internal` dir and add to `internal/ceres/CMakeLists.txt`.\n* Results on my local machine for `double`s generated in range `(-1000, 1000)`: https://drive.google.com/file/d/1xpZiI2_l6IX6-jyM6LUBZHheJOeRhVyC/view?usp\u003dsharing\n* Results on my local machine for `double`s generated in range `(-10000000000, 10000000000)`: https://drive.google.com/file/d/1vwo_UJYIYghtVY6l4Kvs-D8pmvWcwEmM/view?usp\u003dsharing\n\nObservations:\n*  Actually performance of `std::hypot(x, y)` degrades significantly under `double`s as compared with `std::sqrt(x*x + y*y)`. especially to compare `std::hypot` vs `std::sqrt`. But nevertheless I agree that safety may be more important here\n* As for `Jet`s if both variants\n```\nT norm \u003d hypot(w, hypot(x, hypot(y, z)));\n```\nand \n```\nT norm \u003d hypot(w, hypot(x, y, z));\n```\n(where `hypot`s are trivially implemented using `sqrt` for `Jet`s) are slower than\n```\nT norm \u003d sqrt(x*x + y*y + z*z + w*w);\n```\nbecause every time we take square root and raise to power 2 we perform additional (absolutely redundant) computations over `.v` components (derivatives). \n\nMy final point is that safety is good, and actually for scalar types it is better to use `std::hypot` but we should carefully treat `Jet`s. Acceptable variant is to write something like\n```\nT norm;\nif constexpr (std::is_floating_point_v\u003cT\u003e) {\n  norm \u003d hypot(w, hypot(x, y, z));\n} else {\n  norm \u003d sqrt(w * w + x * x + y * y + z * z);\n}\n```\nIt seems to represent an appropriate balance.\n\n\nP.S. \n* Comparitively slow `std::hypot` performance also reported on stackoverflow https://stackoverflow.com/questions/3764978/why-hypot-function-is-so-slow where iterative implementation is demonstrated\n* It seems that `std::hypot(x, y, z)` home some special implementation because it is faster than `std::hypot(x, y)` for random numbers (it looked very suspicious to me that benchmarked shows that 3 args variant of `std::hypot` is faster).",
+      "parentUuid": "7ab03a95_3219c2ce",
+      "revId": "f1113c08abec23462182a5a8235f8ab47277ec4d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
