@@ -88,6 +88,24 @@
       "parentUuid": "7ab03a95_3219c2ce",
       "revId": "f1113c08abec23462182a5a8235f8ab47277ec4d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5d9f3c3_da28463a",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-15T18:08:00Z",
+      "side": 0,
+      "message": "Finally I came to the following solution for safe `hypot` for `Jet`s:\n```\nnamespace ceres {\n\ntemplate \u003ctypename ScalarT\u003e\nauto _hypot(\n    const ScalarT x0,\n    const ScalarT x1,\n    const ScalarT x2,\n    const ScalarT x3) noexcept -\u003e ScalarT {\n#ifdef SAFE_MODE\n  return ::std::hypot(x0, ::std::hypot(x1, x2, x3));\n#else\n  return ::std::sqrt(x0 * x0 + x1 * x1 +  x2 * x2 + x3 * x3);\n#endif\n}\n\ntemplate \u003ctypename ScalarT, int N\u003e\nauto hypot(\n    const Jet\u003cScalarT, N\u003e\u0026 x0,\n    const Jet\u003cScalarT, N\u003e\u0026 x1,\n    const Jet\u003cScalarT, N\u003e\u0026 x2,\n    const Jet\u003cScalarT, N\u003e\u0026 x3) noexcept\n    -\u003e Jet\u003cScalarT, N\u003e {\n  Jet\u003cScalarT, N\u003e y;\n  y.a \u003d _hypot(x0.a, x1.a, x2.a, x3.a);\n  const ScalarT coeff_x0 \u003d x0.a / y.a;\n  const ScalarT coeff_x1 \u003d x1.a / y.a;\n  const ScalarT coeff_x2 \u003d x2.a / y.a;\n  const ScalarT coeff_x3 \u003d x3.a / y.a;\n  y.v \u003d\n      coeff_x0 * x0.v +\n      coeff_x1 * x1.v +\n      coeff_x2 * x2.v +\n      coeff_x3 * x3.v;\n  return y;\n}\n```\n\n* If `SAFE_MODE` is not defined its performance is absolutely the same as of `sqrt(x*x + ...)`.\n* If `SAFE_MODE` is defined its performance degrades by approximately 25% according to benchmarks (but seems appropriate). So we also pay something but at this time we pay for safety. In case of `hypot(w, hypot(x, y, z))` we pay basically for nothing (performance degradation is also around 25%)",
+      "parentUuid": "893cf3ea_52828bb6",
+      "revId": "f1113c08abec23462182a5a8235f8ab47277ec4d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
