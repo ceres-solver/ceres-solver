@@ -175,6 +175,24 @@
       "parentUuid": "42efb185_e86ce31c",
       "revId": "747b979aef1b43be8115e00830ee683c87077c57",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "48418c2d_234606f2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-01-16T19:04:31Z",
+      "side": 1,
+      "message": "you should have gotten an email with an appropriately public version of the link.",
+      "tag": "mailMessageId\u003d\u003cCABqdRUCxyB841M_2p4rntjBeCpMn194W-OwSc8EXK4_7HBY2Vg@mail.gmail.com\u003e",
+      "revId": "747b979aef1b43be8115e00830ee683c87077c57",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
