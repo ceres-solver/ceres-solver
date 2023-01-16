@@ -90,6 +90,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d33204f_12c7452f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-01-16T14:59:20Z",
+      "side": 1,
+      "message": "I would be okay with a variadic function called SafeNorm or AccurateNorm. We can start with a recursive hypot based impl, and move to something more native later on.\n\nI like the idea of rhypot also, I think it is worth exploring.",
+      "parentUuid": "9e974934_3b03cbee",
+      "revId": "1b4688708de4c64df535f9bc41beca4597577a51",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b55571f4_98537e98",
