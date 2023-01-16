@@ -126,6 +126,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6a8a318_c3a249fb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-01-16T15:36:32Z",
+      "side": 1,
+      "message": "Hypot and norm are basically synonyms, so calling it HypotNorm seems odd to me, its like saying NormNorm.",
+      "tag": "mailMessageId\u003d\u003cCABqdRUAhFDenWWhEUQAtz\u003ddwtyX3LZwx2Ja+MVkLKvhwftRg-A@mail.gmail.com\u003e",
+      "revId": "1b4688708de4c64df535f9bc41beca4597577a51",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b55571f4_98537e98",
