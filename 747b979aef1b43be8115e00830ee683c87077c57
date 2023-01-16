@@ -104,6 +104,24 @@
       "parentUuid": "9119c596_7d31c62e",
       "revId": "747b979aef1b43be8115e00830ee683c87077c57",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c936c271_4a0d55cb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-01-16T18:44:09Z",
+      "side": 1,
+      "message": "so in places where this down conversion is happening, we first need to make sure that it is actually safe, otherwise it is a bug, in which case it needs to be fixed. Why would casting be the solution here?\n\nI think the first step would be to enable -Wshorten-64-to-32 in the bazel and cmake builds and identify and fix all the places this problem occurs.\n\nSameer",
+      "tag": "mailMessageId\u003d\u003cCABqdRUAMPtrbJNVPVrQvKcvmqy9oceqEg8SVaq3-yL-zWip2HQ@mail.gmail.com\u003e",
+      "revId": "747b979aef1b43be8115e00830ee683c87077c57",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
