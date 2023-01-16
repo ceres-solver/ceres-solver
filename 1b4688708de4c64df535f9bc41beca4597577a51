@@ -162,6 +162,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "49183e1b_03362b5b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-16T16:00:31Z",
+      "side": 1,
+      "message": "I see what you mean. One can implement the norm in several ways though. `HypotNorm` would mean a norm implemented in terms of `hypot`. There\u0027s also a Blue norm, which uses Blue\u0027s algorithm: https://eigen.tuxfamily.org/dox/classEigen_1_1MatrixBase.html#a3f3faa00163c16824ff03e58a210c74c. The problem with SafeNorm and AccurateNorm is that it\u0027s not immediately clear what the names mean.",
+      "parentUuid": "f6a8a318_c3a249fb",
+      "revId": "1b4688708de4c64df535f9bc41beca4597577a51",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b55571f4_98537e98",
