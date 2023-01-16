@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "055ece60_5ecc8aca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-16T17:25:45Z",
+      "side": 1,
+      "message": "* Added optimized mode build\n* Returned test timeout to its previous value but added comment about why it may take long time (locally all tests passed with optimized build)",
+      "revId": "2e338c4a8f3325d2405c871f76c8433285d7dbe1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

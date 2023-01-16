@@ -87,6 +87,24 @@
       "parentUuid": "4e01bd9d_68cf328e",
       "revId": "f167d9450bb467716d2ced1d4e3f3d629d0e15bd",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1dc060f8_e684434d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-16T17:25:45Z",
+      "side": 1,
+      "message": "Still need you advise about where to put README.md",
+      "parentUuid": "8599b628_17befde8",
+      "revId": "f167d9450bb467716d2ced1d4e3f3d629d0e15bd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
