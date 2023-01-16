@@ -53,6 +53,41 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff407edf_6327fae1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-01-16T07:17:09Z",
+      "side": 1,
+      "message": "Thanks, I wish you happy new year too, Sameer.\nI am back from vacation and ready to continue working on ceres-solver",
+      "parentUuid": "a3936639_b2c74c55",
+      "revId": "b5ac47fe8765ca93f208017c355bdce01476e4d0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26bfa267_8f9ec147",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-01-16T07:17:09Z",
+      "side": 1,
+      "message": "I\u0027ve spent some time moving things around, but I still do not feel it is 100%-satisfying result; probably need some more input from your side.\n\nI decided to split parallel_for.h into four parts:\n\n - parallel_for.h -- ParallelFor, ParallelEvaluate, ParallelSetZero\n - parallel_for_synchronization.h -- BlockUntilFinished, ThreadPoolState\n - parallel_for_invoke_impl.h -- InvokeImpl, ParallelInvoke\n - parallel_for_partition.h -- MaxPartitionCostIsFeasible, ComputePartition\n\nWith that many parts it seems that we don\u0027t need to add explicit forward declarations for ParallelFor methods, because entire header file is just ~200 lines.",
+      "revId": "b5ac47fe8765ca93f208017c355bdce01476e4d0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9f6ff802_9a0f79bc",
@@ -78,6 +113,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "02d9a8a2_329a27e8",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-01-16T07:17:09Z",
+      "side": 1,
+      "message": "Range-based (with range passed as a tuple) functions are used only for parallelization of vector-based expressions.\n\n - (thread_id, range) variant is used for operations involving reduction (dot, norm)\n - (range) variant is used in all other instances (SetZero + ParallelEvaluate).\n\nI\u0027ve thought about turning it into a two-step procedure (switch between index-based and range-based, switch between thread id and no thread id); but 2 * 2 \u003d 2 + 2 so it won\u0027t reduce number of functions.",
+      "parentUuid": "9f6ff802_9a0f79bc",
+      "range": {
+        "startLine": 81,
+        "startChar": 20,
+        "endLine": 81,
+        "endChar": 30
+      },
+      "revId": "b5ac47fe8765ca93f208017c355bdce01476e4d0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ff5380f2_e6f7decd",
         "filename": "internal/ceres/parallel_for.h",
         "patchSetId": 1
@@ -89,6 +148,24 @@
       "writtenOn": "2022-12-20T17:03:20Z",
       "side": 1,
       "message": "drop blank.",
+      "revId": "b5ac47fe8765ca93f208017c355bdce01476e4d0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33a7cd62_74223f42",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-01-16T07:17:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff5380f2_e6f7decd",
       "revId": "b5ac47fe8765ca93f208017c355bdce01476e4d0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
