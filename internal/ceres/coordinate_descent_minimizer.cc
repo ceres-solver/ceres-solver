@@ -32,8 +32,11 @@
 
 #include <algorithm>
 #include <iterator>
+#include <map>
 #include <memory>
 #include <numeric>
+#include <set>
+#include <string>
 #include <vector>
 
 #include "ceres/evaluator.h"
@@ -69,6 +72,9 @@ bool CoordinateDescentMinimizer::Init(
 
   // Serialize the OrderedGroups into a vector of parameter block
   // offsets for parallel access.
+
+  // TODO(sameeragarwal): Investigate if parameter_block_index should be an
+  // ordered or an unordered container.
   std::map<ParameterBlock*, int> parameter_block_index;
   std::map<int, std::set<double*>> group_to_elements =
       ordering.group_to_elements();
@@ -234,6 +240,8 @@ bool CoordinateDescentMinimizer::IsOrderingValid(
     const Program& program,
     const ParameterBlockOrdering& ordering,
     std::string* message) {
+  // TODO(sameeragarwal): Investigate if this should be an ordered or an
+  // unordered group.
   const std::map<int, std::set<double*>>& group_to_elements =
       ordering.group_to_elements();
 

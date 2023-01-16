@@ -32,6 +32,7 @@
 
 #include <algorithm>
 #include <memory>
+#include <vector>
 
 #include "ceres/block_evaluate_preparer.h"
 #include "ceres/block_sparse_matrix.h"

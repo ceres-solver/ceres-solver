@@ -31,6 +31,7 @@
 #include "ceres/dynamic_compressed_row_sparse_matrix.h"
 
 #include <memory>
+#include <vector>
 
 #include "ceres/casts.h"
 #include "ceres/compressed_row_sparse_matrix.h"

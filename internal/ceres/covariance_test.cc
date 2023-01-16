@@ -36,6 +36,7 @@
 #include <map>
 #include <memory>
 #include <utility>
+#include <vector>
 
 #include "ceres/autodiff_cost_function.h"
 #include "ceres/compressed_row_sparse_matrix.h"
@@ -404,6 +405,8 @@ class PolynomialManifold : public Manifold {
 
 class CovarianceTest : public ::testing::Test {
  protected:
+  // TODO(sameeragarwal): Investigate if this should be an ordered or an
+  // unordered map.
   using BoundsMap = std::map<const double*, std::pair<int, int>>;
 
   void SetUp() override {

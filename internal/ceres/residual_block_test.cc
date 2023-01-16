@@ -31,6 +31,8 @@
 #include "ceres/residual_block.h"
 
 #include <cstdint>
+#include <string>
+#include <vector>
 
 #include "ceres/internal/eigen.h"
 #include "ceres/manifold.h"

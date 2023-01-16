@@ -32,6 +32,7 @@
 
 #include <numeric>
 #include <string>
+#include <vector>
 
 #include "ceres/callbacks.h"
 #include "ceres/context_impl.h"

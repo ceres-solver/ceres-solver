@@ -35,6 +35,7 @@
 #include <cmath>
 #include <cstddef>
 #include <limits>
+#include <vector>
 
 #include "ceres/function_sample.h"
 #include "ceres/test_util.h"

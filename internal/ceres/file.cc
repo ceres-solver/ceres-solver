@@ -33,6 +33,7 @@
 #include "ceres/file.h"
 
 #include <cstdio>
+#include <string>
 
 #include "glog/logging.h"
 

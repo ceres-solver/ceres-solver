@@ -32,6 +32,7 @@
 #include "ceres/solver.h"
 
 #include <algorithm>
+#include <map>
 #include <memory>
 #include <sstream>  // NOLINT
 #include <string>

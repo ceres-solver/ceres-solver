@@ -32,6 +32,7 @@
 
 #include <algorithm>
 #include <iostream>  // NO LINT
+#include <string>
 
 #include "ceres/program.h"
 #include "ceres/stringprintf.h"

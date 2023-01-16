@@ -30,6 +30,7 @@
 
 #include "ceres/gradient_problem_solver.h"
 
+#include <map>
 #include <memory>
 #include <string>
 

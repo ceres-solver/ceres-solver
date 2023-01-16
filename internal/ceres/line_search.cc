@@ -33,8 +33,11 @@
 #include <algorithm>
 #include <cmath>
 #include <iomanip>
-#include <iostream>  // NOLINT
+#include <map>
 #include <memory>
+#include <ostream>  // NOLINT
+#include <string>
+#include <vector>
 
 #include "ceres/evaluator.h"
 #include "ceres/function_sample.h"

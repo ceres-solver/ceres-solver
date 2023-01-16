@@ -33,6 +33,7 @@
 #include <algorithm>
 #include <memory>
 #include <unordered_set>
+#include <vector>
 
 #include "ceres/graph.h"
 #include "ceres/internal/export.h"

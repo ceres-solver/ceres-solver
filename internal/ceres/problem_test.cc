@@ -32,6 +32,8 @@
 #include "ceres/problem.h"
 
 #include <memory>
+#include <string>
+#include <vector>
 
 #include "ceres/autodiff_cost_function.h"
 #include "ceres/casts.h"

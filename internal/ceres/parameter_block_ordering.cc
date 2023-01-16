@@ -30,8 +30,11 @@
 
 #include "ceres/parameter_block_ordering.h"
 
+#include <map>
 #include <memory>
+#include <set>
 #include <unordered_set>
+#include <vector>
 
 #include "ceres/graph.h"
 #include "ceres/graph_algorithms.h"
@@ -164,6 +167,8 @@ void OrderingToGroupSizes(const ParameterBlockOrdering* ordering,
     return;
   }
 
+  // TODO(sameeragarwal): Investigate if this should be a set or an
+  // unordered_set.
   const std::map<int, std::set<double*>>& group_to_elements =
       ordering->group_to_elements();
   for (const auto& g_t_e : group_to_elements) {

@@ -31,8 +31,11 @@
 #include "ceres/reorder_program.h"
 
 #include <algorithm>
+#include <map>
 #include <memory>
 #include <numeric>
+#include <set>
+#include <string>
 #include <vector>
 
 #include "Eigen/SparseCore"
@@ -227,6 +230,8 @@ bool ApplyOrdering(const ProblemImpl::ParameterMap& parameter_map,
       program->mutable_parameter_blocks();
   parameter_blocks->clear();
 
+  // TODO(sameeragarwal): Investigate whether this should be a set or an
+  // unordered_set.
   const std::map<int, std::set<double*>>& groups = ordering.group_to_elements();
   for (const auto& p : groups) {
     const std::set<double*>& group = p.second;
@@ -484,6 +489,9 @@ bool ReorderProgramForSchurTypeLinearSolver(
     // group.
 
     // Verify that the first elimination group is an independent set.
+
+    // TODO(sameeragarwal): Investigate if this should be a set or an
+    // unordered_set.
     const std::set<double*>& first_elimination_group =
         parameter_block_ordering->group_to_elements().begin()->second;
     if (!program->IsParameterBlockSetIndependent(first_elimination_group)) {

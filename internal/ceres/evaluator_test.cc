@@ -34,6 +34,8 @@
 #include "ceres/evaluator.h"
 
 #include <memory>
+#include <string>
+#include <vector>
 
 #include "ceres/casts.h"
 #include "ceres/cost_function.h"

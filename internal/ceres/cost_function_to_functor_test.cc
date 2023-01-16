@@ -32,6 +32,7 @@
 
 #include <cstdint>
 #include <memory>
+#include <vector>
 
 #include "ceres/autodiff_cost_function.h"
 #include "ceres/dynamic_autodiff_cost_function.h"

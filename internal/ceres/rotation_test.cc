@@ -30,6 +30,7 @@
 
 #include "ceres/rotation.h"
 
+#include <algorithm>
 #include <array>
 #include <cmath>
 #include <limits>

@@ -31,6 +31,7 @@
 #include "ceres/reorder_program.h"
 
 #include <random>
+#include <vector>
 
 #include "ceres/internal/config.h"
 #include "ceres/parameter_block.h"

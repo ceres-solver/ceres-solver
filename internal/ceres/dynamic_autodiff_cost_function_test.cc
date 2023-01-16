@@ -34,6 +34,7 @@
 
 #include <cstddef>
 #include <memory>
+#include <vector>
 
 #include "gtest/gtest.h"
 

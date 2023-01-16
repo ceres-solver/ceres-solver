@@ -125,6 +125,7 @@
 // will be computed by a DynamicAutoDiffCostFunction since the number of
 // odometry observations will only be known at run time.
 
+#include <algorithm>
 #include <cmath>
 #include <cstdio>
 #include <random>
