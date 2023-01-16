@@ -34,6 +34,24 @@
       "parentUuid": "dde8de21_9dfdc148",
       "revId": "1b4688708de4c64df535f9bc41beca4597577a51",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0c47cb0_5c691261",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-16T10:35:08Z",
+      "side": 1,
+      "message": "If you are concerned about name `hypot` we can change it to `norm`. About two calls to `hypot`:  personally I didn\u0027t find problems about it since no intermendiate computations within `hypot` result in overflow/underflow (or they are explictely catched). But of course, it runs slower",
+      "parentUuid": "27994e1e_07305fc3",
+      "revId": "1b4688708de4c64df535f9bc41beca4597577a51",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
