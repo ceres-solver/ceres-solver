@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e6245c7_0e05f568",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-01-16T15:39:34Z",
+      "side": 1,
+      "message": "Sergiu would you mind taking a look? a second pair of eyes when restructuring this would be helpful.\n\nDmitriy I will send a full review later in the day. I need some coffee before I opine on this :)",
+      "revId": "a5cbc40fa7198048be7c61f553fdef5cf77fb54a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
