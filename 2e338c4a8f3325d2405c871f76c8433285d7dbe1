@@ -16,6 +16,23 @@
       "message": "* Added optimized mode build\n* Returned test timeout to its previous value but added comment about why it may take long time (locally all tests passed with optimized build)",
       "revId": "2e338c4a8f3325d2405c871f76c8433285d7dbe1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac2d5749_11005efe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-01-16T18:28:07Z",
+      "side": 1,
+      "message": "I think you can just add a line to the main README.md in the root directory. Something along the lines of \n\n\"If you are using bazel, then please be sure to add \"--cxxopt\u003d\u0027-std\u003dc++17\u0027\" to the command line.\"",
+      "revId": "2e338c4a8f3325d2405c871f76c8433285d7dbe1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
