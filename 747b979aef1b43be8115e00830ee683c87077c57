@@ -157,6 +157,24 @@
       "parentUuid": "c936c271_4a0d55cb",
       "revId": "747b979aef1b43be8115e00830ee683c87077c57",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ade7351_85e97cdd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-16T19:02:02Z",
+      "side": 1,
+      "message": "Sorry for probably silly question. Do I understand correctly that https://ceres-solver-review.git.corp.google.com/c/ceres-solver/+/23844 is a inner `Google` link with limited access? (Just to clarify that it is OK that I cannot open it)",
+      "parentUuid": "42efb185_e86ce31c",
+      "revId": "747b979aef1b43be8115e00830ee683c87077c57",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
