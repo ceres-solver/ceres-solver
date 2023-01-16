@@ -70,6 +70,81 @@
       "parentUuid": "e0c47cb0_5c691261",
       "revId": "1b4688708de4c64df535f9bc41beca4597577a51",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e974934_3b03cbee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-16T13:08:38Z",
+      "side": 1,
+      "message": "While I also think it is not a good idea to provide overloads for functions not defined in the standard library (Bessel functions being the sole exception to this rule due to their general (un)availability), I do see a benefit in providing the overload which would allow users to avoid the original issue. However, the problem still can occur in user code if Eigen\u0027s `.hypotNorm()` is used instead which makes use of nested `hypot` calls.\n\nAs for the name, there\u0027s already a `std::norm` which does not compute what one would expect, i.e., instead of the L^2 norm the function computes the corresponding square. Therefore, the name should be avoided.\n\nIn general, if we were to provide a `hypot` overload for more than three arguments, it should be variadic and not limited to a specific number of arguments.\n\nIt might be also worthwhile investigating whether providing a dedicated reciprocal `hypot` (`rhypot`) makes sense (see https://doi.org/10.48550/arXiv.2103.08694) as this is the expression generally used throughout the code.",
+      "parentUuid": "fc20be2c_b89c0691",
+      "revId": "1b4688708de4c64df535f9bc41beca4597577a51",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b55571f4_98537e98",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-16T13:08:38Z",
+      "side": 1,
+      "message": "Function must be inline.",
+      "revId": "1b4688708de4c64df535f9bc41beca4597577a51",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dde2fd56_a035fa73",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-16T13:08:38Z",
+      "side": 1,
+      "message": "Are you sure about `noexcept` here? According to https://en.cppreference.com/w/cpp/numeric/math/hypot neither of of the `hypot` overloads is `noexcept`.",
+      "revId": "1b4688708de4c64df535f9bc41beca4597577a51",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6d2bb5e_c23b812f",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-16T13:08:38Z",
+      "side": 1,
+      "message": "Global scope qualification is not necessary.",
+      "range": {
+        "startLine": 467,
+        "startChar": 9,
+        "endLine": 467,
+        "endChar": 11
+      },
+      "revId": "1b4688708de4c64df535f9bc41beca4597577a51",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
