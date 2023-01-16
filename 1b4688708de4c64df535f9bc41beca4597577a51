@@ -180,6 +180,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "86cbf3bc_670d7754",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-01-16T16:33:07Z",
+      "side": 1,
+      "message": "I do not think the user cares about the algorithm/implementation being used. Also we should have freedom to change its impl.\n\nSo I recommend SafeNorm and SafeRNorm for reciprocal norm.\n\nor AccurateNorm an AccurateRNorm.\n\nSameer",
+      "tag": "mailMessageId\u003d\u003cCABqdRUBkYEaacOy68tCKb5-t6h6CLscveP-5sHtQsL_60Ef44w@mail.gmail.com\u003e",
+      "revId": "1b4688708de4c64df535f9bc41beca4597577a51",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b55571f4_98537e98",
