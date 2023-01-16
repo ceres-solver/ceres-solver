@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f622705_80987dc4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-16T19:38:16Z",
+      "side": 1,
+      "message": "Maybe also update Bazel flags?",
+      "revId": "843e3773b665561812e1529fce4fe2845ec2e115",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "625ae920_16b59232",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-16T19:38:16Z",
+      "side": 1,
+      "message": "I suggest using `add_compile_options`. Concatenating flags with `CMAKE_CXX_FLAGS` is not necessary anymore.\n\nDoesn\u0027t enabling warning as error (`-Werror\u003dshorten-64-to-32`) make more sense?",
+      "revId": "843e3773b665561812e1529fce4fe2845ec2e115",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
