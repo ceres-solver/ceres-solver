@@ -144,6 +144,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ba84d94_c18070f6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-16T15:53:49Z",
+      "side": 1,
+      "message": "+1 for `SafeNorm` and for `rhypot`. If you don\u0027t mind I continue to work in this pull request",
+      "parentUuid": "96e5124f_84bedaff",
+      "revId": "1b4688708de4c64df535f9bc41beca4597577a51",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b55571f4_98537e98",
