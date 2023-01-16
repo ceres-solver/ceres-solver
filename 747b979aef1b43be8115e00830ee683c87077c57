@@ -139,6 +139,24 @@
       "message": "Thanks I understand now.\n\nIt is relatively straightforward to add -Wshorten-64-to-32 to the cmake build \n\nhttps://ceres-solver-review.git.corp.google.com/c/ceres-solver/+/23844\n\nand when I do that, I see what you mean by these errors being present all over the code. The bulk of them have to do with taking the size of some objects which are defined to be size_t which is effectively uint64_t.\n\nYes one solution would be to replace all of these warning producing code with the numeric cast, but I would like to look at the pattern of these failures a bit more carefully before we do that.",
       "revId": "747b979aef1b43be8115e00830ee683c87077c57",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7740bbca_4c1d7df0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-16T18:57:25Z",
+      "side": 1,
+      "message": "\"so in places where this down conversion is happening, we first need to make sure that it is actually safe\". It is what `numeric_cast` is about: it explictely fails so a user knows the reason. Right now there are absolutely no checks and that\u0027s why it is unclear whether code current works as intended or not for big tasks where jacobian size approaches 2^32 e.g. current limit on nonzero elements. \n\n\"identify and fix all the places this problem occurs\" I can prepare a test PR where bazel with `-Wshorten-64-to-32` is enabled but I still do not understand the following: if I have a bunch of places where something like `int32 \u003d int64 + int64` is written how thery should be fixed?",
+      "parentUuid": "c936c271_4a0d55cb",
+      "revId": "747b979aef1b43be8115e00830ee683c87077c57",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
