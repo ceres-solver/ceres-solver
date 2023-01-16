@@ -198,6 +198,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf7ef2f7_9bc9b3d6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-01-16T18:30:24Z",
+      "side": 1,
+      "message": "please go ahead and work on it.\nBTW I should mention that the place where this function is being used, the problem is not overflow but rather underflow. we do not expect the quaternion to blow up in normal usage.",
+      "parentUuid": "1ba84d94_c18070f6",
+      "revId": "1b4688708de4c64df535f9bc41beca4597577a51",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b55571f4_98537e98",
