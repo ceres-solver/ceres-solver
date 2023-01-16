@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "36585386_4daa00fe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-16T19:45:41Z",
+      "side": 1,
+      "message": "One more thing: making optional flags mandatory is somewhat annoying particularly for normal users who most likely do not care about such warnings. I suggest providing an initial cache (or a preset for newer CMake versions) for development purposes only which can be used both locally and for CI builds.",
+      "revId": "843e3773b665561812e1529fce4fe2845ec2e115",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "625ae920_16b59232",
         "filename": "CMakeLists.txt",
         "patchSetId": 1
