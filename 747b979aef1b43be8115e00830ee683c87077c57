@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a91281a_ac615ed4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-16T17:31:02Z",
+      "side": 1,
+      "message": "@sameeragarwal@google.com may you please share your opinion about such `numeric_cast` (`safe_cast`)? I am asking because locally I fixed all places where `int64` implicitly casted to `int32` and I would like whether to continue work on this proposal in order to push to `master` or abandone it.",
+      "revId": "747b979aef1b43be8115e00830ee683c87077c57",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
