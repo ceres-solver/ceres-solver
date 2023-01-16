@@ -16,6 +16,24 @@
       "message": "To perform safe computing of sqrt(x^2 + y^2 + z^2 + w^2) were x, y, z and w are Jets we need to provide separate implementation of hypot which takes 4 arguments. Actually we need two implementations\n* First one for doubles\n* Second one for Jets\nIn such a case we preserve safety guarantees of hypot and do not perform redundant computations which we do in case of the following expression with Jets\n\nnorm \u003d hypot(hypot(x, y, z), w)\n\nHere square root is taken inside hypot(x, y, z) and then result raised to power 2 in hypot(result, w). It leads to additional computations including vectors (Jet.v fields)",
       "revId": "1b4688708de4c64df535f9bc41beca4597577a51",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "27994e1e_07305fc3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2023-01-16T00:35:17Z",
+      "side": 1,
+      "message": "adding a four argument hypot as a function on jets when one does not exist in the standard library is not a good idea. \n\nI need to also check if implementing a n hypot in terms of n-1 hypot is numerically safe, or is it just an efficiency thing.",
+      "parentUuid": "dde8de21_9dfdc148",
+      "revId": "1b4688708de4c64df535f9bc41beca4597577a51",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
