@@ -86,6 +86,24 @@
       "message": "I will reply separately to your proposal for adding 64bit support to ceres\u0027 internals.",
       "revId": "747b979aef1b43be8115e00830ee683c87077c57",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9209762_3245129e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-16T18:40:27Z",
+      "side": 1,
+      "message": "First of all to use it explictely when casting from `int64` to `int32`. Actually right now there are mulitple places in the code where it happens silently but there absolutely no guarantees that this cast works properly\n```\nint64 a, b;\n... (doing something if a and b)\nint32 c \u003d a + b;\n```\nThis code is erroneous but no checks performed at all.\n\nSo the first step is to catch all such places and write\n```\nint32 c \u003d numeric_cast\u003cint64_t\u003e(a + b)\n```\nif `a + b` does not fit into range of `int32` this code will fail. \n\nMoreover there are also places like\n```\nint32 a, b;\n...\nint64 c \u003d a + b;\n```\nThis code is also has a possible error when `a + b` does not fit to `int32`. In this case compiler error `-Wshorten-64-to-32` occurs and it could be fixed in the following way:\n```\nint64 c \u003d numeric_cast\u003cint64\u003e(a) + numeric_cast\u003cint64\u003e(b);\n```\nHere `numeric_cast` inside simply a `static_cast` since `int32`s range fully contained inside `int64`s range\n\nSo, first of all the proposal itself makes sense even without aimint at 64bit indexation.",
+      "parentUuid": "9119c596_7d31c62e",
+      "revId": "747b979aef1b43be8115e00830ee683c87077c57",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
