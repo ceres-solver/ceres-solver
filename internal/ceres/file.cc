@@ -58,12 +58,12 @@ void ReadFileToStringOrDie(const std::string& filename, std::string* data) {
 
   // Resize the input buffer appropriately.
   fseek(file_descriptor, 0L, SEEK_END);
-  int num_bytes = ftell(file_descriptor);
+  int64_t num_bytes = ftell(file_descriptor);
   data->resize(num_bytes);
 
   // Read the data.
   fseek(file_descriptor, 0L, SEEK_SET);
-  int num_read =
+  int64_t num_read =
       fread(&((*data)[0]), sizeof((*data)[0]), num_bytes, file_descriptor);
   if (num_read != num_bytes) {
     LOG(FATAL) << "Couldn't read all of " << filename

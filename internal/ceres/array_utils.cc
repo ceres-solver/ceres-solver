@@ -52,7 +52,7 @@ bool IsArrayValid(const int64_t size, const double* x) {
   return true;
 }
 
-int FindInvalidValue(const int64_t size, const double* x) {
+int64_t FindInvalidValue(const int64_t size, const double* x) {
   if (x == nullptr) {
     return size;
   }
