@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "094a5ef5_167e6575",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-17T02:52:45Z",
+      "side": 1,
+      "message": "* Moved `numeric_cast.h` to `include/ceres/internal/numeric_cast.h`\n* Fixed all compiler warnings within `ceres`. There are also 2 or 3 warnings remain in internals of `Eigen` which can be observed during the build.",
+      "revId": "f69651e3773ace8454f5cac68ecbbcf4326ca518",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
