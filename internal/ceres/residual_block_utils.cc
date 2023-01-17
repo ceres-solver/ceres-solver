@@ -33,6 +33,7 @@
 #include <cmath>
 #include <cstddef>
 #include <limits>
+#include <string>
 
 #include "ceres/array_utils.h"
 #include "ceres/internal/eigen.h"
