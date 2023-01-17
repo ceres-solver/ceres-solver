@@ -69,6 +69,24 @@
       "tag": "mailMessageId\u003d\u003cCABqdRUAgRfw_QnjE+oCOn3bmm3mMdgBMcv+SoLUkzbAWoXAMtA@mail.gmail.com\u003e",
       "revId": "f69651e3773ace8454f5cac68ecbbcf4326ca518",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7db6466b_9aefd41f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-17T12:44:36Z",
+      "side": 1,
+      "message": "Great! I am going to start with examples and benchmarks because I do not know very well what happens inside matrices (just in general but not in detail). So it would be great if you or somebody else (who knows all pitfalls) will start to fix internals of ceres.\n\nP.S. Right now I do not abandon this PR right now becase it is just convenient to see how much suspicious places still remain.",
+      "parentUuid": "7c038764_cb0da5b8",
+      "revId": "f69651e3773ace8454f5cac68ecbbcf4326ca518",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
