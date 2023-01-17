@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d2b7a6e_058496ad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-17T19:04:34Z",
+      "side": 1,
+      "message": "I accidentaly broke build in `array_utils.cc`. Sorry for that 😞 \n\nNow tested locally with `cmake` and `bazel`. Everything seems to work",
+      "revId": "f4eb768e0bdcac9eaae481224c996a95d6453e7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
