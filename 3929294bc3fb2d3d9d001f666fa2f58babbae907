@@ -1,0 +1,244 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3be8c818_5e6f41e1",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-17T19:12:15Z",
+      "side": 1,
+      "message": "Why do you need to explicitly specify the function type `F` here? Isn\u0027t `InvokeOnSegment` a function? In which case the parameter types can be deduced automatically.",
+      "range": {
+        "startLine": 126,
+        "startChar": 31,
+        "endLine": 126,
+        "endChar": 34
+      },
+      "revId": "3929294bc3fb2d3d9d001f666fa2f58babbae907",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3b4fe1c_6113e2d0",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-17T19:12:15Z",
+      "side": 1,
+      "message": "Use r-value reference instead of `const` reference?",
+      "range": {
+        "startLine": 153,
+        "startChar": 17,
+        "endLine": 153,
+        "endChar": 22
+      },
+      "revId": "3929294bc3fb2d3d9d001f666fa2f58babbae907",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac9c6893_9815a7bf",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-17T19:12:15Z",
+      "side": 1,
+      "message": "`constexpr`",
+      "revId": "3929294bc3fb2d3d9d001f666fa2f58babbae907",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "efc91563_b65bac0f",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-17T19:12:15Z",
+      "side": 1,
+      "message": "`const std::vector\u003cint\u003e\u0026 partitions` to bind the temporary to avoid copy/move.",
+      "revId": "3929294bc3fb2d3d9d001f666fa2f58babbae907",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbef9d58_d81ab7fc",
+        "filename": "internal/ceres/parallel_for_synchronization.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-17T19:12:15Z",
+      "side": 1,
+      "message": "2023",
+      "revId": "3929294bc3fb2d3d9d001f666fa2f58babbae907",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbbf53ff_c95eda78",
+        "filename": "internal/ceres/parallel_invoke.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-17T19:12:15Z",
+      "side": 1,
+      "message": "Replace by `[[maybe_unused]]`?",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 19
+      },
+      "revId": "3929294bc3fb2d3d9d001f666fa2f58babbae907",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bc8855d_d792a584",
+        "filename": "internal/ceres/parallel_invoke.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-17T19:12:15Z",
+      "side": 1,
+      "message": "These partial specializations can be likely avoided if you use `std::apply`.",
+      "revId": "3929294bc3fb2d3d9d001f666fa2f58babbae907",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee36069b_355102c9",
+        "filename": "internal/ceres/parallel_invoke.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-17T19:12:15Z",
+      "side": 1,
+      "message": "`args_of_t` is unnecessary: provide a function variant of `InvokeImpl` and let it deduce parameter types automatically.",
+      "revId": "3929294bc3fb2d3d9d001f666fa2f58babbae907",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88878270_71c5a823",
+        "filename": "internal/ceres/partition_range_for_parallel_for.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-17T19:12:15Z",
+      "side": 1,
+      "message": "Update year?",
+      "revId": "3929294bc3fb2d3d9d001f666fa2f58babbae907",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5de8ec92_c48ab28e",
+        "filename": "internal/ceres/partition_range_for_parallel_for.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-17T19:12:15Z",
+      "side": 1,
+      "message": "Split declarations.",
+      "range": {
+        "startLine": 118,
+        "startChar": 19,
+        "endLine": 118,
+        "endChar": 51
+      },
+      "revId": "3929294bc3fb2d3d9d001f666fa2f58babbae907",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60767bf5_8bcfedb5",
+        "filename": "internal/ceres/partition_range_for_parallel_for.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-17T19:12:15Z",
+      "side": 1,
+      "message": "`!partition_upper_bound.empty()`",
+      "range": {
+        "startLine": 146,
+        "startChar": 6,
+        "endLine": 146,
+        "endChar": 44
+      },
+      "revId": "3929294bc3fb2d3d9d001f666fa2f58babbae907",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a1b429f_71006100",
+        "filename": "internal/ceres/partition_range_for_parallel_for.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-17T19:12:15Z",
+      "side": 1,
+      "message": "`return {start, end}`. No assignment necessary.",
+      "range": {
+        "startLine": 152,
+        "startChar": 2,
+        "endLine": 152,
+        "endChar": 26
+      },
+      "revId": "3929294bc3fb2d3d9d001f666fa2f58babbae907",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

@@ -103,6 +103,46 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e00159c8_7fa3fd37",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-17T19:12:15Z",
+      "side": 1,
+      "message": "I\u0027d rather unpack the tuple using `std::apply` and then pass the IDs a individual parameters because the lambda signature looks inconsistent. This will simplify the code by eliminating the structured bindings used over and over.",
+      "revId": "a5cbc40fa7198048be7c61f553fdef5cf77fb54a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3354be99_52ce9176",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-17T19:12:15Z",
+      "side": 1,
+      "message": "Any reason for the functor to be a `const` reference? I\u0027d use r-value references to allow for perfect forwarding.",
+      "range": {
+        "startLine": 152,
+        "startChar": 17,
+        "endLine": 152,
+        "endChar": 22
+      },
+      "revId": "a5cbc40fa7198048be7c61f553fdef5cf77fb54a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b6dcf82c_14ed242e",
         "filename": "internal/ceres/parallel_for.h",
         "patchSetId": 3
