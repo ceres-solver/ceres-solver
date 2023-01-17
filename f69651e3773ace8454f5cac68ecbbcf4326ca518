@@ -33,6 +33,24 @@
       "message": "Thanks Alexander, this is very interesting. A quick look indicates that much of the issues have to do with size_t to int conversion. won\u0027t you agree? and at most places we should be able to handle it by simply using int64_t instead of int. \nYes technically it is still a narrowing, but I cannot imagine a scenario where this would actually be violated. This is also what the google style guide recommends.\n\nhttps://google.github.io/styleguide/cppguide.html#Integer_Types\n\nso my proposal is fix this problem in a chunk of files at a time, since these code changes can be subtle, reviewing them carefully would be good.",
       "revId": "f69651e3773ace8454f5cac68ecbbcf4326ca518",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2eca8724_26e0f7ff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-17T12:34:34Z",
+      "side": 1,
+      "message": "I agree about changing to `int64_t` and `std::size_t` where possible but at some places it cannot be done easily. So in such places it makes sense to use `numeric_cast` at least to highlight these places for the future work. For example we cannot simply change `num_nonzeros` in sparse matrices from `int` to `int64_t` since it affects too many files.\n\nSo, I propose the following workflow:\n* Fix a buch of places where it is enough (and easy) to move to `int64_t`\n* Conver other places which are hard to investigate with `numeric_cast`",
+      "parentUuid": "3a4a32eb_9c1b8eb2",
+      "revId": "f69651e3773ace8454f5cac68ecbbcf4326ca518",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
