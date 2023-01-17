@@ -123,6 +123,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cc849dea_a3b05cb0",
+        "filename": "internal/ceres/parallel_invoke.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-17T19:35:54Z",
+      "side": 1,
+      "message": "I would recommend simply commenting as it shows explicitely that argument is not used within function body\n```\n  static void InvokeOnSegment(int /*thread_id*/,\n                              std::tuple\u003cint, int\u003e range,\n                              const F\u0026 function)\n```",
+      "parentUuid": "fbbf53ff_c95eda78",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 19
+      },
+      "revId": "3929294bc3fb2d3d9d001f666fa2f58babbae907",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3bc8855d_d792a584",
         "filename": "internal/ceres/parallel_invoke.h",
         "patchSetId": 4
