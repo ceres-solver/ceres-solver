@@ -16,6 +16,23 @@
       "message": "* Moved `numeric_cast.h` to `include/ceres/internal/numeric_cast.h`\n* Fixed all compiler warnings within `ceres`. There are also 2 or 3 warnings remain in internals of `Eigen` which can be observed during the build.",
       "revId": "f69651e3773ace8454f5cac68ecbbcf4326ca518",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a4a32eb_9c1b8eb2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-01-17T12:24:04Z",
+      "side": 1,
+      "message": "Thanks Alexander, this is very interesting. A quick look indicates that much of the issues have to do with size_t to int conversion. won\u0027t you agree? and at most places we should be able to handle it by simply using int64_t instead of int. \nYes technically it is still a narrowing, but I cannot imagine a scenario where this would actually be violated. This is also what the google style guide recommends.\n\nhttps://google.github.io/styleguide/cppguide.html#Integer_Types\n\nso my proposal is fix this problem in a chunk of files at a time, since these code changes can be subtle, reviewing them carefully would be good.",
+      "revId": "f69651e3773ace8454f5cac68ecbbcf4326ca518",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
