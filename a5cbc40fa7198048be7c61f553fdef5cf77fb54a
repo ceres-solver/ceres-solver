@@ -77,6 +77,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e03dc60_05cae026",
+        "filename": "internal/ceres/parallel_for.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-01-17T18:45:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0bff952_44e92bee",
+      "range": {
+        "startLine": 55,
+        "startChar": 19,
+        "endLine": 55,
+        "endChar": 20
+      },
+      "revId": "a5cbc40fa7198048be7c61f553fdef5cf77fb54a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b6dcf82c_14ed242e",
@@ -102,6 +126,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9d3689a5_a6a390a1",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-01-17T18:45:03Z",
+      "side": 1,
+      "message": "Done.\n\nBy the way, should I also split implementations into separate files, or it is ok to keep those 5 functions in parallel_for.cc?",
+      "parentUuid": "b6dcf82c_14ed242e",
+      "range": {
+        "startLine": 173,
+        "startChar": 3,
+        "endLine": 173,
+        "endChar": 11
+      },
+      "revId": "a5cbc40fa7198048be7c61f553fdef5cf77fb54a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dc13c3a8_3506a3c0",
         "filename": "internal/ceres/parallel_for_invoke_impl.h",
         "patchSetId": 3
@@ -113,6 +161,30 @@
       "writtenOn": "2023-01-17T12:49:57Z",
       "side": 1,
       "message": "I think this file should be named parallel_invoke.h",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 12
+      },
+      "revId": "a5cbc40fa7198048be7c61f553fdef5cf77fb54a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20c1b057_fb69f51a",
+        "filename": "internal/ceres/parallel_for_invoke_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-01-17T18:45:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc13c3a8_3506a3c0",
       "range": {
         "startLine": 30,
         "startChar": 2,
@@ -148,6 +220,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5e9211ca_223a4b9c",
+        "filename": "internal/ceres/parallel_for_partition.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-01-17T18:45:03Z",
+      "side": 1,
+      "message": "Is PartitionRangeMinimizingMaximalCost any better?\n\nAbout file name the only idea I\u0027ve come up with is minmax_range_partition.h , what do you think?",
+      "parentUuid": "9ac58221_93c78c00",
+      "range": {
+        "startLine": 29,
+        "startChar": 12,
+        "endLine": 29,
+        "endChar": 17
+      },
+      "revId": "a5cbc40fa7198048be7c61f553fdef5cf77fb54a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dea69c8b_40c47065",
         "filename": "internal/ceres/parallel_for_synchronization.h",
         "patchSetId": 3
@@ -171,6 +267,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "55a2572b_f9b461c7",
+        "filename": "internal/ceres/parallel_for_synchronization.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-01-17T18:45:03Z",
+      "side": 1,
+      "message": "Yes, it is only used for handling \"dynamic\" part of job assignment.\nBlockUntilFinished is also only used for ParallelInvoke implementation.\n\nWill WorkCompletionStatus / WorkCompletionState be a better name?\n\nDo you think we should move those synchronization primitives to header with  ParallelInvoke ?",
+      "parentUuid": "dea69c8b_40c47065",
+      "range": {
+        "startLine": 35,
+        "startChar": 16,
+        "endLine": 35,
+        "endChar": 17
+      },
+      "revId": "a5cbc40fa7198048be7c61f553fdef5cf77fb54a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "312c8c38_8154e0bb",
         "filename": "internal/ceres/parallel_for_synchronization.h",
         "patchSetId": 3
@@ -182,6 +302,30 @@
       "writtenOn": "2023-01-17T12:49:57Z",
       "side": 1,
       "message": "shouldn\u0027 this be const?",
+      "range": {
+        "startLine": 63,
+        "startChar": 6,
+        "endLine": 63,
+        "endChar": 21
+      },
+      "revId": "a5cbc40fa7198048be7c61f553fdef5cf77fb54a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e17c3d3_46742a8e",
+        "filename": "internal/ceres/parallel_for_synchronization.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-01-17T18:45:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "312c8c38_8154e0bb",
       "range": {
         "startLine": 63,
         "startChar": 6,
