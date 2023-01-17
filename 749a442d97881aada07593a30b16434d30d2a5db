@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd2f8a29_f96e78af",
+        "filename": "internal/ceres/array_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-17T15:33:56Z",
+      "side": 0,
+      "message": "It is not the first I see how compiler ignores `const` for functions declarations. You can see below that the definition has `const int` though declaration does not. Both `gcc` and `clang` behave strange in such cases.\n\nLittle offtop. Personally I like the idea of `const`ing everything even in functions arguments since several times it prevented for for accidentally assigning to passed argument because of type in an inner variable name.",
+      "revId": "749a442d97881aada07593a30b16434d30d2a5db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
