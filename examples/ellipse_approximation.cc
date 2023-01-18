@@ -405,9 +405,9 @@ int main(int argc, char** argv) {
   // Each data point has an associated preimage position on the line segment
   // contour. For each data point we initialize the preimage positions to
   // the index of the closest control point.
-  const int num_observations = kY.rows();
+  const int64_t num_observations = kY.rows();
   VectorXd t(num_observations);
-  for (int i = 0; i < num_observations; ++i) {
+  for (int64_t i = 0; i < num_observations; ++i) {
     (X.rowwise() - kY.row(i)).rowwise().squaredNorm().minCoeff(&t[i]);
   }
 

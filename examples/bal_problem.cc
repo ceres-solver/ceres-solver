@@ -62,8 +62,7 @@ void PerturbPoint3(std::function<double()> dist, double* point) {
 }
 
 double Median(std::vector<double>* data) {
-  int n = data->size();
-  auto mid_point = data->begin() + n / 2;
+  auto mid_point = data->begin() + data->size() / 2;
   std::nth_element(data->begin(), mid_point, data->end());
   return *mid_point;
 }

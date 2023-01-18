@@ -43,7 +43,7 @@ namespace ceres::examples {
 FieldsOfExpertsCost::FieldsOfExpertsCost(const std::vector<double>& filter)
     : filter_(filter) {
   set_num_residuals(1);
-  for (int i = 0; i < filter_.size(); ++i) {
+  for (int64_t i = 0; i < filter_.size(); ++i) {
     mutable_parameter_block_sizes()->push_back(1);
   }
 }
@@ -53,14 +53,14 @@ FieldsOfExpertsCost::FieldsOfExpertsCost(const std::vector<double>& filter)
 bool FieldsOfExpertsCost::Evaluate(double const* const* parameters,
                                    double* residuals,
                                    double** jacobians) const {
-  int num_variables = filter_.size();
+  const int64_t num_variables = filter_.size();
   residuals[0] = 0;
-  for (int i = 0; i < num_variables; ++i) {
+  for (int64_t i = 0; i < num_variables; ++i) {
     residuals[0] += filter_[i] * parameters[i][0];
   }
 
   if (jacobians != nullptr) {
-    for (int i = 0; i < num_variables; ++i) {
+    for (int64_t i = 0; i < num_variables; ++i) {
       if (jacobians[i] != nullptr) {
         jacobians[i][0] = filter_[i];
       }
