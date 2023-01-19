@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7b4cf948_12f68772",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-19T23:35:29Z",
+      "side": 1,
+      "message": "Will fix",
+      "parentUuid": "c6d90c8c_64bb2291",
+      "range": {
+        "startLine": 65,
+        "startChar": 52,
+        "endLine": 65,
+        "endChar": 53
+      },
+      "revId": "2cc829352f6dd94a732ecb670c3267cd318aa2ef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a6e5522b_73c2f1cc",
         "filename": "examples/fields_of_experts.cc",
         "patchSetId": 1
@@ -54,6 +78,30 @@
       "writtenOn": "2023-01-19T23:02:06Z",
       "side": 1,
       "message": "google styleguide recommends against using size_t for loops.\nhow about int64_t ?",
+      "range": {
+        "startLine": 46,
+        "startChar": 12,
+        "endLine": 46,
+        "endChar": 18
+      },
+      "revId": "2cc829352f6dd94a732ecb670c3267cd318aa2ef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4be13a74_a060d754",
+        "filename": "examples/fields_of_experts.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6732
+      },
+      "writtenOn": "2023-01-19T23:35:29Z",
+      "side": 1,
+      "message": "Will fix. But seems a little strange to me since `filter_.size()` returns `std::size_t`",
+      "parentUuid": "a6e5522b_73c2f1cc",
       "range": {
         "startLine": 46,
         "startChar": 12,
