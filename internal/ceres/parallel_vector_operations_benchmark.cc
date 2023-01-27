@@ -46,7 +46,7 @@ static void SetZero(benchmark::State& state) {
 BENCHMARK(SetZero);
 
 static void SetZeroParallel(benchmark::State& state) {
-  const int num_threads = state.range(0);
+  const int num_threads = static_cast<int>(state.range(0));
   ContextImpl context;
   context.EnsureMinimumThreads(num_threads);
 
@@ -70,7 +70,7 @@ static void Negate(benchmark::State& state) {
 BENCHMARK(Negate);
 
 static void NegateParallel(benchmark::State& state) {
-  const int num_threads = state.range(0);
+  const int num_threads = static_cast<int>(state.range(0));
   ContextImpl context;
   context.EnsureMinimumThreads(num_threads);
 
@@ -95,7 +95,7 @@ static void Assign(benchmark::State& state) {
 BENCHMARK(Assign);
 
 static void AssignParallel(benchmark::State& state) {
-  const int num_threads = state.range(0);
+  const int num_threads = static_cast<int>(state.range(0));
   ContextImpl context;
   context.EnsureMinimumThreads(num_threads);
 
@@ -121,7 +121,7 @@ static void D2X(benchmark::State& state) {
 BENCHMARK(D2X);
 
 static void D2XParallel(benchmark::State& state) {
-  const int num_threads = state.range(0);
+  const int num_threads = static_cast<int>(state.range(0));
   ContextImpl context;
   context.EnsureMinimumThreads(num_threads);
 
@@ -147,7 +147,7 @@ static void DivideSqrt(benchmark::State& state) {
 BENCHMARK(DivideSqrt);
 
 static void DivideSqrtParallel(benchmark::State& state) {
-  const int num_threads = state.range(0);
+  const int num_threads = static_cast<int>(state.range(0));
   ContextImpl context;
   context.EnsureMinimumThreads(num_threads);
 
@@ -176,7 +176,7 @@ static void Clamp(benchmark::State& state) {
 BENCHMARK(Clamp);
 
 static void ClampParallel(benchmark::State& state) {
-  const int num_threads = state.range(0);
+  const int num_threads = static_cast<int>(state.range(0));
   ContextImpl context;
   context.EnsureMinimumThreads(num_threads);
 
@@ -204,7 +204,7 @@ static void Norm(benchmark::State& state) {
 BENCHMARK(Norm);
 
 static void NormParallel(benchmark::State& state) {
-  const int num_threads = state.range(0);
+  const int num_threads = static_cast<int>(state.range(0));
   ContextImpl context;
   context.EnsureMinimumThreads(num_threads);
 
@@ -231,7 +231,7 @@ static void Dot(benchmark::State& state) {
 BENCHMARK(Dot);
 
 static void DotParallel(benchmark::State& state) {
-  const int num_threads = state.range(0);
+  const int num_threads = static_cast<int>(state.range(0));
   ContextImpl context;
   context.EnsureMinimumThreads(num_threads);
 
@@ -261,7 +261,7 @@ static void Axpby(benchmark::State& state) {
 BENCHMARK(Axpby);
 
 static void AxpbyParallel(benchmark::State& state) {
-  const int num_threads = state.range(0);
+  const int num_threads = static_cast<int>(state.range(0));
   ContextImpl context;
   context.EnsureMinimumThreads(num_threads);
 

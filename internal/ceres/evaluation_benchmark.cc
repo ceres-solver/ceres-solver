@@ -208,7 +208,7 @@ struct BALData {
 static void Residuals(benchmark::State& state,
                       BALData* data,
                       ContextImpl* context) {
-  const int num_threads = state.range(0);
+  const int num_threads = static_cast<int>(state.range(0));
 
   Evaluator::Options options;
   options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
@@ -240,7 +240,7 @@ static void Residuals(benchmark::State& state,
 static void ResidualsAndJacobian(benchmark::State& state,
                                  BALData* data,
                                  ContextImpl* context) {
-  const int num_threads = state.range(0);
+  const int num_threads = static_cast<int>(state.range(0));
 
   Evaluator::Options options;
   options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
@@ -271,7 +271,7 @@ static void ResidualsAndJacobian(benchmark::State& state,
 }
 
 static void Plus(benchmark::State& state, BALData* data, ContextImpl* context) {
-  const int num_threads = state.range(0);
+  const int num_threads = static_cast<int>(state.range(0));
 
   Evaluator::Options options;
   options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
@@ -300,7 +300,7 @@ static void PMVRightMultiplyAndAccumulateF(benchmark::State& state,
                                            BALData* data,
                                            ContextImpl* context) {
   LinearSolver::Options options;
-  options.num_threads = state.range(0);
+  options.num_threads = static_cast<int>(state.range(0));
   options.elimination_groups.push_back(data->bal_problem->num_points());
   options.context = context;
   auto jacobian = data->PartitionedMatrixViewJacobian(options);
@@ -318,7 +318,7 @@ static void PMVLeftMultiplyAndAccumulateF(benchmark::State& state,
                                           BALData* data,
                                           ContextImpl* context) {
   LinearSolver::Options options;
-  options.num_threads = state.range(0);
+  options.num_threads = static_cast<int>(state.range(0));
   options.elimination_groups.push_back(data->bal_problem->num_points());
   options.context = context;
   auto jacobian = data->PartitionedMatrixViewJacobian(options);
@@ -336,7 +336,7 @@ static void PMVRightMultiplyAndAccumulateE(benchmark::State& state,
                                            BALData* data,
                                            ContextImpl* context) {
   LinearSolver::Options options;
-  options.num_threads = state.range(0);
+  options.num_threads = static_cast<int>(state.range(0));
   options.elimination_groups.push_back(data->bal_problem->num_points());
   options.context = context;
   auto jacobian = data->PartitionedMatrixViewJacobian(options);
@@ -354,7 +354,7 @@ static void PMVLeftMultiplyAndAccumulateE(benchmark::State& state,
                                           BALData* data,
                                           ContextImpl* context) {
   LinearSolver::Options options;
-  options.num_threads = state.range(0);
+  options.num_threads = static_cast<int>(state.range(0));
   options.elimination_groups.push_back(data->bal_problem->num_points());
   options.context = context;
   auto jacobian = data->PartitionedMatrixViewJacobian(options);
@@ -372,7 +372,7 @@ static void PMVUpdateBlockDiagonalEtE(benchmark::State& state,
                                       BALData* data,
                                       ContextImpl* context) {
   LinearSolver::Options options;
-  options.num_threads = state.range(0);
+  options.num_threads = static_cast<int>(state.range(0));
   options.elimination_groups.push_back(data->bal_problem->num_points());
   options.context = context;
   auto jacobian = data->PartitionedMatrixViewJacobian(options);
@@ -387,7 +387,7 @@ static void PMVUpdateBlockDiagonalFtF(benchmark::State& state,
                                       BALData* data,
                                       ContextImpl* context) {
   LinearSolver::Options options;
-  options.num_threads = state.range(0);
+  options.num_threads = static_cast<int>(state.range(0));
   options.elimination_groups.push_back(data->bal_problem->num_points());
   options.context = context;
   auto jacobian = data->PartitionedMatrixViewJacobian(options);
@@ -402,7 +402,7 @@ static void ISCRightMultiplyNoDiag(benchmark::State& state,
                                    BALData* data,
                                    ContextImpl* context) {
   LinearSolver::Options options;
-  options.num_threads = state.range(0);
+  options.num_threads = static_cast<int>(state.range(0));
   options.elimination_groups.push_back(data->bal_problem->num_points());
   options.context = context;
   auto jacobian = data->ImplicitSchurComplementWithoutDiagonal(options);
@@ -419,7 +419,7 @@ static void ISCRightMultiplyDiag(benchmark::State& state,
                                  BALData* data,
                                  ContextImpl* context) {
   LinearSolver::Options options;
-  options.num_threads = state.range(0);
+  options.num_threads = static_cast<int>(state.range(0));
   options.elimination_groups.push_back(data->bal_problem->num_points());
   options.context = context;
 
@@ -436,7 +436,7 @@ static void ISCRightMultiplyDiag(benchmark::State& state,
 static void JacobianSquaredColumnNorm(benchmark::State& state,
                                       BALData* data,
                                       ContextImpl* context) {
-  const int num_threads = state.range(0);
+  const int num_threads = static_cast<int>(state.range(0));
 
   auto jacobian = data->BlockSparseJacobian(context);
 
@@ -451,7 +451,7 @@ static void JacobianSquaredColumnNorm(benchmark::State& state,
 static void JacobianScaleColumns(benchmark::State& state,
                                  BALData* data,
                                  ContextImpl* context) {
-  const int num_threads = state.range(0);
+  const int num_threads = static_cast<int>(state.range(0));
 
   auto jacobian_const = data->BlockSparseJacobian(context);
   auto jacobian = const_cast<BlockSparseMatrix*>(jacobian_const);
@@ -466,7 +466,7 @@ static void JacobianScaleColumns(benchmark::State& state,
 static void JacobianRightMultiplyAndAccumulate(benchmark::State& state,
                                                BALData* data,
                                                ContextImpl* context) {
-  const int num_threads = state.range(0);
+  const int num_threads = static_cast<int>(state.range(0));
 
   auto jacobian = data->BlockSparseJacobian(context);
 
@@ -483,7 +483,7 @@ static void JacobianRightMultiplyAndAccumulate(benchmark::State& state,
 static void JacobianLeftMultiplyAndAccumulate(benchmark::State& state,
                                               BALData* data,
                                               ContextImpl* context) {
-  const int num_threads = state.range(0);
+  const int num_threads = static_cast<int>(state.range(0));
 
   auto jacobian = data->BlockSparseJacobian(context);
 
