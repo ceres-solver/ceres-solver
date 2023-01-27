@@ -66,7 +66,7 @@ constexpr double kBlockDensity = 5.0 / kNumColBlocks;
 
 static void BM_BlockSparseRightMultiplyAndAccumulateBA(
     benchmark::State& state) {
-  const int num_threads = state.range(0);
+  const int num_threads = static_cast<int>(state.range(0));
   std::mt19937 prng;
   auto jacobian = CreateFakeBundleAdjustmentJacobian(
       kNumCameras, kNumPoints, kCameraSize, kPointSize, kVisibility, prng);
@@ -96,7 +96,7 @@ BENCHMARK(BM_BlockSparseRightMultiplyAndAccumulateBA)
 
 static void BM_BlockSparseRightMultiplyAndAccumulateUnstructured(
     benchmark::State& state) {
-  const int num_threads = state.range(0);
+  const int num_threads = static_cast<int>(state.range(0));
   BlockSparseMatrix::RandomMatrixOptions options;
   options.num_row_blocks = kNumRowBlocks;
   options.num_col_blocks = kNumColBlocks;
@@ -178,7 +178,7 @@ static void BM_BlockSparseLeftMultiplyAndAccumulateUnstructured(
 BENCHMARK(BM_BlockSparseLeftMultiplyAndAccumulateUnstructured);
 
 static void BM_CRSRightMultiplyAndAccumulateBA(benchmark::State& state) {
-  const int num_threads = state.range(0);
+  const int num_threads = static_cast<int>(state.range(0));
   std::mt19937 prng;
   auto bsm_jacobian = CreateFakeBundleAdjustmentJacobian(
       kNumCameras, kNumPoints, kCameraSize, kPointSize, kVisibility, prng);
@@ -213,7 +213,7 @@ BENCHMARK(BM_CRSRightMultiplyAndAccumulateBA)
 
 static void BM_CRSRightMultiplyAndAccumulateUnstructured(
     benchmark::State& state) {
-  const int num_threads = state.range(0);
+  const int num_threads = static_cast<int>(state.range(0));
   BlockSparseMatrix::RandomMatrixOptions options;
   options.num_row_blocks = kNumRowBlocks;
   options.num_col_blocks = kNumColBlocks;
