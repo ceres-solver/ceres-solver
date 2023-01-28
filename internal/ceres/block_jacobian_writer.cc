@@ -139,7 +139,7 @@ BlockJacobianWriter::BlockJacobianWriter(const Evaluator::Options& options,
 // makes the final Write() a nop.
 std::unique_ptr<BlockEvaluatePreparer[]>
 BlockJacobianWriter::CreateEvaluatePreparers(unsigned num_threads) {
-  int max_derivatives_per_residual_block =
+  const int max_derivatives_per_residual_block =
       program_->MaxDerivativesPerResidualBlock();
 
   auto preparers = std::make_unique<BlockEvaluatePreparer[]>(num_threads);

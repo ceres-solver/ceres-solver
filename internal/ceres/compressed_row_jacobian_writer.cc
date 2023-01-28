@@ -90,8 +90,8 @@ std::unique_ptr<SparseMatrix> CompressedRowJacobianWriter::CreateJacobian()
     const {
   const auto& residual_blocks = program_->residual_blocks();
 
-  int total_num_residuals = program_->NumResiduals();
-  int total_num_effective_parameters = program_->NumEffectiveParameters();
+  const int total_num_residuals = program_->NumResiduals();
+  const int total_num_effective_parameters = program_->NumEffectiveParameters();
 
   // Count the number of jacobian nonzeros.
   int num_jacobian_nonzeros = 0;
