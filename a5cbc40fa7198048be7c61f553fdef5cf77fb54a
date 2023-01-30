@@ -373,6 +373,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "aea5c520_98cd1625",
+        "filename": "internal/ceres/parallel_for_synchronization.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-01-30T17:39:04Z",
+      "side": 1,
+      "message": "How about ParallelInvokeState ?\n\nand yes both of these classes should likely just be whereever parallelinvoke is.",
+      "parentUuid": "55a2572b_f9b461c7",
+      "range": {
+        "startLine": 35,
+        "startChar": 16,
+        "endLine": 35,
+        "endChar": 17
+      },
+      "revId": "a5cbc40fa7198048be7c61f553fdef5cf77fb54a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "312c8c38_8154e0bb",
         "filename": "internal/ceres/parallel_for_synchronization.h",
         "patchSetId": 3
