@@ -50,6 +50,23 @@
       "message": "gentle ping?",
       "revId": "0c76caa6de9f7dacffb8e3095caba7bd76ae9e4c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46e25a7a_94e1674f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-01-30T17:00:45Z",
+      "side": 1,
+      "message": "I haven\u0027t come up with an idea on changing `InvokeOnSegment` implementation that won\u0027t require \"examining\" argument types of function in some way.\n\nThe problem is `InvokeOnSegment` not just forwards arguments to function, but also handles:\n - Adding loop for functions operating on a single index\n - Supplying thread-id argument to functions expecting it\nA more elaborated description provided in reply to https://ceres-solver-review.googlesource.com/c/ceres-solver/+/23700/comment/e00159c8_7fa3fd37\n\n\nI changed implementation to an explicitly two-step one with template functions instead of partial specialization of template class; but this way handling different argument type sets differently is done via `std::enable_if`.",
+      "revId": "0c76caa6de9f7dacffb8e3095caba7bd76ae9e4c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }

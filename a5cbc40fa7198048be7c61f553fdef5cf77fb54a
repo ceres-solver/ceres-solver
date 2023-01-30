@@ -120,6 +120,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "36feadda_efeb8eea",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-01-30T17:00:45Z",
+      "side": 1,
+      "message": "`InvokeOnSegment` needs to solve two problems via dispatching based on argument types of `F`:\n - Supplying \"optional\" `thread_id` argument\n - Making a loop for functions operating on a single index\n\nSo far I don\u0027t see a way to replace it with `std::apply` invocations without explicit extracting argument types of `F`.\n\n\nBelow is a brief rationale behind co-existence of parallelizable functions accepting `(int)`, `(int, int)`, `(tuple\u003cint, int\u003e)` and `(int, tuple\u003cint, int\u003e)`.\n\n\n\nIn files affected by this CL `std::tuple\u003cint, int\u003e` always has a meaning of contiguous segment of integers `[a; b)`\n\n\nWe have 4 \u003d 2 x 2 types of parallelizable functions:\n - Functions expecting either a single loop index or a contiguous range of loop indices per call\n - Functions that (do not) expect thread_id as a first argument\n\n\nThe following table summarizes signatures of all supported functions:\n\n```\n                 | Works with indices | Works with ranges\n-----------------+--------------------+-----------------------\n Needs thread_id | (int, int)         | (int, tuple\u003cint, int\u003e)\n-----------------+--------------------+-----------------------\n No thread_id    | (int)              | (tuple\u003cint, int\u003e)\n-----------------+--------------------+-----------------------\n```\n\n\nFunctions accepting a range of loop indices were introduced together with parallel vector operations (CL 23621), because those are ineffective to perform on index-by-index basis.\n\nBecause functions requiring thread_id and operating on a single index already used signature `(int, int)`, I decided to make functions operating on ranges accept range as a `tuple\u003cint, int\u003e`.\nWhile we could use `(int thread_id, int start, int end)` for parallelizable functions accepting range and requiring thread-id, this would make API for functions accepting range and (not-)requiring thread-id inconsistent.\n\n\nFor functions operating on a single index we need to add a loop over elements of range provided by scheduling part of code (`ParallelInvoke`), while functions operating on ranges can accept the range directly.",
+      "parentUuid": "e00159c8_7fa3fd37",
+      "revId": "a5cbc40fa7198048be7c61f553fdef5cf77fb54a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3354be99_52ce9176",
         "filename": "internal/ceres/parallel_for.h",
         "patchSetId": 3
@@ -131,6 +149,30 @@
       "writtenOn": "2023-01-17T19:12:15Z",
       "side": 1,
       "message": "Any reason for the functor to be a `const` reference? I\u0027d use r-value references to allow for perfect forwarding.",
+      "range": {
+        "startLine": 152,
+        "startChar": 17,
+        "endLine": 152,
+        "endChar": 22
+      },
+      "revId": "a5cbc40fa7198048be7c61f553fdef5cf77fb54a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2715eb03_2271a2f1",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-01-30T17:00:45Z",
+      "side": 1,
+      "message": "I made a change to forwarding r-value reference.\nAssuming that the only goal was to get a non-const binding of rvalues, I decided not to forward them downwards, since lvalue references to callables seem to be good enough.\n\nFrom my point, however, requiring function-like object used for concurrent invocation to have a const-qualified operator() seem to be a reasonable expectation.",
+      "parentUuid": "3354be99_52ce9176",
       "range": {
         "startLine": 152,
         "startChar": 17,

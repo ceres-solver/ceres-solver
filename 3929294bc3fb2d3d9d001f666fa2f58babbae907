@@ -24,6 +24,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f22612ca_69f59df1",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-01-30T17:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3be8c818_5e6f41e1",
+      "range": {
+        "startLine": 126,
+        "startChar": 31,
+        "endLine": 126,
+        "endChar": 34
+      },
+      "revId": "3929294bc3fb2d3d9d001f666fa2f58babbae907",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f3b4fe1c_6113e2d0",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-01-17T19:12:15Z",
       "side": 1,
       "message": "Use r-value reference instead of `const` reference?",
+      "range": {
+        "startLine": 153,
+        "startChar": 17,
+        "endLine": 153,
+        "endChar": 22
+      },
+      "revId": "3929294bc3fb2d3d9d001f666fa2f58babbae907",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61c6e082_a577b36b",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-01-30T17:00:45Z",
+      "side": 1,
+      "message": "Changed to forwarding r-value reference.\n\nHowever, the code computing optimal partitioning of the input range expects `cumulative_cost_fun` to return the same value for every fixed object of type `CumulativeCostData`, independent on order and number of calls.\nHence, the logical state of `cumulative_cost_fun` is expected to be unchanged on invocation of \"operator()\".",
+      "parentUuid": "f3b4fe1c_6113e2d0",
       "range": {
         "startLine": 153,
         "startChar": 17,
@@ -64,6 +112,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6b0f020_6c2871c6",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-01-30T17:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac9c6893_9815a7bf",
+      "revId": "3929294bc3fb2d3d9d001f666fa2f58babbae907",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "efc91563_b65bac0f",
@@ -81,6 +147,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "efd73730_e915d752",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-01-30T17:00:45Z",
+      "side": 1,
+      "message": "Done\n\nOriginal code was free of copy/move, because no copy/move happens when object is initialized with a prvalue of the same type.\nThis case is covered by clause 16.6.1 of paragraph 9.4.1 [dcl.init.general] of standard (section numbers from current working draft; but it was there for ages).",
+      "parentUuid": "efc91563_b65bac0f",
+      "revId": "3929294bc3fb2d3d9d001f666fa2f58babbae907",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bbef9d58_d81ab7fc",
@@ -94,6 +178,24 @@
       "writtenOn": "2023-01-17T19:12:15Z",
       "side": 1,
       "message": "2023",
+      "revId": "3929294bc3fb2d3d9d001f666fa2f58babbae907",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1e62eaf_0c8cbd68",
+        "filename": "internal/ceres/parallel_for_synchronization.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-01-30T17:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbef9d58_d81ab7fc",
       "revId": "3929294bc3fb2d3d9d001f666fa2f58babbae907",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -169,6 +271,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "593c1585_099fd99e",
+        "filename": "internal/ceres/parallel_invoke.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-01-30T17:00:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f4adee20_396018eb",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 19
+      },
+      "revId": "3929294bc3fb2d3d9d001f666fa2f58babbae907",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3bc8855d_d792a584",
@@ -220,6 +346,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "071fa90d_07ea9fec",
+        "filename": "internal/ceres/partition_range_for_parallel_for.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-01-30T17:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88878270_71c5a823",
+      "revId": "3929294bc3fb2d3d9d001f666fa2f58babbae907",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5de8ec92_c48ab28e",
@@ -233,6 +377,30 @@
       "writtenOn": "2023-01-17T19:12:15Z",
       "side": 1,
       "message": "Split declarations.",
+      "range": {
+        "startLine": 118,
+        "startChar": 19,
+        "endLine": 118,
+        "endChar": 51
+      },
+      "revId": "3929294bc3fb2d3d9d001f666fa2f58babbae907",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be9431b4_ab708071",
+        "filename": "internal/ceres/partition_range_for_parallel_for.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-01-30T17:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5de8ec92_c48ab28e",
       "range": {
         "startLine": 118,
         "startChar": 19,
@@ -266,6 +434,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "96568849_edb76c7e",
+        "filename": "internal/ceres/partition_range_for_parallel_for.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-01-30T17:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60767bf5_8bcfedb5",
+      "range": {
+        "startLine": 146,
+        "startChar": 6,
+        "endLine": 146,
+        "endChar": 44
+      },
+      "revId": "3929294bc3fb2d3d9d001f666fa2f58babbae907",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8a1b429f_71006100",
@@ -279,6 +471,30 @@
       "writtenOn": "2023-01-17T19:12:15Z",
       "side": 1,
       "message": "`return {start, end}`. No assignment necessary.",
+      "range": {
+        "startLine": 152,
+        "startChar": 2,
+        "endLine": 152,
+        "endChar": 26
+      },
+      "revId": "3929294bc3fb2d3d9d001f666fa2f58babbae907",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00747d2f_10cd48aa",
+        "filename": "internal/ceres/partition_range_for_parallel_for.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-01-30T17:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a1b429f_71006100",
       "range": {
         "startLine": 152,
         "startChar": 2,
