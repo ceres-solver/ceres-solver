@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1e03bca_cf9a35e7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-01-31T17:25:45Z",
+      "side": 1,
+      "message": "I\u0027ve noticed that x86 build with mingw on windows has two tests failing (for example, in the following run: https://github.com/ceres-solver/ceres-solver/actions/runs/4034581971/jobs/6935906863#step:8:480 )\n\n`ParallelAssign` test fails due to mingw emitting x87 FPU instructions for scalar code, while using SSE instructions for vector code.\nThis leads to discrepancy between vectorized and non-vectorized code (due to different precision of intermediates).\n\nNote that another comment about bit-exactness (near `BlockSparseMatrixTest`, `RightMultiplyAndAccumulateParallelTest`) is not affected (since computations corresponding to a single row-block are the same).\n\nThe reason of `manifold_test` failing with a segfault is unclear.",
+      "revId": "8bf4a2f42c46c84db0bf5b3fe9deb152eed4aff5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
