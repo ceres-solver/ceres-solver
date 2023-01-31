@@ -97,6 +97,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1e6441b1_bf40fc03",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-31T17:00:38Z",
+      "side": 1,
+      "message": "I\u0027m not sure what are you saying. Passing functors as `const` does not mean there\u0027s a guarantee for the value being returned to be always the same given same input (you can use `mutable`, pointers etc. to break out of the `const`ness as an example.) Consequently, the `const`ness is irrelevant for defining the deterministic/side-effect free behavior of the functor.",
+      "parentUuid": "61c6e082_a577b36b",
+      "range": {
+        "startLine": 153,
+        "startChar": 17,
+        "endLine": 153,
+        "endChar": 22
+      },
+      "revId": "3929294bc3fb2d3d9d001f666fa2f58babbae907",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ac9c6893_9815a7bf",
         "filename": "internal/ceres/parallel_for.h",
         "patchSetId": 4

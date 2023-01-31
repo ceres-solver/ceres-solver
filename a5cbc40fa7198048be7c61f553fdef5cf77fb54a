@@ -138,6 +138,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6855bf93_66ef494f",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-31T17:00:38Z",
+      "side": 1,
+      "message": "I particularly dislike this inversion of control through argument introspection. The complex logic in the traits is indicative of a design flaw. It will be a nightmare to extend this part in the future.\n\nAn easy workaround would be to use `if constexpr (std::is_invocable[_r])`. Alternatively, you can use SFINAE combined with `is_invocable` and provide different overloads.",
+      "parentUuid": "36feadda_efeb8eea",
+      "revId": "a5cbc40fa7198048be7c61f553fdef5cf77fb54a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3354be99_52ce9176",
         "filename": "internal/ceres/parallel_for.h",
         "patchSetId": 3
@@ -173,6 +191,30 @@
       "side": 1,
       "message": "I made a change to forwarding r-value reference.\nAssuming that the only goal was to get a non-const binding of rvalues, I decided not to forward them downwards, since lvalue references to callables seem to be good enough.\n\nFrom my point, however, requiring function-like object used for concurrent invocation to have a const-qualified operator() seem to be a reasonable expectation.",
       "parentUuid": "3354be99_52ce9176",
+      "range": {
+        "startLine": 152,
+        "startChar": 17,
+        "endLine": 152,
+        "endChar": 22
+      },
+      "revId": "a5cbc40fa7198048be7c61f553fdef5cf77fb54a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca2cd92f_3989c3ab",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-01-31T17:00:38Z",
+      "side": 1,
+      "message": "I\u0027m not convinced by the \"good enough\" assessment. For future extensibility purposes the decision should not be made by callee but rather by the caller. This is what perfect forwarding is for.",
+      "parentUuid": "2715eb03_2271a2f1",
       "range": {
         "startLine": 152,
         "startChar": 17,
