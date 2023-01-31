@@ -436,6 +436,7 @@ TEST(GuidedParallelFor, NumThreads) {
 TEST(ParallelAssign, D2MulX) {
   const int kVectorSize = 1024 * 1024;
   const int kMaxNumThreads = 8;
+  const double kEpsilon = 1e-16;
 
   const Vector D_full = Vector::Random(kVectorSize * 2);
   const ConstVectorRef D(D_full.data() + kVectorSize, kVectorSize);
@@ -449,8 +450,12 @@ TEST(ParallelAssign, D2MulX) {
     ParallelAssign(
         &context, num_threads, y_observed, D.array().square() * x.array());
 
-    // Bit-exact result is expected
-    CHECK_EQ((y_expected - y_observed).squaredNorm(), 0.);
+    // We might get non-bit-exact result due to different precision in scalar
+    // and vector code. For example, in x86 mode mingw might emit x87
+    // instructions for scalar code, thus making bit-exact check fail
+    EXPECT_NEAR((y_expected - y_observed).squaredNorm(),
+                0.,
+                kEpsilon * y_expected.squaredNorm());
   }
 }
 
