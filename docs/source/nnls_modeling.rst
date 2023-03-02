@@ -1068,6 +1068,10 @@ their shape graphically. More details can be found in
 
    .. math:: \rho(s,a,b) = b \log(1 + e^{(s - a) / b}) - b \log(1 + e^{-a / b})
 
+.. class:: TukeyLoss
+
+   .. math:: \rho(s) = \begin{cases} \frac{1}{3} (1 - (1 - s)^3) & s \le 1\\ \frac{1}{3} & s > 1 \end{cases}
+
 .. class:: ComposedLoss
 
    Given two loss functions ``f`` and ``g``, implements the loss
