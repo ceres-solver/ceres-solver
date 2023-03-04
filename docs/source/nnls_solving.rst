@@ -1935,7 +1935,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
 
    Size of the trust region at the end of the current iteration. For
    the Levenberg-Marquardt algorithm, the regularization parameter is
-   1.0 / member::`IterationSummary::trust_region_radius`.
+   1.0 / :member:`IterationSummary::trust_region_radius`.
 
 .. member:: double IterationSummary::eta
 

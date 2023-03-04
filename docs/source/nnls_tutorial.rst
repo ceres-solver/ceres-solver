@@ -890,7 +890,7 @@ directory contains a number of other examples:
    :math:`[-\pi,\pi)`.  Specially, we define the
    :member:`AngleManifold::Plus()` function to be:
    :math:`\mathrm{Normalize}(\psi + \Delta)` and
-   ::member::`AngleManifold::Minus()` function to be
+   :member:`AngleManifold::Minus()` function to be
    :math:`\mathrm{Normalize}(y) - \mathrm{Normalize}(x)`.
 
    This package includes an executable :member:`pose_graph_2d` that will read a
