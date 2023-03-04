@@ -1339,10 +1339,7 @@ Additionally we require that :math:`\boxplus` and :math:`\boxminus` be
 sufficiently smooth. In particular they need to be differentiable
 everywhere on the manifold.
 
-For more details, please see `Integrating Generic Sensor Fusion
-Algorithms with Sound State Representations through Encapsulation of
-Manifolds <https://arxiv.org/pdf/1107.1119.pdf>`_
-By C. Hertzberg, R. Wagner, U. Frese and L. Schroder
+For more details, please see [Hertzberg]_
 
 The :class:`Manifold` interface allows the user to define a manifold
 for the purposes optimization by implementing ``Plus`` and ``Minus``
@@ -1675,11 +1672,7 @@ dimension needs to be provided as a constructor argument:
 
    SphereManifold<ceres::DYNAMIC> manifold(ambient_dim);
 
-For more details, please see Section B.2 (p.25) in `Integrating
-Generic Sensor Fusion Algorithms with Sound State Representations
-through Encapsulation of Manifolds
-<https://arxiv.org/pdf/1107.1119.pdf>`_
-By C. Hertzberg, R. Wagner, U. Frese and L. Schroder
+For more details, please see Section B.2 (p.25) in [Hertzberg]_
 
 
 :class:`LineManifold`
