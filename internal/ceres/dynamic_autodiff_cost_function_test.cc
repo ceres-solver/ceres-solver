@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2022 Google Inc. All rights reserved.
+// Copyright 2023 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -75,6 +75,8 @@ class MyCostFunctor {
 TEST(DynamicAutodiffCostFunctionTest, TestResiduals) {
   std::vector<double> param_block_0(10, 0.0);
   std::vector<double> param_block_1(5, 0.0);
+  // Ensure deduction guide to be working
+  (void)DynamicAutoDiffCostFunction(new MyCostFunctor());
   DynamicAutoDiffCostFunction<MyCostFunctor, 3> cost_function(
       new MyCostFunctor());
   cost_function.AddParameterBlock(param_block_0.size());

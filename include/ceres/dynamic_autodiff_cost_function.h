@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2019 Google Inc. All rights reserved.
+// Copyright 2023 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -268,6 +268,10 @@ class DynamicAutoDiffCostFunction final : public DynamicCostFunction {
   std::unique_ptr<CostFunctor> functor_;
   Ownership ownership_;
 };
+
+template <typename CostFunctor>
+DynamicAutoDiffCostFunction(CostFunctor* functor, Ownership ownership)
+    -> DynamicAutoDiffCostFunction<CostFunctor>;
 
 }  // namespace ceres
 
