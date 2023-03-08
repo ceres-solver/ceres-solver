@@ -343,19 +343,19 @@ class CERES_EXPORT Problem {
 
   // Number of parameter blocks in the problem. Always equals
   // parameter_blocks().size() and parameter_block_sizes().size().
-  int NumParameterBlocks() const;
+  int64_t NumParameterBlocks() const;
 
   // The size of the parameter vector obtained by summing over the sizes of all
   // the parameter blocks.
-  int NumParameters() const;
+  int64_t NumParameters() const;
 
   // Number of residual blocks in the problem. Always equals
   // residual_blocks().size().
-  int NumResidualBlocks() const;
+  int64_t NumResidualBlocks() const;
 
   // The size of the residual vector obtained by summing over the sizes of all
   // of the residual blocks.
-  int NumResiduals() const;
+  int64_t NumResiduals() const;
 
   // The size of the parameter block.
   int ParameterBlockSize(const double* values) const;

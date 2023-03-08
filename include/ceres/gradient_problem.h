@@ -85,7 +85,7 @@ class FirstOrderFunction;
 //     return true;
 //   };
 //
-//   virtual int NumParameters() const { return 2; };
+//   virtual int64_t NumParameters() const { return 2; };
 // };
 //
 // ceres::GradientProblem problem(new Rosenbrock());
@@ -97,10 +97,10 @@ class CERES_EXPORT GradientProblem {
   // Takes ownership of the function and the manifold.
   GradientProblem(FirstOrderFunction* function, Manifold* manifold);
 
-  int NumParameters() const;
+  int64_t NumParameters() const;
 
   // Dimension of the manifold (and its tangent space).
-  int NumTangentParameters() const;
+  int64_t NumTangentParameters() const;
 
   // This call is not thread safe.
   bool Evaluate(const double* parameters, double* cost, double* gradient) const;

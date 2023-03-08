@@ -31,6 +31,8 @@
 #ifndef CERES_PUBLIC_FIRST_ORDER_FUNCTION_H_
 #define CERES_PUBLIC_FIRST_ORDER_FUNCTION_H_
 
+#include <cstdint>
+
 #include "ceres/internal/export.h"
 
 namespace ceres {
@@ -46,7 +48,7 @@ class CERES_EXPORT FirstOrderFunction {
   virtual bool Evaluate(const double* const parameters,
                         double* cost,
                         double* gradient) const = 0;
-  virtual int NumParameters() const = 0;
+  virtual int64_t NumParameters() const = 0;
 };
 
 }  // namespace ceres

@@ -50,7 +50,7 @@ class Rosenbrock final : public ceres::FirstOrderFunction {
     return true;
   }
 
-  int NumParameters() const override { return 2; }
+  int64_t NumParameters() const override { return 2; }
 };
 
 int main(int argc, char** argv) {

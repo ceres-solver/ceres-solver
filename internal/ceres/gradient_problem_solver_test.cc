@@ -52,7 +52,7 @@ class Rosenbrock : public ceres::FirstOrderFunction {
     return true;
   }
 
-  int NumParameters() const final { return 2; }
+  int64_t NumParameters() const final { return 2; }
 };
 
 TEST(GradientProblemSolver, SolvesRosenbrockWithDefaultOptions) {
@@ -81,7 +81,7 @@ class QuadraticFunction : public ceres::FirstOrderFunction {
 
     return true;
   }
-  int NumParameters() const final { return 1; }
+  int64_t NumParameters() const final { return 1; }
 };
 
 struct RememberingCallback : public IterationCallback {

@@ -120,7 +120,7 @@ class CERES_EXPORT Solver {
     //
     // Nocedal, J. (1980). "Updating Quasi-Newton Matrices with
     // Limited Storage". Mathematics of Computation 35 (151): 773-782.
-    int max_lbfgs_rank = 20;
+    int64_t max_lbfgs_rank = 20;
 
     // As part of the (L)BFGS update step (BFGS) / right-multiply step (L-BFGS),
     // the initial inverse Hessian approximation is taken to be the Identity.
@@ -198,14 +198,14 @@ class CERES_EXPORT Solver {
     // otherwise. If 0 is specified for the trust region minimizer,
     // then line search will not be used when solving constrained
     // optimization problems.
-    int max_num_line_search_step_size_iterations = 20;
+    int64_t max_num_line_search_step_size_iterations = 20;
 
     // Maximum number of restarts of the line search direction algorithm before
     // terminating the optimization. Restarts of the line search direction
     // algorithm occur when the current algorithm fails to produce a new descent
     // direction. This typically indicates a numerical failure, or a breakdown
     // in the validity of the approximations used.
-    int max_num_line_search_direction_restarts = 5;
+    int64_t max_num_line_search_direction_restarts = 5;
 
     // The strong Wolfe conditions consist of the Armijo sufficient
     // decrease condition, and an additional requirement that the
@@ -262,17 +262,17 @@ class CERES_EXPORT Solver {
     // optimization, the final parameters returned to the user are the
     // ones corresponding to the minimum cost over all iterations.
     bool use_nonmonotonic_steps = false;
-    int max_consecutive_nonmonotonic_steps = 5;
+    int64_t max_consecutive_nonmonotonic_steps = 5;
 
     // Maximum number of iterations for the minimizer to run for.
-    int max_num_iterations = 50;
+    int64_t max_num_iterations = 50;
 
     // Maximum time for which the minimizer should run for.
     double max_solver_time_in_seconds = 1e9;
 
     // Number of threads used by Ceres for evaluating the cost and
     // jacobians.
-    int num_threads = 1;
+    int64_t num_threads = 1;
 
     // Trust region minimizer settings.
     double initial_trust_region_radius = 1e4;
@@ -301,7 +301,7 @@ class CERES_EXPORT Solver {
     // numerically invalid step that can be fixed by reducing the
     // trust region size. So the TrustRegionMinimizer allows for a few
     // successive invalid steps before it declares NUMERICAL_FAILURE.
-    int max_num_consecutive_invalid_steps = 5;
+    int64_t max_num_consecutive_invalid_steps = 5;
 
     // Minimizer terminates when
     //
@@ -596,7 +596,7 @@ class CERES_EXPORT Solver {
 
     // Number steps of the iterative refinement process to run when
     // computing the Gauss-Newton step.
-    int max_num_refinement_iterations = 0;
+    int64_t max_num_refinement_iterations = 0;
 
     // Some non-linear least squares problems have additional
     // structure in the way the parameter blocks interact that it is
@@ -683,19 +683,19 @@ class CERES_EXPORT Solver {
 
     // Minimum number of iterations for which the linear solver should
     // run, even if the convergence criterion is satisfied.
-    int min_linear_solver_iterations = 0;
+    int64_t min_linear_solver_iterations = 0;
 
     // Maximum number of iterations for which the linear solver should
     // run. If the solver does not converge in less than
     // max_linear_solver_iterations, then it returns MAX_ITERATIONS,
     // as its termination type.
-    int max_linear_solver_iterations = 500;
+    int64_t max_linear_solver_iterations = 500;
 
     // Maximum number of iterations performed by SCHUR_POWER_SERIES_EXPANSION.
     // This value controls the maximum number of iterations whether it is used
     // as a preconditioner or just to initialize the solution for
     // ITERATIVE_SCHUR.
-    int max_num_spse_iterations = 5;
+    int64_t max_num_spse_iterations = 5;
 
     // Use SCHUR_POWER_SERIES_EXPANSION to initialize the solution for
     // ITERATIVE_SCHUR. This option can be set true regardless of what
@@ -864,22 +864,22 @@ class CERES_EXPORT Solver {
     // accepted. Unless use_non_monotonic_steps is true this is also
     // the number of steps in which the objective function value/cost
     // went down.
-    int num_successful_steps = -1;
+    int64_t num_successful_steps = -1;
 
     // Number of minimizer iterations in which the step was rejected
     // either because it did not reduce the cost enough or the step
     // was not numerically valid.
-    int num_unsuccessful_steps = -1;
+    int64_t num_unsuccessful_steps = -1;
 
     // Number of times inner iterations were performed.
-    int num_inner_iteration_steps = -1;
+    int64_t num_inner_iteration_steps = -1;
 
     // Total number of iterations inside the line search algorithm
     // across all invocations. We call these iterations "steps" to
     // distinguish them from the outer iterations of the line search
     // and trust region minimizer algorithms which call the line
     // search algorithm as a subroutine.
-    int num_line_search_steps = -1;
+    int64_t num_line_search_steps = -1;
 
     // All times reported below are wall times.
 
@@ -907,19 +907,19 @@ class CERES_EXPORT Solver {
     // Number of times the Newton step was computed by solving a
     // linear system. This does not include linear solves used by
     // inner iterations.
-    int num_linear_solves = -1;
+    int64_t num_linear_solves = -1;
 
     // Time (in seconds) spent evaluating the residual vector.
     double residual_evaluation_time_in_seconds = -1.0;
 
     // Number of residual only evaluations.
-    int num_residual_evaluations = -1;
+    int64_t num_residual_evaluations = -1;
 
     // Time (in seconds) spent evaluating the jacobian matrix.
     double jacobian_evaluation_time_in_seconds = -1.0;
 
     // Number of Jacobian (and residual) evaluations.
-    int num_jacobian_evaluations = -1;
+    int64_t num_jacobian_evaluations = -1;
 
     // Time (in seconds) spent doing inner iterations.
     double inner_iteration_time_in_seconds = -1.0;
@@ -945,55 +945,55 @@ class CERES_EXPORT Solver {
     double line_search_total_time_in_seconds = -1.0;
 
     // Number of parameter blocks in the problem.
-    int num_parameter_blocks = -1;
+    int64_t num_parameter_blocks = -1;
 
     // Number of parameters in the problem.
-    int num_parameters = -1;
+    int64_t num_parameters = -1;
 
     // Dimension of the tangent space of the problem (or the number of
     // columns in the Jacobian for the problem). This is different
     // from num_parameters if a parameter block is associated with a
     // Manifold.
-    int num_effective_parameters = -1;
+    int64_t num_effective_parameters = -1;
 
     // Number of residual blocks in the problem.
-    int num_residual_blocks = -1;
+    int64_t num_residual_blocks = -1;
 
     // Number of residuals in the problem.
-    int num_residuals = -1;
+    int64_t num_residuals = -1;
 
     // Number of parameter blocks in the problem after the inactive
     // and constant parameter blocks have been removed. A parameter
     // block is inactive if no residual block refers to it.
-    int num_parameter_blocks_reduced = -1;
+    int64_t num_parameter_blocks_reduced = -1;
 
     // Number of parameters in the reduced problem.
-    int num_parameters_reduced = -1;
+    int64_t num_parameters_reduced = -1;
 
     // Dimension of the tangent space of the reduced problem (or the
     // number of columns in the Jacobian for the reduced
     // problem). This is different from num_parameters_reduced if a
     // parameter block in the reduced problem is associated with a
     // Manifold.
-    int num_effective_parameters_reduced = -1;
+    int64_t num_effective_parameters_reduced = -1;
 
     // Number of residual blocks in the reduced problem.
-    int num_residual_blocks_reduced = -1;
+    int64_t num_residual_blocks_reduced = -1;
 
     //  Number of residuals in the reduced problem.
-    int num_residuals_reduced = -1;
+    int64_t num_residuals_reduced = -1;
 
     // Is the reduced problem bounds constrained.
     bool is_constrained = false;
 
     //  Number of threads specified by the user for Jacobian and
     //  residual evaluation.
-    int num_threads_given = -1;
+    int64_t num_threads_given = -1;
 
     // Number of threads actually used by the solver for Jacobian and
     // residual evaluation. This number is not equal to
     // num_threads_given if OpenMP is not available.
-    int num_threads_used = -1;
+    int64_t num_threads_used = -1;
 
     // Type of the linear solver requested by the user.
     LinearSolverType linear_solver_type_given =
@@ -1114,7 +1114,7 @@ class CERES_EXPORT Solver {
 
     // If the type of the line search direction is LBFGS, then this
     // indicates the rank of the Hessian approximation.
-    int max_lbfgs_rank = -1;
+    int64_t max_lbfgs_rank = -1;
   };
 
   // Once a least squares problem has been built, this function takes

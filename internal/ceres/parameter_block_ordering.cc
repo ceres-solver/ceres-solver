@@ -169,8 +169,7 @@ void OrderingToGroupSizes(const ParameterBlockOrdering* ordering,
 
   // TODO(sameeragarwal): Investigate if this should be a set or an
   // unordered_set.
-  const std::map<int, std::set<double*>>& group_to_elements =
-      ordering->group_to_elements();
+  const auto& group_to_elements = ordering->group_to_elements();
   for (const auto& g_t_e : group_to_elements) {
     group_sizes->push_back(g_t_e.second.size());
   }

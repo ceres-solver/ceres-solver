@@ -537,16 +537,16 @@ void CompressedRowSparseMatrix::ToTextFile(FILE* file) const {
 }
 
 void CompressedRowSparseMatrix::ToCRSMatrix(CRSMatrix* matrix) const {
+  // TODO(sameeragarwal): The changes here should be undone once the 64bit
+  // transition is done.
   matrix->num_rows = num_rows_;
   matrix->num_cols = num_cols_;
-  matrix->rows = rows_;
-  matrix->cols = cols_;
-  matrix->values = values_;
-
-  // Trim.
   matrix->rows.resize(matrix->num_rows + 1);
   matrix->cols.resize(matrix->rows[matrix->num_rows]);
   matrix->values.resize(matrix->rows[matrix->num_rows]);
+  std::copy_n(rows_.begin(), matrix->rows.size(), matrix->rows.begin());
+  std::copy_n(cols_.begin(), matrix->cols.size(), matrix->cols.begin());
+  std::copy_n(values_.begin(), matrix->values.size(), matrix->values.begin());
 }
 
 void CompressedRowSparseMatrix::SetMaxNumNonZeros(int num_nonzeros) {

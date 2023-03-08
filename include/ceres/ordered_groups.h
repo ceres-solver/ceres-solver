@@ -60,7 +60,7 @@ class OrderedGroups {
   // numbers.
   //
   // Return value indicates if adding the element was a success.
-  bool AddElementToGroup(const T element, const int group) {
+  bool AddElementToGroup(const T element, const int64_t group) {
     if (group < 0) {
       return false;
     }
@@ -91,7 +91,7 @@ class OrderedGroups {
   // Remove the element, no matter what group it is in. Return value
   // indicates if the element was actually removed.
   bool Remove(const T element) {
-    const int current_group = GroupId(element);
+    const int64_t current_group = GroupId(element);
     if (current_group < 0) {
       return false;
     }
@@ -109,13 +109,13 @@ class OrderedGroups {
 
   // Bulk remove elements. The return value indicates the number of
   // elements successfully removed.
-  int Remove(const std::vector<T>& elements) {
+  int64_t Remove(const std::vector<T>& elements) {
     if (NumElements() == 0 || elements.size() == 0) {
       return 0;
     }
 
-    int num_removed = 0;
-    for (int i = 0; i < elements.size(); ++i) {
+    int64_t num_removed = 0;
+    for (int64_t i = 0; i < elements.size(); ++i) {
       num_removed += Remove(elements[i]);
     }
     return num_removed;
@@ -128,10 +128,10 @@ class OrderedGroups {
     }
 
     auto it = group_to_elements_.rbegin();
-    std::map<int, std::set<T>> new_group_to_elements;
+    std::map<int64_t, std::set<T>> new_group_to_elements;
     new_group_to_elements[it->first] = it->second;
 
-    int new_group_id = it->first + 1;
+    int64_t new_group_id = it->first + 1;
     for (++it; it != group_to_elements_.rend(); ++it) {
       for (const auto& element : it->second) {
         element_to_group_[element] = new_group_id;
@@ -145,7 +145,7 @@ class OrderedGroups {
 
   // Return the group id for the element. If the element is not a
   // member of any group, return -1.
-  int GroupId(const T element) const {
+  int64_t GroupId(const T element) const {
     auto it = element_to_group_.find(element);
     if (it == element_to_group_.end()) {
       return -1;
@@ -160,33 +160,35 @@ class OrderedGroups {
 
   // This function always succeeds, i.e., implicitly there exists a
   // group for every integer.
-  int GroupSize(const int group) const {
+  int64_t GroupSize(const int64_t group) const {
     auto it = group_to_elements_.find(group);
     return (it == group_to_elements_.end()) ? 0 : it->second.size();
   }
 
-  int NumElements() const { return element_to_group_.size(); }
+  int64_t NumElements() const { return element_to_group_.size(); }
 
   // Number of groups with one or more elements.
-  int NumGroups() const { return group_to_elements_.size(); }
+  int64_t NumGroups() const { return group_to_elements_.size(); }
 
   // The first group with one or more elements. Calling this when
   // there are no groups with non-zero elements will result in a
   // crash.
-  int MinNonZeroGroup() const {
+  int64_t MinNonZeroGroup() const {
     CHECK_NE(NumGroups(), 0);
     return group_to_elements_.begin()->first;
   }
 
-  const std::map<int, std::set<T>>& group_to_elements() const {
+  const std::map<int64_t, std::set<T>>& group_to_elements() const {
     return group_to_elements_;
   }
 
-  const std::map<T, int>& element_to_group() const { return element_to_group_; }
+  const std::map<T, int64_t>& element_to_group() const {
+    return element_to_group_;
+  }
 
  private:
-  std::map<int, std::set<T>> group_to_elements_;
-  std::unordered_map<T, int> element_to_group_;
+  std::map<int64_t, std::set<T>> group_to_elements_;
+  std::unordered_map<T, int64_t> element_to_group_;
 };
 
 // Typedef for the most commonly used version of OrderedGroups.
