@@ -24,6 +24,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b13267ec_4b1e1578",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-03-08T22:47:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8b4cd8e_5ec68a84",
+      "range": {
+        "startLine": 272,
+        "startChar": 8,
+        "endLine": 272,
+        "endChar": 9
+      },
+      "revId": "74a4708f924ec4608780d82e74d4deddbd4b1cfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e9152e9a_5d732da1",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "I understand that this is quite small, but if for some reason the compilation of this test fails, a naive reader would wonder why a test called TestResiduals would be doing this, and then in the very next line we are doing something else.\n\nTEST(DynamicAutoDiffCostFunctionTest, DeductionTemplateCompilationTest) {\n(void)DynamicAutoDiffCostFunction(new MyCostFunctor());\n}\n\nwould be the way to go.",
       "parentUuid": "8b0df70e_d574646c",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 79,
+        "endChar": 35
+      },
+      "revId": "74a4708f924ec4608780d82e74d4deddbd4b1cfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b65a7e7b_22a62e79",
+        "filename": "internal/ceres/dynamic_autodiff_cost_function_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-03-08T22:47:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a405bc57_d7b7dd17",
       "range": {
         "startLine": 79,
         "startChar": 8,
