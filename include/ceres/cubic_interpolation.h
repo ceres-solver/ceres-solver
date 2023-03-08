@@ -95,7 +95,7 @@ void CubicHermiteSpline(const Eigen::Matrix<double, kDataDimension, 1>& p0,
 //   class Grid {
 //    public:
 //     enum { DATA_DIMENSION = 2; };
-//     void GetValue(int n, double* f) const;
+//     void GetValue(int64_t n, double* f) const;
 //   };
 //
 // Here, GetValue gives the value of a function f (possibly vector
@@ -131,7 +131,7 @@ class CubicInterpolator {
   }
 
   void Evaluate(double x, double* f, double* dfdx) const {
-    const int n = std::floor(x);
+    const int64_t n = std::floor(x);
     Eigen::Matrix<double, Grid::DATA_DIMENSION, 1> p0, p1, p2, p3;
     grid_.GetValue(n - 1, p0.data());
     grid_.GetValue(n, p1.data());
@@ -185,13 +185,13 @@ struct Grid1D {
  public:
   enum { DATA_DIMENSION = kDataDimension };
 
-  Grid1D(const T* data, const int begin, const int end)
+  Grid1D(const T* data, const int64_t begin, const int64_t end)
       : data_(data), begin_(begin), end_(end), num_values_(end - begin) {
     CHECK_LT(begin, end);
   }
 
-  EIGEN_STRONG_INLINE void GetValue(const int n, double* f) const {
-    const int idx = (std::min)((std::max)(begin_, n), end_ - 1) - begin_;
+  EIGEN_STRONG_INLINE void GetValue(const int64_t n, double* f) const {
+    const int64_t idx = (std::min)((std::max)(begin_, n), end_ - 1) - begin_;
     if (kInterleaved) {
       for (int i = 0; i < kDataDimension; ++i) {
         f[i] = static_cast<double>(data_[kDataDimension * idx + i]);
@@ -205,9 +205,9 @@ struct Grid1D {
 
  private:
   const T* data_;
-  const int begin_;
-  const int end_;
-  const int num_values_;
+  const int64_t begin_;
+  const int64_t end_;
+  const int64_t num_values_;
 };
 
 // Given as input an infinite two dimensional grid like object, which
@@ -215,7 +215,7 @@ struct Grid1D {
 //
 //   struct Grid {
 //     enum { DATA_DIMENSION = 1 };
-//     void GetValue(int row, int col, double* f) const;
+//     void GetValue(int64_t row, int64_t col, double* f) const;
 //   };
 //
 // Where, GetValue gives us the value of a function f (possibly vector
@@ -276,8 +276,8 @@ class BiCubicInterpolator {
     // The point (r,c) being evaluated is assumed to lie in the square
     // defined by p11, p12, p22 and p21.
 
-    const int row = std::floor(r);
-    const int col = std::floor(c);
+    const int64_t row = std::floor(r);
+    const int64_t col = std::floor(c);
 
     Eigen::Matrix<double, Grid::DATA_DIMENSION, 1> p0, p1, p2, p3;
 
@@ -383,10 +383,10 @@ struct Grid2D {
   enum { DATA_DIMENSION = kDataDimension };
 
   Grid2D(const T* data,
-         const int row_begin,
-         const int row_end,
-         const int col_begin,
-         const int col_end)
+         const int64_t row_begin,
+         const int64_t row_end,
+         const int64_t col_begin,
+         const int64_t col_end)
       : data_(data),
         row_begin_(row_begin),
         row_end_(row_end),
@@ -400,14 +400,16 @@ struct Grid2D {
     CHECK_LT(col_begin, col_end);
   }
 
-  EIGEN_STRONG_INLINE void GetValue(const int r, const int c, double* f) const {
-    const int row_idx =
+  EIGEN_STRONG_INLINE void GetValue(const int64_t r,
+                                    const int64_t c,
+                                    double* f) const {
+    const int64_t row_idx =
         (std::min)((std::max)(row_begin_, r), row_end_ - 1) - row_begin_;
-    const int col_idx =
+    const int64_t col_idx =
         (std::min)((std::max)(col_begin_, c), col_end_ - 1) - col_begin_;
 
-    const int n = (kRowMajor) ? num_cols_ * row_idx + col_idx
-                              : num_rows_ * col_idx + row_idx;
+    const int64_t n = (kRowMajor) ? num_cols_ * row_idx + col_idx
+                                  : num_rows_ * col_idx + row_idx;
 
     if (kInterleaved) {
       for (int i = 0; i < kDataDimension; ++i) {
@@ -422,13 +424,13 @@ struct Grid2D {
 
  private:
   const T* data_;
-  const int row_begin_;
-  const int row_end_;
-  const int col_begin_;
-  const int col_end_;
-  const int num_rows_;
-  const int num_cols_;
-  const int num_values_;
+  const int64_t row_begin_;
+  const int64_t row_end_;
+  const int64_t col_begin_;
+  const int64_t col_end_;
+  const int64_t num_rows_;
+  const int64_t num_cols_;
+  const int64_t num_values_;
 };
 
 }  // namespace ceres

@@ -160,13 +160,17 @@ bool Problem::EvaluateResidualBlockAssumingParametersUnchanged(
                                       jacobians);
 }
 
-int Problem::NumParameterBlocks() const { return impl_->NumParameterBlocks(); }
+int64_t Problem::NumParameterBlocks() const {
+  return impl_->NumParameterBlocks();
+}
 
-int Problem::NumParameters() const { return impl_->NumParameters(); }
+int64_t Problem::NumParameters() const { return impl_->NumParameters(); }
 
-int Problem::NumResidualBlocks() const { return impl_->NumResidualBlocks(); }
+int64_t Problem::NumResidualBlocks() const {
+  return impl_->NumResidualBlocks();
+}
 
-int Problem::NumResiduals() const { return impl_->NumResiduals(); }
+int64_t Problem::NumResiduals() const { return impl_->NumResiduals(); }
 
 int Problem::ParameterBlockSize(const double* values) const {
   return impl_->ParameterBlockSize(values);

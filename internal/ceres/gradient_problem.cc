@@ -57,11 +57,11 @@ GradientProblem::GradientProblem(FirstOrderFunction* function,
   CHECK_EQ(function_->NumParameters(), manifold_->AmbientSize());
 }
 
-int GradientProblem::NumParameters() const {
+int64_t GradientProblem::NumParameters() const {
   return function_->NumParameters();
 }
 
-int GradientProblem::NumTangentParameters() const {
+int64_t GradientProblem::NumTangentParameters() const {
   return manifold_->TangentSize();
 }
 

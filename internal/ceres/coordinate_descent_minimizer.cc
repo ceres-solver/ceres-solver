@@ -76,8 +76,7 @@ bool CoordinateDescentMinimizer::Init(
   // TODO(sameeragarwal): Investigate if parameter_block_index should be an
   // ordered or an unordered container.
   std::map<ParameterBlock*, int> parameter_block_index;
-  std::map<int, std::set<double*>> group_to_elements =
-      ordering.group_to_elements();
+  auto group_to_elements = ordering.group_to_elements();
   for (const auto& g_t_e : group_to_elements) {
     const auto& elements = g_t_e.second;
     for (double* parameter_block : elements) {
@@ -242,8 +241,7 @@ bool CoordinateDescentMinimizer::IsOrderingValid(
     std::string* message) {
   // TODO(sameeragarwal): Investigate if this should be an ordered or an
   // unordered group.
-  const std::map<int, std::set<double*>>& group_to_elements =
-      ordering.group_to_elements();
+  const auto& group_to_elements = ordering.group_to_elements();
 
   // Verify that each group is an independent set
   for (const auto& g_t_e : group_to_elements) {

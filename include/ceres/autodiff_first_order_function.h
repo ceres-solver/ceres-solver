@@ -138,7 +138,7 @@ class AutoDiffFirstOrderFunction final : public FirstOrderFunction {
     return true;
   }
 
-  int NumParameters() const override { return kNumParameters; }
+  int64_t NumParameters() const override { return kNumParameters; }
 
   const FirstOrderFunctor& functor() const { return *functor_; }
 

@@ -56,7 +56,7 @@ class QuadraticTestFunction : public ceres::FirstOrderFunction {
     return true;
   }
 
-  int NumParameters() const final { return 1; }
+  int64_t NumParameters() const final { return 1; }
 
  private:
   bool* flag_to_set_on_destruction_;

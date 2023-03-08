@@ -49,7 +49,7 @@ class QuadraticFirstOrderFunction : public ceres::FirstOrderFunction {
     return true;
   }
 
-  int NumParameters() const final { return 1; }
+  int64_t NumParameters() const final { return 1; }
 };
 
 TEST(LineSearchMinimizerTest, FinalCostIsZero) {

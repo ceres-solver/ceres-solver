@@ -134,6 +134,7 @@ class CERES_EXPORT CostFunction {
   // Cost function signature metadata: number of inputs & their sizes,
   // number of outputs (residuals).
   std::vector<int32_t> parameter_block_sizes_;
+  // TODO(sameeragarwal): Should this be int32_t?
   int num_residuals_;
 };
 

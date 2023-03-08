@@ -839,7 +839,7 @@ void Solve(const Solver::Options& options,
 std::string Solver::Summary::BriefReport() const {
   return StringPrintf(
       "Ceres Solver Report: "
-      "Iterations: %d, "
+      "Iterations: %lld, "
       "Initial cost: %e, "
       "Final cost: %e, "
       "Termination: %s",
@@ -858,25 +858,25 @@ std::string Solver::Summary::FullReport() const {
 
   StringAppendF(&report, "%45s    %21s\n", "Original", "Reduced");
   StringAppendF(&report,
-                "Parameter blocks    % 25d% 25d\n",
+                "Parameter blocks    % 25lld% 25lld\n",
                 num_parameter_blocks,
                 num_parameter_blocks_reduced);
   StringAppendF(&report,
-                "Parameters          % 25d% 25d\n",
+                "Parameters          % 25lld% 25lld\n",
                 num_parameters,
                 num_parameters_reduced);
   if (num_effective_parameters_reduced != num_parameters_reduced) {
     StringAppendF(&report,
-                  "Effective parameters% 25d% 25d\n",
+                  "Effective parameters% 25lld% 25lld\n",
                   num_effective_parameters,
                   num_effective_parameters_reduced);
   }
   StringAppendF(&report,
-                "Residual blocks     % 25d% 25d\n",
+                "Residual blocks     % 25lld% 25lld\n",
                 num_residual_blocks,
                 num_residual_blocks_reduced);
   StringAppendF(&report,
-                "Residuals           % 25d% 25d\n",
+                "Residuals           % 25lld% 25lld\n",
                 num_residuals,
                 num_residuals_reduced);
 
@@ -966,7 +966,7 @@ std::string Solver::Summary::FullReport() const {
           VisibilityClusteringTypeToString(visibility_clustering_type));
     }
     StringAppendF(&report,
-                  "Threads             % 25d% 25d\n",
+                  "Threads             % 25lld% 25lld\n",
                   num_threads_given,
                   num_threads_used);
 
@@ -1008,7 +1008,8 @@ std::string Solver::Summary::FullReport() const {
 
     std::string line_search_direction_string;
     if (line_search_direction_type == LBFGS) {
-      line_search_direction_string = StringPrintf("LBFGS (%d)", max_lbfgs_rank);
+      line_search_direction_string =
+          StringPrintf("LBFGS (%lld)", max_lbfgs_rank);
     } else if (line_search_direction_type == NONLINEAR_CONJUGATE_GRADIENT) {
       line_search_direction_string = NonlinearConjugateGradientTypeToString(
           nonlinear_conjugate_gradient_type);
@@ -1032,7 +1033,7 @@ std::string Solver::Summary::FullReport() const {
 
     StringAppendF(&report, "%45s    %21s\n", "Given", "Used");
     StringAppendF(&report,
-                  "Threads             % 25d% 25d\n",
+                  "Threads             % 25lld% 25lld\n",
                   num_threads_given,
                   num_threads_used);
   }
@@ -1045,7 +1046,7 @@ std::string Solver::Summary::FullReport() const {
   }
 
   StringAppendF(&report,
-                "\nMinimizer iterations         % 16d\n",
+                "\nMinimizer iterations         % 16lld\n",
                 num_successful_steps + num_unsuccessful_steps);
 
   // Successful/Unsuccessful steps only matter in the case of the
@@ -1053,15 +1054,15 @@ std::string Solver::Summary::FullReport() const {
   // the first unsuccessful step.
   if (minimizer_type == TRUST_REGION) {
     StringAppendF(&report,
-                  "Successful steps               % 14d\n",
+                  "Successful steps               % 14lld\n",
                   num_successful_steps);
     StringAppendF(&report,
-                  "Unsuccessful steps             % 14d\n",
+                  "Unsuccessful steps             % 14lld\n",
                   num_unsuccessful_steps);
   }
   if (inner_iterations_used) {
     StringAppendF(&report,
-                  "Steps with inner iterations    % 14d\n",
+                  "Steps with inner iterations    % 14lld\n",
                   num_inner_iteration_steps);
   }
 
@@ -1071,7 +1072,7 @@ std::string Solver::Summary::FullReport() const {
 
   if (line_search_used) {
     StringAppendF(&report,
-                  "Line search steps              % 14d\n",
+                  "Line search steps              % 14lld\n",
                   num_line_search_steps);
   }
 
@@ -1080,7 +1081,7 @@ std::string Solver::Summary::FullReport() const {
       &report, "Preprocessor        %25.6f\n", preprocessor_time_in_seconds);
 
   StringAppendF(&report,
-                "\n  Residual only evaluation %18.6f (%d)\n",
+                "\n  Residual only evaluation %18.6f (%lld)\n",
                 residual_evaluation_time_in_seconds,
                 num_residual_evaluations);
   if (line_search_used) {
@@ -1089,7 +1090,7 @@ std::string Solver::Summary::FullReport() const {
                   line_search_cost_evaluation_time_in_seconds);
   }
   StringAppendF(&report,
-                "  Jacobian & residual evaluation %12.6f (%d)\n",
+                "  Jacobian & residual evaluation %12.6f (%lld)\n",
                 jacobian_evaluation_time_in_seconds,
                 num_jacobian_evaluations);
   if (line_search_used) {
@@ -1100,7 +1101,7 @@ std::string Solver::Summary::FullReport() const {
 
   if (minimizer_type == TRUST_REGION) {
     StringAppendF(&report,
-                  "  Linear solver       %23.6f (%d)\n",
+                  "  Linear solver       %23.6f (%lld)\n",
                   linear_solver_time_in_seconds,
                   num_linear_solves);
   }

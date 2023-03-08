@@ -43,8 +43,8 @@ namespace ceres {
 struct CERES_EXPORT CRSMatrix {
   CRSMatrix() = default;
 
-  int num_rows{0};
-  int num_cols{0};
+  int64_t num_rows{0};
+  int64_t num_cols{0};
 
   // A compressed row matrix stores its contents in three arrays,
   // rows, cols and values.
@@ -75,8 +75,8 @@ struct CERES_EXPORT CRSMatrix {
   //  cols   = [ 1,  3,  1,  2,  3,  0,  1]
   //  values = [10,  4,  2, -3,  2,  1,  2]
 
-  std::vector<int> cols;
-  std::vector<int> rows;
+  std::vector<int64_t> cols;
+  std::vector<int64_t> rows;
   std::vector<double> values;
 };
 

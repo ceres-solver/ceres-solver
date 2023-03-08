@@ -804,11 +804,12 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
   problem_->Evaluate(evaluate_options_, nullptr, nullptr, nullptr, &jacobian);
   event_logger.AddEvent("Evaluate");
 
-  using EigenSparseMatrix = Eigen::SparseMatrix<double, Eigen::ColMajor>;
+  using EigenSparseMatrix =
+      Eigen::SparseMatrix<double, Eigen::ColMajor, int64_t>;
 
   // Convert the matrix to column major order as required by SparseQR.
   EigenSparseMatrix sparse_jacobian =
-      Eigen::Map<Eigen::SparseMatrix<double, Eigen::RowMajor>>(
+      Eigen::Map<Eigen::SparseMatrix<double, Eigen::RowMajor, int64_t>>(
           jacobian.num_rows,
           jacobian.num_cols,
           static_cast<int>(jacobian.values.size()),
@@ -817,7 +818,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
           jacobian.values.data());
   event_logger.AddEvent("ConvertToSparseMatrix");
 
-  Eigen::SparseQR<EigenSparseMatrix, Eigen::COLAMDOrdering<int>> qr;
+  Eigen::SparseQR<EigenSparseMatrix, Eigen::COLAMDOrdering<int64_t>> qr;
   if (options_.column_pivot_threshold > 0) {
     qr.setPivotThreshold(options_.column_pivot_threshold);
   }
@@ -865,12 +866,12 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
         const int row_end = rows[r + 1];
         if (row_end != row_begin) {
           double* solution = workspace.get() + thread_id * num_cols;
-          SolveRTRWithSparseRHS<int>(num_cols,
-                                     qr.matrixR().innerIndexPtr(),
-                                     qr.matrixR().outerIndexPtr(),
-                                     &qr.matrixR().data().value(0),
-                                     inverse_permutation.indices().coeff(r),
-                                     solution);
+          SolveRTRWithSparseRHS<int64_t>(num_cols,
+                                         qr.matrixR().innerIndexPtr(),
+                                         qr.matrixR().outerIndexPtr(),
+                                         &qr.matrixR().data().value(0),
+                                         inverse_permutation.indices().coeff(r),
+                                         solution);
 
           // Assign the values of the computed covariance using the
           // inverse permutation used in the QR factorization.

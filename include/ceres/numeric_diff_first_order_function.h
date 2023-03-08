@@ -200,13 +200,13 @@ class NumericDiffFirstOrderFunction final : public FirstOrderFunction {
     }
   }
 
-  int NumParameters() const override { return num_parameters_; }
+  int64_t NumParameters() const override { return num_parameters_; }
 
   const FirstOrderFunctor& functor() const { return *functor_; }
 
  private:
   std::unique_ptr<FirstOrderFunctor> functor_;
-  const int num_parameters_;
+  const int64_t num_parameters_;
   const Ownership ownership_;
   const NumericDiffOptions options_;
 };

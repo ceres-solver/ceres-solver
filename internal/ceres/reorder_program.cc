@@ -220,7 +220,7 @@ bool ApplyOrdering(const ProblemImpl::ParameterMap& parameter_map,
     *error = StringPrintf(
         "User specified ordering does not have the same "
         "number of parameters as the problem. The problem"
-        "has %d blocks while the ordering has %d blocks.",
+        "has %d blocks while the ordering has %ld blocks.",
         num_parameter_blocks,
         ordering.NumElements());
     return false;
@@ -232,7 +232,7 @@ bool ApplyOrdering(const ProblemImpl::ParameterMap& parameter_map,
 
   // TODO(sameeragarwal): Investigate whether this should be a set or an
   // unordered_set.
-  const std::map<int, std::set<double*>>& groups = ordering.group_to_elements();
+  const auto& groups = ordering.group_to_elements();
   for (const auto& p : groups) {
     const std::set<double*>& group = p.second;
     for (double* parameter_block_ptr : group) {
