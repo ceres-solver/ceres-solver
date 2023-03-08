@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2022 Google Inc. All rights reserved.
+// Copyright 2023 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -801,6 +801,11 @@ TEST(DynamicAutoDiffCostFunction,
 
   EXPECT_TRUE(cost_function.Evaluate(parameter_blocks, &residual, jacobians));
   EXPECT_EQ(residual, target_value);
+}
+
+TEST(DynamicAutoDiffCostFunctionTest, DeductionTemplateCompilationTest) {
+  // Ensure deduction guide to be working
+  (void)DynamicAutoDiffCostFunction(new MyCostFunctor());
 }
 
 }  // namespace ceres::internal
