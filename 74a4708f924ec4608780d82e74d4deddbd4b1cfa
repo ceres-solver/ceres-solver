@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9152e9a_5d732da1",
+        "filename": "internal/ceres/dynamic_autodiff_cost_function_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-03-08T21:32:11Z",
+      "side": 1,
+      "message": "make this its own test, its weird to have this here like this.",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 79,
+        "endChar": 35
+      },
+      "revId": "74a4708f924ec4608780d82e74d4deddbd4b1cfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f16620f5_0a58bba4",
+        "filename": "internal/ceres/dynamic_autodiff_cost_function_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-03-08T21:32:11Z",
+      "side": 1,
+      "message": "shouldn\u0027t this and other invocations change to make use of the guide?",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 29
+      },
+      "revId": "74a4708f924ec4608780d82e74d4deddbd4b1cfa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
