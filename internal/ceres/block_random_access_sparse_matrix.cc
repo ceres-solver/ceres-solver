@@ -49,11 +49,8 @@ BlockRandomAccessSparseMatrix::BlockRandomAccessSparseMatrix(
     const std::set<std::pair<int, int>>& block_pairs,
     ContextImpl* context,
     int num_threads)
-    : kMaxRowBlocks(10 * 1000 * 1000),
-      blocks_(blocks),
-      context_(context),
-      num_threads_(num_threads) {
-  CHECK_LT(blocks.size(), kMaxRowBlocks);
+    : blocks_(blocks), context_(context), num_threads_(num_threads) {
+  CHECK_LE(blocks.size(), std::numeric_limits<std::int32_t>::max());
 
   const int num_cols = NumScalarEntries(blocks);
 
@@ -82,7 +79,7 @@ BlockRandomAccessSparseMatrix::BlockRandomAccessSparseMatrix(
     const int row_block_size = blocks_[block_pair.first].size;
     const int col_block_size = blocks_[block_pair.second].size;
     cell_values_.emplace_back(block_pair, values + pos);
-    layout_[IntPairToLong(block_pair.first, block_pair.second)] =
+    layout_[IntPairToInt64(block_pair.first, block_pair.second)] =
         std::make_unique<CellInfo>(values + pos);
     pos += row_block_size * col_block_size;
   }
@@ -94,7 +91,7 @@ BlockRandomAccessSparseMatrix::BlockRandomAccessSparseMatrix(
     const int row_block_size = blocks_[row_block_id].size;
     const int col_block_size = blocks_[col_block_id].size;
     int pos =
-        layout_[IntPairToLong(row_block_id, col_block_id)]->values - values;
+        layout_[IntPairToInt64(row_block_id, col_block_id)]->values - values;
     for (int r = 0; r < row_block_size; ++r) {
       for (int c = 0; c < col_block_size; ++c, ++pos) {
         rows[pos] = blocks_[row_block_id].position + r;
@@ -113,7 +110,7 @@ CellInfo* BlockRandomAccessSparseMatrix::GetCell(int row_block_id,
                                                  int* col,
                                                  int* row_stride,
                                                  int* col_stride) {
-  const auto it = layout_.find(IntPairToLong(row_block_id, col_block_id));
+  const auto it = layout_.find(IntPairToInt64(row_block_id, col_block_id));
   if (it == layout_.end()) {
     return nullptr;
   }
