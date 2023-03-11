@@ -96,16 +96,16 @@ class CERES_NO_EXPORT BlockRandomAccessSparseMatrix
   TripletSparseMatrix* mutable_matrix() { return tsm_.get(); }
 
  private:
-  int64_t IntPairToLong(int row, int col) const {
+  int64_t IntPairToInt64(int row, int col) const {
     return row * kMaxRowBlocks + col;
   }
 
-  void LongToIntPair(int64_t index, int* row, int* col) const {
+  void Int64ToIntPair(int64_t index, int* row, int* col) const {
     *row = index / kMaxRowBlocks;
     *col = index % kMaxRowBlocks;
   }
 
-  const int64_t kMaxRowBlocks;
+  constexpr static int64_t kMaxRowBlocks{1ull << 32};
 
   // row/column block sizes.
   const std::vector<Block> blocks_;
@@ -114,7 +114,7 @@ class CERES_NO_EXPORT BlockRandomAccessSparseMatrix
 
   // A mapping from <row_block_id, col_block_id> to the position in
   // the values array of tsm_ where the block is stored.
-  using LayoutType = std::unordered_map<long, std::unique_ptr<CellInfo>>;
+  using LayoutType = std::unordered_map<int64_t, std::unique_ptr<CellInfo>>;
   LayoutType layout_;
 
   // In order traversal of contents of the matrix. This allows us to
