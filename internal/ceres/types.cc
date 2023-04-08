@@ -103,6 +103,7 @@ bool StringToPreconditionerType(std::string value, PreconditionerType* type) {
 const char* SparseLinearAlgebraLibraryTypeToString(
     SparseLinearAlgebraLibraryType type) {
   switch (type) {
+    CASESTR(MKL);
     CASESTR(SUITE_SPARSE);
     CASESTR(EIGEN_SPARSE);
     CASESTR(ACCELERATE_SPARSE);
@@ -116,6 +117,7 @@ const char* SparseLinearAlgebraLibraryTypeToString(
 bool StringToSparseLinearAlgebraLibraryType(
     std::string value, SparseLinearAlgebraLibraryType* type) {
   UpperCase(&value);
+  STRENUM(MKL);
   STRENUM(SUITE_SPARSE);
   STRENUM(EIGEN_SPARSE);
   STRENUM(ACCELERATE_SPARSE);
@@ -399,6 +401,14 @@ bool IsSparseLinearAlgebraLibraryTypeAvailable(
     SparseLinearAlgebraLibraryType type) {
   if (type == SUITE_SPARSE) {
 #ifdef CERES_NO_SUITESPARSE
+    return false;
+#else
+    return true;
+#endif
+  }
+
+  if (type == MKL) {
+#ifdef CERES_NO_MKL
     return false;
 #else
     return true;
