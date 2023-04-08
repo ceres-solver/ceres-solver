@@ -128,13 +128,7 @@ struct BALData {
   std::unique_ptr<CompressedRowSparseMatrix> CreateCompressedRowSparseJacobian(
       ContextImpl* context) {
     auto block_sparse = BlockSparseJacobian(context);
-    auto crs_jacobian = std::make_unique<CompressedRowSparseMatrix>(
-        block_sparse->num_rows(),
-        block_sparse->num_cols(),
-        block_sparse->num_nonzeros());
-
-    block_sparse->ToCompressedRowSparseMatrix(crs_jacobian.get());
-    return crs_jacobian;
+    return block_sparse->ToCompressedRowSparseMatrix();
   }
 
   const BlockSparseMatrix* BlockSparseJacobian(ContextImpl* context) {

@@ -91,12 +91,11 @@ TEST(BlockRandomAccessSparseMatrix, GetCell) {
         Matrix::Ones(blocks[row_block_id].size, blocks[col_block_id].size);
   }
 
-  const TripletSparseMatrix* tsm = m.matrix();
-  EXPECT_EQ(tsm->num_nonzeros(), num_nonzeros);
-  EXPECT_EQ(tsm->max_num_nonzeros(), num_nonzeros);
+  const BlockSparseMatrix* bsm = m.matrix();
+  EXPECT_EQ(bsm->num_nonzeros(), num_nonzeros);
 
   Matrix dense;
-  tsm->ToDenseMatrix(&dense);
+  bsm->ToDenseMatrix(&dense);
 
   double kTolerance = 1e-14;
 

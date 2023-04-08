@@ -91,7 +91,20 @@ class CERES_NO_EXPORT BlockSparseMatrix final : public SparseMatrix {
   void ScaleColumns(const double* scale,
                     ContextImpl* context,
                     int num_threads) final;
-  void ToCompressedRowSparseMatrix(CompressedRowSparseMatrix* matrix) const;
+
+  // Convert to CompressedRowSparseMatrix
+  std::unique_ptr<CompressedRowSparseMatrix> ToCompressedRowSparseMatrix()
+      const;
+  // Create CompressedRowSparseMatrix corresponding to transposed matrix
+  std::unique_ptr<CompressedRowSparseMatrix>
+  ToCompressedRowSparseMatrixTranspose() const;
+  // Copy values to CompressedRowSparseMatrix that has compatible structure
+  void UpdateCompressedRowSparseMatrix(
+      CompressedRowSparseMatrix* crs_matrix) const;
+  // Copy values to CompressedRowSparseMatrix that has structure of transposed
+  // matrix
+  void UpdateCompressedRowSparseMatrixTranspose(
+      CompressedRowSparseMatrix* crs_matrix) const;
   void ToDenseMatrix(Matrix* dense_matrix) const final;
   void ToTextFile(FILE* file) const final;
 
