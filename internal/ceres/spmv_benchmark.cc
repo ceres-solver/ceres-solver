@@ -183,21 +183,18 @@ static void BM_CRSRightMultiplyAndAccumulateBA(benchmark::State& state) {
   auto bsm_jacobian = CreateFakeBundleAdjustmentJacobian(
       kNumCameras, kNumPoints, kCameraSize, kPointSize, kVisibility, prng);
 
-  CompressedRowSparseMatrix jacobian(bsm_jacobian->num_rows(),
-                                     bsm_jacobian->num_cols(),
-                                     bsm_jacobian->num_nonzeros());
-  bsm_jacobian->ToCompressedRowSparseMatrix(&jacobian);
+  auto jacobian = bsm_jacobian->ToCompressedRowSparseMatrix();
 
   ContextImpl context;
   context.EnsureMinimumThreads(num_threads);
 
-  Vector x(jacobian.num_cols());
-  Vector y(jacobian.num_rows());
+  Vector x(jacobian->num_cols());
+  Vector y(jacobian->num_rows());
   x.setRandom();
   y.setRandom();
   double sum = 0;
   for (auto _ : state) {
-    jacobian.RightMultiplyAndAccumulate(
+    jacobian->RightMultiplyAndAccumulate(
         x.data(), y.data(), &context, num_threads);
     sum += y.norm();
   }
@@ -225,21 +222,18 @@ static void BM_CRSRightMultiplyAndAccumulateUnstructured(
   std::mt19937 prng;
 
   auto bsm_jacobian = BlockSparseMatrix::CreateRandomMatrix(options, prng);
-  CompressedRowSparseMatrix jacobian(bsm_jacobian->num_rows(),
-                                     bsm_jacobian->num_cols(),
-                                     bsm_jacobian->num_nonzeros());
-  bsm_jacobian->ToCompressedRowSparseMatrix(&jacobian);
+  auto jacobian = bsm_jacobian->ToCompressedRowSparseMatrix();
 
   ContextImpl context;
   context.EnsureMinimumThreads(num_threads);
 
-  Vector x(jacobian.num_cols());
-  Vector y(jacobian.num_rows());
+  Vector x(jacobian->num_cols());
+  Vector y(jacobian->num_rows());
   x.setRandom();
   y.setRandom();
   double sum = 0;
   for (auto _ : state) {
-    jacobian.RightMultiplyAndAccumulate(
+    jacobian->RightMultiplyAndAccumulate(
         x.data(), y.data(), &context, num_threads);
     sum += y.norm();
   }
@@ -258,19 +252,16 @@ static void BM_CRSLeftMultiplyAndAccumulateBA(benchmark::State& state) {
   // Perform setup here
   auto bsm_jacobian = CreateFakeBundleAdjustmentJacobian(
       kNumCameras, kNumPoints, kCameraSize, kPointSize, kVisibility, prng);
-  CompressedRowSparseMatrix jacobian(bsm_jacobian->num_rows(),
-                                     bsm_jacobian->num_cols(),
-                                     bsm_jacobian->num_nonzeros());
-  bsm_jacobian->ToCompressedRowSparseMatrix(&jacobian);
+  auto jacobian = bsm_jacobian->ToCompressedRowSparseMatrix();
 
-  Vector x(jacobian.num_rows());
-  Vector y(jacobian.num_cols());
+  Vector x(jacobian->num_rows());
+  Vector y(jacobian->num_cols());
   x.setRandom();
   y.setRandom();
   double sum = 0;
   for (auto _ : state) {
     // This code gets timed
-    jacobian.LeftMultiplyAndAccumulate(x.data(), y.data());
+    jacobian->LeftMultiplyAndAccumulate(x.data(), y.data());
     sum += y.norm();
   }
   CHECK_NE(sum, 0.0);
@@ -291,19 +282,16 @@ static void BM_CRSLeftMultiplyAndAccumulateUnstructured(
   std::mt19937 prng;
 
   auto bsm_jacobian = BlockSparseMatrix::CreateRandomMatrix(options, prng);
-  CompressedRowSparseMatrix jacobian(bsm_jacobian->num_rows(),
-                                     bsm_jacobian->num_cols(),
-                                     bsm_jacobian->num_nonzeros());
-  bsm_jacobian->ToCompressedRowSparseMatrix(&jacobian);
+  auto jacobian = bsm_jacobian->ToCompressedRowSparseMatrix();
 
-  Vector x(jacobian.num_rows());
-  Vector y(jacobian.num_cols());
+  Vector x(jacobian->num_rows());
+  Vector y(jacobian->num_cols());
   x.setRandom();
   y.setRandom();
   double sum = 0;
   for (auto _ : state) {
     // This code gets timed
-    jacobian.LeftMultiplyAndAccumulate(x.data(), y.data());
+    jacobian->LeftMultiplyAndAccumulate(x.data(), y.data());
     sum += y.norm();
   }
   CHECK_NE(sum, 0.0);
@@ -319,10 +307,8 @@ static void BM_CudaRightMultiplyAndAccumulateBA(benchmark::State& state) {
   ContextImpl context;
   std::string message;
   context.InitCuda(&message);
-  CompressedRowSparseMatrix jacobian_crs(
-      jacobian->num_rows(), jacobian->num_cols(), jacobian->num_nonzeros());
-  jacobian->ToCompressedRowSparseMatrix(&jacobian_crs);
-  CudaSparseMatrix cuda_jacobian(&context, jacobian_crs);
+  auto jacobian_crs = jacobian->ToCompressedRowSparseMatrix();
+  CudaSparseMatrix cuda_jacobian(&context, *jacobian_crs);
   CudaVector cuda_x(&context, 0);
   CudaVector cuda_y(&context, 0);
 
@@ -360,10 +346,8 @@ static void BM_CudaRightMultiplyAndAccumulateUnstructured(
   ContextImpl context;
   std::string message;
   context.InitCuda(&message);
-  CompressedRowSparseMatrix jacobian_crs(
-      jacobian->num_rows(), jacobian->num_cols(), jacobian->num_nonzeros());
-  jacobian->ToCompressedRowSparseMatrix(&jacobian_crs);
-  CudaSparseMatrix cuda_jacobian(&context, jacobian_crs);
+  auto jacobian_crs = jacobian->ToCompressedRowSparseMatrix();
+  CudaSparseMatrix cuda_jacobian(&context, *jacobian_crs);
   CudaVector cuda_x(&context, 0);
   CudaVector cuda_y(&context, 0);
 
@@ -392,10 +376,8 @@ static void BM_CudaLeftMultiplyAndAccumulateBA(benchmark::State& state) {
   ContextImpl context;
   std::string message;
   context.InitCuda(&message);
-  CompressedRowSparseMatrix jacobian_crs(
-      jacobian->num_rows(), jacobian->num_cols(), jacobian->num_nonzeros());
-  jacobian->ToCompressedRowSparseMatrix(&jacobian_crs);
-  CudaSparseMatrix cuda_jacobian(&context, jacobian_crs);
+  auto jacobian_crs = jacobian->ToCompressedRowSparseMatrix();
+  CudaSparseMatrix cuda_jacobian(&context, *jacobian_crs);
   CudaVector cuda_x(&context, 0);
   CudaVector cuda_y(&context, 0);
 
@@ -433,10 +415,8 @@ static void BM_CudaLeftMultiplyAndAccumulateUnstructured(
   ContextImpl context;
   std::string message;
   context.InitCuda(&message);
-  CompressedRowSparseMatrix jacobian_crs(
-      jacobian->num_rows(), jacobian->num_cols(), jacobian->num_nonzeros());
-  jacobian->ToCompressedRowSparseMatrix(&jacobian_crs);
-  CudaSparseMatrix cuda_jacobian(&context, jacobian_crs);
+  auto jacobian_crs = jacobian->ToCompressedRowSparseMatrix();
+  CudaSparseMatrix cuda_jacobian(&context, *jacobian_crs);
   CudaVector cuda_x(&context, 0);
   CudaVector cuda_y(&context, 0);
 
