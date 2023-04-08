@@ -179,8 +179,27 @@ include(CMakeFindDependencyMacro)
 # Optional dependencies
 @METIS_DEPENDENCY@
 @SuiteSparse_DEPENDENCY@
+# MKL supports different bit-width of integer indices which should be selected
+# at the compile-time. We enforce lp64 interface while searching for MKL library
+# in order to avoid extra conversions whenever possible. If target is already
+# present, an error is issued on MKL_INTERFACE mismatch (because both lp64 and
+# ilp64 versions have symbols with the same names).
+set(CERES_USES_MKL @USE_MKL@)
+if (CERES_USES_MKL)
+  if (TARGET MKL::MKL)
+    if (NOT MKL_INTERFACE STREQUAL @MKL_INTERFACE@)
+      ceres_report_not_found(
+        "Ceres-solver is built using MKL with interface @MKL_INTERFACE@, "
+        "but target MKL::MKL is present and interface is ${MKL_INTERFACE}")
+    endif ()
+  else ()
+    set(MKL_INTERFACE @MKL_INTERFACE@)
+    @MKL_DEPENDENCY@
+  endif()
+endif(CERES_USES_MKL)
 @CUDAToolkit_DEPENDENCY@
 @Threads_DEPENDENCY@
+
 
 # As imported CMake targets are not re-exported when a dependent target is
 # exported, we must invoke find_package(XXX) here to reload the definition

@@ -196,6 +196,18 @@ TEST_P(SparseCholeskyTest, FactorAndSolve) {
 
 namespace {
 
+#ifdef CERES_USE_MKL
+INSTANTIATE_TEST_SUITE_P(
+    MklSparseCholesky,
+    SparseCholeskyTest,
+    ::testing::Combine(::testing::Values(MKL_SPARSE),
+                       ::testing::Values(OrderingType::AMD,
+                                         OrderingType::NESDIS,
+                                         OrderingType::NATURAL),
+                       ::testing::Values(true, false)),
+    ParamInfoToString);
+#endif
+
 #ifndef CERES_NO_SUITESPARSE
 INSTANTIATE_TEST_SUITE_P(
     SuiteSparseCholesky,

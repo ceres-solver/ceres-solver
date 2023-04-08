@@ -51,8 +51,10 @@ DENSE_SOLVER_CONFIGS = [
 SPARSE_SOLVER_CONFIGS = [
     # Linear solver            Sparse backend
     ('SPARSE_NORMAL_CHOLESKY', 'SUITE_SPARSE'),
+    ('SPARSE_NORMAL_CHOLESKY', 'MKL_SPARSE'),
     ('SPARSE_NORMAL_CHOLESKY', 'EIGEN_SPARSE'),
     ('SPARSE_NORMAL_CHOLESKY', 'ACCELERATE_SPARSE'),
+    ('SPARSE_SCHUR',           'MKL_SPARSE'),
     ('SPARSE_SCHUR',           'SUITE_SPARSE'),
     ('SPARSE_SCHUR',           'EIGEN_SPARSE'),
     ('SPARSE_SCHUR',           'ACCELERATE_SPARSE'),
@@ -63,9 +65,11 @@ ITERATIVE_SOLVER_CONFIGS = [
     ('ITERATIVE_SCHUR',        'NO_SPARSE',        'JACOBI'),
     ('ITERATIVE_SCHUR',        'NO_SPARSE',        'SCHUR_JACOBI'),
     ('ITERATIVE_SCHUR',        'NO_SPARSE',        'SCHUR_POWER_SERIES_EXPANSION'),
+    ('ITERATIVE_SCHUR',        'MKL_SPARSE',       'CLUSTER_JACOBI'),
     ('ITERATIVE_SCHUR',        'SUITE_SPARSE',     'CLUSTER_JACOBI'),
     ('ITERATIVE_SCHUR',        'EIGEN_SPARSE',     'CLUSTER_JACOBI'),
     ('ITERATIVE_SCHUR',        'ACCELERATE_SPARSE','CLUSTER_JACOBI'),
+    ('ITERATIVE_SCHUR',        'MKL_SPARSE',       'CLUSTER_TRIDIAGONAL'),
     ('ITERATIVE_SCHUR',        'SUITE_SPARSE',     'CLUSTER_TRIDIAGONAL'),
     ('ITERATIVE_SCHUR',        'EIGEN_SPARSE',     'CLUSTER_TRIDIAGONAL'),
     ('ITERATIVE_SCHUR',        'ACCELERATE_SPARSE','CLUSTER_TRIDIAGONAL'),
@@ -80,6 +84,7 @@ FILENAME_SHORTENING_MAP = dict(
   LAPACK='lapack',
   CUDA='cuda',
   NO_SPARSE='',  # Omit sparse reference entirely for dense tests.
+  MKL_SPARSE='mklsparse',
   SUITE_SPARSE='suitesparse',
   EIGEN_SPARSE='eigensparse',
   ACCELERATE_SPARSE='acceleratesparse',
@@ -217,6 +222,10 @@ def generate_bundle_test(linear_solver,
   elif sparse_backend == 'EIGEN_SPARSE':
     preprocessor_conditions_begin.append('#ifdef CERES_USE_EIGEN_SPARSE')
     preprocessor_conditions_end.insert(0, '#endif  // CERES_USE_EIGEN_SPARSE')
+  elif sparse_backend == 'MKL_SPARSE':
+    preprocessor_conditions_begin.append('#ifdef CERES_USE_MKL')
+    preprocessor_conditions_end.insert(0, '#endif  // CERES_USE_MKL')
+
 
   if dense_backend == "LAPACK":
     preprocessor_conditions_begin.append('#ifndef CERES_NO_LAPACK')

@@ -115,6 +115,7 @@ bool ReorderProgram(PreprocessedProblem* pp) {
         options.sparse_linear_algebra_library_type,
         options.linear_solver_ordering_type,
         pp->problem->parameter_map(),
+        options.num_threads,
         options.linear_solver_ordering.get(),
         pp->reduced_program.get(),
         &pp->error);
@@ -127,6 +128,7 @@ bool ReorderProgram(PreprocessedProblem* pp) {
         options.linear_solver_ordering_type,
         *options.linear_solver_ordering,
         0, /* use all the rows of the jacobian */
+        options.num_threads,
         pp->reduced_program.get(),
         &pp->error);
   }
@@ -143,6 +145,7 @@ bool ReorderProgram(PreprocessedProblem* pp) {
         options.linear_solver_ordering_type,
         *options.linear_solver_ordering,
         pp->linear_solver_options.subset_preconditioner_start_row_block,
+        options.num_threads,
         pp->reduced_program.get(),
         &pp->error);
   }
