@@ -56,6 +56,9 @@
 // If defined, Ceres was compiled without Apple's Accelerate framework solvers.
 @CERES_NO_ACCELERATE_SPARSE@
 
+@CERES_NO_MKL@
+@CERES_USE_MKL@
+
 #if defined(CERES_NO_SUITESPARSE) &&              \
     defined(CERES_NO_ACCELERATE_SPARSE) &&        \
     !defined(CERES_USE_EIGEN_SPARSE)  // NOLINT
