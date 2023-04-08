@@ -131,6 +131,8 @@ void SparseCholeskySolverUnitTest(
     lhs->mutable_row_blocks()->clear();
     lhs->mutable_col_blocks()->clear();
   }
+  Matrix eigen_lhs;
+  lhs->ToDenseMatrix(&eigen_lhs);
 
   Vector rhs = Vector::Random(lhs->num_rows());
   Vector expected(lhs->num_rows());
@@ -141,8 +143,6 @@ void SparseCholeskySolverUnitTest(
   EXPECT_EQ(
       sparse_cholesky->FactorAndSolve(lhs, rhs.data(), actual.data(), &message),
       LinearSolverTerminationType::SUCCESS);
-  Matrix eigen_lhs;
-  lhs->ToDenseMatrix(&eigen_lhs);
   EXPECT_NEAR((actual - expected).norm() / actual.norm(),
               0.0,
               std::numeric_limits<double>::epsilon() * 20)
@@ -195,6 +195,18 @@ TEST_P(SparseCholeskyTest, FactorAndSolve) {
 }
 
 namespace {
+
+#ifndef CERES_NO_MKL
+INSTANTIATE_TEST_SUITE_P(
+    MKLSparseCholesky,
+    SparseCholeskyTest,
+    ::testing::Combine(::testing::Values(MKL),
+                       ::testing::Values(OrderingType::AMD,
+                                         OrderingType::NESDIS,
+                                         OrderingType::NATURAL),
+                       ::testing::Values(true, false)),
+    ParamInfoToString);
+#endif
 
 #ifndef CERES_NO_SUITESPARSE
 INSTANTIATE_TEST_SUITE_P(

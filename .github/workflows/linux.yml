@@ -47,7 +47,17 @@ jobs:
             liblapack-dev \
             libmetis-dev \
             libsuitesparse-dev \
-            ninja-build
+            ninja-build \
+            wget
+      - name: Setup MKL
+        run: |
+          wget https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB
+          apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB
+          echo 'deb https://apt.repos.intel.com/oneapi all main' > /etc/apt/sources.list.d/intel-oneapi.list
+          apt-get update && apt-get install -y intel-oneapi-mkl-devel
+          source /opt/intel/oneapi/setvars.sh
+          printenv >> $GITHUB_ENV
+
 
       - name: Setup CUDA toolkit
         if: matrix.gpu == 'cuda'
@@ -78,6 +88,7 @@ jobs:
                 -DCMAKE_BUILD_TYPE=${{matrix.build_type}} \
                 -DCMAKE_C_COMPILER_LAUNCHER=$(which ccache) \
                 -DCMAKE_CXX_COMPILER_LAUNCHER=$(which ccache) \
+                -DMKL=ON \
                 -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install
 
       - name: Build
