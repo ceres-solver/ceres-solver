@@ -299,32 +299,36 @@ LinearSolver::Summary SparseSchurComplementSolver::SolveReducedLinearSystem(
   summary.termination_type = LinearSolverTerminationType::SUCCESS;
   summary.message = "Success.";
 
-  const TripletSparseMatrix* tsm =
+  const BlockSparseMatrix* bsm =
       down_cast<const BlockRandomAccessSparseMatrix*>(lhs())->matrix();
-  if (tsm->num_rows() == 0) {
+  if (bsm->num_rows() == 0) {
     return summary;
   }
 
-  std::unique_ptr<CompressedRowSparseMatrix> lhs;
   const CompressedRowSparseMatrix::StorageType storage_type =
       sparse_cholesky_->StorageType();
   if (storage_type ==
       CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR) {
-    lhs = CompressedRowSparseMatrix::FromTripletSparseMatrix(*tsm);
-    lhs->set_storage_type(
-        CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR);
+    if (!crs_lhs_) {
+      crs_lhs_ = bsm->ToCompressedRowSparseMatrix();
+      crs_lhs_->set_storage_type(
+          CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR);
+    } else {
+      bsm->UpdateCompressedRowSparseMatrix(crs_lhs_.get());
+    }
   } else {
-    lhs = CompressedRowSparseMatrix::FromTripletSparseMatrixTransposed(*tsm);
-    lhs->set_storage_type(
-        CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR);
+    if (!crs_lhs_) {
+      crs_lhs_ = bsm->ToCompressedRowSparseMatrixTranspose();
+      crs_lhs_->set_storage_type(
+          CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR);
+    } else {
+      bsm->UpdateCompressedRowSparseMatrixTranspose(crs_lhs_.get());
+    }
   }
-
-  *lhs->mutable_col_blocks() = blocks_;
-  *lhs->mutable_row_blocks() = blocks_;
 
   summary.num_iterations = 1;
   summary.termination_type = sparse_cholesky_->FactorAndSolve(
-      lhs.get(), rhs().data(), solution, &summary.message);
+      crs_lhs_.get(), rhs().data(), solution, &summary.message);
   return summary;
 }
 

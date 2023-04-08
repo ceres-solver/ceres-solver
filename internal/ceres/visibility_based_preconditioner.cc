@@ -392,27 +392,33 @@ void VisibilityBasedPreconditioner::ScaleOffDiagonalCells() {
 // Compute the sparse Cholesky factorization of the preconditioner
 // matrix.
 LinearSolverTerminationType VisibilityBasedPreconditioner::Factorize() {
-  // Extract the TripletSparseMatrix that is used for actually storing
+  // Extract the BlockSparseMatrix that is used for actually storing
   // S and convert it into a CompressedRowSparseMatrix.
-  const TripletSparseMatrix* tsm =
-      down_cast<BlockRandomAccessSparseMatrix*>(m_.get())->mutable_matrix();
-
-  std::unique_ptr<CompressedRowSparseMatrix> lhs;
+  const BlockSparseMatrix* bsm =
+      down_cast<BlockRandomAccessSparseMatrix*>(m_.get())->matrix();
   const CompressedRowSparseMatrix::StorageType storage_type =
       sparse_cholesky_->StorageType();
   if (storage_type ==
       CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR) {
-    lhs = CompressedRowSparseMatrix::FromTripletSparseMatrix(*tsm);
-    lhs->set_storage_type(
-        CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR);
+    if (!m_crs_) {
+      m_crs_ = bsm->ToCompressedRowSparseMatrix();
+      m_crs_->set_storage_type(
+          CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR);
+    } else {
+      bsm->UpdateCompressedRowSparseMatrix(m_crs_.get());
+    }
   } else {
-    lhs = CompressedRowSparseMatrix::FromTripletSparseMatrixTransposed(*tsm);
-    lhs->set_storage_type(
-        CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR);
+    if (!m_crs_) {
+      m_crs_ = bsm->ToCompressedRowSparseMatrixTranspose();
+      m_crs_->set_storage_type(
+          CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR);
+    } else {
+      bsm->UpdateCompressedRowSparseMatrixTranspose(m_crs_.get());
+    }
   }
 
   std::string message;
-  return sparse_cholesky_->Factorize(lhs.get(), &message);
+  return sparse_cholesky_->Factorize(m_crs_.get(), &message);
 }
 
 void VisibilityBasedPreconditioner::RightMultiplyAndAccumulate(

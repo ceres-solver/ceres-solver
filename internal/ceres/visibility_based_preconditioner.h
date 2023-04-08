@@ -194,6 +194,7 @@ class CERES_NO_EXPORT VisibilityBasedPreconditioner
 
   // Preconditioner matrix.
   std::unique_ptr<BlockRandomAccessSparseMatrix> m_;
+  std::unique_ptr<CompressedRowSparseMatrix> m_crs_;
   std::unique_ptr<SparseCholesky> sparse_cholesky_;
 };
 

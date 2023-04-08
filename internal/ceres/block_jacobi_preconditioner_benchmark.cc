@@ -85,19 +85,17 @@ static void BM_BlockCRSJacobiPreconditionerBA(benchmark::State& state) {
   auto jacobian = CreateFakeBundleAdjustmentJacobian(
       kNumCameras, kNumPoints, kCameraSize, kPointSize, kVisibility, prng);
 
-  CompressedRowSparseMatrix jacobian_crs(
-      jacobian->num_rows(), jacobian->num_cols(), jacobian->num_nonzeros());
-  jacobian->ToCompressedRowSparseMatrix(&jacobian_crs);
+  auto jacobian_crs = jacobian->ToCompressedRowSparseMatrix();
   Preconditioner::Options preconditioner_options;
   ContextImpl context;
   preconditioner_options.context = &context;
   preconditioner_options.num_threads = static_cast<int>(state.range(0));
   context.EnsureMinimumThreads(preconditioner_options.num_threads);
-  BlockCRSJacobiPreconditioner p(preconditioner_options, jacobian_crs);
+  BlockCRSJacobiPreconditioner p(preconditioner_options, *jacobian_crs);
 
-  Vector d = Vector::Ones(jacobian_crs.num_cols());
+  Vector d = Vector::Ones(jacobian_crs->num_cols());
   for (auto _ : state) {
-    p.Update(jacobian_crs, d.data());
+    p.Update(*jacobian_crs, d.data());
   }
 }
 
@@ -154,19 +152,17 @@ static void BM_BlockCRSJacobiPreconditionerUnstructured(
   std::mt19937 prng;
 
   auto jacobian = BlockSparseMatrix::CreateRandomMatrix(options, prng);
-  CompressedRowSparseMatrix jacobian_crs(
-      jacobian->num_rows(), jacobian->num_cols(), jacobian->num_nonzeros());
-  jacobian->ToCompressedRowSparseMatrix(&jacobian_crs);
+  auto jacobian_crs = jacobian->ToCompressedRowSparseMatrix();
   Preconditioner::Options preconditioner_options;
   ContextImpl context;
   preconditioner_options.context = &context;
   preconditioner_options.num_threads = static_cast<int>(state.range(0));
   context.EnsureMinimumThreads(preconditioner_options.num_threads);
-  BlockCRSJacobiPreconditioner p(preconditioner_options, jacobian_crs);
+  BlockCRSJacobiPreconditioner p(preconditioner_options, *jacobian_crs);
 
-  Vector d = Vector::Ones(jacobian_crs.num_cols());
+  Vector d = Vector::Ones(jacobian_crs->num_cols());
   for (auto _ : state) {
-    p.Update(jacobian_crs, d.data());
+    p.Update(*jacobian_crs, d.data());
   }
 }
 BENCHMARK(BM_BlockCRSJacobiPreconditionerUnstructured)
