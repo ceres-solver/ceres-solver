@@ -97,6 +97,11 @@ if (NOT MINIGLOG AND GLOG_FOUND)
   endif()
 endif (NOT MINIGLOG AND GLOG_FOUND)
 
+if (USE_MKL AND MKL_FOUND)
+  add_definitions(-DCERES_MKL_VERSION="${MKL_VERSION}")
+  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES MKL::MKL)
+endif(USE_MKL AND MKL_FOUND)
+
 if (SUITESPARSE AND SuiteSparse_FOUND)
   # Define version information for use in Solver::FullReport.
   add_definitions(-DCERES_SUITESPARSE_VERSION="${SuiteSparse_VERSION}")
@@ -234,6 +239,7 @@ add_library(ceres_internal OBJECT
     stringprintf.cc
     subset_preconditioner.cc
     suitesparse.cc
+    mkl_sparse.cc
     thread_pool.cc
     thread_token_provider.cc
     triplet_sparse_matrix.cc

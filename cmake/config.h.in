@@ -56,9 +56,13 @@
 // If defined, Ceres was compiled without Apple's Accelerate framework solvers.
 @CERES_NO_ACCELERATE_SPARSE@
 
+// If defined, Ceres was compiled with MKL
+@CERES_USE_MKL@
+
 #if defined(CERES_NO_SUITESPARSE) &&              \
     defined(CERES_NO_ACCELERATE_SPARSE) &&        \
-    !defined(CERES_USE_EIGEN_SPARSE)  // NOLINT
+    !defined(CERES_USE_EIGEN_SPARSE) &&           \
+    !defined(CERES_USE_MKL) // NOLINT
 // If defined Ceres was compiled without any sparse linear algebra support.
 #define CERES_NO_SPARSE
 #endif
@@ -89,6 +93,9 @@
 #endif
 #if defined(CERES_USE_EIGEN_SPARSE)
 #error CERES_NO_SPARSE requires !CERES_USE_EIGEN_SPARSE
+#endif
+#if defined(CERES_USE_MKL)
+#error CERES_NO_SPARSE requires !CERES_USE_MKL
 #endif
 #endif
 
