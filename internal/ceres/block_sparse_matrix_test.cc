@@ -482,8 +482,7 @@ TEST(BlockSparseMatrix, ToDenseMatrix) {
 TEST(BlockSparseMatrix, ToCRSMatrix) {
   {
     std::unique_ptr<BlockSparseMatrix> m = CreateTestMatrixFromId(0);
-    CompressedRowSparseMatrix m_crs(
-        m->num_rows(), m->num_cols(), m->num_nonzeros());
+    CompressedRowSparseMatrix m_crs;
     m->ToCompressedRowSparseMatrix(&m_crs);
     std::vector<int> rows_expected = {0, 2, 4, 7, 10};
     std::vector<int> cols_expected = {0, 1, 0, 1, 2, 3, 4, 2, 3, 4};
@@ -500,8 +499,7 @@ TEST(BlockSparseMatrix, ToCRSMatrix) {
   }
   {
     std::unique_ptr<BlockSparseMatrix> m = CreateTestMatrixFromId(1);
-    CompressedRowSparseMatrix m_crs(
-        m->num_rows(), m->num_cols(), m->num_nonzeros());
+    CompressedRowSparseMatrix m_crs;
     m->ToCompressedRowSparseMatrix(&m_crs);
     std::vector<int> rows_expected = {0, 4, 8, 9};
     std::vector<int> cols_expected = {0, 1, 3, 4, 0, 1, 3, 4, 2};
@@ -514,6 +512,47 @@ TEST(BlockSparseMatrix, ToCRSMatrix) {
     }
     for (int i = 0; i < values_expected.size(); ++i) {
       EXPECT_EQ(m_crs.values()[i], values_expected[i]);
+    }
+  }
+}
+
+TEST(BlockSparseMatrix, ToCRSMatrixTranspose) {
+  {
+    std::unique_ptr<BlockSparseMatrix> m = CreateTestMatrixFromId(0);
+    CompressedRowSparseMatrix m_crs_transpose;
+    m->ToCompressedRowSparseMatrixTranspose(&m_crs_transpose);
+    std::vector<int> rows_expected = {0, 2, 4, 6, 8, 10, 10};
+    std::vector<int> cols_expected = {0, 1, 0, 1, 2, 3, 2, 3, 2, 3};
+    std::vector<double> values_expected = {1, 3, 2, 4, 5, 8, 6, 9, 7, 10};
+    EXPECT_EQ(m_crs_transpose.num_nonzeros(), cols_expected.size());
+    EXPECT_EQ(m_crs_transpose.num_rows(), rows_expected.size() - 1);
+    for (int i = 0; i < rows_expected.size(); ++i) {
+      EXPECT_EQ(m_crs_transpose.rows()[i], rows_expected[i]);
+    }
+    for (int i = 0; i < cols_expected.size(); ++i) {
+      EXPECT_EQ(m_crs_transpose.cols()[i], cols_expected[i]);
+    }
+    for (int i = 0; i < values_expected.size(); ++i) {
+      EXPECT_EQ(m_crs_transpose.values()[i], values_expected[i]);
+    }
+  }
+  {
+    std::unique_ptr<BlockSparseMatrix> m = CreateTestMatrixFromId(1);
+    CompressedRowSparseMatrix m_crs_transpose;
+    m->ToCompressedRowSparseMatrixTranspose(&m_crs_transpose);
+    std::vector<int> rows_expected = {0, 2, 4, 5, 7, 9, 9};
+    std::vector<int> cols_expected = {0, 1, 0, 1, 2, 0, 1, 0, 1};
+    std::vector<double> values_expected = {1, 3, 2, 4, 9, 5, 7, 6, 8};
+    EXPECT_EQ(m_crs_transpose.num_nonzeros(), cols_expected.size());
+    EXPECT_EQ(m_crs_transpose.num_rows(), rows_expected.size() - 1);
+    for (int i = 0; i < rows_expected.size(); ++i) {
+      EXPECT_EQ(m_crs_transpose.rows()[i], rows_expected[i]);
+    }
+    for (int i = 0; i < cols_expected.size(); ++i) {
+      EXPECT_EQ(m_crs_transpose.cols()[i], cols_expected[i]);
+    }
+    for (int i = 0; i < values_expected.size(); ++i) {
+      EXPECT_EQ(m_crs_transpose.values()[i], values_expected[i]);
     }
   }
 }

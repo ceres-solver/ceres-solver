@@ -39,18 +39,18 @@
 #include <vector>
 
 #include "ceres/block_random_access_matrix.h"
+#include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
 #include "ceres/context_impl.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
 #include "ceres/small_blas.h"
-#include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
 
 namespace ceres::internal {
 
 // A thread safe square block sparse implementation of
-// BlockRandomAccessMatrix. Internally a TripletSparseMatrix is used
+// BlockRandomAccessMatrix. Internally a BlockSparseMatrix is used
 // for doing the actual storage. This class augments this matrix with
 // an unordered_map that allows random read/write access.
 class CERES_NO_EXPORT BlockRandomAccessSparseMatrix
@@ -81,19 +81,19 @@ class CERES_NO_EXPORT BlockRandomAccessSparseMatrix
   // locked.
   void SetZero() final;
 
-  // Assume that the matrix is symmetric and only one half of the
-  // matrix is stored.
+  // Assume that the matrix is symmetric and only one half of the matrix is
+  // stored.
   //
   // y += S * x
   void SymmetricRightMultiplyAndAccumulate(const double* x, double* y) const;
 
   // Since the matrix is square, num_rows() == num_cols().
-  int num_rows() const final { return tsm_->num_rows(); }
-  int num_cols() const final { return tsm_->num_cols(); }
+  int num_rows() const final { return bsm_->num_rows(); }
+  int num_cols() const final { return bsm_->num_cols(); }
 
   // Access to the underlying matrix object.
-  const TripletSparseMatrix* matrix() const { return tsm_.get(); }
-  TripletSparseMatrix* mutable_matrix() { return tsm_.get(); }
+  const BlockSparseMatrix* matrix() const { return bsm_.get(); }
+  BlockSparseMatrix* mutable_matrix() { return bsm_.get(); }
 
  private:
   int64_t IntPairToInt64(int row, int col) const {
@@ -122,7 +122,7 @@ class CERES_NO_EXPORT BlockRandomAccessSparseMatrix
   // iterator in the Layout object instead.
   std::vector<std::pair<std::pair<int, int>, double*>> cell_values_;
   // The underlying matrix object which actually stores the cells.
-  std::unique_ptr<TripletSparseMatrix> tsm_;
+  std::unique_ptr<BlockSparseMatrix> bsm_;
 
   friend class BlockRandomAccessSparseMatrixTest;
 };

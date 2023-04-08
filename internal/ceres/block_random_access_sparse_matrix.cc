@@ -53,53 +53,40 @@ BlockRandomAccessSparseMatrix::BlockRandomAccessSparseMatrix(
   CHECK_LE(blocks.size(), std::numeric_limits<std::int32_t>::max());
 
   const int num_cols = NumScalarEntries(blocks);
+  const int num_col_blocks = blocks.size();
 
-  // Count the number of scalar non-zero entries and build the layout
-  // object for looking into the values array of the
-  // TripletSparseMatrix.
-  int num_nonzeros = 0;
-  for (const auto& block_pair : block_pairs) {
-    const int row_block_size = blocks_[block_pair.first].size;
-    const int col_block_size = blocks_[block_pair.second].size;
-    num_nonzeros += row_block_size * col_block_size;
+  // block_pairs is already sorted
+  std::vector<int> num_cells_at_row(num_col_blocks);
+  for (auto& p : block_pairs) {
+    ++num_cells_at_row[p.first];
   }
-
+  auto block_structure_ = new CompressedRowBlockStructure;
+  block_structure_->cols = blocks;
+  block_structure_->rows.resize(num_col_blocks);
+  auto p = block_pairs.begin();
+  int num_nonzeros = 0;
+  for (int i = 0; i < num_col_blocks; ++i) {
+    auto& row = block_structure_->rows[i];
+    row.block = blocks[i];
+    row.cells.reserve(num_cells_at_row[i]);
+    for (; p != block_pairs.end() && i == p->first; ++p) {
+      row.cells.emplace_back(p->second, num_nonzeros);
+      num_nonzeros += blocks[i].size * blocks[p->second].size;
+    }
+  }
+  bsm_ = std::make_unique<BlockSparseMatrix>(block_structure_);
   VLOG(1) << "Matrix Size [" << num_cols << "," << num_cols << "] "
           << num_nonzeros;
-
-  tsm_ =
-      std::make_unique<TripletSparseMatrix>(num_cols, num_cols, num_nonzeros);
-  tsm_->set_num_nonzeros(num_nonzeros);
-  int* rows = tsm_->mutable_rows();
-  int* cols = tsm_->mutable_cols();
-  double* values = tsm_->mutable_values();
-
-  int pos = 0;
-  for (const auto& block_pair : block_pairs) {
-    const int row_block_size = blocks_[block_pair.first].size;
-    const int col_block_size = blocks_[block_pair.second].size;
-    cell_values_.emplace_back(block_pair, values + pos);
-    layout_[IntPairToInt64(block_pair.first, block_pair.second)] =
-        std::make_unique<CellInfo>(values + pos);
-    pos += row_block_size * col_block_size;
-  }
-
-  // Fill the sparsity pattern of the underlying matrix.
-  for (const auto& block_pair : block_pairs) {
-    const int row_block_id = block_pair.first;
-    const int col_block_id = block_pair.second;
-    const int row_block_size = blocks_[row_block_id].size;
-    const int col_block_size = blocks_[col_block_id].size;
-    int pos =
-        layout_[IntPairToInt64(row_block_id, col_block_id)]->values - values;
-    for (int r = 0; r < row_block_size; ++r) {
-      for (int c = 0; c < col_block_size; ++c, ++pos) {
-        rows[pos] = blocks_[row_block_id].position + r;
-        cols[pos] = blocks_[col_block_id].position + c;
-        values[pos] = 1.0;
-        DCHECK_LT(rows[pos], tsm_->num_rows());
-        DCHECK_LT(cols[pos], tsm_->num_rows());
-      }
+  double* values = bsm_->mutable_values();
+  for (int row_block_id = 0; row_block_id < num_col_blocks; ++row_block_id) {
+    const auto& cells = block_structure_->rows[row_block_id].cells;
+    for (auto& c : cells) {
+      const int col_block_id = c.block_id;
+      double* const data = values + c.position;
+      const auto block_pair = std::make_pair(row_block_id, col_block_id);
+      cell_values_.emplace_back(block_pair, data);
+      layout_[IntPairToInt64(row_block_id, col_block_id)] =
+          std::make_unique<CellInfo>(data);
     }
   }
 }
@@ -126,8 +113,7 @@ CellInfo* BlockRandomAccessSparseMatrix::GetCell(int row_block_id,
 // Assume that the user does not hold any locks on any cell blocks
 // when they are calling SetZero.
 void BlockRandomAccessSparseMatrix::SetZero() {
-  ParallelSetZero(
-      context_, num_threads_, tsm_->mutable_values(), tsm_->num_nonzeros());
+  bsm_->SetZero(context_, num_threads_);
 }
 
 void BlockRandomAccessSparseMatrix::SymmetricRightMultiplyAndAccumulate(

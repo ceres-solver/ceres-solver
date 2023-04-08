@@ -91,7 +91,8 @@ class CERES_NO_EXPORT BlockSparseMatrix final : public SparseMatrix {
   void ScaleColumns(const double* scale,
                     ContextImpl* context,
                     int num_threads) final;
-  void ToCompressedRowSparseMatrix(CompressedRowSparseMatrix* matrix) const;
+  void ToCompressedRowSparseMatrix(CompressedRowSparseMatrix* m) const;
+  void ToCompressedRowSparseMatrixTranspose(CompressedRowSparseMatrix* m) const;
   void ToDenseMatrix(Matrix* dense_matrix) const final;
   void ToTextFile(FILE* file) const final;
 

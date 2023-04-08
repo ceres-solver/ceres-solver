@@ -58,6 +58,71 @@ void ComputeCumulativeNumberOfNonZeros(std::vector<CompressedList>& rows) {
     rows[c].cumulative_nnz = curr_nnz + rows[c - 1].cumulative_nnz;
   }
 }
+
+template <bool transpose>
+std::unique_ptr<CompressedRowSparseMatrix> ToCompressedRowSparseMatrixImpl(
+    const double* values,
+    int num_cols,
+    int num_rows,
+    int num_nonzeros,
+    const CompressedRowBlockStructure* block_structure) {
+  auto crs_matrix = std::make_unique<CompressedRowSparseMatrix>(
+      num_rows, num_cols, num_nonzeros);
+  auto values_crs = crs_matrix->mutable_values();
+  auto cols_crs = crs_matrix->mutable_cols();
+  auto rows_crs = crs_matrix->mutable_rows();
+  int value_offset = 0;
+  const int num_row_blocks = block_structure->rows.size();
+  const auto& cols = block_structure->cols;
+  double* values_out = values_crs;
+  int* csr_indices_out = cols_crs;
+  *rows_crs++ = 0;
+  for (int i = 0; i < num_row_blocks; ++i) {
+    const auto& row_block = block_structure->rows[i];
+    if (row_block.cells.empty()) {
+      std::fill(rows_crs, rows_crs + row_block.block.size, value_offset);
+      rows_crs += row_block.block.size;
+      continue;
+    }
+
+    int nnz_row_block;
+    if (transpose) {
+      // transposed block structure comes with nnz filled-in
+      nnz_row_block = row_block.nnz;
+    } else {
+      // non-transposed block structure has sequential layout
+      const auto& front = row_block.cells.front();
+      const auto& back = row_block.cells.back();
+      nnz_row_block =
+          (back.position - front.position) +
+          block_structure->cols[back.block_id].size * row_block.block.size;
+    }
+    const int nnz_row = nnz_row_block / row_block.block.size;
+
+    for (int row = 0; row < row_block.block.size; ++row) {
+      value_offset += nnz_row;
+      *rows_crs++ = value_offset;
+      for (auto& c : row_block.cells) {
+        const int num_cols = cols[c.block_id].size;
+        const int col_position = cols[c.block_id].position;
+        if constexpr (transpose) {
+          const double* cell_values = values + c.position + row;
+          for (int col = 0; col < num_cols;
+               ++col, cell_values += row_block.block.size) {
+            *values_out++ = *cell_values;
+          }
+        } else {
+          const double* cell_values = values + c.position + row * num_cols;
+          std::copy(cell_values, cell_values + num_cols, values_out);
+          values_out += num_cols;
+        }
+        std::iota(csr_indices_out, csr_indices_out + num_cols, col_position);
+        csr_indices_out += num_cols;
+      }
+    }
+  }
+  return crs_matrix;
+}
 }  // namespace
 
 BlockSparseMatrix::BlockSparseMatrix(
@@ -331,28 +396,39 @@ void BlockSparseMatrix::ScaleColumns(const double* scale,
       [](const CompressedRow& row) { return row.cumulative_nnz; });
 }
 
-void BlockSparseMatrix::ToCompressedRowSparseMatrix(
+void BlockSparseMatrix::ToCompressedRowSparseMatrixTranspose(
     CompressedRowSparseMatrix* crs_matrix) const {
-  {
-    TripletSparseMatrix ts_matrix;
-    this->ToTripletSparseMatrix(&ts_matrix);
-    *crs_matrix =
-        *CompressedRowSparseMatrix::FromTripletSparseMatrix(ts_matrix);
+  auto bs = transpose_block_structure_.get();
+  auto new_matrix = ToCompressedRowSparseMatrixImpl<true>(
+      values(), num_rows_, num_cols_, num_nonzeros_, bs);
+  const int num_row_blocks = bs->rows.size();
+  *crs_matrix = std::move(*new_matrix);
+
+  auto& row_blocks = *crs_matrix->mutable_row_blocks();
+  row_blocks.resize(num_row_blocks);
+  for (int i = 0; i < num_row_blocks; ++i) {
+    row_blocks[i] = bs->rows[i].block;
   }
 
-  int num_row_blocks = block_structure_->rows.size();
+  auto& col_blocks = *crs_matrix->mutable_col_blocks();
+  col_blocks = bs->cols;
+}
+
+void BlockSparseMatrix::ToCompressedRowSparseMatrix(
+    CompressedRowSparseMatrix* crs_matrix) const {
+  auto new_matrix = ToCompressedRowSparseMatrixImpl<false>(
+      values(), num_cols_, num_rows_, num_nonzeros_, block_structure_.get());
+  *crs_matrix = std::move(*new_matrix);
+
+  const int num_row_blocks = block_structure_->rows.size();
   auto& row_blocks = *crs_matrix->mutable_row_blocks();
   row_blocks.resize(num_row_blocks);
   for (int i = 0; i < num_row_blocks; ++i) {
     row_blocks[i] = block_structure_->rows[i].block;
   }
 
-  int num_col_blocks = block_structure_->cols.size();
   auto& col_blocks = *crs_matrix->mutable_col_blocks();
-  col_blocks.resize(num_col_blocks);
-  for (int i = 0; i < num_col_blocks; ++i) {
-    col_blocks[i] = block_structure_->cols[i];
-  }
+  col_blocks = block_structure_->cols;
 }
 
 void BlockSparseMatrix::ToDenseMatrix(Matrix* dense_matrix) const {

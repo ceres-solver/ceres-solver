@@ -160,6 +160,9 @@ void AddSymmetricRandomBlock(const int num_rows,
 
 }  // namespace
 
+CompressedRowSparseMatrix::CompressedRowSparseMatrix()
+    : CompressedRowSparseMatrix(0, 0, 0) {}
+
 // This constructor gives you a semi-initialized CompressedRowSparseMatrix.
 CompressedRowSparseMatrix::CompressedRowSparseMatrix(int num_rows,
                                                      int num_cols,
@@ -195,6 +198,7 @@ CompressedRowSparseMatrix::FromTripletSparseMatrix(
     const TripletSparseMatrix& input, bool transpose) {
   int num_rows = input.num_rows();
   int num_cols = input.num_cols();
+  const int num_nonzeros = input.num_nonzeros();
   const int* rows = input.rows();
   const int* cols = input.cols();
   const double* values = input.values();
@@ -204,47 +208,62 @@ CompressedRowSparseMatrix::FromTripletSparseMatrix(
     std::swap(rows, cols);
   }
 
-  // index is the list of indices into the TripletSparseMatrix input.
-  std::vector<int> index(input.num_nonzeros(), 0);
-  for (int i = 0; i < input.num_nonzeros(); ++i) {
-    index[i] = i;
-  }
-
-  // Sort index such that the entries of m are ordered by row and ties
-  // are broken by column.
-  std::sort(index.begin(), index.end(), RowColLessThan(rows, cols));
-
   VLOG(1) << "# of rows: " << num_rows << " # of columns: " << num_cols
-          << " num_nonzeros: " << input.num_nonzeros() << ". Allocating "
-          << ((num_rows + 1) * sizeof(int) +           // NOLINT
-              input.num_nonzeros() * sizeof(int) +     // NOLINT
-              input.num_nonzeros() * sizeof(double));  // NOLINT
+          << " num_nonzeros: " << num_nonzeros << ". Allocating "
+          << ((num_rows + 1) * sizeof(int) +   // NOLINT
+              num_nonzeros * sizeof(int) +     // NOLINT
+              num_nonzeros * sizeof(double));  // NOLINT
 
   auto output = std::make_unique<CompressedRowSparseMatrix>(
-      num_rows, num_cols, input.num_nonzeros());
+      num_rows, num_cols, num_nonzeros);
 
   if (num_rows == 0) {
     // No data to copy.
     return output;
   }
 
+  std::vector<int> requires_sort(num_rows);
+  std::vector<int> row_offset(num_rows);
+  // No need to initialize this array
+  std::unique_ptr<int[]> sorted_idx(new int[num_nonzeros]);
+
   // Copy the contents of the cols and values array in the order given
   // by index and count the number of entries in each row.
   int* output_rows = output->mutable_rows();
   int* output_cols = output->mutable_cols();
   double* output_values = output->mutable_values();
-
-  output_rows[0] = 0;
-  for (int i = 0; i < index.size(); ++i) {
-    const int idx = index[i];
-    ++output_rows[rows[idx] + 1];
-    output_cols[i] = cols[idx];
-    output_values[i] = values[idx];
+  for (int i = 0; i < num_nonzeros; ++i) {
+    ++output_rows[rows[i] + 1];
   }
-
-  // Find the cumulative sum of the row counts.
-  for (int i = 1; i < num_rows + 1; ++i) {
-    output_rows[i] += output_rows[i - 1];
+  std::partial_sum(
+      output_rows + 1, output_rows + num_rows + 1, output_rows + 1);
+  for (int i = 0; i < num_nonzeros; ++i) {
+    const int row = rows[i];
+    const int col = cols[i];
+    const int out_idx = row_offset[row] + output_rows[row];
+    output_cols[out_idx] = col;
+    sorted_idx[out_idx] = i;
+    // Row needs re-sorting by (output) column if and only if there is at least
+    // one pair of adjacent column indices that are out of natural order
+    requires_sort[row] |= row_offset[row] && output_cols[out_idx - 1] > col;
+    ++row_offset[row];
+  }
+  for (int i = 0; i < num_rows; ++i) {
+    if (requires_sort[i]) {
+      std::sort(
+          sorted_idx.get() + output_rows[i],
+          sorted_idx.get() + output_rows[i + 1],
+          [&cols](const int a, const int b) { return cols[a] < cols[b]; });
+      for (int j = output_rows[i]; j < output_rows[i + 1]; ++j) {
+        const int idx = sorted_idx[j];
+        output_cols[j] = cols[idx];
+        output_values[j] = values[idx];
+      }
+    } else {
+      for (int j = output_rows[i]; j < output_rows[i + 1]; ++j) {
+        output_values[j] = values[sorted_idx[j]];
+      }
+    }
   }
 
   CHECK_EQ(output->num_nonzeros(), input.num_nonzeros());

@@ -79,6 +79,9 @@ class CERES_NO_EXPORT CompressedRowSparseMatrix : public SparseMatrix {
   static std::unique_ptr<CompressedRowSparseMatrix>
   FromTripletSparseMatrixTransposed(const TripletSparseMatrix& input);
 
+  // Constuctor creating empty matrix
+  CompressedRowSparseMatrix();
+
   // Use this constructor only if you know what you are doing. This
   // creates a "blank" matrix with the appropriate amount of memory
   // allocated. However, the object itself is in an inconsistent state
