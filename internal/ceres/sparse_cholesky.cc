@@ -37,6 +37,7 @@
 #include "ceres/eigensparse.h"
 #include "ceres/float_suitesparse.h"
 #include "ceres/iterative_refiner.h"
+#include "ceres/mkl_sparse.h"
 #include "ceres/suitesparse.h"
 
 namespace ceres::internal {
@@ -46,6 +47,18 @@ std::unique_ptr<SparseCholesky> SparseCholesky::Create(
   std::unique_ptr<SparseCholesky> sparse_cholesky;
 
   switch (options.sparse_linear_algebra_library_type) {
+    case MKL_SPARSE:
+#ifdef CERES_USE_MKL
+      if (options.use_mixed_precision_solves) {
+        LOG(FATAL) << "Mixed-precision solves are not implemented for MKL";
+      } else {
+        sparse_cholesky = MklSparseCholesky::Create(options.ordering_type,
+                                                    options.num_threads);
+      }
+      break;
+#else
+      LOG(FATAL) << "Ceres was compiled without support for MKL.";
+#endif
     case SUITE_SPARSE:
 #ifndef CERES_NO_SUITESPARSE
       if (options.use_mixed_precision_solves) {

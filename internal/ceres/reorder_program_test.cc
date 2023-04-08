@@ -188,6 +188,7 @@ class ReorderProgramForSparseCholeskyUsingSuiteSparseTest
                                                 ceres::AMD,
                                                 linear_solver_ordering,
                                                 0, /* use all rows */
+                                                1, /* single threaded */
                                                 program,
                                                 &error));
     const std::vector<ParameterBlock*>& ordered_parameter_blocks =

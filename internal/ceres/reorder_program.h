@@ -78,6 +78,7 @@ CERES_NO_EXPORT bool ReorderProgramForSchurTypeLinearSolver(
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
     LinearSolverOrderingType linear_solver_ordering_type,
     const ProblemImpl::ParameterMap& parameter_map,
+    const int max_num_threads,
     ParameterBlockOrdering* parameter_block_ordering,
     Program* program,
     std::string* error);
@@ -96,7 +97,8 @@ CERES_NO_EXPORT bool ReorderProgramForSparseCholesky(
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
     LinearSolverOrderingType linear_solver_ordering_type,
     const ParameterBlockOrdering& parameter_block_ordering,
-    int start_row_block,
+    const int start_row_block,
+    const int max_num_threads,
     Program* program,
     std::string* error);
 
