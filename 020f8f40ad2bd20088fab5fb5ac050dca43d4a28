@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8667be2b_3aac0ad3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-04-08T15:58:57Z",
+      "side": 1,
+      "message": "When a sufficiently-parallel sparse Cholesky implementation is used, converting matrix from coordinate to compressed-row format takes unexpectedly large portion of FactorizeAndSolve call.\n\nI suppose that this is due to log(nnz) factor of time-complexity from sorting all the (row, col) tuples.\n\nMoreover, if indices in COO matrix came from some \"sane\" block-alike matrix format, sorting is not required (and we can detect that for each individual row).\n\nThis reduces time spent in matrix conversion about ~6x, and saves up to 20% of total execution time on large-enough BAL problems (with SPARSE_SCHUR linear solver with SuiteSparse 7.x and high core count cpu).\n\n\nOne can note that\n - If we convert from block-sparse matrix to crs (without triplet form as an intermediate format) -- \"gather\"-like operations can be replaced with strided copies\n - We can parallel part of the operation in the future.",
+      "revId": "020f8f40ad2bd20088fab5fb5ac050dca43d4a28",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
