@@ -41,6 +41,7 @@
 #include "Eigen/SparseCore"
 #include "ceres/internal/config.h"
 #include "ceres/internal/export.h"
+#include "ceres/mkl_sparse.h"
 #include "ceres/ordered_groups.h"
 #include "ceres/parameter_block.h"
 #include "ceres/parameter_block_ordering.h"
@@ -87,6 +88,43 @@ static int MinParameterBlock(const ResidualBlock* residual_block,
     }
   }
   return min_parameter_block_position;
+}
+
+std::pair<TripletSparseMatrix, TripletSparseMatrix> SplitBlockJacobian(
+    const TripletSparseMatrix& block_jacobian_transpose, int split_at) {
+  const int max_nnz = block_jacobian_transpose.num_nonzeros();
+  const int num_rows = block_jacobian_transpose.num_cols();
+  const int num_cols = block_jacobian_transpose.num_rows();
+  TripletSparseMatrix left(num_rows, split_at, max_nnz);
+  TripletSparseMatrix right(num_rows, num_cols - split_at, max_nnz);
+  int nnz_left = 0;
+  int nnz_right = 0;
+  int* cols_left = left.mutable_cols();
+  int* cols_right = right.mutable_cols();
+  int* rows_left = left.mutable_rows();
+  int* rows_right = right.mutable_rows();
+  double* values_left = left.mutable_values();
+  double* values_right = right.mutable_values();
+  const int* cols = block_jacobian_transpose.rows();
+  const int* rows = block_jacobian_transpose.cols();
+  for (int i = 0; i < max_nnz; ++i) {
+    const int col = cols[i];
+    const int row = rows[i];
+    if (col < split_at) {
+      cols_left[nnz_left] = col;
+      rows_left[nnz_left] = row;
+      values_left[nnz_left] = 1.;
+      ++nnz_left;
+    } else {
+      cols_right[nnz_right] = col - split_at;
+      rows_right[nnz_right] = row;
+      values_right[nnz_right] = 1.;
+      ++nnz_right;
+    }
+  }
+  left.set_num_nonzeros(nnz_left);
+  right.set_num_nonzeros(nnz_right);
+  return std::make_pair(left, right);
 }
 
 Eigen::SparseMatrix<int> CreateBlockJacobian(
@@ -207,6 +245,18 @@ void OrderingForSparseNormalCholeskyUsingEigenSparse(
     ordering[i] = perm.indices()[i];
   }
 #endif  // CERES_USE_EIGEN_SPARSE
+}
+
+static void OrderingForSparseNormalCholeskyUsingMKL(
+    LinearSolverOrderingType ordering_type,
+    const TripletSparseMatrix& tsm_block_jacobian_transpose,
+    int* ordering) {
+#ifdef CERES_USE_MKL
+  auto [E, F] = SplitBlockJacobian(tsm_block_jacobian_transpose,
+                                   tsm_block_jacobian_transpose.num_rows());
+  auto E_crs = CompressedRowSparseMatrix::FromTripletSparseMatrix(E);
+  MKLComputeOrdering(*E_crs, ordering_type, ordering);
+#endif
 }
 
 }  // namespace
@@ -379,6 +429,45 @@ static void ReorderSchurComplementColumnsUsingSuiteSparse(
 #endif
 }
 
+static void ReorderSchurComplementColumnsUsingMKL(
+    LinearSolverOrderingType ordering_type,
+    const int size_of_first_elimination_group,
+    Program* program) {
+#ifdef CERES_USE_MKL
+  auto tsm_block_jacobian_transpose =
+      program->CreateJacobianBlockSparsityTranspose();
+  auto [E, F] = SplitBlockJacobian(*tsm_block_jacobian_transpose,
+                                   size_of_first_elimination_group);
+
+  auto E_crs = CompressedRowSparseMatrix::FromTripletSparseMatrix(E);
+  auto F_crs = CompressedRowSparseMatrix::FromTripletSparseMatrix(F);
+
+  const int num_cols_f = F.num_cols();
+  std::vector<int> order(F.num_cols());
+  MKLComputeOrderingSchurComplement(
+      *E_crs, *F_crs, ordering_type, order.data());
+
+  const std::vector<ParameterBlock*>& parameter_blocks =
+      program->parameter_blocks();
+  std::vector<ParameterBlock*> ordering(num_cols_f +
+                                        size_of_first_elimination_group);
+  // The ordering of the first size_of_first_elimination_group does
+  // not matter, so we preserve the existing ordering.
+  for (int i = 0; i < size_of_first_elimination_group; ++i) {
+    ordering[i] = parameter_blocks[i];
+  }
+
+  // For the rest of the blocks, use the computed ordering
+  for (int i = 0; i < num_cols_f; ++i) {
+    ordering[size_of_first_elimination_group + i] =
+        parameter_blocks[size_of_first_elimination_group + order[i]];
+  }
+
+  swap(*program->mutable_parameter_blocks(), ordering);
+  program->SetParameterOffsetsAndIndex();
+#endif
+}
+
 static void ReorderSchurComplementColumnsUsingEigen(
     LinearSolverOrderingType ordering_type,
     const int size_of_first_elimination_group,
@@ -528,6 +617,10 @@ bool ReorderProgramForSchurTypeLinearSolver(
                                               size_of_first_elimination_group,
                                               parameter_map,
                                               program);
+    } else if (sparse_linear_algebra_library_type == MKL_SPARSE) {
+      ReorderSchurComplementColumnsUsingMKL(linear_solver_ordering_type,
+                                            size_of_first_elimination_group,
+                                            program);
     }
   }
 
@@ -582,6 +675,10 @@ bool ReorderProgramForSparseCholesky(
         linear_solver_ordering_type,
         *tsm_block_jacobian_transpose,
         ordering.data());
+  } else if (sparse_linear_algebra_library_type == MKL_SPARSE) {
+    OrderingForSparseNormalCholeskyUsingMKL(linear_solver_ordering_type,
+                                            *tsm_block_jacobian_transpose,
+                                            ordering.data());
   }
 
   // Apply ordering.
@@ -618,6 +715,15 @@ bool AreJacobianColumnsOrdered(
     }
     if (linear_solver_type == SPARSE_SCHUR &&
         linear_solver_ordering_type == ceres::AMD) {
+      return true;
+    }
+    return false;
+  }
+
+  if (sparse_linear_algebra_library_type == MKL_SPARSE) {
+    if (linear_solver_type == SPARSE_NORMAL_CHOLESKY ||
+        linear_solver_type == SPARSE_SCHUR ||
+        (linear_solver_type == CGNR && preconditioner_type == SUBSET)) {
       return true;
     }
     return false;

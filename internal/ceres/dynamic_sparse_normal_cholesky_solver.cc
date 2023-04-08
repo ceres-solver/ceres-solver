@@ -42,6 +42,7 @@
 #include "ceres/internal/config.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
+#include "ceres/mkl_sparse.h"
 #include "ceres/suitesparse.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
@@ -87,6 +88,9 @@ LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImpl(
       break;
     case EIGEN_SPARSE:
       summary = SolveImplUsingEigen(A, x);
+      break;
+    case MKL_SPARSE:
+      summary = SolveImplUsingMKL(A, x);
       break;
     default:
       LOG(FATAL) << "Unsupported sparse linear algebra library for "
@@ -169,6 +173,50 @@ LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImplUsingEigen(
 
   return summary;
 #endif  // CERES_USE_EIGEN_SPARSE
+}
+
+LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImplUsingMKL(
+    CompressedRowSparseMatrix* A, double* rhs_and_solution) {
+  LinearSolver::Summary summary;
+#ifndef CERES_USE_MKL
+  (void)A;
+  (void)rhs_and_solution;
+
+  summary.num_iterations = 0;
+  summary.termination_type = LinearSolverTerminationType::FATAL_ERROR;
+  summary.message =
+      "SPARSE_NORMAL_CHOLESKY cannot be used with MKL "
+      "because Ceres was not built with support for MKL. "
+      "This requires enabling building with -DUSE_MKL=ON.";
+  return summary;
+
+#else
+  EventLogger event_logger("DynamicSparseNormalCholeskySolver::MKL::Solve");
+  auto lhs = MKLUtils::AtA(*A);
+  event_logger.AddEvent("AtA");
+  auto sparse_cholesky = MKLSparseCholesky::Create(options_.ordering_type);
+  event_logger.AddEvent("Setup");
+  if (sparse_cholesky->Factorize(&lhs, &summary.message) !=
+      LinearSolverTerminationType::SUCCESS) {
+    summary.termination_type = LinearSolverTerminationType::FAILURE;
+    summary.message = "MKL failure. Unable to find symbolic factorization";
+    return summary;
+  }
+  event_logger.AddEvent("Factorize");
+
+  Vector sol(lhs.num_cols());
+  if (sparse_cholesky->Solve(rhs_and_solution, sol.data(), &summary.message) !=
+      LinearSolverTerminationType::SUCCESS) {
+    summary.termination_type = LinearSolverTerminationType::FAILURE;
+    summary.message = "MKL failure. Unable to find numeric factorization";
+    return summary;
+  }
+  event_logger.AddEvent("Solve");
+  summary.termination_type = LinearSolverTerminationType::SUCCESS;
+  std::copy_n(sol.data(), lhs.num_cols(), rhs_and_solution);
+  event_logger.AddEvent("Copy result");
+  return summary;
+#endif
 }
 
 LinearSolver::Summary
