@@ -179,6 +179,8 @@ include(CMakeFindDependencyMacro)
 # Optional dependencies
 @METIS_DEPENDENCY@
 @SuiteSparse_DEPENDENCY@
+@MKL_DEPENDENCY_INTERFACE@
+@MKL_DEPENDENCY@
 @CUDAToolkit_DEPENDENCY@
 @Threads_DEPENDENCY@
 

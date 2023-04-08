@@ -71,6 +71,8 @@ function(ceres_compile_options_to_components CURRENT_CERES_COMPILE_OPTIONS CERES
   # add the 'meta-module': SparseLinearAlgebraLibrary in addition to their own
   # module name.
   add_to_output_if_found(CURRENT_CERES_COMPILE_OPTIONS ${CERES_COMPONENTS_VAR}
+    CERES_USE_MKL "MKLSparse;SparseLinearAlgebraLibrary")
+  add_to_output_if_found(CURRENT_CERES_COMPILE_OPTIONS ${CERES_COMPONENTS_VAR}
     CERES_USE_EIGEN_SPARSE "EigenSparse;SparseLinearAlgebraLibrary")
   add_to_output_if_not_found(CURRENT_CERES_COMPILE_OPTIONS ${CERES_COMPONENTS_VAR}
     CERES_NO_LAPACK "LAPACK")

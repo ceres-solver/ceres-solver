@@ -380,7 +380,9 @@ class CERES_EXPORT Solver {
     // Ceres supports using multiple sparse linear algebra libraries for sparse
     // matrix ordering and factorizations.
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type =
-#if !defined(CERES_NO_SUITESPARSE)
+#if defined(CERES_USE_MKL)
+        MKL_SPARSE;
+#elif !defined(CERES_NO_SUITESPARSE)
         SUITE_SPARSE;
 #elif !defined(CERES_NO_ACCELERATE_SPARSE)
         ACCELERATE_SPARSE;

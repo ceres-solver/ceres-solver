@@ -64,6 +64,9 @@ class CERES_NO_EXPORT DynamicSparseNormalCholeskySolver
                                   const LinearSolver::PerSolveOptions& options,
                                   double* x) final;
 
+  LinearSolver::Summary SolveImplUsingMKL(CompressedRowSparseMatrix* A,
+                                          double* rhs_and_solution);
+
   LinearSolver::Summary SolveImplUsingSuiteSparse(CompressedRowSparseMatrix* A,
                                                   double* rhs_and_solution);
 
