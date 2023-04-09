@@ -16,6 +16,24 @@
       "message": "If TripletSparseMatrix is layout-compatible with BlockSparseMatrix (i.e. values are stored in the same order), then no sort is required at all (for both (non-)transposed CompressedRowSparseMatrix).\n\nWe essentially perform a stable sort by the leading dimension, thus, if input values corresponding to each (output) row are already stored in the expected order - we do not need to re-sort any row.\n\n\n\nHere is an example. Let us have the following block-sparse matrix:\n\n```\na b c | 0 0 | g h | 0\nd e f | 0 0 | i j | 0\n------+-----+-----+--\n0 0 0 | k l | 0 0 | o\n0 0 0 | m n | 0 0 | p\n------+-----+-----+--\n0 0 0 | 0 0 | q r | u\n0 0 0 | 0 0 | s t | v\n```\n\nThen values are stored in memory as\n\n```\nabcdefghijklmnopqrstuv\n```\n\nAnd values of, let say, 2nd row and 7th column (1-based indices here) are already stored in-order (asterisks above letter denote a values from 2nd row, asterisks below letter denote a values from 7th column)\n\n```\n   ***  **\nabcdefghijklmnopqrstuv\n       * *       * *\n```\n\nFor example, when running this code as a part of SPARSE_SCHUR linear solver, sorting is never called.",
       "revId": "42a0e0170339d2ca2375ac4b16e537e9a42c0d36",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9b3af2a_5a67865a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-09T15:47:31Z",
+      "side": 1,
+      "message": "Thanks Dmitriy, I had not thought this through. In this case, why not go all the way and instead of doing the block sparse to triplet to crs matrix, why not do a method that is specific to BlockRandomAccessSparseMatrix? that is the only place where we use this method at all. \n\nIn fact an optimization like this maybe application to inner_product_computer, where there is another giant sort that is done.",
+      "parentUuid": "46097687_a9edd1ce",
+      "revId": "42a0e0170339d2ca2375ac4b16e537e9a42c0d36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
