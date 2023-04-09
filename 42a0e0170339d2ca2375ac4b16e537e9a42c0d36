@@ -52,6 +52,24 @@
       "parentUuid": "b9b3af2a_5a67865a",
       "revId": "42a0e0170339d2ca2375ac4b16e537e9a42c0d36",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfb9f7a0_1d00f43b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-09T18:54:30Z",
+      "side": 1,
+      "message": "So it turns out, that there is a tradeoff here.\nand we have tried to have it both ways.\n\nin BlockRandomAccessSparseMatrix we have two members.\n\nlayout_ which is an unordered_map which you are right will not give you in-order traversal, but there is also a vector cell_values_ which will give you what you need.\n\nhave a look at the implementation for SymmetricRightMultiplyAndAccumulate,\n\nhttps://github.com/ceres-solver/ceres-solver/blob/master/internal/ceres/block_random_access_sparse_matrix.cc#L136\n\nso I think the thing to do here would be to get rid of the underlying TripletSparseMatrix entirely, and add a method which will create a CompressedRowSparseMatrix and hand it to you in an optimal manner.\n\nI believe at one point I also tried just using a compressed row sparse matrix as the backing store instead of a compressedrowsparsematrix (it is possible to do that because of the way we use strides), but the lack of memory locality there made the writes done by the schur_eliminator more expensive, but maybe I was not thinking about this correctly and it is worth exploring this again, in which case there is no conversion needed at all?",
+      "parentUuid": "72733559_17936961",
+      "revId": "42a0e0170339d2ca2375ac4b16e537e9a42c0d36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
