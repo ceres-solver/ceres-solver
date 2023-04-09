@@ -70,6 +70,23 @@
       "parentUuid": "72733559_17936961",
       "revId": "42a0e0170339d2ca2375ac4b16e537e9a42c0d36",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a0dec01_372ac8af",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-09T19:03:20Z",
+      "side": 1,
+      "message": "interestingly BlockRandomAccessSparseMatrix has a context object already, so you are welcome to re-work BlockRandomAccessSparseMatrix to be more efficient as you see it fit. \n\nIt is a performance sensitive workhorse, but its possible that some of the assumptions I have made about its performance do not hold true anymore.",
+      "revId": "42a0e0170339d2ca2375ac4b16e537e9a42c0d36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
