@@ -35,6 +35,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c913e4fa_21087308",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-09T21:05:49Z",
+      "side": 1,
+      "message": "thats fair, I should change it to something more innocuous, its really just a shift.",
+      "parentUuid": "fd5d6e05_e8ecd222",
+      "revId": "44113c3f85c927142cb21bc99f33c95c7bc2e915",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9b5137f9_2b84e351",
@@ -48,6 +66,30 @@
       "writtenOn": "2023-04-09T19:41:42Z",
       "side": 1,
       "message": "Probably makes sense to change literal from `1ull` to `1ll`",
+      "range": {
+        "startLine": 108,
+        "startChar": 41,
+        "endLine": 108,
+        "endChar": 45
+      },
+      "revId": "44113c3f85c927142cb21bc99f33c95c7bc2e915",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd3fcf96_2c87b68a",
+        "filename": "internal/ceres/block_random_access_sparse_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-09T21:05:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b5137f9_2b84e351",
       "range": {
         "startLine": 108,
         "startChar": 41,
