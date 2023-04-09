@@ -34,6 +34,24 @@
       "parentUuid": "46097687_a9edd1ce",
       "revId": "42a0e0170339d2ca2375ac4b16e537e9a42c0d36",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "72733559_17936961",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-04-09T16:31:19Z",
+      "side": 1,
+      "message": "BlockRandomAccessSparseMatrix itself does not provide guarantees that conversion to CRS will be sort-less (blocks can have arbitrary order).\n\nBut we only use it in the way that has this invariant of values being stored in correct order.\n\nDo you think it makes sense to explicitly force BlockRandomSparseMatrix to have the same layout of non-zeros as BlockSparseMatrix?",
+      "parentUuid": "b9b3af2a_5a67865a",
+      "revId": "42a0e0170339d2ca2375ac4b16e537e9a42c0d36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
