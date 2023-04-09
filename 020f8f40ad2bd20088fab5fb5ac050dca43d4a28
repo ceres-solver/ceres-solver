@@ -59,6 +59,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "89a8b873_6247b459",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-04-09T15:35:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68cac8b2_fd90f09b",
+      "range": {
+        "startLine": 243,
+        "startChar": 26,
+        "endLine": 243,
+        "endChar": 36
+      },
+      "revId": "020f8f40ad2bd20088fab5fb5ac050dca43d4a28",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d8d3fe49_a94fe968",
@@ -72,6 +96,24 @@
       "writtenOn": "2023-04-09T14:14:23Z",
       "side": 1,
       "message": "I think it reads better to use an else here, rather than using a continue here. that way its clear to the reader that these two cases are exclusive of each other.",
+      "revId": "020f8f40ad2bd20088fab5fb5ac050dca43d4a28",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb7086cc_f4124ff3",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-04-09T15:35:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8d3fe49_a94fe968",
       "revId": "020f8f40ad2bd20088fab5fb5ac050dca43d4a28",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
