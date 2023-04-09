@@ -16,6 +16,64 @@
       "message": "When a sufficiently-parallel sparse Cholesky implementation is used, converting matrix from coordinate to compressed-row format takes unexpectedly large portion of FactorizeAndSolve call.\n\nI suppose that this is due to log(nnz) factor of time-complexity from sorting all the (row, col) tuples.\n\nMoreover, if indices in COO matrix came from some \"sane\" block-alike matrix format, sorting is not required (and we can detect that for each individual row).\n\nThis reduces time spent in matrix conversion about ~6x, and saves up to 20% of total execution time on large-enough BAL problems (with SPARSE_SCHUR linear solver with SuiteSparse 7.x and high core count cpu).\n\n\nOne can note that\n - If we convert from block-sparse matrix to crs (without triplet form as an intermediate format) -- \"gather\"-like operations can be replaced with strided copies\n - We can parallel part of the operation in the future.",
       "revId": "020f8f40ad2bd20088fab5fb5ac050dca43d4a28",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9fc6ea6_a59c0958",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-09T14:14:23Z",
+      "side": 1,
+      "message": "This is an interesting optimization but I am surprised that optimization works so well.\n\nIf the input is a block like matrix, which for sparse_schur it is, it is only the first row of each row block which is sorted, the rest are not. \nso you are performing most of the row sorts. my guess is that it is not smaller number of sorts that is happening here, but rather the memory locality of each sort, which is much smaller now. we do not expect any one row to be very large.\n\nthis can be validated by unconditionally sorting every row and seeing if that is faster or roughly the same speed. \n\nif that is the case, this code can be simplified  to a straight \"unsorted\" row copy followed by a row wise sort.\n\nI think it may also be worth looking at having a dedicated ToCompressedRowSparseMatrix operation for BlockRandomAccessSparseMatrix, that way we can get rid of TripletSparseMatrix entirely.",
+      "parentUuid": "8667be2b_3aac0ad3",
+      "revId": "020f8f40ad2bd20088fab5fb5ac050dca43d4a28",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68cac8b2_fd90f09b",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-09T14:14:23Z",
+      "side": 1,
+      "message": "add a comment here.",
+      "range": {
+        "startLine": 243,
+        "startChar": 26,
+        "endLine": 243,
+        "endChar": 36
+      },
+      "revId": "020f8f40ad2bd20088fab5fb5ac050dca43d4a28",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8d3fe49_a94fe968",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-09T14:14:23Z",
+      "side": 1,
+      "message": "I think it reads better to use an else here, rather than using a continue here. that way its clear to the reader that these two cases are exclusive of each other.",
+      "revId": "020f8f40ad2bd20088fab5fb5ac050dca43d4a28",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
