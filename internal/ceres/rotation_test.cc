@@ -36,6 +36,7 @@
 #include <limits>
 #include <random>
 #include <string>
+#include <utility>
 
 #include "ceres/constants.h"
 #include "ceres/internal/eigen.h"

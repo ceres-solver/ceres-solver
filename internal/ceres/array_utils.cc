@@ -74,7 +74,9 @@ void InvalidateArray(const int64_t size, double* x) {
   }
 }
 
-void AppendArrayToString(const int64_t size, const double* x, std::string* result) {
+void AppendArrayToString(const int64_t size,
+                         const double* x,
+                         std::string* result) {
   for (int64_t i = 0; i < size; ++i) {
     if (x == nullptr) {
       StringAppendF(result, "Not Computed  ");
