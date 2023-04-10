@@ -56,6 +56,30 @@
       },
       "revId": "39ddd6fb4ce0d30d6e44dbf6b117f34dab607265",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "914db589_acb7d820",
+        "filename": "internal/ceres/parallel_invoke.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-04-10T21:36:27Z",
+      "side": 1,
+      "message": "It is impossible to capture a field in c++.\nChanged to `this`.",
+      "parentUuid": "3ca0584a_be6e8394",
+      "range": {
+        "startLine": 62,
+        "startChar": 13,
+        "endLine": 62,
+        "endChar": 14
+      },
+      "revId": "39ddd6fb4ce0d30d6e44dbf6b117f34dab607265",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }

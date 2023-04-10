@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "140d0f45_de05a3ff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-04-10T21:36:27Z",
+      "side": 1,
+      "message": "Rebased onto master branch from gerrit (for some reason it is different from master branch on github).",
+      "revId": "54ad3dd03c9e0dc426fd76bcb0d03e8365ccda1f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
