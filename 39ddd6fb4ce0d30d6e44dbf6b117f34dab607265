@@ -16,6 +16,46 @@
       "message": "sergiu can you take a look please, since you had the last round of comments.",
       "revId": "39ddd6fb4ce0d30d6e44dbf6b117f34dab607265",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42c1250f_b8233172",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-04-10T20:49:58Z",
+      "side": 1,
+      "message": "LGTM. Only a minor remark.",
+      "revId": "39ddd6fb4ce0d30d6e44dbf6b117f34dab607265",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ca0584a_be6e8394",
+        "filename": "internal/ceres/parallel_invoke.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-04-10T20:49:58Z",
+      "side": 1,
+      "message": "Capture only necessary fields or `this` instead of everything?",
+      "range": {
+        "startLine": 62,
+        "startChar": 13,
+        "endLine": 62,
+        "endChar": 14
+      },
+      "revId": "39ddd6fb4ce0d30d6e44dbf6b117f34dab607265",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
