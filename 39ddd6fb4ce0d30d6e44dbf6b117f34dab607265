@@ -80,6 +80,30 @@
       },
       "revId": "39ddd6fb4ce0d30d6e44dbf6b117f34dab607265",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d7ef94d_e1e9f06f",
+        "filename": "internal/ceres/parallel_invoke.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-04-11T01:54:05Z",
+      "side": 1,
+      "message": "That\u0027s not true. You can use generalized labmda captures:\n```cpp\n[foo \u003d num_total_jobs_finished_] { /* use foo instead */ }\n// or\n[\u0026foo \u003d num_total_jobs_finished_] { /* use foo instead */ }\n```",
+      "parentUuid": "914db589_acb7d820",
+      "range": {
+        "startLine": 62,
+        "startChar": 13,
+        "endLine": 62,
+        "endChar": 14
+      },
+      "revId": "39ddd6fb4ce0d30d6e44dbf6b117f34dab607265",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
