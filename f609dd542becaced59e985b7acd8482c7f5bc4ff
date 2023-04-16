@@ -16,6 +16,24 @@
       "message": "I have replaced TripletSparseMatrix with BlockSparseMatrix in BlockRandomAccessSparseMatrix.\n\nAfter modifying BlockSparseMatrix::ToCompressedRowSparseMatrix() to sort-less version, this turned out to be slightly more effective than using TripletSparseMatrix, but not by a huge margin.\n\nI have also tried to fill column indices only for the first row of row block and then copying them, but it results into very small gains, so I decided to stick to a simpler version.\n\nMaking this conversion multi-threaded saves only a couple % of total runtime, I think that it does not worth to overcomplicate this conversion right now.\n\nFinal improvement is ~20..30%, for example on `problem-4585-1324582-pre.txt` (using `./bin/bundle_adjuster  -sparse_linear_algebra_library\u003dsuite_sparse -linear_solver\u003dsparse_schur -input\u003dproblem-4585-1324582-pre.txt -num_iterations\u003d20  -num_threads\u003d28`):\n```\nBefore (TripletSparseMatrix + sort):\n\nTime (in seconds):\nPreprocessor                        61.502462\n\n  Residual only evaluation           4.333457 (20)\n  Jacobian \u0026 residual evaluation     8.741550 (12)\n  Linear solver                    487.757376 (20)\nMinimizer                          506.131221\n\nPostprocessor                        0.695486\nTotal                              568.329171\n--------------------------------------------------\nAfter (BlockSparseMatrix without sort):\n\nTime (in seconds):\nPreprocessor                        61.495169\n\n  Residual only evaluation           4.328399 (20)\n  Jacobian \u0026 residual evaluation     8.632579 (12)\n  Linear solver                    322.538992 (20)\nMinimizer                          340.644099\n\nPostprocessor                        0.640037\nTotal                              402.779307\n```\n\nIt is crucial to have a reasonably modern SuiteSparse for reproducing those results.",
       "revId": "f609dd542becaced59e985b7acd8482c7f5bc4ff",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62b69cf5_02ee5fea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-16T20:43:56Z",
+      "side": 1,
+      "message": "Dmitry,\n\nI will review this in a bit. In the meantime I was t to understand what you mean by a recent version of suitesparse? What version of suitesparse do you recommend? And do you know what has changed in suitesparse recently to make this change work?\n\nI am wondering if this requires openmp support on cholmod, because clang still does not support openmp fully and I want to make sure openmp does not become a requirement for performance.\n\nSameer",
+      "tag": "mailMessageId\u003d\u003cCABqdRUDLBqh5LLCMkfb0o3qQZL7Wa+BnJ7nDRtUdDULEvJb5_g@mail.gmail.com\u003e",
+      "revId": "f609dd542becaced59e985b7acd8482c7f5bc4ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
