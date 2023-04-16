@@ -34,6 +34,24 @@
       "tag": "mailMessageId\u003d\u003cCABqdRUDLBqh5LLCMkfb0o3qQZL7Wa+BnJ7nDRtUdDULEvJb5_g@mail.gmail.com\u003e",
       "revId": "f609dd542becaced59e985b7acd8482c7f5bc4ff",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4c190ee_2e3dee0a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-04-16T21:52:04Z",
+      "side": 1,
+      "message": "SuiteSparse 6.x+ should work (I\u0027ve used 7.0.1).\n\n5.x (for some reason this is the version that is shipped with debian/ubuntu, for example) requires rebuilding with non-default options (hence it is simpler to just build the latest-and-greatest).\n\nThe difference is maximum number of threads being a compile-time constant in 5.x (set to 4 there https://github.com/DrTimothyAldenDavis/SuiteSparse/blob/f8ed0196d35a98caacdf660ac55765915f67298d/CHOLMOD/Include/cholmod_core.h#L277 ).\n\nAnd in CHOLMOD 4.0+ (that is SuiteSparse 6.0+) it is a run-time variable:\n * Corresponding entry in changelog: https://github.com/DrTimothyAldenDavis/SuiteSparse/blob/dev/CHOLMOD/Doc/ChangeLog#L30-L31\n * New field in external interface: https://github.com/DrTimothyAldenDavis/SuiteSparse/blob/dev/CHOLMOD/Include/cholmod.h#L1201-L1202\n * And this is how default is defined in config: https://github.com/DrTimothyAldenDavis/SuiteSparse/blob/dev/SuiteSparse_config/Config/SuiteSparse_config.h.in#L68-L69\n\nThreading in CHOLMOD is still done via OpenMP. On my machine there is a huge difference in end-to-end performance of ceres-solver with sparse Cholesky utilizing 4 and 28 threads; and with Cholesky decomposition that fast, conversion via COO format represents a significant portion of time spent in linear solver.\n\nI still expect some performance improvement when CHOLMOD is built without openmp, but it might be outweighted (in terms of relative improvement) by slower Cholesky factorization.",
+      "parentUuid": "62b69cf5_02ee5fea",
+      "revId": "f609dd542becaced59e985b7acd8482c7f5bc4ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
