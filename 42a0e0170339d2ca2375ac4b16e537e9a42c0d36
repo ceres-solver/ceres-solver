@@ -87,6 +87,24 @@
       "message": "interestingly BlockRandomAccessSparseMatrix has a context object already, so you are welcome to re-work BlockRandomAccessSparseMatrix to be more efficient as you see it fit. \n\nIt is a performance sensitive workhorse, but its possible that some of the assumptions I have made about its performance do not hold true anymore.",
       "revId": "42a0e0170339d2ca2375ac4b16e537e9a42c0d36",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef4c3aa0_f8f76f07",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-04-16T19:00:22Z",
+      "side": 1,
+      "message": "I understood that my statement \"BlockRandomAccessSparseMatrix itself does not provide guarantees that conversion to CRS will be sort-less\" is wrong, because block indices come to constructor as a lexicographically sorted pairs in std::set\n\nThus, BlockRandomAccessSparseMatrix has an invariant of values being stored in order.\n\nIt is TripletSparseMatrix that does not have that invariant.",
+      "parentUuid": "dfb9f7a0_1d00f43b",
+      "revId": "42a0e0170339d2ca2375ac4b16e537e9a42c0d36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
