@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e21f1f0_70158033",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-04-17T20:32:25Z",
+      "side": 1,
+      "message": "Major change comes from splitting CRS conversion into stucture-related and value-related parts. This allows caching the structure which improves timings even more.\n\nDo you think it would be better to convert BlockSparseMatrix::CreateCompressedRowSparseMatrix into constructor of CompressedRowSparseMatrix?\n\nThis will simplify some code (those who need a pointer will use std::make_unique, those who don\u0027t - will just call a constructor; this will make diff smaller).\nBut this way it will be different from how other conversions are handled (for example, CompressedRowSparseMatrix::FromTripletSparseMatrix is a method returning unique_ptr and not a constructor).",
+      "revId": "8553f3cf694cb7b33c326405a820f015e8009e70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
