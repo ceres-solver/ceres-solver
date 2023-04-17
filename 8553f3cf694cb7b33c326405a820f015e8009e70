@@ -16,6 +16,41 @@
       "message": "Major change comes from splitting CRS conversion into stucture-related and value-related parts. This allows caching the structure which improves timings even more.\n\nDo you think it would be better to convert BlockSparseMatrix::CreateCompressedRowSparseMatrix into constructor of CompressedRowSparseMatrix?\n\nThis will simplify some code (those who need a pointer will use std::make_unique, those who don\u0027t - will just call a constructor; this will make diff smaller).\nBut this way it will be different from how other conversions are handled (for example, CompressedRowSparseMatrix::FromTripletSparseMatrix is a method returning unique_ptr and not a constructor).",
       "revId": "8553f3cf694cb7b33c326405a820f015e8009e70",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d203b2c8_7575b400",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T20:42:48Z",
+      "side": 1,
+      "message": "The way I think about this is as follows.\nConverting the function into a constructor means that that now CompressedRowSparseMatrix has to know how to convert itself from BlockSparseMatrix. I thin of CompressedRowSparseMatrix as a simpler format that BlockSparseMatrix should know about rather than the other way around.\nI am not too worried about the callsites as a result.",
+      "parentUuid": "2e21f1f0_70158033",
+      "revId": "8553f3cf694cb7b33c326405a820f015e8009e70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ac3a248_86250d02",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T20:42:48Z",
+      "side": 1,
+      "message": "Dmitriy,\nI will take a look at the code shortly. I think the structure you have right now looks okay to me.",
+      "revId": "8553f3cf694cb7b33c326405a820f015e8009e70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
