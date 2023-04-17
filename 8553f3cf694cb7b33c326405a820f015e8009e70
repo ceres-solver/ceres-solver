@@ -70,6 +70,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "98c1aaac_b9ccc6c6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-04-17T22:36:07Z",
+      "side": 1,
+      "message": "About 10% from linear solver, so this CL gives me ~1.5x end-to-end speedup.\n\nCopying values takes ~3% of FactorAndSolve now.\n\nI wonder if we can squeeze more improvements from other parts of Schur-complement with sparse Cholesky, it would be great.\n\n```\nTime (in seconds):\nPreprocessor                        61.305412\n                                                                                                                                        \n  Residual only evaluation           4.170777 (20)                                              \n  Jacobian \u0026 residual evaluation     8.708902 (12)\n  Linear solver                    290.794084 (20)\nMinimizer                          308.739053\n                                                                                                                                        \nPostprocessor                        0.637659\nTotal                              370.682125\n```",
+      "parentUuid": "36833841_b47b9148",
+      "revId": "8553f3cf694cb7b33c326405a820f015e8009e70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5ab29c40_37a1f5df",
@@ -83,6 +101,30 @@
       "writtenOn": "2023-04-17T21:03:19Z",
       "side": 1,
       "message": "don\u0027t need this either.",
+      "range": {
+        "startLine": 94,
+        "startChar": 35,
+        "endLine": 94,
+        "endChar": 44
+      },
+      "revId": "8553f3cf694cb7b33c326405a820f015e8009e70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbdcdd8f_33bb16d8",
+        "filename": "internal/ceres/block_random_access_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-04-17T22:36:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ab29c40_37a1f5df",
       "range": {
         "startLine": 94,
         "startChar": 35,
@@ -116,6 +158,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "445100f4_936cee2c",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-04-17T22:36:07Z",
+      "side": 1,
+      "message": "Renamed to `CreateStructureOfCompressedRowSparseMatrix`",
+      "parentUuid": "647fb755_ebbf519e",
+      "range": {
+        "startLine": 63,
+        "startChar": 16,
+        "endLine": 63,
+        "endChar": 41
+      },
+      "revId": "8553f3cf694cb7b33c326405a820f015e8009e70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "35713398_fc1bce39",
@@ -129,6 +195,30 @@
       "writtenOn": "2023-04-17T21:03:19Z",
       "side": 1,
       "message": "crs_values and crs_rows I think is more readable.",
+      "range": {
+        "startLine": 121,
+        "startChar": 7,
+        "endLine": 121,
+        "endChar": 17
+      },
+      "revId": "8553f3cf694cb7b33c326405a820f015e8009e70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1f6b695_17343067",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-04-17T22:36:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35713398_fc1bce39",
       "range": {
         "startLine": 121,
         "startChar": 7,
@@ -162,6 +252,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6956f9e_c6e6691a",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-04-17T22:36:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fb0acb6_ede11c65",
+      "range": {
+        "startLine": 136,
+        "startChar": 17,
+        "endLine": 136,
+        "endChar": 18
+      },
+      "revId": "8553f3cf694cb7b33c326405a820f015e8009e70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2a0f44a0_0772741e",
@@ -185,6 +299,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "72c5c931_a55e0f89",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-04-17T22:36:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a0f44a0_0772741e",
+      "range": {
+        "startLine": 150,
+        "startChar": 15,
+        "endLine": 150,
+        "endChar": 19
+      },
+      "revId": "8553f3cf694cb7b33c326405a820f015e8009e70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f1c83573_a51cc606",
@@ -198,6 +336,30 @@
       "writtenOn": "2023-04-17T21:03:19Z",
       "side": 1,
       "message": "Document these methods.",
+      "range": {
+        "startLine": 95,
+        "startChar": 2,
+        "endLine": 95,
+        "endChar": 5
+      },
+      "revId": "8553f3cf694cb7b33c326405a820f015e8009e70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d998e66_132b1dd4",
+        "filename": "internal/ceres/block_sparse_matrix.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-04-17T22:36:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1c83573_a51cc606",
       "range": {
         "startLine": 95,
         "startChar": 2,
