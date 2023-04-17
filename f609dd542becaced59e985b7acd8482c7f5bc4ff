@@ -87,6 +87,454 @@
       "message": "performance looks good both on the mac as well on linux, I will review carefully tomorrow morning.",
       "revId": "f609dd542becaced59e985b7acd8482c7f5bc4ff",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba4c3854_0c0452fa",
+        "filename": "internal/ceres/block_random_access_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T17:41:19Z",
+      "side": 1,
+      "message": "maybe name num_col_blocks as num_blocks, that way the code below will read better.\ne.g. int row_block_id \u003d 0; row_block_id \u003c num_col_blocks; ++row_block_id)",
+      "range": {
+        "startLine": 56,
+        "startChar": 29,
+        "endLine": 56,
+        "endChar": 35
+      },
+      "revId": "f609dd542becaced59e985b7acd8482c7f5bc4ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2ae4743_b5f7f728",
+        "filename": "internal/ceres/block_random_access_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T17:41:19Z",
+      "side": 1,
+      "message": "i -\u003e row_block_id",
+      "range": {
+        "startLine": 68,
+        "startChar": 11,
+        "endLine": 68,
+        "endChar": 12
+      },
+      "revId": "f609dd542becaced59e985b7acd8482c7f5bc4ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a58c7dda_125d0b3d",
+        "filename": "internal/ceres/block_random_access_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T17:41:19Z",
+      "side": 1,
+      "message": "why do you need this? add a comment.",
+      "range": {
+        "startLine": 72,
+        "startChar": 45,
+        "endLine": 72,
+        "endChar": 50
+      },
+      "revId": "f609dd542becaced59e985b7acd8482c7f5bc4ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a7ffaa5_3bbb8ecb",
+        "filename": "internal/ceres/block_random_access_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T17:41:19Z",
+      "side": 1,
+      "message": "I think we can get rid of cell_values_ entirely since the matrix is a block sparse matrix, we can implement right multiply quite easily by traversing the row blocks.",
+      "range": {
+        "startLine": 81,
+        "startChar": 11,
+        "endLine": 81,
+        "endChar": 23
+      },
+      "revId": "f609dd542becaced59e985b7acd8482c7f5bc4ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10d53372_353c3b1d",
+        "filename": "internal/ceres/block_random_access_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T17:41:19Z",
+      "side": 1,
+      "message": "this function can be implemented much more simply now in terms of the block sparse matrix (we cannot use bsm::RightMultiply, but we do not need the cell_values_ as an object anymore).",
+      "range": {
+        "startLine": 119,
+        "startChar": 5,
+        "endLine": 119,
+        "endChar": 34
+      },
+      "revId": "f609dd542becaced59e985b7acd8482c7f5bc4ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b4114ee_f13c7136",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T17:41:19Z",
+      "side": 1,
+      "message": "most of our functions take rows and columns, it would be good to keep the same convention here instead of reversing it.",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 65,
+        "endChar": 16
+      },
+      "revId": "f609dd542becaced59e985b7acd8482c7f5bc4ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4734d562_300c7d1d",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T17:41:19Z",
+      "side": 1,
+      "message": "why rename this?",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 34
+      },
+      "revId": "f609dd542becaced59e985b7acd8482c7f5bc4ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b3dcc2d_455326cb",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T17:41:19Z",
+      "side": 1,
+      "message": "why rename this?",
+      "range": {
+        "startLine": 78,
+        "startChar": 25,
+        "endLine": 78,
+        "endChar": 33
+      },
+      "revId": "f609dd542becaced59e985b7acd8482c7f5bc4ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12c05271_09537249",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T17:41:19Z",
+      "side": 1,
+      "message": "this loop can use some documentation of the various cases.",
+      "range": {
+        "startLine": 80,
+        "startChar": 22,
+        "endLine": 80,
+        "endChar": 36
+      },
+      "revId": "f609dd542becaced59e985b7acd8482c7f5bc4ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56ade1b8_1be6be36",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T17:41:19Z",
+      "side": 1,
+      "message": "nnz_row_block -\u003e row_block_nnz",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 21
+      },
+      "revId": "f609dd542becaced59e985b7acd8482c7f5bc4ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7291114e_76e3e83e",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T17:41:19Z",
+      "side": 1,
+      "message": "constexpr?",
+      "range": {
+        "startLine": 89,
+        "startChar": 7,
+        "endLine": 89,
+        "endChar": 8
+      },
+      "revId": "f609dd542becaced59e985b7acd8482c7f5bc4ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8076c08c_b1e5b2ab",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T17:41:19Z",
+      "side": 1,
+      "message": "this does not seem right, why do you only need to look at the column width of the last cell?",
+      "range": {
+        "startLine": 98,
+        "startChar": 37,
+        "endLine": 98,
+        "endChar": 45
+      },
+      "revId": "f609dd542becaced59e985b7acd8482c7f5bc4ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "facc7597_96abeaa3",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T17:41:19Z",
+      "side": 1,
+      "message": "row_nnz",
+      "revId": "f609dd542becaced59e985b7acd8482c7f5bc4ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd424f15_71c481fc",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T17:41:19Z",
+      "side": 1,
+      "message": "col_block_size",
+      "range": {
+        "startLine": 106,
+        "startChar": 18,
+        "endLine": 106,
+        "endChar": 26
+      },
+      "revId": "f609dd542becaced59e985b7acd8482c7f5bc4ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83f0a1f0_64a4ba6c",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T17:41:19Z",
+      "side": 1,
+      "message": "will this code be a bit more readable if you used eigen matrix maps?",
+      "range": {
+        "startLine": 108,
+        "startChar": 22,
+        "endLine": 108,
+        "endChar": 31
+      },
+      "revId": "f609dd542becaced59e985b7acd8482c7f5bc4ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71aafb28_829ce9b2",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T17:41:19Z",
+      "side": 1,
+      "message": "why have these functions take a CRSMatrix as input at all? since you are constructing a new matrix and just moving it? isn\u0027t it simpler to just create a new matrix and return it?",
+      "range": {
+        "startLine": 399,
+        "startChar": 23,
+        "endLine": 399,
+        "endChar": 24
+      },
+      "revId": "f609dd542becaced59e985b7acd8482c7f5bc4ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "057328f0_fc3e886f",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T17:41:19Z",
+      "side": 1,
+      "message": "this copy of row and column blocks seems like it can be made into a function.",
+      "revId": "f609dd542becaced59e985b7acd8482c7f5bc4ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc6aac42_e0c916c6",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T17:41:19Z",
+      "side": 1,
+      "message": "At this point this function is only being used in tests, should we still update it in this CL?",
+      "range": {
+        "startLine": 197,
+        "startChar": 0,
+        "endLine": 197,
+        "endChar": 25
+      },
+      "revId": "f609dd542becaced59e985b7acd8482c7f5bc4ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e086322_28286434",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T17:41:19Z",
+      "side": 1,
+      "message": "add a test.",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 27
+      },
+      "revId": "f609dd542becaced59e985b7acd8482c7f5bc4ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "379fffc2_75b155b1",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T17:41:19Z",
+      "side": 1,
+      "message": "this construction and discarding of the CompressedRowSparseMatrix seems wasteful? should we think about the case where the indexing information is updated only once and subsequent updates are only made to the values array?",
+      "range": {
+        "startLine": 308,
+        "startChar": 2,
+        "endLine": 308,
+        "endChar": 27
+      },
+      "revId": "f609dd542becaced59e985b7acd8482c7f5bc4ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
