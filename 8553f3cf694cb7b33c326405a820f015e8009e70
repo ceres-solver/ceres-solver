@@ -141,6 +141,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5fb0acb6_ede11c65",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T21:32:23Z",
+      "side": 1,
+      "message": "can\u0027t this update be done cell wise? since all the rows for the row block size are identical. at least in the non-transposed case for sure. But even in that case, won\u0027t it be better to process one cell just once?",
+      "range": {
+        "startLine": 136,
+        "startChar": 17,
+        "endLine": 136,
+        "endChar": 18
+      },
+      "revId": "8553f3cf694cb7b33c326405a820f015e8009e70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2a0f44a0_0772741e",
         "filename": "internal/ceres/block_sparse_matrix.cc",
         "patchSetId": 4
