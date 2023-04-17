@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a57aa755_e40447cb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T23:49:59Z",
+      "side": 1,
+      "message": "Thanks for your patience Dmitriy. This is a fantastic patch.",
+      "revId": "77ad8bb4e53148ba0900a501c308b2df141a7d8a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
