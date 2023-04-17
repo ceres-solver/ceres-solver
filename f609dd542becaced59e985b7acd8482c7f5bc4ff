@@ -512,6 +512,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5d07495_09178869",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T21:03:19Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "6048cb1c_bdee9d5d",
+      "range": {
+        "startLine": 80,
+        "startChar": 22,
+        "endLine": 80,
+        "endChar": 36
+      },
+      "revId": "f609dd542becaced59e985b7acd8482c7f5bc4ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "56ade1b8_1be6be36",
@@ -643,6 +667,30 @@
       "side": 1,
       "message": "`back.position - front.position` \u003d number of non-zeros in row block excluding the last cell. We cannot take a first cell of the next row-block, because it may not exist.\n\nThus we add the size of the last cell manually.\n\nWe have a field for number of non-zeros in row block, but it only gets filled for transposed structure.",
       "parentUuid": "8076c08c_b1e5b2ab",
+      "range": {
+        "startLine": 98,
+        "startChar": 37,
+        "endLine": 98,
+        "endChar": 45
+      },
+      "revId": "f609dd542becaced59e985b7acd8482c7f5bc4ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b9e1e21_f978cbb9",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T21:03:19Z",
+      "side": 1,
+      "message": "oh I completely misread the code, thanks for explaining.\n\nplease add this as a comment.",
+      "parentUuid": "cb72931c_aa8d25c2",
       "range": {
         "startLine": 98,
         "startChar": 37,
@@ -829,6 +877,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0da3859c_f2ae540c",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T21:03:19Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "1912ee85_d93a634a",
+      "range": {
+        "startLine": 399,
+        "startChar": 23,
+        "endLine": 399,
+        "endChar": 24
+      },
+      "revId": "f609dd542becaced59e985b7acd8482c7f5bc4ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "057328f0_fc3e886f",
@@ -995,6 +1067,30 @@
       "side": 1,
       "message": "I\u0027ve split BlockSparseMatrix::ToCompressedRowSparseMatrix() into matrix construction and value update.\n\nIt somewhat simplified the code of conversions and made updates possible.\n\nAdded re-using of CRS structure in SparseSchurComplementSolver and VisibilityBasedPreconditioner",
       "parentUuid": "379fffc2_75b155b1",
+      "range": {
+        "startLine": 308,
+        "startChar": 2,
+        "endLine": 308,
+        "endChar": 27
+      },
+      "revId": "f609dd542becaced59e985b7acd8482c7f5bc4ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed732ed7_d375ad19",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T21:03:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8735171b_9c4ecbbe",
       "range": {
         "startLine": 308,
         "startChar": 2,

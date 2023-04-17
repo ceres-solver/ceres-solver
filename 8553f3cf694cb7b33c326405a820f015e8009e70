@@ -51,6 +51,138 @@
       "message": "Dmitriy,\nI will take a look at the code shortly. I think the structure you have right now looks okay to me.",
       "revId": "8553f3cf694cb7b33c326405a820f015e8009e70",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36833841_b47b9148",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T21:03:19Z",
+      "side": 1,
+      "message": "almost there. \nwhat kind of perf improvements did you get from doing the split?",
+      "revId": "8553f3cf694cb7b33c326405a820f015e8009e70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ab29c40_37a1f5df",
+        "filename": "internal/ceres/block_random_access_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T21:03:19Z",
+      "side": 1,
+      "message": "don\u0027t need this either.",
+      "range": {
+        "startLine": 94,
+        "startChar": 35,
+        "endLine": 94,
+        "endChar": 44
+      },
+      "revId": "8553f3cf694cb7b33c326405a820f015e8009e70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "647fb755_ebbf519e",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T21:03:19Z",
+      "side": 1,
+      "message": "document function to say that this does not populate the values array. Infact it maybe worth changing the name of this function which is indicative of the fact that this function now only creates the sparsity structure.",
+      "range": {
+        "startLine": 63,
+        "startChar": 16,
+        "endLine": 63,
+        "endChar": 41
+      },
+      "revId": "8553f3cf694cb7b33c326405a820f015e8009e70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35713398_fc1bce39",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T21:03:19Z",
+      "side": 1,
+      "message": "crs_values and crs_rows I think is more readable.",
+      "range": {
+        "startLine": 121,
+        "startChar": 7,
+        "endLine": 121,
+        "endChar": 17
+      },
+      "revId": "8553f3cf694cb7b33c326405a820f015e8009e70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a0f44a0_0772741e",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T21:03:19Z",
+      "side": 1,
+      "message": "copy_n is better maybe?",
+      "range": {
+        "startLine": 150,
+        "startChar": 15,
+        "endLine": 150,
+        "endChar": 19
+      },
+      "revId": "8553f3cf694cb7b33c326405a820f015e8009e70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1c83573_a51cc606",
+        "filename": "internal/ceres/block_sparse_matrix.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-17T21:03:19Z",
+      "side": 1,
+      "message": "Document these methods.",
+      "range": {
+        "startLine": 95,
+        "startChar": 2,
+        "endLine": 95,
+        "endChar": 5
+      },
+      "revId": "8553f3cf694cb7b33c326405a820f015e8009e70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
