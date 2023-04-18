@@ -33,6 +33,7 @@
 #include <algorithm>
 #include <cstddef>
 #include <memory>
+#include <numeric>
 #include <random>
 #include <vector>
 
