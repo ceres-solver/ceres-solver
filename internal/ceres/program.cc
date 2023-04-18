@@ -36,6 +36,7 @@
 #include <string>
 #include <vector>
 
+#include "Eigen/SparseCore"
 #include "ceres/array_utils.h"
 #include "ceres/casts.h"
 #include "ceres/compressed_row_sparse_matrix.h"
@@ -474,6 +475,33 @@ Program::CreateJacobianBlockSparsityTranspose(int start_residual_block) const {
 
   tsm->set_num_nonzeros(num_nonzeros);
   return tsm;
+}
+
+Eigen::SparseMatrix<int> Program::CreateJacobianBlockSparsity(
+    int start_residual_block) const {
+  using SparseMatrix = Eigen::SparseMatrix<int>;
+  using Triplet = Eigen::Triplet<int>;
+
+  const int num_rows = NumResidualBlocks() - start_residual_block;
+  const int num_cols = NumParameterBlocks();
+  SparseMatrix block_jacobian(num_rows, num_cols);
+
+  std::vector<Triplet> triplets;
+  triplets.reserve(10 * num_cols);
+  for (int r = start_residual_block; r < residual_blocks_.size(); ++r) {
+    auto residual_block = residual_blocks_[r];
+    auto parameter_blocks = residual_block->parameter_blocks();
+    const int num_parameter_blocks = residual_block->NumParameterBlocks();
+    for (int i = 0; i < num_parameter_blocks; ++i) {
+      if (!parameter_blocks[i]->IsConstant()) {
+        const int c = parameter_blocks[i]->index();
+        triplets.emplace_back(r - start_residual_block, c, 1);
+      }
+    }
+  }
+
+  block_jacobian.setFromTriplets(triplets.begin(), triplets.end());
+  return block_jacobian;
 }
 
 int Program::NumResidualBlocks() const { return residual_blocks_.size(); }

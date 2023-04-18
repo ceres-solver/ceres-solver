@@ -36,6 +36,7 @@
 #include <string>
 #include <vector>
 
+#include "Eigen/SparseCore"
 #include "ceres/evaluation_callback.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
@@ -134,6 +135,9 @@ class CERES_NO_EXPORT Program {
   // start_residual_block which allows the user to ignore the first
   // start_residual_block residuals.
   std::unique_ptr<TripletSparseMatrix> CreateJacobianBlockSparsityTranspose(
+      int start_residual_block = 0) const;
+
+  Eigen::SparseMatrix<int> CreateJacobianBlockSparsity(
       int start_residual_block = 0) const;
 
   // Create a copy of this program and removes constant parameter
