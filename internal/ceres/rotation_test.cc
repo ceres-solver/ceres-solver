@@ -913,6 +913,25 @@ using J4 = Jet<double, 4>;
 
 namespace {
 
+// Converts an array of N real numbers (doubles) to an array of jets
+template <int N>
+void ArrayToArrayOfJets(double const* const src, Jet<double, N>* dst) {
+  for (int i = 0; i < N; ++i) {
+    dst[i] = Jet<double, N>(src[i], i);
+  }
+}
+
+// Generically initializes a Jet with type T and a N-dimensional dual part
+// N is explicitly given (instead of inferred from sizeof...(Ts)) so that the
+// dual part can be initialized from Eigen expressions
+template <int N, typename T, typename... Ts>
+Jet<T, N> MakeJet(T a, const T& v0, Ts&&... v) {
+  Jet<T, N> j;
+  j.a = a;                                  // Real part
+  ((j.v << v0), ..., std::forward<Ts>(v));  // Fill dual part with N components
+  return j;
+}
+
 J3 MakeJ3(double a, double v0, double v1, double v2) {
   J3 j;
   j.a = a;
@@ -932,43 +951,48 @@ J4 MakeJ4(double a, double v0, double v1, double v2, double v3) {
   return j;
 }
 
-bool IsClose(double x, double y) {
-  EXPECT_FALSE(isnan(x));
-  EXPECT_FALSE(isnan(y));
-  return internal::IsClose(x, y, kTolerance, nullptr, nullptr);
-}
-
 }  // namespace
 
-template <int N>
-bool IsClose(const Jet<double, N>& x, const Jet<double, N>& y) {
-  if (!IsClose(x.a, y.a)) {
+// Use EXPECT_THAT(x, testing::PointWise(JetClose(prec), y); to achieve Jet
+// array comparison
+MATCHER_P(JetClose, relative_precision, "") {
+  using internal::IsClose;
+  using LHSJetType = std::remove_reference_t<std::tuple_element_t<0, arg_type>>;
+  using RHSJetType = std::remove_reference_t<std::tuple_element_t<1, arg_type>>;
+
+  constexpr int kDualPartDimension = LHSJetType::DIMENSION;
+  static_assert(
+      kDualPartDimension == RHSJetType::DIMENSION,
+      "Can only compare Jets with dual parts having equal dimensions");
+  auto&& [x, y] = arg;
+  double relative_error;
+  double absolute_error;
+  if (!IsClose(
+          x.a, y.a, relative_precision, &relative_error, &absolute_error)) {
+    *result_listener << "Real part mismatch: x.a = " << x.a
+                     << " and y.a = " << y.a
+                     << " where the relative error between them is "
+                     << relative_error
+                     << " and the absolute error between them is "
+                     << absolute_error;
     return false;
   }
-  for (int i = 0; i < N; i++) {
-    if (!IsClose(x.v[i], y.v[i])) {
+  for (int i = 0; i < kDualPartDimension; i++) {
+    if (!IsClose(x.v[i],
+                 y.v[i],
+                 relative_precision,
+                 &relative_error,
+                 &absolute_error)) {
+      *result_listener << "Dual part mismatch: x.v[" << i << "] = " << x.v[i]
+                       << " and y.v[" << i << "] = " << y.v[i]
+                       << " where the relative error between them is "
+                       << relative_error
+                       << " and the absolute error between them is "
+                       << absolute_error;
       return false;
     }
   }
   return true;
-}
-
-template <int M, int N>
-void ExpectJetArraysClose(const Jet<double, N>* x, const Jet<double, N>* y) {
-  for (int i = 0; i < M; i++) {
-    if (!IsClose(x[i], y[i])) {
-      LOG(ERROR) << "Jet " << i << "/" << M << " not equal";
-      LOG(ERROR) << "x[" << i << "]: " << x[i];
-      LOG(ERROR) << "y[" << i << "]: " << y[i];
-      Jet<double, N> d, zero;
-      d.a = y[i].a - x[i].a;
-      for (int j = 0; j < N; j++) {
-        d.v[j] = y[i].v[j] - x[i].v[j];
-      }
-      LOG(ERROR) << "diff: " << d;
-      EXPECT_TRUE(IsClose(x[i], y[i]));
-    }
-  }
 }
 
 // Log-10 of a value well below machine precision.
@@ -994,7 +1018,7 @@ TEST(Rotation, SmallAngleAxisToQuaternionForJets) {
         MakeJ3(0, 0, 0, sin(theta / 2) / theta),
     };
     AngleAxisToQuaternion(axis_angle, quaternion);
-    ExpectJetArraysClose<4, 3>(quaternion, expected);
+    EXPECT_THAT(quaternion, testing::Pointwise(JetClose(kTolerance), expected));
   }
 }
 
@@ -1016,7 +1040,7 @@ TEST(Rotation, TinyAngleAxisToQuaternionForJets) {
         MakeJ3(0, 0, 0, 0.5),
     };
     AngleAxisToQuaternion(axis_angle, quaternion);
-    ExpectJetArraysClose<4, 3>(quaternion, expected);
+    EXPECT_THAT(quaternion, testing::Pointwise(JetClose(kTolerance), expected));
   }
 }
 
@@ -1031,7 +1055,7 @@ TEST(Rotation, ZeroAngleAxisToQuaternionForJets) {
       MakeJ3(0, 0, 0, 0.5),
   };
   AngleAxisToQuaternion(axis_angle, quaternion);
-  ExpectJetArraysClose<4, 3>(quaternion, expected);
+  EXPECT_THAT(quaternion, testing::Pointwise(JetClose(kTolerance), expected));
 }
 
 // Test that exact conversion works for small angles.
@@ -1052,7 +1076,7 @@ TEST(Rotation, SmallQuaternionToAngleAxisForJets) {
     };
     // clang-format on
     QuaternionToAngleAxis(quaternion, axis_angle);
-    ExpectJetArraysClose<3, 4>(axis_angle, expected);
+    EXPECT_THAT(axis_angle, testing::Pointwise(JetClose(kTolerance), expected));
   }
 }
 
@@ -1077,7 +1101,7 @@ TEST(Rotation, TinyQuaternionToAngleAxisForJets) {
     };
     // clang-format on
     QuaternionToAngleAxis(quaternion, axis_angle);
-    ExpectJetArraysClose<3, 4>(axis_angle, expected);
+    EXPECT_THAT(axis_angle, testing::Pointwise(JetClose(kTolerance), expected));
   }
 }
 
@@ -1091,7 +1115,508 @@ TEST(Rotation, ZeroQuaternionToAngleAxisForJets) {
       MakeJ4(0, 0, 0, 0, 2.0),
   };
   QuaternionToAngleAxis(quaternion, axis_angle);
-  ExpectJetArraysClose<3, 4>(axis_angle, expected);
+  EXPECT_THAT(axis_angle, testing::Pointwise(JetClose(kTolerance), expected));
+}
+
+// The following 4 test cases cover the conversion of Euler Angles to rotation
+// matrices for Jets
+//
+// The dual parts (with dimension 3) of the resultant matrix of Jets contain the
+// derivative of each matrix element w.r.t. the input Euler Angles. In other
+// words, for each element in R = EulerAnglesToRotationMatrix(angles), we have
+// R_ij.v = jacobian(R_ij, angles)
+//
+// The test data (dual parts of the Jets) is generated by analytically
+// differentiating the formulas for Euler Angle to Rotation Matrix conversion
+
+// Test ZXY/312 Intrinsic Euler Angles to rotation matrix conversion using Jets
+// The two ZXY test cases specifically cover handling of Tait-Bryan angles
+// i.e. last axis of rotation is different from the first
+TEST(EulerAngles, Intrinsic312EulerSequenceToRotationMatrixForJets) {
+  J3 euler_angles[3];
+  J3 rotation_matrix[9];
+
+  ArrayToArrayOfJets(sample_euler[0], euler_angles);
+  EulerAnglesToRotation<IntrinsicZXY>(euler_angles, rotation_matrix);
+  {
+    // clang-format off
+    const J3 expected[] = {
+      MakeJ3( 0.306186083320, -0.883883627842, -0.176776571821, -0.918558748402),  // NOLINT
+      MakeJ3(-0.249999816229, -0.433012359189,  0.433012832394,  0.000000000000),  // NOLINT
+      MakeJ3( 0.918558748402,  0.176776777947,  0.176776558880,  0.306186083320),  // NOLINT
+      MakeJ3( 0.883883627842,  0.306186083320,  0.306185986727,  0.176776777947),  // NOLINT
+      MakeJ3( 0.433012359189, -0.249999816229, -0.750000183771,  0.000000000000),  // NOLINT
+      MakeJ3(-0.176776777947,  0.918558748402, -0.306185964313,  0.883883627842),  // NOLINT
+      MakeJ3(-0.353553128699,  0.000000000000,  0.612372616786, -0.353553102817),  // NOLINT
+      MakeJ3( 0.866025628186,  0.000000000000,  0.499999611325,  0.000000000000),  // NOLINT
+      MakeJ3( 0.353553102817,  0.000000000000, -0.612372571957, -0.353553128699)   // NOLINT
+    };
+    // clang-format on
+    EXPECT_THAT(rotation_matrix,
+                testing::Pointwise(JetClose(kLooseTolerance), expected));
+  }
+
+  ArrayToArrayOfJets(sample_euler[1], euler_angles);
+  EulerAnglesToRotation<IntrinsicZXY>(euler_angles, rotation_matrix);
+  {
+    // clang-format off
+    const J3 expected[] = {
+      MakeJ3( 0.533493553520, -0.808012821828, -0.124999913397, -0.808012821828),  // NOLINT
+      MakeJ3(-0.249999816229, -0.433012359189,  0.433012832394,  0.000000000000),  // NOLINT
+      MakeJ3( 0.808012821828,  0.399519181706,  0.216506188745,  0.533493553520),  // NOLINT
+      MakeJ3( 0.808012821828,  0.533493553520,  0.216506188745,  0.399519181706),  // NOLINT
+      MakeJ3( 0.433012359189, -0.249999816229, -0.750000183771,  0.000000000000),  // NOLINT
+      MakeJ3(-0.399519181706,  0.808012821828, -0.374999697927,  0.808012821828),  // NOLINT
+      MakeJ3(-0.249999816229,  0.000000000000,  0.433012832394, -0.433012359189),  // NOLINT
+      MakeJ3( 0.866025628186,  0.000000000000,  0.499999611325,  0.000000000000),  // NOLINT
+      MakeJ3( 0.433012359189,  0.000000000000, -0.750000183771, -0.249999816229)   // NOLINT
+    };
+    // clang-format on
+    EXPECT_THAT(rotation_matrix,
+                testing::Pointwise(JetClose(kLooseTolerance), expected));
+  }
+
+  ArrayToArrayOfJets(sample_euler[2], euler_angles);
+  EulerAnglesToRotation<IntrinsicZXY>(euler_angles, rotation_matrix);
+  {
+    // clang-format off
+    const J3 expected[] = {
+      MakeJ3( 0.047366781483, -0.659739427619, -0.530330235247, -0.789149143778),  // NOLINT
+      MakeJ3(-0.612372449483, -0.612372404654,  0.353553418477,  0.000000000000),  // NOLINT
+      MakeJ3( 0.789149143778, -0.435596057906,  0.306185986727,  0.047366781483),  // NOLINT
+      MakeJ3( 0.659739427619,  0.047366781483,  0.530330196424, -0.435596057906),  // NOLINT
+      MakeJ3( 0.612372404654, -0.612372449483, -0.353553392595,  0.000000000000),  // NOLINT
+      MakeJ3( 0.435596057906,  0.789149143778, -0.306185964313,  0.659739427619),  // NOLINT
+      MakeJ3(-0.750000183771,  0.000000000000,  0.433012832394, -0.433012359189),  // NOLINT
+      MakeJ3( 0.500000021132,  0.000000000000,  0.866025391584,  0.000000000000),  // NOLINT
+      MakeJ3( 0.433012359189,  0.000000000000, -0.249999816229, -0.750000183771)   // NOLINT
+    };
+    // clang-format on
+    EXPECT_THAT(rotation_matrix,
+                testing::Pointwise(JetClose(kLooseTolerance), expected));
+  }
+}
+
+// Test ZXY/312 Extrinsic Euler Angles to rotation matrix conversion using Jets
+TEST(EulerAngles, Extrinsic312EulerSequenceToRotationMatrixForJets) {
+  J3 euler_angles[3];
+  J3 rotation_matrix[9];
+
+  ArrayToArrayOfJets(sample_euler[0], euler_angles);
+  EulerAnglesToRotation<ExtrinsicZXY>(euler_angles, rotation_matrix);
+  {
+    // clang-format off
+    const J3 expected[] = {
+      MakeJ3( 0.918558725988,  0.176776842652,  0.176776571821, -0.306186150563),  // NOLINT
+      MakeJ3( 0.176776842652, -0.918558725988,  0.306185986727,  0.883883614902),  // NOLINT
+      MakeJ3( 0.353553128699,  0.000000000000, -0.612372616786,  0.353553102817),  // NOLINT
+      MakeJ3( 0.249999816229,  0.433012359189, -0.433012832394,  0.000000000000),  // NOLINT
+      MakeJ3( 0.433012359189, -0.249999816229, -0.750000183771,  0.000000000000),  // NOLINT
+      MakeJ3(-0.866025628186,  0.000000000000, -0.499999611325,  0.000000000000),  // NOLINT
+      MakeJ3(-0.306186150563,  0.883883614902,  0.176776558880, -0.918558725988),  // NOLINT
+      MakeJ3( 0.883883614902,  0.306186150563,  0.306185964313, -0.176776842652),  // NOLINT
+      MakeJ3( 0.353553102817,  0.000000000000, -0.612372571957, -0.353553128699)   // NOLINT
+    };
+    // clang-format on
+    EXPECT_THAT(rotation_matrix,
+                testing::Pointwise(JetClose(kLooseTolerance), expected));
+  }
+
+  ArrayToArrayOfJets(sample_euler[1], euler_angles);
+  EulerAnglesToRotation<ExtrinsicZXY>(euler_angles, rotation_matrix);
+  {
+    // clang-format off
+    const J3 expected[] = {
+      MakeJ3( 0.966506404215, -0.058012606358,  0.124999913397, -0.058012606358),  // NOLINT
+      MakeJ3(-0.058012606358, -0.966506404215,  0.216506188745,  0.899519223971),  // NOLINT
+      MakeJ3( 0.249999816229,  0.000000000000, -0.433012832394,  0.433012359189),  // NOLINT
+      MakeJ3( 0.249999816229,  0.433012359189, -0.433012832394,  0.000000000000),  // NOLINT
+      MakeJ3( 0.433012359189, -0.249999816229, -0.750000183771,  0.000000000000),  // NOLINT
+      MakeJ3(-0.866025628186,  0.000000000000, -0.499999611325,  0.000000000000),  // NOLINT
+      MakeJ3(-0.058012606358,  0.899519223971,  0.216506188745, -0.966506404215),  // NOLINT
+      MakeJ3( 0.899519223971,  0.058012606358,  0.374999697927,  0.058012606358),  // NOLINT
+      MakeJ3( 0.433012359189,  0.000000000000, -0.750000183771, -0.249999816229)   // NOLINT
+    };
+    // clang-format on
+    EXPECT_THAT(rotation_matrix,
+                testing::Pointwise(JetClose(kLooseTolerance), expected));
+  }
+
+  ArrayToArrayOfJets(sample_euler[2], euler_angles);
+  EulerAnglesToRotation<ExtrinsicZXY>(euler_angles, rotation_matrix);
+  {
+    // clang-format off
+    const J3 expected[] = {
+      MakeJ3( 0.659739424151, -0.047366829780,  0.530330235247, -0.435596000136),  // NOLINT
+      MakeJ3(-0.047366829780, -0.659739424151,  0.530330196424,  0.789149175666),  // NOLINT
+      MakeJ3( 0.750000183771,  0.000000000000, -0.433012832394,  0.433012359189),  // NOLINT
+      MakeJ3( 0.612372449483,  0.612372404654, -0.353553418477,  0.000000000000),  // NOLINT
+      MakeJ3( 0.612372404654, -0.612372449483, -0.353553392595,  0.000000000000),  // NOLINT
+      MakeJ3(-0.500000021132,  0.000000000000, -0.866025391584,  0.000000000000),  // NOLINT
+      MakeJ3(-0.435596000136,  0.789149175666,  0.306185986727, -0.659739424151),  // NOLINT
+      MakeJ3( 0.789149175666,  0.435596000136,  0.306185964313,  0.047366829780),  // NOLINT
+      MakeJ3( 0.433012359189,  0.000000000000, -0.249999816229, -0.750000183771)   // NOLINT
+    };
+    // clang-format on
+    EXPECT_THAT(rotation_matrix,
+                testing::Pointwise(JetClose(kLooseTolerance), expected));
+  }
+}
+
+// Test ZXZ/313 Intrinsic Euler Angles to rotation matrix conversion using Jets
+// The two ZXZ test cases specifically cover handling of proper Euler Sequences
+// i.e. last axis of rotation is same as the first
+TEST(EulerAngles, Intrinsic313EulerSequenceToRotationMatrixForJets) {
+  J3 euler_angles[3];
+  J3 rotation_matrix[9];
+
+  ArrayToArrayOfJets(sample_euler[0], euler_angles);
+  EulerAnglesToRotation<IntrinsicZXZ>(euler_angles, rotation_matrix);
+  {
+    // clang-format off
+    const J3 expected[] = {
+      MakeJ3( 0.435595832833, -0.659739379323,  0.306186321334, -0.789149008363),  // NOLINT
+      MakeJ3(-0.789149008363,  0.047367454164,  0.306186298920, -0.435595832833),  // NOLINT
+      MakeJ3( 0.433012832394,  0.750000183771,  0.249999816229,  0.000000000000),  // NOLINT
+      MakeJ3( 0.659739379323,  0.435595832833, -0.530330235247, -0.047367454164),  // NOLINT
+      MakeJ3(-0.047367454164, -0.789149008363, -0.530330196424, -0.659739379323),  // NOLINT
+      MakeJ3(-0.750000183771,  0.433012832394, -0.433012359189,  0.000000000000),  // NOLINT
+      MakeJ3( 0.612372616786,  0.000000000000,  0.353553128699,  0.612372571957),  // NOLINT
+      MakeJ3( 0.612372571957,  0.000000000000,  0.353553102817, -0.612372616786),  // NOLINT
+      MakeJ3( 0.499999611325,  0.000000000000, -0.866025628186,  0.000000000000)   // NOLINT
+    };
+    // clang-format on
+    EXPECT_THAT(rotation_matrix,
+                testing::Pointwise(JetClose(kLooseTolerance), expected));
+  }
+
+  ArrayToArrayOfJets(sample_euler[1], euler_angles);
+  EulerAnglesToRotation<IntrinsicZXZ>(euler_angles, rotation_matrix);
+  {
+    // clang-format off
+    const J3 expected[] = {
+      MakeJ3( 0.625000065470, -0.649518902838,  0.216506425348, -0.649518902838),  // NOLINT
+      MakeJ3(-0.649518902838, -0.124999676795,  0.375000107735, -0.625000065470),  // NOLINT
+      MakeJ3( 0.433012832394,  0.750000183771,  0.249999816229,  0.000000000000),  // NOLINT
+      MakeJ3( 0.649518902838,  0.625000065470, -0.375000107735,  0.124999676795),  // NOLINT
+      MakeJ3( 0.124999676795, -0.649518902838, -0.649519202838, -0.649518902838),  // NOLINT
+      MakeJ3(-0.750000183771,  0.433012832394, -0.433012359189,  0.000000000000),  // NOLINT
+      MakeJ3( 0.433012832394,  0.000000000000,  0.249999816229,  0.750000183771),  // NOLINT
+      MakeJ3( 0.750000183771,  0.000000000000,  0.433012359189, -0.433012832394),  // NOLINT
+      MakeJ3( 0.499999611325,  0.000000000000, -0.866025628186,  0.000000000000)   // NOLINT
+    };
+    // clang-format on
+    EXPECT_THAT(rotation_matrix,
+                testing::Pointwise(JetClose(kLooseTolerance), expected));
+  }
+
+  ArrayToArrayOfJets(sample_euler[2], euler_angles);
+  EulerAnglesToRotation<IntrinsicZXZ>(euler_angles, rotation_matrix);
+  {
+    // clang-format off
+    const J3 expected[] = {
+      MakeJ3(-0.176777132430, -0.883883325124,  0.306186321334, -0.918558558685),  // NOLINT
+      MakeJ3(-0.918558558685,  0.306186652473,  0.176776571821,  0.176777132430),  // NOLINT
+      MakeJ3( 0.353553418477,  0.353553392595,  0.612372449483,  0.000000000000),  // NOLINT
+      MakeJ3( 0.883883325124, -0.176777132430, -0.306186298920, -0.306186652473),  // NOLINT
+      MakeJ3(-0.306186652473, -0.918558558685, -0.176776558880, -0.883883325124),  // NOLINT
+      MakeJ3(-0.353553392595,  0.353553418477, -0.612372404654,  0.000000000000),  // NOLINT
+      MakeJ3( 0.433012832394,  0.000000000000,  0.750000183771,  0.249999816229),  // NOLINT
+      MakeJ3( 0.249999816229,  0.000000000000,  0.433012359189, -0.433012832394),  // NOLINT
+      MakeJ3( 0.866025391584,  0.000000000000, -0.500000021132,  0.000000000000)   // NOLINT
+    };
+    // clang-format on
+    EXPECT_THAT(rotation_matrix,
+                testing::Pointwise(JetClose(kLooseTolerance), expected));
+  }
+}
+
+// Test ZXZ/313 Extrinsic Euler Angles to rotation matrix conversion using Jets
+TEST(EulerAngles, Extrinsic313EulerSequenceToRotationMatrixForJets) {
+  J3 euler_angles[3];
+  J3 rotation_matrix[9];
+
+  ArrayToArrayOfJets(sample_euler[0], euler_angles);
+  EulerAnglesToRotation<ExtrinsicZXZ>(euler_angles, rotation_matrix);
+  {
+    // clang-format off
+    const J3 expected[] = {
+      MakeJ3( 0.435595832833, -0.659739379323,  0.306186321334, -0.789149008363),  // NOLINT
+      MakeJ3(-0.659739379323, -0.435595832833,  0.530330235247,  0.047367454164),  // NOLINT
+      MakeJ3( 0.612372616786,  0.000000000000,  0.353553128699,  0.612372571957),  // NOLINT
+      MakeJ3( 0.789149008363, -0.047367454164, -0.306186298920,  0.435595832833),  // NOLINT
+      MakeJ3(-0.047367454164, -0.789149008363, -0.530330196424, -0.659739379323),  // NOLINT
+      MakeJ3(-0.612372571957,  0.000000000000, -0.353553102817,  0.612372616786),  // NOLINT
+      MakeJ3( 0.433012832394,  0.750000183771,  0.249999816229,  0.000000000000),  // NOLINT
+      MakeJ3( 0.750000183771, -0.433012832394,  0.433012359189,  0.000000000000),  // NOLINT
+      MakeJ3( 0.499999611325,  0.000000000000, -0.866025628186,  0.000000000000)   // NOLINT
+    };
+    // clang-format on
+    EXPECT_THAT(rotation_matrix,
+                testing::Pointwise(JetClose(kLooseTolerance), expected));
+  }
+
+  ArrayToArrayOfJets(sample_euler[1], euler_angles);
+  EulerAnglesToRotation<ExtrinsicZXZ>(euler_angles, rotation_matrix);
+  {
+    // clang-format off
+    const J3 expected[] = {
+      MakeJ3( 0.625000065470, -0.649518902838,  0.216506425348, -0.649518902838),  // NOLINT
+      MakeJ3(-0.649518902838, -0.625000065470,  0.375000107735, -0.124999676795),  // NOLINT
+      MakeJ3( 0.433012832394,  0.000000000000,  0.249999816229,  0.750000183771),  // NOLINT
+      MakeJ3( 0.649518902838,  0.124999676795, -0.375000107735,  0.625000065470),  // NOLINT
+      MakeJ3( 0.124999676795, -0.649518902838, -0.649519202838, -0.649518902838),  // NOLINT
+      MakeJ3(-0.750000183771,  0.000000000000, -0.433012359189,  0.433012832394),  // NOLINT
+      MakeJ3( 0.433012832394,  0.750000183771,  0.249999816229,  0.000000000000),  // NOLINT
+      MakeJ3( 0.750000183771, -0.433012832394,  0.433012359189,  0.000000000000),  // NOLINT
+      MakeJ3( 0.499999611325,  0.000000000000, -0.866025628186,  0.000000000000)   // NOLINT
+    };
+    // clang-format on
+    EXPECT_THAT(rotation_matrix,
+                testing::Pointwise(JetClose(kLooseTolerance), expected));
+  }
+
+  ArrayToArrayOfJets(sample_euler[2], euler_angles);
+  EulerAnglesToRotation<ExtrinsicZXZ>(euler_angles, rotation_matrix);
+  {
+    // clang-format off
+    const J3 expected[] = {
+      MakeJ3(-0.176777132430, -0.883883325124,  0.306186321334, -0.918558558685),  // NOLINT
+      MakeJ3(-0.883883325124,  0.176777132430,  0.306186298920,  0.306186652473),  // NOLINT
+      MakeJ3( 0.433012832394,  0.000000000000,  0.750000183771,  0.249999816229),  // NOLINT
+      MakeJ3( 0.918558558685, -0.306186652473, -0.176776571821, -0.176777132430),  // NOLINT
+      MakeJ3(-0.306186652473, -0.918558558685, -0.176776558880, -0.883883325124),  // NOLINT
+      MakeJ3(-0.249999816229,  0.000000000000, -0.433012359189,  0.433012832394),  // NOLINT
+      MakeJ3( 0.353553418477,  0.353553392595,  0.612372449483,  0.000000000000),  // NOLINT
+      MakeJ3( 0.353553392595, -0.353553418477,  0.612372404654,  0.000000000000),  // NOLINT
+      MakeJ3( 0.866025391584,  0.000000000000, -0.500000021132,  0.000000000000)   // NOLINT
+    };
+    // clang-format on
+    EXPECT_THAT(rotation_matrix,
+                testing::Pointwise(JetClose(kLooseTolerance), expected));
+  }
+}
+
+using J9 = Jet<double, 9>;
+
+// The following 4 tests Tests the conversion of rotation matrices to Euler
+// Angles for Jets.
+//
+// The dual parts (with dimension 9) of the resultant array of Jets contain the
+// derivative of each Euler angle w.r.t. each of the 9 elements of the rotation
+// matrix, or a 9-by-1 array formed from flattening the rotation matrix. In
+// other words, for each element in angles = RotationMatrixToEulerAngles(R), we
+// have angles.v = jacobian(angles, [R11 R12 R13 R21 ... R32 R33]);
+//
+// Note: the order of elements in v depend on row/column-wise flattening of
+// the rotation matrix
+//
+// The test data (dual parts of the Jets) is generated by analytically
+// differentiating the formulas for Rotation Matrix to Euler Angle conversion
+
+// clang-format off
+static double sample_matrices[][9] = {
+  { 0.433012359189,  0.176776842652,  0.883883614902,  0.249999816229,  0.918558725988, -0.306186150563, -0.866025628186,  0.353553128699,  0.353553102817},  // NOLINT
+  { 0.433012359189, -0.058012606358,  0.899519223971,  0.249999816229,  0.966506404215, -0.058012606358, -0.866025628186,  0.249999816229,  0.433012359189},  // NOLINT
+  { 0.612372404654, -0.047366829780,  0.789149175666,  0.612372449483,  0.659739424151, -0.435596000136, -0.500000021132,  0.750000183771,  0.433012359189}   // NOLINT
+};
+// clang-format on
+
+// Test rotation matrix to ZXY/312 Intrinsic Euler Angles conversion using Jets
+// The two ZXY test cases specifically cover handling of Tait-Bryan angles
+// i.e. last axis of rotation is different from the first
+TEST(EulerAngles, RotationMatrixToIntrinsic312EulerSequenceForJets) {
+  J9 euler_angles[3];
+  J9 rotation_matrix[9];
+
+  ArrayToArrayOfJets(sample_matrices[0], rotation_matrix);
+  RotationMatrixToEulerAngles<IntrinsicZXY>(rotation_matrix, euler_angles);
+  {
+    // clang-format off
+    const J9 expected[] = {
+      MakeJet<9>(-0.190125743401,  0.000000000000, -1.049781178951,  0.000000000000,  0.000000000000,  0.202030634558,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000),  // NOLINT
+      MakeJet<9>( 0.361366843930,  0.000000000000, -0.066815309609,  0.000000000000,  0.000000000000, -0.347182270882,  0.000000000000,  0.000000000000,  0.935414445680,  0.000000000000),  // NOLINT
+      MakeJet<9>( 1.183200015636,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000, -0.404060603418,  0.000000000000, -0.989743365598)   // NOLINT
+    };
+    // clang-format on
+    EXPECT_THAT(euler_angles,
+                testing::Pointwise(JetClose(kLooseTolerance), expected));
+  }
+
+  ArrayToArrayOfJets(sample_matrices[1], rotation_matrix);
+  RotationMatrixToEulerAngles<IntrinsicZXY>(rotation_matrix, euler_angles);
+  {
+    // clang-format off
+    const J9 expected[] = {
+      MakeJet<9>( 0.059951064811,  0.000000000000, -1.030940063452,  0.000000000000,  0.000000000000, -0.061880107384,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000),  // NOLINT
+      MakeJet<9>( 0.252680065344,  0.000000000000,  0.014978778808,  0.000000000000,  0.000000000000, -0.249550684831,  0.000000000000,  0.000000000000,  0.968245884001,  0.000000000000),  // NOLINT
+      MakeJet<9>( 1.107149138016,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000, -0.461879804532,  0.000000000000, -0.923760579526)   // NOLINT
+    };
+    // clang-format on
+    EXPECT_THAT(euler_angles,
+                testing::Pointwise(JetClose(kLooseTolerance), expected));
+  }
+
+  ArrayToArrayOfJets(sample_matrices[2], rotation_matrix);
+  RotationMatrixToEulerAngles<IntrinsicZXY>(rotation_matrix, euler_angles);
+  {
+    // clang-format off
+    const J9 expected[] = {
+      MakeJet<9>( 0.071673287221,  0.000000000000, -1.507976776767,  0.000000000000,  0.000000000000, -0.108267107713,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000),  // NOLINT
+      MakeJet<9>( 0.848062356818,  0.000000000000,  0.053708966648,  0.000000000000,  0.000000000000, -0.748074610289,  0.000000000000,  0.000000000000,  0.661437619389,  0.000000000000),  // NOLINT
+      MakeJet<9>( 0.857072360427,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000, -0.989743158900,  0.000000000000, -1.142857911244)   // NOLINT
+    };
+    // clang-format on
+    EXPECT_THAT(euler_angles,
+                testing::Pointwise(JetClose(kLooseTolerance), expected));
+  }
+}
+
+// Test rotation matrix to ZXY/312 Extrinsic Euler Angles conversion using Jets
+TEST(EulerAngles, RotationMatrixToExtrinsic312EulerSequenceForJets) {
+  J9 euler_angles[3];
+  J9 rotation_matrix[9];
+
+  ArrayToArrayOfJets(sample_matrices[0], rotation_matrix);
+  RotationMatrixToEulerAngles<ExtrinsicZXY>(rotation_matrix, euler_angles);
+  {
+    // clang-format off
+    const J9 expected[] = {
+      MakeJet<9>( 0.265728912717,  0.000000000000,  0.000000000000,  0.000000000000,  1.013581996386, -0.275861853641,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000),  // NOLINT
+      MakeJet<9>( 0.311184173598,  0.000000000000,  0.000000000000, -0.284286741927,  0.000000000000,  0.000000000000, -0.951971659874,  0.000000000000,  0.000000000000, -0.113714586405),  // NOLINT
+      MakeJet<9>( 1.190290284357,  0.000000000000,  0.000000000000,  0.390127543992,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000, -0.975319806582)   // NOLINT
+    };
+    // clang-format on
+    EXPECT_THAT(euler_angles,
+                testing::Pointwise(JetClose(kLooseTolerance), expected));
+  }
+
+  ArrayToArrayOfJets(sample_matrices[1], rotation_matrix);
+  RotationMatrixToEulerAngles<ExtrinsicZXY>(rotation_matrix, euler_angles);
+  {
+    // clang-format off
+    const J9 expected[] = {
+      MakeJet<9>( 0.253115668605,  0.000000000000,  0.000000000000,  0.000000000000,  0.969770129215, -0.250844022378,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000),  // NOLINT
+      MakeJet<9>( 0.058045195612,  0.000000000000,  0.000000000000, -0.052271487648,  0.000000000000,  0.000000000000, -0.998315850572,  0.000000000000,  0.000000000000, -0.025162553041),  // NOLINT
+      MakeJet<9>( 1.122153748896,  0.000000000000,  0.000000000000,  0.434474567050,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000, -0.902556744846)   // NOLINT
+    };
+    // clang-format on
+    EXPECT_THAT(euler_angles,
+                testing::Pointwise(JetClose(kLooseTolerance), expected));
+  }
+
+  ArrayToArrayOfJets(sample_matrices[2], rotation_matrix);
+  RotationMatrixToEulerAngles<ExtrinsicZXY>(rotation_matrix, euler_angles);
+  {
+    // clang-format off
+    const J9 expected[] = {
+      MakeJet<9>( 0.748180444286,  0.000000000000,  0.000000000000,  0.000000000000,  0.814235652244, -0.755776390750,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000),  // NOLINT
+      MakeJet<9>( 0.450700288478,  0.000000000000,  0.000000000000, -0.381884322045,  0.000000000000,  0.000000000000, -0.900142280234,  0.000000000000,  0.000000000000, -0.209542930950),  // NOLINT
+      MakeJet<9>( 1.068945699497,  0.000000000000,  0.000000000000,  0.534414175972,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000, -0.973950275281)   // NOLINT
+    };
+    // clang-format on
+    EXPECT_THAT(euler_angles,
+                testing::Pointwise(JetClose(kLooseTolerance), expected));
+  }
+}
+
+// Test rotation matrix to ZXZ/313 Intrinsic Euler Angles conversion using Jets
+//// The two ZXZ test cases specifically cover handling of proper Euler
+/// Sequences
+// i.e. last axis of rotation is same as the first
+TEST(EulerAngles, RotationMatrixToIntrinsic313EulerSequenceForJets) {
+  J9 euler_angles[3];
+  J9 rotation_matrix[9];
+
+  ArrayToArrayOfJets(sample_matrices[0], rotation_matrix);
+  RotationMatrixToEulerAngles<IntrinsicZXZ>(rotation_matrix, euler_angles);
+  {
+    // clang-format off
+    const J9 expected[] = {
+      MakeJet<9>( 1.237323270947,  0.000000000000,  0.000000000000,  0.349926947837,  0.000000000000,  0.000000000000,  1.010152467826,  0.000000000000,  0.000000000000,  0.000000000000),  // NOLINT
+      MakeJet<9>( 1.209429510533,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000, -0.327326615680,  0.133630397662, -0.935414455462),  // NOLINT
+      MakeJet<9>(-1.183199990019,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.404060624546,  0.989743344897,  0.000000000000)   // NOLINT
+    };
+    // clang-format on
+    EXPECT_THAT(euler_angles,
+                testing::Pointwise(JetClose(kLooseTolerance), expected));
+  }
+
+  ArrayToArrayOfJets(sample_matrices[1], rotation_matrix);
+  RotationMatrixToEulerAngles<IntrinsicZXZ>(rotation_matrix, euler_angles);
+  {
+    // clang-format off
+    const J9 expected[] = {
+      MakeJet<9>( 1.506392616830,  0.000000000000,  0.000000000000,  0.071400104821,  0.000000000000,  0.000000000000,  1.107100178948,  0.000000000000,  0.000000000000,  0.000000000000),  // NOLINT
+      MakeJet<9>( 1.122964310061,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000, -0.416024849727,  0.120095910090, -0.901387983495),  // NOLINT
+      MakeJet<9>(-1.289761690216,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.307691969119,  1.065877306886,  0.000000000000)   // NOLINT
+    };
+    // clang-format on
+    EXPECT_THAT(euler_angles,
+                testing::Pointwise(JetClose(kLooseTolerance), expected));
+  }
+
+  ArrayToArrayOfJets(sample_matrices[2], rotation_matrix);
+  RotationMatrixToEulerAngles<IntrinsicZXZ>(rotation_matrix, euler_angles);
+  {
+    // clang-format off
+    const J9 expected[] = {
+      MakeJet<9>( 1.066432836578,  0.000000000000,  0.000000000000,  0.536117958181,  0.000000000000,  0.000000000000,  0.971260169116,  0.000000000000,  0.000000000000,  0.000000000000),  // NOLINT
+      MakeJet<9>( 1.122964310061,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000, -0.240192006893,  0.360288083393, -0.901387983495),  // NOLINT
+      MakeJet<9>(-0.588002509965,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.923076812076,  0.615384416607,  0.000000000000)   // NOLINT
+    };
+    // clang-format on
+    EXPECT_THAT(euler_angles,
+                testing::Pointwise(JetClose(kLooseTolerance), expected));
+  }
+}
+
+// Test rotation matrix to ZXZ/313 Extrinsic Euler Angles conversion using Jets
+TEST(EulerAngles, RotationMatrixToExtrinsic313EulerSequenceForJets) {
+  J9 euler_angles[3];
+  J9 rotation_matrix[9];
+
+  ArrayToArrayOfJets(sample_matrices[0], rotation_matrix);
+  RotationMatrixToEulerAngles<ExtrinsicZXZ>(rotation_matrix, euler_angles);
+  {
+    // clang-format off
+    const J9 expected[] = {
+      MakeJet<9>(-1.183199990019,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.404060624546,  0.989743344897,  0.000000000000),  // NOLINT
+      MakeJet<9>( 1.209429510533,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000, -0.327326615680,  0.133630397662, -0.935414455462),  // NOLINT
+      MakeJet<9>( 1.237323270947,  0.000000000000,  0.000000000000,  0.349926947837,  0.000000000000,  0.000000000000,  1.010152467826,  0.000000000000,  0.000000000000,  0.000000000000)   // NOLINT
+    };
+    // clang-format on
+    EXPECT_THAT(euler_angles,
+                testing::Pointwise(JetClose(kLooseTolerance), expected));
+  }
+
+  ArrayToArrayOfJets(sample_matrices[1], rotation_matrix);
+  RotationMatrixToEulerAngles<ExtrinsicZXZ>(rotation_matrix, euler_angles);
+  {
+    // clang-format off
+    const J9 expected[] = {
+      MakeJet<9>(-1.289761690216,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.307691969119,  1.065877306886,  0.000000000000),  // NOLINT
+      MakeJet<9>( 1.122964310061,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000, -0.416024849727,  0.120095910090, -0.901387983495),  // NOLINT
+      MakeJet<9>( 1.506392616830,  0.000000000000,  0.000000000000,  0.071400104821,  0.000000000000,  0.000000000000,  1.107100178948,  0.000000000000,  0.000000000000,  0.000000000000)   // NOLINT
+    };
+    // clang-format on
+    EXPECT_THAT(euler_angles,
+                testing::Pointwise(JetClose(kLooseTolerance), expected));
+  }
+
+  ArrayToArrayOfJets(sample_matrices[2], rotation_matrix);
+  RotationMatrixToEulerAngles<ExtrinsicZXZ>(rotation_matrix, euler_angles);
+  {
+    // clang-format off
+    const J9 expected[] = {
+      MakeJet<9>(-0.588002509965,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.923076812076,  0.615384416607,  0.000000000000),  // NOLINT
+      MakeJet<9>( 1.122964310061,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000,  0.000000000000, -0.240192006893,  0.360288083393, -0.901387983495),  // NOLINT
+      MakeJet<9>( 1.066432836578,  0.000000000000,  0.000000000000,  0.536117958181,  0.000000000000,  0.000000000000,  0.971260169116,  0.000000000000,  0.000000000000,  0.000000000000)   // NOLINT
+    };
+    // clang-format on
+    EXPECT_THAT(euler_angles,
+                testing::Pointwise(JetClose(kLooseTolerance), expected));
+  }
 }
 
 TEST(Quaternion, RotatePointGivesSameAnswerAsRotationByMatrixCanned) {
