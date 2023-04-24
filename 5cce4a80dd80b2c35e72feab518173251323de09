@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3f034a2_aa0431d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2023-04-24T03:52:37Z",
+      "side": 1,
+      "message": "I\u0027m adding two tests for calling EulerAnglesToRotationMatrix / RotationMatrixToEulerAngles with Jets, which used to be uncovered and led to the issue in https://github.com/ceres-solver/ceres-solver/issues/965.\n\nEssentially, these tests check test the correctness of differentiating these functions w.r.t. the source parameters. No generic formula for such differentiation exist in the literature and so far, tests are only implemented for the a few specific Euler Angle conventions and angles and the reference data manually computed.",
+      "revId": "5cce4a80dd80b2c35e72feab518173251323de09",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
