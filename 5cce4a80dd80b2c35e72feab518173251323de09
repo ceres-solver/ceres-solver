@@ -16,6 +16,144 @@
       "message": "I\u0027m adding two tests for calling EulerAnglesToRotationMatrix / RotationMatrixToEulerAngles with Jets, which used to be uncovered and led to the issue in https://github.com/ceres-solver/ceres-solver/issues/965.\n\nEssentially, these tests check test the correctness of differentiating these functions w.r.t. the source parameters. No generic formula for such differentiation exist in the literature and so far, tests are only implemented for the a few specific Euler Angle conventions and angles and the reference data manually computed.",
       "revId": "5cce4a80dd80b2c35e72feab518173251323de09",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c6cce81_8c43c1ef",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-26T18:39:17Z",
+      "side": 1,
+      "message": "ArrayToArrayOfJets",
+      "range": {
+        "startLine": 918,
+        "startChar": 5,
+        "endLine": 918,
+        "endChar": 21
+      },
+      "revId": "5cce4a80dd80b2c35e72feab518173251323de09",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e89b47d_f67f1132",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-26T18:39:17Z",
+      "side": 1,
+      "message": "replace this with the matcher.",
+      "range": {
+        "startLine": 963,
+        "startChar": 5,
+        "endLine": 963,
+        "endChar": 12
+      },
+      "revId": "5cce4a80dd80b2c35e72feab518173251323de09",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55c1818d_6ed96863",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-26T18:39:17Z",
+      "side": 1,
+      "message": "replace this with a matcher.",
+      "range": {
+        "startLine": 978,
+        "startChar": 5,
+        "endLine": 978,
+        "endChar": 25
+      },
+      "revId": "5cce4a80dd80b2c35e72feab518173251323de09",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "306cedd5_db9fe33e",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1000,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-26T18:39:17Z",
+      "side": 1,
+      "message": "you won\u0027t get good line numbers out of this because you are calling isclose, so failure messages will just show that. I think if you are going to have a matcher, then it is worth implementing such that all the work is not pushed into another function.\n\nso my suggestion is that fold IsClose into the matcher, and use it consistently everywhere.",
+      "range": {
+        "startLine": 1000,
+        "startChar": 9,
+        "endLine": 1000,
+        "endChar": 16
+      },
+      "revId": "5cce4a80dd80b2c35e72feab518173251323de09",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df74faf9_dbcbbe4c",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-26T18:39:17Z",
+      "side": 1,
+      "message": "break into named subcases so that if a test fails we can tell from the name which test failed.",
+      "range": {
+        "startLine": 1135,
+        "startChar": 18,
+        "endLine": 1135,
+        "endChar": 19
+      },
+      "revId": "5cce4a80dd80b2c35e72feab518173251323de09",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8eddd055_81068bf0",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1398,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-04-26T18:39:17Z",
+      "side": 1,
+      "message": "please break this into smaller tests, with the test name indicative of what case is being tested.",
+      "range": {
+        "startLine": 1398,
+        "startChar": 15,
+        "endLine": 1398,
+        "endChar": 48
+      },
+      "revId": "5cce4a80dd80b2c35e72feab518173251323de09",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
