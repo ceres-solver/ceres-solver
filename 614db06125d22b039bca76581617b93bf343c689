@@ -16,6 +16,23 @@
       "message": "Adds support of intel mkl as a sparse Cholesky solver.\n\nImplemented features:\n - Program-level reordering (this is the reason of using PARDISO API instead of either MKL-DSS API or Eigen\u0027s bindings to MKL)\n - Static/dynamic sparsity support\n\nPros:\n - Faster than Eigen, +- as fast as SuiteSparse\n - License is more forgiving than GPL license of SuiteSparse\n\nCons:\n - Vendor-specific API\n - QR decomposition has bad API in MKL, and not implemented in this CL\n\n\nBenchmark results (20 iterations of Schur-complement solver):\n\nhttps://drive.google.com/file/d/1y_sidb54apyEj_lnzLEstRpfKVJzulUG/view?usp\u003dsharing\n\n\n\n\nSparse QR decomposition API in MKL does not provide access to R factor directly, and only allows to solve right-hand problems. Decomposition of underconstrained matrices is also unsupported. Do you think it makes sense to implement covariance estimation for MKL via, let say, LDLT decomposition?",
       "revId": "614db06125d22b039bca76581617b93bf343c689",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ea836d5_29bf9b3f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-01T15:51:36Z",
+      "side": 1,
+      "message": "Dmitriy, what kind of performance does this offer? do you have benchmark numbers?",
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
