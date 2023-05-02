@@ -145,24 +145,22 @@ def levenberg_marquardt(r, J, x, Delta = 100, Delta_max = 10000,
         print('The LM method fails to converge within'+ str(nmax) + 'steps.')
     return x, Information
 
-# def r(x):
-#     r = np.zeros((2,))
-#     r[0] = x[0]**2 + x[1]**2 - 1
-#     r[1] = x[0] - x[1]**2
-#     return r
+def r_old(x):
+    r = np.zeros((2,))
+    r[0] = x[0]**2 + x[1]**2 - 1
+    r[1] = x[0] - x[1]**2
+    return r
 
-# def J(x):
-#     J = np.zeros((2, 2))
-#     J[0, 0] = 2*x[0]
-#     J[0, 1] = 2*x[1]
-#     J[1, 0] = 1
-#     J[1, 1] = -2*x[1]
-#     return J
+def J_old(x):
+    J = np.zeros((2, 2))
+    J[0, 0] = 2*x[0]
+    J[0, 1] = 2*x[1]
+    J[1, 0] = 1
+    J[1, 1] = -2*x[1]
+    return J
 
 def r(x):
-    
     r = np.zeros((2,))
-    
     _, tvec, camera, xy_obs = x
     xp = -tvec[0]/tvec[2]
     yp = -tvec[1]/tvec[2]
@@ -192,6 +190,7 @@ def r(x):
 #     J[1, 1] = -2*x[1]
 #     return J
 def J(x):
+    
     _, tvec, camera, xy_obs = x
     xp = -tvec[0]/tvec[2]
     yp = -tvec[1]/tvec[2]
@@ -199,25 +198,26 @@ def J(x):
     l2 = 1
     focal = camera[0][0]
     
-    distortion = 1.0 + l1*(xp**2 + yp**2) + l2*(xp**2 + yp**2)**2
-    
-    
-    predicted_x = focal*xp + focal*xp*l1*(xp**2 + yp**2) + focal*xp*l2*(xp**2 + yp**2)**2
-    predicted_y = focal*yp + focal*yp*l1*(xp**2 + yp**2) + focal*yp*l2*(xp**2 + yp**2)**2
-    
+    # distortion = 1.0 + l1*(xp**2 + yp**2) + l2*(xp**2 + yp**2)**2
+    # predicted_x = focal*xp + focal*xp*l1*(xp**2 + yp**2) + focal*xp*l2*(xp**2 + yp**2)**2
+    # predicted_y = focal*yp + focal*yp*l1*(xp**2 + yp**2) + focal*yp*l2*(xp**2 + yp**2)**2
+    # predicted_x = focal*(xp) + focal*l1*(xp**3) + focal*l1*(xp)*(yp**2) + focal*l2*(xp**5) + 2*focal*l2*(xp**3)*(yp**2) + focal*l2*(xp)*(yp**4)
+    # predicted_y = focal*(yp) + focal*(yp)*l1*(xp**2) + focal*l1*(yp**3) + focal*(yp)*l2*(xp**4) + 2*focal*l2*(xp**2)*(yp**3) + focal*l2*(yp**5)
     
     J = np.zeros((2, 2))
-    J[0, 0] = 2*x[0]
-    J[0, 1] = 2*x[1]
-    J[1, 0] = 1
-    J[1, 1] = -2*x[1]
-    
+    J[0, 0] = focal + 3*focal*l1*(xp**2) + focal*l1*(yp**2) + 5*focal*l2*(xp**4) + 6*focal*l2*(xp**2)*(yp**2) + focal*l2*(yp**4)
+    J[0, 1] = 2*focal*l1*(xp)*(yp) + 4*focal*l2*(xp**3)*(yp) + 4*focal*l2*(xp)*(yp**3)
+    J[1, 0] = 2*focal*(yp)*l1*(xp) + 4*focal*(yp)*l2*(xp**3) + 4*focal*l2*(xp)*(yp**3)
+    J[1, 1] = focal + 3*focal*l1*(xp**2) + focal*l1*(yp**2) + 5*focal*l2*(xp**4) + 6*focal*l2*(xp**2)*(yp**2) + focal*l2*(yp**4)
+
     return J
 
 x0 = np.array([0.97, 0.22])
 x = (np.array([-39608.39506173,11111.11111111,0.]), np.array([99825.529,-115.,45000.]), np.array([[1.5e+03,0.0e+00,5.0e+02],[0.0e+00,1.5e+03,5.0e+02],[0.0e+00,0.0e+00,1.0e+00]]), np.array([4600.32,5900.24]))
 # rvec, tvec, intrinsic, xy_observed
-
-print(J(x).shape)
-
-# x, Information = levenberg_marquardt(r, J, x0, Scaling=True)
+print(x[3])
+# import ultralytics as u
+# import yolov5 as y
+# print(dir(u.YOLO))
+# print(dir(y.YOLOv5))
+x, Information = levenberg_marquardt(r_old, J_old, x0, Scaling=True)
