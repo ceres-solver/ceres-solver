@@ -41,6 +41,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc3c4d57_93bfacae",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2023-05-02T19:35:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c6cce81_8c43c1ef",
+      "range": {
+        "startLine": 918,
+        "startChar": 5,
+        "endLine": 918,
+        "endChar": 21
+      },
+      "revId": "5cce4a80dd80b2c35e72feab518173251323de09",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4e89b47d_f67f1132",
@@ -54,6 +78,30 @@
       "writtenOn": "2023-04-26T18:39:17Z",
       "side": 1,
       "message": "replace this with the matcher.",
+      "range": {
+        "startLine": 963,
+        "startChar": 5,
+        "endLine": 963,
+        "endChar": 12
+      },
+      "revId": "5cce4a80dd80b2c35e72feab518173251323de09",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "29b37b13_c01a1f22",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2023-05-02T19:35:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e89b47d_f67f1132",
       "range": {
         "startLine": 963,
         "startChar": 5,
@@ -87,6 +135,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "87496203_7f5196f1",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2023-05-02T19:35:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55c1818d_6ed96863",
+      "range": {
+        "startLine": 978,
+        "startChar": 5,
+        "endLine": 978,
+        "endChar": 25
+      },
+      "revId": "5cce4a80dd80b2c35e72feab518173251323de09",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "306cedd5_db9fe33e",
@@ -100,6 +172,30 @@
       "writtenOn": "2023-04-26T18:39:17Z",
       "side": 1,
       "message": "you won\u0027t get good line numbers out of this because you are calling isclose, so failure messages will just show that. I think if you are going to have a matcher, then it is worth implementing such that all the work is not pushed into another function.\n\nso my suggestion is that fold IsClose into the matcher, and use it consistently everywhere.",
+      "range": {
+        "startLine": 1000,
+        "startChar": 9,
+        "endLine": 1000,
+        "endChar": 16
+      },
+      "revId": "5cce4a80dd80b2c35e72feab518173251323de09",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "222ce6e5_c08abc41",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1000,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2023-05-02T19:35:53Z",
+      "side": 1,
+      "message": "Done. I am still relying on internal::IsClose so I explicitly provided an error message to make things clear.",
+      "parentUuid": "306cedd5_db9fe33e",
       "range": {
         "startLine": 1000,
         "startChar": 9,
@@ -133,6 +229,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6cca3f8_409c595d",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2023-05-02T19:35:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df74faf9_dbcbbe4c",
+      "range": {
+        "startLine": 1135,
+        "startChar": 18,
+        "endLine": 1135,
+        "endChar": 19
+      },
+      "revId": "5cce4a80dd80b2c35e72feab518173251323de09",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8eddd055_81068bf0",
@@ -146,6 +266,30 @@
       "writtenOn": "2023-04-26T18:39:17Z",
       "side": 1,
       "message": "please break this into smaller tests, with the test name indicative of what case is being tested.",
+      "range": {
+        "startLine": 1398,
+        "startChar": 15,
+        "endLine": 1398,
+        "endChar": 48
+      },
+      "revId": "5cce4a80dd80b2c35e72feab518173251323de09",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0cb386d2_6f2a69b4",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1398,
+      "author": {
+        "id": 6622
+      },
+      "writtenOn": "2023-05-02T19:35:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8eddd055_81068bf0",
       "range": {
         "startLine": 1398,
         "startChar": 15,
