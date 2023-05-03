@@ -78,11 +78,32 @@ class CERES_NO_EXPORT ContextImpl final : public Context {
   //    Ceres, Ceres will use that GPU.
 
   // Note on Ceres' use of CUDA Streams:
-  // All operations on the GPU are performed using a single stream. This ensures
-  // that the order of operations are stream-ordered, but we do not need to
-  // explicitly synchronize the stream at the end of every operation. Stream
-  // synchronization occurs only before GPU to CPU transfers, and is handled by
-  // CudaBuffer.
+  // Most of operations on the GPU are performed using a single stream.  In
+  // those cases DefaultStream() should be used. This ensures that operations
+  // are stream-ordered, and might be concurrent with cpu processing with no
+  // additional efforts.
+  //
+  // a. Single-stream workloads
+  //  - Only use default stream
+  //  - Return control to the callee without synchronization whenever possible
+  //  - Stream synchronization occurs only after GPU to CPU transfers, and is
+  //  handled by CudaBuffer
+  //
+  // b. Multi-stream workloads
+  // Multi-stream workloads are more restricted in order to make it harder to
+  // get a race-condition.
+  //  - Should always synchronize the default stream on entry
+  //  - Should always synchronize all utilized streams on exit
+  //  - Should not make any assumptions on one of streams_[] being default
+  //
+  // With those rules in place
+  //  - All single-stream asynchronous workloads are serialized using default
+  //  stream
+  //  - Multiple-stream workloads always wait single-stream workloads to finish
+  //  and leave no running computations on exit.
+  //  This slightly penalizes multi-stream workloads, but makes it easier to
+  //  avoid race conditions when  multiple-stream workload depends on results of
+  //  any preceeding gpu computations.
 
   // Initializes cuBLAS, cuSOLVER, and cuSPARSE contexts, creates an
   // asynchronous CUDA stream, and associates the stream with the contexts.
@@ -101,7 +122,14 @@ class CERES_NO_EXPORT ContextImpl final : public Context {
 
   cusolverDnHandle_t cusolver_handle_ = nullptr;
   cublasHandle_t cublas_handle_ = nullptr;
-  cudaStream_t stream_ = nullptr;
+
+  // Default stream.
+  // Kernel invocations and memory copies on this stream can be left without
+  // synchronization.
+  cudaStream_t DefaultStream() { return streams_[0]; }
+  static constexpr int kNumCudaStreams = 2;
+  cudaStream_t streams_[kNumCudaStreams] = {0};
+
   cusparseHandle_t cusparse_handle_ = nullptr;
   bool is_cuda_initialized_ = false;
   int gpu_device_id_in_use_ = -1;

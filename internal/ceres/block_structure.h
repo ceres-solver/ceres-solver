@@ -43,7 +43,11 @@
 
 #include "ceres/internal/export.h"
 
-namespace ceres::internal {
+// This file is being included into source files that are compiled with nvcc.
+// nvcc shipped with ubuntu 20.04 does not support some features of c++17,
+// including nested namespace definitions
+namespace ceres {
+namespace internal {
 
 using BlockSize = int32_t;
 
@@ -189,6 +193,7 @@ inline int NumScalarEntries(const std::vector<Block>& blocks) {
 std::vector<Block> Tail(const std::vector<Block>& blocks, int n);
 int SumSquaredSizes(const std::vector<Block>& blocks);
 
-}  // namespace ceres::internal
+}  // namespace internal
+}  // namespace ceres
 
 #endif  // CERES_INTERNAL_BLOCK_STRUCTURE_H_

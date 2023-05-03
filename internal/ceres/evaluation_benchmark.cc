@@ -36,6 +36,7 @@
 #include "benchmark/benchmark.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/bundle_adjustment_test_util.h"
+#include "ceres/cuda_block_sparse_crs_view.h"
 #include "ceres/cuda_sparse_matrix.h"
 #include "ceres/cuda_vector.h"
 #include "ceres/evaluator.h"
@@ -427,6 +428,75 @@ static void ISCRightMultiplyDiag(benchmark::State& state,
   CHECK_GT(y.squaredNorm(), 0.);
 }
 
+static void JacobianToCRS(benchmark::State& state,
+                          BALData* data,
+                          ContextImpl* context) {
+  auto jacobian = data->BlockSparseJacobian(context);
+
+  std::unique_ptr<CompressedRowSparseMatrix> matrix;
+  for (auto _ : state) {
+    matrix = jacobian->ToCompressedRowSparseMatrix();
+  }
+  CHECK(matrix != nullptr);
+}
+
+#ifndef CERES_NO_CUDA
+// We want CudaBlockSparseCRSView to be not slower than explicit conversion to
+// CRS on CPU
+static void JacobianToCRSView(benchmark::State& state,
+                              BALData* data,
+                              ContextImpl* context) {
+  auto jacobian = data->BlockSparseJacobian(context);
+
+  std::unique_ptr<CudaBlockSparseCRSView> matrix;
+  for (auto _ : state) {
+    matrix = std::make_unique<CudaBlockSparseCRSView>(*jacobian, context);
+  }
+  CHECK(matrix != nullptr);
+}
+static void JacobianToCRSMatrix(benchmark::State& state,
+                                BALData* data,
+                                ContextImpl* context) {
+  auto jacobian = data->BlockSparseJacobian(context);
+
+  std::unique_ptr<CudaSparseMatrix> matrix;
+  std::unique_ptr<CompressedRowSparseMatrix> matrix_cpu;
+  for (auto _ : state) {
+    matrix_cpu = jacobian->ToCompressedRowSparseMatrix();
+    matrix = std::make_unique<CudaSparseMatrix>(context, *matrix_cpu);
+  }
+  CHECK(matrix != nullptr);
+}
+// Updating values in CudaBlockSparseCRSView should be +- as fast as just
+// copying values (time spent in value permutation has to be hidden by PCIe
+// transfer)
+static void JacobianToCRSViewUpdate(benchmark::State& state,
+                                    BALData* data,
+                                    ContextImpl* context) {
+  auto jacobian = data->BlockSparseJacobian(context);
+
+  auto matrix = CudaBlockSparseCRSView(*jacobian, context);
+  for (auto _ : state) {
+    matrix.UpdateValues(*jacobian);
+  }
+}
+static void JacobianToCRSMatrixUpdate(benchmark::State& state,
+                                      BALData* data,
+                                      ContextImpl* context) {
+  auto jacobian = data->BlockSparseJacobian(context);
+
+  auto matrix_cpu = jacobian->ToCompressedRowSparseMatrix();
+  auto matrix = std::make_unique<CudaSparseMatrix>(context, *matrix_cpu);
+  for (auto _ : state) {
+    CHECK_EQ(cudaSuccess,
+             cudaMemcpy(matrix->mutable_values(),
+                        matrix_cpu->values(),
+                        matrix->num_nonzeros() * sizeof(double),
+                        cudaMemcpyHostToDevice));
+  }
+}
+#endif
+
 static void JacobianSquaredColumnNorm(benchmark::State& state,
                                       BALData* data,
                                       ContextImpl* context) {
@@ -772,6 +842,34 @@ int main(int argc, char** argv) {
         ->Arg(4)
         ->Arg(8)
         ->Arg(16);
+
+    const std::string name_to_crs = "JacobianToCRS<" + path + ">";
+    ::benchmark::RegisterBenchmark(
+        name_to_crs.c_str(), ceres::internal::JacobianToCRS, data, &context);
+#ifndef CERES_NO_CUDA
+    const std::string name_to_crs_view = "JacobianToCRSView<" + path + ">";
+    ::benchmark::RegisterBenchmark(name_to_crs_view.c_str(),
+                                   ceres::internal::JacobianToCRSView,
+                                   data,
+                                   &context);
+    const std::string name_to_crs_matrix = "JacobianToCRSMatrix<" + path + ">";
+    ::benchmark::RegisterBenchmark(name_to_crs_matrix.c_str(),
+                                   ceres::internal::JacobianToCRSMatrix,
+                                   data,
+                                   &context);
+    const std::string name_to_crs_view_update =
+        "JacobianToCRSViewUpdate<" + path + ">";
+    ::benchmark::RegisterBenchmark(name_to_crs_view_update.c_str(),
+                                   ceres::internal::JacobianToCRSViewUpdate,
+                                   data,
+                                   &context);
+    const std::string name_to_crs_matrix_update =
+        "JacobianToCRSMatrixUpdate<" + path + ">";
+    ::benchmark::RegisterBenchmark(name_to_crs_matrix_update.c_str(),
+                                   ceres::internal::JacobianToCRSMatrixUpdate,
+                                   data,
+                                   &context);
+#endif
   }
   ::benchmark::RunSpecifiedBenchmarks();
 
