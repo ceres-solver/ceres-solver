@@ -64,6 +64,13 @@ class CERES_NO_EXPORT CudaSparseMatrix {
   CudaSparseMatrix(ContextImpl* context,
                    const CompressedRowSparseMatrix& crs_matrix);
 
+  // Creates a "blank" matrix with an appropriate amount of memory allocated.
+  // The object itself is left in an inconsistent state.
+  CudaSparseMatrix(int num_rows,
+                   int num_cols,
+                   int num_nonzeros,
+                   ContextImpl* context);
+
   ~CudaSparseMatrix();
 
   // y = y + Ax;
@@ -74,6 +81,10 @@ class CERES_NO_EXPORT CudaSparseMatrix {
   int num_rows() const { return num_rows_; }
   int num_cols() const { return num_cols_; }
   int num_nonzeros() const { return num_nonzeros_; }
+
+  int32_t* mutable_rows() { return rows_.data(); }
+  int32_t* mutable_cols() { return cols_.data(); }
+  double* mutable_values() { return values_.data(); }
 
   // If subsequent uses of this matrix involve only numerical changes and no
   // structural changes, then this method can be used to copy the updated

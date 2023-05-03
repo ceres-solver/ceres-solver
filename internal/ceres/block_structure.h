@@ -43,7 +43,8 @@
 
 #include "ceres/internal/export.h"
 
-namespace ceres::internal {
+namespace ceres {
+namespace internal {
 
 using BlockSize = int32_t;
 
@@ -189,6 +190,7 @@ inline int NumScalarEntries(const std::vector<Block>& blocks) {
 std::vector<Block> Tail(const std::vector<Block>& blocks, int n);
 int SumSquaredSizes(const std::vector<Block>& blocks);
 
-}  // namespace ceres::internal
+}  // namespace internal
+}  // namespace ceres
 
 #endif  // CERES_INTERNAL_BLOCK_STRUCTURE_H_

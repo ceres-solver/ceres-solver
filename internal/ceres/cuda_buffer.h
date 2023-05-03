@@ -86,7 +86,7 @@ class CudaBuffer {
                              data,
                              size * sizeof(T),
                              cudaMemcpyHostToDevice,
-                             context_->stream_),
+                             context_->DefaultStream()),
              cudaSuccess);
   }
 
@@ -98,7 +98,7 @@ class CudaBuffer {
                              data.data(),
                              data.size() * sizeof(T),
                              cudaMemcpyHostToDevice,
-                             context_->stream_),
+                             context_->DefaultStream()),
              cudaSuccess);
   }
 
@@ -110,7 +110,7 @@ class CudaBuffer {
                              data,
                              size * sizeof(T),
                              cudaMemcpyDeviceToDevice,
-                             context_->stream_),
+                             context_->DefaultStream()),
              cudaSuccess);
   }
 
@@ -126,9 +126,9 @@ class CudaBuffer {
                              data_,
                              size * sizeof(T),
                              cudaMemcpyDeviceToHost,
-                             context_->stream_),
+                             context_->DefaultStream()),
              cudaSuccess);
-    CHECK_EQ(cudaStreamSynchronize(context_->stream_), cudaSuccess);
+    CHECK_EQ(cudaStreamSynchronize(context_->DefaultStream()), cudaSuccess);
   }
 
   // Copy N items from another GPU memory array to the GPU memory managed by
@@ -142,7 +142,7 @@ class CudaBuffer {
                              other.data_,
                              size_ * sizeof(T),
                              cudaMemcpyDeviceToDevice,
-                             context_->stream_),
+                             context_->DefaultStream()),
              cudaSuccess);
   }
 
