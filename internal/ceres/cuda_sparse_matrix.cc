@@ -59,6 +59,31 @@
 
 namespace ceres::internal {
 
+CudaSparseMatrix::CudaSparseMatrix(int num_rows,
+                                   int num_cols,
+                                   int num_nonzeros,
+                                   ContextImpl* context)
+    : context_(context),
+      rows_(context, num_rows + 1),
+      cols_(context, num_nonzeros),
+      values_(context, num_nonzeros),
+      spmv_buffer_(context),
+      num_rows_(num_rows),
+      num_cols_(num_cols),
+      num_nonzeros_(num_nonzeros) {
+  cusparseCreateCsr(&descr_,
+                    num_rows_,
+                    num_cols_,
+                    num_nonzeros_,
+                    rows_.data(),
+                    cols_.data(),
+                    values_.data(),
+                    CUSPARSE_INDEX_32I,
+                    CUSPARSE_INDEX_32I,
+                    CUSPARSE_INDEX_BASE_ZERO,
+                    CUDA_R_64F);
+}
+
 CudaSparseMatrix::CudaSparseMatrix(ContextImpl* context,
                                    const CompressedRowSparseMatrix& crs_matrix)
     : context_(context),

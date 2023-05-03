@@ -127,7 +127,7 @@ void CudaVector::CopyTo(double* x) const {
 
 void CudaVector::SetZero() {
   CHECK(data_.data() != nullptr);
-  CudaSetZeroFP64(data_.data(), num_rows_, context_->stream_);
+  CudaSetZeroFP64(data_.data(), num_rows_, context_->DefaultStream());
 }
 
 void CudaVector::Axpby(double a, const CudaVector& x, double b) {
@@ -160,7 +160,7 @@ void CudaVector::DtDxpy(const CudaVector& D, const CudaVector& x) {
              D.data().data(),
              x.data().data(),
              num_rows_,
-             context_->stream_);
+             context_->DefaultStream());
 }
 
 void CudaVector::Scale(double s) {
