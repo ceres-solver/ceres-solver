@@ -78,11 +78,12 @@ class CERES_NO_EXPORT ContextImpl final : public Context {
   //    Ceres, Ceres will use that GPU.
 
   // Note on Ceres' use of CUDA Streams:
-  // All operations on the GPU are performed using a single stream. This ensures
-  // that the order of operations are stream-ordered, but we do not need to
-  // explicitly synchronize the stream at the end of every operation. Stream
-  // synchronization occurs only before GPU to CPU transfers, and is handled by
-  // CudaBuffer.
+  // Most of operations on the GPU are performed using a single ("default")
+  // stream. This ensures that the order of operations are stream-ordered, but
+  // we do not need to explicitly synchronize the stream at the end of every
+  // operation. Stream synchronization occurs only before GPU to CPU transfers,
+  // and is handled by CudaBuffer. Methods that utilize several streams should
+  // synchronize default stream on entry and all utilized streams on exit.
 
   // Initializes cuBLAS, cuSOLVER, and cuSPARSE contexts, creates an
   // asynchronous CUDA stream, and associates the stream with the contexts.
@@ -101,7 +102,14 @@ class CERES_NO_EXPORT ContextImpl final : public Context {
 
   cusolverDnHandle_t cusolver_handle_ = nullptr;
   cublasHandle_t cublas_handle_ = nullptr;
-  cudaStream_t stream_ = nullptr;
+
+  // Default stream.
+  // Kernel invocations and memory copies on this stream can be left without
+  // synchronization.
+  cudaStream_t DefaultStream() { return streams_[0]; }
+  static constexpr int kNumCudaStreams = 2;
+  cudaStream_t streams_[kNumCudaStreams] = {0};
+
   cusparseHandle_t cusparse_handle_ = nullptr;
   bool is_cuda_initialized_ = false;
   int gpu_device_id_in_use_ = -1;

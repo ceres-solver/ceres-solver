@@ -516,7 +516,7 @@ LinearSolverTerminationType CUDADenseCholeskyMixedPrecision::CudaCholeskySolve(
                            residual_fp32_.data(),
                            num_cols_ * sizeof(float),
                            cudaMemcpyDeviceToDevice,
-                           context_->stream_),
+                           context_->DefaultStream()),
            cudaSuccess);
   if (cusolverDnSpotrs(context_->cusolver_handle_,
                        CUBLAS_FILL_MODE_LOWER,
@@ -569,7 +569,7 @@ LinearSolverTerminationType CUDADenseCholeskyMixedPrecision::Factorize(
   CudaFP64ToFP32(lhs_fp64_.data(),
                  lhs_fp32_.data(),
                  num_cols * num_cols,
-                 context_->stream_);
+                 context_->DefaultStream());
 
   // Factorize lhs_fp32.
   factorize_result_ = CudaCholeskyFactorize(message);
@@ -592,7 +592,7 @@ LinearSolverTerminationType CUDADenseCholeskyMixedPrecision::Solve(
   residual_fp64_.Reserve(num_cols_);
 
   // Initialize x = 0.
-  CudaSetZeroFP64(x_fp64_.data(), num_cols_, context_->stream_);
+  CudaSetZeroFP64(x_fp64_.data(), num_cols_, context_->DefaultStream());
 
   // Initialize residual = rhs.
   rhs_fp64_.CopyFromCpu(rhs, num_cols_);
@@ -603,15 +603,17 @@ LinearSolverTerminationType CUDADenseCholeskyMixedPrecision::Solve(
     CudaFP64ToFP32(residual_fp64_.data(),
                    residual_fp32_.data(),
                    num_cols_,
-                   context_->stream_);
+                   context_->DefaultStream());
     // [fp32] c = lhs^-1 * residual.
     auto result = CudaCholeskySolve(message);
     if (result != LinearSolverTerminationType::SUCCESS) {
       return result;
     }
     // [fp64] x += c.
-    CudaDsxpy(
-        x_fp64_.data(), correction_fp32_.data(), num_cols_, context_->stream_);
+    CudaDsxpy(x_fp64_.data(),
+              correction_fp32_.data(),
+              num_cols_,
+              context_->DefaultStream());
     if (i < max_num_refinement_iterations_) {
       // [fp64] residual = rhs - lhs * x
       // This is done in two steps:
