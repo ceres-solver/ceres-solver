@@ -141,8 +141,9 @@ if (USE_CUDA)
             $<TARGET_FILE:cuda_dense_cholesky_test>)
   endif (BUILD_TESTING AND GFLAGS)
   set_source_files_properties(cuda_kernels.cu.cc PROPERTIES LANGUAGE CUDA)
-  add_library(ceres_cuda_kernels cuda_kernels.cu.cc)
+  add_library(ceres_cuda_kernels STATIC cuda_kernels.cu.cc)
   target_compile_features(ceres_cuda_kernels PRIVATE cxx_std_14)
+  target_include_directories(ceres_cuda_kernels PRIVATE  ${Ceres_SOURCE_DIR}/internal  ${Ceres_BINARY_DIR}/${CMAKE_INSTALL_INCLUDEDIR})
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ceres_cuda_kernels)
 endif (USE_CUDA)
 
@@ -181,6 +182,8 @@ add_library(ceres_internal OBJECT
     cost_function.cc
     covariance.cc
     covariance_impl.cc
+    cuda_block_sparse_crs_view.cc
+    cuda_block_structure.cc
     cuda_sparse_matrix.cc
     cuda_vector.cc
     dense_cholesky.cc
@@ -472,10 +475,13 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(cost_function_to_functor)
   ceres_test(covariance)
   ceres_test(cubic_interpolation)
+  ceres_test(cuda_block_sparse_crs_view)
+  ceres_test(cuda_block_structure)
   ceres_test(cuda_dense_cholesky)
   ceres_test(cuda_dense_qr)
   ceres_test(cuda_kernels)
   ceres_test(cuda_sparse_matrix)
+  ceres_test(cuda_streamer)
   ceres_test(cuda_vector)
   ceres_test(dense_linear_solver)
   ceres_test(dense_cholesky)
