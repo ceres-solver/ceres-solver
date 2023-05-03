@@ -28,6 +28,12 @@
 //
 // Author: joydeepb@cs.utexas.edu (Joydeep Biswas)
 
+#include "ceres/cuda_kernels.h"
+
+#include <thrust/execution_policy.h>
+#include <thrust/scan.h>
+
+#include "ceres/block_structure.h"
 #include "cuda_runtime.h"
 
 namespace ceres {
@@ -40,6 +46,9 @@ namespace internal {
 // might provide better performance. See "Occupancy Calculator" under the CUDA
 // toolkit documentation.
 constexpr int kCudaBlockSize = 256;
+inline int NumBlocks(int size) {
+  return (size + kCudaBlockSize - 1) / kCudaBlockSize;
+}
 
 template <typename SrcType, typename DstType>
 __global__ void TypeConversionKernel(const SrcType* __restrict__ input,
@@ -55,7 +64,7 @@ void CudaFP64ToFP32(const double* input,
                     float* output,
                     const int size,
                     cudaStream_t stream) {
-  const int num_blocks = (size + kCudaBlockSize - 1) / kCudaBlockSize;
+  const int num_blocks = NumBlocks(size);
   TypeConversionKernel<double, float>
       <<<num_blocks, kCudaBlockSize, 0, stream>>>(input, output, size);
 }
@@ -64,7 +73,7 @@ void CudaFP32ToFP64(const float* input,
                     double* output,
                     const int size,
                     cudaStream_t stream) {
-  const int num_blocks = (size + kCudaBlockSize - 1) / kCudaBlockSize;
+  const int num_blocks = NumBlocks(size);
   TypeConversionKernel<float, double>
       <<<num_blocks, kCudaBlockSize, 0, stream>>>(input, output, size);
 }
@@ -78,12 +87,12 @@ __global__ void SetZeroKernel(T* __restrict__ output, const int size) {
 }
 
 void CudaSetZeroFP32(float* output, const int size, cudaStream_t stream) {
-  const int num_blocks = (size + kCudaBlockSize - 1) / kCudaBlockSize;
+  const int num_blocks = NumBlocks(size);
   SetZeroKernel<float><<<num_blocks, kCudaBlockSize, 0, stream>>>(output, size);
 }
 
 void CudaSetZeroFP64(double* output, const int size, cudaStream_t stream) {
-  const int num_blocks = (size + kCudaBlockSize - 1) / kCudaBlockSize;
+  const int num_blocks = NumBlocks(size);
   SetZeroKernel<double>
       <<<num_blocks, kCudaBlockSize, 0, stream>>>(output, size);
 }
@@ -99,7 +108,7 @@ __global__ void XPlusEqualsYKernel(DstType* __restrict__ x,
 }
 
 void CudaDsxpy(double* x, float* y, const int size, cudaStream_t stream) {
-  const int num_blocks = (size + kCudaBlockSize - 1) / kCudaBlockSize;
+  const int num_blocks = NumBlocks(size);
   XPlusEqualsYKernel<float, double>
       <<<num_blocks, kCudaBlockSize, 0, stream>>>(x, y, size);
 }
@@ -119,8 +128,129 @@ void CudaDtDxpy(double* y,
                 const double* x,
                 const int size,
                 cudaStream_t stream) {
-  const int num_blocks = (size + kCudaBlockSize - 1) / kCudaBlockSize;
+  const int num_blocks = NumBlocks(size);
   CudaDtDxpyKernel<<<num_blocks, kCudaBlockSize, 0, stream>>>(y, D, x, size);
+}
+
+// Fill row block id and nnz for each row
+__global__ void RowBlockIdAndNNZ(int num_row_blocks,
+                                 const int* __restrict__ row_block_offsets,
+                                 const Cell* __restrict__ cells,
+                                 const Block* __restrict__ row_blocks,
+                                 const Block* __restrict__ col_blocks,
+                                 int* __restrict__ rows,
+                                 int* __restrict__ row_block_ids) {
+  const int row_block_id = blockIdx.x * blockDim.x + threadIdx.x;
+  if (row_block_id < num_row_blocks) {
+    const auto& row_block = row_blocks[row_block_id];
+    int row_nnz = 0;
+    const auto first_cell = cells + row_block_offsets[row_block_id];
+    const auto last_cell = cells + row_block_offsets[row_block_id + 1];
+    for (auto cell = first_cell; cell < last_cell; ++cell) {
+      row_nnz += col_blocks[cell->block_id].size;
+    }
+    const int first_row = row_block.position;
+    const int last_row = first_row + row_block.size;
+    for (int i = first_row; i < last_row; ++i) {
+      rows[i + 1] = row_nnz;
+      row_block_ids[i] = row_block_id;
+    }
+  } else {
+    if (row_block_id == num_row_blocks) {
+      rows[0] = 0;
+    }
+  }
+}
+
+// Row-wise creation of CRS structure
+__global__ void ComputeColumnsAndPermutation(
+    int num_rows,
+    const int* __restrict__ row_block_offsets,
+    const Cell* __restrict__ cells,
+    const Block* __restrict__ row_blocks,
+    const Block* __restrict__ col_blocks,
+    const int* __restrict__ row_block_ids,
+    int* __restrict__ rows,
+    int* __restrict__ cols,
+    int* __restrict__ permutation) {
+  const int row = blockIdx.x * blockDim.x + threadIdx.x;
+  if (row < num_rows) {
+    const int row_block_id = row_block_ids[row];
+    const auto& row_block = row_blocks[row_block_id];
+    const int row_in_block = row - row_block.position;
+    int crs_position = rows[row];
+    const auto first_cell = cells + row_block_offsets[row_block_id];
+    const auto last_cell = cells + row_block_offsets[row_block_id + 1];
+    for (auto cell = first_cell; cell < last_cell; ++cell) {
+      const auto& col_block = col_blocks[cell->block_id];
+      const int col_block_size = col_block.size;
+      int column_idx = col_block.position;
+      int bs_position = cell->position + row_in_block * col_block_size;
+      for (int i = 0; i < col_block_size; ++i, ++crs_position) {
+        permutation[bs_position++] = crs_position;
+        cols[crs_position] = column_idx++;
+      }
+    }
+  }
+}
+
+void FillCRSStructure(const int num_row_blocks,
+                      const int num_rows,
+                      const int* row_block_offsets,
+                      const Cell* cells,
+                      const Block* row_blocks,
+                      const Block* col_blocks,
+                      int* rows,
+                      int* cols,
+                      int* row_block_ids,
+                      int* permutation,
+                      cudaStream_t stream) {
+  const int num_blocks_blockwise = NumBlocks(num_row_blocks);
+  RowBlockIdAndNNZ<<<num_blocks_blockwise, kCudaBlockSize, 0, stream>>>(
+      num_row_blocks,
+      row_block_offsets,
+      cells,
+      row_blocks,
+      col_blocks,
+      rows,
+      row_block_ids);
+  thrust::inclusive_scan(
+      thrust::cuda::par.on(stream), rows, rows + num_rows + 1, rows);
+  const int num_blocks_rowwise = NumBlocks(num_rows);
+  ComputeColumnsAndPermutation<<<num_blocks_rowwise,
+                                 kCudaBlockSize,
+                                 0,
+                                 stream>>>(num_rows,
+                                           row_block_offsets,
+                                           cells,
+                                           row_blocks,
+                                           col_blocks,
+                                           row_block_ids,
+                                           rows,
+                                           cols,
+                                           permutation);
+}
+
+__global__ void PermuteValuesKernel(const int offset,
+                                    const int num_values,
+                                    const int* permutation,
+                                    const double* values,
+                                    double* target) {
+  const int value_id = blockIdx.x * blockDim.x + threadIdx.x;
+  if (value_id < num_values) {
+    target[permutation[offset + value_id]] = values[value_id];
+  }
+}
+
+void PermuteValues(const int offset,
+                   const int num_values,
+                   const int* permutation,
+                   const double* values,
+                   double* target,
+                   cudaStream_t stream) {
+  const int num_blocks = NumBlocks(num_values);
+  PermuteValuesKernel<<<num_blocks, kCudaBlockSize, 0, stream>>>(
+      offset, num_values, permutation, values, target);
 }
 
 }  // namespace internal

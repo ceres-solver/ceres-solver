@@ -101,7 +101,15 @@ class CERES_NO_EXPORT ContextImpl final : public Context {
 
   cusolverDnHandle_t cusolver_handle_ = nullptr;
   cublasHandle_t cublas_handle_ = nullptr;
+
+  static constexpr int kNumCudaStreams = 2;
+  // "Default" stream; kernel invocations on this stream can be left
+  // unsynchronized (will be synchronized on the next device -> host copy)
   cudaStream_t stream_ = nullptr;
+  // Methods that invoke kernels on multiple streams are expected to perform
+  // synchronization explicitly
+  cudaStream_t streams_[kNumCudaStreams] = {0};
+
   cusparseHandle_t cusparse_handle_ = nullptr;
   bool is_cuda_initialized_ = false;
   int gpu_device_id_in_use_ = -1;

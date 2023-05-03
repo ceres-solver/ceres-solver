@@ -37,7 +37,10 @@
 
 #include "cuda_runtime.h"
 
-namespace ceres::internal {
+namespace ceres {
+namespace internal {
+class Block;
+class Cell;
 
 // Convert an array of double (FP64) values to float (FP32). Both arrays must
 // already be on GPU memory.
@@ -72,7 +75,28 @@ void CudaDtDxpy(double* y,
                 const int size,
                 cudaStream_t stream);
 
-}  // namespace ceres::internal
+// Fill CRS structure from block-sparse
+void FillCRSStructure(const int num_row_blocks,
+                      const int num_rows,
+                      const int* row_block_offsets,
+                      const Cell* cells,
+                      const Block* row_blocks,
+                      const Block* col_blocks,
+                      int* rows,
+                      int* cols,
+                      int* row_block_ids,
+                      int* permutation,
+                      cudaStream_t stream);
+// Permute values using stored permutation
+void PermuteValues(const int offset,
+                   const int num_values,
+                   const int* permutation,
+                   const double* values,
+                   double* target,
+                   cudaStream_t stream);
+
+}  // namespace internal
+}  // namespace ceres
 
 #endif  // CERES_NO_CUDA
 

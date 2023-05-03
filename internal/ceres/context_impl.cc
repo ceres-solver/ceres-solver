@@ -61,8 +61,13 @@ void ContextImpl::TearDown() {
     cusparse_handle_ = nullptr;
   }
   if (stream_ != nullptr) {
-    cudaStreamDestroy(stream_);
     stream_ = nullptr;
+  }
+  for (auto& s : streams_) {
+    if (s != nullptr) {
+      cudaStreamDestroy(s);
+      s = nullptr;
+    }
   }
   is_cuda_initialized_ = false;
 }
@@ -143,14 +148,16 @@ bool ContextImpl::InitCuda(std::string* message) {
     return false;
   }
   event_logger.AddEvent("cusparseCreate");
-  if (cudaStreamCreateWithFlags(&stream_, cudaStreamNonBlocking) !=
-      cudaSuccess) {
-    *message =
-        "CUDA initialization failed because CUDA::cudaStreamCreateWithFlags "
-        "failed.";
-    TearDown();
-    return false;
+  for (auto& s : streams_) {
+    if (cudaStreamCreateWithFlags(&s, cudaStreamNonBlocking) != cudaSuccess) {
+      *message =
+          "CUDA initialization failed because CUDA::cudaStreamCreateWithFlags "
+          "failed.";
+      TearDown();
+      return false;
+    }
   }
+  stream_ = streams_[0];
   event_logger.AddEvent("cudaStreamCreateWithFlags");
   if (cusolverDnSetStream(cusolver_handle_, stream_) !=
           CUSOLVER_STATUS_SUCCESS ||

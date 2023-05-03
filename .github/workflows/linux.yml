@@ -47,15 +47,25 @@ jobs:
             liblapack-dev \
             libmetis-dev \
             libsuitesparse-dev \
-            ninja-build
-
-      - name: Setup CUDA toolkit
-        if: matrix.gpu == 'cuda'
+            ninja-build \
+            wget
+      - name: Setup CUDA toolkit (system repositories)
+        if: matrix.gpu == 'cuda' && matrix.os == 'ubuntu:20.04'
         run: |
           apt-get install -y \
             nvidia-cuda-dev \
             nvidia-cuda-toolkit
-
+      # nvidia cuda toolkit + gcc combo shipped with 22.04LTS is broken
+      # and is not able to compile code that uses thrust
+      # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1006962
+      - name: Setup CUDA toolkit (nvidia repositories)
+        if: matrix.gpu == 'cuda' && matrix.os == 'ubuntu:22.04'
+        run: |
+          wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.0-1_all.deb
+          dpkg -i cuda-keyring_1.0-1_all.deb
+          apt-get update
+          apt-get install -y cuda
+          echo "CUDACXX=/usr/local/cuda/bin/nvcc" >> $GITHUB_ENV
 
       - name: Cache Build
         id: cache-build
