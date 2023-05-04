@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "803bdff8_fae20c03",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-04T18:34:18Z",
+      "side": 1,
+      "message": "My assumption that we can extract number of non-zeros per row in block-sparse matrix in O(1) time was incorrect, a full traversing of the row-block seems to be required because we do not fill number of non-zeros in non-transposed block-structure.\n\nThis method was only used in contexts where this was not important (apart from some parts of evaluation_benchmark).\n\nI have added test-case with non-sequential cell order.",
+      "revId": "abbc4e7974e4e13b808091b2f99a403eff6a2fbd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
