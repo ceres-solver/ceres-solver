@@ -85,23 +85,18 @@ CreateStructureOfCompressedRowSparseMatrix(
       continue;
     }
 
-    // Compute number of non-zeros per row from number of non-zeros in row-block
-    int row_block_nnz;
+    int row_nnz = 0;
     if constexpr (transpose) {
-      // Transposed block structure comes with nnz filled-in
-      row_block_nnz = row_block.nnz;
+      // Transposed block structure comes with nnz in row-block filled-in
+      row_nnz = row_block.nnz / row_block.block.size;
     } else {
-      // Non-transposed block structure has sequential layout, but nnz field of
-      // block structure is not filled. Difference between values position of
-      // the first and the last cells in row-block gives number of non-zero
-      // elements in row-block excluding the last cell.
-      const auto& front = row_block.cells.front();
-      const auto& back = row_block.cells.back();
-      row_block_nnz =
-          (back.position - front.position) +
-          block_structure->cols[back.block_id].size * row_block.block.size;
+      // Nnz field of non-transposed block structure is not filled and it can
+      // have non-sequential structure (consider the case of jacobian for
+      // Schur-complement solver: E and F blocks are stored separately).
+      for (auto& c : row_block.cells) {
+        row_nnz += cols[c.block_id].size;
+      }
     }
-    const int row_nnz = row_block_nnz / row_block.block.size;
 
     // Row-wise setup of matrix structure
     for (int row = 0; row < row_block.block.size; ++row) {

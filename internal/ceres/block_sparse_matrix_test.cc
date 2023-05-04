@@ -113,6 +113,39 @@ std::unique_ptr<BlockSparseMatrix> CreateTestMatrixFromId(int id) {
       values[i] = i + 1;
     }
     return m;
+  } else if (id == 2) {
+    // Create the following block sparse matrix:
+    // [ 1 2 0 | 6 7 0 ]
+    // [ 3 4 0 | 8 9 0 ]
+    // [ 0 0 5 | 0 0 10]
+    // With cells of the left submatrix preceding cells of the right submatrix
+    CompressedRowBlockStructure* bs = new CompressedRowBlockStructure;
+    bs->cols = {
+        // Block size 2, position 0.
+        Block(2, 0),
+        // Block size 1, position 2.
+        Block(1, 2),
+        // Block size 2, position 3.
+        Block(2, 3),
+        // Block size 1, position 5.
+        Block(1, 5),
+    };
+    bs->rows = {CompressedRow(2), CompressedRow(1)};
+    bs->rows[0].block = Block(2, 0);
+    bs->rows[0].cells = {Cell(0, 0), Cell(2, 5)};
+
+    bs->rows[1].block = Block(1, 2);
+    bs->rows[1].cells = {Cell(1, 4), Cell(3, 9)};
+    auto m = std::make_unique<BlockSparseMatrix>(bs);
+    EXPECT_NE(m, nullptr);
+    EXPECT_EQ(m->num_rows(), 3);
+    EXPECT_EQ(m->num_cols(), 6);
+    EXPECT_EQ(m->num_nonzeros(), 10);
+    double* values = m->mutable_values();
+    for (int i = 0; i < 10; ++i) {
+      values[i] = i + 1;
+    }
+    return m;
   }
   return nullptr;
 }
@@ -477,6 +510,17 @@ TEST(BlockSparseMatrix, ToDenseMatrix) {
     m_expected << 1, 2, 0, 5, 6, 0, 3, 4, 0, 7, 8, 0, 0, 0, 9, 0, 0, 0;
     EXPECT_EQ(m_dense, m_expected);
   }
+
+  {
+    std::unique_ptr<BlockSparseMatrix> m = CreateTestMatrixFromId(2);
+    Matrix m_dense;
+    m->ToDenseMatrix(&m_dense);
+    EXPECT_EQ(m_dense.rows(), 3);
+    EXPECT_EQ(m_dense.cols(), 6);
+    Matrix m_expected(3, 6);
+    m_expected << 1, 2, 0, 6, 7, 0, 3, 4, 0, 8, 9, 0, 0, 0, 5, 0, 0, 10;
+    EXPECT_EQ(m_dense, m_expected);
+  }
 }
 
 TEST(BlockSparseMatrix, ToCRSMatrix) {
@@ -502,6 +546,22 @@ TEST(BlockSparseMatrix, ToCRSMatrix) {
     std::vector<int> rows_expected = {0, 4, 8, 9};
     std::vector<int> cols_expected = {0, 1, 3, 4, 0, 1, 3, 4, 2};
     std::vector<double> values_expected = {1, 2, 5, 6, 3, 4, 7, 8, 9};
+    for (int i = 0; i < rows_expected.size(); ++i) {
+      EXPECT_EQ(m_crs->rows()[i], rows_expected[i]);
+    }
+    for (int i = 0; i < cols_expected.size(); ++i) {
+      EXPECT_EQ(m_crs->cols()[i], cols_expected[i]);
+    }
+    for (int i = 0; i < values_expected.size(); ++i) {
+      EXPECT_EQ(m_crs->values()[i], values_expected[i]);
+    }
+  }
+  {
+    std::unique_ptr<BlockSparseMatrix> m = CreateTestMatrixFromId(2);
+    auto m_crs = m->ToCompressedRowSparseMatrix();
+    std::vector<int> rows_expected = {0, 4, 8, 10};
+    std::vector<int> cols_expected = {0, 1, 3, 4, 0, 1, 3, 4, 2, 5};
+    std::vector<double> values_expected = {1, 2, 6, 7, 3, 4, 8, 9, 5, 10};
     for (int i = 0; i < rows_expected.size(); ++i) {
       EXPECT_EQ(m_crs->rows()[i], rows_expected[i]);
     }
@@ -539,6 +599,24 @@ TEST(BlockSparseMatrix, ToCRSMatrixTranspose) {
     std::vector<int> rows_expected = {0, 2, 4, 5, 7, 9, 9};
     std::vector<int> cols_expected = {0, 1, 0, 1, 2, 0, 1, 0, 1};
     std::vector<double> values_expected = {1, 3, 2, 4, 9, 5, 7, 6, 8};
+    EXPECT_EQ(m_crs_transpose->num_nonzeros(), cols_expected.size());
+    EXPECT_EQ(m_crs_transpose->num_rows(), rows_expected.size() - 1);
+    for (int i = 0; i < rows_expected.size(); ++i) {
+      EXPECT_EQ(m_crs_transpose->rows()[i], rows_expected[i]);
+    }
+    for (int i = 0; i < cols_expected.size(); ++i) {
+      EXPECT_EQ(m_crs_transpose->cols()[i], cols_expected[i]);
+    }
+    for (int i = 0; i < values_expected.size(); ++i) {
+      EXPECT_EQ(m_crs_transpose->values()[i], values_expected[i]);
+    }
+  }
+  {
+    std::unique_ptr<BlockSparseMatrix> m = CreateTestMatrixFromId(2);
+    auto m_crs_transpose = m->ToCompressedRowSparseMatrixTranspose();
+    std::vector<int> rows_expected = {0, 2, 4, 5, 7, 9, 10};
+    std::vector<int> cols_expected = {0, 1, 0, 1, 2, 0, 1, 0, 1, 2};
+    std::vector<double> values_expected = {1, 3, 2, 4, 5, 6, 8, 7, 9, 10};
     EXPECT_EQ(m_crs_transpose->num_nonzeros(), cols_expected.size());
     EXPECT_EQ(m_crs_transpose->num_rows(), rows_expected.size() - 1);
     for (int i = 0; i < rows_expected.size(); ++i) {
