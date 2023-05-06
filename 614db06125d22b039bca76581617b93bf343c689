@@ -50,6 +50,23 @@
       "message": "oh nm I see them. Let me take a look at the code and get back to you later today",
       "revId": "614db06125d22b039bca76581617b93bf343c689",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "caa73a73_a1884a06",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-06T20:13:58Z",
+      "side": 1,
+      "message": "Here is the same plot, but with Eigen included too (runs with Eigen were terminated at 1200s limit).\n\nhttps://drive.google.com/file/d/1yjOrPLAFgB-dYIyBRw0-RP69dnWg7k1W/view?usp\u003dsharing\n\nWhen looking at this plot, one should keep in mind that time axis is logarithmic.\n\nMy conclusion is that\n - MKL is comparably fast to SuiteSparse\n - Eigen is significantly slower than both\n - MKL might be useful for users who cannot use GPL\u0027d SuiteSparse (performance with only LGPL part of CHOLMOD is significantly worse)",
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
