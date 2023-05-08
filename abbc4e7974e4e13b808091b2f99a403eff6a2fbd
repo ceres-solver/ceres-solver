@@ -33,6 +33,24 @@
       "message": "By the way, the same problem (not all possible cell layouts supported) happens with AppendRows / DeleteRowBlocks.\n\nIf one deletes row-block and then appends a new one - there might be cells that point to the same values.\n\nExample:\n\n1. Start with block-sparse matrix for Schur complement with E and F stored non-interleaved (example #2 from test)\n```\n[ 1 2   | 6 7   ]\n[ 3 4   | 8 9   ]\n[     5 |     10]\n```\n\nnum_nonzeros \u003d 10, max_num_nonzeros \u003d 10\n\n2. Delete one row-block\n```\n[ 1 2   | 6 7   ]\n[ 3 4   | 8 9   ]\n```\n\nnum_nonzeros \u003d 8, max_num_nonzeros \u003d 10, 9th element is outside the first num_nonzeros elements, and 5th element is not referenced by any cell. \n\n3. Append row-block `[    A |     B]`\nResult:\n```\n[ 1 2   | 6 7   ]\n[ 3 4   | 8 A   ]\n[     A |      B]\n```\n\nNow two cells point to the 9th element (and 5th element is not referenced by any cell.\n\n\nThis never happens in reality though, since we only delete as many rows as we appended before.",
       "revId": "abbc4e7974e4e13b808091b2f99a403eff6a2fbd",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78480f20_bad7dd62",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-08T00:56:23Z",
+      "side": 1,
+      "message": "yes, appendrows and deleterows are not my favorite methods :/ they are needed but the expense of making sure their semantics are completely correct is not worth it.",
+      "parentUuid": "b5af3747_fd4cdc97",
+      "revId": "abbc4e7974e4e13b808091b2f99a403eff6a2fbd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
