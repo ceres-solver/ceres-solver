@@ -121,6 +121,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "620e09e1_73161a29",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-09T19:37:24Z",
+      "side": 1,
+      "message": "SparseQR API seem to be not suitable to perform J^TJ inversion via qr decomposition of J \u003d QR\n\nThere are three problems:\n1). There is no support for solving transposed problems R^{T} x \u003d b [ https://www.intel.com/content/www/us/en/docs/onemkl/developer-reference-fortran/2023-1/mkl-sparse-qr-rsolve.html says:  NOTE:\nCurrently, the only supported value is SPARSE_OPERATION_NON_TRANSPOSE (non-transpose case)]\n2). There seem to be no method to obtain R factor to resolve the first problem outside of intel mkl\n3). There is no support for sparse (i.e. e_i) rhs when solving with triangular factor\n\nI think that 1) and 2) make Sparse QR in MKL basically unusable for our purposes, right?",
+      "parentUuid": "f8cfd472_f928ef3c",
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4b15729c_b0502326",
