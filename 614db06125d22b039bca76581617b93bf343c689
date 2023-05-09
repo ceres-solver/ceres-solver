@@ -85,6 +85,373 @@
       "tag": "mailMessageId\u003d\u003cCABqdRUDKzJT1Lf5WoODkh5vwrMCsExKBW7V5dJLTghw8X7M2cA@mail.gmail.com\u003e",
       "revId": "614db06125d22b039bca76581617b93bf343c689",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "897f812c_e0e0ec1a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-09T19:19:56Z",
+      "side": 1,
+      "message": "First Round. I think to reduce churn, it would be good to get mkl_sparse.h/cc done first before we integrate it into the rest of the code. I do not fully understand the API you are proposing here, it seems considerably more complicated than I expected it to be.",
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b15729c_b0502326",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-09T19:19:56Z",
+      "side": 1,
+      "message": "I think this should be called MKL_SPARSE",
+      "range": {
+        "startLine": 182,
+        "startChar": 5,
+        "endLine": 182,
+        "endChar": 6
+      },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ea6fa39_dc4cf46e",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-09T19:19:56Z",
+      "side": 1,
+      "message": "Is it the case that if intel mkl is linked in, then when using LAPACK we will end up calling Intel MKL?",
+      "range": {
+        "startLine": 214,
+        "startChar": 5,
+        "endLine": 214,
+        "endChar": 34
+      },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ccdcf3b4_0cbbd5a7",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-09T19:19:56Z",
+      "side": 1,
+      "message": "add an event for measuring time for the ordering.",
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54548719_3f780f76",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-09T19:19:56Z",
+      "side": 1,
+      "message": "MKL_SPARSE",
+      "range": {
+        "startLine": 190,
+        "startChar": 45,
+        "endLine": 190,
+        "endChar": 49
+      },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7071535d_1802d339",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-09T19:19:56Z",
+      "side": 1,
+      "message": "move this right after the else.",
+      "range": {
+        "startLine": 198,
+        "startChar": 28,
+        "endLine": 198,
+        "endChar": 61
+      },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88a667c5_70038f1a",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-09T19:19:56Z",
+      "side": 1,
+      "message": "why do we need this define?",
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8dff69c8_4ab1efd0",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-09T19:19:56Z",
+      "side": 1,
+      "message": "Intel MKL.",
+      "range": {
+        "startLine": 49,
+        "startChar": 45,
+        "endLine": 49,
+        "endChar": 50
+      },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3c073ea_f73ac4ea",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-09T19:19:56Z",
+      "side": 1,
+      "message": "Document this function also are we storing state in the MKLSparse object seems not right to me.",
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c6d1273_51ff24b3",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-09T19:19:56Z",
+      "side": 1,
+      "message": "this is easily fixed, if you define MKLSparseCholesky::StorageType to be upper triangular.",
+      "range": {
+        "startLine": 63,
+        "startChar": 17,
+        "endLine": 63,
+        "endChar": 27
+      },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16cea9f8_5d07c912",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-09T19:19:56Z",
+      "side": 1,
+      "message": "why do we need three variants of this function all of which are public?",
+      "range": {
+        "startLine": 65,
+        "startChar": 7,
+        "endLine": 65,
+        "endChar": 23
+      },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca6148d3_c611297c",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-09T19:19:56Z",
+      "side": 1,
+      "message": "why do we need two of these?",
+      "range": {
+        "startLine": 77,
+        "startChar": 7,
+        "endLine": 77,
+        "endChar": 14
+      },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db443768_e93e6cbf",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-09T19:19:56Z",
+      "side": 1,
+      "message": "I do not understand the semantics of this function. what are the semantics of this function, why we are returning a sparse_matrix_t and an array too?",
+      "range": {
+        "startLine": 91,
+        "startChar": 19,
+        "endLine": 91,
+        "endChar": 34
+      },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc2d119d_f748c594",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-09T19:19:56Z",
+      "side": 1,
+      "message": "why do we need a conversion back from a sparse_matrix_t to CSR?",
+      "range": {
+        "startLine": 94,
+        "startChar": 35,
+        "endLine": 94,
+        "endChar": 48
+      },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "279c6b1d_2f6ba805",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-09T19:19:56Z",
+      "side": 1,
+      "message": "document ownership, what do the users need to do with sparse_matrix_t?",
+      "range": {
+        "startLine": 96,
+        "startChar": 16,
+        "endLine": 96,
+        "endChar": 22
+      },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f56db86_a2198102",
+        "filename": "internal/ceres/sparse_cholesky.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-09T19:19:56Z",
+      "side": 1,
+      "message": "this should actually be possible right? mkl supports single precision?",
+      "range": {
+        "startLine": 53,
+        "startChar": 38,
+        "endLine": 53,
+        "endChar": 39
+      },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c37f8bb6_94ad002d",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-09T19:19:56Z",
+      "side": 1,
+      "message": "nesdis?",
+      "range": {
+        "startLine": 145,
+        "startChar": 7,
+        "endLine": 145,
+        "endChar": 47
+      },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
