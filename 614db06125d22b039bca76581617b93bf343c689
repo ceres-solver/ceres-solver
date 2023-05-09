@@ -104,6 +104,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8cfd472_f928ef3c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-09T19:20:56Z",
+      "side": 1,
+      "message": "Dmitriy what is the problem with the sparseqr api in intel mkl? it would be good to understand that before we commit all the way to intel mkl.",
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4b15729c_b0502326",
