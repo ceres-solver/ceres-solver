@@ -16,6 +16,810 @@
       "message": "Here we start with stuff for GPGPU implicit Schur complement.\n\n\nThe first thing is block-sparse to CRS device-side remapping using pre-computed permutation.\n\n\nAs we have discussed earlier, switching to CRS jacobians is infeasible in case of implicit Schur complement.\n\nProposed solution keeps host-side matrices in block-sparse format, and uses a pre-computed permutation from block-sparse to CRS order of values for updating CRS matrix on gpu side.\n\nThis CL provides classes that are re-used for the case of partitioned matrix:\n * `CudaBlockSparseStructure` -- used to store block structure as a couple of arrays on device side\n * `CudaStreamer` -- used for simultaneous host-to-device copy and processing data\n\n\n\nBenchmark results:\n\n```\n./bin/evaluation_benchmark ./venice/problem-{1778*,52*} --benchmark_filter\u003d\u0027.*ToCRS.*\u0027\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d CUDA Device Properties \u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\nCuda version         : 11.8\nDevice ID            : 0\nDevice name          : NVIDIA GeForce RTX 2080 Ti\nTotal GPU memory     :  11012 MiB\nGPU memory available :  10852 MiB\nCompute capability   : 7.5\nWarp size            : 32\nMax threads per block: 1024\nMax threads per dim  : 1024 1024 64\nMax grid size        : 2147483647 65535 65535\nMultiprocessor count : 68\nRunning ./bin/evaluation_benchmark\nRun on (112 X 3200 MHz CPU s)\nCPU Caches:\n  L1 Data 32 KiB (x56)\n  L1 Instruction 32 KiB (x56)\n  L2 Unified 1024 KiB (x56)\n  L3 Unified 39424 KiB (x2)\n-----------------------------------------------------------------------------\nBenchmark                                                                Time\n-----------------------------------------------------------------------------\nJacobianToCRS\u003c./venice/problem-1778-993923-pre.txt\u003e                    905 ms\nJacobianToCRSView\u003c./venice/problem-1778-993923-pre.txt\u003e                374 ms\nJacobianToCRSMatrix\u003c./venice/problem-1778-993923-pre.txt\u003e             1247 ms\nJacobianToCRSViewUpdate\u003c./venice/problem-1778-993923-pre.txt\u003e          199 ms\nJacobianToCRSMatrixUpdate\u003c./venice/problem-1778-993923-pre.txt\u003e        219 ms\n\nJacobianToCRS\u003c./venice/problem-52-64053-pre.txt\u003e                      56.1 ms\nJacobianToCRSView\u003c./venice/problem-52-64053-pre.txt\u003e                  40.8 ms\nJacobianToCRSMatrix\u003c./venice/problem-52-64053-pre.txt\u003e                82.1 ms\nJacobianToCRSViewUpdate\u003c./venice/problem-52-64053-pre.txt\u003e            14.5 ms\nJacobianToCRSMatrixUpdate\u003c./venice/problem-52-64053-pre.txt\u003e          14.7 ms\n```\n\nNew benchmarks:\n\n * `JacobianToCRS` \u003d convert block-sparse to CRS on CPU\n * `JacobianToCRSView` \u003d convert block-sparse to CRS on GPU and compute permutation\n * `JacobianToCRSMatrix` \u003d convert block-sparse to CRS on CPU and copy to GPU\n * `JacobianToCRSViewUpdate` \u003d update CRS values on GPU using block-sparse values on CPU and pre-computed permutation\n * `JacobianToCRSMatrixUpdate` \u003d update CRS values on GPU using CRS values on CPU\n\nObserved behavior:\n - `JacobianToCRSView` takes less time than both `JacobianToCRS` and `JacobianToCRSMatrix` (thus, GPU-side creation of CRS structure is better)\n - `JacobianToCRSViewUpdate` takes +- the same time as \n `JacobianToCRSMatrixUpdate` (thus, time spend shuffling values is hidden by pcie latency) [actually, slightly less in both cases; I guess that is due to larger buffer being used in driver]\n\n\n\nThings we need to discuss:\n * Ubuntu 22.04 ships cuda toolkit and gcc versions that are known to be incompatible ( https://bugs.debian.org/cgi-bin/bugreport.cgi?bug\u003d1006962 ); this can be solved in multiple way:\n   * Use latest-and-greatest cuda toolkit from nvidia (implemented in CL)\n   * Implement prefix sum ourselves\n   * Compute prefix sum of non-zeros per row-block and copy results to gpu when creating a deep copy of block structure\n   * Downgrading CUDA_HOST_COMPILER to gcc-10 might also help\n * The process of updating values is limited by block-sparse values being allocated in pageable memory (thus, requiring additional copy on cpu side in order to be able to make a DMA copy to gpu). With block-sparse values allocated in non-pageable memory value updates are almost 2x faster on my pc.",
       "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "703b8d70_a29137f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "first round, I have not looked at cuda_block_sparse_crs_view.cc yet, because I think we should land this in pieces.\n\nlets get the two helper classes in first.\n\nand then the cuda kernels, and then the crs_view.\n\nit will reduce churn and I can do a better job of reviewing.",
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26962215_3867fb79",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "why did we not need this before?",
+      "range": {
+        "startLine": 146,
+        "startChar": 2,
+        "endLine": 146,
+        "endChar": 28
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44485df4_15bee112",
+        "filename": "internal/ceres/block_structure.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "why? is this because this file is being included in what is being compiled using nvcc and nvcc does not support everything in c++17?",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 9
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f148063_e99e7891",
+        "filename": "internal/ceres/context_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "so the first stream is a default stream ? but all the others have different semantics?",
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e3b164b_1e4407c5",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "stream_ and streams_ are not great names. \nalso how am I to know which one to use? also why can\u0027t the default stream be the first member of the streams_ array?\n\nI think stream_ should be replaced with a method \n\nDefaultStream() { return streams_[0]; } ?",
+      "range": {
+        "startLine": 111,
+        "startChar": 15,
+        "endLine": 111,
+        "endChar": 23
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d709abba_c4a10dc7",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "vlog(3) is fine.",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 8
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c43e0ba8_149bc886",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "move this chunk of comment next to the class.",
+      "range": {
+        "startLine": 31,
+        "startChar": 19,
+        "endLine": 31,
+        "endChar": 26
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81c8e27b_2aeb2007",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "this sentence does not make sense, but also this is meant as documentation for the constructor and not the class no?",
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f714dff2_89651dc6",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "I also recommend putting this class in its own file with its tests.",
+      "range": {
+        "startLine": 64,
+        "startChar": 6,
+        "endLine": 64,
+        "endChar": 30
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b42e3043_b3117bc1",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "is this basically a serialized version of the BlockStructure? where you just traverse the block structure of a matrix serially, and stick them into a vector?\n\nare there any guarantees about the relationship between block_structure and cells array? are they guaranteed to be in the same order?\n\nthis should be documented in the class header.",
+      "range": {
+        "startLine": 94,
+        "startChar": 17,
+        "endLine": 94,
+        "endChar": 18
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ee593e7_8d970be2",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "continuous",
+      "range": {
+        "startLine": 99,
+        "startChar": 30,
+        "endLine": 99,
+        "endChar": 40
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ab51da6_c4ff10aa",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "also this class needs more documentation.",
+      "range": {
+        "startLine": 100,
+        "startChar": 3,
+        "endLine": 100,
+        "endChar": 13
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19c5a0cb_c3ac3358",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "this seems like a very general class on its own. It should sit in its own file and be tested.",
+      "range": {
+        "startLine": 102,
+        "startChar": 6,
+        "endLine": 102,
+        "endChar": 18
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a89fbda2_dfcaa8e8",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "Document how does the user pick values for kValuesPerBatch?\n\nalso in terms of the API its weird that the user specifies kValuesPerBatch as a template parameter, whereas num batches is fixed as a compile time constant so the size of the gpu array is implicitly decided by the combination of these two things one under the user control and one not.\n\nwhy isn\u0027t kValuesPerBatch an argument to the constructor? or better still, shouldn\u0027t the argument to the constructor be the size of the CudaBuffer?",
+      "range": {
+        "startLine": 104,
+        "startChar": 19,
+        "endLine": 104,
+        "endChar": 23
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c5ff46c_6eadc64f",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "is this a limitation forever of a current cuda software/hardware?",
+      "range": {
+        "startLine": 106,
+        "startChar": 23,
+        "endLine": 106,
+        "endChar": 34
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ed67054_229e0018",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "what is this array? also if it is host memory why do you need to use cuda to allocate it?",
+      "range": {
+        "startLine": 111,
+        "startChar": 28,
+        "endLine": 111,
+        "endChar": 46
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d81f43bd_b9cf18cc",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "blank before",
+      "range": {
+        "startLine": 119,
+        "startChar": 2,
+        "endLine": 119,
+        "endChar": 14
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f85b1111_2acb42c4",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "CopyToGpu\n\nor CopyFromHostToGpu\n\nor StreamFromHostToGpu\n\nare better names.",
+      "range": {
+        "startLine": 132,
+        "startChar": 7,
+        "endLine": 132,
+        "endChar": 13
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e859059c_490002ef",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "function -\u003e callback",
+      "range": {
+        "startLine": 134,
+        "startChar": 20,
+        "endLine": 134,
+        "endChar": 28
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "819a9880_2c121448",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "what does from_unpinned mean here?",
+      "range": {
+        "startLine": 135,
+        "startChar": 19,
+        "endLine": 135,
+        "endChar": 32
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67beda2a_903f422b",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "what is this, please comment.",
+      "range": {
+        "startLine": 153,
+        "startChar": 8,
+        "endLine": 153,
+        "endChar": 16
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee0c8b33_72f38f2c",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "I do not understand this variable name.\n\nwhat does it mean to be pinned?",
+      "range": {
+        "startLine": 174,
+        "startChar": 5,
+        "endLine": 174,
+        "endChar": 23
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5236b29f_ac356294",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "I do not understand this documentation for this class. Please expand.",
+      "range": {
+        "startLine": 180,
+        "startChar": 8,
+        "endLine": 180,
+        "endChar": 10
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65cf7693_744a702a",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "this should be the only class in this file, and document this class more thoroughly please.",
+      "range": {
+        "startLine": 182,
+        "startChar": 6,
+        "endLine": 182,
+        "endChar": 28
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ace0628_9b544810",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "move this to the private section and start with the public section.",
+      "range": {
+        "startLine": 183,
+        "startChar": 27,
+        "endLine": 183,
+        "endChar": 28
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bcdcec9_abec6ed8",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "document the constructor",
+      "range": {
+        "startLine": 190,
+        "startChar": 30,
+        "endLine": 190,
+        "endChar": 31
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89022fbd_3bbef342",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "this endif guard needs a comment matching it to the name of the include guard above.",
+      "range": {
+        "startLine": 206,
+        "startChar": 1,
+        "endLine": 206,
+        "endChar": 6
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c361b2ae_1a598d86",
+        "filename": "internal/ceres/cuda_kernels.cu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "document.",
+      "range": {
+        "startLine": 136,
+        "startChar": 16,
+        "endLine": 136,
+        "endChar": 32
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc5f2bf3_264986a0",
+        "filename": "internal/ceres/cuda_kernels.cu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "document thoroughly",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 10
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2012049d_3bbd5435",
+        "filename": "internal/ceres/cuda_kernels.cu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "document",
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8bc40d40_807c4221",
+        "filename": "internal/ceres/cuda_kernels.cu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "document",
+      "range": {
+        "startLine": 197,
+        "startChar": 5,
+        "endLine": 197,
+        "endChar": 21
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ccc5ed33_f13900b4",
+        "filename": "internal/ceres/cuda_kernels.cu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "document",
+      "range": {
+        "startLine": 234,
+        "startChar": 16,
+        "endLine": 234,
+        "endChar": 35
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32775b57_d6f19252",
+        "filename": "internal/ceres/cuda_kernels.cu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "document.",
+      "range": {
+        "startLine": 245,
+        "startChar": 5,
+        "endLine": 245,
+        "endChar": 18
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85480817_8007b26b",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "this needs more documentation. The other kernels are trivial, this is considerably more complicated. It would be good to thoroughly document what is going on here.",
+      "range": {
+        "startLine": 78,
+        "startChar": 12,
+        "endLine": 78,
+        "endChar": 21
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aefcffb4_eed33528",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "same here, please document thoroughly.\n\nalso for this function and previous one, what are the stream semantics, does the caller need to worry about synchronization etc?",
+      "range": {
+        "startLine": 91,
+        "startChar": 5,
+        "endLine": 91,
+        "endChar": 18
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c9ede39_3007e236",
+        "filename": "internal/ceres/cuda_sparse_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-10T00:49:25Z",
+      "side": 1,
+      "message": "we usually name these mutable_rows, mutable_cols and mutable_values when returning non-const ptrs.",
+      "range": {
+        "startLine": 85,
+        "startChar": 11,
+        "endLine": 85,
+        "endChar": 15
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
