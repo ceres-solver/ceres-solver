@@ -16,6 +16,379 @@
       "message": "Moved each entity into a separate file, added tests, added more comments.",
       "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "563a423c_b70a791c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-11T18:24:23Z",
+      "side": 1,
+      "message": "very nice refactor.",
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19d2863d_532bfb00",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-11T18:24:23Z",
+      "side": 1,
+      "message": "this makes me wonder if we should hack blocksparsematrix such that when we know we are going to use cuda, its values array should be allocated using cudaHostAlloc?",
+      "range": {
+        "startLine": 67,
+        "startChar": 10,
+        "endLine": 67,
+        "endChar": 16
+      },
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "313817c5_883624f9",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-11T18:24:23Z",
+      "side": 1,
+      "message": "isn\u0027t it better to always call UpdateValues and not have copy_values in the API?",
+      "range": {
+        "startLine": 90,
+        "startChar": 30,
+        "endLine": 90,
+        "endChar": 41
+      },
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c4b7b89_0654d04e",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-11T18:24:23Z",
+      "side": 1,
+      "message": "crs_matrix and mutable_crs_matrix matches the style better and should come after UpdateValues",
+      "range": {
+        "startLine": 92,
+        "startChar": 26,
+        "endLine": 92,
+        "endChar": 32
+      },
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4cc9da9_bc94c364",
+        "filename": "internal/ceres/cuda_block_structure.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-11T18:24:23Z",
+      "side": 1,
+      "message": "inline ?",
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88b99c92_40cad24b",
+        "filename": "internal/ceres/cuda_kernels.cu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-11T18:24:23Z",
+      "side": 1,
+      "message": "early return by dealing with this case? and reduce nesting.",
+      "range": {
+        "startLine": 158,
+        "startChar": 20,
+        "endLine": 158,
+        "endChar": 21
+      },
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39e2a662_0d4e6573",
+        "filename": "internal/ceres/cuda_kernels.cu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-11T18:24:23Z",
+      "side": 1,
+      "message": "reduce nesting by early return if row \u003e\u003d num_rows",
+      "range": {
+        "startLine": 204,
+        "startChar": 10,
+        "endLine": 204,
+        "endChar": 11
+      },
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1262e6d7_f1b0b6c7",
+        "filename": "internal/ceres/cuda_kernels.cu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-11T18:24:23Z",
+      "side": 1,
+      "message": "I am surprised that there isn\u0027t a cuda function for applying a permutation map to an array already.",
+      "range": {
+        "startLine": 270,
+        "startChar": 21,
+        "endLine": 270,
+        "endChar": 24
+      },
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5fc5d6c1_5c126599",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-11T18:24:23Z",
+      "side": 1,
+      "message": "I am assuming these these are tested as part of cuda_crs_matrix_view?",
+      "range": {
+        "startLine": 83,
+        "startChar": 5,
+        "endLine": 83,
+        "endChar": 21
+      },
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8d128af_7e738ea5",
+        "filename": "internal/ceres/cuda_streamer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-11T18:24:23Z",
+      "side": 1,
+      "message": "it is worth having an example of a calling sequence here of a simple callback and associated transfer sequence of calls.",
+      "range": {
+        "startLine": 48,
+        "startChar": 39,
+        "endLine": 48,
+        "endChar": 42
+      },
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "661e7850_0f20cf5a",
+        "filename": "internal/ceres/cuda_streamer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-11T18:24:23Z",
+      "side": 1,
+      "message": "This sentence is a bit odd. Let me try and understand.\n\nAre you saying that two streams are enough to reach peak bandwidth in general, or are you saying that for the kind of compute we are doing, two streams are enough?",
+      "range": {
+        "startLine": 54,
+        "startChar": 18,
+        "endLine": 54,
+        "endChar": 26
+      },
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf8ddcd7_12af486f",
+        "filename": "internal/ceres/cuda_streamer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-11T18:24:23Z",
+      "side": 1,
+      "message": "kMaxTemporaryArraySize is not a good name, because it makes it sound like its either a constexpr or a template argument.\n\nmax_temp_array_size or max_buffer_size is better.",
+      "range": {
+        "startLine": 61,
+        "startChar": 47,
+        "endLine": 61,
+        "endChar": 69
+      },
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55bf13f0_c4d81d31",
+        "filename": "internal/ceres/cuda_streamer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-11T18:24:23Z",
+      "side": 1,
+      "message": "The class name indicates that this is a Streamer, in which case doesn\u0027t it make sense for it not to own this memory on the gpu, and instead have the client supply it?\n\nalso why divide and then multiply by kNumBatches? are you trying to just get a multiple of kNumBatches? shouldn\u0027t you just use kMaxTemporaryArraySize?\n\n\nIf this class should indeed own the buffer, then isn\u0027t a better name CudaStreamedBuffer ?",
+      "range": {
+        "startLine": 64,
+        "startChar": 20,
+        "endLine": 64,
+        "endChar": 27
+      },
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11073cd3_c619827f",
+        "filename": "internal/ceres/cuda_streamer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-11T18:24:23Z",
+      "side": 1,
+      "message": "explain that values_cpu_pinned is being allocated using cudaHostAlloc so its now page locked and can be copied to the gpu really fast.",
+      "range": {
+        "startLine": 68,
+        "startChar": 13,
+        "endLine": 68,
+        "endChar": 26
+      },
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63b0d9db_4f794558",
+        "filename": "internal/ceres/cuda_streamer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-11T18:24:23Z",
+      "side": 1,
+      "message": "can you explain why a copy is required here? I read the function and i have no idea what is going on here.",
+      "range": {
+        "startLine": 99,
+        "startChar": 31,
+        "endLine": 99,
+        "endChar": 53
+      },
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5335ab81_87ce1f8f",
+        "filename": "internal/ceres/cuda_streamer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-11T18:24:23Z",
+      "side": 1,
+      "message": "is my understanding correct that this function is basically checking that the memory is in an array allocated by cuda as page locked or not? I think it is worth adding this as a comment, I had to go look at cuda documentation to understand the difference between malloc and cudaHostAlloc.",
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2aea6a08_5d9cb332",
+        "filename": "internal/ceres/cuda_streamer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-11T18:24:23Z",
+      "side": 1,
+      "message": "blank before",
+      "range": {
+        "startLine": 156,
+        "startChar": 2,
+        "endLine": 156,
+        "endChar": 7
+      },
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }

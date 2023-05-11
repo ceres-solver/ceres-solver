@@ -82,6 +82,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c90af444_4f4d2e37",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-11T18:24:23Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c20df842_09b8b6c9",
+      "range": {
+        "startLine": 146,
+        "startChar": 2,
+        "endLine": 146,
+        "endChar": 28
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "44485df4_15bee112",
@@ -119,6 +143,30 @@
       "side": 1,
       "message": "Yes, it is required to build with this header when included by nvcc on old ubuntu.",
       "parentUuid": "44485df4_15bee112",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 9
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4354702_f31418af",
+        "filename": "internal/ceres/block_structure.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-11T18:24:23Z",
+      "side": 1,
+      "message": "Please add a comment to that effect here, so that future edits do not undo this change.",
+      "parentUuid": "c634142e_e91a8108",
       "range": {
         "startLine": 47,
         "startChar": 0,
@@ -201,6 +249,30 @@
       "side": 1,
       "message": "I suggest the following:\n\na. Single-stream workloads\n - Everything that runs single-stream should run in DefaultStream()\n - Synchronization is not required for methods scheduling asynchronous copies and kernel launches only in default stream\n\nb. Multiple-stream workloads\n - Should always synchronize on default stream on entry\n - Should always synchronize on all utilized streams on exit\n - Should not make any assumptions on one of streams_[] being default\n\nThis somewhat penalizes multi-stream code, but leaves less options to get a race:\n - All single-stream asynchronous workloads are serialized using stream itself\n - Multiple-stream workloads always wait single-stream workloads to finish and leave no running computations on exit",
       "parentUuid": "6e3b164b_1e4407c5",
+      "range": {
+        "startLine": 111,
+        "startChar": 15,
+        "endLine": 111,
+        "endChar": 23
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62c66300_241c6da3",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-11T18:24:23Z",
+      "side": 1,
+      "message": "This is a more detailed reply than the documentation above, I recommend turning it into documentation for streams.",
+      "parentUuid": "ce1858f5_6b75d87e",
       "range": {
         "startLine": 111,
         "startChar": 15,
@@ -669,6 +741,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4914eb95_afe9caf0",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-11T18:24:23Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "ecf49f17_6ac36341",
+      "range": {
+        "startLine": 106,
+        "startChar": 23,
+        "endLine": 106,
+        "endChar": 34
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1ed67054_229e0018",
@@ -706,6 +802,30 @@
       "side": 1,
       "message": "Transfers between host and device happen via DMA [of large amounts of data; a single value within 64 bits can be copied directly].\n\nThus, we need to be sure that particular part of address space is in the physical memory for the whole transfer (for example, it cannot be moved to the swap on disk).\n\nNvidia calls it pinned memory, linux calls it locked memory, windows calls it non-paged memory.\n\nWhen cudaMemcpyAsync gets a non-pinned memory as a source or destination it runs synchronously using pinned memory allocated by driver [ https://docs.nvidia.com/cuda/cuda-runtime-api/api-sync-behavior.html#api-sync-behavior__memcpy-async ].\nHere we allocate this memory by ourselves to make sure that we run as asynchronously as possible.\n\nWe can split it into two parts (allocation by other means and a call to cudaHostRegister) on most contemporary devices.",
       "parentUuid": "1ed67054_229e0018",
+      "range": {
+        "startLine": 111,
+        "startChar": 28,
+        "endLine": 111,
+        "endChar": 46
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c505e8e3_6934d26d",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-11T18:24:23Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "151c7544_3b22a5ef",
       "range": {
         "startLine": 111,
         "startChar": 28,
@@ -904,6 +1024,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "66421b18_04b15326",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-11T18:24:23Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "be1932f8_de720f57",
+      "range": {
+        "startLine": 135,
+        "startChar": 19,
+        "endLine": 135,
+        "endChar": 32
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "67beda2a_903f422b",
@@ -964,6 +1108,30 @@
       "writtenOn": "2023-05-10T00:49:25Z",
       "side": 1,
       "message": "I do not understand this variable name.\n\nwhat does it mean to be pinned?",
+      "range": {
+        "startLine": 174,
+        "startChar": 5,
+        "endLine": 174,
+        "endChar": 23
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "752a6fb9_5633e65d",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-11T18:24:23Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "ee0c8b33_72f38f2c",
       "range": {
         "startLine": 174,
         "startChar": 5,
@@ -1175,6 +1343,30 @@
       "writtenOn": "2023-05-10T00:49:25Z",
       "side": 1,
       "message": "this endif guard needs a comment matching it to the name of the include guard above.",
+      "range": {
+        "startLine": 206,
+        "startChar": 1,
+        "endLine": 206,
+        "endChar": 6
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33840c91_37e831a7",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-11T18:24:23Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "89022fbd_3bbef342",
       "range": {
         "startLine": 206,
         "startChar": 1,
