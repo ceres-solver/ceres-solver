@@ -64,34 +64,32 @@ class CudaBlockStructureTest : public ::testing::Test {
   }
 
   std::vector<Cell> GetCells(const CudaBlockSparseStructure& structure) {
-    auto& cuda_buffer = structure.cells_;
+    const auto& cuda_buffer = structure.cells_;
     std::vector<Cell> cells(cuda_buffer.size());
     cuda_buffer.CopyToCpu(cells.data(), cells.size());
     return cells;
   }
   std::vector<Block> GetRowBlocks(const CudaBlockSparseStructure& structure) {
-    auto& cuda_buffer = structure.row_blocks_;
+    const auto& cuda_buffer = structure.row_blocks_;
     std::vector<Block> blocks(cuda_buffer.size());
     cuda_buffer.CopyToCpu(blocks.data(), blocks.size());
     return blocks;
   }
   std::vector<Block> GetColBlocks(const CudaBlockSparseStructure& structure) {
-    auto& cuda_buffer = structure.col_blocks_;
+    const auto& cuda_buffer = structure.col_blocks_;
     std::vector<Block> blocks(cuda_buffer.size());
     cuda_buffer.CopyToCpu(blocks.data(), blocks.size());
     return blocks;
   }
   std::vector<int> GetRowBlockOffsets(
       const CudaBlockSparseStructure& structure) {
-    auto& cuda_buffer = structure.row_block_offsets_;
+    const auto& cuda_buffer = structure.row_block_offsets_;
     std::vector<int> row_block_offsets(cuda_buffer.size());
     cuda_buffer.CopyToCpu(row_block_offsets.data(), row_block_offsets.size());
     return row_block_offsets;
   }
 
   std::unique_ptr<BlockSparseMatrix> A_;
-  Vector x_;
-  Vector b_;
   ContextImpl context_;
 };
 

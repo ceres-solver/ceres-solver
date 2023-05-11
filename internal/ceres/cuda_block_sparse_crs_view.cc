@@ -37,14 +37,6 @@
 #include "ceres/parallel_vector_ops.h"
 
 namespace ceres::internal {
-namespace {
-// Assumes that blocks array is sorted
-int Dimension(const std::vector<Block>& blocks) {
-  if (blocks.empty()) return 0;
-  const auto& last = blocks.back();
-  return last.size + last.position;
-}
-}  // namespace
 
 CudaBlockSparseCRSView::CudaBlockSparseCRSView(const BlockSparseMatrix& bsm,
                                                ContextImpl* context,
@@ -71,12 +63,11 @@ CudaBlockSparseCRSView::CudaBlockSparseCRSView(const BlockSparseMatrix& bsm,
   }
 }
 void CudaBlockSparseCRSView::UpdateValues(const BlockSparseMatrix& bsm) {
-  auto values_to = crs_matrix_->mutable_values();
-  auto permutation = permutation_.data();
   streamer_.CopyToGpu(
       bsm.values(),
       bsm.num_nonzeros(),
-      [permutation, values_to](
+      [permutation = permutation_.data(),
+       values_to = crs_matrix_->mutable_values()](
           const double* values, int num_values, int offset, auto stream) {
         PermuteValues(
             offset, num_values, permutation, values, values_to, stream);

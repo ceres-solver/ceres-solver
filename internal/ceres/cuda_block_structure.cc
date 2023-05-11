@@ -36,7 +36,9 @@ namespace ceres::internal {
 namespace {
 // Dimension of a sorted array of blocks
 int Dimension(const std::vector<Block>& blocks) {
-  if (blocks.empty()) return 0;
+  if (blocks.empty()) {
+    return 0;
+  }
   const auto& last = blocks.back();
   return last.size + last.position;
 }
@@ -65,11 +67,11 @@ CudaBlockSparseStructure::CudaBlockSparseStructure(
   row_block_offsets.reserve(num_row_blocks_ + 1);
   num_nonzeros_ = 0;
   num_cells_ = 0;
-  for (auto& r : block_structure.rows) {
+  for (const auto& r : block_structure.rows) {
     const int row_block_size = r.block.size;
     row_blocks.emplace_back(r.block);
     row_block_offsets.push_back(num_cells_);
-    for (auto& c : r.cells) {
+    for (const auto& c : r.cells) {
       cells.emplace_back(c);
       const int col_block_size = col_blocks[c.block_id].size;
       num_nonzeros_ += col_block_size * row_block_size;

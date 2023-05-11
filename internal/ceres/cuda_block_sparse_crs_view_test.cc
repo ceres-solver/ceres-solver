@@ -58,8 +58,6 @@ class CudaBlockSparseCRSViewTest : public ::testing::Test {
   }
 
   std::unique_ptr<BlockSparseMatrix> A_;
-  Vector x_;
-  Vector b_;
   ContextImpl context_;
 };
 
