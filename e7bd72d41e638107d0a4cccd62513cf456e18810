@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "abf359ed_c64bca1c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-12T00:51:28Z",
+      "side": 1,
+      "message": "Going to merge this, feel free to add kernel tests in a follow up CL.",
+      "revId": "e7bd72d41e638107d0a4cccd62513cf456e18810",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
