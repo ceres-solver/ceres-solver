@@ -177,6 +177,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4986d021_562b2d74",
+        "filename": "internal/ceres/block_structure.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-12T00:27:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4354702_f31418af",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 9
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9f148063_e99e7891",
@@ -208,6 +232,24 @@
       "side": 1,
       "message": "The first stream is a default stream, but nobody should rely on this being the case.",
       "parentUuid": "9f148063_e99e7891",
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d6a8c15_5be37e84",
+        "filename": "internal/ceres/context_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-12T00:27:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a9cff29_2bb06896",
       "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -273,6 +315,30 @@
       "side": 1,
       "message": "This is a more detailed reply than the documentation above, I recommend turning it into documentation for streams.",
       "parentUuid": "ce1858f5_6b75d87e",
+      "range": {
+        "startLine": 111,
+        "startChar": 15,
+        "endLine": 111,
+        "endChar": 23
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7fb6788_083f3c91",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-12T00:27:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62c66300_241c6da3",
       "range": {
         "startLine": 111,
         "startChar": 15,
@@ -1731,6 +1797,30 @@
       "side": 1,
       "message": "All functions in ceres_cuda_kernels return without synchronization (but always only  use supplied stream).\n\nThis way we can [potentially] overlap those computations with some computations on cpu-side.\n\nIf caller used \"default\" stream -- synchronization will happen \"automatically\" on the next copy from / to device (because we run them in \"default\" stream. Otherwise - caller needs to perform synchronization.",
       "parentUuid": "aefcffb4_eed33528",
+      "range": {
+        "startLine": 91,
+        "startChar": 5,
+        "endLine": 91,
+        "endChar": 18
+      },
+      "revId": "1572dbbf74f3f5e6064bde89a71f35f3a661459d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a396571a_03ec23dd",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-12T00:27:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47e00e9d_b51f9187",
       "range": {
         "startLine": 91,
         "startChar": 5,

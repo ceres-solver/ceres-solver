@@ -35,6 +35,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9955aecd_53b4e238",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-12T00:27:03Z",
+      "side": 1,
+      "message": "Improved comments, renamed CudaStreamer, added CERES_NO_EXPORT to all new headers.\n\nDo you think it makes sense to pre-allocate CudaSparseMatrix::spmv_buffer_ (by querying memory required for left and right multiplication in constructor)?\nThis way we would be able to declare CudaSparseMatrix::{Left,Right}MultiplyAndAccumulate as const.",
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "19d2863d_532bfb00",
@@ -48,6 +65,30 @@
       "writtenOn": "2023-05-11T18:24:23Z",
       "side": 1,
       "message": "this makes me wonder if we should hack blocksparsematrix such that when we know we are going to use cuda, its values array should be allocated using cudaHostAlloc?",
+      "range": {
+        "startLine": 67,
+        "startChar": 10,
+        "endLine": 67,
+        "endChar": 16
+      },
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b6d0873_78d9d8bc",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-12T00:27:03Z",
+      "side": 1,
+      "message": "In this case we will have to make sure we are only allocating/freeing that memory once, because those allocations are not cheap (because they have to make some calls into driver/kernel).\n\nThere are also other things that we might need to consider for achieving a peak performance of copying values:\n - On systems where cpu and gpu memory is the same set of memory chips (embedded devices) we can benefit from checking if that is the case and avoiding copy\n - On systems where page migration between cpu and gpu is supported - we can allocate a \"managed\" cuda memory, and use prefetches instead of copies (this might be not available on windows and requires Pascal+ gpu, if I remember correctly). This way it is possible to over-subscribe GPU memory.",
+      "parentUuid": "19d2863d_532bfb00",
       "range": {
         "startLine": 67,
         "startChar": 10,
@@ -81,6 +122,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f425b02d_36e96fbe",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-12T00:27:03Z",
+      "side": 1,
+      "message": "Done.\n\nI had a direct sparse Cholesky situation in mind, but it doesn\u0027t make sense in case of iterative solvers.",
+      "parentUuid": "313817c5_883624f9",
+      "range": {
+        "startLine": 90,
+        "startChar": 30,
+        "endLine": 90,
+        "endChar": 41
+      },
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9c4b7b89_0654d04e",
@@ -94,6 +159,30 @@
       "writtenOn": "2023-05-11T18:24:23Z",
       "side": 1,
       "message": "crs_matrix and mutable_crs_matrix matches the style better and should come after UpdateValues",
+      "range": {
+        "startLine": 92,
+        "startChar": 26,
+        "endLine": 92,
+        "endChar": 32
+      },
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe88e3f3_1bd27222",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-12T00:27:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c4b7b89_0654d04e",
       "range": {
         "startLine": 92,
         "startChar": 26,
@@ -121,6 +210,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef263522_04f3d9c7",
+        "filename": "internal/ceres/cuda_block_structure.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-12T00:27:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4cc9da9_bc94c364",
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "88b99c92_40cad24b",
@@ -144,6 +251,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "39a13211_3a3a4efc",
+        "filename": "internal/ceres/cuda_kernels.cu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-12T00:27:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88b99c92_40cad24b",
+      "range": {
+        "startLine": 158,
+        "startChar": 20,
+        "endLine": 158,
+        "endChar": 21
+      },
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "39e2a662_0d4e6573",
@@ -157,6 +288,30 @@
       "writtenOn": "2023-05-11T18:24:23Z",
       "side": 1,
       "message": "reduce nesting by early return if row \u003e\u003d num_rows",
+      "range": {
+        "startLine": 204,
+        "startChar": 10,
+        "endLine": 204,
+        "endChar": 11
+      },
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d58c70f8_1c1bfdac",
+        "filename": "internal/ceres/cuda_kernels.cu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-12T00:27:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39e2a662_0d4e6573",
       "range": {
         "startLine": 204,
         "startChar": 10,
@@ -215,6 +370,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "28687d44_257d91e0",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-12T00:27:03Z",
+      "side": 1,
+      "message": "Yes, those are tested as a whole implicitly (using multiplications with resulting CudaSparseMatrix).\n\nWould you like me to provide some tests that only run one function at a time and check results on some fixed arrays of size suitable for visual interpretation?",
+      "parentUuid": "5fc5d6c1_5c126599",
+      "range": {
+        "startLine": 83,
+        "startChar": 5,
+        "endLine": 83,
+        "endChar": 21
+      },
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a8d128af_7e738ea5",
         "filename": "internal/ceres/cuda_streamer.h",
         "patchSetId": 5
@@ -226,6 +405,30 @@
       "writtenOn": "2023-05-11T18:24:23Z",
       "side": 1,
       "message": "it is worth having an example of a calling sequence here of a simple callback and associated transfer sequence of calls.",
+      "range": {
+        "startLine": 48,
+        "startChar": 39,
+        "endLine": 48,
+        "endChar": 42
+      },
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e52a798_44de336c",
+        "filename": "internal/ceres/cuda_streamer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-12T00:27:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8d128af_7e738ea5",
       "range": {
         "startLine": 48,
         "startChar": 39,
@@ -261,6 +464,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dec1341a_b133bb68",
+        "filename": "internal/ceres/cuda_streamer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-12T00:27:03Z",
+      "side": 1,
+      "message": "Whether it faster to transfer batch of data, or perform (user-defined) computations on the batch of data -- two streams are enough to achieve the maximum possible efficiency under those limitations of host-\u003edevice transfer.\n\nI have rephrased this, hopefully it helps.",
+      "parentUuid": "661e7850_0f20cf5a",
+      "range": {
+        "startLine": 54,
+        "startChar": 18,
+        "endLine": 54,
+        "endChar": 26
+      },
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cf8ddcd7_12af486f",
         "filename": "internal/ceres/cuda_streamer.h",
         "patchSetId": 5
@@ -272,6 +499,30 @@
       "writtenOn": "2023-05-11T18:24:23Z",
       "side": 1,
       "message": "kMaxTemporaryArraySize is not a good name, because it makes it sound like its either a constexpr or a template argument.\n\nmax_temp_array_size or max_buffer_size is better.",
+      "range": {
+        "startLine": 61,
+        "startChar": 47,
+        "endLine": 61,
+        "endChar": 69
+      },
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ddef8bb_d21e943d",
+        "filename": "internal/ceres/cuda_streamer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-12T00:27:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf8ddcd7_12af486f",
       "range": {
         "startLine": 61,
         "startChar": 47,
@@ -307,6 +558,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "53ec3d06_c82bb632",
+        "filename": "internal/ceres/cuda_streamer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-12T00:27:03Z",
+      "side": 1,
+      "message": "I decided that this object should own the memory on gpu, because otherwise client will have this object and a buffer of memory that is barely possible to use for any other purpose.\n\nI am getting a largest multiple of kNumBatches that is less than kMaxTemporaryArraySize, in order to have size of all batches equal.\n\nDo you mean that it does not worth saving sizeof(T) bytes and we should just allocate array of the maximum allowed size?",
+      "parentUuid": "55bf13f0_c4d81d31",
+      "range": {
+        "startLine": 64,
+        "startChar": 20,
+        "endLine": 64,
+        "endChar": 27
+      },
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "11073cd3_c619827f",
         "filename": "internal/ceres/cuda_streamer.h",
         "patchSetId": 5
@@ -318,6 +593,30 @@
       "writtenOn": "2023-05-11T18:24:23Z",
       "side": 1,
       "message": "explain that values_cpu_pinned is being allocated using cudaHostAlloc so its now page locked and can be copied to the gpu really fast.",
+      "range": {
+        "startLine": 68,
+        "startChar": 13,
+        "endLine": 68,
+        "endChar": 26
+      },
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf44c660_26aa1d63",
+        "filename": "internal/ceres/cuda_streamer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-12T00:27:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11073cd3_c619827f",
       "range": {
         "startLine": 68,
         "startChar": 13,
@@ -351,6 +650,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "438b3521_944acc00",
+        "filename": "internal/ceres/cuda_streamer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-12T00:27:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63b0d9db_4f794558",
+      "range": {
+        "startLine": 99,
+        "startChar": 31,
+        "endLine": 99,
+        "endChar": 53
+      },
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5335ab81_87ce1f8f",
@@ -370,6 +693,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2477675d_d72685bd",
+        "filename": "internal/ceres/cuda_streamer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-12T00:27:03Z",
+      "side": 1,
+      "message": "Yes it checks if memory is of type that allows truly asynchronous host-to-device copy (thus, does not require us to copy input data from one cpu memory to another).",
+      "parentUuid": "5335ab81_87ce1f8f",
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2aea6a08_5d9cb332",
         "filename": "internal/ceres/cuda_streamer.h",
         "patchSetId": 5
@@ -381,6 +722,30 @@
       "writtenOn": "2023-05-11T18:24:23Z",
       "side": 1,
       "message": "blank before",
+      "range": {
+        "startLine": 156,
+        "startChar": 2,
+        "endLine": 156,
+        "endChar": 7
+      },
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8d28c4d_116b76b8",
+        "filename": "internal/ceres/cuda_streamer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-12T00:27:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2aea6a08_5d9cb332",
       "range": {
         "startLine": 156,
         "startChar": 2,
