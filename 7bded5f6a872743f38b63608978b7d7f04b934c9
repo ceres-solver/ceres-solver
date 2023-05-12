@@ -101,6 +101,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "704cf489_a984fc4d",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-12T00:51:03Z",
+      "side": 1,
+      "message": "interesting, okay lets consider this an optimization to consider in the future. I suspect that GPU will be used for large problems and reducing the amount of memory used in such cases is a good thing.",
+      "parentUuid": "5b6d0873_78d9d8bc",
+      "range": {
+        "startLine": 67,
+        "startChar": 10,
+        "endLine": 67,
+        "endChar": 16
+      },
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "313817c5_883624f9",
         "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
         "patchSetId": 5
@@ -382,6 +406,30 @@
       "side": 1,
       "message": "Yes, those are tested as a whole implicitly (using multiplications with resulting CudaSparseMatrix).\n\nWould you like me to provide some tests that only run one function at a time and check results on some fixed arrays of size suitable for visual interpretation?",
       "parentUuid": "5fc5d6c1_5c126599",
+      "range": {
+        "startLine": 83,
+        "startChar": 5,
+        "endLine": 83,
+        "endChar": 21
+      },
+      "revId": "7bded5f6a872743f38b63608978b7d7f04b934c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdeb29ff_a45a6d5d",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-12T00:51:03Z",
+      "side": 1,
+      "message": "your call, what is better for debugging in the future as this stuff gets modified/updated?\n\nthis can happen in a follow up CL.",
+      "parentUuid": "28687d44_257d91e0",
       "range": {
         "startLine": 83,
         "startChar": 5,
