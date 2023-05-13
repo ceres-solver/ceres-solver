@@ -1,0 +1,418 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6137a6b1_5d9c27f7",
+        "filename": "internal/ceres/cuda_kernels.cu.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-13T19:49:57Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be row_nnz_e and row_nnz_f respectively?",
+      "range": {
+        "startLine": 194,
+        "startChar": 5,
+        "endLine": 194,
+        "endChar": 11
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74979ff2_f69678a5",
+        "filename": "internal/ceres/cuda_kernels.cu.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-13T19:49:57Z",
+      "side": 1,
+      "message": "row_nnz_e and row_nnz_f",
+      "range": {
+        "startLine": 311,
+        "startChar": 5,
+        "endLine": 311,
+        "endChar": 11
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfef34d6_525ea44c",
+        "filename": "internal/ceres/cuda_kernels.cu.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-13T19:49:57Z",
+      "side": 1,
+      "message": "same question about offsets here and below, why do we need an offset? why not have the caller send you a permutation array which has been offsetted.",
+      "range": {
+        "startLine": 536,
+        "startChar": 12,
+        "endLine": 536,
+        "endChar": 20
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9387fb6e_00ddc59a",
+        "filename": "internal/ceres/cuda_kernels.cu.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-13T19:49:57Z",
+      "side": 1,
+      "message": "why pass an offset at all? why not have the caller send an offsetted permutation? isn\u0027t that simpler?",
+      "range": {
+        "startLine": 567,
+        "startChar": 21,
+        "endLine": 567,
+        "endChar": 32
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c668e924_d20b8192",
+        "filename": "internal/ceres/cuda_kernels.cu.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-13T19:49:57Z",
+      "side": 1,
+      "message": "random idea, why not have the permutation just have indices into the the crs_values_e and crs_values_f arrays ? \n\nthat way this just becomes\n\n\n*permutation[value_id] \u003d value_sparse_values[value_id] \n\nno need for a conditional inside the kernel, just a pointer lookup.",
+      "range": {
+        "startLine": 569,
+        "startChar": 4,
+        "endLine": 569,
+        "endChar": 16
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2f2c270_3cbdb174",
+        "filename": "internal/ceres/cuda_kernels.cu.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-13T19:49:57Z",
+      "side": 1,
+      "message": "this file is starting to get quite large and complicated. I think we should think about splitting it into at least two. one thats simple cuda kernels for doing basic vector ops etc, and the other which is devoted to bsm to crs conversion.\n\nI am also wondering once all these functions land, given some of the similarities between them if there is any refactoring/simplification possible. See my comment about enforcing the constraint about linear memory layout in bsm when using cuda.\n\nthat was a pure optimization done for CPU oriented ITERATIVE_SHUR , but if that makes the cuda streaming code so much more complicated, perhaps it is worth enforcing that invariant when cuda is being used.",
+      "range": {
+        "startLine": 592,
+        "startChar": 1,
+        "endLine": 592,
+        "endChar": 3
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1648ae65_7584f8af",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-13T19:49:57Z",
+      "side": 1,
+      "message": "I was wondering if the same idea as we talked about in the last CL about page locked memory should also be used in compressed_row_sparse_matrix when we are using cuda for CGNR also.\n\nand I suppose also for block_random_access_dense matrix etc which are being used for computing things on cpu and then being transferred to the gpu. \n\nI think it would be worth doing this systematically. If you think this is worth it, can you file a bug on github please?",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 22
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59bb5cfd_6fe5d1c5",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-13T19:49:57Z",
+      "side": 1,
+      "message": "what should be the size of this array?",
+      "range": {
+        "startLine": 96,
+        "startChar": 24,
+        "endLine": 96,
+        "endChar": 33
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e2384fb_b0a31d53",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-13T19:49:57Z",
+      "side": 1,
+      "message": "if this is a temporary, does this mean it is not useful to the caller in which case why are we trying to save an allocation here? or is this because allocation by cuda is a problem? same question for the temporary array below.",
+      "range": {
+        "startLine": 127,
+        "startChar": 38,
+        "endLine": 127,
+        "endChar": 51
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b68129e2_9e789a23",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-13T19:49:57Z",
+      "side": 1,
+      "message": "this makes me wonder if we should just use blocksparsematrix when using cuda for CGNR also?",
+      "range": {
+        "startLine": 137,
+        "startChar": 5,
+        "endLine": 137,
+        "endChar": 18
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f63674f_defb71a6",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-13T19:49:57Z",
+      "side": 1,
+      "message": "First sentence does not make sense.",
+      "range": {
+        "startLine": 144,
+        "startChar": 11,
+        "endLine": 144,
+        "endChar": 16
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47f15754_db17edcd",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-13T19:49:57Z",
+      "side": 1,
+      "message": "I do not understand num_values, why do we need an offset here?\n\ndoes the permutation also need an offset? why not offset block_sparse_values to begin with?",
+      "range": {
+        "startLine": 151,
+        "startChar": 40,
+        "endLine": 151,
+        "endChar": 50
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e75ef2c1_5d262448",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-13T19:49:57Z",
+      "side": 1,
+      "message": "bsm_values or",
+      "range": {
+        "startLine": 153,
+        "startChar": 44,
+        "endLine": 153,
+        "endChar": 63
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abca2795_6e32094d",
+        "filename": "internal/ceres/cuda_partitioned_block_sparse_crs_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-13T19:49:57Z",
+      "side": 1,
+      "message": "I am wondering if we should actually enforce this constraint when using cuda, in which case some of our invariants will become simpler?",
+      "range": {
+        "startLine": 61,
+        "startChar": 15,
+        "endLine": 61,
+        "endChar": 16
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc9d81ae_ab659a0f",
+        "filename": "internal/ceres/cuda_partitioned_block_sparse_crs_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-13T19:49:57Z",
+      "side": 1,
+      "message": "since this is a partitioned view, I think you can drop the crs_suffix here and in the member variables, and just call thing matrix_e and matrix_f if you like. it will make things shorter without losing any readability.",
+      "range": {
+        "startLine": 97,
+        "startChar": 8,
+        "endLine": 97,
+        "endChar": 24
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ae9a228_dcc46355",
+        "filename": "internal/ceres/cuda_partitioned_block_sparse_crs_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-13T19:49:57Z",
+      "side": 1,
+      "message": "move this up before the accessors.",
+      "range": {
+        "startLine": 105,
+        "startChar": 26,
+        "endLine": 105,
+        "endChar": 43
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c05cea84_bf10f8a2",
+        "filename": "internal/ceres/cuda_partitioned_block_sparse_crs_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-13T19:49:57Z",
+      "side": 1,
+      "message": "its weird to hard code this number like this. 8mb sounds small to me, but what do I know.",
+      "range": {
+        "startLine": 111,
+        "startChar": 23,
+        "endLine": 111,
+        "endChar": 45
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8734386_8bc9d335",
+        "filename": "internal/ceres/cuda_partitioned_block_sparse_crs_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-13T19:49:57Z",
+      "side": 1,
+      "message": "see my comment about this permutation in cuda_kernels.cc.cu",
+      "range": {
+        "startLine": 114,
+        "startChar": 22,
+        "endLine": 114,
+        "endChar": 27
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
