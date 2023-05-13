@@ -92,18 +92,68 @@ void FillCRSStructure(const int num_row_blocks,
                       int* permutation,
                       cudaStream_t stream);
 
+// Count non-zeros in left column-block submatrix based on the block-structure
+// of the whole matrix. Temporary array row_block_nnz_e of size num_row_blocks
+// should be allocated by caller and will be filled by row-block-wise non-zero
+// counts on exit
+int ComputeNonZerosInColumnBlockSubMatrix(const int num_row_blocks,
+                                          const int num_col_blocks_e,
+                                          const int* row_block_offsets,
+                                          const Cell* cells,
+                                          const Block* row_blocks,
+                                          const Block* col_blocks,
+                                          int* row_block_nnz_e,
+                                          cudaStream_t stream);
+
+// Compute structure of left and right CRS submatrices with permutation of
+// values using block-sparse structure and temporary array row_block_ids. Array
+// row_block_ids of size num_rows will be filled with indices of row-blocks
+// corresponding to rows of CRS matrix. Arrays corresponding to CRS matrices,
+// permutation and row_block_ids arrays are to be allocated by caller.
+// Block-sparse matrix is split at num_col_blocks_e column blocks.
+// E is the left sub-matrix
+void FillCRSStructurePartitioned(const int num_row_blocks,
+                                 const int num_col_blocks_e,
+                                 const int num_cols_e,
+                                 const int num_rows,
+                                 const int* row_block_offsets,
+                                 const Cell* cells,
+                                 const Block* row_blocks,
+                                 const Block* col_blocks,
+                                 int* rows_e,
+                                 int* cols_e,
+                                 int* rows_f,
+                                 int* cols_f,
+                                 int* row_block_ids,
+                                 int* permutation,
+                                 cudaStream_t stream);
+
 // Permute block of block-sparse values using permutation
 // Pointer block_sparse_values corresponds to a block of num_values values from
-// block-sparse matrix at the offset from begining. Pointer output corresponds
-// to values of CRS matrix. Array permutation stores permutation from
-// block-sparse to CRS matrix with permutation[i] being an index of i-th value
-// of block-sparse matrix in values of CRS matrix
+// block-sparse matrix at the offset from begining. Pointer crs_values
+// corresponds to values of CRS matrix. Array permutation stores permutation
+// from block-sparse to CRS matrix with permutation[i] being an index of i-th
+// value of block-sparse matrix in values of CRS matrix
 void PermuteValues(const int offset,
                    const int num_values,
                    const int* permutation,
                    const double* block_sparse_values,
                    double* crs_values,
                    cudaStream_t stream);
+
+// Permute block of block-sparse values using permutation
+// Pointer block_sparse_values corresponds to a block of num_values values from
+// block-sparse matrix at the offset from begining. Pointers crs_values_e and
+// crs_value_f correspond to  values of CRS matrix. Array permutation stores
+// permutation from block-sparse to CRS matrix with sign bit selecting either E
+// or F sub-matrix.
+void PermuteValuesPartitioned(const int offset,
+                              const int num_values,
+                              const int* permutation,
+                              const double* block_sparse_values,
+                              double* crs_values_e,
+                              double* crs_values_f,
+                              cudaStream_t stream);
 
 }  // namespace internal
 }  // namespace ceres
