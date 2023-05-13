@@ -37,6 +37,7 @@
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/bundle_adjustment_test_util.h"
 #include "ceres/cuda_block_sparse_crs_view.h"
+#include "ceres/cuda_partitioned_block_sparse_crs_view.h"
 #include "ceres/cuda_sparse_matrix.h"
 #include "ceres/cuda_vector.h"
 #include "ceres/evaluator.h"
@@ -441,6 +442,110 @@ static void JacobianToCRS(benchmark::State& state,
 }
 
 #ifndef CERES_NO_CUDA
+static void PMVRightMultiplyAndAccumulateFCuda(benchmark::State& state,
+                                               BALData* data,
+                                               ContextImpl* context) {
+  LinearSolver::Options options;
+  options.elimination_groups.push_back(data->bal_problem->num_points());
+  options.context = context;
+  options.num_threads = 1;
+  auto jacobian = data->PartitionedMatrixViewJacobian(options);
+  auto underlying_matrix = data->BlockSparseJacobian(context);
+  CudaPartitionedBlockSparseCRSView view(
+      *underlying_matrix, jacobian->num_col_blocks_e(), context);
+
+  Vector x = Vector::Random(jacobian->num_cols_f());
+  CudaVector cuda_x(context, x.size());
+  CudaVector cuda_y(context, jacobian->num_rows());
+
+  cuda_x.CopyFromCpu(x);
+  cuda_y.SetZero();
+
+  auto matrix = view.mutable_crs_matrix_f();
+  for (auto _ : state) {
+    matrix->RightMultiplyAndAccumulate(cuda_x, &cuda_y);
+  }
+  CHECK_GT(cuda_y.Norm(), 0.);
+}
+
+static void PMVLeftMultiplyAndAccumulateFCuda(benchmark::State& state,
+                                              BALData* data,
+                                              ContextImpl* context) {
+  LinearSolver::Options options;
+  options.elimination_groups.push_back(data->bal_problem->num_points());
+  options.context = context;
+  options.num_threads = 1;
+  auto jacobian = data->PartitionedMatrixViewJacobian(options);
+  auto underlying_matrix = data->BlockSparseJacobian(context);
+  CudaPartitionedBlockSparseCRSView view(
+      *underlying_matrix, jacobian->num_col_blocks_e(), context);
+
+  Vector x = Vector::Random(jacobian->num_rows());
+  CudaVector cuda_x(context, x.size());
+  CudaVector cuda_y(context, jacobian->num_cols_f());
+
+  cuda_x.CopyFromCpu(x);
+  cuda_y.SetZero();
+
+  auto matrix = view.mutable_crs_matrix_f();
+  for (auto _ : state) {
+    matrix->LeftMultiplyAndAccumulate(cuda_x, &cuda_y);
+  }
+  CHECK_GT(cuda_y.Norm(), 0.);
+}
+
+static void PMVRightMultiplyAndAccumulateECuda(benchmark::State& state,
+                                               BALData* data,
+                                               ContextImpl* context) {
+  LinearSolver::Options options;
+  options.elimination_groups.push_back(data->bal_problem->num_points());
+  options.context = context;
+  options.num_threads = 1;
+  auto jacobian = data->PartitionedMatrixViewJacobian(options);
+  auto underlying_matrix = data->BlockSparseJacobian(context);
+  CudaPartitionedBlockSparseCRSView view(
+      *underlying_matrix, jacobian->num_col_blocks_e(), context);
+
+  Vector x = Vector::Random(jacobian->num_cols_e());
+  CudaVector cuda_x(context, x.size());
+  CudaVector cuda_y(context, jacobian->num_rows());
+
+  cuda_x.CopyFromCpu(x);
+  cuda_y.SetZero();
+
+  auto matrix = view.mutable_crs_matrix_e();
+  for (auto _ : state) {
+    matrix->RightMultiplyAndAccumulate(cuda_x, &cuda_y);
+  }
+  CHECK_GT(cuda_y.Norm(), 0.);
+}
+
+static void PMVLeftMultiplyAndAccumulateECuda(benchmark::State& state,
+                                              BALData* data,
+                                              ContextImpl* context) {
+  LinearSolver::Options options;
+  options.elimination_groups.push_back(data->bal_problem->num_points());
+  options.context = context;
+  options.num_threads = 1;
+  auto jacobian = data->PartitionedMatrixViewJacobian(options);
+  auto underlying_matrix = data->BlockSparseJacobian(context);
+  CudaPartitionedBlockSparseCRSView view(
+      *underlying_matrix, jacobian->num_col_blocks_e(), context);
+
+  Vector x = Vector::Random(jacobian->num_rows());
+  CudaVector cuda_x(context, x.size());
+  CudaVector cuda_y(context, jacobian->num_cols_e());
+
+  cuda_x.CopyFromCpu(x);
+  cuda_y.SetZero();
+
+  auto matrix = view.mutable_crs_matrix_e();
+  for (auto _ : state) {
+    matrix->LeftMultiplyAndAccumulate(cuda_x, &cuda_y);
+  }
+  CHECK_GT(cuda_y.Norm(), 0.);
+}
+
 // We want CudaBlockSparseCRSView to be not slower than explicit conversion to
 // CRS on CPU
 static void JacobianToCRSView(benchmark::State& state,
@@ -699,6 +804,16 @@ int main(int argc, char** argv) {
         ->Arg(8)
         ->Arg(16);
 
+#ifndef CERES_NO_CUDA
+    const std::string name_right_product_partitioned_f_cuda =
+        "PMVRightMultiplyAndAccumulateFCuda<" + path + ">";
+    ::benchmark::RegisterBenchmark(
+        name_right_product_partitioned_f_cuda.c_str(),
+        ceres::internal::PMVRightMultiplyAndAccumulateFCuda,
+        data,
+        &context);
+#endif
+
     const std::string name_right_product_partitioned_e =
         "PMVRightMultiplyAndAccumulateE<" + path + ">";
     ::benchmark::RegisterBenchmark(
@@ -711,6 +826,16 @@ int main(int argc, char** argv) {
         ->Arg(4)
         ->Arg(8)
         ->Arg(16);
+
+#ifndef CERES_NO_CUDA
+    const std::string name_right_product_partitioned_e_cuda =
+        "PMVRightMultiplyAndAccumulateECuda<" + path + ">";
+    ::benchmark::RegisterBenchmark(
+        name_right_product_partitioned_e_cuda.c_str(),
+        ceres::internal::PMVRightMultiplyAndAccumulateECuda,
+        data,
+        &context);
+#endif
 
     const std::string name_update_block_diagonal_ftf =
         "PMVUpdateBlockDiagonalFtF<" + path + ">";
@@ -783,6 +908,17 @@ int main(int argc, char** argv) {
         ->Arg(8)
         ->Arg(16);
 
+#ifndef CERES_NO_CUDA
+    const std::string name_left_product_cuda =
+        "JacobianLeftMultiplyAndAccumulateCuda<" + path + ">";
+    ::benchmark::RegisterBenchmark(
+        name_left_product_cuda.c_str(),
+        ceres::internal::JacobianLeftMultiplyAndAccumulateCuda,
+        data,
+        &context)
+        ->Arg(1);
+#endif
+
     const std::string name_left_product_partitioned_f =
         "PMVLeftMultiplyAndAccumulateF<" + path + ">";
     ::benchmark::RegisterBenchmark(
@@ -795,6 +931,16 @@ int main(int argc, char** argv) {
         ->Arg(4)
         ->Arg(8)
         ->Arg(16);
+
+#ifndef CERES_NO_CUDA
+    const std::string name_left_product_partitioned_f_cuda =
+        "PMVLeftMultiplyAndAccumulateFCuda<" + path + ">";
+    ::benchmark::RegisterBenchmark(
+        name_left_product_partitioned_f_cuda.c_str(),
+        ceres::internal::PMVLeftMultiplyAndAccumulateFCuda,
+        data,
+        &context);
+#endif
 
     const std::string name_left_product_partitioned_e =
         "PMVLeftMultiplyAndAccumulateE<" + path + ">";
@@ -810,14 +956,13 @@ int main(int argc, char** argv) {
         ->Arg(16);
 
 #ifndef CERES_NO_CUDA
-    const std::string name_left_product_cuda =
-        "JacobianLeftMultiplyAndAccumulateCuda<" + path + ">";
+    const std::string name_left_product_partitioned_e_cuda =
+        "PMVLeftMultiplyAndAccumulateECuda<" + path + ">";
     ::benchmark::RegisterBenchmark(
-        name_left_product_cuda.c_str(),
-        ceres::internal::JacobianLeftMultiplyAndAccumulateCuda,
+        name_left_product_partitioned_e_cuda.c_str(),
+        ceres::internal::PMVLeftMultiplyAndAccumulateECuda,
         data,
-        &context)
-        ->Arg(1);
+        &context);
 #endif
 
     const std::string name_squared_column_norm =
