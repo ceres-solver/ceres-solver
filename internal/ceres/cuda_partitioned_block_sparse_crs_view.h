@@ -29,8 +29,8 @@
 // Authors: dmitriy.korchemkin@gmail.com (Dmitriy Korchemkin)
 //
 
-#ifndef CERES_INTERNAL_CUDA_BLOCK_SPARSE_CRS_VIEW_H_
-#define CERES_INTERNAL_CUDA_BLOCK_SPARSE_CRS_VIEW_H_
+#ifndef CERES_INTERNAL_CUDA_PARTITIONED_BLOCK_SPARSE_CRS_VIEW_H_
+#define CERES_INTERNAL_CUDA_PARTITIONED_BLOCK_SPARSE_CRS_VIEW_H_
 
 #include "ceres/internal/config.h"
 
@@ -45,62 +45,73 @@
 
 namespace ceres::internal {
 // We use cuSPARSE library for SpMV operations. However, it does not support
-// block-sparse format with varying size of the blocks. Thus, we perform the
-// following operations in order to compute products of block-sparse matrices
-// and dense vectors on gpu:
+// neither block-sparse format with varying size of the blocks nor
+// submatrix-vector products. Thus, we perform the following operations in order
+// to compute products of partitioned block-sparse matrices and dense vectors on
+// gpu:
 //  - Once per block-sparse structure update:
-//    - Compute CRS structure from block-sparse structure
-//    - Compute permutation from block-sparse values to CRS values
+//    - Compute CRS structures of left and right submatrices from block-sparse
+//    structure
+//    - Compute permutation from block-sparse values to CRS values of two
+//    matrices
 //  - Once per block-sparse values update:
-//    - Update values in CRS matrix with values of block-sparse matrix
+//    - Update values of both CRS matrices with values of block-sparse matrix
 //
 // Since there are no constraints on positions of cells in value array of
-// block-sparse matrix, a permutation from block-sparse values to CRS
-// values is stored explicitly.
+// block-sparse matrix, a permutation is stored explicitly. In order to limit
+// amount of memory consumed by additional structures, we exploit the fact that
+// ceres solver uses signed indices and encode submatrix in signbit.
 //
-// Example: given matrix with the following block-structure
-//  [ 1 2 | | 6 7 ]
-//  [ 3 4 | | 8 9 ]
-//  [-----+-+-----]
-//  [     |5|     ]
+// Note: currently this class does not make assumptions on number of cells per
+// row-block in the left sub-matrix. This might change in the future.
+//
+// Example: given partitioned matrix with the following block-structure
+//  [ 1 2 | ] [ 6 7 ]
+//  [ 3 4 | ] [ 8 9 ]
+//  [-----+-] [-----]
+//  [     |5] [     ]
 // with values stored as values_block_sparse = [1, 2, 3, 4, 5, 6, 7, 8, 9],
-// permutation from block-sparse to CRS is p = [0, 1, 4, 5, 8, 2, 3, 6, 7];
-// and i-th block-sparse value has index p[i] in CRS values array
+// permutation from block-sparse to CRS is p = [-1, -2, -3, -4, -5, 0, 1, 2, 3];
 //
 // This allows to avoid storing both CRS and block-sparse values in GPU memory.
 // Instead, block-sparse values are transferred to gpu memory as a disjoint set
 // of small continuous segments with simultaneous permutation of the values into
 // correct order
-class CERES_NO_EXPORT CudaBlockSparseCRSView {
+class CERES_NO_EXPORT CudaPartitionedBlockSparseCRSView {
  public:
   // Initializes internal CRS matrix and permutation from block-sparse to CRS
   // values. The following objects are stored in gpu memory for the whole
   // lifetime of the object
-  //  - crs_matrix_: CRS matrix
-  //  - permutation_: permutation from block-sparse to CRS value order
+  //  - matrix_e_: left CRS submatrix
+  //  - matrix_f_: right CRS submatrix
+  //  - permutation_: permutation from block-sparse to CRS values
   //  (num_nonzeros integer values)
   //  - streamed_buffer_: helper for value updating
   // The following objects are created temporarily during construction:
   //  - CudaBlockSparseStructure: block-sparse structure of block-sparse matrix
   //  - num_rows integer values: row to row-block map
-  CudaBlockSparseCRSView(const BlockSparseMatrix& bsm, ContextImpl* context);
+  CudaPartitionedBlockSparseCRSView(const BlockSparseMatrix& bsm,
+                                    const int num_col_blocks_e,
+                                    ContextImpl* context);
 
-  const CudaSparseMatrix* crs_matrix() const { return crs_matrix_.get(); }
-  CudaSparseMatrix* mutable_crs_matrix() { return crs_matrix_.get(); }
-
-  // Update values of crs_matrix_ using values of block-sparse matrix.
+  // Update values of CRS submatrices using values of block-sparse matrix.
   // Assumes that bsm has the same block-sparse structure as matrix that was
   // used for construction.
   void UpdateValues(const BlockSparseMatrix& bsm);
+
+  const CudaSparseMatrix* matrix_e() const { return matrix_e_.get(); }
+  const CudaSparseMatrix* matrix_f() const { return matrix_f_.get(); }
+  CudaSparseMatrix* mutable_matrix_e() { return matrix_e_.get(); }
+  CudaSparseMatrix* mutable_matrix_f() { return matrix_f_.get(); }
 
  private:
   // Value permutation kernel performs a single element-wise operation per
   // thread, thus performing permutation in blocks of 8 megabytes of
   // block-sparse  values seems reasonable
   static constexpr int kMaxTemporaryArraySize = 1 * 1024 * 1024;
-  std::unique_ptr<CudaSparseMatrix> crs_matrix_;
+  std::unique_ptr<CudaSparseMatrix> matrix_e_;
+  std::unique_ptr<CudaSparseMatrix> matrix_f_;
   // Permutation from block-sparse to CRS value order.
-  // permutation_[i] = index of i-th block-sparse value in CRS values
   CudaBuffer<int> permutation_;
   CudaStreamedBuffer<double> streamed_buffer_;
 };
@@ -108,4 +119,4 @@ class CERES_NO_EXPORT CudaBlockSparseCRSView {
 }  // namespace ceres::internal
 
 #endif  // CERES_NO_CUDA
-#endif  // CERES_INTERNAL_CUDA_BLOCK_SPARSE_CRS_VIEW_H_
+#endif  // CERES_INTERNAL_CUDA_PARTITIONED_BLOCK_SPARSE_CRS_VIEW_H_

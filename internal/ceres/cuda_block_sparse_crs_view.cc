@@ -44,7 +44,6 @@ CudaBlockSparseCRSView::CudaBlockSparseCRSView(const BlockSparseMatrix& bsm,
   CudaBlockSparseStructure block_structure(*bsm.block_structure(), context);
   crs_matrix_ = std::make_unique<CudaSparseMatrix>(
       bsm.num_rows(), bsm.num_cols(), bsm.num_nonzeros(), context);
-  CudaBuffer<int> temp_rows(context, bsm.num_rows());
   FillCRSStructure(block_structure.num_row_blocks(),
                    bsm.num_rows(),
                    block_structure.row_block_offsets(),
@@ -53,7 +52,6 @@ CudaBlockSparseCRSView::CudaBlockSparseCRSView(const BlockSparseMatrix& bsm,
                    block_structure.col_blocks(),
                    crs_matrix_->mutable_rows(),
                    crs_matrix_->mutable_cols(),
-                   temp_rows.data(),
                    permutation_.data(),
                    context->DefaultStream());
   UpdateValues(bsm);
@@ -66,7 +64,7 @@ void CudaBlockSparseCRSView::UpdateValues(const BlockSparseMatrix& bsm) {
        values_to = crs_matrix_->mutable_values()](
           const double* values, int num_values, int offset, auto stream) {
         PermuteValues(
-            offset, num_values, permutation, values, values_to, stream);
+            num_values, permutation + offset, values, values_to, stream);
       });
 }
 
