@@ -184,6 +184,7 @@ add_library(ceres_internal OBJECT
     covariance_impl.cc
     cuda_block_sparse_crs_view.cc
     cuda_block_structure.cc
+    cuda_partitioned_block_sparse_crs_view.cc
     cuda_sparse_matrix.cc
     cuda_vector.cc
     dense_cholesky.cc
@@ -480,6 +481,7 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(cuda_dense_cholesky)
   ceres_test(cuda_dense_qr)
   ceres_test(cuda_kernels)
+  ceres_test(cuda_partitioned_block_sparse_crs_view)
   ceres_test(cuda_sparse_matrix)
   ceres_test(cuda_streamed_buffer)
   ceres_test(cuda_vector)
