@@ -426,6 +426,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f73d15a9_928c4653",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-14T12:52:11Z",
+      "side": 1,
+      "message": "I think joydeep biswas who initially contributed cuda support to ceres cares about running older versions of cuda on some devices. This is a good question for him. I am happy to use newer versions.",
+      "parentUuid": "f67d90b0_d0296bdf",
+      "range": {
+        "startLine": 127,
+        "startChar": 38,
+        "endLine": 127,
+        "endChar": 51
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b68129e2_9e789a23",
         "filename": "internal/ceres/cuda_kernels.h",
         "patchSetId": 3
@@ -461,6 +485,30 @@
       "side": 1,
       "message": "You expect that we might save some time by utilizing block-sparse jacobian writer, right?",
       "parentUuid": "b68129e2_9e789a23",
+      "range": {
+        "startLine": 137,
+        "startChar": 5,
+        "endLine": 137,
+        "endChar": 18
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a589f3c_69f76cb7",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-14T12:52:11Z",
+      "side": 1,
+      "message": "yes, but I am not sure how that trades off against the need to permute the values.\nit also simplifies/eliminates one variant of the block jacobi preconditioner which is done using crs matrices as input.",
+      "parentUuid": "a4c4f13d_6e534581",
       "range": {
         "startLine": 137,
         "startChar": 5,
