@@ -16,6 +16,24 @@
       "message": "Sameer, is this is the only place, where we are shuffling cell positions out of sequential order?\n\nSo there are only two possible layouts of block-sparse matrix:\n a. All cell positions are ordered by (row_block, col_block)\n b. Matrix consists of two submatrices (E and F) where values of both E and F are stored separately and cell positions corresponding to each of matrices are ordered by (row_block, col_block)\nRight?\n\nIf that\u0027s the case I think I will think about a solution that exploits that fact ( and does not store permutation explicitly) this week.\n\n\nDoes storing E sequentially in memory helps with all operations on cpu?\nOr it has negative impact on some of them (for example, jacobian evaluation)?\nIf it improves performance on preconditioner updates, then we should keep this reordering in-place.",
       "revId": "9047461ad6385a0f3b5f7b959ee9022db212ec7d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea297c1e_cff1fe74",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-14T20:12:56Z",
+      "side": 1,
+      "message": "Hey Dmitry,\n\nYes that\u0027s the only place where block sparse matrices are created. The only other ones are block diagonal matrices. I think it is simpler to just force a linear layout rather than worry about more special handling.\n\nI am less concerned about the version that ships with Ubuntu, I am more concerned about supporting enough hardware to be useful.\n\nI am out for the rest of the day (it\u0027s mother\u0027s day here in the us). More tomorrow.\n\nSameer",
+      "tag": "mailMessageId\u003d\u003cCABqdRUCxOPrfrh3DDD3XAgsMsdYc92uJqkt6QGcA8gpUwuZ-Mw@mail.gmail.com\u003e",
+      "revId": "9047461ad6385a0f3b5f7b959ee9022db212ec7d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
