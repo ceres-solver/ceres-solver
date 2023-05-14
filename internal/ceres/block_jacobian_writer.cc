@@ -49,13 +49,12 @@ namespace {
 // Given the residual block ordering, build a lookup table to determine which
 // per-parameter jacobian goes where in the overall program jacobian.
 //
-// Since we expect to use a Schur type linear solver to solve the LM step, take
-// extra care to place the E blocks and the F blocks contiguously. E blocks are
-// the first num_eliminate_blocks parameter blocks as indicated by the parameter
-// block ordering. The remaining parameter blocks are the F blocks.
+// If num_eliminate_blocks > 0, then we are using a Schur type solver, in which
+// case take extra care to place the E blocks and the F blocks contiguously.
 //
-// TODO(keir): Consider if we should use a boolean for each parameter block
-// instead of num_eliminate_blocks.
+// E blocks are the first num_eliminate_blocks parameter blocks as indicated by
+// the parameter block ordering. The remaining parameter blocks are the F
+// blocks.
 void BuildJacobianLayout(const Program& program,
                          int num_eliminate_blocks,
                          std::vector<int*>* jacobian_layout,
@@ -65,7 +64,9 @@ void BuildJacobianLayout(const Program& program,
 
   // Iterate over all the active residual blocks and determine how many E blocks
   // are there. This will determine where the F blocks start in the jacobian
-  // matrix. Also compute the number of jacobian blocks.
+  // matrix.
+  //
+  // Also compute the number of jacobian blocks.
   int f_block_pos = 0;
   int num_jacobian_blocks = 0;
   for (auto* residual_block : residual_blocks) {
@@ -125,12 +126,21 @@ void BuildJacobianLayout(const Program& program,
 
 BlockJacobianWriter::BlockJacobianWriter(const Evaluator::Options& options,
                                          Program* program)
-    : program_(program) {
+    : options_(options), program_(program) {
   CHECK_GE(options.num_eliminate_blocks, 0)
       << "num_eliminate_blocks must be greater than 0.";
 
+  // BuildJacobianLayout if num_eliminate_blocks > 0, will place all the E
+  // blocks in memory contiguously before the F blocks. This makes matrix-vector
+  // products more cache coherent. However, if we are going to be using CUDA to
+  // do the matrix-vector products, then this non-linear layout makes copying
+  // memory from cpu to gpu more complicated and we do not need this special
+  // memory layout. So if CUDA_SPARSE is being used, call BuildJacobianLayout
+  // with num_eliminate_blocks set to zero.
   BuildJacobianLayout(*program,
-                      options.num_eliminate_blocks,
+                      options.sparse_linear_algebra_library_type == CUDA_SPARSE
+                          ? options.num_eliminate_blocks
+                          : 0,
                       &jacobian_layout_,
                       &jacobian_layout_storage_);
 }
