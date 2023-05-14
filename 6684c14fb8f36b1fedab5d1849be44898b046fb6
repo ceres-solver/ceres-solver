@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fa12c60_356edb98",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-14T17:11:42Z",
+      "side": 1,
+      "message": "We have discussed if it using block-sparse structure for cuda-cgnr will lead to performance improvements in https://ceres-solver-review.googlesource.com/c/ceres-solver/+/24220 .\n\nFrom my experiments it seems to save us ~10% of total run-time (with the cost of +33% of gpu memory usage if we don\u0027t force sequential cell layout invariant on block-sparse matrices).\n\nThe biggest savings are in residual \u0026 jacobian evaluation, as it was expected.\n\nDifference in linear solver time is minute, and is probably due to CudaStreamedBuffer starting copying to gpu slightly earlier than driver (right after first 4Mb of data landed in pinned memory).\n\nPlots (time [log-scale] vs BAL dataset): https://drive.google.com/file/d/1NlyTnc_IWPOtMxBdcqj9GOp2mTieh2vo/view?usp\u003dsharing\n\nTable with total improvement stats: https://drive.google.com/file/d/12MUDAu-rSZ0vz9R__MAVRIHuRl1DUsXS/view?usp\u003dsharing\n\nTest setup: intel 8180 + rtx 2080 ti + debian sid",
+      "revId": "6684c14fb8f36b1fedab5d1849be44898b046fb6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
