@@ -34,6 +34,7 @@
 #include <memory>
 
 #include "ceres/conjugate_gradients_solver.h"
+#include "ceres/cuda_block_sparse_crs_view.h"
 #include "ceres/cuda_sparse_matrix.h"
 #include "ceres/cuda_vector.h"
 #include "ceres/internal/export.h"
@@ -74,33 +75,32 @@ class CERES_NO_EXPORT CgnrSolver final : public BlockSparseMatrixSolver {
 #ifndef CERES_NO_CUDA
 class CudaPreconditioner : public ConjugateGradientsLinearOperator<CudaVector> {
  public:
-  virtual void Update(const CompressedRowSparseMatrix& A, const double* D) = 0;
+  virtual void Update(const BlockSparseMatrix& A, const double* D) = 0;
   virtual ~CudaPreconditioner() = default;
 };
 
 // A Cuda-accelerated version of CgnrSolver.
 // This solver assumes that the sparsity structure of A remains constant for its
 // lifetime.
-class CERES_NO_EXPORT CudaCgnrSolver final
-    : public CompressedRowSparseMatrixSolver {
+class CERES_NO_EXPORT CudaCgnrSolver final : public BlockSparseMatrixSolver {
  public:
   explicit CudaCgnrSolver(LinearSolver::Options options);
   static std::unique_ptr<CudaCgnrSolver> Create(LinearSolver::Options options,
                                                 std::string* error);
   ~CudaCgnrSolver() override;
 
-  Summary SolveImpl(CompressedRowSparseMatrix* A,
+  Summary SolveImpl(BlockSparseMatrix* A,
                     const double* b,
                     const LinearSolver::PerSolveOptions& per_solve_options,
                     double* x) final;
 
  private:
-  void CpuToGpuTransfer(const CompressedRowSparseMatrix& A,
+  void CpuToGpuTransfer(const BlockSparseMatrix& A,
                         const double* b,
                         const double* D);
 
   LinearSolver::Options options_;
-  std::unique_ptr<CudaSparseMatrix> A_;
+  std::unique_ptr<CudaBlockSparseCRSView> A_view_;
   std::unique_ptr<CudaVector> b_;
   std::unique_ptr<CudaVector> x_;
   std::unique_ptr<CudaVector> Atb_;

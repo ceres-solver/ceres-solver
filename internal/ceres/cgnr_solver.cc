@@ -245,7 +245,7 @@ class CERES_NO_EXPORT CudaCgnrLinearOperator final
 class CERES_NO_EXPORT CudaIdentityPreconditioner final
     : public CudaPreconditioner {
  public:
-  void Update(const CompressedRowSparseMatrix& A, const double* D) final {}
+  void Update(const BlockSparseMatrix& A, const double* D) final {}
   void RightMultiplyAndAccumulate(const CudaVector& x, CudaVector& y) final {
     y.Axpby(1.0, x, 1.0);
   }
@@ -258,15 +258,15 @@ class CERES_NO_EXPORT CudaJacobiPreconditioner final
     : public CudaPreconditioner {
  public:
   explicit CudaJacobiPreconditioner(Preconditioner::Options options,
-                                    const CompressedRowSparseMatrix& A)
+                                    const BlockSparseMatrix& A)
       : options_(std::move(options)),
         cpu_preconditioner_(options_, A),
-        m_(options_.context, cpu_preconditioner_.matrix()) {}
+        m_(options_.context, *cpu_preconditioner_.matrix().matrix()) {}
   ~CudaJacobiPreconditioner() = default;
 
-  void Update(const CompressedRowSparseMatrix& A, const double* D) final {
+  void Update(const BlockSparseMatrix& A, const double* D) final {
     cpu_preconditioner_.Update(A, D);
-    m_.CopyValuesFromCpu(cpu_preconditioner_.matrix());
+    m_.CopyValuesFromCpu(*cpu_preconditioner_.matrix().matrix());
   }
 
   void RightMultiplyAndAccumulate(const CudaVector& x, CudaVector& y) final {
@@ -275,7 +275,7 @@ class CERES_NO_EXPORT CudaJacobiPreconditioner final
 
  private:
   Preconditioner::Options options_;
-  BlockCRSJacobiPreconditioner cpu_preconditioner_;
+  BlockSparseJacobiPreconditioner cpu_preconditioner_;
   CudaSparseMatrix m_;
 };
 
@@ -308,12 +308,12 @@ std::unique_ptr<CudaCgnrSolver> CudaCgnrSolver::Create(
   return solver;
 }
 
-void CudaCgnrSolver::CpuToGpuTransfer(const CompressedRowSparseMatrix& A,
+void CudaCgnrSolver::CpuToGpuTransfer(const BlockSparseMatrix& A,
                                       const double* b,
                                       const double* D) {
-  if (A_ == nullptr) {
+  if (A_view_ == nullptr) {
     // Assume structure is not cached, do an initialization and structural copy.
-    A_ = std::make_unique<CudaSparseMatrix>(options_.context, A);
+    A_view_ = std::make_unique<CudaBlockSparseCRSView>(A, options_.context);
     b_ = std::make_unique<CudaVector>(options_.context, A.num_rows());
     x_ = std::make_unique<CudaVector>(options_.context, A.num_cols());
     Atb_ = std::make_unique<CudaVector>(options_.context, A.num_cols());
@@ -341,14 +341,14 @@ void CudaCgnrSolver::CpuToGpuTransfer(const CompressedRowSparseMatrix& A,
     }
   } else {
     // Assume structure is cached, do a value copy.
-    A_->CopyValuesFromCpu(A);
+    A_view_->UpdateValues(A);
   }
   b_->CopyFromCpu(ConstVectorRef(b, A.num_rows()));
   D_->CopyFromCpu(ConstVectorRef(D, A.num_cols()));
 }
 
 LinearSolver::Summary CudaCgnrSolver::SolveImpl(
-    CompressedRowSparseMatrix* A,
+    BlockSparseMatrix* A,
     const double* b,
     const LinearSolver::PerSolveOptions& per_solve_options,
     double* x) {
@@ -364,6 +364,7 @@ LinearSolver::Summary CudaCgnrSolver::SolveImpl(
 
   // Form z = Atb.
   Atb_->SetZero();
+  auto A_ = A_view_->mutable_crs_matrix();
   A_->LeftMultiplyAndAccumulate(*b_, Atb_.get());
 
   // Solve (AtA + DtD)x = z (= Atb).
