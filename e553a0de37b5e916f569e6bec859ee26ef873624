@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4acdbf5_a74af3e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-14T01:21:21Z",
+      "side": 1,
+      "message": "Moved bsm-\u003ecrs kernels to a separate file, combined (non-)partitioned kernels, moved allocation of temporary arrays inside.",
+      "revId": "e553a0de37b5e916f569e6bec859ee26ef873624",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

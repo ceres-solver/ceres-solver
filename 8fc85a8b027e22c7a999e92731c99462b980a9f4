@@ -24,6 +24,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f09c42d_16e9fd38",
+        "filename": "internal/ceres/cuda_kernels.cu.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-14T01:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6137a6b1_5d9c27f7",
+      "range": {
+        "startLine": 194,
+        "startChar": 5,
+        "endLine": 194,
+        "endChar": 11
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "74979ff2_f69678a5",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-05-13T19:49:57Z",
       "side": 1,
       "message": "row_nnz_e and row_nnz_f",
+      "range": {
+        "startLine": 311,
+        "startChar": 5,
+        "endLine": 311,
+        "endChar": 11
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1c9b0c2_23030085",
+        "filename": "internal/ceres/cuda_kernels.cu.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-14T01:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74979ff2_f69678a5",
       "range": {
         "startLine": 311,
         "startChar": 5,
@@ -70,6 +118,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb8384e3_5402d2d0",
+        "filename": "internal/ceres/cuda_kernels.cu.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-14T01:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfef34d6_525ea44c",
+      "range": {
+        "startLine": 536,
+        "startChar": 12,
+        "endLine": 536,
+        "endChar": 20
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9387fb6e_00ddc59a",
@@ -83,6 +155,30 @@
       "writtenOn": "2023-05-13T19:49:57Z",
       "side": 1,
       "message": "why pass an offset at all? why not have the caller send an offsetted permutation? isn\u0027t that simpler?",
+      "range": {
+        "startLine": 567,
+        "startChar": 21,
+        "endLine": 567,
+        "endChar": 32
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed8182d3_2c38c97d",
+        "filename": "internal/ceres/cuda_kernels.cu.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-14T01:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9387fb6e_00ddc59a",
       "range": {
         "startLine": 567,
         "startChar": 21,
@@ -118,6 +214,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ca3ce776_d018d44c",
+        "filename": "internal/ceres/cuda_kernels.cu.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-14T01:21:21Z",
+      "side": 1,
+      "message": "With 32-bit indices we have 8 + 4 + 4 \u003d 16 bytes per non-zero (value + column index + permutation index); that is 33% more than plain crs matrix.\n\nWith 64-bit pointers for permutation we will spend 66% more memory than plain crs matrix.\n\nWith the largest memory available on [consumer] gpu (24GB) there still will be problems that are too large to fit into gpu memory, but can be solved by cpu solver (with 32-bit signed indices). This makes me want to put efforts into minimization of memory consumption.\n\n\nThis routine is \"too fast\" actually (order of magnitude faster than the transfer from host [even excluding copy to pinned memory]: 16us vs 530us).",
+      "parentUuid": "c668e924_d20b8192",
+      "range": {
+        "startLine": 569,
+        "startChar": 4,
+        "endLine": 569,
+        "endChar": 16
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f2f2c270_3cbdb174",
         "filename": "internal/ceres/cuda_kernels.cu.cc",
         "patchSetId": 3
@@ -129,6 +249,30 @@
       "writtenOn": "2023-05-13T19:49:57Z",
       "side": 1,
       "message": "this file is starting to get quite large and complicated. I think we should think about splitting it into at least two. one thats simple cuda kernels for doing basic vector ops etc, and the other which is devoted to bsm to crs conversion.\n\nI am also wondering once all these functions land, given some of the similarities between them if there is any refactoring/simplification possible. See my comment about enforcing the constraint about linear memory layout in bsm when using cuda.\n\nthat was a pure optimization done for CPU oriented ITERATIVE_SHUR , but if that makes the cuda streaming code so much more complicated, perhaps it is worth enforcing that invariant when cuda is being used.",
+      "range": {
+        "startLine": 592,
+        "startChar": 1,
+        "endLine": 592,
+        "endChar": 3
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a51b396_e05dd789",
+        "filename": "internal/ceres/cuda_kernels.cu.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-14T01:21:21Z",
+      "side": 1,
+      "message": "Block-sparse routines are now cuda_kernels_bsm_to_crs.cu.cc\n\nGpu kernels are templated by partitioned flag. If partitioned \u003d false \u003d\u003e caller should use arguments corresponding to matrix F.\n\nLinear layout will allow to get rid of permutation.\nThere is an option to get rid of it sometimes with current layout too.",
+      "parentUuid": "f2f2c270_3cbdb174",
       "range": {
         "startLine": 592,
         "startChar": 1,
@@ -164,6 +308,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "06b044c0_21c6afa7",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-14T01:21:21Z",
+      "side": 1,
+      "message": "Yes, that makes sense.",
+      "parentUuid": "1648ae65_7584f8af",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 22
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "59bb5cfd_6fe5d1c5",
         "filename": "internal/ceres/cuda_kernels.h",
         "patchSetId": 3
@@ -175,6 +343,30 @@
       "writtenOn": "2023-05-13T19:49:57Z",
       "side": 1,
       "message": "what should be the size of this array?",
+      "range": {
+        "startLine": 96,
+        "startChar": 24,
+        "endLine": 96,
+        "endChar": 33
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3128f72_a098c646",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-14T01:21:21Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "59bb5cfd_6fe5d1c5",
       "range": {
         "startLine": 96,
         "startChar": 24,
@@ -210,6 +402,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f67d90b0_d0296bdf",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-14T01:21:21Z",
+      "side": 1,
+      "message": "cudaMalloc / cudaFree synchronize the whole device and are expensive. For partitioned matrix temporary buffer passed to ComputeNonZerosInColumnBlockSubMatrix was later reused in FillCRSStructurePartitioned.\n\nI replaced supplying passing pre-allocated array with stream-ordered allocations.\n\ncudaMallocAsync / cudaFreeAsync are not available in toolkit shipped with ubuntu 20.04; so we will need cuda toolkit from nvidia on 20.04 too (stream-ordered allocation became a thing in cuda 11.4, ubuntu 20.04 ships 10.1).\n\nIf requiring cuda 11.4+ is fine - then it might make sense to make all cuda allocations asynchronous and run them in default stream in the future. Making memory allocations asynchronous should not break anything due to our convention for using streams.",
+      "parentUuid": "1e2384fb_b0a31d53",
+      "range": {
+        "startLine": 127,
+        "startChar": 38,
+        "endLine": 127,
+        "endChar": 51
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b68129e2_9e789a23",
         "filename": "internal/ceres/cuda_kernels.h",
         "patchSetId": 3
@@ -221,6 +437,30 @@
       "writtenOn": "2023-05-13T19:49:57Z",
       "side": 1,
       "message": "this makes me wonder if we should just use blocksparsematrix when using cuda for CGNR also?",
+      "range": {
+        "startLine": 137,
+        "startChar": 5,
+        "endLine": 137,
+        "endChar": 18
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4c4f13d_6e534581",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-14T01:21:21Z",
+      "side": 1,
+      "message": "You expect that we might save some time by utilizing block-sparse jacobian writer, right?",
+      "parentUuid": "b68129e2_9e789a23",
       "range": {
         "startLine": 137,
         "startChar": 5,
@@ -254,6 +494,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa322325_643e0b98",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-14T01:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f63674f_defb71a6",
+      "range": {
+        "startLine": 144,
+        "startChar": 11,
+        "endLine": 144,
+        "endChar": 16
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "47f15754_db17edcd",
@@ -277,6 +541,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f89faffa_7e1b2daa",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-14T01:21:21Z",
+      "side": 1,
+      "message": "Done.\n\nPermutation needs offset, block_sparse_values do not; block_sparse values is a small buffer from CudaStreamedBuffer.",
+      "parentUuid": "47f15754_db17edcd",
+      "range": {
+        "startLine": 151,
+        "startChar": 40,
+        "endLine": 151,
+        "endChar": 50
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e75ef2c1_5d262448",
@@ -290,6 +578,30 @@
       "writtenOn": "2023-05-13T19:49:57Z",
       "side": 1,
       "message": "bsm_values or",
+      "range": {
+        "startLine": 153,
+        "startChar": 44,
+        "endLine": 153,
+        "endChar": 63
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47561430_bb6b5fea",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-14T01:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e75ef2c1_5d262448",
       "range": {
         "startLine": 153,
         "startChar": 44,
@@ -325,6 +637,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c9ec1238_e12d0426",
+        "filename": "internal/ceres/cuda_partitioned_block_sparse_crs_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-14T01:21:21Z",
+      "side": 1,
+      "message": "If we enforce that cells\u0027 positions are sorted by (row_block, col_block), then we can compute index in crs corresponding to given index in bsm on-the-fly, avoiding storing permutation alltogether.\n\nComputing index in this case is 2 binary searches (first for row-block, second - for cell inside the row-block).\nAnd it is still faster than host-to-device copy (though significantly slower than approach with permutation).\n\n\nNote that in the case of \"the simplest\" bundle adjustment (one E cell and one F cell per row-block) in certain cases we can do a plain memcopy (or strided memcopy) instead of allocating permutations and using CudaStreamedBuffer. It is possible to check if it is the case by a reasonably simple code \nthat utilizes just block-sparse structure (thus, before we allocate CRS matrices and permutation array).",
+      "parentUuid": "abca2795_6e32094d",
+      "range": {
+        "startLine": 61,
+        "startChar": 15,
+        "endLine": 61,
+        "endChar": 16
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fc9d81ae_ab659a0f",
         "filename": "internal/ceres/cuda_partitioned_block_sparse_crs_view.h",
         "patchSetId": 3
@@ -336,6 +672,30 @@
       "writtenOn": "2023-05-13T19:49:57Z",
       "side": 1,
       "message": "since this is a partitioned view, I think you can drop the crs_suffix here and in the member variables, and just call thing matrix_e and matrix_f if you like. it will make things shorter without losing any readability.",
+      "range": {
+        "startLine": 97,
+        "startChar": 8,
+        "endLine": 97,
+        "endChar": 24
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "edd4465d_fb3cce74",
+        "filename": "internal/ceres/cuda_partitioned_block_sparse_crs_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-14T01:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc9d81ae_ab659a0f",
       "range": {
         "startLine": 97,
         "startChar": 8,
@@ -369,6 +729,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "51a77d1c_2a8350fa",
+        "filename": "internal/ceres/cuda_partitioned_block_sparse_crs_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-14T01:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ae9a228_dcc46355",
+      "range": {
+        "startLine": 105,
+        "startChar": 26,
+        "endLine": 105,
+        "endChar": 43
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c05cea84_bf10f8a2",
@@ -382,6 +766,30 @@
       "writtenOn": "2023-05-13T19:49:57Z",
       "side": 1,
       "message": "its weird to hard code this number like this. 8mb sounds small to me, but what do I know.",
+      "range": {
+        "startLine": 111,
+        "startChar": 23,
+        "endLine": 111,
+        "endChar": 45
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93fa17ba_72502105",
+        "filename": "internal/ceres/cuda_partitioned_block_sparse_crs_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-14T01:21:21Z",
+      "side": 1,
+      "message": "Permuting values happens element-wise, so half-million values per run should be able to occupy the whole gpu.\n\nI\u0027ve checked with nvidia tools - on my setup this kernels achieves 100% occupancy and runs for 16.7us per invocation; I would say it is on a shorter side, but reasonable.\n\nIf we would increase size of this buffer to more than, let say, 64Mb - I think it might make sens to move CudaStreamedBuffer to ContextImpl.",
+      "parentUuid": "c05cea84_bf10f8a2",
       "range": {
         "startLine": 111,
         "startChar": 23,
