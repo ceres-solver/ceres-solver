@@ -450,6 +450,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bc15c330_6d356642",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-14T17:16:20Z",
+      "side": 1,
+      "message": "Ok, I think we need to decide:\n - The lowest CUDA version we need to support\n - Are we using the latest \u0026 greatest cuda toolkit from nvidia for CI builds, or we should stick to whatever is shipped by ubuntu maintainers.\n\nIf we decide to use cuda toolkit shipped with ubuntu, that will:\n - Require us to support CUDA 10.1 on ubuntu 20.04; this forbids using stream-ordered allocations (thus, all (de-)allocations require device-level synchrnonization)\n - Require us to support CUDA 11.5 + gcc11 combination on ubuntu 22.04, which has problems with compiling code utilizing thrust ( https://bugs.debian.org/cgi-bin/bugreport.cgi?bug\u003d1006962 )",
+      "parentUuid": "f73d15a9_928c4653",
+      "range": {
+        "startLine": 127,
+        "startChar": 38,
+        "endLine": 127,
+        "endChar": 51
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b68129e2_9e789a23",
         "filename": "internal/ceres/cuda_kernels.h",
         "patchSetId": 3
@@ -509,6 +533,30 @@
       "side": 1,
       "message": "yes, but I am not sure how that trades off against the need to permute the values.\nit also simplifies/eliminates one variant of the block jacobi preconditioner which is done using crs matrices as input.",
       "parentUuid": "a4c4f13d_6e534581",
+      "range": {
+        "startLine": 137,
+        "startChar": 5,
+        "endLine": 137,
+        "endChar": 18
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cffeba7_9bec13df",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-14T17:16:20Z",
+      "side": 1,
+      "message": "Seem to save us 10% of total run time https://ceres-solver-review.googlesource.com/c/ceres-solver/+/24221",
+      "parentUuid": "5a589f3c_69f76cb7",
       "range": {
         "startLine": 137,
         "startChar": 5,
