@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2149cdba_c4d08235",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-14T13:38:07Z",
+      "side": 1,
+      "message": "here is a first cut of the sort of thing I have in mind.",
+      "revId": "ef75c740f6c74f2eb674f8e12d06b3aa62a97c45",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
