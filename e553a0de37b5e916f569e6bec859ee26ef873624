@@ -16,6 +16,23 @@
       "message": "Moved bsm-\u003ecrs kernels to a separate file, combined (non-)partitioned kernels, moved allocation of temporary arrays inside.",
       "revId": "e553a0de37b5e916f569e6bec859ee26ef873624",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c097cb38_f6080091",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-14T12:59:15Z",
+      "side": 1,
+      "message": "Dmitriy,\nBefore I review this code further, should we first make two changes to block sparse matrix instead?\n\n1. Use pagelocked memory on request.\n2. Enforce linear layout of memory on request.\n\nMy understanding is that (1) will significantly speed up memory transfers to the gpu and (2) will simplify permutation handling.\n\nIs it possible that (1) will also change how we think about the tradeoff between memory transfer latency and permutation?",
+      "revId": "e553a0de37b5e916f569e6bec859ee26ef873624",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
