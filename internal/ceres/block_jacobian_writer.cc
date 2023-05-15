@@ -125,7 +125,7 @@ void BuildJacobianLayout(const Program& program,
 
 BlockJacobianWriter::BlockJacobianWriter(const Evaluator::Options& options,
                                          Program* program)
-    : program_(program) {
+    : options_(options), program_(program) {
   CHECK_GE(options.num_eliminate_blocks, 0)
       << "num_eliminate_blocks must be greater than 0.";
 
@@ -207,7 +207,8 @@ std::unique_ptr<SparseMatrix> BlockJacobianWriter::CreateJacobian() const {
     std::sort(row->cells.begin(), row->cells.end(), CellLessThan);
   }
 
-  return std::make_unique<BlockSparseMatrix>(bs);
+  return std::make_unique<BlockSparseMatrix>(
+      bs, options_.sparse_linear_algebra_library_type == CUDA_SPARSE);
 }
 
 }  // namespace ceres::internal
