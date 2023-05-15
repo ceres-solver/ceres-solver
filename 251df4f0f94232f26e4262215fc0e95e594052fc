@@ -41,6 +41,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b202f885_974afec5",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-15T19:26:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93710895_99a83627",
+      "range": {
+        "startLine": 816,
+        "startChar": 47,
+        "endLine": 816,
+        "endChar": 73
+      },
+      "revId": "251df4f0f94232f26e4262215fc0e95e594052fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "56c1a5d6_e40af7eb",
@@ -54,6 +78,30 @@
       "writtenOn": "2023-05-15T18:41:18Z",
       "side": 1,
       "message": "When CUDA is *not* available\n(+ the same message  couple lines below)",
+      "range": {
+        "startLine": 819,
+        "startChar": 45,
+        "endLine": 819,
+        "endChar": 68
+      },
+      "revId": "251df4f0f94232f26e4262215fc0e95e594052fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b9deb0e_dd6f3925",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-15T19:26:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56c1a5d6_e40af7eb",
       "range": {
         "startLine": 819,
         "startChar": 45,
