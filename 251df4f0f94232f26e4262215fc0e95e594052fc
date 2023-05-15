@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc260493_66c3361d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-15T18:41:18Z",
+      "side": 1,
+      "message": "I believe we shouldn\u0027t use cudaHostAllocWriteCombined (because we will read this memory when preparing preconditioner, etc).",
+      "revId": "251df4f0f94232f26e4262215fc0e95e594052fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93710895_99a83627",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-15T18:41:18Z",
+      "side": 1,
+      "message": "I think we should use cudaHostAllocDefault.\n\nWrite-combined penalizes read access from the host.\n\nhttps://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__MEMORY.html#group__CUDART__MEMORY_1gb65da58f444e7230d3322b6126bb4902\n\n\"Allocates the memory as write-combined (WC). WC memory can be transferred across the PCI Express bus more quickly on some system configurations, but cannot be read efficiently by most CPUs. WC memory is a good option for buffers that will be written by the CPU and read by the device via mapped pinned memory or host-\u003edevice transfers.\"",
+      "range": {
+        "startLine": 816,
+        "startChar": 47,
+        "endLine": 816,
+        "endChar": 73
+      },
+      "revId": "251df4f0f94232f26e4262215fc0e95e594052fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56c1a5d6_e40af7eb",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-15T18:41:18Z",
+      "side": 1,
+      "message": "When CUDA is *not* available\n(+ the same message  couple lines below)",
+      "range": {
+        "startLine": 819,
+        "startChar": 45,
+        "endLine": 819,
+        "endChar": 68
+      },
+      "revId": "251df4f0f94232f26e4262215fc0e95e594052fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
