@@ -34,6 +34,24 @@
       "tag": "mailMessageId\u003d\u003cCABqdRUCxOPrfrh3DDD3XAgsMsdYc92uJqkt6QGcA8gpUwuZ-Mw@mail.gmail.com\u003e",
       "revId": "9047461ad6385a0f3b5f7b959ee9022db212ec7d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f72018c2_f580a1ce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-15T13:46:27Z",
+      "side": 1,
+      "message": "I suspect it affects jacobian writing poorly because we are jumping around.\nthe rest of the cpu operations that will be performed on this matrix when using cuda will be quite minor so I am not too worried about it.\n\nI think this patch should be a net win when using cuda.\n\nwe need to combine it with page locked allocation, which I will send you shortly and together our cuda code should get simpler and faster.",
+      "parentUuid": "b6de6fa8_2283d80a",
+      "revId": "9047461ad6385a0f3b5f7b959ee9022db212ec7d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
