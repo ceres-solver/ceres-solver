@@ -34,6 +34,24 @@
       "parentUuid": "b268d9b1_993d7f22",
       "revId": "6bb4d1266de4c0c0ad40d5b2389802384085aff3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e050b4cc_129ec372",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-15T16:55:36Z",
+      "side": 1,
+      "message": "I think keeping E and F contiguous is fine. I am not sure if the \"simple\" bundle adjustment detection is worth it, it creates yet another special code path. Since memory copy is the hard part, I think we are okay doing the permutation. \n\nI can revert this CL, and in the cuda related code, you can assume that E is contiguous and before F always. Thats how the code is structured.",
+      "parentUuid": "02bc4119_f8eac7df",
+      "revId": "6bb4d1266de4c0c0ad40d5b2389802384085aff3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
