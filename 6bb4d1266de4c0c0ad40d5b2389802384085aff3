@@ -16,6 +16,24 @@
       "message": "dmitriy, why don\u0027t we get this patch in then?\nand I will send you another one which ensures that blocksparsematrices use page locked memory if requested. And then simplify the cuda code assuming these two constraints?",
       "revId": "6bb4d1266de4c0c0ad40d5b2389802384085aff3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02bc4119_f8eac7df",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-15T15:40:31Z",
+      "side": 1,
+      "message": "I am not 100% sure that this is the best way.\n\n\n\nIf we keep cell-reordering to keep E and F continuous, and add detection of two possible layouts into cuda-related code instead (with a check if submatrices are layout-compatible with crs [in other words, each contain maximum 1 cell per row-block]), then:\n - We will be able to replace CudaStreamedBuffer invocation with scheduling two asynchronous copies in the case of \"simple\" bundle-adjustment (with a single F-cell per residual). And hope that it will run asynchronously on gpu while we are updating preconditioner on cpu.\n - In other cases we still should be able to permute values of F using just a compressed block structure, without storing permutation; and values of E would be copied as-is.",
+      "parentUuid": "b268d9b1_993d7f22",
+      "revId": "6bb4d1266de4c0c0ad40d5b2389802384085aff3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
