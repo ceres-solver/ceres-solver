@@ -74,6 +74,7 @@ class CERES_NO_EXPORT BlockJacobianWriter {
   }
 
  private:
+  Evaluator::Options options_;
   Program* program_;
 
   // Stores the position of each residual / parameter jacobian.
