@@ -38,6 +38,7 @@
 #include <numeric>
 
 #include "ceres/cuda_streamed_buffer.h"
+#include "cuda_runtime.h"
 
 namespace ceres::internal {
 

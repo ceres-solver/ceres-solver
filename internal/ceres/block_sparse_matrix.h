@@ -65,7 +65,9 @@ class CERES_NO_EXPORT BlockSparseMatrix final : public SparseMatrix {
   //
   // TODO(sameeragarwal): Add a function which will validate legal
   // CompressedRowBlockStructure objects.
-  explicit BlockSparseMatrix(CompressedRowBlockStructure* block_structure);
+  explicit BlockSparseMatrix(CompressedRowBlockStructure* block_structure,
+                             bool use_page_locked_memory = false);
+  ~BlockSparseMatrix();
 
   BlockSparseMatrix(const BlockSparseMatrix&) = delete;
   void operator=(const BlockSparseMatrix&) = delete;
@@ -114,8 +116,8 @@ class CERES_NO_EXPORT BlockSparseMatrix final : public SparseMatrix {
   int num_rows()         const final { return num_rows_;     }
   int num_cols()         const final { return num_cols_;     }
   int num_nonzeros()     const final { return num_nonzeros_; }
-  const double* values() const final { return values_.get(); }
-  double* mutable_values()     final { return values_.get(); }
+  const double* values() const final { return values_; }
+  double* mutable_values()     final { return values_; }
   // clang-format on
 
   void ToTripletSparseMatrix(TripletSparseMatrix* matrix) const;
@@ -158,11 +160,15 @@ class CERES_NO_EXPORT BlockSparseMatrix final : public SparseMatrix {
       const RandomMatrixOptions& options, std::mt19937& prng);
 
  private:
+  double* AllocateValues(int size);
+  void FreeValues(double* values);
+
+  const bool use_page_locked_memory_;
   int num_rows_;
   int num_cols_;
   int num_nonzeros_;
   int max_num_nonzeros_;
-  std::unique_ptr<double[]> values_;
+  double* values_;
   std::unique_ptr<CompressedRowBlockStructure> block_structure_;
   std::unique_ptr<CompressedRowBlockStructure> transpose_block_structure_;
 };
