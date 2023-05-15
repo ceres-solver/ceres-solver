@@ -474,6 +474,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "352ab4b6_70d906d1",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2023-05-15T14:16:56Z",
+      "side": 1,
+      "message": "Thanks for checking, much appreciated.\n\nI think it is fine to require CUDA 11.4+ . We can set this restriction independently of the CUDA version shipped with Ubuntu - this is quite common, e.g., with ML libraries.\n\nMoving to async GPU alloc / free sounds good to me as long as we have all the GPU operations synced to the same stream. The original reason to move to an explicit ceres stream instead of the default stream was to ensure that we did not have to be synchronous with CUDA operations from the host program.",
+      "parentUuid": "bc15c330_6d356642",
+      "range": {
+        "startLine": 127,
+        "startChar": 38,
+        "endLine": 127,
+        "endChar": 51
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b68129e2_9e789a23",
         "filename": "internal/ceres/cuda_kernels.h",
         "patchSetId": 3
