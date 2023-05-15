@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b268d9b1_993d7f22",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-15T14:35:25Z",
+      "side": 1,
+      "message": "dmitriy, why don\u0027t we get this patch in then?\nand I will send you another one which ensures that blocksparsematrices use page locked memory if requested. And then simplify the cuda code assuming these two constraints?",
+      "revId": "6bb4d1266de4c0c0ad40d5b2389802384085aff3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
