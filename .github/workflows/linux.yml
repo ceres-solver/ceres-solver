@@ -49,20 +49,23 @@ jobs:
             libsuitesparse-dev \
             ninja-build \
             wget
-      - name: Setup CUDA toolkit (system repositories)
+      # nvidia cuda toolkit shipped with 20.04 LTS does not support stream-ordered allocations
+      - name: Setup CUDA toolkit repositories (20.04)
         if: matrix.gpu == 'cuda' && matrix.os == 'ubuntu:20.04'
         run: |
-          apt-get install -y \
-            nvidia-cuda-dev \
-            nvidia-cuda-toolkit
+          wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.0-1_all.deb
+          dpkg -i cuda-keyring_1.0-1_all.deb
       # nvidia cuda toolkit + gcc combo shipped with 22.04LTS is broken
       # and is not able to compile code that uses thrust
       # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1006962
-      - name: Setup CUDA toolkit (nvidia repositories)
+      - name: Setup CUDA toolkit repositories (22.04)
         if: matrix.gpu == 'cuda' && matrix.os == 'ubuntu:22.04'
         run: |
           wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.0-1_all.deb
           dpkg -i cuda-keyring_1.0-1_all.deb
+      - name: Setup CUDA toolkit
+        if: matrix.gpu == 'cuda'
+        run: |
           apt-get update
           apt-get install -y cuda
           echo "CUDACXX=/usr/local/cuda/bin/nvcc" >> $GITHUB_ENV

@@ -52,7 +52,7 @@
 #ifndef CERES_NO_CUDA
 
 #include "ceres/cuda_buffer.h"
-#include "ceres/cuda_kernels.h"
+#include "ceres/cuda_kernels_vector_ops.h"
 #include "ceres/cuda_vector.h"
 #include "cuda_runtime_api.h"
 #include "cusparse.h"

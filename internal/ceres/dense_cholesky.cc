@@ -41,7 +41,7 @@
 
 #ifndef CERES_NO_CUDA
 #include "ceres/context_impl.h"
-#include "ceres/cuda_kernels.h"
+#include "ceres/cuda_kernels_vector_ops.h"
 #include "cuda_runtime.h"
 #include "cusolverDn.h"
 #endif  // CERES_NO_CUDA

@@ -46,7 +46,7 @@ inline int Dimension(const std::vector<Block>& blocks) {
 
 CudaBlockSparseStructure::CudaBlockSparseStructure(
     const CompressedRowBlockStructure& block_structure, ContextImpl* context)
-    : row_block_offsets_(context),
+    : first_cell_in_row_block_(context),
       cells_(context),
       row_blocks_(context),
       col_blocks_(context) {
@@ -56,44 +56,56 @@ CudaBlockSparseStructure::CudaBlockSparseStructure(
   const auto& col_blocks = block_structure.cols;
 
   // Row block offset is an index of the first cell corresponding to row block
-  std::vector<int> row_block_offsets;
+  std::vector<int> first_cell_in_row_block;
   // Flat array of all cells from all row-blocks
   std::vector<Cell> cells;
 
+  int f_values_offset = 0;
+  is_crs_compatible_ = true;
   num_row_blocks_ = block_structure.rows.size();
   num_col_blocks_ = col_blocks.size();
 
   row_blocks.reserve(num_row_blocks_);
-  row_block_offsets.reserve(num_row_blocks_ + 1);
+  first_cell_in_row_block.reserve(num_row_blocks_ + 1);
   num_nonzeros_ = 0;
-  num_cells_ = 0;
+  sequential_layout_ = true;
   for (const auto& r : block_structure.rows) {
     const int row_block_size = r.block.size;
+    if (r.cells.size() > 1 && row_block_size > 1) {
+      is_crs_compatible_ = false;
+    }
     row_blocks.emplace_back(r.block);
-    row_block_offsets.push_back(num_cells_);
+    first_cell_in_row_block.push_back(cells.size());
     for (const auto& c : r.cells) {
-      cells.emplace_back(c);
       const int col_block_size = col_blocks[c.block_id].size;
-      num_nonzeros_ += col_block_size * row_block_size;
-      ++num_cells_;
+      const int cell_size = col_block_size * row_block_size;
+      cells.push_back(c);
+      sequential_layout_ &= c.position == num_nonzeros_;
+      num_nonzeros_ += cell_size;
     }
   }
-  row_block_offsets.push_back(num_cells_);
+  first_cell_in_row_block.push_back(cells.size());
+  num_cells_ = cells.size();
 
   num_rows_ = Dimension(row_blocks);
   num_cols_ = Dimension(col_blocks);
 
+  is_crs_compatible_ &= sequential_layout_;
+
   if (VLOG_IS_ON(3)) {
-    const size_t row_block_offsets_size =
-        row_block_offsets.size() * sizeof(int);
+    const size_t first_cell_in_row_block_size =
+        first_cell_in_row_block.size() * sizeof(int);
     const size_t cells_size = cells.size() * sizeof(Cell);
     const size_t row_blocks_size = row_blocks.size() * sizeof(Block);
     const size_t col_blocks_size = col_blocks.size() * sizeof(Block);
-    const size_t total_size =
-        row_block_offsets_size + cells_size + col_blocks_size + row_blocks_size;
+    const size_t total_size = first_cell_in_row_block_size + cells_size +
+                              col_blocks_size + row_blocks_size;
+    const double ratio =
+        (100. * total_size) / (num_nonzeros_ * (sizeof(int) + sizeof(double)) +
+                               num_rows_ * sizeof(int));
     VLOG(3) << "\nCudaBlockSparseStructure:\n"
                "\tRow block offsets: "
-            << row_block_offsets_size
+            << first_cell_in_row_block_size
             << " bytes\n"
                "\tColumn blocks: "
             << col_blocks_size
@@ -102,13 +114,11 @@ CudaBlockSparseStructure::CudaBlockSparseStructure(
             << row_blocks_size
             << " bytes\n"
                "\tCells: "
-            << cells_size
-            << " bytes\n"
-               "\tTotal: "
-            << total_size << " bytes of GPU memory";
+            << cells_size << " bytes\n\tTotal: " << total_size
+            << " bytes of GPU memory (" << ratio << "% of CRS matrix size)";
   }
 
-  row_block_offsets_.CopyFromCpuVector(row_block_offsets);
+  first_cell_in_row_block_.CopyFromCpuVector(first_cell_in_row_block);
   cells_.CopyFromCpuVector(cells);
   row_blocks_.CopyFromCpuVector(row_blocks);
   col_blocks_.CopyFromCpuVector(col_blocks);
