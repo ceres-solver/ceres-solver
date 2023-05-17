@@ -65,7 +65,8 @@ std::unique_ptr<Evaluator> Evaluator::Create(const Evaluator::Options& options,
     case SPARSE_SCHUR:
     case ITERATIVE_SCHUR:
     case CGNR: {
-      if (options.sparse_linear_algebra_library_type == CUDA_SPARSE) {
+      if (options.sparse_linear_algebra_library_type == CUDA_SPARSE &&
+          options.linear_solver_type != ITERATIVE_SCHUR) {
         return std::make_unique<ProgramEvaluator<ScratchEvaluatePreparer,
                                                  CompressedRowJacobianWriter>>(
             options, program);

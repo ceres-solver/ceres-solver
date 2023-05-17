@@ -82,6 +82,10 @@ class CERES_NO_EXPORT CudaSparseMatrix {
   int num_cols() const { return num_cols_; }
   int num_nonzeros() const { return num_nonzeros_; }
 
+  const int32_t* rows() const { return rows_.data(); }
+  const int32_t* cols() const { return cols_.data(); }
+  const double* values() const { return values_.data(); }
+
   int32_t* mutable_rows() { return rows_.data(); }
   int32_t* mutable_cols() { return cols_.data(); }
   double* mutable_values() { return values_.data(); }
