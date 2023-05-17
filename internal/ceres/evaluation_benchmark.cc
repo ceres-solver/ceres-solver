@@ -103,6 +103,13 @@ struct BALData {
 
     Evaluator::Options options;
     options.linear_solver_type = ITERATIVE_SCHUR;
+    // When CUDA is available and  Options::sparse_linear_algebra_library_type
+    // is set to CUDA_SPARSE, block-sparse jacobian writer allocates values of
+    // block-sparse jacobian in page-locked memory, improving performance of
+    // host->device transfers
+#ifndef CERES_NO_CUDA
+    options.sparse_linear_algebra_library_type = CUDA_SPARSE;
+#endif
     options.num_threads = 1;
     options.context = context;
     options.num_eliminate_blocks = bal_problem->num_points();

@@ -45,11 +45,10 @@ class CudaBlockStructureTest;
 // Invariants are the same as those of CompressedRowBlockStructure.
 // In order to simplify allocation and copying data to gpu, cells from all
 // row-blocks are stored in a single array sequentially. Additional array
-// row_block_offsets of size num_row_blocks + 1 allows to identify range of
-// cells corresponding to a row-block.
-// Cells corresponding to i-th row-block are stored in sub-array
-// cells[row_block_offsets[i]; ... row_block_offsets[i + 1] - 1], and their
-// order is preserved.
+// first_cell_in_row_block of size num_row_blocks + 1 allows to identify range
+// of cells corresponding to a row-block. Cells corresponding to i-th row-block
+// are stored in sub-array cells[first_cell_in_row_block[i]; ...
+// first_cell_in_row_block[i + 1] - 1], and their order is preserved.
 class CERES_NO_EXPORT CudaBlockSparseStructure {
  public:
   // CompressedRowBlockStructure is contains a vector of CompressedLists, with
@@ -65,15 +64,40 @@ class CERES_NO_EXPORT CudaBlockSparseStructure {
   int num_row_blocks() const { return num_row_blocks_; }
   int num_col_blocks() const { return num_col_blocks_; }
 
+  // Returns true if matrix consists of two non-empty sub-matrices with
+  // sequential layout of cells (separated by a boundary of column-block).
+  // Otherwise matrix itself has sequential layout of cells.
+  bool is_partitioned() const { return is_partitioned_; }
+  // Number of non-zeros in the left sub-matrix (which coincides with the whole
+  // matrix in non-partitioned case)
+  int num_nonzeros_e() const { return num_nonzeros_e_; }
+  // Number of non-zeros in the right sub-matrix (zero in non-partitioned case)
+  int num_nonzeros_f() const { return num_nonzeros_f_; }
+  // True if values of the left sub-matrix has the same layout as CRS matrix
+  bool e_is_crs_compatible() const { return e_is_crs_compatible_; }
+  // True if values of the right sub-matrix has the same layout as CRS matrix
+  // Always true in non-partitioned case
+  bool f_is_crs_compatible() const { return f_is_crs_compatible_; }
+
   // Device pointer to array of num_row_blocks + 1 indices of the first cell of
   // row block
-  const int* row_block_offsets() const { return row_block_offsets_.data(); }
+  const int* first_cell_in_row_block() const {
+    return first_cell_in_row_block_.data();
+  }
   // Device pointer to array of num_cells cells, sorted by row-block
   const Cell* cells() const { return cells_.data(); }
   // Device pointer to array of row blocks
   const Block* row_blocks() const { return row_blocks_.data(); }
   // Device pointer to array of column blocks
   const Block* col_blocks() const { return col_blocks_.data(); }
+  // Position (in block-sparse values array) of the first cell in succeding
+  // row-blocks of E sub-matrix (only populated for partitioned matrices); for
+  // row-blocks past the last populated row-block num_nonzeros_e is stored
+  const int* first_cell_pos_e() const { return first_cell_pos_e_.data(); }
+  // Position (in block-sparse values array) of the first cell in succeding
+  // row-blocks of F sub-matrix (only populated for partitioned matrices); for
+  // row-blocks past the last populated row-block num_nonzeros is stored
+  const int* first_cell_pos_f() const { return first_cell_pos_f_.data(); }
 
  private:
   int num_rows_;
@@ -82,7 +106,14 @@ class CERES_NO_EXPORT CudaBlockSparseStructure {
   int num_nonzeros_;
   int num_row_blocks_;
   int num_col_blocks_;
-  CudaBuffer<int> row_block_offsets_;
+  int num_nonzeros_e_;
+  int num_nonzeros_f_;
+  bool is_partitioned_;
+  bool e_is_crs_compatible_;
+  bool f_is_crs_compatible_;
+  CudaBuffer<int> first_cell_in_row_block_;
+  CudaBuffer<int> first_cell_pos_e_;
+  CudaBuffer<int> first_cell_pos_f_;
   CudaBuffer<Cell> cells_;
   CudaBuffer<Block> row_blocks_;
   CudaBuffer<Block> col_blocks_;

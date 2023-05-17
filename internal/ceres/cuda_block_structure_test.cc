@@ -83,10 +83,10 @@ class CudaBlockStructureTest : public ::testing::Test {
   }
   std::vector<int> GetRowBlockOffsets(
       const CudaBlockSparseStructure& structure) {
-    const auto& cuda_buffer = structure.row_block_offsets_;
-    std::vector<int> row_block_offsets(cuda_buffer.size());
-    cuda_buffer.CopyToCpu(row_block_offsets.data(), row_block_offsets.size());
-    return row_block_offsets;
+    const auto& cuda_buffer = structure.first_cell_in_row_block_;
+    std::vector<int> first_cell_in_row_block(cuda_buffer.size());
+    cuda_buffer.CopyToCpu(first_cell_in_row_block.data(), first_cell_in_row_block.size());
+    return first_cell_in_row_block;
   }
 
   std::unique_ptr<BlockSparseMatrix> A_;
@@ -114,19 +114,19 @@ TEST_F(CudaBlockStructureTest, StructureIdentity) {
   }
 
   std::vector<Cell> cells = GetCells(cuda_block_structure);
-  std::vector<int> row_block_offsets = GetRowBlockOffsets(cuda_block_structure);
+  std::vector<int> first_cell_in_row_block = GetRowBlockOffsets(cuda_block_structure);
   blocks = GetRowBlocks(cuda_block_structure);
 
   ASSERT_EQ(blocks.size(), num_row_blocks);
-  ASSERT_EQ(row_block_offsets.size(), num_row_blocks + 1);
-  ASSERT_EQ(row_block_offsets.back(), cells.size());
+  ASSERT_EQ(first_cell_in_row_block.size(), num_row_blocks + 1);
+  ASSERT_EQ(first_cell_in_row_block.back(), cells.size());
 
   for (int i = 0; i < num_row_blocks; ++i) {
     const int num_cells = block_structure->rows[i].cells.size();
     EXPECT_EQ(blocks[i].position, block_structure->rows[i].block.position);
     EXPECT_EQ(blocks[i].size, block_structure->rows[i].block.size);
-    const int first_cell = row_block_offsets[i];
-    const int last_cell = row_block_offsets[i + 1];
+    const int first_cell = first_cell_in_row_block[i];
+    const int last_cell = first_cell_in_row_block[i + 1];
     ASSERT_EQ(last_cell - first_cell, num_cells);
     for (int j = 0; j < num_cells; ++j) {
       EXPECT_EQ(cells[first_cell + j].block_id,
