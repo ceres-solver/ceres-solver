@@ -127,9 +127,13 @@ endif()
 if (USE_CUDA)
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES
     CUDA::cublas
-    CUDA::cudart
     CUDA::cusolver
     CUDA::cusparse)
+  # For CUDA projects, Visual Studio will automatically link to cudart_static.lib.
+  # Avoid linking the same library twice by not including cudart.lib.
+  if (NOT MSVC)
+    list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES CUDA::cudart)
+  endif (NOT MSVC)
   if (BUILD_TESTING AND GFLAGS)
     add_test(
         NAME cuda_memcheck_dense_qr_test
