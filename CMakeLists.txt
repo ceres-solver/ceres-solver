@@ -268,6 +268,7 @@ if (USE_CUDA)
         CUDA::cudart
         CUDA::cusolver
         CUDA::cusparse)
+      set(CMAKE_CUDA_RUNTIME_LIBRARY NONE)
     else (CUDAToolkit_FOUND)
       message("-- Did not find CUDA, disabling CUDA support.")
       update_cache_variable(USE_CUDA OFF)
@@ -533,30 +534,31 @@ if (MSVC)
   # [1] https://msdn.microsoft.com/en-us/library/4hwaceh6.aspx
   add_definitions("-D_USE_MATH_DEFINES")
   # Disable signed/unsigned int conversion warnings.
-  add_compile_options("/wd4018" "/wd4267")
+  add_compile_options($<$<COMPILE_LANGUAGE:CXX>:/wd4018>)
+  add_compile_options($<$<COMPILE_LANGUAGE:CXX>:/wd4267>)
   # Disable warning about using struct/class for the same symbol.
-  add_compile_options("/wd4099")
+  add_compile_options($<$<COMPILE_LANGUAGE:CXX>:/wd4099>)
   # Disable warning about the insecurity of using "std::copy".
-  add_compile_options("/wd4996")
+  add_compile_options($<$<COMPILE_LANGUAGE:CXX>:/wd4996>)
   # Disable performance warning about int-to-bool conversion.
-  add_compile_options("/wd4800")
+  add_compile_options($<$<COMPILE_LANGUAGE:CXX>:/wd4800>)
   # Disable performance warning about fopen insecurity.
-  add_compile_options("/wd4996")
+  add_compile_options($<$<COMPILE_LANGUAGE:CXX>:/wd4996>)
   # Disable warning about int64 to int32 conversion. Disabling
   # this warning may not be correct; needs investigation.
   # TODO(keir): Investigate these warnings in more detail.
-  add_compile_options("/wd4244")
+  add_compile_options($<$<COMPILE_LANGUAGE:CXX>:/wd4244>)
   # It's not possible to use STL types in DLL interfaces in a portable and
   # reliable way. However, that's what happens with Google Log and Google Flags
   # on Windows. MSVC gets upset about this and throws warnings that we can't do
   # much about. The real solution is to link static versions of Google Log and
   # Google Test, but that seems tricky on Windows. So, disable the warning.
-  add_compile_options("/wd4251")
+  add_compile_options($<$<COMPILE_LANGUAGE:CXX>:/wd4251>)
 
   # Add bigobj flag otherwise the build would fail due to large object files
   # probably resulting from generated headers (like the fixed-size schur
   # specializations).
-  add_compile_options("/bigobj")
+  add_compile_options($<$<COMPILE_LANGUAGE:CXX>:/bigobj>)
 
   # Google Flags doesn't have their DLL import/export stuff set up correctly,
   # which results in linker warnings. This is irrelevant for Ceres, so ignore
