@@ -44,12 +44,11 @@ class CudaBlockStructureTest;
 // This class stores a read-only block-sparse structure in gpu memory.
 // Invariants are the same as those of CompressedRowBlockStructure.
 // In order to simplify allocation and copying data to gpu, cells from all
-// row-blocks are stored in a single array sequentially. Additional array
-// row_block_offsets of size num_row_blocks + 1 allows to identify range of
-// cells corresponding to a row-block.
-// Cells corresponding to i-th row-block are stored in sub-array
-// cells[row_block_offsets[i]; ... row_block_offsets[i + 1] - 1], and their
-// order is preserved.
+// row-blocks are stored in a single array sequentially. Array
+// first_cell_in_row_block of size num_row_blocks + 1 allows to identify range
+// of cells corresponding to a row-block. Cells corresponding to i-th row-block
+// are stored in sub-array cells[first_cell_in_row_block[i]; ...
+// first_cell_in_row_block[i + 1] - 1], and their order is preserved.
 class CERES_NO_EXPORT CudaBlockSparseStructure {
  public:
   // CompressedRowBlockStructure is contains a vector of CompressedLists, with
@@ -65,9 +64,20 @@ class CERES_NO_EXPORT CudaBlockSparseStructure {
   int num_row_blocks() const { return num_row_blocks_; }
   int num_col_blocks() const { return num_col_blocks_; }
 
+  // Returns true if values from block-sparse matrix can be copied to CRS matrix
+  // as-is. This is possible if each row-block is stored in CRS order:
+  //  - Row-block consists of a single row
+  //  - Row-block contains a single cell
+  bool IsCrsCompatible() const { return is_crs_compatible_; }
+  // Returns true if block-sparse structure corresponds to block-sparse matrix
+  // with sequential cell positions
+  bool sequential_layout() const { return sequential_layout_; }
+
   // Device pointer to array of num_row_blocks + 1 indices of the first cell of
   // row block
-  const int* row_block_offsets() const { return row_block_offsets_.data(); }
+  const int* first_cell_in_row_block() const {
+    return first_cell_in_row_block_.data();
+  }
   // Device pointer to array of num_cells cells, sorted by row-block
   const Cell* cells() const { return cells_.data(); }
   // Device pointer to array of row blocks
@@ -82,7 +92,9 @@ class CERES_NO_EXPORT CudaBlockSparseStructure {
   int num_nonzeros_;
   int num_row_blocks_;
   int num_col_blocks_;
-  CudaBuffer<int> row_block_offsets_;
+  bool is_crs_compatible_;
+  bool sequential_layout_;
+  CudaBuffer<int> first_cell_in_row_block_;
   CudaBuffer<Cell> cells_;
   CudaBuffer<Block> row_blocks_;
   CudaBuffer<Block> col_blocks_;

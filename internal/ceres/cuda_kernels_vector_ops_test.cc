@@ -28,7 +28,7 @@
 //
 // Author: joydeepb@cs.utexas.edu (Joydeep Biswas)
 
-#include "ceres/cuda_kernels.h"
+#include "ceres/cuda_kernels_vector_ops.h"
 
 #include <math.h>
 
