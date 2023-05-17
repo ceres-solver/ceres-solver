@@ -103,6 +103,9 @@ struct BALData {
 
     Evaluator::Options options;
     options.linear_solver_type = ITERATIVE_SCHUR;
+#ifndef CERES_NO_CUDA
+    options.sparse_linear_algebra_library_type = CUDA_SPARSE;
+#endif
     options.num_threads = 1;
     options.context = context;
     options.num_eliminate_blocks = bal_problem->num_points();

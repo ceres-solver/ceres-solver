@@ -65,6 +65,13 @@ class CERES_NO_EXPORT CudaBlockSparseStructure {
   int num_row_blocks() const { return num_row_blocks_; }
   int num_col_blocks() const { return num_col_blocks_; }
 
+  // Inferred structure details
+  bool is_partitioned() const { return is_partitioned_; }
+  int num_nonzeros_e() const { return num_nonzeros_e_; }
+  int num_nonzeros_f() const { return num_nonzeros_f_; }
+  bool e_is_crs_compatible() const { return e_is_crs_compatible_; }
+  bool f_is_crs_compatible() const { return f_is_crs_compatible_; }
+
   // Device pointer to array of num_row_blocks + 1 indices of the first cell of
   // row block
   const int* row_block_offsets() const { return row_block_offsets_.data(); }
@@ -74,6 +81,12 @@ class CERES_NO_EXPORT CudaBlockSparseStructure {
   const Block* row_blocks() const { return row_blocks_.data(); }
   // Device pointer to array of column blocks
   const Block* col_blocks() const { return col_blocks_.data(); }
+  // Position of the first cell of E sub-matrix in row-block (only populated for
+  // partitioned matrices)
+  const int* first_cell_pos_e() const { return first_cell_pos_e_.data(); }
+  // Position of the first cell of F sub-matrix in row-block (only populated for
+  // partitioned matrices)
+  const int* first_cell_pos_f() const { return first_cell_pos_f_.data(); }
 
  private:
   int num_rows_;
@@ -82,7 +95,14 @@ class CERES_NO_EXPORT CudaBlockSparseStructure {
   int num_nonzeros_;
   int num_row_blocks_;
   int num_col_blocks_;
+  int num_nonzeros_e_;
+  int num_nonzeros_f_;
+  bool is_partitioned_;
+  bool e_is_crs_compatible_;
+  bool f_is_crs_compatible_;
   CudaBuffer<int> row_block_offsets_;
+  CudaBuffer<int> first_cell_pos_e_;
+  CudaBuffer<int> first_cell_pos_f_;
   CudaBuffer<Cell> cells_;
   CudaBuffer<Block> row_blocks_;
   CudaBuffer<Block> col_blocks_;
