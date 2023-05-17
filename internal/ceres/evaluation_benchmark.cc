@@ -96,13 +96,20 @@ struct BALData {
   }
 
   std::unique_ptr<BlockSparseMatrix> CreateBlockSparseJacobian(
-      ContextImpl* context) {
+      ContextImpl* context, bool sequential) {
     auto problem = bal_problem->mutable_problem();
     auto problem_impl = problem->mutable_impl();
     CHECK(problem_impl != nullptr);
 
     Evaluator::Options options;
     options.linear_solver_type = ITERATIVE_SCHUR;
+    // When CUDA is available and  Options::sparse_linear_algebra_library_type
+    // is set to CUDA_SPARSE, block-sparse jacobian writer allocates values of
+    // block-sparse jacobian in page-locked memory, improving performance of
+    // host->device transfers
+#ifndef CERES_NO_CUDA
+    options.sparse_linear_algebra_library_type = CUDA_SPARSE;
+#endif
     options.num_threads = 1;
     options.context = context;
     options.num_eliminate_blocks = bal_problem->num_points();
@@ -116,6 +123,30 @@ struct BALData {
     auto block_sparse = downcast_unique_ptr<BlockSparseMatrix>(jacobian);
     CHECK(block_sparse != nullptr);
 
+    if (sequential) {
+      auto block_structure_sequential =
+          std::make_unique<CompressedRowBlockStructure>(
+              *block_sparse->block_structure());
+      int num_nonzeros = 0;
+      for (auto& row_block : block_structure_sequential->rows) {
+        const int row_block_size = row_block.block.size;
+        for (auto& cell : row_block.cells) {
+          const int col_block_size =
+              block_structure_sequential->cols[cell.block_id].size;
+          cell.position = num_nonzeros;
+          num_nonzeros += col_block_size * row_block_size;
+        }
+      }
+      block_sparse = std::make_unique<BlockSparseMatrix>(
+          block_structure_sequential.release(),
+#ifndef CERES_NO_CUDA
+          true
+#else
+          false
+#endif
+      );
+    }
+
     std::mt19937 rng;
     std::normal_distribution<double> rnorm;
     const int nnz = block_sparse->num_nonzeros();
@@ -123,6 +154,7 @@ struct BALData {
     for (int i = 0; i < nnz; ++i) {
       values[i] = rnorm(rng);
     }
+
     return block_sparse;
   }
 
@@ -134,9 +166,18 @@ struct BALData {
 
   const BlockSparseMatrix* BlockSparseJacobian(ContextImpl* context) {
     if (!block_sparse_jacobian) {
-      block_sparse_jacobian = CreateBlockSparseJacobian(context);
+      block_sparse_jacobian = CreateBlockSparseJacobian(context, true);
     }
     return block_sparse_jacobian.get();
+  }
+
+  const BlockSparseMatrix* BlockSparseJacobianPartitioned(
+      ContextImpl* context) {
+    if (!block_sparse_jacobian_partitioned) {
+      block_sparse_jacobian_partitioned =
+          CreateBlockSparseJacobian(context, false);
+    }
+    return block_sparse_jacobian_partitioned.get();
   }
 
   const CompressedRowSparseMatrix* CompressedRowSparseJacobian(
@@ -149,7 +190,7 @@ struct BALData {
 
   std::unique_ptr<PartitionedView> PartitionedMatrixViewJacobian(
       const LinearSolver::Options& options) {
-    auto block_sparse = BlockSparseJacobian(options.context);
+    auto block_sparse = BlockSparseJacobianPartitioned(options.context);
     return std::make_unique<PartitionedView>(options, *block_sparse);
   }
 
@@ -171,7 +212,7 @@ struct BALData {
 
   const ImplicitSchurComplement* ImplicitSchurComplementWithoutDiagonal(
       const LinearSolver::Options& options) {
-    auto block_sparse = BlockSparseJacobian(options.context);
+    auto block_sparse = BlockSparseJacobianPartitioned(options.context);
     implicit_schur_complement =
         std::make_unique<ImplicitSchurComplement>(options);
     implicit_schur_complement->Init(*block_sparse, nullptr, b.data());
@@ -180,7 +221,7 @@ struct BALData {
 
   const ImplicitSchurComplement* ImplicitSchurComplementWithDiagonal(
       const LinearSolver::Options& options) {
-    auto block_sparse = BlockSparseJacobian(options.context);
+    auto block_sparse = BlockSparseJacobianPartitioned(options.context);
     implicit_schur_complement_diag =
         std::make_unique<ImplicitSchurComplement>(options);
     implicit_schur_complement_diag->Init(*block_sparse, D.data(), b.data());
@@ -192,6 +233,7 @@ struct BALData {
   Vector b;
   std::unique_ptr<BundleAdjustmentProblem> bal_problem;
   std::unique_ptr<PreprocessedProblem> preprocessed_problem;
+  std::unique_ptr<BlockSparseMatrix> block_sparse_jacobian_partitioned;
   std::unique_ptr<BlockSparseMatrix> block_sparse_jacobian;
   std::unique_ptr<CompressedRowSparseMatrix> crs_jacobian;
   std::unique_ptr<BlockSparseMatrix> block_diagonal_ete;

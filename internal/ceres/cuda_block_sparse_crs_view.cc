@@ -32,41 +32,73 @@
 
 #ifndef CERES_NO_CUDA
 
-#include "ceres/cuda_block_structure.h"
 #include "ceres/cuda_kernels.h"
 
 namespace ceres::internal {
 
 CudaBlockSparseCRSView::CudaBlockSparseCRSView(const BlockSparseMatrix& bsm,
                                                ContextImpl* context)
-    : permutation_(context, bsm.num_nonzeros()),
-      streamed_buffer_(context, kMaxTemporaryArraySize) {
-  CudaBlockSparseStructure block_structure(*bsm.block_structure(), context);
+    : context_(context) {
+  block_structure_ = std::make_unique<CudaBlockSparseStructure>(
+      *bsm.block_structure(), context);
+  // Only block-sparse matrices with sequential layout of cells are supported
+  CHECK(block_structure_->sequential_layout());
   crs_matrix_ = std::make_unique<CudaSparseMatrix>(
       bsm.num_rows(), bsm.num_cols(), bsm.num_nonzeros(), context);
-  CudaBuffer<int> temp_rows(context, bsm.num_rows());
-  FillCRSStructure(block_structure.num_row_blocks(),
+  FillCRSStructure(block_structure_->num_row_blocks(),
                    bsm.num_rows(),
-                   block_structure.row_block_offsets(),
-                   block_structure.cells(),
-                   block_structure.row_blocks(),
-                   block_structure.col_blocks(),
+                   block_structure_->first_cell_in_row_block(),
+                   block_structure_->cells(),
+                   block_structure_->row_blocks(),
+                   block_structure_->col_blocks(),
                    crs_matrix_->mutable_rows(),
                    crs_matrix_->mutable_cols(),
-                   temp_rows.data(),
-                   permutation_.data(),
                    context->DefaultStream());
+  PrepareForValueUpdates();
   UpdateValues(bsm);
 }
+
+void CudaBlockSparseCRSView::PrepareForValueUpdates() {
+  crs_compatible_ = block_structure_->crs_compatible();
+  // if matrix is crs-compatible - we can drop block-structure and don't need
+  // streamed_buffer_
+  if (crs_compatible_) {
+    VLOG(3) << "Block-sparse matrix is compatible with CRS, discarding "
+               "block-structure";
+    block_structure_ = nullptr;
+    return;
+  }
+  streamed_buffer_ = std::make_unique<CudaStreamedBuffer<double>>(
+      context_, kMaxTemporaryArraySize);
+}
+
 void CudaBlockSparseCRSView::UpdateValues(const BlockSparseMatrix& bsm) {
-  streamed_buffer_.CopyToGpu(
+  if (crs_compatible_) {
+    // Values of CRS-compatible matrices can be copied as-is
+    CHECK_EQ(cudaSuccess,
+             cudaMemcpyAsync(crs_matrix_->mutable_values(),
+                             bsm.values(),
+                             bsm.num_nonzeros() * sizeof(double),
+                             cudaMemcpyHostToDevice,
+                             context_->DefaultStream()));
+    return;
+  }
+  streamed_buffer_->CopyToGpu(
       bsm.values(),
       bsm.num_nonzeros(),
-      [permutation = permutation_.data(),
-       values_to = crs_matrix_->mutable_values()](
+      [bs = block_structure_.get(), crs = crs_matrix_.get()](
           const double* values, int num_values, int offset, auto stream) {
-        PermuteValues(
-            offset, num_values, permutation, values, values_to, stream);
+        PermuteToCRS(offset,
+                     num_values,
+                     bs->num_row_blocks(),
+                     bs->first_cell_in_row_block(),
+                     bs->cells(),
+                     bs->row_blocks(),
+                     bs->col_blocks(),
+                     crs->rows(),
+                     values,
+                     crs->mutable_values(),
+                     stream);
       });
 }
 

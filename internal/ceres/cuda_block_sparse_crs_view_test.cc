@@ -52,48 +52,98 @@ class CudaBlockSparseCRSViewTest : public ::testing::Test {
     options.max_col_block_size = 10;
     options.block_density = 0.2;
     std::mt19937 rng;
-    A_ = BlockSparseMatrix::CreateRandomMatrix(options, rng);
+
+    // Block-sparse matrix with order of values different from CRS
+    A_ = BlockSparseMatrix::CreateRandomMatrix(options, rng, true);
     std::iota(
         A_->mutable_values(), A_->mutable_values() + A_->num_nonzeros(), 1);
+
+    options.max_row_block_size = 1;
+    // Block-sparse matrix with CRS order of values (row-blocks are rows)
+    B_ = BlockSparseMatrix::CreateRandomMatrix(options, rng, true);
+    std::iota(
+        B_->mutable_values(), B_->mutable_values() + B_->num_nonzeros(), 1);
+    // Block-sparse matrix with CRS order of values (single cell per row-block)
+    auto bs =
+        std::make_unique<CompressedRowBlockStructure>(*A_->block_structure());
+
+    int num_nonzeros = 0;
+    for (auto& r : bs->rows) {
+      const int num_cells = r.cells.size();
+      if (num_cells > 1) {
+        std::uniform_int_distribution<int> uniform_cell(0, num_cells - 1);
+        const int selected_cell = uniform_cell(rng);
+        std::swap(r.cells[0], r.cells[selected_cell]);
+        r.cells.resize(1);
+      }
+      const int row_block_size = r.block.size;
+      for (auto& c : r.cells) {
+        c.position = num_nonzeros;
+        const int col_block_size = bs->cols[c.block_id].size;
+        num_nonzeros += col_block_size * row_block_size;
+      }
+    }
+    C_ = std::make_unique<BlockSparseMatrix>(bs.release());
+    std::iota(
+        C_->mutable_values(), C_->mutable_values() + C_->num_nonzeros(), 1);
+  }
+
+  void Compare(const BlockSparseMatrix& bsm, CudaSparseMatrix& csm) {
+    ASSERT_EQ(csm.num_cols(), bsm.num_cols());
+    ASSERT_EQ(csm.num_rows(), bsm.num_rows());
+    ASSERT_EQ(csm.num_nonzeros(), bsm.num_nonzeros());
+    const int num_rows = bsm.num_rows();
+    const int num_cols = bsm.num_cols();
+    Vector x(num_cols);
+    Vector y(num_rows);
+    CudaVector x_cuda(&context_, num_cols);
+    CudaVector y_cuda(&context_, num_rows);
+    Vector y_cuda_host(num_rows);
+
+    for (int i = 0; i < num_cols; ++i) {
+      x.setZero();
+      y.setZero();
+      y_cuda.SetZero();
+      x[i] = 1.;
+      x_cuda.CopyFromCpu(x);
+      csm.RightMultiplyAndAccumulate(x_cuda, &y_cuda);
+      bsm.RightMultiplyAndAccumulate(
+          x.data(), y.data(), &context_, std::thread::hardware_concurrency());
+      y_cuda.CopyTo(&y_cuda_host);
+      // There will be up to 1 non-zero product per row, thus we expect an exact
+      // match on 32-bit integer indices
+      EXPECT_EQ((y - y_cuda_host).squaredNorm(), 0.);
+    }
   }
 
   std::unique_ptr<BlockSparseMatrix> A_;
+  std::unique_ptr<BlockSparseMatrix> B_;
+  std::unique_ptr<BlockSparseMatrix> C_;
   ContextImpl context_;
 };
 
-TEST_F(CudaBlockSparseCRSViewTest, CreateUpdateValues) {
+TEST_F(CudaBlockSparseCRSViewTest, CreateUpdateValuesNonCompatible) {
   auto view = CudaBlockSparseCRSView(*A_, &context_);
+  ASSERT_EQ(view.crs_compatible(), false);
 
-  // TODO: we definitely would like to use crs_matrix() here, but
-  // CudaSparseMatrix::RightMultiplyAndAccumulate is defined non-const because
-  // it might allocate additional storage by request of cuSPARSE
   auto matrix = view.mutable_crs_matrix();
-  ASSERT_EQ(matrix->num_cols(), A_->num_cols());
-  ASSERT_EQ(matrix->num_rows(), A_->num_rows());
-  ASSERT_EQ(matrix->num_nonzeros(), A_->num_nonzeros());
+  Compare(*A_, *matrix);
+}
 
-  const int num_rows = A_->num_rows();
-  const int num_cols = A_->num_cols();
-  Vector x(num_cols);
-  Vector y(num_rows);
-  CudaVector x_cuda(&context_, num_cols);
-  CudaVector y_cuda(&context_, num_rows);
-  Vector y_cuda_host(num_rows);
+TEST_F(CudaBlockSparseCRSViewTest, CreateUpdateValuesCompatibleRows) {
+  auto view = CudaBlockSparseCRSView(*B_, &context_);
+  ASSERT_EQ(view.crs_compatible(), true);
 
-  for (int i = 0; i < num_cols; ++i) {
-    x.setZero();
-    y.setZero();
-    y_cuda.SetZero();
-    x[i] = 1.;
-    x_cuda.CopyFromCpu(x);
-    A_->RightMultiplyAndAccumulate(
-        x.data(), y.data(), &context_, std::thread::hardware_concurrency());
-    matrix->RightMultiplyAndAccumulate(x_cuda, &y_cuda);
-    y_cuda.CopyTo(&y_cuda_host);
-    // There will be up to 1 non-zero product per row, thus we expect an exact
-    // match on 32-bit integer indices
-    EXPECT_EQ((y - y_cuda_host).squaredNorm(), 0.);
-  }
+  auto matrix = view.mutable_crs_matrix();
+  Compare(*B_, *matrix);
+}
+
+TEST_F(CudaBlockSparseCRSViewTest, CreateUpdateValuesCompatibleSingleCell) {
+  auto view = CudaBlockSparseCRSView(*C_, &context_);
+  ASSERT_EQ(view.crs_compatible(), true);
+
+  auto matrix = view.mutable_crs_matrix();
+  Compare(*C_, *matrix);
 }
 }  // namespace ceres::internal
 
