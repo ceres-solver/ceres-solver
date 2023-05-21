@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f977677d_8113a4a9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-21T00:51:10Z",
+      "side": 1,
+      "message": "Blocks-sparse to CRS conversion supporting two types of block-sparse matrices:\n - With sequential positions of cells\n - Consisting of two sub-matrices with sequential positions of cells\n\nBlock-sparse matrices that have crs-compatible layout of values [useful case - block-diagonal matrices] are transferred with a single memcopy (and block-sparse structure on gpu is discarded after computing crs structure).\n\nBenchmark results:\n\n```\n-------------------------------------------------------------------------\nBenchmark                                                            Time\n-------------------------------------------------------------------------\nJacobianToCRS\u003cvenice/problem-1778-993923-pre.txt\u003e                  924 ms\nJacobianToCRSView\u003cvenice/problem-1778-993923-pre.txt\u003e              371 ms\nJacobianToCRSMatrix\u003cvenice/problem-1778-993923-pre.txt\u003e           1272 ms\nJacobianToCRSViewUpdate\u003cvenice/problem-1778-993923-pre.txt\u003e        125 ms\nJacobianToCRSMatrixUpdate\u003cvenice/problem-1778-993923-pre.txt\u003e      223 ms\n\nJacobianToCRS\u003cvenice/problem-52-64053-pre.txt\u003e                    57.3 ms\nJacobianToCRSView\u003cvenice/problem-52-64053-pre.txt\u003e                30.0 ms\nJacobianToCRSMatrix\u003cvenice/problem-52-64053-pre.txt\u003e              82.6 ms\nJacobianToCRSViewUpdate\u003cvenice/problem-52-64053-pre.txt\u003e          8.76 ms\nJacobianToCRSMatrixUpdate\u003cvenice/problem-52-64053-pre.txt\u003e        15.1 ms\n```\n\nCopying values and permuting them is simultaneous (with block-sparse matrix being backed by non-pageable memory), and takes almost twice less time than updates of CudaSparseMatrix; here is a plot from nvidia profiler:\nhttps://drive.google.com/file/d/1eE5-mXE72mu3z5nIJYY9p6pIcYrn6QIU/view?usp\u003dsharing",
+      "revId": "51175646856b3e594827d94c3f77ce4ae7832695",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
