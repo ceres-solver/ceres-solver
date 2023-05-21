@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e8d7db61_7090cd60",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-21T17:59:35Z",
+      "side": 1,
+      "message": "Sameer, I might have abused notation a bit.\n\nThis code handles all possible block-sparse layouts as long as either\n - Matrix cells are stored sequentially (in this case matrix E is the whole matrix)\n - Matrix can be split at column-block boundary into two sub-matrices such that each of them is stored sequentially and values of left sub-matrix come first (in this case E is left sub-matrix and F is right sub-matrix).\n\n(This is a slightly broader class of matrices than we might observe)\n\nIn order to disambiguate between those two cases we need to find the first discontinuity in cell positions inside a row-block.\n\nThen we keep tracking cells from both sub-matrices, adjusting the column-block boundary as we keep finding cells from sub-matrix F to the left of current estimate of column-block boundary between sub-matrices.\n\nNote that some matrices can be both (non-)partitioned with the same block structure:\n```\n1 2 0 0 |  0  0  0\n3 4 0 0 |  0  0  0\n0 0 5 6 |  9 10  0 \n0 0 7 8 | 12 13  0\n0 0 0 0 | 15 16 17\n```\n\nFor partitioned view an exact value of num_col_blocks_e will be supplied as an argument (instead of estimation from cell positions discontinuity).\n\nFor non-partitioned view the only thing that matters is if matrix consists of one or two sub-matrices with sequentially stored values.\n\n\nI can rename E,F -\u003e L,R (or A,B) if it will make things more clear.",
+      "parentUuid": "b02d72c3_eb81e354",
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "20d5ab4e_325e08cb",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 2
@@ -31,6 +49,30 @@
       "writtenOn": "2023-05-21T15:04:54Z",
       "side": 1,
       "message": "add a comment about what this is and why this is needed.",
+      "range": {
+        "startLine": 147,
+        "startChar": 54,
+        "endLine": 147,
+        "endChar": 62
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f9a3cb6_044aafde",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-21T17:59:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20d5ab4e_325e08cb",
       "range": {
         "startLine": 147,
         "startChar": 54,
@@ -66,6 +108,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "06068130_4c16473b",
+        "filename": "internal/ceres/cuda_block_structure.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-21T17:59:35Z",
+      "side": 1,
+      "message": "num_col_blocks_e is updated later as we continue finding blocks from the right sub-matrix that are to the left of the current estimate.",
+      "parentUuid": "001ba0eb_b1de29ec",
+      "range": {
+        "startLine": 75,
+        "startChar": 40,
+        "endLine": 75,
+        "endChar": 41
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3bdfa0f4_fb2f82ec",
         "filename": "internal/ceres/cuda_block_structure.cc",
         "patchSetId": 2
@@ -77,6 +143,30 @@
       "writtenOn": "2023-05-21T15:04:54Z",
       "side": 1,
       "message": "I think there is a bit of a naming confusion here. \nrow_blocks contains the Block object for each row.\nhowever row_block_offsets is an index into the cells_ array. I guess this is fine, but it took me a bit to parse this.",
+      "range": {
+        "startLine": 87,
+        "startChar": 22,
+        "endLine": 87,
+        "endChar": 31
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c43ce8d5_394103ee",
+        "filename": "internal/ceres/cuda_block_structure.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-21T17:59:35Z",
+      "side": 1,
+      "message": "Renamed to first_cell_in_row_block",
+      "parentUuid": "3bdfa0f4_fb2f82ec",
       "range": {
         "startLine": 87,
         "startChar": 22,
@@ -112,6 +202,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fe7913d2_bc28d24f",
+        "filename": "internal/ceres/cuda_block_structure.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-21T17:59:35Z",
+      "side": 1,
+      "message": "num_col_blocks_e is initialized with col_blocks.size(), but gets updated to the minumum of all cell.block_id for cells that are in the right sub-matrix defined by discontinuity of cell positions.",
+      "parentUuid": "f217320c_de3bfda8",
+      "range": {
+        "startLine": 98,
+        "startChar": 34,
+        "endLine": 98,
+        "endChar": 50
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e40e5c44_680a4a43",
         "filename": "internal/ceres/cuda_block_structure.cc",
         "patchSetId": 2
@@ -123,6 +237,30 @@
       "writtenOn": "2023-05-21T15:04:54Z",
       "side": 1,
       "message": "this does not seem right to me.\n\nmax_cell_e is always 1, a row block cannot have two e_blocks. this is guaranteed. this means that if we assume that e blocks are laid out before f_blocks in memory then e is always crs compatible. you do not need max_row_block_size \u003d\u003d1.",
+      "range": {
+        "startLine": 143,
+        "startChar": 2,
+        "endLine": 143,
+        "endChar": 22
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa017486_f8209794",
+        "filename": "internal/ceres/cuda_block_structure.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-21T17:59:35Z",
+      "side": 1,
+      "message": "I think me using E and F made things quite confusing.\n\nIf there was no discontinuity of cell positions, then input matrix consists of a single sub-matrix E with sequential layout of cell values; and might have more than one cell per block.\n\nEvery matrix with max_row_block_size \u003d\u003d 1 is layout-compatible with CRS and can be copied as-is.",
+      "parentUuid": "e40e5c44_680a4a43",
       "range": {
         "startLine": 143,
         "startChar": 2,
@@ -158,6 +296,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "61be30d5_c233d8a5",
+        "filename": "internal/ceres/cuda_block_structure.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-21T17:59:35Z",
+      "side": 1,
+      "message": "It checks if we have observed discontinuity in cell positions (in other words, if matrix is partitioned into two).\n\nIf we have not observed discontinuity in cell positions, then E matrix is the whole matrix.",
+      "parentUuid": "22680249_255aabdf",
+      "range": {
+        "startLine": 145,
+        "startChar": 20,
+        "endLine": 145,
+        "endChar": 35
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "46781109_88a7765d",
         "filename": "internal/ceres/cuda_block_structure.h",
         "patchSetId": 2
@@ -169,6 +331,30 @@
       "writtenOn": "2023-05-21T15:04:54Z",
       "side": 1,
       "message": "explain what is_partitioned means.",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 21
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "235a0029_4a8cf6b1",
+        "filename": "internal/ceres/cuda_block_structure.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-21T17:59:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46781109_88a7765d",
       "range": {
         "startLine": 69,
         "startChar": 7,
@@ -192,6 +378,30 @@
       "writtenOn": "2023-05-21T15:04:54Z",
       "side": 1,
       "message": "add documentation as to what the semantics of these methods are depending on whether is_partitioned is true or not.",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 20
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea4353ee_ecde8813",
+        "filename": "internal/ceres/cuda_block_structure.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-21T17:59:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64049bd5_98ec2f92",
       "range": {
         "startLine": 70,
         "startChar": 6,
@@ -227,6 +437,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "23ab5a12_ea4696b0",
+        "filename": "internal/ceres/cuda_block_structure.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-21T17:59:35Z",
+      "side": 1,
+      "message": "This array will have exactly num_row_blocks entries with entries for empty row-blocks being equal to the entry corresponding to the next row-block (and if the last row-block is empty in E sub-matrix - value num_nonzeros_e is stored).\n\nMaybe an \"inverse\" description is better: number of non-zeros in all E cells preceding this row-block.",
+      "parentUuid": "7ac229f9_139f91c7",
+      "range": {
+        "startLine": 84,
+        "startChar": 55,
+        "endLine": 84,
+        "endChar": 60
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8b8ef858_9e97be5e",
         "filename": "internal/ceres/cuda_block_structure.h",
         "patchSetId": 2
@@ -238,6 +472,30 @@
       "writtenOn": "2023-05-21T15:04:54Z",
       "side": 1,
       "message": "again this is the position in the values array no?\n\nI think what you mean to say is that this information is per-row-block, so this array will have at most num_row_block entries.",
+      "range": {
+        "startLine": 87,
+        "startChar": 55,
+        "endLine": 87,
+        "endChar": 60
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1e68cd7_1de3a7ad",
+        "filename": "internal/ceres/cuda_block_structure.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-21T17:59:35Z",
+      "side": 1,
+      "message": "Those arrays will have exactly num_row_blocks entries.\nIf sub-matrix does not span across all row-blocks - after the last populated row-block they will be constant",
+      "parentUuid": "8b8ef858_9e97be5e",
       "range": {
         "startLine": 87,
         "startChar": 55,
@@ -273,6 +531,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3b80e18f_73ee40cf",
+        "filename": "internal/ceres/cuda_block_structure.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-21T17:59:35Z",
+      "side": 1,
+      "message": "Those arrays store cell.position for the first cell in bottom corner of the input matrix (starting from the current row-block).\n\nIf all row-blocks contain at least one cell in each sub-matrix, then those arrays will contain cell.position of the first cell of corresponding sub-matrix in the row-block.",
+      "parentUuid": "6466d936_934e47f9",
+      "range": {
+        "startLine": 104,
+        "startChar": 18,
+        "endLine": 104,
+        "endChar": 35
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a468eddb_7bb9e087",
         "filename": "internal/ceres/cuda_kernels_utils.h",
         "patchSetId": 2
@@ -284,6 +566,30 @@
       "writtenOn": "2023-05-21T15:04:54Z",
       "side": 1,
       "message": "The comment starts out without context. Please add an introductory sentence.",
+      "range": {
+        "startLine": 38,
+        "startChar": 23,
+        "endLine": 38,
+        "endChar": 36
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d57ad144_733324a6",
+        "filename": "internal/ceres/cuda_kernels_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-21T17:59:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a468eddb_7bb9e087",
       "range": {
         "startLine": 38,
         "startChar": 23,
@@ -317,6 +623,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "84daf610_30c425d2",
+        "filename": "internal/ceres/cuda_kernels_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-21T17:59:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21288262_a6671729",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 6
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8b6ba70a_8be298f6",
@@ -330,6 +660,30 @@
       "writtenOn": "2023-05-21T15:04:54Z",
       "side": 1,
       "message": "this ifdef without a comment is very confusing. explain why you need this.",
+      "range": {
+        "startLine": 106,
+        "startChar": 1,
+        "endLine": 106,
+        "endChar": 7
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "55138d00_f0996c2f",
+        "filename": "internal/ceres/evaluation_benchmark.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-21T17:59:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b6ba70a_8be298f6",
       "range": {
         "startLine": 106,
         "startChar": 1,
