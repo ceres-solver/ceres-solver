@@ -1,0 +1,343 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b02d72c3_eb81e354",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-21T15:04:54Z",
+      "side": 1,
+      "message": "Dmitriy,\n\nThe code in cuda_block_structure does not seem right to me and/or overly complicated because of the way you are reasoning about num_col_blocks_e.\n\nHave a look at my comments and see if they make sense to you.\n\nlets resolve these comments, since your kernel code will depend on it and I do not want cause unnecessary churn.",
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20d5ab4e_325e08cb",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-21T15:04:54Z",
+      "side": 1,
+      "message": "add a comment about what this is and why this is needed.",
+      "range": {
+        "startLine": 147,
+        "startChar": 54,
+        "endLine": 147,
+        "endChar": 62
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "001ba0eb_b1de29ec",
+        "filename": "internal/ceres/cuda_block_structure.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-21T15:04:54Z",
+      "side": 1,
+      "message": "this is wrong. all column blocks are not e_blocks. This information is not available from the block_structure. This information is stored in LinearSolver::Options and elsewhere in the form of num_eliminate_blocks.",
+      "range": {
+        "startLine": 75,
+        "startChar": 40,
+        "endLine": 75,
+        "endChar": 41
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bdfa0f4_fb2f82ec",
+        "filename": "internal/ceres/cuda_block_structure.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-21T15:04:54Z",
+      "side": 1,
+      "message": "I think there is a bit of a naming confusion here. \nrow_blocks contains the Block object for each row.\nhowever row_block_offsets is an index into the cells_ array. I guess this is fine, but it took me a bit to parse this.",
+      "range": {
+        "startLine": 87,
+        "startChar": 22,
+        "endLine": 87,
+        "endChar": 31
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f217320c_de3bfda8",
+        "filename": "internal/ceres/cuda_block_structure.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-21T15:04:54Z",
+      "side": 1,
+      "message": "You computed num_col_blocks_e \u003d col_blocks.size(), so this line will never be true no?\n\nthis computation is much simpler if you actually know num_col_blocks_e/num_eliminate_blocks in which case you can just check\n\ncell_in_f \u003d c.block_id \u003e\u003d num_col_blocks_e;",
+      "range": {
+        "startLine": 98,
+        "startChar": 34,
+        "endLine": 98,
+        "endChar": 50
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e40e5c44_680a4a43",
+        "filename": "internal/ceres/cuda_block_structure.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-21T15:04:54Z",
+      "side": 1,
+      "message": "this does not seem right to me.\n\nmax_cell_e is always 1, a row block cannot have two e_blocks. this is guaranteed. this means that if we assume that e blocks are laid out before f_blocks in memory then e is always crs compatible. you do not need max_row_block_size \u003d\u003d1.",
+      "range": {
+        "startLine": 143,
+        "startChar": 2,
+        "endLine": 143,
+        "endChar": 22
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22680249_255aabdf",
+        "filename": "internal/ceres/cuda_block_structure.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-21T15:04:54Z",
+      "side": 1,
+      "message": "isn\u0027t this just checking if num_col_blocks_e \u003e\u003d1 ? why do you need to go off of f_values_offset?",
+      "range": {
+        "startLine": 145,
+        "startChar": 20,
+        "endLine": 145,
+        "endChar": 35
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46781109_88a7765d",
+        "filename": "internal/ceres/cuda_block_structure.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-21T15:04:54Z",
+      "side": 1,
+      "message": "explain what is_partitioned means.",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 21
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64049bd5_98ec2f92",
+        "filename": "internal/ceres/cuda_block_structure.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-21T15:04:54Z",
+      "side": 1,
+      "message": "add documentation as to what the semantics of these methods are depending on whether is_partitioned is true or not.",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 20
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ac229f9_139f91c7",
+        "filename": "internal/ceres/cuda_block_structure.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-21T15:04:54Z",
+      "side": 1,
+      "message": "I think this can just be called cell_pos_e no? since there is no first, just one e cell per row.\n\n\nalso this is the position in the values array not in the \"row-block\" as the documentation indicates.\n\nI think what you mean to say is that this information is per-row-block, so this array will have at most num_row_block entries.\n\nwhich raises the question, every row does not have an e-block. how do you indicate that?",
+      "range": {
+        "startLine": 84,
+        "startChar": 55,
+        "endLine": 84,
+        "endChar": 60
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b8ef858_9e97be5e",
+        "filename": "internal/ceres/cuda_block_structure.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-21T15:04:54Z",
+      "side": 1,
+      "message": "again this is the position in the values array no?\n\nI think what you mean to say is that this information is per-row-block, so this array will have at most num_row_block entries.",
+      "range": {
+        "startLine": 87,
+        "startChar": 55,
+        "endLine": 87,
+        "endChar": 60
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6466d936_934e47f9",
+        "filename": "internal/ceres/cuda_block_structure.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-21T15:04:54Z",
+      "side": 1,
+      "message": "aren\u0027t these actually offsets? and isn\u0027t it better to name these to match row_block_offsets as \n\ne_block_offsets\n\nf_block_offsets ?",
+      "range": {
+        "startLine": 104,
+        "startChar": 18,
+        "endLine": 104,
+        "endChar": 35
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a468eddb_7bb9e087",
+        "filename": "internal/ceres/cuda_kernels_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-21T15:04:54Z",
+      "side": 1,
+      "message": "The comment starts out without context. Please add an introductory sentence.",
+      "range": {
+        "startLine": 38,
+        "startChar": 23,
+        "endLine": 38,
+        "endChar": 36
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21288262_a6671729",
+        "filename": "internal/ceres/cuda_kernels_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-21T15:04:54Z",
+      "side": 1,
+      "message": "blank before. NumBlocks is a very generic name, and could apply to many things. Perhaps this should be called NumCudaBlocks?",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 6
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b6ba70a_8be298f6",
+        "filename": "internal/ceres/evaluation_benchmark.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-21T15:04:54Z",
+      "side": 1,
+      "message": "this ifdef without a comment is very confusing. explain why you need this.",
+      "range": {
+        "startLine": 106,
+        "startChar": 1,
+        "endLine": 106,
+        "endChar": 7
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
