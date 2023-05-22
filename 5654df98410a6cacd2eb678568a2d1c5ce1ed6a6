@@ -74,6 +74,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "acc94df1_69ae50e7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-22T18:57:19Z",
+      "side": 1,
+      "message": "lets work backwards to answer your question.\n\nThe choice of matrix format is determined by the choice of linear solver.\n\nHere is the set of linear solvers.\n\n  DENSE_NORMAL_CHOLESKY,\n  DENSE_QR,\n\nThe above two solvers will lead to a dense jacobian storage and they are mapped directly into GPU memory as needed. \n\n  SPARSE_NORMAL_CHOLESKY,\n  \n  This starts out as BlockSparseMatrix (J) and then we compute a compressed row sparse matrix from it. (J\u0027J)\n  \n  we currently do not support sparse_normal_cholesky on the gpu, but if we did, we would either compute j\u0027j on the gpu or push a crs directly to the gpu.\n  \n  \n  DENSE_SCHUR,\n  \n this starts out as a partitioned block sparse matrix -- results in a dense matrix which may or may not be solved on the gpu.\n \n  SPARSE_SCHUR,\n \n this again starts out as a partitioned block sparse matrix, - results in a sparse matrix which is solved on the cpu.\n  \n  ITERATIVE_SCHUR,\n  \n  this is always a partitioned block sparse matrix. \n  \n  CGNR\n  \n  this is a unpartitioned block sparse matrix.\n  \n  \n  so as you can see, the only case in which we are currently using a block sparse matrix which is not partitioned is CGNR running on the GPU. Of all the linear solvers, this is likely the simplest and least used solver too. However int his case it is worth detecting if all the rows are of size 1, in which case we do not have to perform any permutation and can do a straight copy.\n  \n  The only time we are going to have a partitioned matrix  is if we are using a schur type solver. There is really no other reason for having a nonlinear layout for the block sparse matrix otherwise. \n  \niterative_schur on GPU I expect to have significant usage, and there we should absolutely optimize the heck out of it. E matrix is capable of being copied quickly without permutation always.\n\nThere I think there are two cases/things to consider and worth thinking about.\n\n1. not all rows will contain E blocks.\n2. the simple bundle adjustment case where the F matrix can also be copied without permutation.",
+      "parentUuid": "6017a7ac_293271c8",
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "20d5ab4e_325e08cb",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 2
