@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "00292928_e1b75c76",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2023-05-22T13:15:06Z",
+      "side": 1,
+      "message": "Thanks for the explanation Dmitriy. Yes the naming was definitely confusing. \n\nThat said, still begs the question - we are only going to have two layouts. \n\nOne in which all the cells are laid out sequentially -- this is the default for SparseNormalCholesky as well as CGNR. \n\nFor all schur based solvers E will be laid out after F. \n\nWhy not keep the code simpler by exploiting these two assumptions? it will also make generating the appropriate test data. \n\nAre you anticipating a case where it maybe beneficial to change the layout of block sparse matrix to be other than the two cases above?",
+      "parentUuid": "e8d7db61_7090cd60",
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "20d5ab4e_325e08cb",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 2
