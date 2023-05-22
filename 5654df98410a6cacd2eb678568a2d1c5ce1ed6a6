@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6017a7ac_293271c8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-22T14:07:33Z",
+      "side": 1,
+      "message": "There are two aspects:\n - Do we expect that any BlockSparseMatrix can be wrapped into CudaBlockSparseCRSView, or only non-partitioned ones\n - Do we expect user of CudaBlockSparseCRSView to know if (and at which column block) BlockSparseMatrix is partitioned.\n\nIf we allow user to wrap any BlockSparseMatrix into CudaBlockSparseCRSView, without knowing if input matrix was partitioned - then we need the code that estimates column block partition from discontinuity of cell positions (but can drop members e_is_crs_compatible, first_cell_pos_e)\n\nIf we allow user to wrap any BlockSparseMatrix into CudaBlocKSparseCRSView, but require them to explicitly provide column-block partitioning of the matrix - then we can leave only the code that counts cumulative non-zeros in right sub-matrix with a given column-block partitioning.\n\nIf we allow user to wrap only non-partitioned BlockSparseMatrix into CudaBlockSparseCRSView - then everything partition-related can be moved from CudaBlockStructure to CudaPartitionedCRSView.",
+      "parentUuid": "00292928_e1b75c76",
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "20d5ab4e_325e08cb",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 2
