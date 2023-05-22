@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2caaf410_19196d85",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2023-05-22T13:10:50Z",
+      "side": 1,
+      "message": "why are they not inside the condition block below?\nor should more things in the condition block use this form of add_compile_option?",
+      "range": {
+        "startLine": 529,
+        "startChar": 20,
+        "endLine": 529,
+        "endChar": 21
+      },
+      "revId": "dbe5f9ab3e2752dcd46f819cfc8cd415079e46e6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
