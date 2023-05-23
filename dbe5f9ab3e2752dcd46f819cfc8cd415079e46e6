@@ -46,6 +46,30 @@
       },
       "revId": "dbe5f9ab3e2752dcd46f819cfc8cd415079e46e6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00ed1bab_6e6bb156",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-23T13:35:24Z",
+      "side": 1,
+      "message": "okay that makes more sense to me. we just don\u0027t want these compiler options being applied to the cuda code. Alex said he will take a look later today.",
+      "parentUuid": "e6984d66_90d89527",
+      "range": {
+        "startLine": 529,
+        "startChar": 20,
+        "endLine": 529,
+        "endChar": 21
+      },
+      "revId": "dbe5f9ab3e2752dcd46f819cfc8cd415079e46e6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
