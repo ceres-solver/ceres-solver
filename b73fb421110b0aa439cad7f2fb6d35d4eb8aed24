@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1162275_be705e09",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2023-05-23T13:51:44Z",
+      "side": 1,
+      "message": "What version of CMake, VS and CUDA are you using?\n\nThis should not be necessary on newer versions of CMake that are using CMake\u0027s upstream FindCUDA as CMAKE_CUDA_RUNTIME_LIBRARY should be set correctly to static/shared which should ensure that this conflict would not occur unless the VS settings have been changed separately (external to CMake).  I\u0027m not in favour of changing this here as this otherwise misrepresents what the dependencies are to work around what sounds like a VS configuration issue.",
+      "revId": "b73fb421110b0aa439cad7f2fb6d35d4eb8aed24",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
