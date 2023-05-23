@@ -22,6 +22,30 @@
       },
       "revId": "dbe5f9ab3e2752dcd46f819cfc8cd415079e46e6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6984d66_90d89527",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 6762
+      },
+      "writtenOn": "2023-05-23T13:33:17Z",
+      "side": 1,
+      "message": "I have moved the add_compile_options statements into the condition block. Previously, I used COMPILE_LANG_AND_ID:CXX,MSVC to check that the language is C++ (not CUDA) and that the compiler is MSVC before enabling the flags. Now, I use COMIPLE_LANGUAGE:CXX just to check the language since there is already a condition block to check if the compiler is MSVC.",
+      "parentUuid": "2caaf410_19196d85",
+      "range": {
+        "startLine": 529,
+        "startChar": 20,
+        "endLine": 529,
+        "endChar": 21
+      },
+      "revId": "dbe5f9ab3e2752dcd46f819cfc8cd415079e46e6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
