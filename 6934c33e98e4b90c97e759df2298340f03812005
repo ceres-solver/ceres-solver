@@ -16,6 +16,23 @@
       "message": "Removed support of partitioned matrices, now only matrices with sequential cell layout are supported.",
       "revId": "6934c33e98e4b90c97e759df2298340f03812005",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f89dd371_bb69c973",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-24T23:26:14Z",
+      "side": 1,
+      "message": "thanks dmitriy, I will have a review for you by tomorrow.",
+      "revId": "6934c33e98e4b90c97e759df2298340f03812005",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
