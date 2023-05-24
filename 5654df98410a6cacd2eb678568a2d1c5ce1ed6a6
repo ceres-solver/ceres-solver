@@ -92,6 +92,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a1274fce_ee2a9331",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-24T23:24:18Z",
+      "side": 1,
+      "message": "Removed support of partitioned matrices.",
+      "parentUuid": "acc94df1_69ae50e7",
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "20d5ab4e_325e08cb",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 2
@@ -174,6 +192,30 @@
       "side": 1,
       "message": "num_col_blocks_e is updated later as we continue finding blocks from the right sub-matrix that are to the left of the current estimate.",
       "parentUuid": "001ba0eb_b1de29ec",
+      "range": {
+        "startLine": 75,
+        "startChar": 40,
+        "endLine": 75,
+        "endChar": 41
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83ce02ee_f48534d8",
+        "filename": "internal/ceres/cuda_block_structure.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-24T23:24:18Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "06068130_4c16473b",
       "range": {
         "startLine": 75,
         "startChar": 40,
@@ -278,6 +320,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "af1d2d61_ba719c9b",
+        "filename": "internal/ceres/cuda_block_structure.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-24T23:24:18Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "fe7913d2_bc28d24f",
+      "range": {
+        "startLine": 98,
+        "startChar": 34,
+        "endLine": 98,
+        "endChar": 50
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e40e5c44_680a4a43",
@@ -325,6 +391,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2988c4e3_d4b33ac2",
+        "filename": "internal/ceres/cuda_block_structure.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-24T23:24:18Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "aa017486_f8209794",
+      "range": {
+        "startLine": 143,
+        "startChar": 2,
+        "endLine": 143,
+        "endChar": 22
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "22680249_255aabdf",
@@ -362,6 +452,30 @@
       "side": 1,
       "message": "It checks if we have observed discontinuity in cell positions (in other words, if matrix is partitioned into two).\n\nIf we have not observed discontinuity in cell positions, then E matrix is the whole matrix.",
       "parentUuid": "22680249_255aabdf",
+      "range": {
+        "startLine": 145,
+        "startChar": 20,
+        "endLine": 145,
+        "endChar": 35
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fa2dcac_e48b4f96",
+        "filename": "internal/ceres/cuda_block_structure.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-24T23:24:18Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "61be30d5_c233d8a5",
       "range": {
         "startLine": 145,
         "startChar": 20,
@@ -513,6 +627,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3e452fd_8a76b6fd",
+        "filename": "internal/ceres/cuda_block_structure.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-24T23:24:18Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "23ab5a12_ea4696b0",
+      "range": {
+        "startLine": 84,
+        "startChar": 55,
+        "endLine": 84,
+        "endChar": 60
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8b8ef858_9e97be5e",
@@ -560,6 +698,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d059f5e5_9c51fa53",
+        "filename": "internal/ceres/cuda_block_structure.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-24T23:24:18Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a1e68cd7_1de3a7ad",
+      "range": {
+        "startLine": 87,
+        "startChar": 55,
+        "endLine": 87,
+        "endChar": 60
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6466d936_934e47f9",
@@ -597,6 +759,30 @@
       "side": 1,
       "message": "Those arrays store cell.position for the first cell in bottom corner of the input matrix (starting from the current row-block).\n\nIf all row-blocks contain at least one cell in each sub-matrix, then those arrays will contain cell.position of the first cell of corresponding sub-matrix in the row-block.",
       "parentUuid": "6466d936_934e47f9",
+      "range": {
+        "startLine": 104,
+        "startChar": 18,
+        "endLine": 104,
+        "endChar": 35
+      },
+      "revId": "5654df98410a6cacd2eb678568a2d1c5ce1ed6a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e66d575c_74717015",
+        "filename": "internal/ceres/cuda_block_structure.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-24T23:24:18Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "3b80e18f_73ee40cf",
       "range": {
         "startLine": 104,
         "startChar": 18,
