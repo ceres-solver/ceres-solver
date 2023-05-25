@@ -195,6 +195,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5843f8b9_2236d24e",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-25T21:57:47Z",
+      "side": 1,
+      "message": "sorry I should have updated this after reading the code. I understand now.",
+      "parentUuid": "af5304f4_0cb0cce6",
+      "range": {
+        "startLine": 92,
+        "startChar": 48,
+        "endLine": 92,
+        "endChar": 51
+      },
+      "revId": "6934c33e98e4b90c97e759df2298340f03812005",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4f94a241_9c3a3ed1",
         "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
         "patchSetId": 4
@@ -735,6 +759,30 @@
       "side": 1,
       "message": "This change is due to label ITERATIVE_SCHUR running the same code as CGNR.\nSince partitioned matrices are not supported anymore (and sequential jacobian is created manually in evaluation_benchmark), I have removed it, but we will need to revisit this soon.",
       "parentUuid": "ab0cf0b3_bd9dc194",
+      "range": {
+        "startLine": 69,
+        "startChar": 39,
+        "endLine": 69,
+        "endChar": 40
+      },
+      "revId": "6934c33e98e4b90c97e759df2298340f03812005",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30a80d1e_4ea6d339",
+        "filename": "internal/ceres/evaluator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-25T21:57:47Z",
+      "side": 1,
+      "message": "yes.",
+      "parentUuid": "9f89ee3b_35c18346",
       "range": {
         "startLine": 69,
         "startChar": 39,

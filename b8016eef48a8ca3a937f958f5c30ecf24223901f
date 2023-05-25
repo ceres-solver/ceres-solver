@@ -16,6 +16,46 @@
       "message": "Fixed field naming, added benchmark results",
       "revId": "b8016eef48a8ca3a937f958f5c30ecf24223901f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d70a16c8_022613fa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-25T21:57:47Z",
+      "side": 1,
+      "message": "minor things.",
+      "revId": "b8016eef48a8ca3a937f958f5c30ecf24223901f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d50c352_a236a7f7",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-25T21:57:47Z",
+      "side": 1,
+      "message": "variable names should be lower case.",
+      "range": {
+        "startLine": 128,
+        "startChar": 37,
+        "endLine": 128,
+        "endChar": 65
+      },
+      "revId": "b8016eef48a8ca3a937f958f5c30ecf24223901f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
