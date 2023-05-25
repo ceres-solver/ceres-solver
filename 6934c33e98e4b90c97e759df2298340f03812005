@@ -33,6 +33,362 @@
       "message": "thanks dmitriy, I will have a review for you by tomorrow.",
       "revId": "6934c33e98e4b90c97e759df2298340f03812005",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "55230cd7_fe695750",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-25T18:26:11Z",
+      "side": 1,
+      "message": "minor comments, looking pretty good. Please add the before and after benchmark data into the commit log now that things have settled down.",
+      "revId": "6934c33e98e4b90c97e759df2298340f03812005",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e504cc16_1939ccd1",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-25T18:26:11Z",
+      "side": 1,
+      "message": "I think this method is superfluous and makes the code less readable, since you create the block_structure in the constructor and deallocate it here, and its not doing much anyways. I think you should fold it into the constructor. That way it is clear from reading the constructor code, what objects are live and what are not.",
+      "range": {
+        "startLine": 61,
+        "startChar": 29,
+        "endLine": 61,
+        "endChar": 51
+      },
+      "revId": "6934c33e98e4b90c97e759df2298340f03812005",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63837387_05ff44a4",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-25T18:26:11Z",
+      "side": 1,
+      "message": "IsCrsCompatible()  is preferred.",
+      "range": {
+        "startLine": 81,
+        "startChar": 7,
+        "endLine": 81,
+        "endChar": 21
+      },
+      "revId": "6934c33e98e4b90c97e759df2298340f03812005",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e48d52d_cd3d6128",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-25T18:26:11Z",
+      "side": 1,
+      "message": "You can make this comment simpler, just say that matrix has row blocks with size greater than 1. Since the layout is in order that the only thing that will prevent this no?",
+      "range": {
+        "startLine": 92,
+        "startChar": 48,
+        "endLine": 92,
+        "endChar": 51
+      },
+      "revId": "6934c33e98e4b90c97e759df2298340f03812005",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f94a241_9c3a3ed1",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-25T18:26:11Z",
+      "side": 1,
+      "message": "is_crs_compatible_",
+      "range": {
+        "startLine": 94,
+        "startChar": 7,
+        "endLine": 94,
+        "endChar": 22
+      },
+      "revId": "6934c33e98e4b90c97e759df2298340f03812005",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96d92a9d_08878d54",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-25T18:26:11Z",
+      "side": 1,
+      "message": "A, B and C are not great names, because they do not tell me anything about them. They are matrices with specific structure that you are creating for testing purposes.",
+      "range": {
+        "startLine": 119,
+        "startChar": 37,
+        "endLine": 119,
+        "endChar": 39
+      },
+      "revId": "6934c33e98e4b90c97e759df2298340f03812005",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0fc7a3c8_7e14cfb8",
+        "filename": "internal/ceres/cuda_block_structure.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-25T18:26:11Z",
+      "side": 1,
+      "message": "max_cells_per_row",
+      "range": {
+        "startLine": 64,
+        "startChar": 9,
+        "endLine": 64,
+        "endChar": 18
+      },
+      "revId": "6934c33e98e4b90c97e759df2298340f03812005",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c6746c9_3937d8fc",
+        "filename": "internal/ceres/cuda_block_structure.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-25T18:26:11Z",
+      "side": 1,
+      "message": "Additionally the array",
+      "range": {
+        "startLine": 47,
+        "startChar": 68,
+        "endLine": 47,
+        "endChar": 73
+      },
+      "revId": "6934c33e98e4b90c97e759df2298340f03812005",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0a5921c_0ed076c0",
+        "filename": "internal/ceres/cuda_block_structure.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-25T18:26:11Z",
+      "side": 1,
+      "message": "document these two methods, what do they mean.",
+      "range": {
+        "startLine": 67,
+        "startChar": 24,
+        "endLine": 67,
+        "endChar": 29
+      },
+      "revId": "6934c33e98e4b90c97e759df2298340f03812005",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5eae961f_5828ee68",
+        "filename": "internal/ceres/cuda_block_structure.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-25T18:26:11Z",
+      "side": 1,
+      "message": "IsCrsCompatible",
+      "revId": "6934c33e98e4b90c97e759df2298340f03812005",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc63cece_db76ecec",
+        "filename": "internal/ceres/cuda_block_structure.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-25T18:26:11Z",
+      "side": 1,
+      "message": "is_crs_compatible",
+      "range": {
+        "startLine": 89,
+        "startChar": 7,
+        "endLine": 89,
+        "endChar": 22
+      },
+      "revId": "6934c33e98e4b90c97e759df2298340f03812005",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7033d182_843f8771",
+        "filename": "internal/ceres/cuda_kernels.cu.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-25T18:26:11Z",
+      "side": 1,
+      "message": "in a follow up CL it would be good to rename this file to something less generic \ne.g.\ncuda_kernel_vector_ops.h/cc.cu",
+      "range": {
+        "startLine": 29,
+        "startChar": 3,
+        "endLine": 29,
+        "endChar": 9
+      },
+      "revId": "6934c33e98e4b90c97e759df2298340f03812005",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9cab9e4_8230b682",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-25T18:26:11Z",
+      "side": 1,
+      "message": "did you mean to keep these two functions here? shouldn\u0027t they in a .h file corresponding to the cc.cu file or is that a problem ?\n\nwe try to keep one .h/.cc file combo in this code base.",
+      "range": {
+        "startLine": 80,
+        "startChar": 5,
+        "endLine": 80,
+        "endChar": 21
+      },
+      "revId": "6934c33e98e4b90c97e759df2298340f03812005",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d693d8b9_d8cb9b76",
+        "filename": "internal/ceres/cuda_kernels_bsm_to_crs.cu.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-25T18:26:11Z",
+      "side": 1,
+      "message": "PartitionPoint",
+      "range": {
+        "startLine": 178,
+        "startChar": 15,
+        "endLine": 178,
+        "endChar": 30
+      },
+      "revId": "6934c33e98e4b90c97e759df2298340f03812005",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fdf542b6_6594e771",
+        "filename": "internal/ceres/cuda_kernels_bsm_to_crs.cu.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-25T18:26:11Z",
+      "side": 1,
+      "message": "too generic a name and will likely conflict at some point of time. How about PermuteToCrsKernel ?",
+      "range": {
+        "startLine": 202,
+        "startChar": 16,
+        "endLine": 202,
+        "endChar": 23
+      },
+      "revId": "6934c33e98e4b90c97e759df2298340f03812005",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab0cf0b3_bd9dc194",
+        "filename": "internal/ceres/evaluator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-05-25T18:26:11Z",
+      "side": 1,
+      "message": "This is very confusing to reason about. also we should not make this change in this CL, since this is a policy change.  \n\nisn\u0027t it the case that we now want BlockJacobianWriter always?\n\nin the cl that makes this change we can also delete a bunch of code which uses crs for cgnr. I can do that and the associated cleanup in a followup CL.",
+      "range": {
+        "startLine": 69,
+        "startChar": 39,
+        "endLine": 69,
+        "endChar": 40
+      },
+      "revId": "6934c33e98e4b90c97e759df2298340f03812005",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
