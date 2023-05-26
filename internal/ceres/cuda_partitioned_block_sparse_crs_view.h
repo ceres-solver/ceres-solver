@@ -92,10 +92,15 @@ class CERES_NO_EXPORT CudaPartitionedBlockSparseCRSView {
   CudaSparseMatrix* mutable_matrix_f() { return matrix_f_.get(); }
 
  private:
-  // Value permutation kernel performs a single element-wise operation per
-  // thread, thus performing permutation in blocks of 8 megabytes of
-  // block-sparse  values seems reasonable
-  static constexpr int kMaxTemporaryArraySize = 1 * 1024 * 1024;
+  // All executions of value permutation kernel can be scheduled at once in the
+  // case of copying from page-locked memory, allowing for asynchronous
+  // execution with relation to host. Due to limited queue depth of CUDA stream,
+  // synchronization might occur ifn there are too many operations already
+  // scheduled; there is no published information on the max queue depth. We
+  // limit the total number of operations to 64 (trading a latency of ~1/64 of
+  // copy operation and 1/64 of memory consumption for host-asynchronous
+  // execution).
+  static constexpr int kMaxOperations = 64;
   std::unique_ptr<CudaSparseMatrix> matrix_e_;
   std::unique_ptr<CudaSparseMatrix> matrix_f_;
   std::unique_ptr<CudaStreamedBuffer<double>> streamed_buffer_;

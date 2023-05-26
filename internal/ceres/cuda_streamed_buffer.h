@@ -84,6 +84,12 @@ class CERES_NO_EXPORT CudaStreamedBuffer {
                cudaEventCreateWithFlags(&e, cudaEventDisableTiming));
     }
   }
+  CudaStreamedBuffer(ContextImpl* context,
+                   const int num_elements,
+                   const int max_operations,
+                   const int alignment = 1024)
+      : CudaStreamedBuffer(
+            context, SizeOfBuffer(num_elements, max_operations, alignment)) {}
 
   CudaStreamedBuffer(const CudaStreamedBuffer&) = delete;
 
@@ -113,7 +119,7 @@ class CERES_NO_EXPORT CudaStreamedBuffer {
   // In this case no copy on the host-side is necessary, and this method just
   // schedules a bunch of interleaved memory copies and callback invocations:
   //
-  //  cudaStreamSynchronize(context->DefaultStream());
+  //  InsertCudaBarrier()
   //  - Iteration #0:
   //    - cudaMemcpyAsync(values_gpu_, from, K * sizeof(T), H->D, stream_0)
   //    - callback(values_gpu_, K, 0, stream_0)
@@ -135,8 +141,6 @@ class CERES_NO_EXPORT CudaStreamedBuffer {
   //     sizeof(T), H->D, stream_(i % 2))
   //     - callback(values_gpu_ + (i % 2) * K, K, i * K, stream_(i % 2)
   //  ...
-  //  cudaStreamSynchronize(stream_0)
-  //  cudaStreamSynchronize(stream_1)
   //
   //  This sequence of calls results in following activity on gpu (assuming that
   //  kernel invoked by callback takes less time than host-to-device copy):
@@ -171,7 +175,7 @@ class CERES_NO_EXPORT CudaStreamedBuffer {
   //  - Invoke callback (that launches kernel asynchronously)
   //
   //  Invocations are performed with the following arguments
-  //  cudaStreamSynchronize(context->DefaultStream());
+  //  InsertCudaBarrier()
   //  - Iteration #0:
   //    - cudaEventSynchronize(copy_finished_0)
   //    - std::copy_n(from, K, values_cpu_pinned_)
@@ -209,8 +213,6 @@ class CERES_NO_EXPORT CudaStreamedBuffer {
   //    - cudaEventRecord(copy_finished_(i % 2), stream_(i % 2))
   //    - callback(values_gpu_ + (i % 2) * K, K, i * K, stream_(i % 2))
   //  ...
-  //  cudaStreamSynchronize(stream_0)
-  //  cudaStreamSynchronize(stream_1)
   //
   //  This sequence of calls results in following activity on cpu and gpu
   //  (assuming that kernel invoked by callback takes less time than
@@ -239,10 +241,7 @@ class CERES_NO_EXPORT CudaStreamedBuffer {
   //
   template <typename Fun>
   void CopyToGpu(const T* from, const int num_values, Fun&& callback) {
-    // This synchronization is not required in some cases, but we perform it in
-    // order to avoid situation when user callback depends on data that is
-    // still to be computed in default stream
-    CHECK_EQ(cudaSuccess, cudaStreamSynchronize(context_->DefaultStream()));
+    auto barrier = context_->InsertCudaBarrier();
 
     // If pointer to input data does not correspond to page-locked memory,
     // host-to-device memory copy might be executed synchrnonously (with a copy
@@ -291,10 +290,6 @@ class CERES_NO_EXPORT CudaStreamedBuffer {
       callback(batch_to, num_values_batch, offset, stream);
       batch_id = (batch_id + 1) % kNumBatches;
     }
-    // Explicitly synchronize on all CUDA streams that were utilized.
-    for (int i = 0; i < kNumBatches; ++i) {
-      CHECK_EQ(cudaSuccess, cudaStreamSynchronize(streams[i]));
-    }
   }
 
  private:
@@ -320,6 +315,19 @@ class CERES_NO_EXPORT CudaStreamedBuffer {
     // user-provided call-back (and hope that page migration will provide a
     // similar throughput with zero efforts from our side).
     return attributes.type == cudaMemoryTypeUnregistered;
+  }
+
+  static int SizeOfBuffer(const int num_elements,
+                          const int max_operations,
+                          const int alignment) {
+    const int num_elements_per_operation =
+        (num_elements + max_operations - 1) / max_operations;
+    const int aligned_temporary_array_size =
+        ((num_elements_per_operation + alignment - 1) / alignment) * alignment;
+    constexpr int kMinTemporaryArraySize = 1024 * 1024;
+    const int temporary_array_size =
+        std::max(kMinTemporaryArraySize, aligned_temporary_array_size);
+    return temporary_array_size;
   }
 
   const int kValuesPerBatch;

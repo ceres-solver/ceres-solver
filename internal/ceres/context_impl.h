@@ -92,19 +92,19 @@ class CERES_NO_EXPORT ContextImpl final : public Context {
   // b. Multi-stream workloads
   // Multi-stream workloads are more restricted in order to make it harder to
   // get a race-condition.
-  //  - Should always synchronize the default stream on entry
-  //  - Should always synchronize all utilized streams on exit
-  //  - Should not make any assumptions on one of streams_[] being default
+  //  - Should use ContextImpl::InsertCudaBarrier()
+  //  - A group of GPU workloads scheduled within the lifetime of
+  //  ContextImpl::MultiStreamBarrier
+  //    - Will wait for existing operations in default stream to complete
+  //    - Will be followed by a series of events (in default stream)
+  //    corresponding for completion of operations in non-default streams
   //
   // With those rules in place
   //  - All single-stream asynchronous workloads are serialized using default
   //  stream
-  //  - Multiple-stream workloads always wait single-stream workloads to finish
-  //  and leave no running computations on exit.
-  //  This slightly penalizes multi-stream workloads, but makes it easier to
-  //  avoid race conditions when  multiple-stream workload depends on results of
-  //  any preceeding gpu computations.
-
+  //  - Multiple-stream workloads are serialized using barrier functionality
+  //  implemented by InsertCudaBarrier() and might be concurent with cpu
+  //  processing.
   // Initializes cuBLAS, cuSOLVER, and cuSPARSE contexts, creates an
   // asynchronous CUDA stream, and associates the stream with the contexts.
   // Returns true iff initialization was successful, else it returns false and a
@@ -127,6 +127,17 @@ class CERES_NO_EXPORT ContextImpl final : public Context {
   // Kernel invocations and memory copies on this stream can be left without
   // synchronization.
   cudaStream_t DefaultStream() { return streams_[0]; }
+  class MultiStreamBarrier {
+   public:
+    MultiStreamBarrier(ContextImpl* context);
+    ~MultiStreamBarrier();
+
+   private:
+    MultiStreamBarrier(const MultiStreamBarrier&) = delete;
+    void operator=(const MultiStreamBarrier&) = delete;
+    ContextImpl* context_;
+  };
+  [[nodiscard]] MultiStreamBarrier InsertCudaBarrier();
   static constexpr int kNumCudaStreams = 2;
   cudaStream_t streams_[kNumCudaStreams] = {0};
 
@@ -136,6 +147,9 @@ class CERES_NO_EXPORT ContextImpl final : public Context {
   cudaDeviceProp gpu_device_properties_;
   int cuda_version_major_ = 0;
   int cuda_version_minor_ = 0;
+
+ private:
+  cudaEvent_t multi_stream_sync_ = nullptr;
 #endif  // CERES_NO_CUDA
 };
 

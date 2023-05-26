@@ -84,7 +84,7 @@ CudaPartitionedBlockSparseCRSView::CudaPartitionedBlockSparseCRSView(
     block_structure_ = nullptr;
   } else {
     streamed_buffer_ = std::make_unique<CudaStreamedBuffer<double>>(
-        context, kMaxTemporaryArraySize);
+        context, bsm.num_nonzeros(), kMaxOperations);
   }
   CHECK_EQ(bsm.num_nonzeros(),
            matrix_e_->num_nonzeros() + matrix_f_->num_nonzeros());

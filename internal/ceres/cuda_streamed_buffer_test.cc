@@ -69,10 +69,12 @@ TEST(CudaStreamedBufferTest, IntegerCopy) {
                                                        cudaMemcpyDeviceToHost,
                                                        stream));
                             });
-  // All operations in all streams should be completed when CopyToGpu returns
-  // control to the callee
+  // CudaStreamedBuffer might leave computations running asynchronously. Users
+  // of CudaStreamedBuffer do not need to perform synchronization explicitly,
+  // because it will be handled by the next kernel invocation (or device->host
+  // copy).
   for (int i = 0; i < ContextImpl::kNumCudaStreams; ++i) {
-    CHECK_EQ(cudaSuccess, cudaStreamQuery(context.streams_[i]));
+    CHECK_EQ(cudaSuccess, cudaStreamSynchronize(context.streams_[i]));
   }
 
   // Check if every element was visited
@@ -133,10 +135,12 @@ TEST(CudaStreamedBufferTest, IntegerNoCopy) {
                                                        cudaMemcpyDeviceToHost,
                                                        stream));
                             });
-  // All operations in all streams should be completed when CopyToGpu returns
-  // control to the callee
+  // CudaStreamedBuffer might leave computations running asynchronously. Users
+  // of CudaStreamedBuffer do not need to perform synchronization explicitly,
+  // because it will be handled by the next kernel invocation (or device->host
+  // copy).
   for (int i = 0; i < ContextImpl::kNumCudaStreams; ++i) {
-    CHECK_EQ(cudaSuccess, cudaStreamQuery(context.streams_[i]));
+    CHECK_EQ(cudaSuccess, cudaStreamSynchronize(context.streams_[i]));
   }
 
   // Check if every element was visited

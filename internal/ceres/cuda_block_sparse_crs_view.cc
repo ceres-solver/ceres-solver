@@ -60,8 +60,16 @@ CudaBlockSparseCRSView::CudaBlockSparseCRSView(const BlockSparseMatrix& bsm,
                "block-structure";
     block_structure_ = nullptr;
   } else {
+    // In the case of copying from page-locked memory, CudaStreamedBuffer just
+    // schedules a bunch of memory copies interleaved with kernel invocation.
+    // Due to limited queue depth of CUDA stream, synchronization might occur
+    // when there are too many operations already scheduled; there is no
+    // published information on the max queue depth. We limit the total number
+    // of operations to 32 (trading a latency of ~1/32 of copy operation for
+    // host-asynchronous execution).
+    constexpr int kMaxOperations = 32;
     streamed_buffer_ = std::make_unique<CudaStreamedBuffer<double>>(
-        context_, kMaxTemporaryArraySize);
+        context_, bsm.num_nonzeros(), kMaxOperations);
   }
   UpdateValues(bsm);
 }

@@ -66,6 +66,10 @@ void ContextImpl::TearDown() {
       s = nullptr;
     }
   }
+  if (multi_stream_sync_ != nullptr) {
+    cudaEventDestroy(multi_stream_sync_);
+    multi_stream_sync_ = nullptr;
+  }
   is_cuda_initialized_ = false;
 }
 
@@ -154,6 +158,14 @@ bool ContextImpl::InitCuda(std::string* message) {
       return false;
     }
   }
+  if (cudaEventCreateWithFlags(&multi_stream_sync_, cudaEventDisableTiming) !=
+      cudaSuccess) {
+    *message =
+        "CUDA initialization failed because CUDA::cudaEventCreateWithFlags "
+        "failed.";
+    TearDown();
+    return false;
+  }
   event_logger.AddEvent("cudaStreamCreateWithFlags");
   if (cusolverDnSetStream(cusolver_handle_, DefaultStream()) !=
           CUSOLVER_STATUS_SUCCESS ||
@@ -169,6 +181,38 @@ bool ContextImpl::InitCuda(std::string* message) {
   is_cuda_initialized_ = true;
   return true;
 }
+
+ContextImpl::MultiStreamBarrier ContextImpl::InsertCudaBarrier() {
+  return MultiStreamBarrier(this);
+}
+
+ContextImpl::MultiStreamBarrier::MultiStreamBarrier(ContextImpl* context)
+    : context_(context) {
+  // Ensure that any next operation in any non-default stream can start only
+  // after all existing operations in default stream are completed
+  CHECK_EQ(
+      cudaSuccess,
+      cudaEventRecord(context_->multi_stream_sync_, context_->streams_[0]));
+  for (int i = 1; i < ContextImpl::kNumCudaStreams; ++i) {
+    CHECK_EQ(cudaSuccess,
+             cudaStreamWaitEvent(context_->streams_[i],
+                                 context_->multi_stream_sync_));
+  }
+}
+
+ContextImpl::MultiStreamBarrier::~MultiStreamBarrier() {
+  // Ensure that any next operation in default stream can start only after all
+  // existing operations in any non-default stream are completed
+  for (int i = 1; i < ContextImpl::kNumCudaStreams; ++i) {
+    CHECK_EQ(
+        cudaSuccess,
+        cudaEventRecord(context_->multi_stream_sync_, context_->streams_[i]));
+    CHECK_EQ(cudaSuccess,
+             cudaStreamWaitEvent(context_->streams_[0],
+                                 context_->multi_stream_sync_));
+  }
+}
+
 #endif  // CERES_NO_CUDA
 
 ContextImpl::~ContextImpl() {

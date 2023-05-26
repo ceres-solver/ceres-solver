@@ -81,10 +81,6 @@ class CERES_NO_EXPORT CudaBlockSparseCRSView {
   bool IsCrsCompatible() const { return is_crs_compatible_; }
 
  private:
-  // Value permutation kernel performs a single element-wise operation per
-  // thread, thus performing permutation in blocks of 8 megabytes of
-  // block-sparse  values seems reasonable
-  static constexpr int kMaxTemporaryArraySize = 1 * 1024 * 1024;
   std::unique_ptr<CudaSparseMatrix> crs_matrix_;
   // Only created if block-sparse matrix has non-CRS value layout
   std::unique_ptr<CudaStreamedBuffer<double>> streamed_buffer_;
