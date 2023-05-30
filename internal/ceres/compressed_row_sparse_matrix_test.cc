@@ -303,7 +303,7 @@ TEST(CompressedRowSparseMatrix, Transpose) {
   cols[16] = 2;
   rows[5] = 17;
 
-  std::copy(values, values + 17, cols);
+  std::iota(values, values + 17, 1);
 
   auto transpose = matrix.Transpose();
 
