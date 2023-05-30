@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "75abf2b8_278a3a89",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-30T08:27:49Z",
+      "side": 1,
+      "message": "With std::copy(first_src, last_src, first_dst) the structure of matrix was destroyed (instead of filling array of values); we were not catching it because values array is zero-initialized (by std::vector), thus all the following code is well-formed (but matrix structure makes no sense and all values are zeros).\n\nReplaced with std::iota.",
+      "revId": "04ab515f5a9f0240af8fb5a4351ea20025331417",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
