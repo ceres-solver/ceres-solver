@@ -824,9 +824,9 @@ double* BlockSparseMatrix::AllocateValues(int size) {
 #endif
 };
 
-void BlockSparseMatrix::FreeValues(double* values) {
+void BlockSparseMatrix::FreeValues(double*& values) {
   if (!use_page_locked_memory_) {
-    delete values;
+    delete[] values;
     values = nullptr;
     return;
   }

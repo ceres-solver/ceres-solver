@@ -163,7 +163,7 @@ class CERES_NO_EXPORT BlockSparseMatrix final : public SparseMatrix {
 
  private:
   double* AllocateValues(int size);
-  void FreeValues(double* values);
+  void FreeValues(double*& values);
 
   const bool use_page_locked_memory_;
   int num_rows_;
