@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "27921ee5_bfb8b6df",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-05-30T08:37:40Z",
+      "side": 1,
+      "message": "- new[] allocation is matched with delete[] de-allocation\n- pointer is passed by reference into FreeValues (because FreeValues sets it to nullptr)",
+      "revId": "d880df09f9fe34493a0f6d4ef2eb14884407dde9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
