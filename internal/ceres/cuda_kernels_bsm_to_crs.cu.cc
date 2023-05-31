@@ -40,6 +40,43 @@
 namespace ceres {
 namespace internal {
 
+namespace {
+inline auto ThrustCudaStreamExecutionPolicy(cudaStream_t stream) {
+  // par_nosync execution policy was added in Thrust 1.16
+  // https://github.com/NVIDIA/thrust/blob/main/CHANGELOG.md#thrust-1160
+#if THRUST_VERSION < 101700
+  return thrust::cuda::par.on(stream);
+#else
+  return thrust::cuda::par_nosync.on(stream);
+#endif
+}
+// Allocate temporary memory on gpu, avoiding synchronization if possible
+template <typename T>
+T* AllocateTemporaryMemory(size_t num_elements, cudaStream_t stream) {
+  T* data;
+  // Stream-ordered alloactions are available since CUDA 11.4
+#if CUDART_VERSION < 11040
+#warning \
+    "Stream-ordered allocations are unavailable, consider updating CUDA toolkit"
+  cudaMalloc(&data, sizeof(T) * num_elements);
+#else
+  cudaMallocAsync(&data, sizeof(T) * num_elements, stream);
+#endif
+  return data;
+}
+
+void FreeTemporaryMemory(void* data, cudaStream_t stream) {
+  // Stream-ordered alloactions are available since CUDA 11.4
+#if CUDART_VERSION < 11040
+#warning \
+    "Stream-ordered allocations are unavailable, consider updating CUDA toolkit"
+  cudaFree(data);
+#else
+  cudaFreeAsync(data, stream);
+#endif
+}
+}  // namespace
+
 // Fill row block id and nnz for each row using block-sparse structure
 // represented by a set of flat arrays.
 // Inputs:
@@ -144,8 +181,7 @@ void FillCRSStructure(const int num_row_blocks,
                       cudaStream_t stream) {
   // Set number of non-zeros per row in rows array and row to row-block map in
   // row_block_ids array
-  int* row_block_ids;
-  cudaMallocAsync(&row_block_ids, sizeof(int) * num_rows, stream);
+  int* row_block_ids = AllocateTemporaryMemory<int>(num_rows, stream);
   const int num_blocks_blockwise = NumBlocksInGrid(num_row_blocks + 1);
   RowBlockIdAndNNZ<<<num_blocks_blockwise, kCudaBlockSize, 0, stream>>>(
       num_row_blocks,
@@ -157,7 +193,7 @@ void FillCRSStructure(const int num_row_blocks,
       row_block_ids);
   // Finalize row-index array of CRS strucure by computing prefix sum
   thrust::inclusive_scan(
-      thrust::cuda::par_nosync.on(stream), rows, rows + num_rows + 1, rows);
+      ThrustCudaStreamExecutionPolicy(stream), rows, rows + num_rows + 1, rows);
 
   // Fill cols array of CRS structure and permutation from block-sparse to CRS
   const int num_blocks_rowwise = NumBlocksInGrid(num_rows);
@@ -172,7 +208,7 @@ void FillCRSStructure(const int num_row_blocks,
                                            row_block_ids,
                                            rows,
                                            cols);
-  cudaFreeAsync(row_block_ids, stream);
+  FreeTemporaryMemory(row_block_ids, stream);
 }
 
 template <typename T, typename Predicate>
