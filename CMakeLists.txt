@@ -152,6 +152,7 @@ option(BUILD_DOCUMENTATION "Build User's Guide (html)" OFF)
 option(BUILD_EXAMPLES "Build examples" ON)
 option(BUILD_BENCHMARKS "Build Ceres benchmarking suite" ON)
 option(BUILD_SHARED_LIBS "Build Ceres as a shared library." OFF)
+option(BUILD_PKG_CONFIG "Build pkg-config manifest" ON)
 option(PROVIDE_UNINSTALL_TARGET "Add a custom target to ease removal of installed targets" ON)
 set(SANITIZERS "" CACHE STRING "Semicolon-separated list of sanitizers to use (e.g address, memory, thread)")
 include(EnableSanitizer)
@@ -492,6 +493,36 @@ if (BUILD_SHARED_LIBS)
 else (BUILD_SHARED_LIBS)
   message("-- Building Ceres as a static library.")
 endif (BUILD_SHARED_LIBS)
+
+# Build a pkg-config(1) manifest if enabled...
+if (BUILD_PKG_CONFIG)
+
+  FUNCTION(JOIN_PATHS joined_path first_path_segment)
+    SET(temp_path "${first_path_segment}")
+    FOREACH(current_segment IN LISTS ARGN)
+      IF(NOT ("${current_segment}" STREQUAL ""))
+        IF(IS_ABSOLUTE "${current_segment}")
+          SET(temp_path "${current_segment}")
+        ELSE()
+          SET(temp_path "${temp_path}/${current_segment}")
+        ENDIF()
+      ENDIF()
+    ENDFOREACH()
+    SET(${joined_path} "${temp_path}" PARENT_SCOPE)
+  ENDFUNCTION()
+
+  JOIN_PATHS(libdir_for_pc_file "\${exec_prefix}" "${CMAKE_INSTALL_LIBDIR}")
+  JOIN_PATHS(includedir_for_pc_file "\${prefix}" "${CMAKE_INSTALL_INCLUDEDIR}")
+
+  CONFIGURE_FILE(
+    "libceres.pc.in"
+    "libceres.pc"
+    @ONLY)
+
+  INSTALL(FILES "${CMAKE_CURRENT_BINARY_DIR}/libceres.pc"
+  DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+
+endif (BUILD_PKG_CONFIG)
 
 # Change the default build type from Debug to Release, while still
 # supporting overriding the build type.

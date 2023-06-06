@@ -1,0 +1,13 @@
+prefix=@CMAKE_INSTALL_PREFIX@
+exec_prefix=@CMAKE_INSTALL_PREFIX@
+libdir=@libdir_for_pc_file@
+includedir=@includedir_for_pc_file@
+
+Name: libceres
+Description: A large scale non-linear optimization library.
+Version: @CERES_VERSION@
+URL: http://ceres-solver.org/
+Libs: -L${libdir} -lceres
+Cflags: -I${includedir}
+Requires: eigen3 >= 3.3.4
+
