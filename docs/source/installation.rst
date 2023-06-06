@@ -1074,6 +1074,96 @@ Ceres) to invoke ``find_package(Ceres)`` in ``FooConfig.cmake``, thus
     include(CMakeFindDependencyMacro)
     find_dependency(Ceres)
 
+Using Ceres with pkg-config
+===========================
+
+If you would like to provide your project's build environment with the necessary
+compiler and linker flags in a portable manner, the library by default when
+built enables ``BUILD_PKG_CONFIG`` and will generate a
+`pkg-config manifest <https://www.freedesktop.org/wiki/Software/pkg-config>`__
+``libcpuinfo.pc``. Here are several examples of how to use it:
+
+Command Line
+------------
+
+If you used your distro's package manager to install the library, you can verify
+that it is available to your build environment like so:
+
+.. code-block:: bash
+
+    $ pkg-config --cflags --libs libceres
+    -I/usr/include/ceres -I/usr/include/eigen3 -L/usr/lib -lceres
+
+If you have installed the library from source into a non-standard prefix,
+pkg-config may need help finding it:
+
+.. code-block:: bash
+
+    $ PKG_CONFIG_PATH="/home/me/projects/cpuinfo/prefix/lib/pkgconfig/:$PKG_CONFIG_PATH" pkg-config --cflags --libs libceres
+    -I/usr/include/ceres -I/usr/include/eigen3 -L/usr/lib -lceres
+
+GNU Autotools
+-------------
+
+To `use <https://autotools.io/pkgconfig/pkg_check_modules.html>`__ with the GNU
+Autotools include the following snippet in your project's ``configure.ac``:
+
+.. code-block:: makefile
+
+    # Ceres Solver...
+    PKG_CHECK_MODULES(
+        [libceres], [libceres >= 2.2.0], [],
+        [AC_MSG_ERROR([libceres missing...])])
+    YOURPROJECT_CXXFLAGS="$YOURPROJECT_CXXFLAGS $libceres_CFLAGS"
+    YOURPROJECT_LIBS="$YOURPROJECT_LIBS $libceres_LIBS"
+
+Meson
+-----
+
+To use with Meson you just need to add ``dependency('libceres')`` as a dependency for your executable.
+
+.. code-block:: python
+
+    project(
+        'MyCeresSolverProject',
+        'cpp',
+        meson_version: '>=0.55.0'
+    )
+    executable(
+        'MyCeresSolverExecutable',
+        sources: 'main.cpp',
+        dependencies: dependency('libceres')
+    )
+
+CMake
+-----
+
+To use with CMake use the `FindPkgConfig <https://cmake.org/cmake/help/latest/module/FindPkgConfig.html>`__ module.
+Here is an example:
+
+.. code-block:: cmake
+
+    cmake_minimum_required(VERSION 3.6)
+    project("MyCeresSolverProject")
+    find_package(PkgConfig)
+    pkg_check_modules(Ceres REQUIRED IMPORTED_TARGET libceres)
+    add_executable(${PROJECT_NAME} main.cpp)
+    target_link_libraries(${PROJECT_NAME} PkgConfig::Ceres)
+
+Makefile
+--------
+
+To use within a vanilla makefile, you can call ``pkg-config`` directly to supply
+compiler and linker flags using shell substitution.
+
+.. code-block:: makefile
+
+    CXXFLAGS=-g3 -Wall -Wextra -Werror ...
+    LDFLAGS=-lfoo ...
+    ...
+    CXXFLAGS+= $(pkg-config --cflags libceres)
+    LDFLAGS+= $(pkg-config --libs libceres)
+
 .. _section-migration:
 
 Migration
