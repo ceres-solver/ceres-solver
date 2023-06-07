@@ -511,8 +511,8 @@ if (BUILD_PKG_CONFIG)
     SET(${joined_path} "${temp_path}" PARENT_SCOPE)
   ENDFUNCTION()
 
-  JOIN_PATHS(libdir_for_pc_file "\${exec_prefix}" "${CMAKE_INSTALL_LIBDIR}")
-  JOIN_PATHS(includedir_for_pc_file "\${prefix}" "${CMAKE_INSTALL_INCLUDEDIR}")
+  join_paths(libdir_for_pc_file "\${exec_prefix}" "${CMAKE_INSTALL_LIBDIR}")
+  join_paths(includedir_for_pc_file "\${prefix}" "${CMAKE_INSTALL_INCLUDEDIR}")
 
   CONFIGURE_FILE(
     "libceres.pc.in"
