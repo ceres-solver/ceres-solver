@@ -16,6 +16,172 @@
       "message": "Sergiu do you mind taking a look?",
       "revId": "89a94a8164479f9439835ab546f7305c838b128b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49d3ed3f_d6aa9033",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-06-07T18:51:29Z",
+      "side": 1,
+      "message": "Regular CMake build users will not need pkg-config support. Therefore, this option should default to `OFF`.",
+      "range": {
+        "startLine": 155,
+        "startChar": 52,
+        "endLine": 155,
+        "endChar": 54
+      },
+      "revId": "89a94a8164479f9439835ab546f7305c838b128b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67909fdf_ac02e6cc",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-06-07T18:51:29Z",
+      "side": 1,
+      "message": "Is this function really necessary for inserting a slash between the content of two variables? Why can\u0027t we compose the paths inline?",
+      "revId": "89a94a8164479f9439835ab546f7305c838b128b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c77aa46_9f726b74",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-06-07T18:51:29Z",
+      "side": 1,
+      "message": "Lowercase for all commands/functions etc.",
+      "range": {
+        "startLine": 514,
+        "startChar": 2,
+        "endLine": 514,
+        "endChar": 12
+      },
+      "revId": "89a94a8164479f9439835ab546f7305c838b128b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32a40a25_4c69d384",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-06-07T18:51:29Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be `ceres` to be consistent with the CMake package name?",
+      "range": {
+        "startLine": 518,
+        "startChar": 5,
+        "endLine": 518,
+        "endChar": 13
+      },
+      "revId": "89a94a8164479f9439835ab546f7305c838b128b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9eddd29_3be855c1",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1081,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-06-07T18:51:29Z",
+      "side": 1,
+      "message": "I don\u0027t agree with this rationale. I\u0027m not aware of any pkg-config use, e.g., under Windows. In this sense, CMake packages are therefore more portable than integration using pkg-config. There must be a different good reason for using pkg-config.",
+      "range": {
+        "startLine": 1081,
+        "startChar": 0,
+        "endLine": 1081,
+        "endChar": 46
+      },
+      "revId": "89a94a8164479f9439835ab546f7305c838b128b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69af1840_a29aa9f8",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1138,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-06-07T18:51:29Z",
+      "side": 1,
+      "message": "Users should not be encouraged to use Ceres in CMake through pkg-config. This will only cause confusion and result in unnecessary bug reports.",
+      "revId": "89a94a8164479f9439835ab546f7305c838b128b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "070a610e_60177000",
+        "filename": "libceres.pc.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-06-07T18:51:29Z",
+      "side": 1,
+      "message": "Shouldn\u0027t the name be rather `Ceres Solver` or just `ceres`?",
+      "range": {
+        "startLine": 6,
+        "startChar": 6,
+        "endLine": 6,
+        "endChar": 14
+      },
+      "revId": "89a94a8164479f9439835ab546f7305c838b128b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a99032a_adb13d9b",
+        "filename": "libceres.pc.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-06-07T18:51:29Z",
+      "side": 1,
+      "message": "The list of dependencies seems to be incomplete. Depending on the configuration, glog, gflags, LAPACK, CUDA, SuiteSparse, METIS etc. might be required.",
+      "revId": "89a94a8164479f9439835ab546f7305c838b128b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
