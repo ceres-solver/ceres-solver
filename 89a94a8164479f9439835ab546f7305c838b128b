@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2a475454_ae16023d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 6767
+      },
+      "writtenOn": "2023-06-08T22:27:11Z",
+      "side": 1,
+      "message": "In generating it the only resulting build artefact is a 374 byte pkg-config manifest file. Further, regular CMake users should get in the habit of using pkg-config manifests instead of relying on the build environment\u0027s ad hoc package management. It\u0027s an industry standard used across different development toolchains and platforms that originated with freedesktop.org.",
+      "parentUuid": "49d3ed3f_d6aa9033",
+      "range": {
+        "startLine": 155,
+        "startChar": 52,
+        "endLine": 155,
+        "endChar": 54
+      },
+      "revId": "89a94a8164479f9439835ab546f7305c838b128b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "67909fdf_ac02e6cc",
         "filename": "CMakeLists.txt",
         "patchSetId": 1
@@ -60,6 +84,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "568f9aa4_fc99aef2",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 6767
+      },
+      "writtenOn": "2023-06-08T22:27:11Z",
+      "side": 1,
+      "message": "If you have a more elegant means of doing this, such as with a built-in function, feel free to edit.",
+      "parentUuid": "67909fdf_ac02e6cc",
+      "revId": "89a94a8164479f9439835ab546f7305c838b128b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3c77aa46_9f726b74",
         "filename": "CMakeLists.txt",
         "patchSetId": 1
@@ -71,6 +113,30 @@
       "writtenOn": "2023-06-07T18:51:29Z",
       "side": 1,
       "message": "Lowercase for all commands/functions etc.",
+      "range": {
+        "startLine": 514,
+        "startChar": 2,
+        "endLine": 514,
+        "endChar": 12
+      },
+      "revId": "89a94a8164479f9439835ab546f7305c838b128b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ca31fba_385fa06c",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 6767
+      },
+      "writtenOn": "2023-06-08T22:27:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c77aa46_9f726b74",
       "range": {
         "startLine": 514,
         "startChar": 2,
@@ -106,6 +172,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0bd0dbc9_4ea30537",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 6767
+      },
+      "writtenOn": "2023-06-08T22:27:11Z",
+      "side": 1,
+      "message": "That\u0027s generally not how pkg-config manifests are labelled, although there are some that do that. The reason why it\u0027s better to use libfoo rather than foo is because there may be situations where the two refer to different packages, e.g. development headers and library versus some command line tools.\n\nSee as an example:\n\n$ ls -l /usr/lib/x86_64-linux-gnu/pkgconfig/lib*.pc\n-rw-r--r-- 1 root root  369 Apr  6  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libarchive.pc\n-rw-r--r-- 1 root root  245 Aug 31  2018 /usr/lib/x86_64-linux-gnu/pkgconfig/libart-2.0.pc\n-rw-r--r-- 1 root root  382 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libassuan.pc\n-rw-r--r-- 1 root root  742 May 18  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libavcodec.pc\n-rw-r--r-- 1 root root  701 May 18  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libavdevice.pc\n-rw-r--r-- 1 root root  878 May 18  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libavfilter.pc\n-rw-r--r-- 1 root root  489 May 18  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libavformat.pc\n-rw-r--r-- 1 root root  401 May 18  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libavutil.pc\n-rw-r--r-- 1 root root  301 Sep 20  2021 /usr/lib/x86_64-linux-gnu/pkgconfig/libbrasero-burn3.pc\n-rw-r--r-- 1 root root  295 Sep 20  2021 /usr/lib/x86_64-linux-gnu/pkgconfig/libbrasero-media3.pc\n-rw-r--r-- 1 root root  275 Mar 23  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libbrotlicommon.pc\n-rw-r--r-- 1 root root  302 Mar 23  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libbrotlidec.pc\n-rw-r--r-- 1 root root  302 Mar 23  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libbrotlienc.pc\n-rw-r--r-- 1 root root  355 Jan 26  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libcaja-extension.pc\n-rw-r--r-- 1 root root  290 Jan 11 06:48 /usr/lib/x86_64-linux-gnu/pkgconfig/libcanberra-gtk3.pc\n-rw-r--r-- 1 root root  240 Jan 11 06:48 /usr/lib/x86_64-linux-gnu/pkgconfig/libcanberra.pc\n-rw-r--r-- 1 root root  268 Feb 16  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libchromaprint.pc\n-rw-r--r-- 1 root root  242 Jan 10  2021 /usr/lib/x86_64-linux-gnu/pkgconfig/libconfuse.pc\n-rw-r--r-- 1 root root  282 Feb 21  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libcpuinfo.pc\n-rw-r--r-- 1 root root  299 May 24 10:12 /usr/lib/x86_64-linux-gnu/pkgconfig/libcrypto.pc\nlrwxrwxrwx 1 root root   12 Dec 17  2021 /usr/lib/x86_64-linux-gnu/pkgconfig/libcrypt.pc -\u003e libxcrypt.pc\n-rw-r--r-- 1 root root  369 May 15 07:35 /usr/lib/x86_64-linux-gnu/pkgconfig/libcupsfilters.pc\n-rw-r--r-- 1 root root 1883 Mar 14 09:37 /usr/lib/x86_64-linux-gnu/pkgconfig/libcurl.pc\n-rw-r--r-- 1 root root  218 Mar 10  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libdeflate.pc\n-rw-r--r-- 1 root root  309 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libdmapsharing-3.0.pc\n-rw-r--r-- 1 root root  287 Dec  5  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libdrm_amdgpu.pc\n-rw-r--r-- 1 root root  309 Dec  5  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libdrm_intel.pc\n-rw-r--r-- 1 root root  340 Dec  5  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libdrm_nouveau.pc\n-rw-r--r-- 1 root root  255 Dec  5  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libdrm.pc\n-rw-r--r-- 1 root root  287 Dec  5  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libdrm_radeon.pc\n-rw-r--r-- 1 root root  255 Sep  6  2021 /usr/lib/x86_64-linux-gnu/pkgconfig/libdvdcss.pc\n-rw-r--r-- 1 root root  681 Mar 23  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libdw.pc\n-rw-r--r-- 1 root root  435 Jul  6  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libebackend-1.2.pc\n-rw-r--r-- 1 root root  388 Jul  6  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libebook-1.2.pc\n-rw-r--r-- 1 root root  382 Jul  6  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libebook-contacts-1.2.pc\n-rw-r--r-- 1 root root  355 Jul  6  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libecal-2.0.pc\n-rw-r--r-- 1 root root  479 Jul  6  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libedata-book-1.2.pc\n-rw-r--r-- 1 root root  508 Jul  6  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libedataserver-1.2.pc\n-rw-r--r-- 1 root root  651 Jul  6  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libedataserverui-1.2.pc\n-rw-r--r-- 1 root root  312 Jan 27  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libefa.pc\n-rw-r--r-- 1 root root  289 Mar 23  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libelf.pc\n-rw-r--r-- 1 root root  386 Aug 10  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libemail-engine.pc\n-rw-r--r-- 1 root root  243 Mar 31  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libevdev.pc\n-rw-r--r-- 1 root root  298 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libevent_core.pc\n-rw-r--r-- 1 root root  301 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libevent_extra.pc\n-rw-r--r-- 1 root root  379 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libevent_openssl.pc\n-rw-r--r-- 1 root root  334 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libevent.pc\n-rw-r--r-- 1 root root  371 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libevent_pthreads.pc\n-rw-r--r-- 1 root root  259 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libexif.pc\n-rw-r--r-- 1 root root  311 Aug 18  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libexslt.pc\n-rw-r--r-- 1 root root  214 Jan 17  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libffi.pc\n-rw-r--r-- 1 root root  222 Aug  3  2021 /usr/lib/x86_64-linux-gnu/pkgconfig/libflexver.pc\n-rw-r--r-- 1 root root  181 Mar 23  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libfl.pc\n-rw-r--r-- 1 root root  262 Aug 21  2021 /usr/lib/x86_64-linux-gnu/pkgconfig/libgadu.pc\n-rw-r--r-- 1 root root  643 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libgcrypt.pc\n-rw-r--r-- 1 root root  440 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libgdata.pc\n-rw-r--r-- 1 root root  486 Aug 24  2021 /usr/lib/x86_64-linux-gnu/pkgconfig/libglade-2.0.pc\n-rw-r--r-- 1 root root  329 Mar 22  2020 /usr/lib/x86_64-linux-gnu/pkgconfig/libglademm-2.4.pc\n-rw-r--r-- 1 root root  233 Nov  3  2021 /usr/lib/x86_64-linux-gnu/pkgconfig/libglog.pc\n-rw-r--r-- 1 root root  256 Jan  4  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libglvnd.pc\n-rw-r--r-- 1 root root  316 Mar  9  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libgnomecanvas-2.0.pc\n-rw-r--r-- 1 root root  420 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libgphoto2.pc\n-rw-r--r-- 1 root root  385 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libgphoto2_port.pc\n-rw-r--r-- 1 root root  340 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libgpod-1.0.pc\n-rw-r--r-- 1 root root  267 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libgtop-2.0.pc\n-rw-r--r-- 1 root root  283 Feb  2  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libgxps.pc\n-rw-r--r-- 1 root root  244 Mar 18  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libhandy-1.pc\n-rw-r--r-- 1 root root  570 Jan 27  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libibverbs.pc\n-rw-r--r-- 1 root root  293 Feb  8  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libical-glib.pc\n-rw-r--r-- 1 root root  303 Feb  8  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libical.pc\n-rw-r--r-- 1 root root  245 Nov 26  2015 /usr/lib/x86_64-linux-gnu/pkgconfig/libIDL-2.0.pc\n-rw-r--r-- 1 root root  287 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libidn2.pc\n-rw-r--r-- 1 root root  829 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libidn.pc\n-rw-r--r-- 1 root root  375 Jan 14  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libimobiledevice-1.0.pc\nlrwxrwxrwx 1 root root   23 Jan 14  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libimobiledevice.pc -\u003e libimobiledevice-1.0.pc\n-rw-r--r-- 1 root root  195 Jan 11 22:58 /usr/lib/x86_64-linux-gnu/pkgconfig/libinput.pc\n-rw-r--r-- 1 root root  238 Feb 21  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libjpeg.pc\n-rw-r--r-- 1 root root  323 Mar 16  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libKF5Attica.pc\n-rw-r--r-- 1 root root  407 Apr  8  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/liblzma.pc\n-rw-r--r-- 1 root root  314 Jan 27  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libmlx4.pc\n-rw-r--r-- 1 root root  315 Jan 27  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libmlx5.pc\n-rw-r--r-- 1 root root  356 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libmtp.pc\n-rw-r--r-- 1 root root  319 Jan 25  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libnemo-extension.pc\n-rw-r--r-- 1 root root  238 Feb  7  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libnl-3.0.pc\n-rw-r--r-- 1 root root  252 Feb  7  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libnl-genl-3.0.pc\n-rw-r--r-- 1 root root  261 Feb  7  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libnl-route-3.0.pc\n-rw-r--r-- 1 root root  263 Apr 27  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libnotify.pc\n-rw-r--r-- 1 root root  306 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libnsl.pc\n-rw-r--r-- 1 root root  356 Jan 16  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libopenjp2.pc\n-rw-r--r-- 1 root root  383 Jan 16  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libopenjp3d.pc\n-rw-r--r-- 1 root root  429 Jan 16  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libopenjpip.pc\n-rw-r--r-- 1 root root  241 Aug 29  2021 /usr/lib/x86_64-linux-gnu/pkgconfig/libpci.pc\n-rw-r--r-- 1 root root  334 May 17  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libpcre16.pc\n-rw-r--r-- 1 root root  350 Sep 20  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libpcre2-16.pc\n-rw-r--r-- 1 root root  350 Sep 20  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libpcre2-32.pc\n-rw-r--r-- 1 root root  347 Sep 20  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libpcre2-8.pc\n-rw-r--r-- 1 root root  316 Sep 20  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libpcre2-posix.pc\n-rw-r--r-- 1 root root  334 May 17  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libpcre32.pc\n-rw-r--r-- 1 root root  275 May 17  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libpcrecpp.pc\n-rw-r--r-- 1 root root  329 May 17  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libpcre.pc\n-rw-r--r-- 1 root root  317 May 17  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libpcreposix.pc\n-rw-r--r-- 1 root root  352 Mar 21  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libpeas-1.0.pc\n-rw-r--r-- 1 root root  431 Mar 21  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libpeas-gtk-1.0.pc\n-rw-r--r-- 1 root root  322 Mar 25 11:49 /usr/lib/x86_64-linux-gnu/pkgconfig/libpistache.pc\n-rw-r--r-- 1 root root  271 Jan 13  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libplist-2.0.pc\nlrwxrwxrwx 1 root root   15 Jan 13  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libplist.pc -\u003e libplist-2.0.pc\n-rw-r--r-- 1 root root  271 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libpng16.pc\nlrwxrwxrwx 1 root root   11 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libpng.pc -\u003e libpng16.pc\n-rw-r--r-- 1 root root  324 May 18  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libpostproc.pc\n-rw-r--r-- 1 root root  298 May 16 05:37 /usr/lib/x86_64-linux-gnu/pkgconfig/libpq.pc\n-rw-r--r-- 1 root root  309 Mar 24  2020 /usr/lib/x86_64-linux-gnu/pkgconfig/libpqxx.pc\n-rw-r--r-- 1 root root  299 Mar 23  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libprofiler.pc\n-rw-r--r-- 1 root root  264 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libpsl.pc\n-rw-r--r-- 1 root root  243 Aug 16  2021 /usr/lib/x86_64-linux-gnu/pkgconfig/libpst.pc\n-rw-r--r-- 1 root root  355 Feb 15 18:19 /usr/lib/x86_64-linux-gnu/pkgconfig/libpulse-mainloop-glib.pc\n-rw-r--r-- 1 root root  340 Feb 15 18:19 /usr/lib/x86_64-linux-gnu/pkgconfig/libpulse.pc\n-rw-r--r-- 1 root root  345 Feb 15 18:19 /usr/lib/x86_64-linux-gnu/pkgconfig/libpulse-simple.pc\n-rw-r--r-- 1 root root  249 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libraw1394.pc\n-rw-r--r-- 1 root root  309 Jan 22  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/librsvg-2.0.pc\n-rw-r--r-- 1 root root  279 Dec 12 03:52 /usr/lib/x86_64-linux-gnu/pkgconfig/libsasl2.pc\n-rw-r--r-- 1 root root 1021 Mar 17  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libseccomp.pc\n-rw-r--r-- 1 root root  425 Feb 23  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libsecret-1.pc\n-rw-r--r-- 1 root root  344 Feb 23  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libsecret-unstable.pc\n-rw-r--r-- 1 root root  274 Mar 17  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libselinux.pc\n-rw-r--r-- 1 root root  248 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libsepol.pc\n-rw-r--r-- 1 root root  544 Dec 27  2021 /usr/lib/x86_64-linux-gnu/pkgconfig/libsoup-2.4.pc\n-rw-r--r-- 1 root root  224 Feb 13  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libspectre.pc\n-rw-r--r-- 1 root root  280 May 24 10:12 /usr/lib/x86_64-linux-gnu/pkgconfig/libssl.pc\n-rw-r--r-- 1 root root  281 Mar 25  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libstartup-notification-1.0.pc\n-rw-r--r-- 1 root root  261 Jan 30  2021 /usr/lib/x86_64-linux-gnu/pkgconfig/libsubunit.pc\n-rw-r--r-- 1 root root  336 May 18  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libswresample.pc\n-rw-r--r-- 1 root root  322 May 18  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libswscale.pc\n-rw-r--r-- 1 root root  590 Mar 20 07:32 /usr/lib/x86_64-linux-gnu/pkgconfig/libsystemd.pc\n-rw-r--r-- 1 root root 1111 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libtasn1.pc\n-rw-r--r-- 1 root root  305 Mar 23  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libtcmalloc_debug.pc\n-rw-r--r-- 1 root root  313 Mar 23  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libtcmalloc_minimal_debug.pc\n-rw-r--r-- 1 root root  307 Mar 23  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libtcmalloc_minimal.pc\n-rw-r--r-- 1 root root  299 Mar 23  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libtcmalloc.pc\n-rw-r--r-- 1 root root  244 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libthai.pc\n-rw-r--r-- 1 root root  317 Mar  3 08:17 /usr/lib/x86_64-linux-gnu/pkgconfig/libtiff-4.pc\n-rw-r--r-- 1 root root  269 Jul 25  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libtirpc.pc\n-rw-r--r-- 1 root root  558 Mar 20 07:32 /usr/lib/x86_64-linux-gnu/pkgconfig/libudev.pc\n-rw-r--r-- 1 root root  297 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libunwind-coredump.pc\n-rw-r--r-- 1 root root  276 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libunwind-generic.pc\n-rw-r--r-- 1 root root  258 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libunwind.pc\n-rw-r--r-- 1 root root  291 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libunwind-ptrace.pc\n-rw-r--r-- 1 root root  329 May 13  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libusb-1.0.pc\n-rw-r--r-- 1 root root  291 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libusbmuxd-2.0.pc\nlrwxrwxrwx 1 root root   17 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libusbmuxd.pc -\u003e libusbmuxd-2.0.pc\n-rw-r--r-- 1 root root  212 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libusb.pc\n-rw-r--r-- 1 root root  289 Jan 15  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libuv.pc\n-rw-r--r-- 1 root root  298 Jan 15  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libuv-static.pc\n-rw-r--r-- 1 root root  258 Mar 31  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libwacom.pc\n-rw-r--r-- 1 root root  350 Feb  4  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libwmf.pc\n-rw-r--r-- 1 root root  361 Mar 24  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libwnck-3.0.pc\n-rw-r--r-- 1 root root  389 Dec 17  2021 /usr/lib/x86_64-linux-gnu/pkgconfig/libxcrypt.pc\n-rw-r--r-- 1 root root  389 Oct 30  2021 /usr/lib/x86_64-linux-gnu/pkgconfig/libxfce4kbd-private-3.pc\n-rw-r--r-- 1 root root  387 Aug 15  2021 /usr/lib/x86_64-linux-gnu/pkgconfig/libxfce4panel-2.0.pc\n-rw-r--r-- 1 root root  423 Feb 15  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libxfce4sensors-1.0.pc\n-rw-r--r-- 1 root root  282 Oct 30  2021 /usr/lib/x86_64-linux-gnu/pkgconfig/libxfce4ui-2.pc\n-rw-r--r-- 1 root root  280 Dec 23  2020 /usr/lib/x86_64-linux-gnu/pkgconfig/libxfce4util-1.0.pc\n-rw-r--r-- 1 root root  332 Dec 23  2020 /usr/lib/x86_64-linux-gnu/pkgconfig/libxfconf-0.pc\n-rw-r--r-- 1 root root  308 Apr 14 04:19 /usr/lib/x86_64-linux-gnu/pkgconfig/libxml-2.0.pc\n-rw-r--r-- 1 root root  266 Aug 18  2022 /usr/lib/x86_64-linux-gnu/pkgconfig/libxslt.pc\n-rw-r--r-- 1 root root  268 Sep 22  2021 /usr/lib/x86_64-linux-gnu/pkgconfig/libytnef.pc",
+      "parentUuid": "32a40a25_4c69d384",
+      "range": {
+        "startLine": 518,
+        "startChar": 5,
+        "endLine": 518,
+        "endChar": 13
+      },
+      "revId": "89a94a8164479f9439835ab546f7305c838b128b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e9eddd29_3be855c1",
         "filename": "docs/source/installation.rst",
         "patchSetId": 1
@@ -117,6 +207,30 @@
       "writtenOn": "2023-06-07T18:51:29Z",
       "side": 1,
       "message": "I don\u0027t agree with this rationale. I\u0027m not aware of any pkg-config use, e.g., under Windows. In this sense, CMake packages are therefore more portable than integration using pkg-config. There must be a different good reason for using pkg-config.",
+      "range": {
+        "startLine": 1081,
+        "startChar": 0,
+        "endLine": 1081,
+        "endChar": 46
+      },
+      "revId": "89a94a8164479f9439835ab546f7305c838b128b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08c2c39e_59e80920",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1081,
+      "author": {
+        "id": 6767
+      },
+      "writtenOn": "2023-06-08T22:27:11Z",
+      "side": 1,
+      "message": "Sergiu, I recommend reading up on pkg-config(1) and its history. It\u0027s ubiquitous and has been for many years for doing exactly what is stated. It\u0027s not a controversial statement to make either.\n\nPeople do use it on Windows as well, but they may not be using the official freedesktop.org implementation. There is another implementation that doesn\u0027t depend on glib2.\n\nCMake packages are by definition not portable. They are specific to CMake. The standard approach to a build environment agnostic is to use pkg-config because support for it in virtually all major build environments is already available, as noted in the documentation I patched.",
+      "parentUuid": "e9eddd29_3be855c1",
       "range": {
         "startLine": 1081,
         "startChar": 0,
@@ -146,6 +260,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "94f98eae_8ec47343",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1138,
+      "author": {
+        "id": 6767
+      },
+      "writtenOn": "2023-06-08T22:27:11Z",
+      "side": 1,
+      "message": "I disagree for the reason given above. Users should never get in the habit of relying on CMake specific packages. Many libraries don\u0027t have specific CMake integration, but do support build environment agnostic integration via pkg-config. \n\nBut regardless, these instructions don\u0027t constitute an \"endorsement\". It\u0027s information simply for those who want to use the library via pkg-config.",
+      "parentUuid": "69af1840_a29aa9f8",
+      "revId": "89a94a8164479f9439835ab546f7305c838b128b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "070a610e_60177000",
         "filename": "libceres.pc.in",
         "patchSetId": 1
@@ -169,6 +301,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cf72071c_024197dd",
+        "filename": "libceres.pc.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 6767
+      },
+      "writtenOn": "2023-06-08T22:27:11Z",
+      "side": 1,
+      "message": "No, see comment #518. The former is definitely not common because it has a space in it. The latter is more common, but the lib- prefix is the most common for development libraries.",
+      "parentUuid": "070a610e_60177000",
+      "range": {
+        "startLine": 6,
+        "startChar": 6,
+        "endLine": 6,
+        "endChar": 14
+      },
+      "revId": "89a94a8164479f9439835ab546f7305c838b128b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3a99032a_adb13d9b",
         "filename": "libceres.pc.in",
         "patchSetId": 1
@@ -180,6 +336,24 @@
       "writtenOn": "2023-06-07T18:51:29Z",
       "side": 1,
       "message": "The list of dependencies seems to be incomplete. Depending on the configuration, glog, gflags, LAPACK, CUDA, SuiteSparse, METIS etc. might be required.",
+      "revId": "89a94a8164479f9439835ab546f7305c838b128b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0466738b_ad0ea97f",
+        "filename": "libceres.pc.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 6767
+      },
+      "writtenOn": "2023-06-08T22:27:11Z",
+      "side": 1,
+      "message": "These aren\u0027t runtime dependencies. These are compile time dependencies for client applications using the library. Other than the include path to libeigen3-dev\u0027s headers, can you check if the others are required?",
+      "parentUuid": "3a99032a_adb13d9b",
       "revId": "89a94a8164479f9439835ab546f7305c838b128b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
