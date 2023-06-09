@@ -386,6 +386,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a7f55053_e4850699",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1138,
+      "author": {
+        "id": 6767
+      },
+      "writtenOn": "2023-06-09T00:17:32Z",
+      "side": 1,
+      "message": "Good luck with your project, Sergiu.",
+      "parentUuid": "47e7340b_e41cb036",
+      "revId": "89a94a8164479f9439835ab546f7305c838b128b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "070a610e_60177000",
         "filename": "libceres.pc.in",
         "patchSetId": 1
