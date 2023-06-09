@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f72a213_3cb22fdc",
+        "filename": "libceres.pc.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-06-09T00:11:44Z",
+      "side": 1,
+      "message": "The version must match the one used to compile Ceres.",
+      "range": {
+        "startLine": 12,
+        "startChar": 20,
+        "endLine": 12,
+        "endChar": 25
+      },
+      "revId": "2e8b5a20c241a51892d140417e89e4c1de4b2590",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

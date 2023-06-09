@@ -67,6 +67,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f4a0e5cf_b270dbf2",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-06-09T00:11:44Z",
+      "side": 1,
+      "message": "It does not matter how large the generated artifact is or whether you believe pkg-config is an industry standard (which I disagree with). CMake users still do not need pkg-config support in general. Please default to `OFF`.",
+      "parentUuid": "2a475454_ae16023d",
+      "range": {
+        "startLine": 155,
+        "startChar": 52,
+        "endLine": 155,
+        "endChar": 54
+      },
+      "revId": "89a94a8164479f9439835ab546f7305c838b128b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "67909fdf_ac02e6cc",
         "filename": "CMakeLists.txt",
         "patchSetId": 1
@@ -96,6 +120,24 @@
       "side": 1,
       "message": "If you have a more elegant means of doing this, such as with a built-in function, feel free to edit.",
       "parentUuid": "67909fdf_ac02e6cc",
+      "revId": "89a94a8164479f9439835ab546f7305c838b128b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76e960ab_efa03084",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-06-09T00:11:44Z",
+      "side": 1,
+      "message": "This does not answer my question.",
+      "parentUuid": "568f9aa4_fc99aef2",
       "revId": "89a94a8164479f9439835ab546f7305c838b128b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -194,6 +236,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e10ddcc3_555b8f04",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-06-09T00:11:44Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "0bd0dbc9_4ea30537",
+      "range": {
+        "startLine": 518,
+        "startChar": 5,
+        "endLine": 518,
+        "endChar": 13
+      },
+      "revId": "89a94a8164479f9439835ab546f7305c838b128b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e9eddd29_3be855c1",
@@ -243,6 +309,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2598c7da_6871a39f",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1081,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-06-09T00:11:44Z",
+      "side": 1,
+      "message": "If I follow your definition of portability which is limited to the tool that enables it, then pkg-config configurations are not portable either because they rely on pkg-config, no?\n\nBesides that, pkg-config packages are not portable already because they assume GCC style compiler and linker option names which may not be available otherwise.",
+      "parentUuid": "08c2c39e_59e80920",
+      "range": {
+        "startLine": 1081,
+        "startChar": 0,
+        "endLine": 1081,
+        "endChar": 46
+      },
+      "revId": "89a94a8164479f9439835ab546f7305c838b128b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "69af1840_a29aa9f8",
         "filename": "docs/source/installation.rst",
         "patchSetId": 1
@@ -272,6 +362,24 @@
       "side": 1,
       "message": "I disagree for the reason given above. Users should never get in the habit of relying on CMake specific packages. Many libraries don\u0027t have specific CMake integration, but do support build environment agnostic integration via pkg-config. \n\nBut regardless, these instructions don\u0027t constitute an \"endorsement\". It\u0027s information simply for those who want to use the library via pkg-config.",
       "parentUuid": "69af1840_a29aa9f8",
+      "revId": "89a94a8164479f9439835ab546f7305c838b128b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47e7340b_e41cb036",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1138,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-06-09T00:11:44Z",
+      "side": 1,
+      "message": "The reasons given above are not sound. Also your agenda for changing the habits of CMake user is out of place.\n\nCMake users do not need an indirection through pkg-config since native and very well tested CMake support is available. Therefore, I do not see any good reason why someone would need such an indirection in CMake.\n\nUnless you can provide factual arguments for supporting an alternative CMake integration, the section is unnecessary.",
+      "parentUuid": "94f98eae_8ec47343",
       "revId": "89a94a8164479f9439835ab546f7305c838b128b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -323,6 +431,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b424257c_7237f4ab",
+        "filename": "libceres.pc.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-06-09T00:11:44Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "cf72071c_024197dd",
+      "range": {
+        "startLine": 6,
+        "startChar": 6,
+        "endLine": 6,
+        "endChar": 14
+      },
+      "revId": "89a94a8164479f9439835ab546f7305c838b128b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3a99032a_adb13d9b",
@@ -354,6 +486,24 @@
       "side": 1,
       "message": "These aren\u0027t runtime dependencies. These are compile time dependencies for client applications using the library. Other than the include path to libeigen3-dev\u0027s headers, can you check if the others are required?",
       "parentUuid": "3a99032a_adb13d9b",
+      "revId": "89a94a8164479f9439835ab546f7305c838b128b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a47fccf6_cfcb72f3",
+        "filename": "libceres.pc.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-06-09T00:11:44Z",
+      "side": 1,
+      "message": "The dependencies above can be both compile time and runtime.",
+      "parentUuid": "0466738b_ad0ea97f",
       "revId": "89a94a8164479f9439835ab546f7305c838b128b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
