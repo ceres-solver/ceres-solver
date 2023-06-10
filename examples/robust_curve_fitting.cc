@@ -147,7 +147,7 @@ int main(int argc, char** argv) {
   for (int i = 0; i < kNumObservations; ++i) {
     ceres::CostFunction* cost_function =
         new ceres::AutoDiffCostFunction<ExponentialResidual, 1, 1, 1>(
-            new ExponentialResidual(data[2 * i], data[2 * i + 1]));
+            data[2 * i], data[2 * i + 1]);
     problem.AddResidualBlock(cost_function, new ceres::CauchyLoss(0.5), &m, &c);
   }
 

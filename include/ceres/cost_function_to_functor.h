@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2024 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -94,8 +94,6 @@
 
 #include "ceres/cost_function.h"
 #include "ceres/dynamic_cost_function_to_functor.h"
-#include "ceres/internal/export.h"
-#include "ceres/internal/fixed_array.h"
 #include "ceres/internal/parameter_dims.h"
 #include "ceres/types.h"
 #include "glog/logging.h"
@@ -107,12 +105,16 @@ class CostFunctionToFunctor {
  public:
   // Takes ownership of cost_function.
   explicit CostFunctionToFunctor(CostFunction* cost_function)
-      : cost_functor_(cost_function) {
-    CHECK(cost_function != nullptr);
+      : CostFunctionToFunctor{std::unique_ptr<CostFunction>{cost_function}} {}
+
+  // Takes ownership of cost_function.
+  explicit CostFunctionToFunctor(std::unique_ptr<CostFunction> cost_function)
+      : cost_functor_(std::move(cost_function)) {
+    CHECK(cost_functor_.function() != nullptr);
     CHECK(kNumResiduals > 0 || kNumResiduals == DYNAMIC);
 
     const std::vector<int32_t>& parameter_block_sizes =
-        cost_function->parameter_block_sizes();
+        cost_functor_.function()->parameter_block_sizes();
     const int num_parameter_blocks = ParameterDims::kNumParameterBlocks;
     CHECK_EQ(static_cast<int>(parameter_block_sizes.size()),
              num_parameter_blocks);
