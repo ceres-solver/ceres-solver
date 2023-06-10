@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1609db6b_f782cd72",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-06-10T19:09:20Z",
+      "side": 1,
+      "message": "Currently, MinGW CI builds fail due to changes to standard headers in GCC 13.1; see https://github.com/ceres-solver/ceres-solver/actions/runs/5137202777/jobs/9244984191#step:7:54 for instance.",
+      "revId": "fd6197ce0ef5794bba455fe6f907dcdabcf624eb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
