@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2024 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -46,8 +46,7 @@
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
 TEST(NumericDiffCostFunction, EasyCaseFunctorCentralDifferences) {
   auto cost_function =
@@ -438,5 +437,28 @@ TEST(NumericDiffCostFunction, ParameterBlockConstant) {
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+struct MultiArgFunctor {
+  explicit MultiArgFunctor(int a, double c) {}
+  template <class T>
+  bool operator()(const T* params, T* residuals) const noexcept {
+    return false;
+  }
+};
+
+TEST(NumericDiffCostFunction, ArgumentForwarding) {
+  auto cost_function1 = std::make_unique<
+      NumericDiffCostFunction<EasyFunctor, CENTRAL, 3, 5, 5>>();
+  auto cost_function2 =
+      std::make_unique<NumericDiffCostFunction<MultiArgFunctor, CENTRAL, 1, 1>>(
+          1, 2);
+}
+
+TEST(NumericDiffCostFunction, UniquePtrCtor) {
+  auto cost_function1 =
+      std::make_unique<NumericDiffCostFunction<EasyFunctor, CENTRAL, 3, 5, 5>>(
+          std::make_unique<EasyFunctor>());
+  auto cost_function2 = std::make_unique<
+      NumericDiffCostFunction<EasyFunctor, CENTRAL, 3, 5, 5>>();
+}
+
+}  // namespace ceres::internal

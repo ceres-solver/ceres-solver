@@ -47,8 +47,7 @@ in Ceres.
 
     static ceres::FirstOrderFunction* Create() {
       constexpr int kNumParameters = 2;
-      return new ceres::AutoDiffFirstOrderFunction<Rosenbrock, kNumParameters>(
-          new Rosenbrock);
+      return new ceres::AutoDiffFirstOrderFunction<Rosenbrock, kNumParameters>();
     }
   };
 
@@ -161,8 +160,7 @@ follows [#f2]_.
       constexpr int kNumParameters = 2;
       return new ceres::NumericDiffFirstOrderFunction<Rosenbrock,
                                                       ceres::CENTRAL,
-                                                      kNumParameters>(
-          new Rosenbrock);
+                                                      kNumParameters>();
     }
   };
 
@@ -177,8 +175,6 @@ non-linear least squares problems [#f3]_.
   // f(x,y) = (1-x)^2 + 100(y - x^2)^2;
   class Rosenbrock final  : public ceres::FirstOrderFunction {
     public:
-      ~Rosenbrock() override {}
-
       bool Evaluate(const double* parameters,
                              double* cost,
                              double* gradient) const override {

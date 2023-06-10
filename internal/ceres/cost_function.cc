@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2024 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -33,6 +33,8 @@
 
 namespace ceres {
 
+CostFunction::CostFunction(CostFunction&& other) noexcept = default;
+CostFunction& CostFunction::operator=(CostFunction&& other) noexcept = default;
 CostFunction::CostFunction() : num_residuals_(0) {}
 CostFunction::~CostFunction() = default;
 

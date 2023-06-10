@@ -33,6 +33,8 @@
 
 #include <algorithm>
 #include <memory>
+#include <type_traits>
+#include <utility>
 
 #include "ceres/first_order_function.h"
 #include "ceres/internal/eigen.h"
@@ -115,12 +117,37 @@ template <typename FirstOrderFunctor,
           int kNumParameters = DYNAMIC>
 class NumericDiffFirstOrderFunction final : public FirstOrderFunction {
  public:
+  template <class... Args,
+            bool kIsDynamic = kNumParameters == DYNAMIC,
+            std::enable_if_t<!kIsDynamic &&
+                             std::is_constructible_v<FirstOrderFunctor,
+                                                     Args&&...>>* = nullptr>
+  explicit NumericDiffFirstOrderFunction(Args&&... args)
+      : NumericDiffFirstOrderFunction{std::make_unique<FirstOrderFunction>(
+            std::forward<Args>(args)...)} {}
+
+  NumericDiffFirstOrderFunction(const NumericDiffFirstOrderFunction&) = delete;
+  NumericDiffFirstOrderFunction& operator=(
+      const NumericDiffFirstOrderFunction&) = delete;
+  NumericDiffFirstOrderFunction(
+      NumericDiffFirstOrderFunction&& other) noexcept = default;
+  NumericDiffFirstOrderFunction& operator=(
+      NumericDiffFirstOrderFunction&& other) noexcept = default;
+
   // Constructor for the case where the parameter size is known at compile time.
   explicit NumericDiffFirstOrderFunction(
       FirstOrderFunctor* functor,
       Ownership ownership = TAKE_OWNERSHIP,
       const NumericDiffOptions& options = NumericDiffOptions())
-      : functor_(functor),
+      : NumericDiffFirstOrderFunction{
+            std::unique_ptr<FirstOrderFunctor>{functor}, ownership, options} {}
+
+  // Constructor for the case where the parameter size is known at compile time.
+  explicit NumericDiffFirstOrderFunction(
+      std::unique_ptr<FirstOrderFunctor> functor,
+      Ownership ownership = TAKE_OWNERSHIP,
+      const NumericDiffOptions& options = NumericDiffOptions())
+      : functor_(std::move(functor)),
         num_parameters_(kNumParameters),
         ownership_(ownership),
         options_(options) {
@@ -137,7 +164,19 @@ class NumericDiffFirstOrderFunction final : public FirstOrderFunction {
       int num_parameters,
       Ownership ownership = TAKE_OWNERSHIP,
       const NumericDiffOptions& options = NumericDiffOptions())
-      : functor_(functor),
+      : NumericDiffFirstOrderFunction{
+            std::unique_ptr<FirstOrderFunctor>{functor},
+            num_parameters,
+            ownership,
+            options} {}
+
+  // Constructor for the case where the parameter size is specified at run time.
+  explicit NumericDiffFirstOrderFunction(
+      std::unique_ptr<FirstOrderFunctor> functor,
+      int num_parameters,
+      Ownership ownership = TAKE_OWNERSHIP,
+      const NumericDiffOptions& options = NumericDiffOptions())
+      : functor_(std::move(functor)),
         num_parameters_(num_parameters),
         ownership_(ownership),
         options_(options) {
@@ -206,9 +245,9 @@ class NumericDiffFirstOrderFunction final : public FirstOrderFunction {
 
  private:
   std::unique_ptr<FirstOrderFunctor> functor_;
-  const int num_parameters_;
-  const Ownership ownership_;
-  const NumericDiffOptions options_;
+  int num_parameters_;
+  Ownership ownership_;
+  NumericDiffOptions options_;
 };
 
 }  // namespace ceres

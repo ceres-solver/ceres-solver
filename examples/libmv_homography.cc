@@ -327,14 +327,10 @@ bool EstimateHomography2DFromCorrespondences(
   // Step 2: Refine matrix using Ceres minimizer.
   ceres::Problem problem;
   for (int i = 0; i < x1.cols(); i++) {
-    auto* homography_symmetric_geometric_cost_function =
-        new HomographySymmetricGeometricCostFunctor(x1.col(i), x2.col(i));
-
     problem.AddResidualBlock(
         new ceres::AutoDiffCostFunction<HomographySymmetricGeometricCostFunctor,
                                         4,  // num_residuals
-                                        9>(
-            homography_symmetric_geometric_cost_function),
+                                        9>(x1.col(i), x2.col(i)),
         nullptr,
         H->data());
   }

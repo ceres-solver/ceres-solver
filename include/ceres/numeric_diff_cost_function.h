@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2024 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -163,6 +163,7 @@
 
 #include <array>
 #include <memory>
+#include <type_traits>
 
 #include "Eigen/Dense"
 #include "ceres/cost_function.h"
@@ -171,7 +172,6 @@
 #include "ceres/numeric_diff_options.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 
 namespace ceres {
 
@@ -187,16 +187,41 @@ class NumericDiffCostFunction final
       Ownership ownership = TAKE_OWNERSHIP,
       int num_residuals = kNumResiduals,
       const NumericDiffOptions& options = NumericDiffOptions())
-      : functor_(functor), ownership_(ownership), options_(options) {
-    if (kNumResiduals == DYNAMIC) {
+      : NumericDiffCostFunction{std::unique_ptr<CostFunctor>{functor},
+                                ownership,
+                                num_residuals,
+                                options} {}
+
+  explicit NumericDiffCostFunction(
+      std::unique_ptr<CostFunctor> functor,
+      Ownership ownership = TAKE_OWNERSHIP,
+      int num_residuals = kNumResiduals,
+      const NumericDiffOptions& options = NumericDiffOptions())
+      : functor_(std::move(functor)), ownership_(ownership), options_(options) {
+    if constexpr (kNumResiduals == DYNAMIC) {
       SizedCostFunction<kNumResiduals, Ns...>::set_num_residuals(num_residuals);
     }
   }
 
-  NumericDiffCostFunction(NumericDiffCostFunction&& other)
-      : functor_(std::move(other.functor_)), ownership_(other.ownership_) {}
+  // Constructs the CostFunctor on the heap and takes the ownership.
+  template <class... Args,
+            std::enable_if_t<std::is_constructible_v<CostFunctor, Args&&...>>* =
+                nullptr>
+  explicit NumericDiffCostFunction(Args&&... args)
+      // NOTE We explicitly use direct initialization using parentheses instead
+      // of uniform initialization using braces to avoid narrowing conversion
+      // warnings.
+      : NumericDiffCostFunction{
+            std::make_unique<CostFunctor>(std::forward<Args>(args)...),
+            TAKE_OWNERSHIP} {}
 
-  virtual ~NumericDiffCostFunction() {
+  NumericDiffCostFunction(NumericDiffCostFunction&& other) noexcept = default;
+  NumericDiffCostFunction& operator=(NumericDiffCostFunction&& other) noexcept =
+      default;
+  NumericDiffCostFunction(const NumericDiffCostFunction&) = delete;
+  NumericDiffCostFunction& operator=(const NumericDiffCostFunction&) = delete;
+
+  ~NumericDiffCostFunction() override {
     if (ownership_ != TAKE_OWNERSHIP) {
       functor_.release();
     }

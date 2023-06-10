@@ -118,12 +118,13 @@ An implementation of the above three steps looks as follows:
        y[0] = y_in[0];
        y[1] = y_in[1];
 
-       compute_distortion.reset(new ceres::CostFunctionToFunctor<1, 1>(
-            new ceres::NumericDiffCostFunction<ComputeDistortionValueFunctor,
-                                               ceres::CENTRAL,
-                                               1,
-                                               1>(
-               new ComputeDistortionValueFunctor)));
+       compute_distortion = std::make_unique<ceres::CostFunctionToFunctor<1, 1>>(
+         std::make_unique<ceres::NumericDiffCostFunction<
+               ComputeDistortionValueFunctor
+             , ceres::CENTRAL, 1, 1
+           >
+         >()
+       );
      }
 
      template <typename T>
@@ -140,7 +141,7 @@ An implementation of the above three steps looks as follows:
 
      double x[2];
      double y[2];
-     std::unique_ptr<ceres::CostFunctionToFunctor<1, 1> > compute_distortion;
+     std::unique_ptr<ceres::CostFunctionToFunctor<1, 1>> compute_distortion;
    };
 
 
