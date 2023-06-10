@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2024 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -41,10 +41,10 @@
 #ifndef CERES_EXAMPLES_SNAVELY_REPROJECTION_ERROR_H_
 #define CERES_EXAMPLES_SNAVELY_REPROJECTION_ERROR_H_
 
+#include "ceres/autodiff_cost_function.h"
 #include "ceres/rotation.h"
 
-namespace ceres {
-namespace examples {
+namespace ceres::examples {
 
 // Templated pinhole camera model for used with Ceres.  The camera is
 // parameterized using 9 parameters: 3 for rotation, 3 for translation, 1 for
@@ -95,8 +95,8 @@ struct SnavelyReprojectionError {
   // the client code.
   static ceres::CostFunction* Create(const double observed_x,
                                      const double observed_y) {
-    return (new ceres::AutoDiffCostFunction<SnavelyReprojectionError, 2, 9, 3>(
-        new SnavelyReprojectionError(observed_x, observed_y)));
+    return new ceres::AutoDiffCostFunction<SnavelyReprojectionError, 2, 9, 3>(
+        observed_x, observed_y);
   }
 
   double observed_x;
@@ -160,20 +160,15 @@ struct SnavelyReprojectionErrorWithQuaternions {
   // the client code.
   static ceres::CostFunction* Create(const double observed_x,
                                      const double observed_y) {
-    return (
-        new ceres::AutoDiffCostFunction<SnavelyReprojectionErrorWithQuaternions,
-                                        2,
-                                        10,
-                                        3>(
-            new SnavelyReprojectionErrorWithQuaternions(observed_x,
-                                                        observed_y)));
+    return new ceres::
+        AutoDiffCostFunction<SnavelyReprojectionErrorWithQuaternions, 2, 10, 3>(
+            observed_x, observed_y);
   }
 
   double observed_x;
   double observed_y;
 };
 
-}  // namespace examples
-}  // namespace ceres
+}  // namespace ceres::examples
 
 #endif  // CERES_EXAMPLES_SNAVELY_REPROJECTION_ERROR_H_

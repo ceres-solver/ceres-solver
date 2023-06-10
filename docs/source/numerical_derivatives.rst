@@ -61,8 +61,7 @@ Ceres Solver. This is done in two steps:
   }
 
   CostFunction* cost_function =
-    new NumericDiffCostFunction<Rat43CostFunctor, FORWARD, 1, 4>(
-      new Rat43CostFunctor(x, y));
+    new NumericDiffCostFunction<Rat43CostFunctor, FORWARD, 1, 4>(x, y);
 
 This is about the minimum amount of work one can expect to do to
 define the cost function. The only thing that the user needs to do is

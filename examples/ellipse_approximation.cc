@@ -354,7 +354,7 @@ class EuclideanDistanceFunctor {
 
   static ceres::CostFunction* Create(const double sqrt_weight) {
     return new ceres::AutoDiffCostFunction<EuclideanDistanceFunctor, 2, 2, 2>(
-        new EuclideanDistanceFunctor(sqrt_weight));
+        sqrt_weight);
   }
 
  private:

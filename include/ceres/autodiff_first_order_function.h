@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2024 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -32,6 +32,7 @@
 #define CERES_PUBLIC_AUTODIFF_FIRST_ORDER_FUNCTION_H_
 
 #include <memory>
+#include <type_traits>
 
 #include "ceres/first_order_function.h"
 #include "ceres/internal/eigen.h"
@@ -106,9 +107,21 @@ class AutoDiffFirstOrderFunction final : public FirstOrderFunction {
  public:
   // Takes ownership of functor.
   explicit AutoDiffFirstOrderFunction(FirstOrderFunctor* functor)
-      : functor_(functor) {
+      : AutoDiffFirstOrderFunction{
+            std::unique_ptr<FirstOrderFunctor>{functor}} {}
+
+  explicit AutoDiffFirstOrderFunction(
+      std::unique_ptr<FirstOrderFunctor> functor)
+      : functor_(std::move(functor)) {
     static_assert(kNumParameters > 0, "kNumParameters must be positive");
   }
+
+  template <class... Args,
+            std::enable_if_t<std::is_constructible_v<FirstOrderFunctor,
+                                                     Args&&...>>* = nullptr>
+  explicit AutoDiffFirstOrderFunction(Args&&... args)
+      : AutoDiffFirstOrderFunction{
+            std::make_unique<FirstOrderFunctor>(std::forward<Args>(args)...)} {}
 
   bool Evaluate(const double* const parameters,
                 double* cost,

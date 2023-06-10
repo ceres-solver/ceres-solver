@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2024 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -176,6 +176,26 @@ TEST(AutoDiffCostFunction, PartiallyFilledResidualShouldFailEvaluation) {
   EXPECT_TRUE(cost_function->Evaluate(parameters, residuals, jacobians));
   EXPECT_FALSE(IsArrayValid(2, jacobian));
   EXPECT_FALSE(IsArrayValid(2, residuals));
+}
+
+TEST(AutodiffCostFunction, ArgumentForwarding) {
+  // No narrowing conversion warning should be emitted
+  auto cost_function1 =
+      std::make_unique<AutoDiffCostFunction<BinaryScalarCost, 1, 2, 2>>(1);
+  auto cost_function2 =
+      std::make_unique<AutoDiffCostFunction<BinaryScalarCost, 1, 2, 2>>(2.0);
+  // Default constructible functor
+  auto cost_function3 =
+      std::make_unique<AutoDiffCostFunction<OnlyFillsOneOutputFunctor, 1, 1>>();
+}
+
+TEST(AutodiffCostFunction, UniquePtrCtor) {
+  auto cost_function1 =
+      std::make_unique<AutoDiffCostFunction<BinaryScalarCost, 1, 2, 2>>(
+          std::make_unique<BinaryScalarCost>(1));
+  auto cost_function2 =
+      std::make_unique<AutoDiffCostFunction<BinaryScalarCost, 1, 2, 2>>(
+          std::make_unique<BinaryScalarCost>(2.0));
 }
 
 }  // namespace ceres::internal
