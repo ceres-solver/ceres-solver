@@ -112,7 +112,7 @@ Ceres solve it.
      // Set up the only cost function (also known as residual). This uses
      // auto-differentiation to obtain the derivative (jacobian).
      CostFunction* cost_function =
-         new AutoDiffCostFunction<CostFunctor, 1, 1>(new CostFunctor);
+         new AutoDiffCostFunction<CostFunctor, 1, 1>();
      problem.AddResidualBlock(cost_function, nullptr, &x);
 
      // Run the solver!
@@ -212,8 +212,7 @@ Which is added to the :class:`Problem` as:
 .. code-block:: c++
 
   CostFunction* cost_function =
-    new NumericDiffCostFunction<NumericDiffCostFunctor, ceres::CENTRAL, 1, 1>(
-        new NumericDiffCostFunctor);
+    new NumericDiffCostFunction<NumericDiffCostFunctor, ceres::CENTRAL, 1, 1>();
   problem.AddResidualBlock(cost_function, nullptr, &x);
 
 Notice the parallel from when we were using automatic differentiation
@@ -221,7 +220,7 @@ Notice the parallel from when we were using automatic differentiation
 .. code-block:: c++
 
   CostFunction* cost_function =
-      new AutoDiffCostFunction<CostFunctor, 1, 1>(new CostFunctor);
+      new AutoDiffCostFunction<CostFunctor, 1, 1>();
   problem.AddResidualBlock(cost_function, nullptr, &x);
 
 The construction looks almost identical to the one used for automatic
@@ -360,13 +359,13 @@ respectively. Using these, the problem can be constructed as follows:
   // Add residual terms to the problem using the autodiff
   // wrapper to get the derivatives automatically.
   problem.AddResidualBlock(
-    new AutoDiffCostFunction<F1, 1, 1, 1>(new F1), nullptr, &x1, &x2);
+    new AutoDiffCostFunction<F1, 1, 1, 1>(), nullptr, &x1, &x2);
   problem.AddResidualBlock(
-    new AutoDiffCostFunction<F2, 1, 1, 1>(new F2), nullptr, &x3, &x4);
+    new AutoDiffCostFunction<F2, 1, 1, 1>(), nullptr, &x3, &x4);
   problem.AddResidualBlock(
-    new AutoDiffCostFunction<F3, 1, 1, 1>(new F3), nullptr, &x2, &x3);
+    new AutoDiffCostFunction<F3, 1, 1, 1>(), nullptr, &x2, &x3);
   problem.AddResidualBlock(
-    new AutoDiffCostFunction<F4, 1, 1, 1>(new F4), nullptr, &x1, &x4);
+    new AutoDiffCostFunction<F4, 1, 1, 1>(), nullptr, &x1, &x4);
 
 
 Note that each ``ResidualBlock`` only depends on the two parameters
@@ -499,8 +498,8 @@ Assuming the observations are in a :math:`2n` sized array called
  Problem problem;
  for (int i = 0; i < kNumObservations; ++i) {
    CostFunction* cost_function =
-        new AutoDiffCostFunction<ExponentialResidual, 1, 1, 1>(
-            new ExponentialResidual(data[2 * i], data[2 * i + 1]));
+        new AutoDiffCostFunction<ExponentialResidual, 1, 1, 1>
+            (data[2 * i], data[2 * i + 1]);
    problem.AddResidualBlock(cost_function, nullptr, &m, &c);
  }
 
@@ -675,8 +674,8 @@ The details of this camera model can be found the `Bundler homepage
     // the client code.
     static ceres::CostFunction* Create(const double observed_x,
                                        const double observed_y) {
-      return (new ceres::AutoDiffCostFunction<SnavelyReprojectionError, 2, 9, 3>(
-                  new SnavelyReprojectionError(observed_x, observed_y)));
+      return new ceres::AutoDiffCostFunction<SnavelyReprojectionError, 2, 9, 3>
+        (observed_x, observed_y);
     }
 
    double observed_x;

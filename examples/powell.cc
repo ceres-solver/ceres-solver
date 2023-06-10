@@ -104,13 +104,13 @@ int main(int argc, char** argv) {
   // wrapper to get the derivatives automatically. The parameters, x1 through
   // x4, are modified in place.
   problem.AddResidualBlock(
-      new ceres::AutoDiffCostFunction<F1, 1, 1, 1>(new F1), nullptr, &x1, &x2);
+      new ceres::AutoDiffCostFunction<F1, 1, 1, 1>(), nullptr, &x1, &x2);
   problem.AddResidualBlock(
-      new ceres::AutoDiffCostFunction<F2, 1, 1, 1>(new F2), nullptr, &x3, &x4);
+      new ceres::AutoDiffCostFunction<F2, 1, 1, 1>(), nullptr, &x3, &x4);
   problem.AddResidualBlock(
-      new ceres::AutoDiffCostFunction<F3, 1, 1, 1>(new F3), nullptr, &x2, &x3);
+      new ceres::AutoDiffCostFunction<F3, 1, 1, 1>(), nullptr, &x2, &x3);
   problem.AddResidualBlock(
-      new ceres::AutoDiffCostFunction<F4, 1, 1, 1>(new F4), nullptr, &x1, &x4);
+      new ceres::AutoDiffCostFunction<F4, 1, 1, 1>(), nullptr, &x1, &x4);
 
   ceres::Solver::Options options;
   LOG_IF(FATAL,

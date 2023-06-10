@@ -81,46 +81,47 @@ static void SetNumericDiffOptions(ceres::NumericDiffOptions* options) {
       CERES_GET_FLAG(FLAGS_ridders_extrapolations);
 }
 
-#define BEGIN_MGH_PROBLEM(name, num_parameters, num_residuals)                \
-  struct name {                                                               \
-    static constexpr int kNumParameters = num_parameters;                     \
-    static const double initial_x[kNumParameters];                            \
-    static const double lower_bounds[kNumParameters];                         \
-    static const double upper_bounds[kNumParameters];                         \
-    static const double constrained_optimal_cost;                             \
-    static const double unconstrained_optimal_cost;                           \
-    static CostFunction* Create() {                                           \
-      if (CERES_GET_FLAG(FLAGS_use_numeric_diff)) {                           \
-        ceres::NumericDiffOptions options;                                    \
-        SetNumericDiffOptions(&options);                                      \
-        if (CERES_GET_FLAG(FLAGS_numeric_diff_method) == "central") {         \
-          return new NumericDiffCostFunction<name,                            \
-                                             ceres::CENTRAL,                  \
-                                             num_residuals,                   \
-                                             num_parameters>(                 \
-              new name, ceres::TAKE_OWNERSHIP, num_residuals, options);       \
-        } else if (CERES_GET_FLAG(FLAGS_numeric_diff_method) == "forward") {  \
-          return new NumericDiffCostFunction<name,                            \
-                                             ceres::FORWARD,                  \
-                                             num_residuals,                   \
-                                             num_parameters>(                 \
-              new name, ceres::TAKE_OWNERSHIP, num_residuals, options);       \
-        } else if (CERES_GET_FLAG(FLAGS_numeric_diff_method) == "ridders") {  \
-          return new NumericDiffCostFunction<name,                            \
-                                             ceres::RIDDERS,                  \
-                                             num_residuals,                   \
-                                             num_parameters>(                 \
-              new name, ceres::TAKE_OWNERSHIP, num_residuals, options);       \
-        } else {                                                              \
-          LOG(ERROR) << "Invalid numeric diff method specified";              \
-          return nullptr;                                                     \
-        }                                                                     \
-      } else {                                                                \
-        return new AutoDiffCostFunction<name, num_residuals, num_parameters>( \
-            new name);                                                        \
-      }                                                                       \
-    }                                                                         \
-    template <typename T>                                                     \
+#define BEGIN_MGH_PROBLEM(name, num_parameters, num_residuals)               \
+  struct name {                                                              \
+    static constexpr int kNumParameters = num_parameters;                    \
+    static const double initial_x[kNumParameters];                           \
+    static const double lower_bounds[kNumParameters];                        \
+    static const double upper_bounds[kNumParameters];                        \
+    static const double constrained_optimal_cost;                            \
+    static const double unconstrained_optimal_cost;                          \
+    static CostFunction* Create() {                                          \
+      if (CERES_GET_FLAG(FLAGS_use_numeric_diff)) {                          \
+        ceres::NumericDiffOptions options;                                   \
+        SetNumericDiffOptions(&options);                                     \
+        if (CERES_GET_FLAG(FLAGS_numeric_diff_method) == "central") {        \
+          return new NumericDiffCostFunction<name,                           \
+                                             ceres::CENTRAL,                 \
+                                             num_residuals,                  \
+                                             num_parameters>(                \
+              new name, ceres::TAKE_OWNERSHIP, num_residuals, options);      \
+        } else if (CERES_GET_FLAG(FLAGS_numeric_diff_method) == "forward") { \
+          return new NumericDiffCostFunction<name,                           \
+                                             ceres::FORWARD,                 \
+                                             num_residuals,                  \
+                                             num_parameters>(                \
+              new name, ceres::TAKE_OWNERSHIP, num_residuals, options);      \
+        } else if (CERES_GET_FLAG(FLAGS_numeric_diff_method) == "ridders") { \
+          return new NumericDiffCostFunction<name,                           \
+                                             ceres::RIDDERS,                 \
+                                             num_residuals,                  \
+                                             num_parameters>(                \
+              new name, ceres::TAKE_OWNERSHIP, num_residuals, options);      \
+        } else {                                                             \
+          LOG(ERROR) << "Invalid numeric diff method specified";             \
+          return nullptr;                                                    \
+        }                                                                    \
+      } else {                                                               \
+        return new AutoDiffCostFunction<name,                                \
+                                        num_residuals,                       \
+                                        num_parameters>();                   \
+      }                                                                      \
+    }                                                                        \
+    template <typename T>                                                    \
     bool operator()(const T* const x, T* residual) const {
 // clang-format off
 

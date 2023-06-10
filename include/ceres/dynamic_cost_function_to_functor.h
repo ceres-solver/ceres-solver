@@ -106,8 +106,14 @@ class CERES_EXPORT DynamicCostFunctionToFunctor {
  public:
   // Takes ownership of cost_function.
   explicit DynamicCostFunctionToFunctor(CostFunction* cost_function)
-      : cost_function_(cost_function) {
-    CHECK(cost_function != nullptr);
+      : DynamicCostFunctionToFunctor{
+            std::unique_ptr<CostFunction>{cost_function}} {}
+
+  // Takes ownership of cost_function.
+  explicit DynamicCostFunctionToFunctor(
+      std::unique_ptr<CostFunction> cost_function)
+      : cost_function_(std::move(cost_function)) {
+    CHECK(cost_function_ != nullptr);
   }
 
   bool operator()(double const* const* parameters, double* residuals) const {
@@ -182,6 +188,8 @@ class CERES_EXPORT DynamicCostFunctionToFunctor {
 
     return true;
   }
+
+  CostFunction* function() const noexcept { return cost_function_.get(); }
 
  private:
   std::unique_ptr<CostFunction> cost_function_;

@@ -62,7 +62,7 @@ int main(int argc, char** argv) {
   // Set up the only cost function (also known as residual). This uses
   // auto-differentiation to obtain the derivative (jacobian).
   ceres::CostFunction* cost_function =
-      new ceres::AutoDiffCostFunction<CostFunctor, 1, 1>(new CostFunctor);
+      new ceres::AutoDiffCostFunction<CostFunctor, 1, 1>();
   problem.AddResidualBlock(cost_function, nullptr, &x);
 
   // Run the solver!

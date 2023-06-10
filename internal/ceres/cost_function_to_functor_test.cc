@@ -391,4 +391,39 @@ TEST(CostFunctionToFunctor, DynamicCostFunctionToFunctor) {
   ExpectCostFunctionsAreEqual(cost_function, *actual_cost_function);
 }
 
+TEST(CostFunctionToFunctor, UniquePtrArgumentForwarding) {
+  auto cost_function = std::make_unique<
+      AutoDiffCostFunction<CostFunctionToFunctor<ceres::DYNAMIC, 2, 2>,
+                           ceres::DYNAMIC,
+                           2,
+                           2>>(
+      std::make_unique<CostFunctionToFunctor<ceres::DYNAMIC, 2, 2>>(
+          std::make_unique<
+              AutoDiffCostFunction<TwoParameterBlockFunctor, 2, 2, 2>>()),
+      2);
+
+  auto actual_cost_function = std::make_unique<
+      AutoDiffCostFunction<TwoParameterBlockFunctor, 2, 2, 2>>();
+  ExpectCostFunctionsAreEqual(*cost_function, *actual_cost_function);
+}
+
+TEST(CostFunctionToFunctor, DynamicCostFunctionToFunctorUniquePtr) {
+  auto actual_cost_function = std::make_unique<
+      DynamicAutoDiffCostFunction<DynamicTwoParameterBlockFunctor>>();
+  actual_cost_function->AddParameterBlock(2);
+  actual_cost_function->AddParameterBlock(2);
+  actual_cost_function->SetNumResiduals(2);
+
+  // Use deduction guides for a more compact variable definition
+  DynamicAutoDiffCostFunction cost_function(
+      std::make_unique<DynamicCostFunctionToFunctor>(
+          std::move(actual_cost_function)));
+  cost_function.AddParameterBlock(2);
+  cost_function.AddParameterBlock(2);
+  cost_function.SetNumResiduals(2);
+
+  ExpectCostFunctionsAreEqual(cost_function,
+                              *cost_function.functor().function());
+}
+
 }  // namespace ceres::internal

@@ -73,7 +73,7 @@ struct AutoDiffBiCubicCost {
                                      const Eigen::Vector2d& point,
                                      double value) {
     return new ceres::AutoDiffCostFunction<AutoDiffBiCubicCost, 1, 2>(
-        new AutoDiffBiCubicCost(interpolator, point, value));
+        interpolator, point, value);
   }
 
   const Eigen::Vector2d point_;

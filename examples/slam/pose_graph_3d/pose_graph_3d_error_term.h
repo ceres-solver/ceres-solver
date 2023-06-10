@@ -116,7 +116,7 @@ class PoseGraph3dErrorTerm {
       const Pose3d& t_ab_measured,
       const Eigen::Matrix<double, 6, 6>& sqrt_information) {
     return new ceres::AutoDiffCostFunction<PoseGraph3dErrorTerm, 6, 3, 4, 3, 4>(
-        new PoseGraph3dErrorTerm(t_ab_measured, sqrt_information));
+        t_ab_measured, sqrt_information);
   }
 
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
