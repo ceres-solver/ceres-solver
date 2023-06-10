@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2024 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -126,11 +126,11 @@
 #define CERES_PUBLIC_AUTODIFF_COST_FUNCTION_H_
 
 #include <memory>
+#include <type_traits>
 
 #include "ceres/internal/autodiff.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 
 namespace ceres {
 
@@ -154,6 +154,27 @@ template <typename CostFunctor,
 class AutoDiffCostFunction final
     : public SizedCostFunction<kNumResiduals, Ns...> {
  public:
+  // Constructs the CostFunctor on the heap and takes the ownership. Requires at
+  // least one argument value to be provided.
+  template <class... Args,
+            std::enable_if_t<(sizeof...(Args) > 0) &&
+                             std::is_constructible_v<CostFunctor, Args&&...>>* =
+                nullptr>
+  explicit AutoDiffCostFunction(Args&&... args)
+      // NOTE We explicitly use direct initialization using parentheses instead
+      // of uniform initialization using braces to avoid narrowing conversion
+      // warnings.
+      : AutoDiffCostFunction{
+            std::make_unique<CostFunctor>(std::forward<Args>(args)...),
+            TAKE_OWNERSHIP} {}
+
+  template <class T,
+            class Deleter,
+            std::enable_if_t<std::is_base_of_v<CostFunctor, T>>* = nullptr>
+  explicit AutoDiffCostFunction(std::unique_ptr<T, Deleter> functor,
+                                Ownership ownership = TAKE_OWNERSHIP)
+      : functor_{std::move(functor)}, ownership_{ownership} {}
+
   // Takes ownership of functor by default. Uses the template-provided
   // value for the number of residuals ("kNumResiduals").
   explicit AutoDiffCostFunction(CostFunctor* functor,
@@ -179,10 +200,19 @@ class AutoDiffCostFunction final
     SizedCostFunction<kNumResiduals, Ns...>::set_num_residuals(num_residuals);
   }
 
-  AutoDiffCostFunction(AutoDiffCostFunction&& other)
+  AutoDiffCostFunction(AutoDiffCostFunction&& other) noexcept
       : functor_(std::move(other.functor_)), ownership_(other.ownership_) {}
 
-  virtual ~AutoDiffCostFunction() {
+  AutoDiffCostFunction& operator=(AutoDiffCostFunction&& other) noexcept {
+    functor_ = std::move(other.functor_);
+    ownership_ = other.ownership_;
+    return *this;
+  }
+
+  AutoDiffCostFunction(const AutoDiffCostFunction& other) = delete;
+  AutoDiffCostFunction& operator=(const AutoDiffCostFunction& other) = delete;
+
+  ~AutoDiffCostFunction() override {
     // Manually release pointer if configured to not take ownership rather than
     // deleting only if ownership is taken.
     // This is to stay maximally compatible to old user code which may have
