@@ -51,7 +51,7 @@ struct InterpolatedCostFunctor {
 
   static ceres::CostFunction* Create(const Interpolator& interpolator) {
     return new ceres::AutoDiffCostFunction<InterpolatedCostFunctor, 1, 1>(
-        new InterpolatedCostFunctor(interpolator));
+        interpolator);
   }
 
  private:

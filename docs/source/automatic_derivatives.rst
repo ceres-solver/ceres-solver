@@ -37,9 +37,7 @@ implements an automatically differentiated ``CostFunction`` for `Rat43
   };
 
 
-  CostFunction* cost_function =
-        new AutoDiffCostFunction<Rat43CostFunctor, 1, 4>(
-          new Rat43CostFunctor(x, y));
+  auto* cost_function = new AutoDiffCostFunction<Rat43CostFunctor, 1, 4>(x, y);
 
 Notice that compared to numeric differentiation, the only difference
 when defining the functor for use with automatic differentiation is

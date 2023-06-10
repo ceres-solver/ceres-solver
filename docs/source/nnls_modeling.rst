@@ -181,12 +181,19 @@ the corresponding accessors. This information will be verified by the
      class AutoDiffCostFunction : public
      SizedCostFunction<kNumResiduals, Ns> {
       public:
-       AutoDiffCostFunction(CostFunctor* functor, ownership = TAKE_OWNERSHIP);
+       // Instantiate CostFunctor using the supplied arguments.
+       template<class ...Args>
+       explicit AutoDiffCostFunction(Args&& ...args);
+       explicit AutoDiffCostFunction(std::unique_ptr<CostFunctor> functor);
+       explicit AutoDiffCostFunction(CostFunctor* functor, ownership = TAKE_OWNERSHIP);
+
        // Ignore the template parameter kNumResiduals and use
        // num_residuals instead.
        AutoDiffCostFunction(CostFunctor* functor,
                             int num_residuals,
                             ownership = TAKE_OWNERSHIP);
+       AutoDiffCostFunction(std::unique_ptr<CostFunctor> functor,
+                            int num_residuals);
      };
 
    To get an auto differentiated cost function, you must define a
@@ -244,9 +251,9 @@ the corresponding accessors. This information will be verified by the
 
    .. code-block:: c++
 
-    CostFunction* cost_function
-        = new AutoDiffCostFunction<MyScalarCostFunctor, 1, 2, 2>(
-            new MyScalarCostFunctor(1.0));              ^  ^  ^
+    auto* cost_function
+        = new AutoDiffCostFunction<MyScalarCostFunctor, 1, 2, 2>(1.0);
+                                                        ^  ^  ^
                                                         |  |  |
                             Dimension of residual ------+  |  |
                             Dimension of x ----------------+  |
@@ -272,7 +279,7 @@ the corresponding accessors. This information will be verified by the
    .. code-block:: c++
 
     MyScalarCostFunctor functor(1.0)
-    CostFunction* cost_function
+    auto* cost_function
         = new AutoDiffCostFunction<MyScalarCostFunctor, 1, 2, 2>(
             &functor, DO_NOT_TAKE_OWNERSHIP);
 
@@ -281,9 +288,11 @@ the corresponding accessors. This information will be verified by the
 
    .. code-block:: c++
 
-     CostFunction* cost_function
-         = new AutoDiffCostFunction<MyScalarCostFunctor, DYNAMIC, 2, 2>(
-             new CostFunctorWithDynamicNumResiduals(1.0),   ^     ^  ^
+     auto functor = std::make_unique<CostFunctorWithDynamicNumResiduals>(1.0);
+     auto* cost_function
+         = new AutoDiffCostFunction<CostFunctorWithDynamicNumResiduals,
+                                                         DYNAMIC, 2, 2>(
+             std::move(functor),                            ^     ^  ^
              runtime_number_of_residuals); <----+           |     |  |
                                                 |           |     |  |
                                                 |           |     |  |
@@ -336,9 +345,7 @@ the corresponding accessors. This information will be verified by the
 
      .. code-block:: c++
 
-       DynamicAutoDiffCostFunction<MyCostFunctor, 4>* cost_function =
-         new DynamicAutoDiffCostFunction<MyCostFunctor, 4>(
-           new MyCostFunctor());
+       auto* cost_function = new DynamicAutoDiffCostFunction<MyCostFunctor, 4>();
        cost_function->AddParameterBlock(5);
        cost_function->AddParameterBlock(10);
        cost_function->SetNumResiduals(21);
@@ -443,9 +450,9 @@ the corresponding accessors. This information will be verified by the
 
   .. code-block:: c++
 
-    CostFunction* cost_function
-        = new NumericDiffCostFunction<MyScalarCostFunctor, CENTRAL, 1, 2, 2>(
-            new MyScalarCostFunctor(1.0));                    ^     ^  ^  ^
+    auto* cost_function
+        = new NumericDiffCostFunction<MyScalarCostFunctor, CENTRAL, 1, 2, 2>(1.0)
+                                                              ^     ^  ^  ^
                                                               |     |  |  |
                                   Finite Differencing Scheme -+     |  |  |
                                   Dimension of residual ------------+  |  |
@@ -465,17 +472,18 @@ the corresponding accessors. This information will be verified by the
 
    .. code-block:: c++
 
-     CostFunction* cost_function
-         = new NumericDiffCostFunction<MyScalarCostFunctor, CENTRAL, DYNAMIC, 2, 2>(
-             new CostFunctorWithDynamicNumResiduals(1.0),               ^     ^  ^
-             TAKE_OWNERSHIP,                                            |     |  |
-             runtime_number_of_residuals); <----+                       |     |  |
-                                                |                       |     |  |
-                                                |                       |     |  |
-               Actual number of residuals ------+                       |     |  |
-               Indicate dynamic number of residuals --------------------+     |  |
-               Dimension of x ------------------------------------------------+  |
-               Dimension of y ---------------------------------------------------+
+     auto functor = std::make_unique<CostFunctorWithDynamicNumResiduals>(1.0);
+     auto* cost_function
+         = new NumericDiffCostFunction<CostFunctorWithDynamicNumResiduals,
+                                                CENTRAL, DYNAMIC, 2, 2>(
+             std::move(functor),                            ^     ^  ^
+             runtime_number_of_residuals); <----+           |     |  |
+                                                |           |     |  |
+                                                |           |     |  |
+               Actual number of residuals ------+           |     |  |
+               Indicate dynamic number of residuals --------+     |  |
+               Dimension of x ------------------------------------+  |
+               Dimension of y ---------------------------------------+
 
 
   There are three available numeric differentiation schemes in ceres-solver:
@@ -569,9 +577,8 @@ Numeric Differentiation & Manifolds
 
    .. code-block:: c++
 
-     CostFunction* cost_function
-         = new NumericDiffCostFunction<MyCostFunction, CENTRAL, 1, 4, 8>(
-             new MyCostFunction(...), TAKE_OWNERSHIP);
+     auto* cost_function
+         = new NumericDiffCostFunction<MyCostFunction, CENTRAL, 1, 4, 8>(...);
 
    where ``MyCostFunction`` has 1 residual and 2 parameter blocks with
    sizes 4 and 8 respectively. Look at the tests for a more detailed
@@ -612,8 +619,7 @@ Numeric Differentiation & Manifolds
 
      .. code-block:: c++
 
-       DynamicNumericDiffCostFunction<MyCostFunctor>* cost_function =
-         new DynamicNumericDiffCostFunction<MyCostFunctor>(new MyCostFunctor);
+       auto cost_function = std::make_unique<DynamicNumericDiffCostFunction<MyCostFunctor>>();
        cost_function->AddParameterBlock(5);
        cost_function->AddParameterBlock(10);
        cost_function->SetNumResiduals(21);
@@ -672,8 +678,8 @@ Numeric Differentiation & Manifolds
    .. code-block:: c++
 
     struct CameraProjection {
-      CameraProjection(double* observation)
-      : intrinsic_projection_(new IntrinsicProjection(observation)) {
+      explicit CameraProjection(double* observation)
+      : intrinsic_projection_(std::make_unique<IntrinsicProjection>(observation)) {
       }
 
       template <typename T>
@@ -691,7 +697,7 @@ Numeric Differentiation & Manifolds
       }
 
      private:
-      CostFunctionToFunctor<2,5,3> intrinsic_projection_;
+      CostFunctionToFunctor<2, 5, 3> intrinsic_projection_;
     };
 
    Note that :class:`CostFunctionToFunctor` takes ownership of the
@@ -733,10 +739,9 @@ Numeric Differentiation & Manifolds
   .. code-block:: c++
 
    struct CameraProjection {
-     CameraProjection(double* observation)
+     explicit CameraProjection(double* observation)
         : intrinsic_projection_(
-              new NumericDiffCostFunction<IntrinsicProjection, CENTRAL, 2, 5, 3>(
-                  new IntrinsicProjection(observation))) {}
+              std::make_unique<NumericDiffCostFunction<IntrinsicProjection, CENTRAL, 2, 5, 3>>()) {}
 
      template <typename T>
      bool operator()(const T* rotation,
@@ -794,8 +799,8 @@ Numeric Differentiation & Manifolds
    .. code-block:: c++
 
     struct CameraProjection {
-      CameraProjection(double* observation)
-          : intrinsic_projection_(new IntrinsicProjection(observation)) {
+      explicit CameraProjection(double* observation)
+          : intrinsic_projection_(std::make_unique<IntrinsicProjection>(observation)) {
       }
 
       template <typename T>
@@ -1122,9 +1127,8 @@ their shape graphically. More details can be found in
 
      // Add parameter blocks
 
-     CostFunction* cost_function =
-         new AutoDiffCostFunction < UW_Camera_Mapper, 2, 9, 3>(
-             new UW_Camera_Mapper(feature_x, feature_y));
+     auto* cost_function =
+         new AutoDiffCostFunction<UW_Camera_Mapper, 2, 9, 3>(feature_x, feature_y);
 
      LossFunctionWrapper* loss_function(new HuberLoss(1.0), TAKE_OWNERSHIP);
      problem.AddResidualBlock(cost_function, loss_function, parameters);
@@ -1556,8 +1560,8 @@ In advanced use cases, manifolds can be dynamically allocated and passed as (sma
    ProductManifold<std::unique_ptr<QuaternionManifold>, EuclideanManifold<3>> se3
         {std::make_unique<QuaternionManifold>(), EuclideanManifold<3>{}};
 
-In C++17, the template parameters can be left out as they are automatically
-deduced making the initialization much simpler:
+The template parameters can also be left out as they are deduced automatically
+making the initialization much simpler:
 
 .. code-block:: c++
 

@@ -133,8 +133,8 @@ int main(int argc, char** argv) {
   int num_points = 0;
   while (scanf("%lf %lf\n", &xx, &yy) == 2) {
     ceres::CostFunction* cost =
-        new ceres::AutoDiffCostFunction<DistanceFromCircleCost, 1, 1, 1, 1>(
-            new DistanceFromCircleCost(xx, yy));
+        new ceres::AutoDiffCostFunction<DistanceFromCircleCost, 1, 1, 1, 1>(xx,
+                                                                            yy);
     problem.AddResidualBlock(cost, loss, &x, &y, &m);
     num_points++;
   }

@@ -164,8 +164,8 @@ struct SnavelyReprojectionError {
   // the client code.
   static ceres::CostFunction* Create(const double observed_x,
                                      const double observed_y) {
-    return (new ceres::AutoDiffCostFunction<SnavelyReprojectionError, 2, 9, 3>(
-        new SnavelyReprojectionError(observed_x, observed_y)));
+    return new ceres::AutoDiffCostFunction<SnavelyReprojectionError, 2, 9, 3>(
+        observed_x, observed_y);
   }
 
   double observed_x;

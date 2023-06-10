@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2024 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -65,7 +65,7 @@ class CERES_EXPORT CostFunction {
  public:
   CostFunction();
   CostFunction(const CostFunction&) = delete;
-  void operator=(const CostFunction&) = delete;
+  CostFunction& operator=(const CostFunction&) = delete;
 
   virtual ~CostFunction();
 
@@ -124,6 +124,10 @@ class CERES_EXPORT CostFunction {
   int num_residuals() const { return num_residuals_; }
 
  protected:
+  // Prevent moving through the base class
+  CostFunction(CostFunction&& other) noexcept;
+  CostFunction& operator=(CostFunction&& other) noexcept;
+
   std::vector<int32_t>* mutable_parameter_block_sizes() {
     return &parameter_block_sizes_;
   }

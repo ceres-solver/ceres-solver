@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2024 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -35,6 +35,7 @@
 #include <cmath>
 #include <memory>
 #include <numeric>
+#include <type_traits>
 #include <vector>
 
 #include "ceres/dynamic_cost_function.h"
@@ -65,8 +66,7 @@ namespace ceres {
 // also specify the sizes after creating the dynamic autodiff cost
 // function. For example:
 //
-//   DynamicAutoDiffCostFunction<MyCostFunctor, 3> cost_function(
-//       new MyCostFunctor());
+//   DynamicAutoDiffCostFunction<MyCostFunctor, 3> cost_function;
 //   cost_function.AddParameterBlock(5);
 //   cost_function.AddParameterBlock(10);
 //   cost_function.SetNumResiduals(21);
@@ -79,13 +79,34 @@ namespace ceres {
 template <typename CostFunctor, int Stride = 4>
 class DynamicAutoDiffCostFunction final : public DynamicCostFunction {
  public:
+  // Constructs the CostFunctor on the heap and takes the ownership.
+  template <class... Args,
+            std::enable_if_t<std::is_constructible_v<CostFunctor, Args&&...>>* =
+                nullptr>
+  explicit DynamicAutoDiffCostFunction(Args&&... args)
+      // NOTE We explicitly use direct initialization using parentheses instead
+      // of uniform initialization using braces to avoid narrowing conversion
+      // warnings.
+      : DynamicAutoDiffCostFunction{
+            std::make_unique<CostFunctor>(std::forward<Args>(args)...)} {}
+
   // Takes ownership by default.
   explicit DynamicAutoDiffCostFunction(CostFunctor* functor,
                                        Ownership ownership = TAKE_OWNERSHIP)
-      : functor_(functor), ownership_(ownership) {}
+      : DynamicAutoDiffCostFunction{std::unique_ptr<CostFunctor>{functor},
+                                    ownership} {}
 
-  DynamicAutoDiffCostFunction(DynamicAutoDiffCostFunction&& other)
-      : functor_(std::move(other.functor_)), ownership_(other.ownership_) {}
+  explicit DynamicAutoDiffCostFunction(std::unique_ptr<CostFunctor> functor)
+      : DynamicAutoDiffCostFunction{std::move(functor), TAKE_OWNERSHIP} {}
+
+  DynamicAutoDiffCostFunction(const DynamicAutoDiffCostFunction& other) =
+      delete;
+  DynamicAutoDiffCostFunction& operator=(
+      const DynamicAutoDiffCostFunction& other) = delete;
+  DynamicAutoDiffCostFunction(DynamicAutoDiffCostFunction&& other) noexcept =
+      default;
+  DynamicAutoDiffCostFunction& operator=(
+      DynamicAutoDiffCostFunction&& other) noexcept = default;
 
   ~DynamicAutoDiffCostFunction() override {
     // Manually release pointer if configured to not take ownership
@@ -267,6 +288,10 @@ class DynamicAutoDiffCostFunction final : public DynamicCostFunction {
   const CostFunctor& functor() const { return *functor_; }
 
  private:
+  explicit DynamicAutoDiffCostFunction(std::unique_ptr<CostFunctor> functor,
+                                       Ownership ownership)
+      : functor_(std::move(functor)), ownership_(ownership) {}
+
   std::unique_ptr<CostFunctor> functor_;
   Ownership ownership_;
 };
@@ -276,9 +301,16 @@ class DynamicAutoDiffCostFunction final : public DynamicCostFunction {
 // instantiated as follows:
 //
 //   new DynamicAutoDiffCostFunction{new MyCostFunctor{}};
+//   new DynamicAutoDiffCostFunction{std::make_unique<MyCostFunctor>()};
 //
 template <typename CostFunctor>
+DynamicAutoDiffCostFunction(CostFunctor* functor)
+    -> DynamicAutoDiffCostFunction<CostFunctor>;
+template <typename CostFunctor>
 DynamicAutoDiffCostFunction(CostFunctor* functor, Ownership ownership)
+    -> DynamicAutoDiffCostFunction<CostFunctor>;
+template <typename CostFunctor>
+DynamicAutoDiffCostFunction(std::unique_ptr<CostFunctor> functor)
     -> DynamicAutoDiffCostFunction<CostFunctor>;
 
 }  // namespace ceres
