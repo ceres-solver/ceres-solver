@@ -41,8 +41,6 @@ CudaBlockSparseCRSView::CudaBlockSparseCRSView(const BlockSparseMatrix& bsm,
     : context_(context) {
   block_structure_ = std::make_unique<CudaBlockSparseStructure>(
       *bsm.block_structure(), context);
-  // Only block-sparse matrices with sequential layout of cells are supported
-  CHECK(block_structure_->sequential_layout());
   crs_matrix_ = std::make_unique<CudaSparseMatrix>(
       bsm.num_rows(), bsm.num_cols(), bsm.num_nonzeros(), context);
   FillCRSStructure(block_structure_->num_row_blocks(),

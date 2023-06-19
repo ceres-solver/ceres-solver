@@ -54,6 +54,13 @@ namespace {
 // the first num_eliminate_blocks parameter blocks as indicated by the parameter
 // block ordering. The remaining parameter blocks are the F blocks.
 //
+// In order to simplify handling block-sparse to CRS conversion, cells within
+// the row-block of non-partitioned matrix are stored in memory sequentially in
+// the order of increasing column-block id. In case of partitioned matrices,
+// cells corresponding to F sub-matrix are stored sequentially in the order of
+// increasing column-block id (with cells corresponding to E sub-matrix stored
+// separately).
+//
 // TODO(keir): Consider if we should use a boolean for each parameter block
 // instead of num_eliminate_blocks.
 void BuildJacobianLayout(const Program& program,
@@ -95,29 +102,54 @@ void BuildJacobianLayout(const Program& program,
 
   int e_block_pos = 0;
   int* jacobian_pos = jacobian_layout_storage->data();
+  std::vector<std::pair<int, int>> active_parameter_blocks;
   for (int i = 0; i < residual_blocks.size(); ++i) {
     const ResidualBlock* residual_block = residual_blocks[i];
     const int num_residuals = residual_block->NumResiduals();
     const int num_parameter_blocks = residual_block->NumParameterBlocks();
 
     (*jacobian_layout)[i] = jacobian_pos;
+    // Cells from F sub-matrix are to be stored sequentially with increasing
+    // column block id. For each non-constant parameter block, a pair of indices
+    // (index in the list of active parameter blocks and index in the list of
+    // all parameter blocks) is computed, and index pairs are sorted by the
+    // index of corresponding column block id.
+    active_parameter_blocks.clear();
+    active_parameter_blocks.reserve(num_parameter_blocks);
     for (int j = 0; j < num_parameter_blocks; ++j) {
       ParameterBlock* parameter_block = residual_block->parameter_blocks()[j];
-      const int parameter_block_index = parameter_block->index();
       if (parameter_block->IsConstant()) {
         continue;
       }
+      const int k = active_parameter_blocks.size();
+      active_parameter_blocks.emplace_back(k, j);
+    }
+    std::sort(active_parameter_blocks.begin(),
+              active_parameter_blocks.end(),
+              [&residual_block](const std::pair<int, int>& a,
+                                const std::pair<int, int>& b) {
+                return residual_block->parameter_blocks()[a.second]->index() <
+                       residual_block->parameter_blocks()[b.second]->index();
+              });
+    // Cell positions for each active parameter block are filled in the order of
+    // active parameter block indices sorted by columnd block index. This
+    // guarantees that cells are laid out sequentially with increasing column
+    // block indices.
+    for (const auto& indices : active_parameter_blocks) {
+      const auto [k, j] = indices;
+      ParameterBlock* parameter_block = residual_block->parameter_blocks()[j];
+      const int parameter_block_index = parameter_block->index();
       const int jacobian_block_size =
           num_residuals * parameter_block->TangentSize();
       if (parameter_block_index < num_eliminate_blocks) {
-        *jacobian_pos = e_block_pos;
+        jacobian_pos[k] = e_block_pos;
         e_block_pos += jacobian_block_size;
       } else {
-        *jacobian_pos = f_block_pos;
+        jacobian_pos[k] = f_block_pos;
         f_block_pos += jacobian_block_size;
       }
-      jacobian_pos++;
     }
+    jacobian_pos += active_parameter_blocks.size();
   }
 }
 

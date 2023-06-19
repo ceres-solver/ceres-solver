@@ -93,13 +93,17 @@ void FreeTemporaryMemory(void* data, cudaStream_t stream) {
 // - row_block_ids: row_block_ids[i] will be set to index of row-block that
 // contains i-th row.
 // Computation is perform row-block-wise
+template <bool partitioned = false>
 __global__ void RowBlockIdAndNNZ(
-    int num_row_blocks,
+    const int num_row_blocks,
+    const int num_col_blocks_e,
+    const int num_row_blocks_e,
     const int* __restrict__ first_cell_in_row_block,
     const Cell* __restrict__ cells,
     const Block* __restrict__ row_blocks,
     const Block* __restrict__ col_blocks,
-    int* __restrict__ rows,
+    int* __restrict__ rows_e,
+    int* __restrict__ rows_f,
     int* __restrict__ row_block_ids) {
   const int row_block_id = blockIdx.x * blockDim.x + threadIdx.x;
   if (row_block_id > num_row_blocks) {
@@ -108,20 +112,32 @@ __global__ void RowBlockIdAndNNZ(
   }
   if (row_block_id == num_row_blocks) {
     // one extra thread sets the first element
-    rows[0] = 0;
+    rows_f[0] = 0;
+    if constexpr (partitioned) {
+      rows_e[0] = 0;
+    }
     return;
   }
   const auto& row_block = row_blocks[row_block_id];
-  int row_nnz = 0;
-  const auto first_cell = cells + first_cell_in_row_block[row_block_id];
+  auto first_cell = cells + first_cell_in_row_block[row_block_id];
   const auto last_cell = cells + first_cell_in_row_block[row_block_id + 1];
+  int row_nnz_e = 0;
+  if (partitioned && row_block_id < num_row_blocks_e) {
+    // First cell is a cell from E
+    row_nnz_e = col_blocks[first_cell->block_id].size;
+    ++first_cell;
+  }
+  int row_nnz_f = 0;
   for (auto cell = first_cell; cell < last_cell; ++cell) {
-    row_nnz += col_blocks[cell->block_id].size;
+    row_nnz_f += col_blocks[cell->block_id].size;
   }
   const int first_row = row_block.position;
   const int last_row = first_row + row_block.size;
   for (int i = first_row; i < last_row; ++i) {
-    rows[i + 1] = row_nnz;
+    if constexpr (partitioned) {
+      rows_e[i + 1] = row_nnz_e;
+    }
+    rows_f[i + 1] = row_nnz_f;
     row_block_ids[i] = row_block_id;
   }
 }
@@ -139,15 +155,19 @@ __global__ void RowBlockIdAndNNZ(
 // Outputs:
 // - cols: column-index array of CRS structure
 // Computaion is perform row-wise
-__global__ void ComputeColumnsAndPermutation(
-    int num_rows,
-    const int* __restrict__ first_cell_in_row_block,
-    const Cell* __restrict__ cells,
-    const Block* __restrict__ row_blocks,
-    const Block* __restrict__ col_blocks,
-    const int* __restrict__ row_block_ids,
-    const int* __restrict__ rows,
-    int* __restrict__ cols) {
+template <bool partitioned>
+__global__ void ComputeColumns(const int num_rows,
+                               const int num_row_blocks_e,
+                               const int num_col_blocks_e,
+                               const int* __restrict__ first_cell_in_row_block,
+                               const Cell* __restrict__ cells,
+                               const Block* __restrict__ row_blocks,
+                               const Block* __restrict__ col_blocks,
+                               const int* __restrict__ row_block_ids,
+                               const int* __restrict__ rows_e,
+                               int* __restrict__ cols_e,
+                               const int* __restrict__ rows_f,
+                               int* __restrict__ cols_f) {
   const int row = blockIdx.x * blockDim.x + threadIdx.x;
   if (row >= num_rows) {
     // No synchronization is performed in this kernel, thus it is safe to return
@@ -155,17 +175,30 @@ __global__ void ComputeColumnsAndPermutation(
   }
   const int row_block_id = row_block_ids[row];
   // position in crs matrix
-  int crs_position = rows[row];
-  const auto first_cell = cells + first_cell_in_row_block[row_block_id];
+  auto first_cell = cells + first_cell_in_row_block[row_block_id];
   const auto last_cell = cells + first_cell_in_row_block[row_block_id + 1];
+  const int num_cols_e = col_blocks[num_col_blocks_e].position;
   // For reach cell of row-block only current row is being filled
+  if (partitioned && row_block_id < num_row_blocks_e) {
+    // The first cell is cell from E
+    const auto& col_block = col_blocks[first_cell->block_id];
+    const int col_block_size = col_block.size;
+    int column_idx = col_block.position;
+    int crs_position_e = rows_e[row];
+    // Column indices for each element of row_in_block row of current cell
+    for (int i = 0; i < col_block_size; ++i, ++crs_position_e) {
+      cols_e[crs_position_e] = column_idx++;
+    }
+    ++first_cell;
+  }
+  int crs_position_f = rows_f[row];
   for (auto cell = first_cell; cell < last_cell; ++cell) {
     const auto& col_block = col_blocks[cell->block_id];
     const int col_block_size = col_block.size;
-    int column_idx = col_block.position;
+    int column_idx = col_block.position - num_cols_e;
     // Column indices for each element of row_in_block row of current cell
-    for (int i = 0; i < col_block_size; ++i, ++crs_position) {
-      cols[crs_position] = column_idx++;
+    for (int i = 0; i < col_block_size; ++i, ++crs_position_f) {
+      cols_f[crs_position_f] = column_idx++;
     }
   }
 }
@@ -183,31 +216,93 @@ void FillCRSStructure(const int num_row_blocks,
   // row_block_ids array
   int* row_block_ids = AllocateTemporaryMemory<int>(num_rows, stream);
   const int num_blocks_blockwise = NumBlocksInGrid(num_row_blocks + 1);
-  RowBlockIdAndNNZ<<<num_blocks_blockwise, kCudaBlockSize, 0, stream>>>(
+  RowBlockIdAndNNZ<false><<<num_blocks_blockwise, kCudaBlockSize, 0, stream>>>(
       num_row_blocks,
+      0,
+      0,
       first_cell_in_row_block,
       cells,
       row_blocks,
       col_blocks,
+      nullptr,
       rows,
       row_block_ids);
   // Finalize row-index array of CRS strucure by computing prefix sum
   thrust::inclusive_scan(
       ThrustCudaStreamExecutionPolicy(stream), rows, rows + num_rows + 1, rows);
 
-  // Fill cols array of CRS structure and permutation from block-sparse to CRS
+  // Fill cols array of CRS structure
   const int num_blocks_rowwise = NumBlocksInGrid(num_rows);
-  ComputeColumnsAndPermutation<<<num_blocks_rowwise,
-                                 kCudaBlockSize,
-                                 0,
-                                 stream>>>(num_rows,
-                                           first_cell_in_row_block,
-                                           cells,
-                                           row_blocks,
-                                           col_blocks,
-                                           row_block_ids,
-                                           rows,
-                                           cols);
+  ComputeColumns<false><<<num_blocks_rowwise, kCudaBlockSize, 0, stream>>>(
+      num_rows,
+      0,
+      0,
+      first_cell_in_row_block,
+      cells,
+      row_blocks,
+      col_blocks,
+      row_block_ids,
+      nullptr,
+      nullptr,
+      rows,
+      cols);
+  FreeTemporaryMemory(row_block_ids, stream);
+}
+
+void FillCRSStructurePartitioned(const int num_row_blocks,
+                                 const int num_rows,
+                                 const int num_row_blocks_e,
+                                 const int num_col_blocks_e,
+                                 const int num_nonzeros_e,
+                                 const int* first_cell_in_row_block,
+                                 const Cell* cells,
+                                 const Block* row_blocks,
+                                 const Block* col_blocks,
+                                 int* rows_e,
+                                 int* cols_e,
+                                 int* rows_f,
+                                 int* cols_f,
+                                 cudaStream_t stream) {
+  // Set number of non-zeros per row in rows array and row to row-block map in
+  // row_block_ids array
+  int* row_block_ids = AllocateTemporaryMemory<int>(num_rows, stream);
+  const int num_blocks_blockwise = NumBlocksInGrid(num_row_blocks + 1);
+  RowBlockIdAndNNZ<true><<<num_blocks_blockwise, kCudaBlockSize, 0, stream>>>(
+      num_row_blocks,
+      num_col_blocks_e,
+      num_row_blocks_e,
+      first_cell_in_row_block,
+      cells,
+      row_blocks,
+      col_blocks,
+      rows_e,
+      rows_f,
+      row_block_ids);
+  // Finalize row-index array of CRS strucure by computing prefix sum
+  thrust::inclusive_scan(ThrustCudaStreamExecutionPolicy(stream),
+                         rows_e,
+                         rows_e + num_rows + 1,
+                         rows_e);
+  thrust::inclusive_scan(ThrustCudaStreamExecutionPolicy(stream),
+                         rows_f,
+                         rows_f + num_rows + 1,
+                         rows_f);
+
+  // Fill cols array of CRS structure
+  const int num_blocks_rowwise = NumBlocksInGrid(num_rows);
+  ComputeColumns<true><<<num_blocks_rowwise, kCudaBlockSize, 0, stream>>>(
+      num_rows,
+      num_row_blocks_e,
+      num_col_blocks_e,
+      first_cell_in_row_block,
+      cells,
+      row_blocks,
+      col_blocks,
+      row_block_ids,
+      rows_e,
+      cols_e,
+      rows_f,
+      cols_f);
   FreeTemporaryMemory(row_block_ids, stream);
 }
 
@@ -231,16 +326,17 @@ __device__ int PartitionPoint(const T* data,
 }
 
 // Element-wise reordering of block-sparse values
-// - first_cell_pos - position of the first cell of corresponding sub-matrix;
-// only used if use_first_cell is true; otherwise the first cell in row-block is
-// used
+// - first_cell_in_row_block - position of the first cell of row-block
 // - block_sparse_values - segment of block-sparse values starting from
 // block_sparse_offset, containing num_values
+template <bool partitioned>
 __global__ void PermuteToCrsKernel(
     const int block_sparse_offset,
     const int num_values,
     const int num_row_blocks,
+    const int num_row_blocks_e,
     const int* __restrict__ first_cell_in_row_block,
+    const int* __restrict__ value_offset_row_block_f,
     const Cell* __restrict__ cells,
     const Block* __restrict__ row_blocks,
     const Block* __restrict__ col_blocks,
@@ -254,21 +350,32 @@ __global__ void PermuteToCrsKernel(
   const int block_sparse_value_id = value_id + block_sparse_offset;
   // Find the corresponding row-block with a binary search
   const int row_block_id =
-      PartitionPoint(
-          first_cell_in_row_block,
-          0,
-          num_row_blocks,
-          [cells,
-           block_sparse_value_id] __device__(const int row_block_offset) {
-            return cells[row_block_offset].position <= block_sparse_value_id;
-          }) -
+      (partitioned
+           ? PartitionPoint(value_offset_row_block_f,
+                            0,
+                            num_row_blocks,
+                            [block_sparse_value_id] __device__(
+                                const int row_block_offset) {
+                              return row_block_offset <= block_sparse_value_id;
+                            })
+           : PartitionPoint(first_cell_in_row_block,
+                            0,
+                            num_row_blocks,
+                            [cells, block_sparse_value_id] __device__(
+                                const int row_block_offset) {
+                              return cells[row_block_offset].position <=
+                                     block_sparse_value_id;
+                            })) -
       1;
   // Find cell and calculate offset within the row with a linear scan
   const auto& row_block = row_blocks[row_block_id];
-  const auto first_cell = cells + first_cell_in_row_block[row_block_id];
+  auto first_cell = cells + first_cell_in_row_block[row_block_id];
   const auto last_cell = cells + first_cell_in_row_block[row_block_id + 1];
   const int row_block_size = row_block.size;
   int num_cols_before = 0;
+  if (partitioned && row_block_id < num_row_blocks_e) {
+    ++first_cell;
+  }
   for (const Cell* cell = first_cell; cell < last_cell; ++cell) {
     const auto& col_block = col_blocks[cell->block_id];
     const int col_block_size = col_block.size;
@@ -298,11 +405,43 @@ void PermuteToCRS(const int block_sparse_offset,
                   double* crs_values,
                   cudaStream_t stream) {
   const int num_blocks_valuewise = NumBlocksInGrid(num_values);
-  PermuteToCrsKernel<<<num_blocks_valuewise, kCudaBlockSize, 0, stream>>>(
+  PermuteToCrsKernel<false>
+      <<<num_blocks_valuewise, kCudaBlockSize, 0, stream>>>(
+          block_sparse_offset,
+          num_values,
+          num_row_blocks,
+          0,
+          first_cell_in_row_block,
+          nullptr,
+          cells,
+          row_blocks,
+          col_blocks,
+          crs_rows,
+          block_sparse_values,
+          crs_values);
+}
+
+void PermuteToCRSPartitionedF(const int block_sparse_offset,
+                              const int num_values,
+                              const int num_row_blocks,
+                              const int num_row_blocks_e,
+                              const int* first_cell_in_row_block,
+                              const int* value_offset_row_block_f,
+                              const Cell* cells,
+                              const Block* row_blocks,
+                              const Block* col_blocks,
+                              const int* crs_rows,
+                              const double* block_sparse_values,
+                              double* crs_values,
+                              cudaStream_t stream) {
+  const int num_blocks_valuewise = NumBlocksInGrid(num_values);
+  PermuteToCrsKernel<true><<<num_blocks_valuewise, kCudaBlockSize, 0, stream>>>(
       block_sparse_offset,
       num_values,
       num_row_blocks,
+      num_row_blocks_e,
       first_cell_in_row_block,
+      value_offset_row_block_f,
       cells,
       row_blocks,
       col_blocks,

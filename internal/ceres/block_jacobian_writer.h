@@ -53,6 +53,17 @@ class SparseMatrix;
 // TODO(sameeragarwal): This class needs documentation.
 class CERES_NO_EXPORT BlockJacobianWriter {
  public:
+  // Pre-computes positions of cells in block-sparse jacobian.
+  // Two possible memory layouts are implemented:
+  //  - Non-partitioned case
+  //  - Partitioned case (for Schur type linear solver)
+  //
+  // In non-partitioned case, cells are stored sequentially in the
+  // lexicographic order of (row block id, column block id).
+  //
+  // In the case of partitoned matrix, cells of each sub-matrix (E and F) are
+  // stored sequentially in the lexicographic order of (row block id, column
+  // block id) and cells from E sub-matrix precede cells from F sub-matrix.
   BlockJacobianWriter(const Evaluator::Options& options, Program* program);
 
   // JacobianWriter interface.
