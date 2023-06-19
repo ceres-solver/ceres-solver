@@ -95,29 +95,45 @@ void BuildJacobianLayout(const Program& program,
 
   int e_block_pos = 0;
   int* jacobian_pos = jacobian_layout_storage->data();
+  std::vector<std::pair<int, int>> active_parameter_blocks;
   for (int i = 0; i < residual_blocks.size(); ++i) {
     const ResidualBlock* residual_block = residual_blocks[i];
     const int num_residuals = residual_block->NumResiduals();
     const int num_parameter_blocks = residual_block->NumParameterBlocks();
 
     (*jacobian_layout)[i] = jacobian_pos;
+    active_parameter_blocks.clear();
+    active_parameter_blocks.reserve(num_parameter_blocks);
     for (int j = 0; j < num_parameter_blocks; ++j) {
       ParameterBlock* parameter_block = residual_block->parameter_blocks()[j];
-      const int parameter_block_index = parameter_block->index();
       if (parameter_block->IsConstant()) {
         continue;
       }
+      const int k = active_parameter_blocks.size();
+      active_parameter_blocks.emplace_back(k, j);
+    }
+    std::sort(active_parameter_blocks.begin(),
+              active_parameter_blocks.end(),
+              [&residual_block](const std::pair<int, int>& a,
+                                const std::pair<int, int>& b) {
+                return residual_block->parameter_blocks()[a.second]->index() <
+                       residual_block->parameter_blocks()[b.second]->index();
+              });
+    for (const auto& indices : active_parameter_blocks) {
+      const auto [k, j] = indices;
+      ParameterBlock* parameter_block = residual_block->parameter_blocks()[j];
+      const int parameter_block_index = parameter_block->index();
       const int jacobian_block_size =
           num_residuals * parameter_block->TangentSize();
       if (parameter_block_index < num_eliminate_blocks) {
-        *jacobian_pos = e_block_pos;
+        jacobian_pos[k] = e_block_pos;
         e_block_pos += jacobian_block_size;
       } else {
-        *jacobian_pos = f_block_pos;
+        jacobian_pos[k] = f_block_pos;
         f_block_pos += jacobian_block_size;
       }
-      jacobian_pos++;
     }
+    jacobian_pos += active_parameter_blocks.size();
   }
 }
 

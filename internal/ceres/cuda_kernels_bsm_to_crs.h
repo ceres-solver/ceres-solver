@@ -54,6 +54,23 @@ void FillCRSStructure(const int num_row_blocks,
                       int* cols,
                       cudaStream_t stream);
 
+// Compute structure of partitioned CRS matrix using block-sparse structure.
+// Arrays corresponding to CRS matrices are to be allocated by caller
+void FillCRSStructurePartitioned(const int num_row_blocks,
+                                 const int num_rows,
+                                 const int num_row_blocks_e,
+                                 const int num_col_blocks_e,
+                                 const int num_nonzeros_e,
+                                 const int* first_cell_in_row_block,
+                                 const Cell* cells,
+                                 const Block* row_blocks,
+                                 const Block* col_blocks,
+                                 int* rows_e,
+                                 int* cols_e,
+                                 int* rows_f,
+                                 int* cols_f,
+                                 cudaStream_t stream);
+
 // Permute segment of values from block-sparse matrix with sequential layout to
 // CRS order. Segment starts at block_sparse_offset and has length of num_values
 void PermuteToCRS(const int block_sparse_offset,
@@ -67,6 +84,24 @@ void PermuteToCRS(const int block_sparse_offset,
                   const double* block_sparse_values,
                   double* crs_values,
                   cudaStream_t stream);
+
+// Permute segment of values from F sub-matrix of block-sparse partitioned
+// matrix with sequential layout to CRS order. Segment starts at
+// block_sparse_offset (including the offset induced by values of E submatrix)
+// and has length of num_values
+void PermuteToCRSPartitioned(const int block_sparse_offset,
+                             const int num_values,
+                             const int num_row_blocks,
+                             const int num_row_blocks_e,
+                             const int* first_cell_in_row_block,
+                             const int* value_offset_row_block_f,
+                             const Cell* cells,
+                             const Block* row_blocks,
+                             const Block* col_blocks,
+                             const int* crs_rows,
+                             const double* block_sparse_values,
+                             double* crs_values,
+                             cudaStream_t stream);
 
 }  // namespace internal
 }  // namespace ceres

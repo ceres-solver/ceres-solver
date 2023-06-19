@@ -56,27 +56,45 @@ class CERES_NO_EXPORT CudaBlockSparseStructure {
   // array of cells on cpu and transfer it to the gpu.
   CudaBlockSparseStructure(const CompressedRowBlockStructure& block_structure,
                            ContextImpl* context);
+  // In the case of partitioned matrices, number of non-zeros in E and layout of
+  // F are computed
+  CudaBlockSparseStructure(const CompressedRowBlockStructure& block_structure,
+                           const int num_col_blocks_e,
+                           ContextImpl* context);
 
   int num_rows() const { return num_rows_; }
   int num_cols() const { return num_cols_; }
   int num_cells() const { return num_cells_; }
   int num_nonzeros() const { return num_nonzeros_; }
+  // When partitioned matrix constructor was used, returns number of non-zeros
+  // in E sub-matrix
+  int num_nonzeros_e() const { return num_nonzeros_e_; }
   int num_row_blocks() const { return num_row_blocks_; }
+  int num_row_blocks_e() const { return num_row_blocks_e_; }
   int num_col_blocks() const { return num_col_blocks_; }
 
   // Returns true if values from block-sparse matrix can be copied to CRS matrix
   // as-is. This is possible if each row-block is stored in CRS order:
   //  - Row-block consists of a single row
   //  - Row-block contains a single cell
+  //  When partitioned matrix constructor was used, returns true if values of F
+  //  sub-matrix are crs-compatible
   bool IsCrsCompatible() const { return is_crs_compatible_; }
   // Returns true if block-sparse structure corresponds to block-sparse matrix
   // with sequential cell positions
+  //  When partitioned matrix constructor was used, returns true if values of F
+  //  sub-matrix are sequential
   bool sequential_layout() const { return sequential_layout_; }
 
   // Device pointer to array of num_row_blocks + 1 indices of the first cell of
   // row block
   const int* first_cell_in_row_block() const {
     return first_cell_in_row_block_.data();
+  }
+  // Device pointer to array of num_row_blocks + 1 indices of the first value in
+  // this or subsequent row-blocks of submatrix F
+  const int* value_offset_row_block_f() const {
+    return value_offset_row_block_f_.data();
   }
   // Device pointer to array of num_cells cells, sorted by row-block
   const Cell* cells() const { return cells_.data(); }
@@ -90,11 +108,14 @@ class CERES_NO_EXPORT CudaBlockSparseStructure {
   int num_cols_;
   int num_cells_;
   int num_nonzeros_;
+  int num_nonzeros_e_;
   int num_row_blocks_;
+  int num_row_blocks_e_;
   int num_col_blocks_;
   bool is_crs_compatible_;
   bool sequential_layout_;
   CudaBuffer<int> first_cell_in_row_block_;
+  CudaBuffer<int> value_offset_row_block_f_;
   CudaBuffer<Cell> cells_;
   CudaBuffer<Block> row_blocks_;
   CudaBuffer<Block> col_blocks_;
