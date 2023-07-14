@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51607ea1_80d2b997",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-07-14T18:22:29Z",
+      "side": 1,
+      "message": "Added more comments, replaced sequential_layout() method in CudaBlockStructure with a check for sequential layout.",
+      "revId": "75bacedf7dbe568671acedd1518d2eeb48300f23",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

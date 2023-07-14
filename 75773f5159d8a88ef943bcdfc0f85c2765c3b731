@@ -35,6 +35,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "74aefc70_ad558586",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-07-14T18:22:29Z",
+      "side": 1,
+      "message": "Implementing block-sparse spmv would be great (we will save on both extra memory and extra code; moreover, there should be some memory-bandwidth savings because we only need to traverse block-structure which is more compact than crs structure in most cases), but making it perform on-par with crs spmv might be not straightforward.\n\nWould you prefer getting this approach (with conversion to CRS) completed first; or you would like to get some estimates for block-sparse spmv performance (in comparison to cuSPARSE CRS spmv) first, and then decide if the difference in performance worth complexity induced by conversion?",
+      "parentUuid": "934ba711_392121b9",
+      "revId": "75773f5159d8a88ef943bcdfc0f85c2765c3b731",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a188055b_ca21bf50",
@@ -48,6 +66,30 @@
       "writtenOn": "2023-07-14T16:35:13Z",
       "side": 1,
       "message": "update the docs here to explain the structure of the output/what can we assume about it now.",
+      "range": {
+        "startLine": 58,
+        "startChar": 14,
+        "endLine": 58,
+        "endChar": 34
+      },
+      "revId": "75773f5159d8a88ef943bcdfc0f85c2765c3b731",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32b9f6b2_c23b9507",
+        "filename": "internal/ceres/block_jacobian_writer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-07-14T18:22:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a188055b_ca21bf50",
       "range": {
         "startLine": 58,
         "startChar": 14,
@@ -81,6 +123,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "da27fc89_e310ae2a",
+        "filename": "internal/ceres/block_jacobian_writer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-07-14T18:22:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b0fd84f_b68972cf",
+      "range": {
+        "startLine": 104,
+        "startChar": 6,
+        "endLine": 104,
+        "endChar": 21
+      },
+      "revId": "75773f5159d8a88ef943bcdfc0f85c2765c3b731",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b8f402e1_0f0e8520",
@@ -94,6 +160,30 @@
       "writtenOn": "2023-07-14T16:35:13Z",
       "side": 1,
       "message": "since we have made some changes to guarantee a certain structure in the jacobian layout, it is worth documenting it in the header for this file too.",
+      "range": {
+        "startLine": 169,
+        "startChar": 28,
+        "endLine": 169,
+        "endChar": 29
+      },
+      "revId": "75773f5159d8a88ef943bcdfc0f85c2765c3b731",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81e51734_ac9c322c",
+        "filename": "internal/ceres/block_jacobian_writer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-07-14T18:22:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8f402e1_0f0e8520",
       "range": {
         "startLine": 169,
         "startChar": 28,
@@ -129,6 +219,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b2e90744_eb067c8e",
+        "filename": "internal/ceres/cuda_block_structure.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-07-14T18:22:29Z",
+      "side": 1,
+      "message": "I deleted sequential_layout() method, because matrices are guaranteed to have sequential layout. Added CHECK into constructor that this flag is valid.",
+      "parentUuid": "4d849da6_7b02ee4d",
+      "range": {
+        "startLine": 80,
+        "startChar": 30,
+        "endLine": 80,
+        "endChar": 41
+      },
+      "revId": "75773f5159d8a88ef943bcdfc0f85c2765c3b731",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6b8d4a23_a6a7d495",
         "filename": "internal/ceres/cuda_kernels_bsm_to_crs.h",
         "patchSetId": 5
@@ -140,6 +254,24 @@
       "writtenOn": "2023-07-14T16:35:13Z",
       "side": 1,
       "message": "shouldn\u0027t the function name reflect that we are only working with the F submatrix?",
+      "revId": "75773f5159d8a88ef943bcdfc0f85c2765c3b731",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45164b28_b1f0225e",
+        "filename": "internal/ceres/cuda_kernels_bsm_to_crs.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-07-14T18:22:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b8d4a23_a6a7d495",
       "revId": "75773f5159d8a88ef943bcdfc0f85c2765c3b731",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
