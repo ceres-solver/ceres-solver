@@ -16,6 +16,115 @@
       "message": "Updated CUDA partitioned matrix view to follow the same concept as block-sparse view:\n - E submatrix is always copied as-is (it is guaranteed to have CRS-compatible order of values because each row-block has at most one cell)\n - F submatrix is copied as-is if each row-block contains at most one cell or has height of 1\n - Otherwise, permutation from block-sparse to CRS order of values of F is computed on-the-fly while values are being transferred to GPU.",
       "revId": "75773f5159d8a88ef943bcdfc0f85c2765c3b731",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a188055b_ca21bf50",
+        "filename": "internal/ceres/block_jacobian_writer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-07-14T16:35:13Z",
+      "side": 1,
+      "message": "update the docs here to explain the structure of the output/what can we assume about it now.",
+      "range": {
+        "startLine": 58,
+        "startChar": 14,
+        "endLine": 58,
+        "endChar": 34
+      },
+      "revId": "75773f5159d8a88ef943bcdfc0f85c2765c3b731",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b0fd84f_b68972cf",
+        "filename": "internal/ceres/block_jacobian_writer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-07-14T16:35:13Z",
+      "side": 1,
+      "message": "add a comment here explaining why you are doing this.\n\nsince this is a sensitive change that distant code depends on, it is worth adding tests for this behaviour.",
+      "range": {
+        "startLine": 104,
+        "startChar": 6,
+        "endLine": 104,
+        "endChar": 21
+      },
+      "revId": "75773f5159d8a88ef943bcdfc0f85c2765c3b731",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8f402e1_0f0e8520",
+        "filename": "internal/ceres/block_jacobian_writer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-07-14T16:35:13Z",
+      "side": 1,
+      "message": "since we have made some changes to guarantee a certain structure in the jacobian layout, it is worth documenting it in the header for this file too.",
+      "range": {
+        "startLine": 169,
+        "startChar": 28,
+        "endLine": 169,
+        "endChar": 29
+      },
+      "revId": "75773f5159d8a88ef943bcdfc0f85c2765c3b731",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d849da6_7b02ee4d",
+        "filename": "internal/ceres/cuda_block_structure.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-07-14T16:35:13Z",
+      "side": 1,
+      "message": "this comment reads odd because it is talking about a different constructor/object.  Can we make this and the comment below self contained. It will be more verbose but will be more useful in the future.",
+      "range": {
+        "startLine": 80,
+        "startChar": 30,
+        "endLine": 80,
+        "endChar": 41
+      },
+      "revId": "75773f5159d8a88ef943bcdfc0f85c2765c3b731",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b8d4a23_a6a7d495",
+        "filename": "internal/ceres/cuda_kernels_bsm_to_crs.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-07-14T16:35:13Z",
+      "side": 1,
+      "message": "shouldn\u0027t the function name reflect that we are only working with the F submatrix?",
+      "revId": "75773f5159d8a88ef943bcdfc0f85c2765c3b731",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
