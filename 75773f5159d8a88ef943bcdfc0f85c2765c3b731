@@ -18,6 +18,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "934ba711_392121b9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-07-14T17:33:56Z",
+      "side": 1,
+      "message": "Dmitriy,\ngiven the amount of reasonably complicated code that is going into maintaining these various permutations and such, do you think it is worth also exploring a simple cuda kernel based approach that just iterates over the block structure array to do the spmv? \n\nI am willing to give that a try.",
+      "revId": "75773f5159d8a88ef943bcdfc0f85c2765c3b731",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a188055b_ca21bf50",
