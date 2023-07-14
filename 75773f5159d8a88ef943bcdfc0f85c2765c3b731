@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c808456a_9c35137f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-07-14T01:03:38Z",
+      "side": 1,
+      "message": "Updated CUDA partitioned matrix view to follow the same concept as block-sparse view:\n - E submatrix is always copied as-is (it is guaranteed to have CRS-compatible order of values because each row-block has at most one cell)\n - F submatrix is copied as-is if each row-block contains at most one cell or has height of 1\n - Otherwise, permutation from block-sparse to CRS order of values of F is computed on-the-fly while values are being transferred to GPU.",
+      "revId": "75773f5159d8a88ef943bcdfc0f85c2765c3b731",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

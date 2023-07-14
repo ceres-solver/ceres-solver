@@ -236,6 +236,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f2a4d54_2c28bfad",
+        "filename": "internal/ceres/cuda_kernels.cu.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-07-14T01:03:38Z",
+      "side": 1,
+      "message": "Explicit permutation is not stored now",
+      "parentUuid": "ca3ce776_d018d44c",
+      "range": {
+        "startLine": 569,
+        "startChar": 4,
+        "endLine": 569,
+        "endChar": 16
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f2f2c270_3cbdb174",
@@ -283,6 +307,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "17494bd6_eebe33e9",
+        "filename": "internal/ceres/cuda_kernels.cu.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-07-14T01:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a51b396_e05dd789",
+      "range": {
+        "startLine": 592,
+        "startChar": 1,
+        "endLine": 592,
+        "endChar": 3
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1648ae65_7584f8af",
@@ -320,6 +368,30 @@
       "side": 1,
       "message": "Yes, that makes sense.",
       "parentUuid": "1648ae65_7584f8af",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 22
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3001b7b_112c7f49",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-07-14T01:03:38Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "06b044c0_21c6afa7",
       "range": {
         "startLine": 90,
         "startChar": 0,
@@ -496,6 +568,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "acb8b6aa_547fd5a7",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-07-14T01:03:38Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "352ab4b6_70d906d1",
+      "range": {
+        "startLine": 127,
+        "startChar": 38,
+        "endLine": 127,
+        "endChar": 51
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b68129e2_9e789a23",
@@ -581,6 +677,30 @@
       "side": 1,
       "message": "Seem to save us 10% of total run time https://ceres-solver-review.googlesource.com/c/ceres-solver/+/24221",
       "parentUuid": "5a589f3c_69f76cb7",
+      "range": {
+        "startLine": 137,
+        "startChar": 5,
+        "endLine": 137,
+        "endChar": 18
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "279b2889_8fc212b9",
+        "filename": "internal/ceres/cuda_kernels.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-07-14T01:03:38Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "7cffeba7_9bec13df",
       "range": {
         "startLine": 137,
         "startChar": 5,
