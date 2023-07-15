@@ -899,6 +899,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "79d38fad_d082bfdd",
+        "filename": "internal/ceres/cuda_partitioned_block_sparse_crs_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-07-15T12:26:05Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c9ec1238_e12d0426",
+      "range": {
+        "startLine": 61,
+        "startChar": 15,
+        "endLine": 61,
+        "endChar": 16
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fc9d81ae_ab659a0f",
@@ -1030,6 +1054,30 @@
       "side": 1,
       "message": "Permuting values happens element-wise, so half-million values per run should be able to occupy the whole gpu.\n\nI\u0027ve checked with nvidia tools - on my setup this kernels achieves 100% occupancy and runs for 16.7us per invocation; I would say it is on a shorter side, but reasonable.\n\nIf we would increase size of this buffer to more than, let say, 64Mb - I think it might make sens to move CudaStreamedBuffer to ContextImpl.",
       "parentUuid": "c05cea84_bf10f8a2",
+      "range": {
+        "startLine": 111,
+        "startChar": 23,
+        "endLine": 111,
+        "endChar": 45
+      },
+      "revId": "8fc85a8b027e22c7a999e92731c99462b980a9f4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0940fd59_b897e716",
+        "filename": "internal/ceres/cuda_partitioned_block_sparse_crs_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-07-15T12:26:05Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "93fa17ba_72502105",
       "range": {
         "startLine": 111,
         "startChar": 23,

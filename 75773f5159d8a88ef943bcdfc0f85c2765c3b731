@@ -241,6 +241,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "27cbe9d3_56f8c364",
+        "filename": "internal/ceres/cuda_block_structure.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-07-15T12:26:05Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "b2e90744_eb067c8e",
+      "range": {
+        "startLine": 80,
+        "startChar": 30,
+        "endLine": 80,
+        "endChar": 41
+      },
+      "revId": "75773f5159d8a88ef943bcdfc0f85c2765c3b731",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6b8d4a23_a6a7d495",
