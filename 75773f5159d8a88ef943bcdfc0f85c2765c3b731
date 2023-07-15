@@ -53,6 +53,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "10562daa_976c4a53",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-07-15T12:56:11Z",
+      "side": 1,
+      "message": "My comment was not meant to block this change, the idea was to prototype the block sparse matrix spmv separately. if it works, it should simplify cuda based  CGNR as well as ITERATIVE_SCHUR significantly.",
+      "parentUuid": "74aefc70_ad558586",
+      "revId": "75773f5159d8a88ef943bcdfc0f85c2765c3b731",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a188055b_ca21bf50",
