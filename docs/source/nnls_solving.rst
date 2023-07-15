@@ -2083,7 +2083,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    For each row ``i``, ``cols[rows[i]]`` ... ``cols[rows[i + 1] - 1]``
    are the indices of the non-zero columns of row ``i``.
 
-.. member:: vector<int> CRSMatrix::values
+.. member:: vector<double> CRSMatrix::values
 
    :member:`CRSMatrix::values` contain as many entries as there are
    non-zeros in the matrix.
