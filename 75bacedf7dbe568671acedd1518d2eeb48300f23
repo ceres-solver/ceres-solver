@@ -16,6 +16,23 @@
       "message": "Added more comments, replaced sequential_layout() method in CudaBlockStructure with a check for sequential layout.",
       "revId": "75bacedf7dbe568671acedd1518d2eeb48300f23",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e93021ce_e863671d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-07-15T12:35:47Z",
+      "side": 1,
+      "message": "dmitriy I am unable to merge this CR due to some new security changes instituted by google (nothing of your doing). I am looking into what needs done to deal with them.",
+      "revId": "75bacedf7dbe568671acedd1518d2eeb48300f23",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
