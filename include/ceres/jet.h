@@ -1381,6 +1381,7 @@ struct NumTraits<ceres::Jet<T, N>> {
   }
 
   static inline int digits10() { return NumTraits<T>::digits10(); }
+  static inline int max_digits10() { return NumTraits<T>::max_digits10(); }
 
   enum {
     IsComplex = 0,
