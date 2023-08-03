@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18a4fa75_e6c86901",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2023-08-03T21:01:50Z",
+      "side": 1,
+      "message": "This looks suspicious, as we are using cudaMalloc() and cudaFree() which are part of the CUDA Runtime API.  This option is only intended (AFAIK) for the case when you were using the low-level driver APIs exclusively which is (particularly now) very rare.\n\nThis is also however misleading, in that we\u0027re explicitly specifying CUDA::cudart above, which is why this continued to compile given our function usage so explicitly declaring here that it should be None (not empty, but specifically none) means that the resulting generated compile command is going to look something like -cudart\u003dNone ... -cudart\u003d\u003cShared/Static\u003e derived from FindCUDAToolkit and/or Ceres\u0027 target build type.\n\nI can\u0027t find much evidence of this being used to cover this issue, which still makes me suspicious that this is not a general issue but a configuration specific one.  It might work, and you could fix it for your configuration by passing -DCMAKE_CUDA_RUNTIME_LIBRARY\u003dNone when you configure Ceres, I\u0027m not sure given the obvious contradiction in what this specifies vs what we\u0027re doing in the line above that this is a good idea in general.",
+      "revId": "cae5fcc2649ea7ca8e66048c6c31b9462cc2f554",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
