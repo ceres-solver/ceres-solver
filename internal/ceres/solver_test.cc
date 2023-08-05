@@ -1202,4 +1202,28 @@ TEST(Solver, IterativeSchurOptionsAccelerateSparse) {
   EXPECT_FALSE(options.IsValid(&message));
 }
 
+class LargeCostCostFunction : public SizedCostFunction<1, 1> {
+ public:
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const override {
+    residuals[0] = 1e300;
+    if (jacobians && jacobians[0]) {
+      jacobians[0][0] = 1.0;
+    }
+    return true;
+  }
+};
+
+TEST(Solver, LargeCostProblem) {
+  double x = 1;
+  Problem problem;
+  problem.AddResidualBlock(new LargeCostCostFunction, nullptr, &x);
+  Solver::Options options;
+  Solver::Summary summary;
+  Solve(options, &problem, &summary);
+  LOG(INFO) << summary.FullReport();
+  EXPECT_EQ(summary.termination_type, FAILURE);
+}
+
 }  // namespace ceres::internal

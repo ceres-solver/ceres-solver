@@ -218,6 +218,8 @@ bool TrustRegionMinimizer::IterationZero() {
   }
 
   if (!EvaluateGradientAndJacobian(/*new_evaluation_point=*/true)) {
+    solver_summary_->message =
+        "Initial residual and Jacobian evaluation failed.";
     return false;
   }
 
