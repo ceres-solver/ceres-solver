@@ -83,7 +83,7 @@ jobs:
               --target install
 
   build-msvc:
-    name: ${{matrix.msvc}}-${{matrix.arch}}-${{matrix.build_type}}-${{matrix.lib}}
+    name: ${{matrix.msvc}}-${{matrix.arch}}-${{matrix.build_type}}-${{matrix.lib}}-${{matrix.gpu}}
     runs-on: ${{matrix.os}}
     defaults:
       run:
@@ -104,6 +104,9 @@ jobs:
           - VS-17-2022
         lib:
           - shared
+        gpu:
+          - cuda
+          - no-cuda
         include:
           - msvc: VS-16-2019
             os: windows-2019
@@ -116,6 +119,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
+      - name: Download and install CUDA toolkit
+        if: matrix.gpu == 'cuda'
+        run: |
+          Invoke-WebRequest https://developer.download.nvidia.com/compute/cuda/12.2.1/network_installers/cuda_12.2.1_windows_network.exe -OutFile cuda_toolkit_windows.exe
+          Start-Process -Wait -FilePath .\cuda_toolkit_windows.exe -ArgumentList "-s cusolver_dev_12.2 cusparse_dev_12.2 cublas_dev_12.2 thrust_12.2 nvcc_12.2 cudart_12.2 nvrtc_dev_12.2 visual_studio_integration_12.2"
+          Remove-Item .\cuda_toolkit_windows.exe
+          $CUDA_PATH = "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.2"
+          echo "CUDA_PATH=$CUDA_PATH" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "CUDA_PATH_V12_2=$CUDA_PATH" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "$CUDA_PATH/bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
       - name: Cache gflags
         id: cache-gflags
@@ -232,6 +246,7 @@ jobs:
                 --config ${{matrix.build_type}}
 
       - name: Test
+        if: matrix.gpu == 'no-cuda'
         env:
           CTEST_OUTPUT_ON_FAILURE: 1
         run: |
