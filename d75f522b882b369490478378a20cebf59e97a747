@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce8a0463_e32c7ed9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2023-08-11T17:38:06Z",
+      "side": 1,
+      "message": "I get that a test may be hard, but it\u0027s worth thinking about how we might do one.",
+      "revId": "d75f522b882b369490478378a20cebf59e97a747",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7b462a0_698fc969",
+        "filename": "internal/ceres/block_jacobian_writer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2023-08-11T17:38:06Z",
+      "side": 1,
+      "message": "Overflow behavior is undefined for signed integers. To detect wrapping, use an unsigned int, which has defined overflow behavior (wraps, 2s complement).",
+      "revId": "d75f522b882b369490478378a20cebf59e97a747",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5da2b9aa_f365197b",
+        "filename": "internal/ceres/block_jacobian_writer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2023-08-11T17:38:06Z",
+      "side": 1,
+      "message": "Please add a comment re: this variable.",
+      "revId": "d75f522b882b369490478378a20cebf59e97a747",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
