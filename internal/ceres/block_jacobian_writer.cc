@@ -63,7 +63,7 @@ namespace {
 //
 // TODO(keir): Consider if we should use a boolean for each parameter block
 // instead of num_eliminate_blocks.
-void BuildJacobianLayout(const Program& program,
+bool BuildJacobianLayout(const Program& program,
                          int num_eliminate_blocks,
                          std::vector<int*>* jacobian_layout,
                          std::vector<int>* jacobian_layout_storage) {
@@ -89,6 +89,10 @@ void BuildJacobianLayout(const Program& program,
           f_block_pos += num_residuals * parameter_block->TangentSize();
         }
       }
+    }
+    if (num_jacobian_blocks < 0) {
+      LOG(WARNING) << "Number of jacobian blocks is too many.";
+      return false;
     }
   }
 
@@ -147,10 +151,14 @@ void BuildJacobianLayout(const Program& program,
       } else {
         jacobian_pos[k] = f_block_pos;
         f_block_pos += jacobian_block_size;
+        if (f_block_pos < 0) {
+          return false;
+        }
       }
     }
     jacobian_pos += active_parameter_blocks.size();
   }
+  return true;
 }
 
 }  // namespace
@@ -161,10 +169,10 @@ BlockJacobianWriter::BlockJacobianWriter(const Evaluator::Options& options,
   CHECK_GE(options.num_eliminate_blocks, 0)
       << "num_eliminate_blocks must be greater than 0.";
 
-  BuildJacobianLayout(*program,
-                      options.num_eliminate_blocks,
-                      &jacobian_layout_,
-                      &jacobian_layout_storage_);
+  jacobian_layout_is_valid_ = BuildJacobianLayout(*program,
+                                                  options.num_eliminate_blocks,
+                                                  &jacobian_layout_,
+                                                  &jacobian_layout_storage_);
 }
 
 // Create evaluate prepareres that point directly into the final jacobian. This
@@ -183,6 +191,10 @@ BlockJacobianWriter::CreateEvaluatePreparers(unsigned num_threads) {
 }
 
 std::unique_ptr<SparseMatrix> BlockJacobianWriter::CreateJacobian() const {
+  if (!jacobian_layout_is_valid_) {
+    return nullptr;
+  }
+
   auto* bs = new CompressedRowBlockStructure;
 
   const std::vector<ParameterBlock*>& parameter_blocks =
