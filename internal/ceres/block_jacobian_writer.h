@@ -133,6 +133,7 @@ class CERES_NO_EXPORT BlockJacobianWriter {
 
   // The pointers in jacobian_layout_ point directly into this vector.
   std::vector<int> jacobian_layout_storage_;
+  bool jacobian_layout_is_valid_ = false;
 };
 
 }  // namespace ceres::internal
