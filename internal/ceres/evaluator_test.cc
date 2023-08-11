@@ -676,5 +676,51 @@ TEST(Evaluator, EvaluatorRespectsParameterChanges) {
   }
 }
 
+class HugeCostFunction : public SizedCostFunction<46341, 46345> {
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const override {
+    return true;
+  }
+};
+
+TEST(Evaluator, LargeProblemDoesNotCauseCrashBlockJacobianWriter) {
+  ProblemImpl problem;
+  std::vector<double> x(46345);
+
+  problem.AddResidualBlock(new HugeCostFunction, nullptr, x.data());
+  Evaluator::Options options;
+  options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+  options.context = problem.context();
+  options.num_eliminate_blocks = 0;
+  options.dynamic_sparsity = false;
+  std::string error;
+  auto program = problem.mutable_program();
+  program->SetParameterOffsetsAndIndex();
+  auto evaluator = Evaluator::Create(options, program, &error);
+  auto jacobian = evaluator->CreateJacobian();
+  EXPECT_EQ(jacobian, nullptr);
+}
+
+TEST(Evaluator, LargeProblemDoesNotCauseCrashCompressedRowJacobianWriter) {
+  ProblemImpl problem;
+  std::vector<double> x(46345);
+
+  problem.AddResidualBlock(new HugeCostFunction, nullptr, x.data());
+  Evaluator::Options options;
+  // CGNR on CUDA_SPARSE is the only combination that triggers a
+  // CompressedRowJacobianWriter.
+  options.linear_solver_type = CGNR;
+  options.sparse_linear_algebra_library_type = CUDA_SPARSE;
+  options.context = problem.context();
+  options.num_eliminate_blocks = 0;
+  std::string error;
+  auto program = problem.mutable_program();
+  program->SetParameterOffsetsAndIndex();
+  auto evaluator = Evaluator::Create(options, program, &error);
+  auto jacobian = evaluator->CreateJacobian();
+  EXPECT_EQ(jacobian, nullptr);
+}
+
 }  // namespace internal
 }  // namespace ceres

@@ -133,6 +133,12 @@ class CERES_NO_EXPORT BlockJacobianWriter {
 
   // The pointers in jacobian_layout_ point directly into this vector.
   std::vector<int> jacobian_layout_storage_;
+
+  // The constructor computes the layout of the Jacobian, and this bool keeps
+  // track of whether the computation of the layout completed successfully or
+  // not, if it is false, then jacobian_layout and jacobian_layout_storage are
+  // both in an invalid state.
+  bool jacobian_layout_is_valid_ = false;
 };
 
 }  // namespace ceres::internal
