@@ -50,6 +50,24 @@
       "message": "Please add a comment re: this variable.",
       "revId": "d75f522b882b369490478378a20cebf59e97a747",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61433e46_71199de2",
+        "filename": "internal/ceres/block_jacobian_writer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2023-08-11T18:48:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5da2b9aa_f365197b",
+      "revId": "d75f522b882b369490478378a20cebf59e97a747",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }

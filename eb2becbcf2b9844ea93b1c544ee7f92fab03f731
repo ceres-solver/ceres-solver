@@ -16,6 +16,23 @@
       "message": "how about now? if the impl makes sense now, I will work on adding tests.",
       "revId": "eb2becbcf2b9844ea93b1c544ee7f92fab03f731",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b79f44fb_ea31d22c",
+        "filename": "internal/ceres/compressed_row_jacobian_writer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2023-08-11T18:48:39Z",
+      "side": 1,
+      "message": "I suggest adding a \u003c\u003c num_jacobian_nonzeros.",
+      "revId": "eb2becbcf2b9844ea93b1c544ee7f92fab03f731",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
