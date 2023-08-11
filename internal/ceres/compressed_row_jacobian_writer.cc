@@ -102,6 +102,11 @@ std::unique_ptr<SparseMatrix> CompressedRowJacobianWriter::CreateJacobian()
       auto parameter_block = residual_block->parameter_blocks()[j];
       if (!parameter_block->IsConstant()) {
         num_jacobian_nonzeros += num_residuals * parameter_block->TangentSize();
+        if (num_jacobian_nonzeros < 0) {
+          LOG(ERROR) << "Unable to create Jacobian matrix: Too many entries in "
+                        "the Jacobian matrix.";
+          return nullptr;
+        }
       }
     }
   }

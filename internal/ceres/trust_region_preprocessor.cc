@@ -336,13 +336,19 @@ bool SetupInnerIterationMinimizer(PreprocessedProblem* pp) {
 }
 
 // Configure and create a TrustRegionMinimizer object.
-void SetupMinimizerOptions(PreprocessedProblem* pp) {
+bool SetupMinimizerOptions(PreprocessedProblem* pp) {
   const Solver::Options& options = pp->options;
 
   SetupCommonMinimizerOptions(pp);
   pp->minimizer_options.is_constrained =
       pp->reduced_program->IsBoundsConstrained();
   pp->minimizer_options.jacobian = pp->evaluator->CreateJacobian();
+  if (pp->minimizer_options.jacobian == nullptr) {
+    pp->error =
+        "Unable to create Jacobian matrix. Likely because it is too large.";
+    return false;
+  }
+
   pp->minimizer_options.inner_iteration_minimizer =
       pp->inner_iteration_minimizer;
 
@@ -360,6 +366,7 @@ void SetupMinimizerOptions(PreprocessedProblem* pp) {
   pp->minimizer_options.trust_region_strategy =
       TrustRegionStrategy::Create(strategy_options);
   CHECK(pp->minimizer_options.trust_region_strategy != nullptr);
+  return true;
 }
 
 }  // namespace
@@ -395,8 +402,7 @@ bool TrustRegionPreprocessor::Preprocess(const Solver::Options& options,
     return false;
   }
 
-  SetupMinimizerOptions(pp);
-  return true;
+  return SetupMinimizerOptions(pp);
 }
 
 }  // namespace ceres::internal
