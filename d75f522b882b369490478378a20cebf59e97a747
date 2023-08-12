@@ -35,6 +35,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f76f3438_2393d6f3",
+        "filename": "internal/ceres/block_jacobian_writer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-08-12T00:16:57Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "e7b462a0_698fc969",
+      "revId": "d75f522b882b369490478378a20cebf59e97a747",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5da2b9aa_f365197b",
