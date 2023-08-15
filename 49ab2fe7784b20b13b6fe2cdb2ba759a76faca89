@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "726b543b_d69bd0c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-08-15T22:30:56Z",
+      "side": 1,
+      "message": "Resolves https://github.com/ceres-solver/ceres-solver/issues/985 (requires https://ceres-solver-review.googlesource.com/c/ceres-solver/+/24280 )",
+      "revId": "49ab2fe7784b20b13b6fe2cdb2ba759a76faca89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
