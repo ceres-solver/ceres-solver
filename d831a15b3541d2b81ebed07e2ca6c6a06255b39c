@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c419783_c61213aa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-08-15T22:31:01Z",
+      "side": 1,
+      "message": "Added CUDA to MSVC builds on windows.\n\nThis allows to reproduce several issues referenced on github without a windows pc.\n\nI\u0027ve added `VERBOSE\u003d1` environment variable to build section in order to make debugging build issues easier.\n\nI\u0027ve changed strategy of both mingw and msvc jobs to `fail-fast: false` because mingw-i686 builds are failing on some test for the past couple of months; and msvc builds [tests] seem to became broken in `Detect large Jacobians and return failure instead of crashing.` [ https://github.com/ceres-solver/ceres-solver/actions/runs/5861988771/job/15893060255 ].\nWith almost 100% probability non-gpu build finishes before CUDA toolkit is even downloaded / installed, terminating it prematurely.",
+      "revId": "d831a15b3541d2b81ebed07e2ca6c6a06255b39c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
