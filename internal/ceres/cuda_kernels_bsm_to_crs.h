@@ -39,8 +39,8 @@
 
 namespace ceres {
 namespace internal {
-class Block;
-class Cell;
+struct Block;
+struct Cell;
 
 // Compute structure of CRS matrix using block-sparse structure.
 // Arrays corresponding to CRS matrix are to be allocated by caller
