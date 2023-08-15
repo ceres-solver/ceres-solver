@@ -32,6 +32,7 @@
 #define CERES_INTERNAL_CUDA_KERNELS_BSM_TO_CRS_H_
 
 #include "ceres/internal/config.h"
+#include "ceres/internal/export.h"
 
 #ifndef CERES_NO_CUDA
 
@@ -39,8 +40,8 @@
 
 namespace ceres {
 namespace internal {
-class Block;
-class Cell;
+struct Block;
+struct Cell;
 
 // Compute structure of CRS matrix using block-sparse structure.
 // Arrays corresponding to CRS matrix are to be allocated by caller
