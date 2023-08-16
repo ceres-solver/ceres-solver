@@ -33,6 +33,23 @@
       "message": "Agreed Sergiu should look too.",
       "revId": "63b58674b0c8687ca0512f58dffd5759e4ebcd4a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6310368a_496d626c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-08-16T15:05:35Z",
+      "side": 1,
+      "message": "Sergiu are you good with this?",
+      "revId": "63b58674b0c8687ca0512f58dffd5759e4ebcd4a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
