@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d2e048e8_6cc1165c",
+        "filename": ".github/workflows/windows.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-08-16T17:55:32Z",
+      "side": 1,
+      "message": "It helps to \"separate\" mingw builds from msvc ones; those builds fail due to different reasons, and having one constantly failing forbids us from seeing results of another when `fail-fast` is active.",
+      "parentUuid": "341fef16_b51fb325",
+      "revId": "63b58674b0c8687ca0512f58dffd5759e4ebcd4a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "009d903c_2c6b1ee3",
         "filename": ".github/workflows/windows.yml",
         "patchSetId": 4
@@ -31,6 +49,30 @@
       "writtenOn": "2023-08-16T16:26:08Z",
       "side": 1,
       "message": "I guess this line updates the environment variable only within this scope which can cause confusion.",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 85
+      },
+      "revId": "63b58674b0c8687ca0512f58dffd5759e4ebcd4a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f8bebdd_3867baa4",
+        "filename": ".github/workflows/windows.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-08-16T17:55:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "009d903c_2c6b1ee3",
       "range": {
         "startLine": 129,
         "startChar": 0,
@@ -64,6 +106,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "37c3e136_861722d9",
+        "filename": ".github/workflows/windows.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-08-16T17:55:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32daf576_a6c634d1",
+      "range": {
+        "startLine": 130,
+        "startChar": 10,
+        "endLine": 130,
+        "endChar": 44
+      },
+      "revId": "63b58674b0c8687ca0512f58dffd5759e4ebcd4a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "98e9bd9e_07b259ad",
@@ -87,6 +153,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "257a60e1_d23afb60",
+        "filename": ".github/workflows/windows.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-08-16T17:55:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98e9bd9e_07b259ad",
+      "range": {
+        "startLine": 133,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 91
+      },
+      "revId": "63b58674b0c8687ca0512f58dffd5759e4ebcd4a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "127d7abc_864bd2c5",
@@ -100,6 +190,24 @@
       "writtenOn": "2023-08-16T16:26:08Z",
       "side": 1,
       "message": "Do we need this in regular CI builds?",
+      "revId": "63b58674b0c8687ca0512f58dffd5759e4ebcd4a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1599046_ed2de735",
+        "filename": ".github/workflows/windows.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-08-16T17:55:32Z",
+      "side": 1,
+      "message": "It makes logs quite more explicit, which helps when you don\u0027t have a windows pc.",
+      "parentUuid": "127d7abc_864bd2c5",
       "revId": "63b58674b0c8687ca0512f58dffd5759e4ebcd4a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -168,6 +276,23 @@
       "writtenOn": "2023-08-16T16:26:08Z",
       "side": 1,
       "message": "Thanks for the CL Dimitriy. I have some minor remarks.",
+      "revId": "63b58674b0c8687ca0512f58dffd5759e4ebcd4a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4747c433_43245008",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-08-16T17:55:32Z",
+      "side": 1,
+      "message": "Rebased, changed handling of environment variables.\n\nThe problem with `fail-fast` setting being turned on is that the last successful build on `mingw-i686` was more than half a year ago: https://github.com/ceres-solver/ceres-solver/actions/workflows/windows.yml?query\u003dis%3Asuccess\n\nAfter that it was always failing with segfault on `manifold_test`.\n\nBecause mingw builds are significantly faster than downloading / installing cuda toolkit, the whole workflow is prematurely aborted (before getting cuda toolkit downloaded and installed); thus we will never know if msvc-cuda builds succeed (at least in \"building\" part) if `fail-fast` is set to true and problem with `manifold_test` persists.",
       "revId": "63b58674b0c8687ca0512f58dffd5759e4ebcd4a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
