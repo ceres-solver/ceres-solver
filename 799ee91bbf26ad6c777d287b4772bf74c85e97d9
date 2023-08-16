@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2e51052_d4790888",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-08-16T11:17:50Z",
+      "side": 1,
+      "message": "`num_jacobian_nonzeros` is now offset by `total_num_effective_parameters` in the beginning of `CompressedRowJacobianWriter::CreateJacobian`.\n\nThus, it needs to be subtracted when performing the check.",
+      "revId": "799ee91bbf26ad6c777d287b4772bf74c85e97d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
