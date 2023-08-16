@@ -1,6 +1,109 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "341fef16_b51fb325",
+        "filename": ".github/workflows/windows.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-08-16T16:26:08Z",
+      "side": 1,
+      "message": "I guess this was needed for debugging. However, for normal builds I would revert this setting since compilation takes a very long time already.",
+      "revId": "63b58674b0c8687ca0512f58dffd5759e4ebcd4a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "009d903c_2c6b1ee3",
+        "filename": ".github/workflows/windows.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-08-16T16:26:08Z",
+      "side": 1,
+      "message": "I guess this line updates the environment variable only within this scope which can cause confusion.",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 85
+      },
+      "revId": "63b58674b0c8687ca0512f58dffd5759e4ebcd4a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32daf576_a6c634d1",
+        "filename": ".github/workflows/windows.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-08-16T16:26:08Z",
+      "side": 1,
+      "message": "Better consistently pipe `echo` output using `Out-File` as below for persistency.",
+      "range": {
+        "startLine": 130,
+        "startChar": 10,
+        "endLine": 130,
+        "endChar": 44
+      },
+      "revId": "63b58674b0c8687ca0512f58dffd5759e4ebcd4a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98e9bd9e_07b259ad",
+        "filename": ".github/workflows/windows.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-08-16T16:26:08Z",
+      "side": 1,
+      "message": "You can write directly to `GITHUB_PATH` to extend the `PATH` environment variable. See [this workflow](https://github.com/sergiud/SuiteSparse/blob/0ba07264225518a487a0a9a8e675f6e36c96a68a/.github/workflows/windows.yml#L227-L228) for an example.",
+      "range": {
+        "startLine": 133,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 91
+      },
+      "revId": "63b58674b0c8687ca0512f58dffd5759e4ebcd4a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "127d7abc_864bd2c5",
+        "filename": ".github/workflows/windows.yml",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-08-16T16:26:08Z",
+      "side": 1,
+      "message": "Do we need this in regular CI builds?",
+      "revId": "63b58674b0c8687ca0512f58dffd5759e4ebcd4a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "47c2b73d_77496884",
@@ -48,6 +151,23 @@
       "writtenOn": "2023-08-16T15:05:35Z",
       "side": 1,
       "message": "Sergiu are you good with this?",
+      "revId": "63b58674b0c8687ca0512f58dffd5759e4ebcd4a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a68f57da_5bb399b5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-08-16T16:26:08Z",
+      "side": 1,
+      "message": "Thanks for the CL Dimitriy. I have some minor remarks.",
       "revId": "63b58674b0c8687ca0512f58dffd5759e4ebcd4a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
