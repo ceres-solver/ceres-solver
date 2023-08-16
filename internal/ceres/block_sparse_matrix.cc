@@ -833,12 +833,11 @@ void BlockSparseMatrix::FreeValues(double*& values) {
 
 #ifndef CERES_NO_CUDA
   CHECK_EQ(cudaSuccess, cudaFreeHost(values));
+  values = nullptr;
 #else
   LOG(FATAL) << "Page locked memory requested when CUDA is not available. "
              << "This is a Ceres bug; please contact the developers!";
 #endif
-
-  values = nullptr;
 };
 
 }  // namespace ceres::internal
