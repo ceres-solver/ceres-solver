@@ -67,6 +67,24 @@
       "message": "Is there a reason for including the header without using its macro definitions? This does look unnecessary.",
       "revId": "49ab2fe7784b20b13b6fe2cdb2ba759a76faca89",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d556707_2dfcfeeb",
+        "filename": "internal/ceres/cuda_kernels_bsm_to_crs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-08-16T16:21:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b28bbfe0_8f48116b",
+      "revId": "49ab2fe7784b20b13b6fe2cdb2ba759a76faca89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
