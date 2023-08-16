@@ -16,6 +16,23 @@
       "message": "Resolves https://github.com/ceres-solver/ceres-solver/issues/985 (requires https://ceres-solver-review.googlesource.com/c/ceres-solver/+/24280 )",
       "revId": "49ab2fe7784b20b13b6fe2cdb2ba759a76faca89",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8f673fd_55e3ae32",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-08-16T15:05:57Z",
+      "side": 1,
+      "message": "Sergiu are you good with this?",
+      "revId": "49ab2fe7784b20b13b6fe2cdb2ba759a76faca89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
