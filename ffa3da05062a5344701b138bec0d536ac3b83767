@@ -18,6 +18,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9806f6d_c88b7b53",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-08-16T19:56:40Z",
+      "side": 1,
+      "message": "at your leisure, sergiu can you look into this? is this patch still needed or should we abandon this?",
+      "revId": "ffa3da05062a5344701b138bec0d536ac3b83767",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "58b42237_8d20c825",
