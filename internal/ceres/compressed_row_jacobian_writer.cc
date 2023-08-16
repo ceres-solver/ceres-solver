@@ -190,7 +190,8 @@ std::unique_ptr<SparseMatrix> CompressedRowJacobianWriter::CreateJacobian()
     }
     row_pos += num_residuals;
   }
-  CHECK_EQ(num_jacobian_nonzeros, rows[total_num_residuals]);
+  CHECK_EQ(num_jacobian_nonzeros - total_num_effective_parameters,
+           rows[total_num_residuals]);
 
   PopulateJacobianRowAndColumnBlockVectors(program_, jacobian.get());
 
