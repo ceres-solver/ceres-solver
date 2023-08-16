@@ -16,6 +16,29 @@
       "message": "`num_jacobian_nonzeros` is now offset by `total_num_effective_parameters` in the beginning of `CompressedRowJacobianWriter::CreateJacobian`.\n\nThus, it needs to be subtracted when performing the check.",
       "revId": "799ee91bbf26ad6c777d287b4772bf74c85e97d9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e12b31bf_e43940b2",
+        "filename": "internal/ceres/compressed_row_jacobian_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-08-16T13:09:04Z",
+      "side": 1,
+      "message": "ah crap, I think I screwed up when submitting this and only ran one of the tests. Thank you for catching this.",
+      "range": {
+        "startLine": 193,
+        "startChar": 11,
+        "endLine": 193,
+        "endChar": 32
+      },
+      "revId": "799ee91bbf26ad6c777d287b4772bf74c85e97d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
