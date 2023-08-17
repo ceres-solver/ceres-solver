@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f5771fd_9b2c7701",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-08-17T18:44:40Z",
+      "side": 1,
+      "message": "This patch allows host-asynchronous operation of copying values of non-crs-compatible matrix onto gpu, allowing overlaying it with some host-side computations (EtE inverse update, etc).\n\nBecause block-sparse matrices are expected to have values allocated in page-locked memory, we can schedule all memory copies and kernel invocations immediately.\nThe only limitation is a limit of queue depth of cuda stream (which is not described in docs / not exposed via api; potentially depends on kernel size).\n\nI\u0027ve replaced fixed-size buffer for storing batch of values on gpu with a buffer of size proportional to number of non-zeros, and replaced synchronization with event-based one.",
+      "revId": "22e596c839697034003551288548d13d561bd086",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
