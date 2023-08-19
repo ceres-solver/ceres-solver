@@ -55,6 +55,13 @@ class CudaBuffer {
   CudaBuffer(ContextImpl* context, int size) : context_(context) {
     Reserve(size);
   }
+
+  CudaBuffer(CudaBuffer&& other)
+      : data_(other.data_), size_(other.size_), context_(other.context_) {
+    other.data_ = nullptr;
+    other.size_ = 0;
+  }
+
   CudaBuffer(const CudaBuffer&) = delete;
   CudaBuffer& operator=(const CudaBuffer&) = delete;
 
