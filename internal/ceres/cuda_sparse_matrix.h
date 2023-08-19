@@ -71,12 +71,16 @@ class CERES_NO_EXPORT CudaSparseMatrix {
                    int num_nonzeros,
                    ContextImpl* context);
 
+  void UpdateTempBuffer();
+
   ~CudaSparseMatrix();
 
   // y = y + Ax;
+  void RightMultiplyAndAccumulate(const double* x, double* y) const;
   void RightMultiplyAndAccumulate(const CudaVector& x, CudaVector* y);
   // y = y + A'x;
   void LeftMultiplyAndAccumulate(const CudaVector& x, CudaVector* y);
+  void LeftMultiplyAndAccumulate(const double* x, double* y) const;
 
   int num_rows() const { return num_rows_; }
   int num_cols() const { return num_cols_; }
@@ -106,7 +110,9 @@ class CERES_NO_EXPORT CudaSparseMatrix {
 
   // y = y + op(M)x. op must be either CUSPARSE_OPERATION_NON_TRANSPOSE or
   // CUSPARSE_OPERATION_TRANSPOSE.
-  void SpMv(cusparseOperation_t op, const CudaVector& x, CudaVector* y);
+  void SpMv(cusparseOperation_t op,
+            const cusparseDnVecDescr_t& x,
+            const cusparseDnVecDescr_t& y) const;
 
   int num_rows_ = 0;
   int num_cols_ = 0;
@@ -123,7 +129,11 @@ class CERES_NO_EXPORT CudaSparseMatrix {
   // CuSparse object that describes this matrix.
   cusparseSpMatDescr_t descr_ = nullptr;
 
-  CudaBuffer<uint8_t> spmv_buffer_;
+  // Dense vector descriptors for pointer interface
+  cusparseDnVecDescr_t descr_vec_left_ = nullptr;
+  cusparseDnVecDescr_t descr_vec_right_ = nullptr;
+
+  mutable CudaBuffer<uint8_t> spmv_buffer_;
 };
 
 }  // namespace ceres::internal

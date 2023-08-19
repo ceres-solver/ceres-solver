@@ -79,6 +79,8 @@ CudaPartitionedBlockSparseCRSView::CudaPartitionedBlockSparseCRSView(
                               matrix_f_->mutable_rows(),
                               matrix_f_->mutable_cols(),
                               context->DefaultStream());
+  matrix_f_->UpdateTempBuffer();
+  matrix_e_->UpdateTempBuffer();
   f_is_crs_compatible_ = block_structure_->IsCrsCompatible();
   if (f_is_crs_compatible_) {
     block_structure_ = nullptr;
