@@ -48,7 +48,7 @@ TEST(CudaVector, Creation) {
   CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
   CudaVector x(&context, 1000);
   EXPECT_EQ(x.num_rows(), 1000);
-  EXPECT_NE(x.data().data(), nullptr);
+  EXPECT_NE(x.data(), nullptr);
 }
 
 TEST(CudaVector, CopyVector) {

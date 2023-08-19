@@ -52,6 +52,7 @@ CudaBlockSparseCRSView::CudaBlockSparseCRSView(const BlockSparseMatrix& bsm,
                    crs_matrix_->mutable_rows(),
                    crs_matrix_->mutable_cols(),
                    context->DefaultStream());
+  crs_matrix_->UpdateTempBuffer();
   is_crs_compatible_ = block_structure_->IsCrsCompatible();
   // if matrix is crs-compatible - we can drop block-structure and don't need
   // streamed_buffer_
