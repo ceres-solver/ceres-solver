@@ -99,7 +99,7 @@ class CudaBlockSparseCRSViewTest : public ::testing::Test {
               1);
   }
 
-  void Compare(const BlockSparseMatrix& bsm, CudaSparseMatrix& csm) {
+  void Compare(const BlockSparseMatrix& bsm, const CudaSparseMatrix& csm) {
     ASSERT_EQ(csm.num_cols(), bsm.num_cols());
     ASSERT_EQ(csm.num_rows(), bsm.num_rows());
     ASSERT_EQ(csm.num_nonzeros(), bsm.num_nonzeros());
@@ -138,7 +138,7 @@ TEST_F(CudaBlockSparseCRSViewTest, CreateUpdateValuesNonCompatible) {
       CudaBlockSparseCRSView(*block_sparse_non_crs_compatible_, &context_);
   ASSERT_EQ(view.IsCrsCompatible(), false);
 
-  auto matrix = view.mutable_crs_matrix();
+  auto matrix = view.crs_matrix();
   Compare(*block_sparse_non_crs_compatible_, *matrix);
 }
 
@@ -147,7 +147,7 @@ TEST_F(CudaBlockSparseCRSViewTest, CreateUpdateValuesCompatibleRows) {
       CudaBlockSparseCRSView(*block_sparse_crs_compatible_rows_, &context_);
   ASSERT_EQ(view.IsCrsCompatible(), true);
 
-  auto matrix = view.mutable_crs_matrix();
+  auto matrix = view.crs_matrix();
   Compare(*block_sparse_crs_compatible_rows_, *matrix);
 }
 
@@ -156,7 +156,7 @@ TEST_F(CudaBlockSparseCRSViewTest, CreateUpdateValuesCompatibleSingleCell) {
                                      &context_);
   ASSERT_EQ(view.IsCrsCompatible(), true);
 
-  auto matrix = view.mutable_crs_matrix();
+  auto matrix = view.crs_matrix();
   Compare(*block_sparse_crs_compatible_single_cell_, *matrix);
 }
 }  // namespace ceres::internal
