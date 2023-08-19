@@ -59,10 +59,11 @@ CudaPartitionedBlockSparseCRSView::CudaPartitionedBlockSparseCRSView(
                              ? bs.cols[num_col_blocks_e].position
                              : bsm.num_cols();
   const int num_cols_f = bsm.num_cols() - num_cols_e;
-  matrix_e_ = std::make_unique<CudaSparseMatrix>(
-      num_rows, num_cols_e, num_nonzeros_e, context);
-  matrix_f_ = std::make_unique<CudaSparseMatrix>(
-      num_rows, num_cols_f, num_nonzeros_f, context);
+
+  CudaBuffer<int32_t> rows_e(context, num_rows + 1);
+  CudaBuffer<int32_t> cols_e(context, num_nonzeros_e);
+  CudaBuffer<int32_t> rows_f(context, num_rows + 1);
+  CudaBuffer<int32_t> cols_f(context, num_nonzeros_f);
 
   num_row_blocks_e_ = block_structure_->num_row_blocks_e();
   FillCRSStructurePartitioned(block_structure_->num_row_blocks(),
@@ -74,10 +75,10 @@ CudaPartitionedBlockSparseCRSView::CudaPartitionedBlockSparseCRSView(
                               block_structure_->cells(),
                               block_structure_->row_blocks(),
                               block_structure_->col_blocks(),
-                              matrix_e_->mutable_rows(),
-                              matrix_e_->mutable_cols(),
-                              matrix_f_->mutable_rows(),
-                              matrix_f_->mutable_cols(),
+                              rows_e.data(),
+                              cols_e.data(),
+                              rows_f.data(),
+                              cols_f.data(),
                               context->DefaultStream());
   f_is_crs_compatible_ = block_structure_->IsCrsCompatible();
   if (f_is_crs_compatible_) {
@@ -86,6 +87,11 @@ CudaPartitionedBlockSparseCRSView::CudaPartitionedBlockSparseCRSView(
     streamed_buffer_ = std::make_unique<CudaStreamedBuffer<double>>(
         context, kMaxTemporaryArraySize);
   }
+  matrix_e_ = std::make_unique<CudaSparseMatrix>(
+      num_cols_e, std::move(rows_e), std::move(cols_e), context);
+  matrix_f_ = std::make_unique<CudaSparseMatrix>(
+      num_cols_f, std::move(rows_f), std::move(cols_f), context);
+
   CHECK_EQ(bsm.num_nonzeros(),
            matrix_e_->num_nonzeros() + matrix_f_->num_nonzeros());
 

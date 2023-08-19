@@ -196,11 +196,8 @@ class CudaPartitionedBlockSparseCRSViewTest : public ::testing::Test {
     const int num_cols_e = bs.cols[num_col_blocks_e].position;
     const int num_cols_f = num_cols - num_cols_e;
 
-    // TODO: we definitely would like to use matrix() here, but
-    // CudaSparseMatrix::RightMultiplyAndAccumulate is defined non-const because
-    // it might allocate additional storage by request of cuSPARSE
-    auto matrix_e = view.mutable_matrix_e();
-    auto matrix_f = view.mutable_matrix_f();
+    auto matrix_e = view.matrix_e();
+    auto matrix_f = view.matrix_f();
     ASSERT_EQ(matrix_e->num_cols(), num_cols_e);
     ASSERT_EQ(matrix_e->num_rows(), num_rows);
     ASSERT_EQ(matrix_f->num_cols(), num_cols_f);

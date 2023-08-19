@@ -65,6 +65,8 @@ class CERES_NO_EXPORT CudaVector {
   // context before calling this method.
   CudaVector(ContextImpl* context, int size);
 
+  CudaVector(CudaVector&& other);
+
   ~CudaVector();
 
   void Resize(int size);
@@ -83,6 +85,9 @@ class CERES_NO_EXPORT CudaVector {
 
   // Copy from Eigen vector.
   void CopyFromCpu(const Vector& x);
+
+  // Copy from CPU memory array.
+  void CopyFromCpu(const double* x);
 
   // Copy to Eigen vector.
   void CopyTo(Vector* x) const;
@@ -103,7 +108,8 @@ class CERES_NO_EXPORT CudaVector {
   int num_rows() const { return num_rows_; }
   int num_cols() const { return 1; }
 
-  const CudaBuffer<double>& data() const { return data_; }
+  const double* data() const { return data_.data(); }
+  double* mutable_data() { return data_.data(); }
 
   const cusparseDnVecDescr_t& descr() const { return descr_; }
 

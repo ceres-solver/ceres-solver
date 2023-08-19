@@ -496,7 +496,7 @@ static void PMVRightMultiplyAndAccumulateFCuda(benchmark::State& state,
   cuda_x.CopyFromCpu(x);
   cuda_y.SetZero();
 
-  auto matrix = view.mutable_matrix_f();
+  auto matrix = view.matrix_f();
   for (auto _ : state) {
     matrix->RightMultiplyAndAccumulate(cuda_x, &cuda_y);
   }
@@ -522,7 +522,7 @@ static void PMVLeftMultiplyAndAccumulateFCuda(benchmark::State& state,
   cuda_x.CopyFromCpu(x);
   cuda_y.SetZero();
 
-  auto matrix = view.mutable_matrix_f();
+  auto matrix = view.matrix_f();
   for (auto _ : state) {
     matrix->LeftMultiplyAndAccumulate(cuda_x, &cuda_y);
   }
@@ -548,7 +548,7 @@ static void PMVRightMultiplyAndAccumulateECuda(benchmark::State& state,
   cuda_x.CopyFromCpu(x);
   cuda_y.SetZero();
 
-  auto matrix = view.mutable_matrix_e();
+  auto matrix = view.matrix_e();
   for (auto _ : state) {
     matrix->RightMultiplyAndAccumulate(cuda_x, &cuda_y);
   }
@@ -574,7 +574,7 @@ static void PMVLeftMultiplyAndAccumulateECuda(benchmark::State& state,
   cuda_x.CopyFromCpu(x);
   cuda_y.SetZero();
 
-  auto matrix = view.mutable_matrix_e();
+  auto matrix = view.matrix_e();
   for (auto _ : state) {
     matrix->LeftMultiplyAndAccumulate(cuda_x, &cuda_y);
   }

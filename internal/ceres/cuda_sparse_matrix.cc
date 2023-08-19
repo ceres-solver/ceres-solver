@@ -58,63 +58,85 @@
 #include "cusparse.h"
 
 namespace ceres::internal {
+namespace {
+// Starting in CUDA 11.2.1, CUSPARSE_MV_ALG_DEFAULT was deprecated in favor of
+// CUSPARSE_SPMV_ALG_DEFAULT.
+#if CUDART_VERSION >= 11021
+const auto kSpMVAlgorithm = CUSPARSE_SPMV_ALG_DEFAULT;
+#else   // CUDART_VERSION >= 11021
+const auto kSpMVAlgorithm = CUSPARSE_MV_ALG_DEFAULT;
+#endif  // CUDART_VERSION >= 11021
+size_t GetTempBufferSizeForOp(const cusparseHandle_t& handle,
+                              const cusparseOperation_t op,
+                              const cusparseDnVecDescr_t& x,
+                              const cusparseDnVecDescr_t& y,
+                              const cusparseSpMatDescr_t& A) {
+  size_t buffer_size;
+  const double alpha = 1.0;
+  const double beta = 1.0;
+  CHECK_NE(A, nullptr);
+  CHECK_EQ(cusparseSpMV_bufferSize(handle,
+                                   op,
+                                   &alpha,
+                                   A,
+                                   x,
+                                   &beta,
+                                   y,
+                                   CUDA_R_64F,
+                                   kSpMVAlgorithm,
+                                   &buffer_size),
+           CUSPARSE_STATUS_SUCCESS);
+  return buffer_size;
+}
 
-CudaSparseMatrix::CudaSparseMatrix(int num_rows,
-                                   int num_cols,
-                                   int num_nonzeros,
+size_t GetTempBufferSize(const cusparseHandle_t& handle,
+                         const cusparseDnVecDescr_t& left,
+                         const cusparseDnVecDescr_t& right,
+                         const cusparseSpMatDescr_t& A) {
+  CHECK_NE(A, nullptr);
+  return std::max(GetTempBufferSizeForOp(
+                      handle, CUSPARSE_OPERATION_NON_TRANSPOSE, right, left, A),
+                  GetTempBufferSizeForOp(
+                      handle, CUSPARSE_OPERATION_TRANSPOSE, left, right, A));
+}
+}  // namespace
+
+CudaSparseMatrix::CudaSparseMatrix(int num_cols,
+                                   CudaBuffer<int32_t>&& rows,
+                                   CudaBuffer<int32_t>&& cols,
                                    ContextImpl* context)
-    : num_rows_(num_rows),
+    : num_rows_(rows.size() - 1),
       num_cols_(num_cols),
-      num_nonzeros_(num_nonzeros),
+      num_nonzeros_(cols.size()),
       context_(context),
-      rows_(context, num_rows + 1),
-      cols_(context, num_nonzeros),
-      values_(context, num_nonzeros),
+      rows_(std::move(rows)),
+      cols_(std::move(cols)),
+      values_(context, num_nonzeros_),
       spmv_buffer_(context) {
-  cusparseCreateCsr(&descr_,
-                    num_rows_,
-                    num_cols_,
-                    num_nonzeros_,
-                    rows_.data(),
-                    cols_.data(),
-                    values_.data(),
-                    CUSPARSE_INDEX_32I,
-                    CUSPARSE_INDEX_32I,
-                    CUSPARSE_INDEX_BASE_ZERO,
-                    CUDA_R_64F);
+  Initialize();
 }
 
 CudaSparseMatrix::CudaSparseMatrix(ContextImpl* context,
                                    const CompressedRowSparseMatrix& crs_matrix)
-    : context_(context),
-      rows_{context},
-      cols_{context},
-      values_{context},
-      spmv_buffer_{context} {
-  DCHECK_NE(context, nullptr);
-  CHECK(context->IsCudaInitialized());
-  num_rows_ = crs_matrix.num_rows();
-  num_cols_ = crs_matrix.num_cols();
-  num_nonzeros_ = crs_matrix.num_nonzeros();
+    : num_rows_(crs_matrix.num_rows()),
+      num_cols_(crs_matrix.num_cols()),
+      num_nonzeros_(crs_matrix.num_nonzeros()),
+      context_(context),
+      rows_(context, num_rows_ + 1),
+      cols_(context, num_nonzeros_),
+      values_(context, num_nonzeros_),
+      spmv_buffer_(context) {
   rows_.CopyFromCpu(crs_matrix.rows(), num_rows_ + 1);
   cols_.CopyFromCpu(crs_matrix.cols(), num_nonzeros_);
   values_.CopyFromCpu(crs_matrix.values(), num_nonzeros_);
-  cusparseCreateCsr(&descr_,
-                    num_rows_,
-                    num_cols_,
-                    num_nonzeros_,
-                    rows_.data(),
-                    cols_.data(),
-                    values_.data(),
-                    CUSPARSE_INDEX_32I,
-                    CUSPARSE_INDEX_32I,
-                    CUSPARSE_INDEX_BASE_ZERO,
-                    CUDA_R_64F);
+  Initialize();
 }
 
 CudaSparseMatrix::~CudaSparseMatrix() {
   CHECK_EQ(cusparseDestroySpMat(descr_), CUSPARSE_STATUS_SUCCESS);
   descr_ = nullptr;
+  CHECK_EQ(CUSPARSE_STATUS_SUCCESS, cusparseDestroyDnVec(descr_vec_left_));
+  CHECK_EQ(CUSPARSE_STATUS_SUCCESS, cusparseDestroyDnVec(descr_vec_right_));
 }
 
 void CudaSparseMatrix::CopyValuesFromCpu(
@@ -128,58 +150,76 @@ void CudaSparseMatrix::CopyValuesFromCpu(
   values_.CopyFromCpu(crs_matrix.values(), num_nonzeros_);
 }
 
+void CudaSparseMatrix::Initialize() {
+  CHECK(context_->IsCudaInitialized());
+  CHECK_EQ(CUSPARSE_STATUS_SUCCESS,
+           cusparseCreateCsr(&descr_,
+                             num_rows_,
+                             num_cols_,
+                             num_nonzeros_,
+                             rows_.data(),
+                             cols_.data(),
+                             values_.data(),
+                             CUSPARSE_INDEX_32I,
+                             CUSPARSE_INDEX_32I,
+                             CUSPARSE_INDEX_BASE_ZERO,
+                             CUDA_R_64F));
+
+  // Note: values_.data() is used as non-zero pointer to device memory
+  // When there is no non-zero values, data-pointer of values_ array will be a
+  // nullptr; but in this case left/right products are trivial and temporary
+  // buffer (and vector descriptors) is not required
+  if (!num_nonzeros_) return;
+
+  CHECK_EQ(CUSPARSE_STATUS_SUCCESS,
+           cusparseCreateDnVec(
+               &descr_vec_left_, num_rows_, values_.data(), CUDA_R_64F));
+  CHECK_EQ(CUSPARSE_STATUS_SUCCESS,
+           cusparseCreateDnVec(
+               &descr_vec_right_, num_cols_, values_.data(), CUDA_R_64F));
+  size_t buffer_size = GetTempBufferSize(
+      context_->cusparse_handle_, descr_vec_left_, descr_vec_right_, descr_);
+  spmv_buffer_.Reserve(buffer_size);
+}
+
 void CudaSparseMatrix::SpMv(cusparseOperation_t op,
-                            const CudaVector& x,
-                            CudaVector* y) {
+                            const cusparseDnVecDescr_t& x,
+                            const cusparseDnVecDescr_t& y) const {
   size_t buffer_size = 0;
   const double alpha = 1.0;
   const double beta = 1.0;
 
-  // Starting in CUDA 11.2.1, CUSPARSE_MV_ALG_DEFAULT was deprecated in favor of
-  // CUSPARSE_SPMV_ALG_DEFAULT.
-#if CUDART_VERSION >= 11021
-  const auto algorithm = CUSPARSE_SPMV_ALG_DEFAULT;
-#else   // CUDART_VERSION >= 11021
-  const auto algorithm = CUSPARSE_MV_ALG_DEFAULT;
-#endif  // CUDART_VERSION >= 11021
-
-  CHECK_EQ(cusparseSpMV_bufferSize(context_->cusparse_handle_,
-                                   op,
-                                   &alpha,
-                                   descr_,
-                                   x.descr(),
-                                   &beta,
-                                   y->descr(),
-                                   CUDA_R_64F,
-                                   algorithm,
-                                   &buffer_size),
-           CUSPARSE_STATUS_SUCCESS);
-  spmv_buffer_.Reserve(buffer_size);
   CHECK_EQ(cusparseSpMV(context_->cusparse_handle_,
                         op,
                         &alpha,
                         descr_,
-                        x.descr(),
+                        x,
                         &beta,
-                        y->descr(),
+                        y,
                         CUDA_R_64F,
-                        algorithm,
+                        kSpMVAlgorithm,
                         spmv_buffer_.data()),
            CUSPARSE_STATUS_SUCCESS);
 }
 
 void CudaSparseMatrix::RightMultiplyAndAccumulate(const CudaVector& x,
-                                                  CudaVector* y) {
-  SpMv(CUSPARSE_OPERATION_NON_TRANSPOSE, x, y);
+                                                  CudaVector* y) const {
+  DCHECK(GetTempBufferSize(
+             context_->cusparse_handle_, y->descr(), x.descr(), descr_) <=
+         spmv_buffer_.size());
+  SpMv(CUSPARSE_OPERATION_NON_TRANSPOSE, x.descr(), y->descr());
 }
 
 void CudaSparseMatrix::LeftMultiplyAndAccumulate(const CudaVector& x,
-                                                 CudaVector* y) {
+                                                 CudaVector* y) const {
   // TODO(Joydeep Biswas): We should consider storing a transposed copy of the
   // matrix by converting CSR to CSC. From the cuSPARSE documentation:
   // "In general, opA == CUSPARSE_OPERATION_NON_TRANSPOSE is 3x faster than opA
   // != CUSPARSE_OPERATION_NON_TRANSPOSE"
-  SpMv(CUSPARSE_OPERATION_TRANSPOSE, x, y);
+  DCHECK(GetTempBufferSize(
+             context_->cusparse_handle_, x.descr(), y->descr(), descr_) <=
+         spmv_buffer_.size());
+  SpMv(CUSPARSE_OPERATION_TRANSPOSE, x.descr(), y->descr());
 }
 
 }  // namespace ceres::internal

@@ -56,27 +56,28 @@ namespace ceres::internal {
 
 // A sparse matrix hosted on the GPU in compressed row sparse format, with
 // CUDA-accelerated operations.
+// The user of the class must ensure that ContextImpl::InitCuda() has already
+// been successfully called before using this class.
 class CERES_NO_EXPORT CudaSparseMatrix {
  public:
-  // Create a GPU copy of the matrix provided. The caller must ensure that
-  // InitCuda() has already been successfully called on context before calling
-  // this constructor.
+  // Create a GPU copy of the matrix provided.
   CudaSparseMatrix(ContextImpl* context,
                    const CompressedRowSparseMatrix& crs_matrix);
 
-  // Creates a "blank" matrix with an appropriate amount of memory allocated.
-  // The object itself is left in an inconsistent state.
-  CudaSparseMatrix(int num_rows,
-                   int num_cols,
-                   int num_nonzeros,
+  // Create matrix from existing row and column index buffers.
+  // Values are left uninitialized.
+  CudaSparseMatrix(int num_cols,
+                   CudaBuffer<int32_t>&& rows,
+                   CudaBuffer<int32_t>&& cols,
                    ContextImpl* context);
 
   ~CudaSparseMatrix();
 
+  // Left/right products are using internal buffer and are not thread-safe
   // y = y + Ax;
-  void RightMultiplyAndAccumulate(const CudaVector& x, CudaVector* y);
+  void RightMultiplyAndAccumulate(const CudaVector& x, CudaVector* y) const;
   // y = y + A'x;
-  void LeftMultiplyAndAccumulate(const CudaVector& x, CudaVector* y);
+  void LeftMultiplyAndAccumulate(const CudaVector& x, CudaVector* y) const;
 
   int num_rows() const { return num_rows_; }
   int num_cols() const { return num_cols_; }
@@ -104,9 +105,15 @@ class CERES_NO_EXPORT CudaSparseMatrix {
   CudaSparseMatrix(const CudaSparseMatrix&) = delete;
   CudaSparseMatrix& operator=(const CudaSparseMatrix&) = delete;
 
+  // Allocate temporary buffer for left/right products, create cuSPARSE
+  // descriptors
+  void Initialize();
+
   // y = y + op(M)x. op must be either CUSPARSE_OPERATION_NON_TRANSPOSE or
   // CUSPARSE_OPERATION_TRANSPOSE.
-  void SpMv(cusparseOperation_t op, const CudaVector& x, CudaVector* y);
+  void SpMv(cusparseOperation_t op,
+            const cusparseDnVecDescr_t& x,
+            const cusparseDnVecDescr_t& y) const;
 
   int num_rows_ = 0;
   int num_cols_ = 0;
@@ -123,7 +130,11 @@ class CERES_NO_EXPORT CudaSparseMatrix {
   // CuSparse object that describes this matrix.
   cusparseSpMatDescr_t descr_ = nullptr;
 
-  CudaBuffer<uint8_t> spmv_buffer_;
+  // Dense vector descriptors for pointer interface
+  cusparseDnVecDescr_t descr_vec_left_ = nullptr;
+  cusparseDnVecDescr_t descr_vec_right_ = nullptr;
+
+  mutable CudaBuffer<uint8_t> spmv_buffer_;
 };
 
 }  // namespace ceres::internal

@@ -48,7 +48,7 @@ TEST(CudaVector, Creation) {
   CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
   CudaVector x(&context, 1000);
   EXPECT_EQ(x.num_rows(), 1000);
-  EXPECT_NE(x.data().data(), nullptr);
+  EXPECT_NE(x.data(), nullptr);
 }
 
 TEST(CudaVector, CopyVector) {
@@ -65,6 +65,23 @@ TEST(CudaVector, CopyVector) {
   z << 0, 0, 0;
   y.CopyTo(&z);
   EXPECT_EQ(x, z);
+}
+
+TEST(CudaVector, Move) {
+  ContextImpl context;
+  std::string message;
+  CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
+  CudaVector y(&context, 10);
+  const auto y_data = y.data();
+  const auto y_descr = y.descr();
+  EXPECT_EQ(y.num_rows(), 10);
+  CudaVector z(std::move(y));
+  EXPECT_EQ(y.data(), nullptr);
+  EXPECT_EQ(y.descr(), nullptr);
+  EXPECT_EQ(y.num_rows(), 0);
+
+  EXPECT_EQ(z.data(), y_data);
+  EXPECT_EQ(z.descr(), y_descr);
 }
 
 TEST(CudaVector, DeepCopy) {

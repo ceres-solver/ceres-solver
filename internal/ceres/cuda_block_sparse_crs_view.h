@@ -80,6 +80,14 @@ class CERES_NO_EXPORT CudaBlockSparseCRSView {
   // Returns true if block-sparse matrix had CRS-compatible value layout
   bool IsCrsCompatible() const { return is_crs_compatible_; }
 
+  void LeftMultiplyAndAccumulate(const CudaVector& x, CudaVector* y) const {
+    crs_matrix()->LeftMultiplyAndAccumulate(x, y);
+  }
+
+  void RightMultiplyAndAccumulate(const CudaVector& x, CudaVector* y) const {
+    crs_matrix()->RightMultiplyAndAccumulate(x, y);
+  }
+
  private:
   // Value permutation kernel performs a single element-wise operation per
   // thread, thus performing permutation in blocks of 8 megabytes of
