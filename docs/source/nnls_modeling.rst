@@ -2434,8 +2434,8 @@ be constructed as
       class EvaluationCallback {
        public:
         virtual ~EvaluationCallback() = default;
-        virtual void PrepareForEvaluation()(bool evaluate_jacobians
-                                            bool new_evaluation_point) = 0;
+        virtual void PrepareForEvaluation(bool evaluate_jacobians,
+                                          bool new_evaluation_point) = 0;
       };
 
 .. function:: void EvaluationCallback::PrepareForEvaluation(bool evaluate_jacobians, bool new_evaluation_point)
