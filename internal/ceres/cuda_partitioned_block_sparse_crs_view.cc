@@ -143,5 +143,41 @@ void CudaPartitionedBlockSparseCRSView::UpdateValues(
                            context_->DefaultStream()));
 }
 
+void CudaPartitionedBlockSparseCRSView::LeftMultiplyAndAccumulateE(
+    const double* x, double* y) const {
+  matrix_e()->LeftMultiplyAndAccumulate(x, y);
+}
+
+void CudaPartitionedBlockSparseCRSView::LeftMultiplyAndAccumulateF(
+    const double* x, double* y) const {
+  matrix_f()->LeftMultiplyAndAccumulate(x, y);
+}
+
+void CudaPartitionedBlockSparseCRSView::RightMultiplyAndAccumulateE(
+    const double* x, double* y) const {
+  matrix_e()->RightMultiplyAndAccumulate(x, y);
+}
+
+void CudaPartitionedBlockSparseCRSView::RightMultiplyAndAccumulateF(
+    const double* x, double* y) const {
+  matrix_f()->RightMultiplyAndAccumulate(x, y);
+}
+
+int CudaPartitionedBlockSparseCRSView::num_cols_e() const {
+  return matrix_e()->num_cols();
+}
+
+int CudaPartitionedBlockSparseCRSView::num_cols_f() const {
+  return matrix_f()->num_cols();
+}
+
+int CudaPartitionedBlockSparseCRSView::num_cols() const {
+  return num_cols_e() + num_cols_f();
+}
+
+int CudaPartitionedBlockSparseCRSView::num_rows() const {
+  return matrix_f()->num_rows();
+}
+
 }  // namespace ceres::internal
 #endif  // CERES_NO_CUDA

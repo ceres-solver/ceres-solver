@@ -75,6 +75,19 @@ void CudaDtDxpy(double* y,
                 const int size,
                 cudaStream_t stream);
 
+// Negate vector
+void CudaNegate(double* x, const int size, cudaStream_t stream);
+
+// Compute y[i] = x[i] - y[i]
+void CudaYXmY(double* y, const double* x, const int size, cudaStream_t stream);
+
+// Compute y[i] = D[i]^2 * x[i]
+void CudaD2x(double* y,
+             const double* D,
+             const double* x,
+             const int size,
+             cudaStream_t stream);
+
 }  // namespace internal
 }  // namespace ceres
 

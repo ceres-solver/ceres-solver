@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2023 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -26,9 +26,9 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: sameeragarwal@google.com (Sameer Agarwal)
+// Authors: dmitriy.korchemkin@gmail.com (Dmitriy Korchemkin)
 
-#include "ceres/implicit_schur_complement.h"
+#include "ceres/cuda_implicit_schur_complement.h"
 
 #include <cstddef>
 #include <memory>
@@ -49,15 +49,17 @@
 
 namespace ceres::internal {
 
+#ifndef CERES_NO_CUDA
 using testing::AssertionResult;
 
 const double kEpsilon = 1e-14;
 
-class ImplicitSchurComplementTest : public ::testing::Test {
+class CudaImplicitSchurComplementTest : public ::testing::Test {
  protected:
   void SetUp() final {
-    auto problem = CreateLinearLeastSquaresProblemFromId(2);
-
+    std::string message;
+    CHECK(context_.InitCuda(&message)) << "Cuda init failed: " << message;
+    auto problem = CreateLinearLeastSquaresProblemFromId(7);
     CHECK(problem != nullptr);
     A_.reset(down_cast<BlockSparseMatrix*>(problem->A.release()));
     b_ = std::move(problem->b);
@@ -66,6 +68,12 @@ class ImplicitSchurComplementTest : public ::testing::Test {
     num_cols_ = A_->num_cols();
     num_rows_ = A_->num_rows();
     num_eliminate_blocks_ = problem->num_eliminate_blocks;
+
+    b_device_ = std::make_unique<CudaVector>(&context_, num_rows_);
+    D_device_ = std::make_unique<CudaVector>(&context_, num_rows_);
+
+    b_device_->CopyFromCpu(b_.get());
+    D_device_->CopyFromCpu(D_.get());
   }
 
   void ReducedLinearSystemAndSolution(double* D,
@@ -81,8 +89,7 @@ class ImplicitSchurComplementTest : public ::testing::Test {
     LinearSolver::Options options;
     options.elimination_groups.push_back(num_eliminate_blocks_);
     options.type = DENSE_SCHUR;
-    ContextImpl context;
-    options.context = &context;
+    options.context = &context_;
 
     std::unique_ptr<SchurEliminatorBase> eliminator =
         SchurEliminatorBase::Create(options);
@@ -126,9 +133,8 @@ class ImplicitSchurComplementTest : public ::testing::Test {
     LinearSolver::Options options;
     options.elimination_groups.push_back(num_eliminate_blocks_);
     options.preconditioner_type = JACOBI;
-    ContextImpl context;
-    options.context = &context;
-    ImplicitSchurComplement isc(options);
+    options.context = &context_;
+    CudaImplicitSchurComplement isc(options);
     isc.Init(*A_, D, b_.get());
 
     const int num_f_cols = lhs.cols();
@@ -153,6 +159,9 @@ class ImplicitSchurComplementTest : public ::testing::Test {
         F.transpose() * E * (E.transpose() * E + DE).inverse() * E.transpose() *
         F;
 
+    CudaVector z_device(&context_, num_f_cols);
+    CudaVector x_device(&context_, num_f_cols);
+    Vector z(num_f_cols);
     for (int i = 0; i < num_f_cols; ++i) {
       Vector x(num_f_cols);
       x.setZero();
@@ -161,9 +170,12 @@ class ImplicitSchurComplementTest : public ::testing::Test {
       Vector y(num_f_cols);
       y = lhs * x;
 
-      Vector z(num_f_cols);
       z.setZero();
-      isc.RightMultiplyAndAccumulate(x.data(), z.data());
+
+      x_device.CopyFromCpu(x);
+      z_device.SetZero();
+      isc.RightMultiplyAndAccumulate(x_device.data(), z_device.mutable_data());
+      z_device.CopyTo(&z);
 
       // The i^th column of the implicit schur complement is the same as
       // the explicit schur complement.
@@ -176,8 +188,10 @@ class ImplicitSchurComplementTest : public ::testing::Test {
 
       y.setZero();
       y = Z_reference * x;
-      z.setZero();
-      isc.InversePowerSeriesOperatorRightMultiplyAccumulate(x.data(), z.data());
+      z_device.SetZero();
+      isc.InversePowerSeriesOperatorRightMultiplyAccumulate(
+          x_device.data(), z_device.mutable_data());
+      z_device.CopyTo(&z);
 
       // The i^th column of operator Z stored implicitly is the same as its
       // explicit version.
@@ -191,12 +205,14 @@ class ImplicitSchurComplementTest : public ::testing::Test {
       }
     }
 
+    Vector isc_rhs(num_f_cols);
+    isc.rhs().CopyTo(&isc_rhs);
     // Compare the rhs of the reduced linear system
-    if ((isc.rhs() - rhs).norm() > kEpsilon) {
+    if ((isc_rhs - rhs).norm() > kEpsilon) {
       return testing::AssertionFailure()
              << "Explicit and Implicit SchurComplements differ in "
              << "rhs. explicit: " << rhs.transpose()
-             << " implicit: " << isc.rhs().transpose();
+             << " implicit: " << isc_rhs.transpose();
     }
 
     // Reference solution to the f_block.
@@ -206,7 +222,12 @@ class ImplicitSchurComplementTest : public ::testing::Test {
     // Backsubstituted solution from the implicit schur solver using the
     // reference solution to the f_block.
     Vector sol(num_cols_);
-    isc.BackSubstitute(reference_f_sol.data(), sol.data());
+    CudaVector sol_device(&context_, num_cols_);
+    CudaVector reference_f_sol_device(&context_, reference_f_sol.rows());
+    reference_f_sol_device.CopyFromCpu(reference_f_sol);
+    isc.BackSubstitute(reference_f_sol_device.data(),
+                       sol_device.mutable_data());
+    sol_device.CopyTo(&sol);
     if ((sol - reference_solution).norm() > kEpsilon) {
       return testing::AssertionFailure()
              << "Explicit and Implicit SchurComplements solutions differ. "
@@ -225,6 +246,8 @@ class ImplicitSchurComplementTest : public ::testing::Test {
   std::unique_ptr<BlockSparseMatrix> A_;
   std::unique_ptr<double[]> b_;
   std::unique_ptr<double[]> D_;
+  std::unique_ptr<CudaVector> b_device_;
+  std::unique_ptr<CudaVector> D_device_;
 };
 
 // Verify that the Schur Complement matrix implied by the
@@ -233,9 +256,10 @@ class ImplicitSchurComplementTest : public ::testing::Test {
 //
 // We do this with and without regularization to check that the
 // support for the LM diagonal is correct.
-TEST_F(ImplicitSchurComplementTest, SchurMatrixValuesTest) {
+TEST_F(CudaImplicitSchurComplementTest, SchurMatrixValuesTest) {
   EXPECT_TRUE(TestImplicitSchurComplement(nullptr));
   EXPECT_TRUE(TestImplicitSchurComplement(D_.get()));
 }
 
+#endif
 }  // namespace ceres::internal

@@ -37,6 +37,7 @@
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/bundle_adjustment_test_util.h"
 #include "ceres/cuda_block_sparse_crs_view.h"
+#include "ceres/cuda_implicit_schur_complement.h"
 #include "ceres/cuda_partitioned_block_sparse_crs_view.h"
 #include "ceres/cuda_sparse_matrix.h"
 #include "ceres/cuda_vector.h"
@@ -221,6 +222,28 @@ struct BALData {
     implicit_schur_complement_diag->Init(*block_sparse, D.data(), b.data());
     return implicit_schur_complement_diag.get();
   }
+
+#ifndef CERES_NO_CUDA
+  std::unique_ptr<CudaImplicitSchurComplement>
+  ImplicitSchurComplementWithoutDiagonalCuda(
+      const LinearSolver::Options& options) {
+    auto block_sparse = BlockSparseJacobianPartitioned(options.context);
+    auto implicit_schur_complement =
+        std::make_unique<CudaImplicitSchurComplement>(options);
+    implicit_schur_complement->Init(*block_sparse, nullptr, b.data());
+    return implicit_schur_complement;
+  }
+
+  std::unique_ptr<CudaImplicitSchurComplement>
+  ImplicitSchurComplementWithDiagonalCuda(
+      const LinearSolver::Options& options) {
+    auto block_sparse = BlockSparseJacobianPartitioned(options.context);
+    auto implicit_schur_complement =
+        std::make_unique<CudaImplicitSchurComplement>(options);
+    implicit_schur_complement->Init(*block_sparse, D.data(), b.data());
+    return implicit_schur_complement;
+  }
+#endif
 
   Vector parameters;
   Vector D;
@@ -635,6 +658,51 @@ static void JacobianToCRSMatrixUpdate(benchmark::State& state,
                         cudaMemcpyHostToDevice));
   }
 }
+
+static void ISCRightMultiplyNoDiagCuda(benchmark::State& state,
+                                       BALData* data,
+                                       ContextImpl* context) {
+  LinearSolver::Options options;
+  options.num_threads = static_cast<int>(state.range(0));
+  options.elimination_groups.push_back(data->bal_problem->num_points());
+  options.context = context;
+  auto jacobian = data->ImplicitSchurComplementWithoutDiagonalCuda(options);
+
+  Vector y = Vector::Zero(jacobian->num_rows());
+  Vector x = Vector::Random(jacobian->num_cols());
+
+  CudaVector y_cuda(context, 0);
+  CudaVector x_cuda(context, 0);
+  x_cuda.CopyFromCpu(x);
+  y_cuda.CopyFromCpu(y);
+  for (auto _ : state) {
+    jacobian->RightMultiplyAndAccumulate(x_cuda.data(), y_cuda.mutable_data());
+  }
+  CHECK_GT(y_cuda.Norm(), 0.);
+}
+
+static void ISCRightMultiplyDiagCuda(benchmark::State& state,
+                                     BALData* data,
+                                     ContextImpl* context) {
+  LinearSolver::Options options;
+  options.num_threads = static_cast<int>(state.range(0));
+  options.elimination_groups.push_back(data->bal_problem->num_points());
+  options.context = context;
+
+  auto jacobian = data->ImplicitSchurComplementWithDiagonalCuda(options);
+
+  Vector y = Vector::Zero(jacobian->num_rows());
+  Vector x = Vector::Random(jacobian->num_cols());
+
+  CudaVector y_cuda(context, 0);
+  CudaVector x_cuda(context, 0);
+  x_cuda.CopyFromCpu(x);
+  y_cuda.CopyFromCpu(y);
+  for (auto _ : state) {
+    jacobian->RightMultiplyAndAccumulate(x_cuda.data(), y_cuda.mutable_data());
+  }
+  CHECK_GT(y_cuda.Norm(), 0.);
+}
 #endif
 
 static void JacobianSquaredColumnNorm(benchmark::State& state,
@@ -896,6 +964,16 @@ int main(int argc, char** argv) {
         ->Arg(8)
         ->Arg(16);
 
+#ifndef CERES_NO_CUDA
+    const std::string name_isc_no_diag_cuda =
+        "ISCRightMultiplyAndAccumulateCuda<" + path + ">";
+    ::benchmark::RegisterBenchmark(name_isc_no_diag_cuda.c_str(),
+                                   ceres::internal::ISCRightMultiplyNoDiagCuda,
+                                   data,
+                                   &context)
+        ->Arg(16);
+#endif
+
     const std::string name_update_block_diagonal_ete =
         "PMVUpdateBlockDiagonalEtE<" + path + ">";
     ::benchmark::RegisterBenchmark(name_update_block_diagonal_ete.c_str(),
@@ -920,6 +998,14 @@ int main(int argc, char** argv) {
         ->Arg(16);
 
 #ifndef CERES_NO_CUDA
+    const std::string name_isc_diag_cuda =
+        "ISCRightMultiplyAndAccumulateDiagCuda<" + path + ">";
+    ::benchmark::RegisterBenchmark(name_isc_diag_cuda.c_str(),
+                                   ceres::internal::ISCRightMultiplyDiagCuda,
+                                   data,
+                                   &context)
+        ->Arg(16);
+
     const std::string name_right_product_cuda =
         "JacobianRightMultiplyAndAccumulateCuda<" + path + ">";
     ::benchmark::RegisterBenchmark(
@@ -927,7 +1013,7 @@ int main(int argc, char** argv) {
         ceres::internal::JacobianRightMultiplyAndAccumulateCuda,
         data,
         &context)
-        ->Arg(1);
+        ->Arg(16);
 #endif
 
     const std::string name_left_product =

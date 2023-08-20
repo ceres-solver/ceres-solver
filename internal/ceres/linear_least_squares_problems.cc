@@ -63,6 +63,8 @@ CreateLinearLeastSquaresProblemFromId(int id) {
       return LinearLeastSquaresProblem5();
     case 6:
       return LinearLeastSquaresProblem6();
+    case 7:
+      return LinearLeastSquaresProblem7();
     default:
       LOG(FATAL) << "Unknown problem id requested " << id;
   }
@@ -922,6 +924,135 @@ std::unique_ptr<LinearLeastSquaresProblem> LinearLeastSquaresProblem6() {
   }
 
   problem->A = std::move(A);
+  return problem;
+}
+
+// Partitioned version of problem #2 (with sequential order of blocks in E and
+// F)
+std::unique_ptr<LinearLeastSquaresProblem> LinearLeastSquaresProblem7() {
+  int num_rows = 6;
+  int num_cols = 5;
+
+  auto problem = std::make_unique<LinearLeastSquaresProblem>();
+
+  problem->b = std::make_unique<double[]>(num_rows);
+  problem->D = std::make_unique<double[]>(num_cols);
+  problem->num_eliminate_blocks = 2;
+
+  problem->x = std::make_unique<double[]>(num_cols);
+  problem->x[0] = -2.3061;
+  problem->x[1] = 0.3172;
+  problem->x[2] = 0.2102;
+  problem->x[3] = 2.1367;
+  problem->x[4] = 0.1388;
+
+  auto* bs = new CompressedRowBlockStructure;
+  auto values = std::make_unique<double[]>(num_rows * num_cols);
+
+  for (int c = 0; c < num_cols; ++c) {
+    bs->cols.emplace_back();
+    bs->cols.back().size = 1;
+    bs->cols.back().position = c;
+  }
+
+  int nnz_e = 0;
+  int nnz_f = 5;
+
+  // Row 1
+  {
+    bs->rows.emplace_back();
+    CompressedRow& row = bs->rows.back();
+    row.block.size = 1;
+    row.block.position = 0;
+    row.cells.emplace_back(0, nnz_e);
+    row.cells.emplace_back(2, nnz_f);
+
+    values[nnz_e++] = 1;
+    values[nnz_f++] = 2;
+  }
+
+  // Row 2
+  {
+    bs->rows.emplace_back();
+    CompressedRow& row = bs->rows.back();
+    row.block.size = 1;
+    row.block.position = 1;
+    row.cells.emplace_back(0, nnz_e);
+    row.cells.emplace_back(3, nnz_f);
+
+    values[nnz_e++] = 3;
+    values[nnz_f++] = 4;
+  }
+
+  // Row 3
+  {
+    bs->rows.emplace_back();
+    CompressedRow& row = bs->rows.back();
+    row.block.size = 1;
+    row.block.position = 2;
+    row.cells.emplace_back(1, nnz_e);
+    row.cells.emplace_back(4, nnz_f);
+
+    values[nnz_e++] = 5;
+    values[nnz_f++] = 6;
+  }
+
+  // Row 4
+  {
+    bs->rows.emplace_back();
+    CompressedRow& row = bs->rows.back();
+    row.block.size = 1;
+    row.block.position = 3;
+    row.cells.emplace_back(1, nnz_e);
+    row.cells.emplace_back(2, nnz_f);
+
+    values[nnz_e++] = 7;
+    values[nnz_f++] = 8;
+  }
+
+  // Row 5
+  {
+    bs->rows.emplace_back();
+    CompressedRow& row = bs->rows.back();
+    row.block.size = 1;
+    row.block.position = 4;
+    row.cells.emplace_back(1, nnz_e);
+    row.cells.emplace_back(2, nnz_f);
+
+    values[nnz_e++] = 9;
+    values[nnz_f++] = 1;
+  }
+
+  // Row 6
+  {
+    bs->rows.emplace_back();
+    CompressedRow& row = bs->rows.back();
+    row.block.size = 1;
+    row.block.position = 5;
+    row.cells.emplace_back(2, nnz_f);
+    row.cells.emplace_back(3, nnz_f + 1);
+    row.cells.emplace_back(4, nnz_f + 2);
+
+    values[nnz_f++] = 1;
+    values[nnz_f++] = 1;
+    values[nnz_f++] = 1;
+  }
+
+  const int nnz = nnz_f;
+
+  auto A = std::make_unique<BlockSparseMatrix>(bs);
+  memcpy(A->mutable_values(), values.get(), nnz * sizeof(*A->values()));
+
+  for (int i = 0; i < num_cols; ++i) {
+    problem->D.get()[i] = 1;
+  }
+
+  for (int i = 0; i < num_rows; ++i) {
+    problem->b.get()[i] = i;
+  }
+
+  problem->A = std::move(A);
+
   return problem;
 }
 

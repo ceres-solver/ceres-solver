@@ -119,5 +119,50 @@ void CudaDtDxpy(double* y,
   CudaDtDxpyKernel<<<num_blocks, kCudaBlockSize, 0, stream>>>(y, D, x, size);
 }
 
+__global__ void CudaNegateKernel(double* x, const int size) {
+  const int i = blockIdx.x * blockDim.x + threadIdx.x;
+  if (i < size) {
+    x[i] = -x[i];
+  }
+}
+
+void CudaNegate(double* x, const int size, cudaStream_t stream) {
+  const int num_blocks = NumBlocksInGrid(size);
+  CudaNegateKernel<<<num_blocks, kCudaBlockSize, 0, stream>>>(x, size);
+}
+
+__global__ void CudaYXmYKernel(double* __restrict__ y,
+                               const double* __restrict__ x,
+                               const int size) {
+  const int i = blockIdx.x * blockDim.x + threadIdx.x;
+  if (i < size) {
+    y[i] = x[i] - y[i];
+  }
+}
+
+void CudaYXmY(double* y, const double* x, const int size, cudaStream_t stream) {
+  const int num_blocks = NumBlocksInGrid(size);
+  CudaYXmYKernel<<<num_blocks, kCudaBlockSize, 0, stream>>>(y, x, size);
+}
+
+__global__ void CudaD2xKernel(double* __restrict__ y,
+                              const double* __restrict__ D,
+                              const double* __restrict__ x,
+                              const int size) {
+  const int i = blockIdx.x * blockDim.x + threadIdx.x;
+  if (i < size) {
+    y[i] = D[i] * D[i] * x[i];
+  }
+}
+
+void CudaD2x(double* y,
+             const double* D,
+             const double* x,
+             const int size,
+             cudaStream_t stream) {
+  const int num_blocks = NumBlocksInGrid(size);
+  CudaD2xKernel<<<num_blocks, kCudaBlockSize, 0, stream>>>(y, D, x, size);
+}
+
 }  // namespace internal
 }  // namespace ceres
