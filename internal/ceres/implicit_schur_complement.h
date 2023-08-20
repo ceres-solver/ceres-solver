@@ -88,18 +88,17 @@ class BlockSparseMatrix;
 // RightMultiplyAndAccumulate (and the LeftMultiplyAndAccumulate) methods are
 // not thread safe as they depend on mutable arrays used for the temporaries
 // needed to compute the product y += Sx;
-class CERES_NO_EXPORT ImplicitSchurComplement final : public LinearOperator {
+//
+// Base class ImplicitSchurComplementBase implements Schur-complement operations
+// using data access methods provided by derived class (for example -
+// ImplicitSchurComplement)
+//
+//
+
+class CERES_NO_EXPORT ImplicitSchurComplementBase : public LinearOperator {
  public:
-  // num_eliminate_blocks is the number of E blocks in the matrix
-  // A.
-  //
-  // preconditioner indicates whether the inverse of the matrix F'F
-  // should be computed or not as a preconditioner for the Schur
-  // Complement.
-  //
-  // TODO(sameeragarwal): Get rid of the two bools below and replace
-  // them with enums.
-  explicit ImplicitSchurComplement(const LinearSolver::Options& options);
+  virtual ~ImplicitSchurComplementBase() = default;
+  ImplicitSchurComplementBase(const LinearSolver::Options& options);
 
   // Initialize the Schur complement for a linear least squares
   // problem of the form
@@ -111,14 +110,14 @@ class CERES_NO_EXPORT ImplicitSchurComplement final : public LinearOperator {
   // is important that the matrix A have a BlockStructure object
   // associated with it and has a block structure that is compatible
   // with the SchurComplement solver.
+  // D and b pointers are always pointers to host memory
   void Init(const BlockSparseMatrix& A, const double* D, const double* b);
 
-  // y += Sx, where S is the Schur complement.
-  void RightMultiplyAndAccumulate(const double* x, double* y) const final;
-
-  // The Schur complement is a symmetric positive definite matrix,
-  // thus the left and right multiply operators are the same.
-  void LeftMultiplyAndAccumulate(const double* x, double* y) const final {
+  // LinearOperator implementation; x and y might be either a pair of pointers
+  // to host memory or a pair of pointers to gpu memory, depending on particular
+  // implementation
+  virtual void RightMultiplyAndAccumulate(const double* x, double* y) const;
+  virtual void LeftMultiplyAndAccumulate(const double* x, double* y) const {
     RightMultiplyAndAccumulate(x, y);
   }
 
@@ -132,27 +131,133 @@ class CERES_NO_EXPORT ImplicitSchurComplement final : public LinearOperator {
   // the Schur complement system, this method computes the value of
   // the e_block variables that were eliminated to form the Schur
   // complement.
-  void BackSubstitute(const double* x, double* y);
+  void BackSubstitute(const double* x, double* y) const;
 
-  int num_rows() const final { return A_->num_cols_f(); }
-  int num_cols() const final { return A_->num_cols_f(); }
+  int num_rows() const override;
+  int num_cols() const override;
+  int num_cols_total() const;
+
+  // Data pointer to rhs of  schur-complement (reduced) linear system
+  virtual const double* RhsData() const = 0;
+
+  // Instantiates implementation corresponding to
+  // options.sparse_linear_algebra_library_type:
+  //  - CUDA_SPARSE: creates gpu-accelerated implementation (expecting pointers
+  //  to device memory as input vectors)
+  //  - Otherwise: cpu implementation (expecting pointers to host memory as
+  //  input vectors)
+  static std::unique_ptr<ImplicitSchurComplementBase> Create(
+      const LinearSolver::Options& options);
+
+ protected:
+  // Initialization implementation, setting initialize_rhs skips the process of
+  // obtaining Schur-complement rhs
+  virtual void InitImpl(const BlockSparseMatrix& A,
+                        const double* D,
+                        const double* b,
+                        bool initialize_rhs) = 0;
+  // Returns true if block-diagonal FtF inverse has to be computed
+  bool IsFtFRequired() const;
+  void UpdateRhs();
+
+  // Matrix-vector product with block-diagonal EtE and FtF inverses
+  virtual void BlockDiagonalEtEInverseRightMultiplyAndAccumulate(
+      const double* x, double* y) const = 0;
+  virtual void BlockDiagonalFtFInverseRightMultiplyAndAccumulate(
+      const double* x, double* y) const = 0;
+
+  // Access to PartitionedLinearOperator (used for left and right products with
+  // E and F sub-matrices)
+  virtual const PartitionedLinearOperator* PartitionedOperator() const = 0;
+  // Sets x[i] = 0
+  virtual void SetZero(double* x, int size) const = 0;
+  // Sets x[i] = -x[i]
+  virtual void Negate(double* x, int size) const = 0;
+  // Sets y[i] = x[i] - y[i]
+  virtual void YXmY(double* y, const double* x, int size) const = 0;
+  // Sets y[i] = D[i]^2 * x[i]
+  virtual void D2x(double* y,
+                   const double* D,
+                   const double* x,
+                   int size) const = 0;
+  // Sets to[i] = from[i]
+  virtual void Assign(double* to, const double* from, int size) const = 0;
+
+  // Temporary array of size corresponding to rows of partitioned Jacobian
+  virtual double* tmp_rows() const = 0;
+  // Temporary array of num_cols_e size
+  virtual double* tmp_e_cols() const = 0;
+  // Temporary array of num_cols_e size
+  virtual double* tmp_e_cols_2() const = 0;
+  // Temporary array of num_cols_f size
+  virtual double* tmp_f_cols() const = 0;
+  // Pointer to values of diagonal
+  virtual const double* Diag() const = 0;
+  // Pointer to full rhs vector
+  virtual const double* b() const = 0;
+  // Pointer to reduced rhs vector
+  virtual double* mutable_rhs() = 0;
+
+  const LinearSolver::Options& options_;
+  bool compute_ftf_inverse_ = false;
+};
+
+class CERES_NO_EXPORT ImplicitSchurComplement final
+    : public ImplicitSchurComplementBase {
+ public:
+  // num_eliminate_blocks is the number of E blocks in the matrix
+  // A.
+  //
+  // preconditioner indicates whether the inverse of the matrix F'F
+  // should be computed or not as a preconditioner for the Schur
+  // Complement.
+  explicit ImplicitSchurComplement(const LinearSolver::Options& options);
+
   const Vector& rhs() const { return rhs_; }
-
-  const BlockSparseMatrix* block_diagonal_EtE_inverse() const {
-    return block_diagonal_EtE_inverse_.get();
-  }
 
   const BlockSparseMatrix* block_diagonal_FtF_inverse() const {
     CHECK(compute_ftf_inverse_);
     return block_diagonal_FtF_inverse_.get();
   }
 
+  const BlockSparseMatrix* block_diagonal_EtE_inverse() const {
+    return block_diagonal_EtE_inverse_.get();
+  }
+
+  const double* RhsData() const override { return rhs_.data(); }
+
+  void InitImpl(const BlockSparseMatrix& A,
+                const double* D,
+                const double* b,
+                bool update_rhs) override;
+
+ protected:
+  void BlockDiagonalEtEInverseRightMultiplyAndAccumulate(
+      const double* x, double* y) const override;
+  void BlockDiagonalFtFInverseRightMultiplyAndAccumulate(
+      const double* x, double* y) const override;
+
+  const PartitionedLinearOperator* PartitionedOperator() const override;
+  void SetZero(double* ptr, int size) const override;
+  void Negate(double* ptr, int size) const override;
+  void YXmY(double* y, const double* x, int size) const override;
+  void D2x(double* y,
+           const double* D,
+           const double* x,
+           int size) const override;
+  void Assign(double* to, const double* from, int size) const override;
+
+  double* tmp_rows() const override;
+  double* tmp_e_cols() const override;
+  double* tmp_e_cols_2() const override;
+  double* tmp_f_cols() const override;
+  const double* Diag() const override;
+  const double* b() const override;
+  double* mutable_rhs() override;
+
  private:
   void AddDiagonalAndInvert(const double* D, BlockSparseMatrix* matrix);
-  void UpdateRhs();
 
-  const LinearSolver::Options& options_;
-  bool compute_ftf_inverse_ = false;
   std::unique_ptr<PartitionedMatrixViewBase> A_;
   const double* D_ = nullptr;
   const double* b_ = nullptr;

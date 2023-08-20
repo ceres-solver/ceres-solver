@@ -43,6 +43,7 @@
 #include "ceres/cuda_buffer.h"
 #include "ceres/cuda_sparse_matrix.h"
 #include "ceres/cuda_streamed_buffer.h"
+#include "ceres/partitioned_matrix_view.h"
 
 namespace ceres::internal {
 // We use cuSPARSE library for SpMV operations. However, it does not support
@@ -68,7 +69,8 @@ namespace ceres::internal {
 // Instead, block-sparse values are transferred to gpu memory as a disjoint set
 // of small continuous segments with simultaneous permutation of the values into
 // correct order using block-structure.
-class CERES_NO_EXPORT CudaPartitionedBlockSparseCRSView {
+class CERES_NO_EXPORT CudaPartitionedBlockSparseCRSView final
+    : public PartitionedLinearOperator {
  public:
   // Initializes internal CRS matrix and block-sparse structure on GPU side
   // values. The following objects are stored in gpu memory for the whole
@@ -90,6 +92,16 @@ class CERES_NO_EXPORT CudaPartitionedBlockSparseCRSView {
   const CudaSparseMatrix* matrix_f() const { return matrix_f_.get(); }
   CudaSparseMatrix* mutable_matrix_e() { return matrix_e_.get(); }
   CudaSparseMatrix* mutable_matrix_f() { return matrix_f_.get(); }
+
+  void LeftMultiplyAndAccumulateE(const double* x, double* y) const override;
+  void LeftMultiplyAndAccumulateF(const double* x, double* y) const override;
+  void RightMultiplyAndAccumulateE(const double* x, double* y) const override;
+  void RightMultiplyAndAccumulateF(const double* x, double* y) const override;
+
+  int num_cols_e() const override;
+  int num_cols_f() const override;
+  int num_cols() const override;
+  int num_rows() const override;
 
  private:
   // Value permutation kernel performs a single element-wise operation per

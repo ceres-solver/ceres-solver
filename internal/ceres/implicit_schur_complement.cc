@@ -33,6 +33,7 @@
 #include "Eigen/Dense"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
+#include "ceres/cuda_implicit_schur_complement.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
 #include "ceres/parallel_for.h"
@@ -42,13 +43,185 @@
 
 namespace ceres::internal {
 
-ImplicitSchurComplement::ImplicitSchurComplement(
+std::unique_ptr<ImplicitSchurComplementBase>
+ImplicitSchurComplementBase::Create(const LinearSolver::Options& options) {
+#ifndef CERES_NO_CUDA
+  if (options.sparse_linear_algebra_library_type ==
+      SparseLinearAlgebraLibraryType::CUDA_SPARSE) {
+    return std::make_unique<CudaImplicitSchurComplement>(options);
+  }
+#endif
+  return std::make_unique<ImplicitSchurComplement>(options);
+}
+
+int ImplicitSchurComplementBase::num_cols() const { return num_rows(); }
+
+int ImplicitSchurComplementBase::num_rows() const {
+  return PartitionedOperator()->num_cols_f();
+}
+
+int ImplicitSchurComplementBase::num_cols_total() const {
+  return PartitionedOperator()->num_cols();
+}
+
+bool ImplicitSchurComplementBase::IsFtFRequired() const {
+  return options_.use_spse_initialization ||
+         options_.preconditioner_type == JACOBI ||
+         options_.preconditioner_type == SCHUR_POWER_SERIES_EXPANSION;
+}
+
+ImplicitSchurComplementBase::ImplicitSchurComplementBase(
     const LinearSolver::Options& options)
     : options_(options) {}
 
-void ImplicitSchurComplement::Init(const BlockSparseMatrix& A,
-                                   const double* D,
-                                   const double* b) {
+// Evaluate the product
+//
+//   Sx = [F'F - F'E (E'E)^-1 E'F]x
+//
+// By breaking it down into individual matrix vector products
+// involving the matrices E and F. This is implemented using a
+// PartitionedMatrixView of the input matrix A.
+void ImplicitSchurComplementBase::RightMultiplyAndAccumulate(const double* x,
+                                                             double* y) const {
+  const auto& A = PartitionedOperator();
+
+  // y1 = F x
+  SetZero(tmp_rows(), A->num_rows());
+  A->RightMultiplyAndAccumulateF(x, tmp_rows());
+
+  // y2 = E' y1
+  SetZero(tmp_e_cols(), A->num_cols_e());
+  A->LeftMultiplyAndAccumulateE(tmp_rows(), tmp_e_cols());
+
+  // y3 = -(E'E)^-1 y2
+  SetZero(tmp_e_cols_2(), A->num_cols_e());
+  BlockDiagonalEtEInverseRightMultiplyAndAccumulate(tmp_e_cols(),
+                                                    tmp_e_cols_2());
+
+  Negate(tmp_e_cols_2(), A->num_cols_e());
+
+  // y1 = y1 + E y3
+  A->RightMultiplyAndAccumulateE(tmp_e_cols_2(), tmp_rows());
+
+  // y5 = D * x
+  if (Diag() != nullptr) {
+    D2x(y, Diag() + A->num_cols_e(), x, num_cols());
+  } else {
+    SetZero(y, num_cols());
+  }
+
+  // y = y5 + F' y1
+  A->LeftMultiplyAndAccumulateF(tmp_rows(), y);
+}
+
+void ImplicitSchurComplementBase::
+    InversePowerSeriesOperatorRightMultiplyAccumulate(const double* x,
+                                                      double* y) const {
+  const auto A = PartitionedOperator();
+  CHECK(compute_ftf_inverse_);
+  // y1 = F x
+  SetZero(tmp_rows(), A->num_rows());
+  A->RightMultiplyAndAccumulateF(x, tmp_rows());
+
+  // y2 = E' y1
+  SetZero(tmp_e_cols(), A->num_cols_e());
+  A->LeftMultiplyAndAccumulateE(tmp_rows(), tmp_e_cols());
+
+  // y3 = (E'E)^-1 y2
+  SetZero(tmp_e_cols_2(), A->num_cols_e());
+  BlockDiagonalEtEInverseRightMultiplyAndAccumulate(tmp_e_cols(),
+                                                    tmp_e_cols_2());
+  // y1 = E y3
+  SetZero(tmp_rows(), A->num_rows());
+  A->RightMultiplyAndAccumulateE(tmp_e_cols_2(), tmp_rows());
+
+  // y4 = F' y1
+  SetZero(tmp_f_cols(), A->num_cols_f());
+  A->LeftMultiplyAndAccumulateF(tmp_rows(), tmp_f_cols());
+
+  // y += (F'F)^-1 y4
+  BlockDiagonalFtFInverseRightMultiplyAndAccumulate(tmp_f_cols(), y);
+}
+
+// Similar to RightMultiplyAndAccumulate, use the block structure of the matrix
+// A to compute y = (E'E)^-1 (E'b - E'F x).
+void ImplicitSchurComplementBase::BackSubstitute(const double* x,
+                                                 double* y) const {
+  const auto A = PartitionedOperator();
+  const int num_cols_e = A->num_cols_e();
+  const int num_cols_f = A->num_cols_f();
+  const int num_cols = A->num_cols();
+  const int num_rows = A->num_rows();
+
+  // y1 = F x
+  SetZero(tmp_rows(), num_rows);
+  A->RightMultiplyAndAccumulateF(x, tmp_rows());
+
+  // y2 = b - y1
+  YXmY(tmp_rows(), b(), num_rows);
+
+  // y3 = E' y2
+  SetZero(tmp_e_cols(), num_cols_e);
+  A->LeftMultiplyAndAccumulateE(tmp_rows(), tmp_e_cols());
+
+  // y = (E'E)^-1 y3
+  SetZero(y, num_cols);
+  BlockDiagonalEtEInverseRightMultiplyAndAccumulate(tmp_e_cols(), y);
+
+  // The full solution vector y has two blocks. The first block of
+  // variables corresponds to the eliminated variables, which we just
+  // computed via back substitution. The second block of variables
+  // corresponds to the Schur complement system, so we just copy those
+  // values from the solution to the Schur complement.
+  Assign(y + num_cols_e, x, num_cols_f);
+}
+
+// Compute the RHS of the Schur complement system.
+//
+// rhs = F'b - F'E (E'E)^-1 E'b
+//
+// Like BackSubstitute, we use the block structure of A to implement
+// this using a series of matrix vector products.
+void ImplicitSchurComplementBase::UpdateRhs() {
+  const auto A = PartitionedOperator();
+
+  // y1 = E'b
+  SetZero(tmp_e_cols(), A->num_cols_e());
+  A->LeftMultiplyAndAccumulateE(b(), tmp_e_cols());
+
+  // y2 = (E'E)^-1 y1
+  SetZero(tmp_e_cols_2(), A->num_cols_e());
+  BlockDiagonalEtEInverseRightMultiplyAndAccumulate(tmp_e_cols(),
+                                                    tmp_e_cols_2());
+
+  // y3 = E y2
+  SetZero(tmp_rows(), A->num_rows());
+  A->RightMultiplyAndAccumulateE(tmp_e_cols_2(), tmp_rows());
+
+  // y3 = b - y3
+  YXmY(tmp_rows(), b(), A->num_rows());
+
+  // rhs = F' y3
+  SetZero(mutable_rhs(), A->num_cols_f());
+  A->LeftMultiplyAndAccumulateF(tmp_rows(), mutable_rhs());
+}
+
+void ImplicitSchurComplementBase::Init(const BlockSparseMatrix& A,
+                                       const double* D,
+                                       const double* b) {
+  compute_ftf_inverse_ = IsFtFRequired();
+  InitImpl(A, D, b, true);
+}
+
+ImplicitSchurComplement::ImplicitSchurComplement(
+    const LinearSolver::Options& options)
+    : ImplicitSchurComplementBase(options) {}
+
+void ImplicitSchurComplement::InitImpl(const BlockSparseMatrix& A,
+                                       const double* D,
+                                       const double* b,
+                                       bool update_rhs) {
+  compute_ftf_inverse_ = IsFtFRequired();
   // Since initialization is reasonably heavy, perhaps we can save on
   // constructing a new object everytime.
   if (A_ == nullptr) {
@@ -58,13 +231,8 @@ void ImplicitSchurComplement::Init(const BlockSparseMatrix& A,
   D_ = D;
   b_ = b;
 
-  compute_ftf_inverse_ =
-      options_.use_spse_initialization ||
-      options_.preconditioner_type == JACOBI ||
-      options_.preconditioner_type == SCHUR_POWER_SERIES_EXPANSION;
-
   // Initialize temporary storage and compute the block diagonals of
-  // E'E and F'E.
+  // E'E and F'F.
   if (block_diagonal_EtE_inverse_ == nullptr) {
     block_diagonal_EtE_inverse_ = A_->CreateBlockDiagonalEtE();
     if (compute_ftf_inverse_) {
@@ -92,85 +260,10 @@ void ImplicitSchurComplement::Init(const BlockSparseMatrix& A,
                          block_diagonal_FtF_inverse_.get());
   }
 
-  // Compute the RHS of the Schur complement system.
-  UpdateRhs();
-}
-
-// Evaluate the product
-//
-//   Sx = [F'F - F'E (E'E)^-1 E'F]x
-//
-// By breaking it down into individual matrix vector products
-// involving the matrices E and F. This is implemented using a
-// PartitionedMatrixView of the input matrix A.
-void ImplicitSchurComplement::RightMultiplyAndAccumulate(const double* x,
-                                                         double* y) const {
-  // y1 = F x
-  ParallelSetZero(options_.context, options_.num_threads, tmp_rows_);
-  A_->RightMultiplyAndAccumulateF(x, tmp_rows_.data());
-
-  // y2 = E' y1
-  ParallelSetZero(options_.context, options_.num_threads, tmp_e_cols_);
-  A_->LeftMultiplyAndAccumulateE(tmp_rows_.data(), tmp_e_cols_.data());
-
-  // y3 = -(E'E)^-1 y2
-  ParallelSetZero(options_.context, options_.num_threads, tmp_e_cols_2_);
-  block_diagonal_EtE_inverse_->RightMultiplyAndAccumulate(tmp_e_cols_.data(),
-                                                          tmp_e_cols_2_.data(),
-                                                          options_.context,
-                                                          options_.num_threads);
-
-  ParallelAssign(
-      options_.context, options_.num_threads, tmp_e_cols_2_, -tmp_e_cols_2_);
-
-  // y1 = y1 + E y3
-  A_->RightMultiplyAndAccumulateE(tmp_e_cols_2_.data(), tmp_rows_.data());
-
-  // y5 = D * x
-  if (D_ != nullptr) {
-    ConstVectorRef Dref(D_ + A_->num_cols_e(), num_cols());
-    VectorRef y_cols(y, num_cols());
-    ParallelAssign(
-        options_.context,
-        options_.num_threads,
-        y_cols,
-        (Dref.array().square() * ConstVectorRef(x, num_cols()).array()));
-  } else {
-    ParallelSetZero(options_.context, options_.num_threads, y, num_cols());
+  if (update_rhs) {
+    // Compute the RHS of the Schur complement system.
+    UpdateRhs();
   }
-
-  // y = y5 + F' y1
-  A_->LeftMultiplyAndAccumulateF(tmp_rows_.data(), y);
-}
-
-void ImplicitSchurComplement::InversePowerSeriesOperatorRightMultiplyAccumulate(
-    const double* x, double* y) const {
-  CHECK(compute_ftf_inverse_);
-  // y1 = F x
-  ParallelSetZero(options_.context, options_.num_threads, tmp_rows_);
-  A_->RightMultiplyAndAccumulateF(x, tmp_rows_.data());
-
-  // y2 = E' y1
-  ParallelSetZero(options_.context, options_.num_threads, tmp_e_cols_);
-  A_->LeftMultiplyAndAccumulateE(tmp_rows_.data(), tmp_e_cols_.data());
-
-  // y3 = (E'E)^-1 y2
-  ParallelSetZero(options_.context, options_.num_threads, tmp_e_cols_2_);
-  block_diagonal_EtE_inverse_->RightMultiplyAndAccumulate(tmp_e_cols_.data(),
-                                                          tmp_e_cols_2_.data(),
-                                                          options_.context,
-                                                          options_.num_threads);
-  // y1 = E y3
-  ParallelSetZero(options_.context, options_.num_threads, tmp_rows_);
-  A_->RightMultiplyAndAccumulateE(tmp_e_cols_2_.data(), tmp_rows_.data());
-
-  // y4 = F' y1
-  ParallelSetZero(options_.context, options_.num_threads, tmp_f_cols_);
-  A_->LeftMultiplyAndAccumulateF(tmp_rows_.data(), tmp_f_cols_.data());
-
-  // y += (F'F)^-1 y4
-  block_diagonal_FtF_inverse_->RightMultiplyAndAccumulate(
-      tmp_f_cols_.data(), y, options_.context, options_.num_threads);
 }
 
 // Given a block diagonal matrix and an optional array of diagonal
@@ -203,76 +296,78 @@ void ImplicitSchurComplement::AddDiagonalAndInvert(
               });
 }
 
-// Similar to RightMultiplyAndAccumulate, use the block structure of the matrix
-// A to compute y = (E'E)^-1 (E'b - E'F x).
-void ImplicitSchurComplement::BackSubstitute(const double* x, double* y) {
-  const int num_cols_e = A_->num_cols_e();
-  const int num_cols_f = A_->num_cols_f();
-  const int num_cols = A_->num_cols();
-  const int num_rows = A_->num_rows();
-
-  // y1 = F x
-  ParallelSetZero(options_.context, options_.num_threads, tmp_rows_);
-  A_->RightMultiplyAndAccumulateF(x, tmp_rows_.data());
-
-  // y2 = b - y1
-  ParallelAssign(options_.context,
-                 options_.num_threads,
-                 tmp_rows_,
-                 ConstVectorRef(b_, num_rows) - tmp_rows_);
-
-  // y3 = E' y2
-  ParallelSetZero(options_.context, options_.num_threads, tmp_e_cols_);
-  A_->LeftMultiplyAndAccumulateE(tmp_rows_.data(), tmp_e_cols_.data());
-
-  // y = (E'E)^-1 y3
-  ParallelSetZero(options_.context, options_.num_threads, y, num_cols);
+void ImplicitSchurComplement::BlockDiagonalEtEInverseRightMultiplyAndAccumulate(
+    const double* x, double* y) const {
   block_diagonal_EtE_inverse_->RightMultiplyAndAccumulate(
-      tmp_e_cols_.data(), y, options_.context, options_.num_threads);
-
-  // The full solution vector y has two blocks. The first block of
-  // variables corresponds to the eliminated variables, which we just
-  // computed via back substitution. The second block of variables
-  // corresponds to the Schur complement system, so we just copy those
-  // values from the solution to the Schur complement.
-  VectorRef y_cols_f(y + num_cols_e, num_cols_f);
-  ParallelAssign(options_.context,
-                 options_.num_threads,
-                 y_cols_f,
-                 ConstVectorRef(x, num_cols_f));
+      x, y, options_.context, options_.num_threads);
 }
 
-// Compute the RHS of the Schur complement system.
-//
-// rhs = F'b - F'E (E'E)^-1 E'b
-//
-// Like BackSubstitute, we use the block structure of A to implement
-// this using a series of matrix vector products.
-void ImplicitSchurComplement::UpdateRhs() {
-  // y1 = E'b
-  ParallelSetZero(options_.context, options_.num_threads, tmp_e_cols_);
-  A_->LeftMultiplyAndAccumulateE(b_, tmp_e_cols_.data());
+void ImplicitSchurComplement::BlockDiagonalFtFInverseRightMultiplyAndAccumulate(
+    const double* x, double* y) const {
+  block_diagonal_FtF_inverse_->RightMultiplyAndAccumulate(
+      x, y, options_.context, options_.num_threads);
+}
 
-  // y2 = (E'E)^-1 y1
-  ParallelSetZero(options_.context, options_.num_threads, tmp_e_cols_2_);
-  block_diagonal_EtE_inverse_->RightMultiplyAndAccumulate(tmp_e_cols_.data(),
-                                                          tmp_e_cols_2_.data(),
-                                                          options_.context,
-                                                          options_.num_threads);
+const PartitionedLinearOperator* ImplicitSchurComplement::PartitionedOperator()
+    const {
+  return A_.get();
+}
 
-  // y3 = E y2
-  ParallelSetZero(options_.context, options_.num_threads, tmp_rows_);
-  A_->RightMultiplyAndAccumulateE(tmp_e_cols_2_.data(), tmp_rows_.data());
+void ImplicitSchurComplement::SetZero(double* ptr, int size) const {
+  VectorRef vector(ptr, size);
+  ParallelSetZero(options_.context, options_.num_threads, vector);
+}
 
-  // y3 = b - y3
+void ImplicitSchurComplement::Negate(double* ptr, int size) const {
+  VectorRef vector(ptr, size);
+  ParallelAssign(options_.context, options_.num_threads, vector, -vector);
+}
+
+void ImplicitSchurComplement::YXmY(double* y, const double* x, int size) const {
+  VectorRef vector_y(y, size);
+  ConstVectorRef vector_x(x, size);
+  ParallelAssign(
+      options_.context, options_.num_threads, vector_y, vector_x - vector_y);
+}
+
+void ImplicitSchurComplement::D2x(double* y,
+                                  const double* D,
+                                  const double* x,
+                                  int size) const {
+  VectorRef vector_y(y, size);
+  ConstVectorRef vector_D(D, size);
+  ConstVectorRef vector_x(x, size);
   ParallelAssign(options_.context,
                  options_.num_threads,
-                 tmp_rows_,
-                 ConstVectorRef(b_, A_->num_rows()) - tmp_rows_);
-
-  // rhs = F' y3
-  ParallelSetZero(options_.context, options_.num_threads, rhs_);
-  A_->LeftMultiplyAndAccumulateF(tmp_rows_.data(), rhs_.data());
+                 vector_y,
+                 vector_D.array().square() * vector_x.array());
 }
+
+void ImplicitSchurComplement::Assign(double* to,
+                                     const double* from,
+                                     int size) const {
+  VectorRef vector_to(to, size);
+  ConstVectorRef vector_from(from, size);
+  ParallelAssign(
+      options_.context, options_.num_threads, vector_to, vector_from);
+}
+
+double* ImplicitSchurComplement::tmp_rows() const { return tmp_rows_.data(); }
+
+double* ImplicitSchurComplement::tmp_e_cols() const {
+  return tmp_e_cols_.data();
+}
+
+double* ImplicitSchurComplement::tmp_e_cols_2() const {
+  return tmp_e_cols_2_.data();
+}
+
+double* ImplicitSchurComplement::tmp_f_cols() const {
+  return tmp_f_cols_.data();
+}
+
+const double* ImplicitSchurComplement::Diag() const { return D_; }
+const double* ImplicitSchurComplement::b() const { return b_; }
+double* ImplicitSchurComplement::mutable_rhs() { return rhs_.data(); }
 
 }  // namespace ceres::internal

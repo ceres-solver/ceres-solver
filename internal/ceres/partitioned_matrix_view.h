@@ -54,6 +54,23 @@ namespace ceres::internal {
 
 class ContextImpl;
 
+class CERES_NO_EXPORT PartitionedLinearOperator {
+ public:
+  virtual ~PartitionedLinearOperator() = default;
+
+  virtual void LeftMultiplyAndAccumulateE(const double* x, double* y) const = 0;
+  virtual void LeftMultiplyAndAccumulateF(const double* x, double* y) const = 0;
+  virtual void RightMultiplyAndAccumulateE(const double* x,
+                                           double* y) const = 0;
+  virtual void RightMultiplyAndAccumulateF(const double* x,
+                                           double* y) const = 0;
+
+  virtual int num_cols_e() const = 0;
+  virtual int num_cols_f() const = 0;
+  virtual int num_rows() const = 0;
+  virtual int num_cols() const = 0;
+};
+
 // Given generalized bi-partite matrix A = [E F], with the same block
 // structure as required by the Schur complement based solver, found
 // in schur_complement_solver.h, provide access to the
@@ -64,7 +81,8 @@ class ContextImpl;
 // block structure of the matrix does not satisfy the requirements of
 // the Schur complement solver it will result in unpredictable and
 // wrong output.
-class CERES_NO_EXPORT PartitionedMatrixViewBase {
+class CERES_NO_EXPORT PartitionedMatrixViewBase
+    : public PartitionedLinearOperator {
  public:
   virtual ~PartitionedMatrixViewBase();
 
