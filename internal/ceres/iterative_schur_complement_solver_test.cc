@@ -76,7 +76,8 @@ class IterativeSchurComplementSolverTest : public ::testing::Test {
 
   AssertionResult TestSolver(double* D,
                              PreconditionerType preconditioner_type,
-                             bool use_spse_initialization) {
+                             bool use_spse_initialization,
+                             bool use_cuda) {
     TripletSparseMatrix triplet_A(
         A_->num_rows(), A_->num_cols(), A_->num_nonzeros());
     A_->ToTripletSparseMatrix(&triplet_A);
@@ -100,11 +101,20 @@ class IterativeSchurComplementSolverTest : public ::testing::Test {
     options.max_num_spse_iterations = 1;
     options.use_spse_initialization = use_spse_initialization;
     options.preconditioner_type = preconditioner_type;
-    IterativeSchurComplementSolver isc(options);
+#ifndef CERES_NO_CUDA
+    if (use_cuda) {
+      options.sparse_linear_algebra_library_type =
+          SparseLinearAlgebraLibraryType::CUDA_SPARSE;
+      std::string error;
+      CHECK(context.InitCuda(&error))
+          << "Cuda initialization failed: " << error;
+    }
+#endif
+    auto isc = IterativeSchurComplementSolverBase::Create(options);
 
     Vector isc_sol(num_cols_);
     per_solve_options.r_tolerance = 1e-12;
-    isc.Solve(A_.get(), b_.get(), per_solve_options, isc_sol.data());
+    isc->Solve(A_.get(), b_.get(), per_solve_options, isc_sol.data());
     double diff = (isc_sol - reference_solution).norm();
     if (diff < kEpsilon) {
       return testing::AssertionSuccess();
@@ -124,29 +134,41 @@ class IterativeSchurComplementSolverTest : public ::testing::Test {
 };
 
 TEST_F(IterativeSchurComplementSolverTest, NormalProblemSchurJacobi) {
-  SetUpProblem(2);
-  EXPECT_TRUE(TestSolver(nullptr, SCHUR_JACOBI, false));
-  EXPECT_TRUE(TestSolver(D_.get(), SCHUR_JACOBI, false));
+  SetUpProblem(7);
+  EXPECT_TRUE(TestSolver(nullptr, SCHUR_JACOBI, false, false));
+  EXPECT_TRUE(TestSolver(D_.get(), SCHUR_JACOBI, false, false));
+#ifndef CERES_NO_CUDA
+  EXPECT_TRUE(TestSolver(nullptr, SCHUR_JACOBI, false, false));
+  EXPECT_TRUE(TestSolver(D_.get(), SCHUR_JACOBI, false, false));
+#endif
 }
 
 TEST_F(IterativeSchurComplementSolverTest,
        NormalProblemSchurJacobiWithPowerSeriesExpansionInitialization) {
-  SetUpProblem(2);
-  EXPECT_TRUE(TestSolver(nullptr, SCHUR_JACOBI, true));
-  EXPECT_TRUE(TestSolver(D_.get(), SCHUR_JACOBI, true));
+  SetUpProblem(7);
+  EXPECT_TRUE(TestSolver(nullptr, SCHUR_JACOBI, true, false));
+  EXPECT_TRUE(TestSolver(D_.get(), SCHUR_JACOBI, true, false));
+#ifndef CERES_NO_CUDA
+  EXPECT_TRUE(TestSolver(nullptr, SCHUR_JACOBI, true, true));
+  EXPECT_TRUE(TestSolver(D_.get(), SCHUR_JACOBI, true, true));
+#endif
 }
 
 TEST_F(IterativeSchurComplementSolverTest,
        NormalProblemPowerSeriesExpansionPreconditioner) {
-  SetUpProblem(5);
-  EXPECT_TRUE(TestSolver(nullptr, SCHUR_POWER_SERIES_EXPANSION, false));
-  EXPECT_TRUE(TestSolver(D_.get(), SCHUR_POWER_SERIES_EXPANSION, false));
+  SetUpProblem(8);
+  EXPECT_TRUE(TestSolver(nullptr, SCHUR_POWER_SERIES_EXPANSION, false, false));
+  EXPECT_TRUE(TestSolver(D_.get(), SCHUR_POWER_SERIES_EXPANSION, false, false));
 }
 
 TEST_F(IterativeSchurComplementSolverTest, ProblemWithNoFBlocks) {
   SetUpProblem(3);
-  EXPECT_TRUE(TestSolver(nullptr, SCHUR_JACOBI, false));
-  EXPECT_TRUE(TestSolver(D_.get(), SCHUR_JACOBI, false));
+  EXPECT_TRUE(TestSolver(nullptr, SCHUR_JACOBI, false, false));
+  EXPECT_TRUE(TestSolver(D_.get(), SCHUR_JACOBI, false, false));
+#ifndef CERES_NO_CUDA
+  EXPECT_TRUE(TestSolver(nullptr, SCHUR_JACOBI, false, true));
+  EXPECT_TRUE(TestSolver(D_.get(), SCHUR_JACOBI, false, true));
+#endif
 }
 
 }  // namespace internal
