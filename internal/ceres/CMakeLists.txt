@@ -189,9 +189,11 @@ add_library(ceres_internal OBJECT
     cuda_block_sparse_crs_view.cc
     cuda_block_structure.cc
     cuda_implicit_schur_complement.cc
+    cuda_iterative_schur_complement_solver.cc
     cuda_partitioned_block_sparse_crs_view.cc
     cuda_sparse_matrix.cc
     cuda_vector.cc
+    cuda_preconditioner_wrapper.cc
     dense_cholesky.cc
     dense_normal_cholesky_solver.cc
     dense_qr.cc

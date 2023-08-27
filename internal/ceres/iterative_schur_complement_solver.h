@@ -33,6 +33,7 @@
 
 #include <memory>
 
+#include "ceres/conjugate_gradients_solver.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
@@ -42,7 +43,7 @@
 namespace ceres::internal {
 
 class BlockSparseMatrix;
-class ImplicitSchurComplement;
+class ImplicitSchurComplementBase;
 class Preconditioner;
 
 // This class implements an iterative solver for the linear least
@@ -69,28 +70,69 @@ class Preconditioner;
 // a proof of this fact and others related to this solver please see
 // the section on Domain Decomposition Methods in Saad's book
 // "Iterative Methods for Sparse Linear Systems".
-class CERES_NO_EXPORT IterativeSchurComplementSolver final
+//
+// Implementations of IterativeSchurComplementSolverBase interface are expected
+// to provide methods for creating preconditioner and pre-solver that are
+// compatible in terms of location of vector values (cpu / gpu)
+class CERES_NO_EXPORT IterativeSchurComplementSolverBase
     : public BlockSparseMatrixSolver {
  public:
-  explicit IterativeSchurComplementSolver(LinearSolver::Options options);
-  IterativeSchurComplementSolver(const IterativeSchurComplementSolver&) =
-      delete;
-  void operator=(const IterativeSchurComplementSolver&) = delete;
+  explicit IterativeSchurComplementSolverBase(LinearSolver::Options options);
+  IterativeSchurComplementSolverBase(
+      const IterativeSchurComplementSolverBase&) = delete;
+  void operator=(const IterativeSchurComplementSolverBase&) = delete;
 
-  ~IterativeSchurComplementSolver() override;
+  virtual ~IterativeSchurComplementSolverBase();
+
+  static std::unique_ptr<IterativeSchurComplementSolverBase> Create(
+      const LinearSolver::Options& options);
+
+ protected:
+  std::unique_ptr<ImplicitSchurComplementBase> schur_complement_;
+  std::unique_ptr<Preconditioner> preconditioner_;
+  std::unique_ptr<Preconditioner> pre_solver_;
+  LinearSolver::Options options_;
 
  private:
+  virtual void Initialize() = 0;
+  // Both vectors b and x are in cpu memory
   LinearSolver::Summary SolveImpl(BlockSparseMatrix* A,
                                   const double* b,
                                   const LinearSolver::PerSolveOptions& options,
                                   double* x) final;
+  // Create power-series preconditioner
+  virtual void CreatePreSolver(const int max_num_spse_iterations,
+                               const double spse_tolerance) = 0;
+  // Back-substitution (x pointer is always in cpu memory)
+  virtual void BackSubstitute(const double* reduced_system_solution,
+                              double* x) = 0;
+  // Run conjugate gradients solver
+  virtual LinearSolver::Summary ReducedSolve(
+      const ConjugateGradientsSolverOptions& cg_options) = 0;
 
-  void CreatePreconditioner(BlockSparseMatrix* A);
+  // Pointer to solution of reduced linear system (might be in cpu or gpu memory
+  // depending on implementation)
+  virtual double* reduced_linear_system_solution() = 0;
 
-  LinearSolver::Options options_;
-  std::unique_ptr<internal::ImplicitSchurComplement> schur_complement_;
-  std::unique_ptr<Preconditioner> preconditioner_;
+  virtual void CreatePreconditioner(const BlockSparseMatrix* A) = 0;
+};
+
+class CERES_NO_EXPORT IterativeSchurComplementSolver
+    : public IterativeSchurComplementSolverBase {
+ public:
+  explicit IterativeSchurComplementSolver(LinearSolver::Options options);
+  double* reduced_linear_system_solution();
+  void CreatePreconditioner(const BlockSparseMatrix* A);
+  void CreatePreSolver(const int max_num_spse_iterations,
+                       const double spse_tolerance);
+  void Initialize();
+  void BackSubstitute(const double* reduced_system_solution, double* x);
+  LinearSolver::Summary ReducedSolve(
+      const ConjugateGradientsSolverOptions& cg_options);
+
+ private:
   Vector reduced_linear_system_solution_;
+  Vector scratch_[4];
 };
 
 }  // namespace ceres::internal

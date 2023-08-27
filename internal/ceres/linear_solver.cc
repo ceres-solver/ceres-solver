@@ -111,7 +111,7 @@ std::unique_ptr<LinearSolver> LinearSolver::Create(
       if (options.use_explicit_schur_complement) {
         return std::make_unique<SparseSchurComplementSolver>(options);
       } else {
-        return std::make_unique<IterativeSchurComplementSolver>(options);
+        return IterativeSchurComplementSolverBase::Create(options);
       }
 
     case DENSE_QR:

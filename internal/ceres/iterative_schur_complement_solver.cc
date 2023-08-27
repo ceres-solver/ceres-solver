@@ -38,7 +38,7 @@
 #include "Eigen/Dense"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
-#include "ceres/conjugate_gradients_solver.h"
+#include "ceres/cuda_iterative_schur_complement_solver.h"
 #include "ceres/detect_structure.h"
 #include "ceres/implicit_schur_complement.h"
 #include "ceres/internal/eigen.h"
@@ -54,13 +54,71 @@
 
 namespace ceres::internal {
 
-IterativeSchurComplementSolver::IterativeSchurComplementSolver(
+std::unique_ptr<IterativeSchurComplementSolverBase>
+IterativeSchurComplementSolverBase::Create(
+    const LinearSolver::Options& options) {
+#ifndef CERES_NO_CUDA
+  if (options.sparse_linear_algebra_library_type ==
+      SparseLinearAlgebraLibraryType::CUDA_SPARSE) {
+    std::string error;
+    CHECK(options.context->InitCuda(&error))
+        << "Failed to initialize CUDA: " << error;
+    return std::make_unique<CudaIterativeSchurComplementSolver>(options);
+  }
+#endif
+  return std::make_unique<IterativeSchurComplementSolver>(options);
+}
+
+IterativeSchurComplementSolverBase::~IterativeSchurComplementSolverBase() =
+    default;
+
+IterativeSchurComplementSolverBase::IterativeSchurComplementSolverBase(
     LinearSolver::Options options)
     : options_(std::move(options)) {}
 
-IterativeSchurComplementSolver::~IterativeSchurComplementSolver() = default;
+void IterativeSchurComplementSolver::Initialize() {
+  reduced_linear_system_solution_.resize(schur_complement_->num_rows());
+  reduced_linear_system_solution_.setZero();
+  for (int i = 0; i < 4; ++i) {
+    scratch_[i].resize(schur_complement_->num_rows());
+  }
+}
 
-LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
+LinearSolver::Summary IterativeSchurComplementSolver::ReducedSolve(
+    const ConjugateGradientsSolverOptions& cg_options) {
+  LinearOperatorAdapter lhs(*schur_complement_);
+  LinearOperatorAdapter preconditioner(*preconditioner_);
+
+  Vector* scratch_ptr[4] = {
+      &scratch_[0], &scratch_[1], &scratch_[2], &scratch_[3]};
+
+  return ConjugateGradientsSolver(
+      cg_options,
+      lhs,
+      down_cast<ImplicitSchurComplement*>(schur_complement_.get())->rhs(),
+      preconditioner,
+      scratch_ptr,
+      reduced_linear_system_solution_);
+}
+
+double* IterativeSchurComplementSolver::reduced_linear_system_solution() {
+  return reduced_linear_system_solution_.data();
+}
+
+void IterativeSchurComplementSolver::BackSubstitute(
+    const double* reduced_system_solution, double* x) {
+  schur_complement_->BackSubstitute(reduced_system_solution, x);
+}
+
+void IterativeSchurComplementSolver::CreatePreSolver(
+    const int max_num_spse_iterations, const double spse_tolerance) {
+  pre_solver_ = std::make_unique<PowerSeriesExpansionPreconditioner>(
+      down_cast<ImplicitSchurComplement*>(schur_complement_.get()),
+      max_num_spse_iterations,
+      spse_tolerance);
+}
+
+LinearSolver::Summary IterativeSchurComplementSolverBase::SolveImpl(
     BlockSparseMatrix* A,
     const double* b,
     const LinearSolver::PerSolveOptions& per_solve_options,
@@ -78,9 +136,12 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
                     &options_.row_block_size,
                     &options_.e_block_size,
                     &options_.f_block_size);
-    schur_complement_ = std::make_unique<ImplicitSchurComplement>(options_);
+    schur_complement_ = ImplicitSchurComplementBase::Create(options_);
   }
   schur_complement_->Init(*A, per_solve_options.D, b);
+
+  // Initialize the solution to the Schur complement system.
+  Initialize();
 
   const int num_schur_complement_blocks =
       A->block_structure()->cols.size() - num_eliminate_blocks;
@@ -89,21 +150,17 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
     LinearSolver::Summary summary;
     summary.num_iterations = 0;
     summary.termination_type = LinearSolverTerminationType::SUCCESS;
-    schur_complement_->BackSubstitute(nullptr, x);
+    BackSubstitute(nullptr, x);
     return summary;
   }
 
-  // Initialize the solution to the Schur complement system.
-  reduced_linear_system_solution_.resize(schur_complement_->num_rows());
-  reduced_linear_system_solution_.setZero();
   if (options_.use_spse_initialization) {
-    PowerSeriesExpansionPreconditioner pse_solver(
-        schur_complement_.get(),
-        options_.max_num_spse_iterations,
-        options_.spse_tolerance);
-    pse_solver.RightMultiplyAndAccumulate(
-        schur_complement_->rhs().data(),
-        reduced_linear_system_solution_.data());
+    if (!pre_solver_) {
+      CreatePreSolver(options_.max_num_spse_iterations,
+                      options_.spse_tolerance);
+    }
+    pre_solver_->RightMultiplyAndAccumulate(schur_complement_->RhsData(),
+                                            reduced_linear_system_solution());
   }
 
   CreatePreconditioner(A);
@@ -124,36 +181,23 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
   cg_options.q_tolerance = per_solve_options.q_tolerance;
   cg_options.r_tolerance = per_solve_options.r_tolerance;
 
-  LinearOperatorAdapter lhs(*schur_complement_);
-  LinearOperatorAdapter preconditioner(*preconditioner_);
-
-  Vector scratch[4];
-  for (int i = 0; i < 4; ++i) {
-    scratch[i].resize(schur_complement_->num_cols());
-  }
-  Vector* scratch_ptr[4] = {&scratch[0], &scratch[1], &scratch[2], &scratch[3]};
-
   event_logger.AddEvent("Setup");
-
-  LinearSolver::Summary summary =
-      ConjugateGradientsSolver(cg_options,
-                               lhs,
-                               schur_complement_->rhs(),
-                               preconditioner,
-                               scratch_ptr,
-                               reduced_linear_system_solution_);
+  auto summary = ReducedSolve(cg_options);
 
   if (summary.termination_type != LinearSolverTerminationType::FAILURE &&
       summary.termination_type != LinearSolverTerminationType::FATAL_ERROR) {
-    schur_complement_->BackSubstitute(reduced_linear_system_solution_.data(),
-                                      x);
+    BackSubstitute(reduced_linear_system_solution(), x);
   }
   event_logger.AddEvent("Solve");
   return summary;
 }
 
+IterativeSchurComplementSolver::IterativeSchurComplementSolver(
+    LinearSolver::Options options)
+    : IterativeSchurComplementSolverBase(options) {}
+
 void IterativeSchurComplementSolver::CreatePreconditioner(
-    BlockSparseMatrix* A) {
+    const BlockSparseMatrix* A) {
   if (preconditioner_ != nullptr) {
     return;
   }
@@ -172,6 +216,8 @@ void IterativeSchurComplementSolver::CreatePreconditioner(
   CHECK(options_.context != nullptr);
   preconditioner_options.context = options_.context;
 
+  auto schur_complement =
+      down_cast<ImplicitSchurComplement*>(schur_complement_.get());
   switch (options_.preconditioner_type) {
     case IDENTITY:
       preconditioner_ = std::make_unique<IdentityPreconditioner>(
@@ -179,14 +225,14 @@ void IterativeSchurComplementSolver::CreatePreconditioner(
       break;
     case JACOBI:
       preconditioner_ = std::make_unique<SparseMatrixPreconditionerWrapper>(
-          schur_complement_->block_diagonal_FtF_inverse(),
+          schur_complement->block_diagonal_FtF_inverse(),
           preconditioner_options);
       break;
     case SCHUR_POWER_SERIES_EXPANSION:
       // Ignoring the value of spse_tolerance to ensure preconditioner stays
       // fixed during the iterations of cg.
       preconditioner_ = std::make_unique<PowerSeriesExpansionPreconditioner>(
-          schur_complement_.get(), options_.max_num_spse_iterations, 0);
+          schur_complement, options_.max_num_spse_iterations, 0);
       break;
     case SCHUR_JACOBI:
       preconditioner_ = std::make_unique<SchurJacobiPreconditioner>(
