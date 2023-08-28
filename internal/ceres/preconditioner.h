@@ -178,7 +178,7 @@ class CERES_NO_EXPORT TypedPreconditioner : public Preconditioner {
 // Preconditioners that depend on access to the low level structure
 // of a SparseMatrix.
 // clang-format off
-using SparseMatrixPreconditioner = TypedPreconditioner<SparseMatrix>;
+using SparseMatrixPreconditioner = TypedPreconditioner<LinearOperator>;
 using BlockSparseMatrixPreconditioner = TypedPreconditioner<BlockSparseMatrix>;
 using CompressedRowSparseMatrixPreconditioner = TypedPreconditioner<CompressedRowSparseMatrix>;
 // clang-format on
@@ -189,7 +189,7 @@ class CERES_NO_EXPORT SparseMatrixPreconditionerWrapper final
  public:
   // Wrapper does NOT take ownership of the matrix pointer.
   explicit SparseMatrixPreconditionerWrapper(
-      const SparseMatrix* matrix, const Preconditioner::Options& options);
+      const LinearOperator* matrix, const Preconditioner::Options& options);
   ~SparseMatrixPreconditionerWrapper() override;
 
   // Preconditioner interface
@@ -197,8 +197,8 @@ class CERES_NO_EXPORT SparseMatrixPreconditionerWrapper final
   int num_rows() const override;
 
  private:
-  bool UpdateImpl(const SparseMatrix& A, const double* D) override;
-  const SparseMatrix* matrix_;
+  bool UpdateImpl(const LinearOperator& A, const double* D) override;
+  const LinearOperator* matrix_;
   const Preconditioner::Options options_;
 };
 

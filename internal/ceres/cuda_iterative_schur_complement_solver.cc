@@ -139,29 +139,32 @@ void CudaIterativeSchurComplementSolver::CreatePreconditioner(
   preconditioner_options.context = options_.context;
 
   std::unique_ptr<Preconditioner> preconditioner;
-  const auto& schur_complement =
-      down_cast<CudaImplicitSchurComplement*>(schur_complement_.get())
-          ->isc_cpu();
+  const auto& schur_complement_gpu =
+      down_cast<CudaImplicitSchurComplement*>(schur_complement_.get());
+  const auto& schur_complement_cpu = schur_complement_gpu->isc_cpu();
   switch (options_.preconditioner_type) {
     case IDENTITY:
-      preconditioner = std::make_unique<IdentityPreconditioner>(
-          schur_complement_->num_cols());
-      break;
+      preconditioner_ = std::make_unique<CudaIdentityPreconditionerBlockSparse>(
+          schur_complement_->num_cols(), options_.context);
+      return;
     case JACOBI:
-      preconditioner = std::make_unique<SparseMatrixPreconditionerWrapper>(
-          schur_complement.block_diagonal_FtF_inverse(),
+      preconditioner_ = std::make_unique<SparseMatrixPreconditionerWrapper>(
+          schur_complement_gpu->block_diagonal_FtF_inverse(),
           preconditioner_options);
-      break;
+      return;
     case SCHUR_POWER_SERIES_EXPANSION:
       // Ignoring the value of spse_tolerance to ensure preconditioner stays
       // fixed during the iterations of cg.
       preconditioner = std::make_unique<PowerSeriesExpansionPreconditioner>(
-          &schur_complement, options_.max_num_spse_iterations, 0);
+          &schur_complement_cpu, options_.max_num_spse_iterations, 0);
       break;
-    case SCHUR_JACOBI:
-      preconditioner = std::make_unique<SchurJacobiPreconditioner>(
+    case SCHUR_JACOBI: {
+      auto schur_jacobi = std::make_unique<SchurJacobiPreconditioner>(
           *A->block_structure(), preconditioner_options);
-      break;
+      preconditioner_ = std::make_unique<CudaSchurJacobiPreconditioner>(
+          std::move(schur_jacobi), options_.context);
+      return;
+    }
     case CLUSTER_JACOBI:
     case CLUSTER_TRIDIAGONAL:
       preconditioner = std::make_unique<VisibilityBasedPreconditioner>(

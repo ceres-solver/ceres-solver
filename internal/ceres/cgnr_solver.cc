@@ -242,7 +242,7 @@ class CERES_NO_EXPORT CudaCgnrLinearOperator final
   CudaVector* z_ = nullptr;
 };
 
-class CERES_NO_EXPORT CudaIdentityPreconditioner final
+class CERES_NO_EXPORT CudaIdentityPreconditionerCrs final
     : public CudaPreconditioner {
  public:
   void Update(const CompressedRowSparseMatrix& A, const double* D) final {}
@@ -334,7 +334,7 @@ void CudaCgnrSolver::CpuToGpuTransfer(const CompressedRowSparseMatrix& A,
       preconditioner_ =
           std::make_unique<CudaJacobiPreconditioner>(preconditioner_options, A);
     } else {
-      preconditioner_ = std::make_unique<CudaIdentityPreconditioner>();
+      preconditioner_ = std::make_unique<CudaIdentityPreconditionerCrs>();
     }
     for (int i = 0; i < 4; ++i) {
       scratch_[i] = new CudaVector(options_.context, A.num_cols());

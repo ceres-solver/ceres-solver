@@ -83,6 +83,10 @@ void SchurJacobiPreconditioner::InitEliminator(
       eliminator_options.elimination_groups[0], kFullRankETE, &bs);
 }
 
+const CompressedRowSparseMatrix& SchurJacobiPreconditioner::Matrix() const {
+  return *m_->matrix();
+}
+
 // Update the values of the preconditioner matrix and factorize it.
 bool SchurJacobiPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
                                            const double* D) {

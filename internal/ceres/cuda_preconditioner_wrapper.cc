@@ -75,6 +75,31 @@ bool CudaPreconditionerWrapper::Update(const LinearOperator& A,
   return preconditioner_->Update(A, D);
 }
 
+CudaSchurJacobiPreconditioner::CudaSchurJacobiPreconditioner(
+    std::unique_ptr<SchurJacobiPreconditioner> preconditioner,
+    ContextImpl* context)
+    : preconditioner_(std::move(preconditioner)), context_(context) {}
+
+void CudaSchurJacobiPreconditioner::RightMultiplyAndAccumulate(
+    const double* x, double* y) const {
+  m_->RightMultiplyAndAccumulate(x, y);
+}
+
+int CudaSchurJacobiPreconditioner::num_rows() const {
+  return preconditioner_->num_rows();
+}
+
+bool CudaSchurJacobiPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
+                                               const double* D) {
+  if (!preconditioner_->Update(A, D)) return false;
+  if (m_) {
+    m_->CopyValuesFromCpu(preconditioner_->Matrix());
+    return true;
+  }
+  m_ = std::make_unique<CudaSparseMatrix>(context_, preconditioner_->Matrix());
+  return true;
+}
+
 }  // namespace ceres::internal
 
 #endif
