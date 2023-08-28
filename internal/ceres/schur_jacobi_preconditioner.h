@@ -95,6 +95,8 @@ class CERES_NO_EXPORT SchurJacobiPreconditioner
   void RightMultiplyAndAccumulate(const double* x, double* y) const final;
   int num_rows() const final;
 
+  const CompressedRowSparseMatrix& Matrix() const;
+
  private:
   void InitEliminator(const CompressedRowBlockStructure& bs);
   bool UpdateImpl(const BlockSparseMatrix& A, const double* D) final;

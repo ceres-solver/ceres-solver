@@ -35,8 +35,10 @@
 #include "ceres/internal/config.h"
 
 #ifndef CERES_NO_CUDA
+#include "ceres/cuda_sparse_matrix.h"
 #include "ceres/cuda_vector.h"
 #include "ceres/preconditioner.h"
+#include "ceres/schur_jacobi_preconditioner.h"
 
 namespace ceres::internal {
 
@@ -58,6 +60,47 @@ class CERES_NO_EXPORT CudaPreconditionerWrapper : public Preconditioner {
   mutable Vector y_;
   ContextImpl* context_;
 };
+
+class CERES_NO_EXPORT CudaIdentityPreconditionerBlockSparse
+    : public Preconditioner {
+ public:
+  CudaIdentityPreconditionerBlockSparse(const int num_rows,
+                                        ContextImpl* context)
+      : num_rows_(num_rows), context_(context) {}
+
+  void RightMultiplyAndAccumulate(const double* x, double* y) const {
+    const double a = 1.;
+    CHECK_EQ(CUBLAS_STATUS_SUCCESS,
+             cublasDaxpy(context_->cublas_handle_, num_rows_, &a, x, 1, y, 1));
+  }
+  int num_rows() const { return num_rows_; };
+
+  bool Update(const LinearOperator& /*A*/, const double* /* D*/) {
+    return true;
+  };
+
+ private:
+  const int num_rows_;
+  ContextImpl* context_;
+};
+
+class CERES_NO_EXPORT CudaSchurJacobiPreconditioner
+    : public BlockSparseMatrixPreconditioner {
+ public:
+  CudaSchurJacobiPreconditioner(
+      std::unique_ptr<SchurJacobiPreconditioner> preconditioner,
+      ContextImpl* context);
+
+  void RightMultiplyAndAccumulate(const double* x, double* y) const;
+  int num_rows() const;
+
+ private:
+  bool UpdateImpl(const BlockSparseMatrix& A, const double* D);
+  std::unique_ptr<SchurJacobiPreconditioner> preconditioner_;
+  std::unique_ptr<CudaSparseMatrix> m_;
+  ContextImpl* context_;
+};
+
 }  // namespace ceres::internal
 
 #endif

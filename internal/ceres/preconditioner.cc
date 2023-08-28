@@ -47,7 +47,7 @@ PreconditionerType Preconditioner::PreconditionerForZeroEBlocks(
 }
 
 SparseMatrixPreconditionerWrapper::SparseMatrixPreconditionerWrapper(
-    const SparseMatrix* matrix, const Preconditioner::Options& options)
+    const LinearOperator* matrix, const Preconditioner::Options& options)
     : matrix_(matrix), options_(options) {
   CHECK(matrix != nullptr);
 }
@@ -55,7 +55,7 @@ SparseMatrixPreconditionerWrapper::SparseMatrixPreconditionerWrapper(
 SparseMatrixPreconditionerWrapper::~SparseMatrixPreconditionerWrapper() =
     default;
 
-bool SparseMatrixPreconditionerWrapper::UpdateImpl(const SparseMatrix& /*A*/,
+bool SparseMatrixPreconditionerWrapper::UpdateImpl(const LinearOperator& /*A*/,
                                                    const double* /*D*/) {
   return true;
 }
