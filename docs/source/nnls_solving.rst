@@ -986,7 +986,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
 
 .. member:: int Solver::Options::max_lbfgs_rank
 
-   Default: 20
+   Default: ``20``
 
    The L-BFGS hessian approximation is a low rank approximation to the
    inverse of the Hessian matrix. The rank of the approximation
@@ -1053,6 +1053,8 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    ``CUBIC``.
 
 .. member:: double Solver::Options::min_line_search_step_size
+
+   Default: ``1e-9``
 
    The line search terminates if:
 
@@ -1208,7 +1210,8 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
 
 .. member:: double Solver::Options::max_solver_time_in_seconds
 
-   Default: ``1e6``
+   Default: ``1e9``
+
    Maximum amount of time for which the solver should run.
 
 .. member:: int Solver::Options::num_threads
@@ -1376,7 +1379,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
 
 .. member:: DenseLinearAlgebraLibrary Solver::Options::dense_linear_algebra_library_type
 
-   Default:``EIGEN``
+   Default: ``EIGEN``
 
    Ceres supports using multiple dense linear algebra libraries for
    dense matrix factorizations. Currently ``EIGEN``, ``LAPACK`` and
@@ -1480,6 +1483,8 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
      preconditioner.
 
 .. member:: bool Solver::Options::dynamic_sparsity
+
+   Default: ``false``
 
    Some non-linear least squares problems are symbolically dense but
    numerically sparse. i.e. at any given state only a small number of
@@ -1686,7 +1691,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
     :member:`Solver::Options::trust_region_problem_dump_format_type` is not
     ``CONSOLE``.
 
-.. member:: DumpFormatType Solver::Options::trust_region_problem_dump_format
+.. member:: DumpFormatType Solver::Options::trust_region_problem_dump_format_type
 
    Default: ``TEXTFILE``
 
@@ -1781,6 +1786,8 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    their values.
 
 .. member:: vector<IterationCallback> Solver::Options::callbacks
+
+   Default: ``empty``
 
    Callbacks that are executed at the end of each iteration of the
    :class:`Minimizer`. They are executed in the order that they are
