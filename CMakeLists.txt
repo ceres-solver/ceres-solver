@@ -37,6 +37,16 @@ if (POLICY CMP0074) # Added in CMake 3.12
   cmake_policy(SET CMP0074 NEW)
 endif()
 
+# TODO(sameeragarwal): This should be removed when we go past CMake
+# 3.12 as required as it provides alternate ways of finding the Python
+# interpreter.
+if (POLICY CMP0148)
+  # FindSphinx.cmake uses find_package(PythonInterp 3), which has been deprecated
+  # in cmake 3.27. So use the old behaviour till we update our minimum required
+  # cmake version to 3.27
+  cmake_policy(SET CMP0148 OLD)
+endif()
+
 # On macOS, add the Homebrew prefix (with appropriate suffixes) to the
 # respective HINTS directories (after any user-specified locations).  This
 # handles Homebrew installations into non-standard locations (not /usr/local).
