@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25601162_216198fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-08-29T23:42:43Z",
+      "side": 1,
+      "message": "CudaSparseMatrix only supports products with CudaVectors.\nThis patch adds support for matrix-vector products with vector data at an arbitrary [gpu] pointer.\n\nSeveral corner-cases regarding zero-size CudaMatrices and CudaVectors are also addressed.",
+      "revId": "712c5d202e0107a36267a2ff4606d78c93362f1d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
