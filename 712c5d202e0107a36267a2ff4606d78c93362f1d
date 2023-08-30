@@ -16,6 +16,132 @@
       "message": "CudaSparseMatrix only supports products with CudaVectors.\nThis patch adds support for matrix-vector products with vector data at an arbitrary [gpu] pointer.\n\nSeveral corner-cases regarding zero-size CudaMatrices and CudaVectors are also addressed.",
       "revId": "712c5d202e0107a36267a2ff4606d78c93362f1d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9cddf53_c1c53c9f",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-08-30T01:00:38Z",
+      "side": 1,
+      "message": "why is this needed? add a comment. and how was this working without it. \nit also indicates that perhaps CudaSparseMatrix::UpdateTempBuffer is not a great name since I can\u0027t actually tell what this call is doing from the call site.",
+      "range": {
+        "startLine": 55,
+        "startChar": 15,
+        "endLine": 55,
+        "endChar": 31
+      },
+      "revId": "712c5d202e0107a36267a2ff4606d78c93362f1d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6782f4d7_62d14981",
+        "filename": "internal/ceres/cuda_partitioned_block_sparse_crs_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-08-30T01:00:38Z",
+      "side": 1,
+      "message": "same comment here.",
+      "range": {
+        "startLine": 83,
+        "startChar": 13,
+        "endLine": 83,
+        "endChar": 29
+      },
+      "revId": "712c5d202e0107a36267a2ff4606d78c93362f1d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1c33444_54d41b92",
+        "filename": "internal/ceres/cuda_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-08-30T01:00:38Z",
+      "side": 1,
+      "message": "why can\u0027t updatetempbuffer be called here?",
+      "revId": "712c5d202e0107a36267a2ff4606d78c93362f1d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "690a8d45_aa2d40e7",
+        "filename": "internal/ceres/cuda_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-08-30T01:00:38Z",
+      "side": 1,
+      "message": "so its my understanding (from my own experiments) that having our own copy of the transpose has a huge impact on performance.\nalso there seems to be a significant delta in using CSR for right multiply versus using a CSC for right multiply.",
+      "range": {
+        "startLine": 198,
+        "startChar": 7,
+        "endLine": 198,
+        "endChar": 35
+      },
+      "revId": "712c5d202e0107a36267a2ff4606d78c93362f1d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9448051_8f8c1a1f",
+        "filename": "internal/ceres/cuda_sparse_matrix.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-08-30T01:00:38Z",
+      "side": 1,
+      "message": "why is this a public method? it seems odd for it to be a very specific method that you expect the user to call to use this class correctly.\n\nI think either this should be just called Init() which makes the call site more innocuous or the constructor should take care of calling this and the user should not have to worry about it.",
+      "range": {
+        "startLine": 77,
+        "startChar": 7,
+        "endLine": 77,
+        "endChar": 23
+      },
+      "revId": "712c5d202e0107a36267a2ff4606d78c93362f1d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0547eef_351884d5",
+        "filename": "internal/ceres/cuda_vector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-08-30T01:00:38Z",
+      "side": 1,
+      "message": "why are the implementations for the version with Vector and this one so different? I do not understand. is it because the CopyFromCPU below can have a different sizes from what the buffer size is, but this one is expected to be the same.\n\nin which case isn\u0027t it better to make the code below conditioned on the two sizes being different? instead of unconditionally destroying the descriptor and then creating it again?",
+      "revId": "712c5d202e0107a36267a2ff4606d78c93362f1d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
