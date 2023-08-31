@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "215166ca_9ab12406",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-08-31T17:59:57Z",
+      "side": 1,
+      "message": "Fixed naming, reorganized code a bit, removed mutable access to CudaSparseMatrix instances that was needed because (Left-)RightMultiplyAccumulate methods were non-const.\n\nI still think that in order to avoid both:\n - Code duplication for cpu and gpu versions\n - Avoiding introducing unnecessary copies from pointer to vector in cpu version\n\nOne needs to either:\n - Support vectors represented by data pointers in CudaSparseMatrix\n - Change LinearSolver interface to use vectors instead of data pointers\n\nCGNR solver introduced additional copy of solution vector in cpu version (which was not present in the previous version, which updated solution vector directly).\n\nFor iterative Schur-complement solver in my understanding we will need to do two [please check comment in cuda_sparse_matrix.h for details] extra copies for cpu version (if we decide to neither support pointers in CudaSparseMatrix nor change LinearSolver interface).",
+      "revId": "cb48bc396e6fb6b5812cf240292c772e9be45bce",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

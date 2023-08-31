@@ -58,6 +58,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e471b5bc_5526c400",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-08-31T17:59:57Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "e73069bd_69c8f476",
+      "range": {
+        "startLine": 83,
+        "startChar": 23,
+        "endLine": 83,
+        "endChar": 29
+      },
+      "revId": "9d1723d09dfb09f2323cb6351b5a6b9c425e3a05",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "64a4c388_69e97de2",
@@ -71,6 +95,30 @@
       "writtenOn": "2023-08-31T14:13:39Z",
       "side": 1,
       "message": "GetTempBufferSizeForOp",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 24
+      },
+      "revId": "9d1723d09dfb09f2323cb6351b5a6b9c425e3a05",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "059019df_adc5669f",
+        "filename": "internal/ceres/cuda_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-08-31T17:59:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64a4c388_69e97de2",
       "range": {
         "startLine": 69,
         "startChar": 7,
@@ -104,6 +152,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b0499b5_96ab1883",
+        "filename": "internal/ceres/cuda_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-08-31T17:59:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64162f41_fbb4f081",
+      "range": {
+        "startLine": 167,
+        "startChar": 6,
+        "endLine": 167,
+        "endChar": 19
+      },
+      "revId": "9d1723d09dfb09f2323cb6351b5a6b9c425e3a05",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "75cbffa2_f624f592",
@@ -117,6 +189,30 @@
       "writtenOn": "2023-08-31T14:13:39Z",
       "side": 1,
       "message": "this comment about init cuda should not apply to all constructors no? so either duplicate it or make it more general as part of the class documentation.. that initcuda must be called before using this class.",
+      "range": {
+        "startLine": 62,
+        "startChar": 46,
+        "endLine": 62,
+        "endChar": 52
+      },
+      "revId": "9d1723d09dfb09f2323cb6351b5a6b9c425e3a05",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4943161c_095996cf",
+        "filename": "internal/ceres/cuda_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-08-31T17:59:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75cbffa2_f624f592",
       "range": {
         "startLine": 62,
         "startChar": 46,
@@ -144,6 +240,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "258d7f80_ea2d2968",
+        "filename": "internal/ceres/cuda_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-08-31T17:59:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a89318e_186686cb",
+      "revId": "9d1723d09dfb09f2323cb6351b5a6b9c425e3a05",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "042dc587_d532482b",
@@ -157,6 +271,30 @@
       "writtenOn": "2023-08-31T14:13:39Z",
       "side": 1,
       "message": "why do we need this pointer interface? is this because of the linearoperator interface.\n\nif we decide to do composition instead of inheritence like in cgnr solver, do you think we will still need this interface? we do not have to resolve this in this CL, we can come back remove this if it is not needed, but just a question for now.",
+      "range": {
+        "startLine": 84,
+        "startChar": 7,
+        "endLine": 84,
+        "endChar": 32
+      },
+      "revId": "9d1723d09dfb09f2323cb6351b5a6b9c425e3a05",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e1a4ad3_83ebc6f3",
+        "filename": "internal/ceres/cuda_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-08-31T17:59:57Z",
+      "side": 1,
+      "message": "I think this still a problem, because LinearSolver interface (and its\u0027 users) operate with vectors represented by data pointers.\n\nMethods ImplicitSchurComplement::BackSubstitute and ImplicitSchurComplement::UpdateRhs are using values that are using input/output arguments from LinearSolver::SolverImpl directly.\n\n\nImplicitSchurComplement::BackSubstitute method receives pointer to data of y vector.\n\nThis comes from x pointer in IterativeSchurComplementSolver::SolveImpl which gets it all the way up from TrustRegionMinimizer::ComputeTrustRegionStep.\n\nIf we would like to avoid making an extra copy from local Vector instance to the pointer passed to SolveImpl, we have the following options:\n\n a. Change all interfaces on this way to handling Vectors instead of data pointers\n b. Add products with vectors represented by pointers to data to CudaSparseMatrix (and CudaBlockSparseCrsView)\n c. Have separate implementations for cpu and gpu ImplicitSchurComplement::BackSubstitute.\n\n\n\n\n\n\nImplicitSchurComplement::UpdateRhs method accepts pointer to b, and no copy happens in cpu version.\nIf we only accept CudaVectors in CudaSparseMatrix - we will have different implementation of UpdateRhs, or extra copy in CPU version, or will need to propagate Vector parameters up in the call sequence.\n\n\nCGNR solver solves a similar problem by copying solution after solving in cpu version [and this was not the thing in the old cpu-only version, which was updating solution vector directly; so ]",
+      "parentUuid": "042dc587_d532482b",
       "range": {
         "startLine": 84,
         "startChar": 7,
