@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8578e915_c1eed59f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-08-31T19:14:08Z",
+      "side": 1,
+      "message": "Renamed back the GetTempBufferSize function that computes buffer size for both operation.\n\nIf we can afford pessimizing performance of cpu version a bit - then I agree that there is no need to support vectors represented by data pointers in CudaSparseMatrix.",
+      "revId": "5e4b22f7fcf5cfe2afb66f1d1664ddc454e2bd97",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
