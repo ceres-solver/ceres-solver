@@ -303,6 +303,30 @@
       },
       "revId": "9d1723d09dfb09f2323cb6351b5a6b9c425e3a05",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2119c1e2_fa3f9887",
+        "filename": "internal/ceres/cuda_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-08-31T18:20:12Z",
+      "side": 1,
+      "message": "I think it is okay to make a copy, these copies are not that expensive and happen once at the beginning/end of solve. \n\nThe way I think about this object is that it exists entirely for the purposes for stuff to happen on device, and we should make it as device friendly as possible.\n\nand we write our algorithms like cg to be device agnostic if we can, I think cgnr shows it can be done. I am hoping the same will happen for iterative schur complement solver.\n\nBackSubtitute is an interesting thing because it is not clear if its even worth doing on the gpu, so its possible that we need to break up ImplicitSchurComplement into something that is JUST used for doing the CG part and the back substitution is done by another object which happens on the cpu.\n\nso lets go with this and see how things shape up in the next change? as long as you are okay iterating with me as we figure this out I am good with it.",
+      "parentUuid": "6e1a4ad3_83ebc6f3",
+      "range": {
+        "startLine": 84,
+        "startChar": 7,
+        "endLine": 84,
+        "endChar": 32
+      },
+      "revId": "9d1723d09dfb09f2323cb6351b5a6b9c425e3a05",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
