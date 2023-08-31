@@ -16,6 +16,155 @@
       "message": "Added CudaSparseMatrix constructor from existing column \u0026 row CudaBuffer\u003cint\u003e (as well as move constructors for CudaBuffer and CudaVector).\n\nMoved initialization (left/right hand vector descriptors, temporary buffer allocation) into `Initialize` method that is called from each constructor.",
       "revId": "9d1723d09dfb09f2323cb6351b5a6b9c425e3a05",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee82f423_fd60a312",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-08-31T14:13:39Z",
+      "side": 1,
+      "message": "minor comments.",
+      "revId": "9d1723d09dfb09f2323cb6351b5a6b9c425e3a05",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e73069bd_69c8f476",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-08-31T14:13:39Z",
+      "side": 1,
+      "message": "I think this should read as a requirement.\n\n\"Both x \u0026 y must be device pointers.\" here and below.\n\nAlso should we add a debug mode check or something for them to device pointers or is this something that will just crash if the code is called incorrectly?",
+      "range": {
+        "startLine": 83,
+        "startChar": 23,
+        "endLine": 83,
+        "endChar": 29
+      },
+      "revId": "9d1723d09dfb09f2323cb6351b5a6b9c425e3a05",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64a4c388_69e97de2",
+        "filename": "internal/ceres/cuda_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-08-31T14:13:39Z",
+      "side": 1,
+      "message": "GetTempBufferSizeForOp",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 24
+      },
+      "revId": "9d1723d09dfb09f2323cb6351b5a6b9c425e3a05",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64162f41_fbb4f081",
+        "filename": "internal/ceres/cuda_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-08-31T14:13:39Z",
+      "side": 1,
+      "message": "early return if num_nonzeros_ is 0 will reduce a level of nesting like below.",
+      "range": {
+        "startLine": 167,
+        "startChar": 6,
+        "endLine": 167,
+        "endChar": 19
+      },
+      "revId": "9d1723d09dfb09f2323cb6351b5a6b9c425e3a05",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75cbffa2_f624f592",
+        "filename": "internal/ceres/cuda_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-08-31T14:13:39Z",
+      "side": 1,
+      "message": "this comment about init cuda should not apply to all constructors no? so either duplicate it or make it more general as part of the class documentation.. that initcuda must be called before using this class.",
+      "range": {
+        "startLine": 62,
+        "startChar": 46,
+        "endLine": 62,
+        "endChar": 52
+      },
+      "revId": "9d1723d09dfb09f2323cb6351b5a6b9c425e3a05",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a89318e_186686cb",
+        "filename": "internal/ceres/cuda_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-08-31T14:13:39Z",
+      "side": 1,
+      "message": "see comment about this in crs_view.",
+      "revId": "9d1723d09dfb09f2323cb6351b5a6b9c425e3a05",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "042dc587_d532482b",
+        "filename": "internal/ceres/cuda_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-08-31T14:13:39Z",
+      "side": 1,
+      "message": "why do we need this pointer interface? is this because of the linearoperator interface.\n\nif we decide to do composition instead of inheritence like in cgnr solver, do you think we will still need this interface? we do not have to resolve this in this CL, we can come back remove this if it is not needed, but just a question for now.",
+      "range": {
+        "startLine": 84,
+        "startChar": 7,
+        "endLine": 84,
+        "endChar": 32
+      },
+      "revId": "9d1723d09dfb09f2323cb6351b5a6b9c425e3a05",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
