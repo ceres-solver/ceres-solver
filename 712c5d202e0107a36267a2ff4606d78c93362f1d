@@ -41,6 +41,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "63ae6ee5_ef9f315e",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-08-31T13:39:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9cddf53_c1c53c9f",
+      "range": {
+        "startLine": 55,
+        "startChar": 15,
+        "endLine": 55,
+        "endChar": 31
+      },
+      "revId": "712c5d202e0107a36267a2ff4606d78c93362f1d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6782f4d7_62d14981",
@@ -64,6 +88,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "da4eafb1_c474ecff",
+        "filename": "internal/ceres/cuda_partitioned_block_sparse_crs_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-08-31T13:39:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6782f4d7_62d14981",
+      "range": {
+        "startLine": 83,
+        "startChar": 13,
+        "endLine": 83,
+        "endChar": 29
+      },
+      "revId": "712c5d202e0107a36267a2ff4606d78c93362f1d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e1c33444_54d41b92",
@@ -77,6 +125,24 @@
       "writtenOn": "2023-08-30T01:00:38Z",
       "side": 1,
       "message": "why can\u0027t updatetempbuffer be called here?",
+      "revId": "712c5d202e0107a36267a2ff4606d78c93362f1d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "519be15f_17128efe",
+        "filename": "internal/ceres/cuda_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-08-31T13:39:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1c33444_54d41b92",
       "revId": "712c5d202e0107a36267a2ff4606d78c93362f1d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -127,6 +193,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f360653b_01219a8c",
+        "filename": "internal/ceres/cuda_sparse_matrix.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-08-31T13:39:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9448051_8f8c1a1f",
+      "range": {
+        "startLine": 77,
+        "startChar": 7,
+        "endLine": 77,
+        "endChar": 23
+      },
+      "revId": "712c5d202e0107a36267a2ff4606d78c93362f1d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f0547eef_351884d5",
@@ -140,6 +230,24 @@
       "writtenOn": "2023-08-30T01:00:38Z",
       "side": 1,
       "message": "why are the implementations for the version with Vector and this one so different? I do not understand. is it because the CopyFromCPU below can have a different sizes from what the buffer size is, but this one is expected to be the same.\n\nin which case isn\u0027t it better to make the code below conditioned on the two sizes being different? instead of unconditionally destroying the descriptor and then creating it again?",
+      "revId": "712c5d202e0107a36267a2ff4606d78c93362f1d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "110bb676_35b9597b",
+        "filename": "internal/ceres/cuda_vector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-08-31T13:39:23Z",
+      "side": 1,
+      "message": "Yes, pointer-based interface expects user to make vector sizes correct",
+      "parentUuid": "f0547eef_351884d5",
       "revId": "712c5d202e0107a36267a2ff4606d78c93362f1d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }

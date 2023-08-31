@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46a27fc2_7d0a12de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-08-31T13:39:23Z",
+      "side": 1,
+      "message": "Added CudaSparseMatrix constructor from existing column \u0026 row CudaBuffer\u003cint\u003e (as well as move constructors for CudaBuffer and CudaVector).\n\nMoved initialization (left/right hand vector descriptors, temporary buffer allocation) into `Initialize` method that is called from each constructor.",
+      "revId": "9d1723d09dfb09f2323cb6351b5a6b9c425e3a05",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
