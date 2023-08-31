@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c875a824_65e02596",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-08-31T20:47:32Z",
+      "side": 1,
+      "message": "I think we should think about this change first and make sure if it fits the pattern of the cgnr solver before we design CudaImplicitSchurComplement no? because that will decide if we are doing composition/wrapper or inheritence?",
+      "revId": "39eabd2ed29cff5566e7163699d1c07285d7c3b3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
