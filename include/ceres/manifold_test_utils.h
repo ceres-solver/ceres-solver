@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2022 Google Inc. All rights reserved.
+// Copyright 2023 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -99,7 +99,7 @@ MATCHER_P2(XPlusZeroIsXAt, x, tolerance, "") {
   Vector actual = Vector::Zero(ambient_size);
   Vector zero = Vector::Zero(tangent_size);
   EXPECT_TRUE(arg.Plus(x.data(), zero.data(), actual.data()));
-  const double n = (actual - x).norm();
+  const double n = (actual - Vector{x}).norm();
   const double d = x.norm();
   const double diffnorm = (d == 0.0) ? n : (n / d);
   if (diffnorm > tolerance) {
@@ -189,7 +189,7 @@ MATCHER_P3(MinusPlusIsIdentityAt, x, delta, tolerance, "") {
   Vector actual = Vector::Zero(tangent_size);
   EXPECT_TRUE(arg.Minus(x_plus_delta.data(), x.data(), actual.data()));
 
-  const double n = (actual - delta).norm();
+  const double n = (actual - Vector{delta}).norm();
   const double d = delta.norm();
   const double diffnorm = (d == 0.0) ? n : (n / d);
   if (diffnorm > tolerance) {
@@ -214,7 +214,7 @@ MATCHER_P3(PlusMinusIsIdentityAt, x, y, tolerance, "") {
   Vector actual = Vector::Zero(ambient_size);
   EXPECT_TRUE(arg.Plus(x.data(), y_minus_x.data(), actual.data()));
 
-  const double n = (actual - y).norm();
+  const double n = (actual - Vector{y}).norm();
   const double d = y.norm();
   const double diffnorm = (d == 0.0) ? n : (n / d);
   if (diffnorm > tolerance) {
