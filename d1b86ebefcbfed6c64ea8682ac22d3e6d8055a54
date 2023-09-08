@@ -33,6 +33,24 @@
       "message": "Hi Sergiu, thanks for fixing this. Could you update the commit log to explain what the problem was and how you fixed it. It would be good to have that for posterity.",
       "revId": "d1b86ebefcbfed6c64ea8682ac22d3e6d8055a54",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1cad4658_aa352b43",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-09-08T18:02:43Z",
+      "side": 1,
+      "message": "Hi Sameer,\n\nEven after the debugging, it is hard to tell what the problem actually is: whether it is Eigen\u0027s packet math/memory alignment, GMock use or a compiler issue, or all of these combined. I\u0027ve added the how.",
+      "parentUuid": "3d5818ce_bc79d55c",
+      "revId": "d1b86ebefcbfed6c64ea8682ac22d3e6d8055a54",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
