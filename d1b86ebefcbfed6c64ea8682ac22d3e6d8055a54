@@ -16,6 +16,23 @@
       "message": "`manifold_test` successfully completes now: https://github.com/sergiud/ceres-solver/actions/runs/6114588805/job/16596457618",
       "revId": "d1b86ebefcbfed6c64ea8682ac22d3e6d8055a54",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d5818ce_bc79d55c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-09-08T17:50:58Z",
+      "side": 1,
+      "message": "Hi Sergiu, thanks for fixing this. Could you update the commit log to explain what the problem was and how you fixed it. It would be good to have that for posterity.",
+      "revId": "d1b86ebefcbfed6c64ea8682ac22d3e6d8055a54",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
