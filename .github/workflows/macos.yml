@@ -18,6 +18,7 @@ jobs:
         os:
           - macos-11
           - macos-12
+          - macos-13
         build_type:
           - Release
         lib:
