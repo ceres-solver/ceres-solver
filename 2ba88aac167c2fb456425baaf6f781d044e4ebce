@@ -33,6 +33,23 @@
       "message": "Sergiu can you look at this pls?",
       "revId": "2ba88aac167c2fb456425baaf6f781d044e4ebce",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42bbee35_fa0d3006",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-09-09T12:53:18Z",
+      "side": 1,
+      "message": "I would add a `TODO` for switching to the new policy once we can bump the minimum required version of CMake to 3.12 which provides alternative Python interpreter find modules.",
+      "revId": "2ba88aac167c2fb456425baaf6f781d044e4ebce",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
