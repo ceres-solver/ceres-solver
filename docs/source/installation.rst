@@ -29,7 +29,7 @@ Ceres relies on a number of open source libraries, some of which are
 optional. For details on customizing the build process, see
 :ref:`section-customizing` .
 
-- `CMake <http://www.cmake.org>`_ 3.10 or later **required**.
+- `CMake <http://www.cmake.org>`_ 3.16 or later **required**.
 
 - `Eigen <http://eigen.tuxfamily.org/index.php?title=Main_Page>`_
   3.3 or later **required**.

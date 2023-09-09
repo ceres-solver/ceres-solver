@@ -1,5 +1,5 @@
 # Ceres Solver - A fast non-linear least squares minimizer
-# Copyright 2015 Google Inc. All rights reserved.
+# Copyright 2023 Google Inc. All rights reserved.
 # http://ceres-solver.org/
 #
 # Redistribution and use in source and binary forms, with or without
@@ -37,27 +37,24 @@
 
 find_program(SPHINX_EXECUTABLE
              NAMES sphinx-build
-             PATHS
-               /usr/bin
-               /usr/local/bin
-               /opt/local/bin
+             PATHS /opt/local/bin
              DOC "Sphinx documentation generator")
 
 if (SPHINX_EXECUTABLE)
 
-  find_package(PythonInterp 3)
+  find_package(Python COMPONENTS Interpreter)
 
-  if(PYTHONINTERP_FOUND)
+  if(Python_Interpreter_FOUND)
     # Check for sphinx theme dependency for documentation
     execute_process(
-      COMMAND ${PYTHON_EXECUTABLE} -c "import sphinx_rtd_theme"
+      COMMAND ${Python_EXECUTABLE} -c "import sphinx_rtd_theme"
       RESULT_VARIABLE SPHINX_RTD_THEME
       OUTPUT_QUIET
       ERROR_QUIET
     )
   endif ()
 
-  if (${SPHINX_RTD_THEME} EQUAL 0)
+  if (SPHINX_RTD_THEME EQUAL 0)
     set(SPHINX_RTD_THEME TRUE)
   else ()
     set(SPHINX_RTD_THEME FALSE)
