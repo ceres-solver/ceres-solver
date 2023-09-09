@@ -50,6 +50,24 @@
       "message": "I would add a `TODO` for switching to the new policy once we can bump the minimum required version of CMake to 3.12 which provides alternative Python interpreter find modules.",
       "revId": "2ba88aac167c2fb456425baaf6f781d044e4ebce",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f640b581_1c00dfa9",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-09-09T14:59:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42bbee35_fa0d3006",
+      "revId": "2ba88aac167c2fb456425baaf6f781d044e4ebce",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
