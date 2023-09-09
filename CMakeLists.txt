@@ -1,5 +1,5 @@
 # Ceres Solver - A fast non-linear least squares minimizer
-# Copyright 2022 Google Inc. All rights reserved.
+# Copyright 2023 Google Inc. All rights reserved.
 # http://ceres-solver.org/
 #
 # Redistribution and use in source and binary forms, with or without
@@ -29,23 +29,7 @@
 # Authors: keir@google.com (Keir Mierle)
 #          alexs.mac@gmail.com (Alex Stewart)
 
-cmake_minimum_required(VERSION 3.11)
-
-if (POLICY CMP0074) # Added in CMake 3.12
-  # FindTBB.cmake uses TBB_ROOT in a way that is historical, but also compliant
-  # with CMP0074 so suppress the legacy compatibility warning and allow its use.
-  cmake_policy(SET CMP0074 NEW)
-endif()
-
-# TODO(sameeragarwal): This should be removed when we go past CMake
-# 3.12 as required as it provides alternate ways of finding the Python
-# interpreter.
-if (POLICY CMP0148)
-  # FindSphinx.cmake uses find_package(PythonInterp 3), which has been deprecated
-  # in cmake 3.27. So use the old behaviour till we update our minimum required
-  # cmake version to 3.27
-  cmake_policy(SET CMP0148 OLD)
-endif()
+cmake_minimum_required(VERSION 3.16...3.27)
 
 # On macOS, add the Homebrew prefix (with appropriate suffixes) to the
 # respective HINTS directories (after any user-specified locations).  This
@@ -168,11 +152,6 @@ include(EnableSanitizer)
 enable_sanitizer(${SANITIZERS})
 if (ANDROID)
   option(ANDROID_STRIP_DEBUG_SYMBOLS "Strip debug symbols from Android builds (reduces file sizes)" ON)
-endif()
-if (MSVC)
-  # TODO Not needed starting CMake 3.15 which provides CMAKE_MSVC_RUNTIME_LIBRARY
-  option(MSVC_USE_STATIC_CRT
-    "MS Visual Studio: Use static C-Run Time Library in place of shared." OFF)
 endif()
 
 # IOS is defined iff using the iOS.cmake CMake toolchain to build a static
@@ -575,29 +554,6 @@ if (MSVC)
   # the warnings.
   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /ignore:4049")
 
-  # Update the C/CXX flags for MSVC to use either the static or shared
-  # C-Run Time (CRT) library based on the user option: MSVC_USE_STATIC_CRT.
-  list(APPEND C_CXX_FLAGS
-    CMAKE_CXX_FLAGS
-    CMAKE_CXX_FLAGS_DEBUG
-    CMAKE_CXX_FLAGS_RELEASE
-    CMAKE_CXX_FLAGS_MINSIZEREL
-    CMAKE_CXX_FLAGS_RELWITHDEBINFO)
-
-  foreach(FLAG_VAR ${C_CXX_FLAGS})
-    if (MSVC_USE_STATIC_CRT)
-      # Use static CRT.
-      if (${FLAG_VAR} MATCHES "/MD")
-        string(REGEX REPLACE "/MD" "/MT" ${FLAG_VAR} "${${FLAG_VAR}}")
-      endif (${FLAG_VAR} MATCHES "/MD")
-    else (MSVC_USE_STATIC_CRT)
-      # Use shared, not static, CRT.
-      if (${FLAG_VAR} MATCHES "/MT")
-        string(REGEX REPLACE "/MT" "/MD" ${FLAG_VAR} "${${FLAG_VAR}}")
-      endif (${FLAG_VAR} MATCHES "/MT")
-    endif (MSVC_USE_STATIC_CRT)
-  endforeach()
-
   # Tuple sizes of 10 are used by Gtest.
   add_definitions("-D_VARIADIC_MAX=10")
 
@@ -650,14 +606,7 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "Clang") # Matches Clang & AppleClang.
   endif(HAVE_RETURN_TYPE_C_LINKAGE)
 endif ()
 
-if (CMAKE_VERSION VERSION_LESS 3.12)
-  # Disable the definition of min/max macros within the project
-  if (WIN32)
-    add_definitions (-DNOMINMAX)
-  endif (WIN32)
-else (CMAKE_VERSION VERSION_LESS 3.12)
-  add_compile_definitions($<$<BOOL:${WIN32}>:NOMINMAX>)
-endif (CMAKE_VERSION VERSION_LESS 3.12)
+add_compile_definitions($<$<BOOL:${WIN32}>:NOMINMAX>)
 
 # Configure the Ceres config.h compile options header using the current
 # compile options and put the configured header into the Ceres build
