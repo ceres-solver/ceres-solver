@@ -27,6 +27,12 @@ Backward Incompatible API Changes
    ``-DSUITESPARSE=ON`` restores the previous behavior, but makes the
    resulting Ceres build GPL licensed unless you hold a commercial
    SuiteSparse license.
+#. CMake configuration now reports dependencies using standard package output
+   and ``FeatureSummary``, and feature options are renamed with a ``WITH_``
+   prefix (e.g. ``SUITESPARSE`` is now ``WITH_SUITESPARSE``). The
+   ``LIB_SUFFIX``, ``MSVC_USE_STATIC_CRT``, and ``EXPORT_BUILD_DIR`` options
+   are removed in favor of standard CMake variables. CMake 3.22 or later is
+   now required. See :ref:`options-controlling-ceres-configuration`.
 
 2.2.0
 =====

@@ -121,7 +121,7 @@ jobs:
         run: |
           cmake -S . -B build_${{matrix.build_type}} \
                 -DBUILD_SHARED_LIBS=${{matrix.lib == 'shared'}} \
-                -DUSE_CUDA=${{matrix.gpu == 'cuda'}} \
+                -DWITH_CUDA=${{matrix.gpu == 'cuda'}} \
                 -DCMAKE_BUILD_TYPE=${{matrix.build_type}} \
                 -DCMAKE_C_COMPILER_LAUNCHER=$(which ccache) \
                 -DCMAKE_CXX_COMPILER_LAUNCHER=$(which ccache) \
