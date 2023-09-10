@@ -85,7 +85,7 @@ macro(enable_sanitizer)
       message(FATAL_ERROR "Specified sanitizer: ${REQUESTED_SANITIZER} is not "
         "supported by the compiler.")
     endif()
-    message(STATUS "Enabling sanitizer: ${REQUESTED_SANITIZER}")
+    message(DEBUG "Enabling sanitizer: ${REQUESTED_SANITIZER}")
     set(ADDED_SANITIZER TRUE)
     # As per the Clang documentation, the sanitizer flags must be added to both
     # the compiler and linker flags.

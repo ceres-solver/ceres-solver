@@ -18,7 +18,7 @@ Ceres relies on a number of open source libraries, some of which are
 optional. For details on customizing the build process, see
 :ref:`section-customizing` .
 
-- `CMake <http://www.cmake.org>`_ (**required**) 3.16 or later.
+- `CMake <http://www.cmake.org>`_ (**required**) 3.22 or later.
 
 - `Eigen <http://eigen.tuxfamily.org/index.php?title=Main_Page>`_
   (**Required**) 3.3.4 or later.
@@ -26,7 +26,7 @@ optional. For details on customizing the build process, see
   .. NOTE ::
 
     Ceres can also use Eigen as a sparse linear algebra
-    library. Please see the documentation for ``EIGENSPARSE`` for
+    library. Please see the documentation for ``WITH_EIGENSPARSE`` for
     more details.
 
 - `Abseil <https://abseil.io/>`_ (**Required**) 20240116 or later.
@@ -84,7 +84,7 @@ optional. For details on customizing the build process, see
 
   If you have an NVIDIA GPU then Ceres Solver can use it accelerate
   the solution of the Gauss-Newton linear systems using the CMake flag
-  ``USE_CUDA``.
+  ``WITH_CUDA``.
 
   This support depends on two libraries from NVIDIA `CUDA` and `cuDSS`.
 
@@ -165,9 +165,8 @@ We are now ready to build, test, and install Ceres.
  cmake ../ceres-solver-2.2.0
  make -j3
  make test
- # Optionally install Ceres, it can also be exported using CMake which
- # allows Ceres to be used without requiring installation, see the documentation
- # for the EXPORT_BUILD_DIR option for more information.
+ # The build tree is also exported for use without installation. Registry
+ # registration can be disabled with CMAKE_EXPORT_PACKAGE_REGISTRY=OFF.
  make install
 
 You can also try running the command line bundling application with one of the
@@ -294,9 +293,8 @@ We are now ready to build, test, and install Ceres.
    cmake ../ceres-solver-2.2.0
    make -j3
    make test
-   # Optionally install Ceres, it can also be exported using CMake which
-   # allows Ceres to be used without requiring installation, see the
-   # documentation for the EXPORT_BUILD_DIR option for more information.
+   # The build tree is also exported for use without installation. Registry
+   # registration can be disabled with CMAKE_EXPORT_PACKAGE_REGISTRY=OFF.
    make install
 
 .. _section-windows:
@@ -567,6 +565,13 @@ via ``-D<OPTION>=<ON/OFF>`` when running ``CMake`` from the command
 line.  In general, you should only modify these options from their
 defaults if you know what you are doing.
 
+For additional configure diagnostics, pass ``--log-level=VERBOSE``,
+``--log-level=DEBUG`` or ``--log-level=TRACE`` to ``CMake``.  To keep a log
+level for subsequent configure runs in a build directory, set
+``CMAKE_MESSAGE_LOG_LEVEL``, for example with
+``-DCMAKE_MESSAGE_LOG_LEVEL=DEBUG``.  The command-line option takes precedence
+over the variable.
+
 .. NOTE::
 
  If you are setting variables via ``-D<VARIABLE>=<VALUE>`` when
@@ -620,16 +625,89 @@ CMake with:
 Options controlling Ceres configuration
 ---------------------------------------
 
-#. ``LAPACK [Default: ON]``: If this option is enabled, and the ``BLAS`` and
-   ``LAPACK`` libraries are found, Ceres will enable **direct** use of
-   ``LAPACK`` routines (i.e. Ceres itself will call them).  If this option is
-   disabled, then Ceres will not require ``LAPACK`` or ``BLAS``.  It is
-   however still possible that Ceres may call ``LAPACK`` routines indirectly
-   via SuiteSparse if ``LAPACK=OFF`` and ``SUITESPARSE=ON``.  Finally
-   note that if ``LAPACK=ON`` and ``SUITESPARSE=ON``, the ``LAPACK`` and
-   ``BLAS`` libraries used by SuiteSparse and Ceres should be the same.
+Ceres-specific feature options use the ``WITH_`` prefix. The configure step
+prints a summary of enabled features and discovered dependencies at the end of
+the output. The summary includes the Ceres version, package versions when they
+are reported by the package finders, and optional packages that were not found.
+An unavailable optional package does not change the corresponding cache option.
 
-#. ``SUITESPARSE [Default: OFF]``: SuiteSparse support is opt-in. Turn this
+#. ``BUILD_BENCHMARKS [Default: ON]``: Enable the Ceres benchmarking suite
+   when the benchmark dependency is available.
+
+#. ``BUILD_DOCUMENTATION [Default: OFF]``: Use this to enable building
+   the documentation. This requires `Sphinx <http://sphinx-doc.org/>`_ and
+   the `sphinx-rtd-theme
+   <https://pypi.org/project/sphinx-rtd-theme/>`_ package
+   available from the Python package index. In addition, ``make
+   ceres_docs`` can be used to build only the documentation.
+
+#. ``BUILD_EXAMPLES [Default: ON]``: Build the Ceres example programs.
+
+#. ``BUILD_SHARED_LIBS [Default: OFF]``: By default Ceres is built as
+   a static library. Turn this ``ON`` to build Ceres as a shared library.
+
+#. ``BUILD_TESTING [Default: ON]``: Enable the Ceres unit and integration tests.
+
+#. ``CMAKE_EXPORT_PACKAGE_REGISTRY [Default: ON]``: Ceres always generates a
+   build-tree package export, so clients can use the build directory without
+   installing Ceres. By default, ``export(PACKAGE)`` registers the build
+   directory in the `user's local CMake package registry
+   <http://www.cmake.org/cmake/help/v3.5/manual/cmake-packages.7.html#user-package-registry>`_.
+   Set this standard CMake variable to ``OFF`` to disable registry registration
+   while retaining the build-tree package files.
+
+#. ``CMAKE_INSTALL_LIBDIR [Default: platform-dependent]``: Set this standard
+   CMake variable to choose the directory below ``CMAKE_INSTALL_PREFIX`` where
+   Ceres libraries are installed. It defaults according to CMake's
+   ``GNUInstallDirs`` module.
+
+#. ``CMAKE_MSVC_RUNTIME_LIBRARY [Default: compiler default]`` *Windows Only*:
+   Set this standard CMake variable to select the MSVC runtime library used to
+   build Ceres. When it is not set, CMake uses the compiler default.
+
+#. ``WITH_ACCELERATESPARSE [Default: ON]``: By default, Ceres will link to
+   Apple's Accelerate framework directly if a version of it is detected
+   which supports solving sparse linear systems. On Apple operating systems,
+   Accelerate usually also provides the BLAS and LAPACK implementations and
+   is linked irrespective of this option.
+
+#. ``WITH_BITCODE [Default: OFF]`` *Apple platforms*: Enable bitcode for iOS
+   builds. This disables Eigen's additional Clang inlining optimization.
+
+#. ``WITH_CUDA [Default: default]``: Enable CUDA linear algebra solvers. The
+   value can be ``OFF``, ``default``, or ``static``. The latter links against
+   static CUDA runtime libraries when supported.
+
+#. ``WITH_CUSTOM_BLAS [Default: ON]``: Use Ceres' custom BLAS routines instead
+   of Eigen's implementations where available.
+
+#. ``WITH_EIGENMETIS [Default: ON]``: Enable METIS support for Eigen's sparse
+   solvers when METIS is available. This option is available when
+   ``WITH_EIGENSPARSE`` is enabled.
+
+#. ``WITH_EIGENSPARSE [Default: ON]``: By default, Ceres will use Eigen's
+   sparse Cholesky factorization.
+
+#. ``WITH_LAPACK [Default: ON]``: If this option is enabled, and the ``BLAS`` and
+   ``LAPACK`` libraries are found, Ceres will enable **direct** use of
+   ``LAPACK`` routines. If this option is disabled, Ceres will not require
+   ``LAPACK`` or ``BLAS``. This also prevents SuiteSparse from discovering
+   ``LAPACK`` as a transitive dependency. If both options are enabled, the
+   ``LAPACK`` and ``BLAS`` libraries used by SuiteSparse and Ceres should be
+   the same.
+
+#. ``WITH_SANITIZERS [Default: empty]``: A semicolon-separated list of
+   sanitizers to enable, such as ``address`` or ``thread``.
+
+#. ``WITH_SCHUR_SPECIALIZATIONS [Default: ON]``: If you are concerned about
+   binary size or compilation time over some small performance gains in the
+   ``SPARSE_SCHUR`` solver, you can disable some of the template
+   specializations by turning this ``OFF``.
+
+#. ``WITH_STRIPPED_DEBUG_SYMBOLS [Default: ON]`` *Android platforms*: Strip
+   debug symbols from Android builds to reduce file sizes.
+
+#. ``WITH_SUITESPARSE [Default: OFF]``: SuiteSparse support is opt-in. Turn this
    ``ON`` to link Ceres against ``SuiteSparse``, provided it and all of its
    dependencies are present.
 
@@ -643,71 +721,8 @@ Options controlling Ceres configuration
       opt-in rather than enabled by default. Obtaining a commercial SuiteSparse
       license removes this restriction.
 
-#. ``ACCELERATESPARSE [Default: ON]``: By default, Ceres will link to
-   Apple's Accelerate framework directly if a version of it is detected
-   which supports solving sparse linear systems.  Note that on Apple OSs
-   Accelerate usually also provides the BLAS/LAPACK implementations and
-   so would be linked against irrespective of the value of ``ACCELERATESPARSE``.
-
-#. ``EIGENSPARSE [Default: ON]``: By default, Ceres will use Eigen's
-   sparse Cholesky factorization.
-
-#. ``GFLAGS [Default: ON]``: Turn this ``OFF`` to build Ceres without
-   ``gflags``. This will also prevent some of the example code from
-   building.
-
-#. ``MINIGLOG [Default: OFF]``: Ceres includes a stripped-down,
-   minimal implementation of ``glog`` which can optionally be used as
-   a substitute for ``glog``, thus removing ``glog`` as a required
-   dependency. Turn this ``ON`` to use this minimal ``glog``
-   implementation.
-
-#. ``SCHUR_SPECIALIZATIONS [Default: ON]``: If you are concerned about
-   binary size/compilation time over some small (10-20%) performance
-   gains in the ``SPARSE_SCHUR`` solver, you can disable some of the
-   template specializations by turning this ``OFF``.
-
-#. ``BUILD_SHARED_LIBS [Default: OFF]``: By default Ceres is built as
-   a static library, turn this ``ON`` to instead build Ceres as a
-   shared library.
-
-#. ``EXPORT_BUILD_DIR [Default: OFF]``: By default Ceres is configured
-   solely for installation, and so must be installed in order for
-   clients to use it.  Turn this ``ON`` to export Ceres' build
-   directory location into the `user's local CMake package registry
-   <http://www.cmake.org/cmake/help/v3.5/manual/cmake-packages.7.html#user-package-registry>`_
-   where it will be detected **without requiring installation** in a
-   client project using CMake when `find_package(Ceres)
-   <http://www.cmake.org/cmake/help/v3.5/command/find_package.html>`_
-   is invoked.
-
-#. ``BUILD_DOCUMENTATION [Default: OFF]``: Use this to enable building
-   the documentation, requires `Sphinx <http://sphinx-doc.org/>`_ and
-   the `sphinx-rtd-theme
-   <https://pypi.org/project/sphinx-rtd-theme/>`_ package
-   available from the Python package index. In addition, ``make
-   ceres_docs`` can be used to build only the documentation.
-
-#. ``MSVC_USE_STATIC_CRT [Default: OFF]`` *Windows Only*: By default
-   Ceres will use the Visual Studio default, *shared* C-Run Time (CRT)
-   library.  Turn this ``ON`` to use the *static* C-Run Time library
-   instead.
-
-#. ``LIB_SUFFIX [Default: "64" on non-Debian/Arch based 64-bit Linux,
-   otherwise: ""]``: The suffix to append to the library install
-   directory, built from:
-   ``${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}``.
-
-   The filesystem hierarchy standard recommends that 64-bit systems
-   install native libraries to lib64 rather than lib.  Most Linux
-   distributions follow this convention, but Debian and Arch based
-   distros do not.  Note that the only generally sensible values for
-   ``LIB_SUFFIX`` are "" and "64".
-
-   Although by default Ceres will auto-detect non-Debian/Arch based
-   64-bit Linux distributions and default ``LIB_SUFFIX`` to "64", this
-   can always be overridden by manually specifying LIB_SUFFIX using:
-   ``-DLIB_SUFFIX=<VALUE>`` when invoking CMake.
+#. ``WITH_UNINSTALL_TARGET [Default: ON]``: Add an ``uninstall`` target to
+   remove files installed by Ceres.
 
 
 Options controlling Ceres dependency locations
@@ -792,8 +807,9 @@ then either:
     any extra information to be provided in client code for Ceres to
     be detected.
 
-#. Or Ceres' build directory must have been exported by enabling the
-    ``EXPORT_BUILD_DIR`` option when Ceres was configured.
+#. Or Ceres' build directory can be used directly through its generated
+    build-tree package files. If registry registration is disabled, set
+    ``Ceres_DIR`` to the Ceres build directory.
 
 
 As an example of how to use Ceres, to compile `examples/helloworld.cc
@@ -843,21 +859,21 @@ built with.
 
 The Ceres components which can be specified are:
 
-#. ``LAPACK``: Ceres built using LAPACK (``LAPACK=ON``).
+#. ``LAPACK``: Ceres built using LAPACK (``WITH_LAPACK=ON``).
 
-#. ``SuiteSparse``: Ceres built with SuiteSparse (``SUITESPARSE=ON``).
+#. ``SuiteSparse``: Ceres built with SuiteSparse (``WITH_SUITESPARSE=ON``).
 
-#. ``AccelerateSparse``: Ceres built with Apple's Accelerate sparse solvers (``ACCELERATESPARSE=ON``).
+#. ``AccelerateSparse``: Ceres built with Apple's Accelerate sparse solvers (``WITH_ACCELERATESPARSE=ON``).
 
 #. ``EigenSparse``: Ceres built with Eigen's sparse Cholesky factorization
-   (``EIGENSPARSE=ON``).
+   (``WITH_EIGENSPARSE=ON``).
 
 #. ``SparseLinearAlgebraLibrary``: Ceres built with *at least one*
    sparse linear algebra library.  This is equivalent to
    ``SuiteSparse`` **OR** ``AccelerateSparse`` **OR** ``EigenSparse``.
 
 #. ``SchurSpecializations``: Ceres built with Schur specializations
-   (``SCHUR_SPECIALIZATIONS=ON``).
+   (``WITH_SCHUR_SPECIALIZATIONS=ON``).
 
 To specify one/multiple Ceres components use the ``COMPONENTS`` argument to
 `find_package()
@@ -902,10 +918,10 @@ add the **PATHS** option to the ``find_package()`` command, e.g.,
 Note that this can be used to have multiple versions of Ceres
 installed.  However, particularly if you have only a single version of
 Ceres which you want to use but do not wish to install to a system
-location, you should consider exporting Ceres using the
-``EXPORT_BUILD_DIR`` option instead of a local install, as exported
-versions of Ceres will be automatically detected by CMake,
-irrespective of their location.
+location, you should consider using Ceres' build-tree package export instead
+of a local install. Build-tree exports are automatically detected when
+registry registration is enabled, irrespective of their location. Otherwise
+set ``Ceres_DIR`` to the Ceres build directory.
 
 Understanding the CMake Package System
 ----------------------------------------
@@ -1011,9 +1027,10 @@ exported** using `export()
 <http://www.cmake.org/cmake/help/v3.5/command/export.html>`_ (instead
 of `install()
 <http://www.cmake.org/cmake/help/v3.5/command/install.html>`_).  Ceres
-supports both installation and export of its build directory if the
-``EXPORT_BUILD_DIR`` option is enabled, see
-:ref:`section-customizing`.
+supports both installation and export of its build directory. The build-tree
+package files are always generated. The standard
+``CMAKE_EXPORT_PACKAGE_REGISTRY`` variable controls whether the build directory
+is added to the user package registry.
 
 .. _section-install-vs-export:
 
