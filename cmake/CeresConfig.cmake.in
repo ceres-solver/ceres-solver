@@ -62,10 +62,10 @@
 
 include(CMakeFindDependencyMacro)
 
-# Called if we failed to find Ceres or any of its required dependencies,
-# unsets all public (designed to be used externally) variables and reports
-# error message at priority depending upon [REQUIRED/QUIET/<NONE>] argument.
-macro(CERES_REPORT_NOT_FOUND REASON_MSG)
+# Called if Ceres or one of its required dependencies cannot be used. Clears
+# the public result variables and provides the standard find_package failure
+# reason. find_package controls whether and how the reason is reported.
+macro(ceres_set_not_found REASON_MSG)
   # FindPackage() only references Ceres_FOUND, and requires it to be
   # explicitly set FALSE to denote not found (not merely undefined).
   set(Ceres_FOUND FALSE)
@@ -76,22 +76,9 @@ macro(CERES_REPORT_NOT_FOUND REASON_MSG)
 
   # Reset the CMake module path to its state when this script was called.
   set(CMAKE_MODULE_PATH ${CALLERS_CMAKE_MODULE_PATH})
-  # Concatenate REASON_MSG and ARGN with each element separated by a space
-  string(JOIN " " ${CMAKE_FIND_PACKAGE_NAME}_NOT_FOUND_MESSAGE "${REASON_MSG}" ${ARGN})
+  string(JOIN " " Ceres_NOT_FOUND_MESSAGE "${REASON_MSG}" ${ARGN})
   return()
-endmacro(CERES_REPORT_NOT_FOUND)
-
-
-# ceres_message([mode] "message text")
-#
-# Wraps the standard cmake 'message' command, but suppresses output
-# if the QUIET flag was passed to the find_package(Ceres ...) call.
-function(ceres_message)
-  if (NOT Ceres_FIND_QUIETLY)
-    message(${ARGN})
-  endif()
-endfunction()
-
+endmacro(ceres_set_not_found)
 
 # ceres_pretty_print_cmake_list( OUTPUT_VAR [item1 [item2 ... ]] )
 #
@@ -134,7 +121,7 @@ if (CERES_WAS_INSTALLED)
     "${CERES_CURRENT_CONFIG_DIR}/@INSTALL_ROOT_REL_CONFIG_INSTALL_DIR@"
     ABSOLUTE)
   if (NOT EXISTS ${CURRENT_ROOT_INSTALL_DIR})
-    ceres_report_not_found(
+    ceres_set_not_found(
       "Ceres install root: ${CURRENT_ROOT_INSTALL_DIR}, "
       "determined from relative path from CeresConfig.cmake install location: "
       "${CERES_CURRENT_CONFIG_DIR}, does not exist. Either the install "
@@ -149,7 +136,7 @@ else(CERES_WAS_INSTALLED)
     "${CERES_EXPORTED_BUILD_DIR}/@INSTALL_ROOT_REL_CONFIG_INSTALL_DIR@"
     ABSOLUTE)
   if (NOT EXISTS ${CERES_EXPORTED_SOURCE_DIR})
-    ceres_report_not_found(
+    ceres_set_not_found(
       "Ceres exported source directory: ${CERES_EXPORTED_SOURCE_DIR}, "
       "determined from relative path from CeresConfig.cmake exported build "
       "directory: ${CERES_EXPORTED_BUILD_DIR} does not exist.")
@@ -165,13 +152,14 @@ endif(CERES_WAS_INSTALLED)
 # Set the version.
 set(CERES_VERSION @CERES_VERSION@)
 
-include(CMakeFindDependencyMacro)
+# Required dependencies
+find_dependency(Threads)
+
 # Optional dependencies
 @METIS_DEPENDENCY@
 @SuiteSparse_DEPENDENCY@
 @CUDAToolkit_DEPENDENCY@
 @cudss_DEPENDENCY@
-@Threads_DEPENDENCY@
 
 # As imported CMake targets are not re-exported when a dependent target is
 # exported, we must invoke find_package(XXX) here to reload the definition
@@ -187,27 +175,29 @@ if (_CERES_USE_SYSTEM_ABSL)
   find_dependency(absl ${_CERES_ABSL_VERSION})
   if (NOT absl_VERSION)
     if (NOT TARGET absl::absl_vlog_is_on)
-      ceres_report_not_found("The version of abseil installed on the system "
+      ceres_set_not_found("The version of abseil installed on the system "
         "provides no version info and is missing TARGET 'absl::absl_vlog_is_on'")
     endif ()
   endif ()
 else ()
   # absl from submodule, configs installed with ceres-solver
-  get_filename_component(_ABSL_IMPORT_PREFIX "${CMAKE_CURRENT_LIST_FILE}" PATH)
-  get_filename_component(_ABSL_IMPORT_PREFIX "${_ABSL_IMPORT_PREFIX}" PATH)
-  set(_ABSL_IMPORT_PREFIX "${_ABSL_IMPORT_PREFIX}/absl")
+  if (CERES_WAS_INSTALLED)
+    get_filename_component(_ABSL_IMPORT_PREFIX "${CMAKE_CURRENT_LIST_FILE}" PATH)
+    get_filename_component(_ABSL_IMPORT_PREFIX "${_ABSL_IMPORT_PREFIX}" PATH)
+    set(_ABSL_IMPORT_PREFIX "${_ABSL_IMPORT_PREFIX}/absl")
+  else()
+    set(_ABSL_IMPORT_PREFIX
+      "${CERES_EXPORTED_BUILD_DIR}/third_party/abseil-cpp")
+  endif()
   find_dependency(absl ${_CERES_ABSL_VERSION} HINTS "${_ABSL_IMPORT_PREFIX}")
 endif ()
-ceres_message(STATUS "Found required Ceres dependency: "
-  "absl version ${_CERES_ABSL_VERSION} in ${absl_DIR}")
 unset(_CERES_ABSL_VERSION)
 unset(_CERES_USE_SYSTEM_ABSL)
 
 # Eigen.
 # Flag set during configuration and build of Ceres.
 set(CERES_EIGEN_VERSION @Eigen3_VERSION@)
-# Search quietly to control the timing of the error message if not found. The
-# search should be for an exact match, but for usability reasons do a soft
+# The search should be for an exact match, but for usability reasons do a soft
 # match and reject with an explanation below.
 find_package(Eigen3 ${CERES_EIGEN_VERSION} QUIET)
 if (Eigen3_FOUND)
@@ -215,17 +205,15 @@ if (Eigen3_FOUND)
     # CMake's VERSION check in FIND_PACKAGE() will accept any version >= the
     # specified version. However, only version = is supported. Improve
     # usability by explaining why we don't accept non-exact version matching.
-    ceres_report_not_found("Found Eigen dependency, but the version of Eigen "
+    ceres_set_not_found("Found Eigen dependency, but the version of Eigen "
       "found (${Eigen3_VERSION}) does not exactly match the version of Eigen "
       "Ceres was compiled with (${CERES_EIGEN_VERSION}). This can cause subtle "
       "bugs by triggering violations of the One Definition Rule. See the "
       "Wikipedia article http://en.wikipedia.org/wiki/One_Definition_Rule "
       "for more details")
   endif ()
-  ceres_message(STATUS "Found required Ceres dependency: "
-    "Eigen version ${CERES_EIGEN_VERSION} in ${Eigen3_DIR}")
 else (Eigen3_FOUND)
-  ceres_report_not_found("Missing required Ceres "
+  ceres_set_not_found("Missing required Ceres "
     "dependency: Eigen version ${CERES_EIGEN_VERSION}, please set "
     "Eigen3_DIR.")
 endif (Eigen3_FOUND)
@@ -277,16 +265,12 @@ if (Ceres_FIND_COMPONENTS)
       ${Ceres_FIND_COMPONENTS})
     ceres_pretty_print_cmake_list(MISSING_CERES_COMPONENTS_STRING
       ${MISSING_CERES_COMPONENTS})
-    ceres_report_not_found("Missing requested Ceres components: "
+    ceres_set_not_found("Missing requested Ceres components: "
       "${MISSING_CERES_COMPONENTS_STRING} (components requested: "
       "${REQUESTED_CERES_COMPONENTS_STRING}). Detected "
       "${CERES_DETECTED_VERSION_STRING}.")
   endif()
 endif()
-
-# As we use CERES_REPORT_NOT_FOUND() to abort, if we reach this point we have
-# found Ceres and all required dependencies.
-ceres_message(STATUS "Found " ${CERES_DETECTED_VERSION_STRING})
 
 # Set CERES_FOUND to be equivalent to Ceres_FOUND, which is set to
 # TRUE by FindPackage() if this file is found and run, and after which

@@ -1,5 +1,5 @@
 # Ceres Solver - A fast non-linear least squares minimizer
-# Copyright 2025 Google Inc. All rights reserved.
+# Copyright 2026 Google Inc. All rights reserved.
 # http://ceres-solver.org/
 #
 # Redistribution and use in source and binary forms, with or without
@@ -30,10 +30,7 @@
 
 # Build the list of dependencies for Ceres based on the current configuration.
 
-find_package(Threads REQUIRED)
 list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES Threads::Threads)
-# Make dependency visible to the parent CMakeLists.txt
-set(Threads_DEPENDENCY "find_dependency (Threads)" PARENT_SCOPE)
 
 # Generator expressions were introduced in CMake version 3.24. Without
 # them including absl::log_flags as an internal dependency causes
@@ -82,12 +79,12 @@ file(GLOB CERES_PUBLIC_INTERNAL_HDRS
   ${Ceres_BINARY_DIR}/${CMAKE_INSTALL_INCLUDEDIR}/ceres/internal/*.h)
 
 # Include the specialized schur solvers.
-if (SCHUR_SPECIALIZATIONS)
+if (WITH_SCHUR_SPECIALIZATIONS)
   file(GLOB CERES_INTERNAL_SCHUR_FILES generated/*.cc)
-else (SCHUR_SPECIALIZATIONS)
+else (WITH_SCHUR_SPECIALIZATIONS)
   # Only the fully dynamic solver. The build is much faster this way.
   file(GLOB CERES_INTERNAL_SCHUR_FILES generated/*_d_d_d.cc)
-endif (SCHUR_SPECIALIZATIONS)
+endif (WITH_SCHUR_SPECIALIZATIONS)
 
 # The generated specializations of the Schur eliminator include
 # schur_eliminator_impl.h which defines EIGEN_CACHEFRIENDLY_PRODUCT_THRESHOLD
@@ -98,7 +95,7 @@ endif (SCHUR_SPECIALIZATIONS)
 set_source_files_properties(${CERES_INTERNAL_SCHUR_FILES} PROPERTIES
   SKIP_UNITY_BUILD_INCLUSION ON)
 
-if (SUITESPARSE AND SuiteSparse_FOUND)
+if (_Ceres_FEATURE_SUITESPARSE)
   # Define version information for use in Solver::FullReport.
   add_definitions(-DCERES_SUITESPARSE_VERSION="${SuiteSparse_VERSION}")
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES SuiteSparse::CHOLMOD
@@ -107,19 +104,19 @@ if (SUITESPARSE AND SuiteSparse_FOUND)
   if (SuiteSparse_Partition_FOUND)
     list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES SuiteSparse::Partition)
   endif (SuiteSparse_Partition_FOUND)
-endif (SUITESPARSE AND SuiteSparse_FOUND)
+endif (_Ceres_FEATURE_SUITESPARSE)
 
-if (SuiteSparse_Partition_FOUND OR EIGENMETIS)
+if (_Ceres_FEATURE_CHOLMOD_PARTITION OR _Ceres_FEATURE_EIGEN_METIS)
   # Define version information for use in Solver::FullReport.
   add_definitions(-DCERES_METIS_VERSION="${METIS_VERSION}")
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES METIS::METIS)
-endif (SuiteSparse_Partition_FOUND OR EIGENMETIS)
+endif (_Ceres_FEATURE_CHOLMOD_PARTITION OR _Ceres_FEATURE_EIGEN_METIS)
 
-if (ACCELERATESPARSE AND AccelerateSparse_FOUND)
-  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${AccelerateSparse_LIBRARIES})
+if (_Ceres_FEATURE_ACCELERATE)
+  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES AccelerateSparse::Accelerate)
 endif()
 
-if (USE_CUDA)
+if (_Ceres_FEATURE_CUDA)
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${CERES_CUDA_LIBRARIES})
   set_source_files_properties(cuda_kernels_vector_ops.cu.cc PROPERTIES LANGUAGE CUDA)
   set_source_files_properties(cuda_kernels_bsm_to_crs.cu.cc PROPERTIES LANGUAGE CUDA)
@@ -130,9 +127,9 @@ if (USE_CUDA)
   target_compile_options(ceres_cuda_kernels PRIVATE --expt-extended-lambda)
   target_include_directories(ceres_cuda_kernels PRIVATE  ${Ceres_SOURCE_DIR}/include  ${Ceres_SOURCE_DIR}/internal ${Ceres_BINARY_DIR}/${CMAKE_INSTALL_INCLUDEDIR})
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ceres_cuda_kernels)
-endif (USE_CUDA)
+endif (_Ceres_FEATURE_CUDA)
 
-if (LAPACK_FOUND)
+if (_Ceres_FEATURE_LAPACK)
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${LAPACK_LIBRARIES})
 endif ()
 
@@ -253,13 +250,6 @@ set(CERES_LIBRARY_SOURCE
     ${CERES_PUBLIC_HDRS}
     ${CERES_PUBLIC_INTERNAL_HDRS})
 
-
-# Ceres C++ compiler flags can be too strict for an external library code
-# which we do not maintain.
-include(CheckCXXCompilerFlag)
-check_cxx_compiler_flag("-Wno-missing-declarations"
-                        CHECK_CXX_FLAG_Wno_missing_declarations)
-
 add_library(ceres $<TARGET_OBJECTS:ceres_internal> ${CERES_LIBRARY_SOURCE})
 
 if(BUILD_SHARED_LIBS)
@@ -331,35 +321,18 @@ target_include_directories(ceres
 # results in all compiler warnings from them being suppressed.
 target_link_libraries(ceres PUBLIC Eigen3::Eigen)
 
-# Gather the list of public & private include locations for all enabled optional
-# dependencies to be added to the Ceres target.
-set(CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS "")
-set(CERES_LIBRARY_PUBLIC_DEPENDENCIES_INCLUDE_DIRS "")
-
-if (ACCELERATESPARSE)
-  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS
-    ${AccelerateSparse_INCLUDE_DIRS})
-endif()
-
-# Add include locations for optional dependencies to the Ceres target without
-# duplication.
-list(REMOVE_DUPLICATES CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS)
-target_include_directories(ceres PRIVATE ${CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS})
-list(REMOVE_DUPLICATES CERES_LIBRARY_PUBLIC_DEPENDENCIES_INCLUDE_DIRS)
-target_include_directories(ceres PUBLIC ${CERES_LIBRARY_PUBLIC_DEPENDENCIES_INCLUDE_DIRS})
-
 # Generate an export header for annotating symbols visibility
 include(GenerateExportHeader)
 generate_export_header(ceres EXPORT_FILE_NAME
   ${Ceres_BINARY_DIR}/${CMAKE_INSTALL_INCLUDEDIR}/ceres/internal/export.h)
 
-if (USE_CUDA)
+if (_Ceres_FEATURE_CUDA)
   install(TARGETS ceres_cuda_kernels
           EXPORT  CeresExport
           RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
           LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
           ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
-endif(USE_CUDA)
+endif(_Ceres_FEATURE_CUDA)
 
 install(TARGETS ceres
         EXPORT  CeresExport
@@ -531,7 +504,7 @@ macro(add_dependencies_to_benchmark BENCHMARK_TARGET)
             ${CERES_LIBRARY_PRIVATE_DEPENDENCIES})
 endmacro()
 
-if (BUILD_BENCHMARKS)
+if (_Ceres_FEATURE_BENCHMARKS)
   add_executable(evaluation_benchmark evaluation_benchmark.cc)
   add_dependencies_to_benchmark(evaluation_benchmark)
 
@@ -567,4 +540,4 @@ if (BUILD_BENCHMARKS)
   add_dependencies_to_benchmark(block_jacobi_preconditioner_benchmark)
 
   add_subdirectory(autodiff_benchmarks)
-endif (BUILD_BENCHMARKS)
+endif (_Ceres_FEATURE_BENCHMARKS)
