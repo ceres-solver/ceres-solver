@@ -814,12 +814,20 @@ if (EXPORT_BUILD_DIR)
     ${Ceres_BINARY_DIR}
     ${Ceres_SOURCE_DIR})
 
+  set (Ceres_EXPORT_TARGETS ceres)
+
+  if (TARGET ceres_cuda_kernels)
+    list (APPEND Ceres_EXPORT_TARGETS ceres_cuda_kernels)
+  endif (TARGET ceres_cuda_kernels)
+
   # Analogously to install(EXPORT ...), export the Ceres target from the build
   # directory as a package called Ceres into the local CMake package registry.
-  export(TARGETS ceres
+  export(TARGETS ${Ceres_EXPORT_TARGETS}
          NAMESPACE Ceres::
          FILE ${Ceres_BINARY_DIR}/CeresTargets.cmake)
   export(PACKAGE ${CMAKE_PROJECT_NAME})
+
+  unset (Ceres_EXPORT_TARGETS)
 
   # Configure a CeresConfig.cmake file for the export of the Ceres build
   # directory from the template, reflecting the current build options.
