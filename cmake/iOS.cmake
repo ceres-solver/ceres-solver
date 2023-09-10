@@ -82,7 +82,7 @@ execute_process(COMMAND xcodebuild -version
   OUTPUT_STRIP_TRAILING_WHITESPACE)
 string(REGEX MATCH "Xcode [0-9\\.]+" XCODE_VERSION "${XCODE_VERSION}")
 string(REGEX REPLACE "Xcode ([0-9\\.]+)" "\\1" XCODE_VERSION "${XCODE_VERSION}")
-message(STATUS "Building with Xcode version: ${XCODE_VERSION}")
+message(VERBOSE "Building with Xcode version: ${XCODE_VERSION}")
 
 # Default to building for iPhoneOS if not specified otherwise, and we cannot
 # determine the platform from the CMAKE_OSX_ARCHITECTURES variable.  The use
@@ -127,7 +127,7 @@ if (NOT CMAKE_OSX_SYSROOT)
     OUTPUT_VARIABLE CMAKE_OSX_SYSROOT
     ERROR_QUIET
     OUTPUT_STRIP_TRAILING_WHITESPACE)
-  message(STATUS "Using SDK: ${CMAKE_OSX_SYSROOT} for platform: ${IOS_PLATFORM}")
+  message(VERBOSE "Using SDK: ${CMAKE_OSX_SYSROOT} for platform: ${IOS_PLATFORM}")
 endif()
 if (NOT EXISTS ${CMAKE_OSX_SYSROOT})
   message(FATAL_ERROR "Invalid CMAKE_OSX_SYSROOT: ${CMAKE_OSX_SYSROOT} "
@@ -158,14 +158,14 @@ if (NOT CMAKE_C_COMPILER)
     OUTPUT_VARIABLE CMAKE_C_COMPILER
     ERROR_QUIET
     OUTPUT_STRIP_TRAILING_WHITESPACE)
-  message(STATUS "Using C compiler: ${CMAKE_C_COMPILER}")
+  message(VERBOSE "Using C compiler: ${CMAKE_C_COMPILER}")
 endif()
 if (NOT CMAKE_CXX_COMPILER)
   execute_process(COMMAND xcrun -sdk ${CMAKE_OSX_SYSROOT} -find clang++
     OUTPUT_VARIABLE CMAKE_CXX_COMPILER
     ERROR_QUIET
     OUTPUT_STRIP_TRAILING_WHITESPACE)
-  message(STATUS "Using CXX compiler: ${CMAKE_CXX_COMPILER}")
+  message(VERBOSE "Using CXX compiler: ${CMAKE_CXX_COMPILER}")
 endif()
 
 # Find (Apple's) libtool.
@@ -173,7 +173,7 @@ execute_process(COMMAND xcrun -sdk ${CMAKE_OSX_SYSROOT} -find libtool
   OUTPUT_VARIABLE IOS_LIBTOOL
   ERROR_QUIET
   OUTPUT_STRIP_TRAILING_WHITESPACE)
-message(STATUS "Using libtool: ${IOS_LIBTOOL}")
+message(VERBOSE "Using libtool: ${IOS_LIBTOOL}")
 # Configure libtool to be used instead of ar + ranlib to build static libraries.
 # This is required on Xcode 7+, but should also work on previous versions of
 # Xcode.
@@ -192,13 +192,13 @@ execute_process(COMMAND uname -r
 # Unless specified, the latest SDK version is used by default.
 set(IOS_DEPLOYMENT_TARGET "${IOS_SDK_VERSION}"
     CACHE STRING "Minimum iOS version to build for." )
-message(STATUS "Building for minimum iOS version: ${IOS_DEPLOYMENT_TARGET}"
+message(VERBOSE "Building for minimum iOS version: ${IOS_DEPLOYMENT_TARGET}"
                " (SDK version: ${IOS_SDK_VERSION})")
 if (NOT IOS_DEPLOYMENT_TARGET VERSION_LESS 11.0)
   # iOS 11+ does not support 32-bit architectures (armv7).
   foreach(ARCH ${IOS_ARCH})
     if (ARCH MATCHES "armv7*")
-      message(STATUS "Removing iOS architecture: ${ARCH} from build as it is "
+      message(VERBOSE "Removing iOS architecture: ${ARCH} from build as it is "
         "not supported by the minimum iOS version to build for: "
         "${IOS_DEPLOYMENT_TARGET} (iOS >= 11 requires 64-bit).")
     else()
@@ -208,7 +208,7 @@ if (NOT IOS_DEPLOYMENT_TARGET VERSION_LESS 11.0)
   set(IOS_ARCH ${VALID_IOS_ARCH_FOR_SDK_VERSION})
 endif()
 
-message(STATUS "Configuring iOS build for platform: ${IOS_PLATFORM}, "
+message(VERBOSE "Configuring iOS build for platform: ${IOS_PLATFORM}, "
   "architecture(s): ${IOS_ARCH}")
 
 # Standard settings.
