@@ -66,7 +66,8 @@ function(ADD_GERRIT_COMMIT_HOOK SOURCE_DIR BINARY_DIR)
 
   if (EXISTS ${LOCAL_GIT_DIRECTORY})
     if (NOT EXISTS ${LOCAL_GIT_DIRECTORY}/hooks/commit-msg)
-      message(STATUS "Detected Ceres being used as a git submodule, adding "
+      # Hook installation is an internal setup detail.
+      message(DEBUG "Detected Ceres being used as a git submodule, adding "
         "commit hook for Gerrit to: ${LOCAL_GIT_DIRECTORY}")
       # Download the hook only if it is not already present.
       file(DOWNLOAD https://ceres-solver-review.googlesource.com/tools/hooks/commit-msg
