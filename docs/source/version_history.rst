@@ -11,6 +11,18 @@
 Version History
 ===============
 
+Unreleased
+==========
+
+Backward Incompatible Changes
+-----------------------------
+
+#. CMake configuration now reports dependencies using standard package output
+   and ``FeatureSummary``, uses the ``WITH_`` prefix for feature options, and
+   replaces the obsolete ``LIB_SUFFIX``, ``MSVC_USE_STATIC_CRT``, and
+   ``WITH_EXPORT_BUILD_DIR`` options with standard CMake variables. See
+   :ref:`options-controlling-ceres-configuration`.
+
 2.2.0
 =====
 
