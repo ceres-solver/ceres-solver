@@ -89,7 +89,6 @@ function(CREATE_CERES_CONFIG CURRENT_CERES_COMPILE_OPTIONS CERES_CONFIG_OUTPUT_D
     # interprets if (VAR) to be true if VAR is any non-zero number, even
     # negative ones, hence we have to explicitly check for >= 0.
     if (OPTION_ENABLED GREATER -1)
-      message(STATUS "Enabling ${CERES_OPTION} in Ceres config.h")
       set(${CERES_OPTION} "#define ${CERES_OPTION}")
 
       # Remove the item from the list of current options so that we can identify
