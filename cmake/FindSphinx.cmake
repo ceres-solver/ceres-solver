@@ -29,41 +29,96 @@
 # Author: pablo.speciale@gmail.com (Pablo Speciale)
 #
 
-# Find the Sphinx documentation generator
-#
-# This modules defines
-#  SPHINX_EXECUTABLE
-#  SPHINX_FOUND
+#[=======================================================================[.rst:
+FindSphinx
+==========
 
-find_program(SPHINX_EXECUTABLE
-             NAMES sphinx-build
-             PATHS /opt/local/bin
-             DOC "Sphinx documentation generator")
+Module for locating Sphinx and its components.
 
-if (SPHINX_EXECUTABLE)
+This modules defines the following variables:
 
-  find_package(Python COMPONENTS Interpreter)
+``Sphinx_FOUND``
+  ``TRUE`` iff Sphinx and all of its components have been found.
 
-  if(Python_Interpreter_FOUND)
-    # Check for sphinx theme dependency for documentation
-    execute_process(
-      COMMAND ${Python_EXECUTABLE} -c "import sphinx_rtd_theme"
-      RESULT_VARIABLE SPHINX_RTD_THEME
-      OUTPUT_QUIET
-      ERROR_QUIET
-    )
-  endif ()
+``Sphinx_BUILD_EXECUTABLE``
+  Path to the ``sphinx-build`` tool.
+]=======================================================================]
 
-  if (SPHINX_RTD_THEME EQUAL 0)
-    set(SPHINX_RTD_THEME TRUE)
-  else ()
-    set(SPHINX_RTD_THEME FALSE)
-  endif ()
+include (FindPackageHandleStandardArgs)
 
-endif ()
+find_program (Sphinx_BUILD_EXECUTABLE
+  NAMES sphinx-build
+  PATHS /opt/local/bin
+  DOC "Sphinx documentation generator"
+)
 
-include(FindPackageHandleStandardArgs)
+mark_as_advanced (Sphinx_BUILD_EXECUTABLE)
 
-find_package_handle_standard_args(Sphinx DEFAULT_MSG SPHINX_EXECUTABLE SPHINX_RTD_THEME)
+if (Sphinx_BUILD_EXECUTABLE)
+  execute_process (
+    COMMAND ${Sphinx_BUILD_EXECUTABLE} --version
+    ERROR_STRIP_TRAILING_WHITESPACE
+    ERROR_VARIABLE _Sphinx_BUILD_ERROR
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    OUTPUT_VARIABLE _Sphinx_VERSION_STRING
+    RESULT_VARIABLE _Sphinx_BUILD_RESULT
+  )
 
-mark_as_advanced(SPHINX_EXECUTABLE)
+  if (_Sphinx_BUILD_RESULT EQUAL 0)
+    string (REGEX REPLACE "^sphinx-build[ \t]+([^ \t]+)$" "\\1" Sphinx_VERSION
+      "${_Sphinx_VERSION_STRING}")
+
+    if (Sphinx_VERSION MATCHES "[0-9]+\\.[0-9]+\\.[0-9]+")
+      set (Sphinx_VERSION_COMPONENTS 3)
+      set (Sphinx_VERSION_MAJOR ${CMAKE_MATCH_1})
+      set (Sphinx_VERSION_MINOR ${CMAKE_MATCH_2})
+      set (Sphinx_VERSION_PATCH ${CMAKE_MATCH_3})
+    endif (Sphinx_VERSION MATCHES "[0-9]+\\.[0-9]+\\.[0-9]+")
+  else (_Sphinx_BUILD_RESULT EQUAL 0)
+    message (WARNING "Could not determine sphinx-build version: ${_Sphinx_BUILD_ERROR}")
+  endif (_Sphinx_BUILD_RESULT EQUAL 0)
+
+  unset (_Sphinx_BUILD_ERROR)
+  unset (_Sphinx_BUILD_RESULT)
+  unset (_Sphinx_VERSION_STRING)
+
+  find_package (Python COMPONENTS Interpreter)
+  set (_Sphinx_BUILD_RESULT FALSE)
+
+  if (Python_Interpreter_FOUND)
+    # Check for Sphinx theme dependency for documentation
+    foreach (component IN LISTS Sphinx_FIND_COMPONENTS)
+      string (REGEX MATCH "^(.+_theme)$" theme_component "${component}")
+
+      if (NOT theme_component STREQUAL component)
+        continue ()
+      endif (NOT theme_component STREQUAL component)
+
+      execute_process (
+        COMMAND ${Python_EXECUTABLE} -c "import ${theme_component}"
+        ERROR_STRIP_TRAILING_WHITESPACE
+        ERROR_VARIABLE _Sphinx_BUILD_ERROR
+        OUTPUT_QUIET
+        RESULT_VARIABLE _Sphinx_BUILD_RESULT
+      )
+
+      if (_Sphinx_BUILD_RESULT EQUAL 0)
+        set (Sphinx_${component}_FOUND TRUE)
+      elseif (_Sphinx_BUILD_RESULT EQUAL 0)
+        message (WARNING "Could not determine whether Sphinx component '${theme_component}' is available: ${_Sphinx_BUILD_ERROR}")
+        set (Sphinx_${component}_FOUND FALSE)
+      endif (_Sphinx_BUILD_RESULT EQUAL 0)
+
+      unset (_Sphinx_BUILD_ERROR)
+      unset (_Sphinx_BUILD_RESULT)
+    endforeach (component)
+
+    unset (theme_component)
+  endif (Python_Interpreter_FOUND)
+endif (Sphinx_BUILD_EXECUTABLE)
+
+find_package_handle_standard_args (Sphinx
+  REQUIRED_VARS Sphinx_BUILD_EXECUTABLE
+  VERSION_VAR Sphinx_VERSION
+  HANDLE_COMPONENTS
+)

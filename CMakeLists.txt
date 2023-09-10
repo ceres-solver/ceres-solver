@@ -622,8 +622,8 @@ create_ceres_config("${CERES_COMPILE_OPTIONS}"
 add_subdirectory(internal/ceres)
 
 if (BUILD_DOCUMENTATION)
-  find_package(Sphinx)
-  if (NOT SPHINX_FOUND)
+  find_package (Sphinx REQUIRED COMPONENTS sphinx_rtd_theme)
+  if (NOT Sphinx_FOUND)
     message("-- Failed to find Sphinx and/or its dependencies, disabling build of documentation.")
     update_cache_variable(BUILD_DOCUMENTATION OFF)
   else()
