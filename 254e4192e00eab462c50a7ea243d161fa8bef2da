@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9971b0c7_cbce9611",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-09-10T22:11:35Z",
+      "side": 1,
+      "message": "Minor comment.",
+      "revId": "254e4192e00eab462c50a7ea243d161fa8bef2da",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5fcc8e81_82182637",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-09-10T22:11:35Z",
+      "side": 1,
+      "message": "add a comment here as to why this is needed here.",
+      "range": {
+        "startLine": 819,
+        "startChar": 6,
+        "endLine": 819,
+        "endChar": 12
+      },
+      "revId": "254e4192e00eab462c50a7ea243d161fa8bef2da",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
