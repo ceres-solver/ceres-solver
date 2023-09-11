@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02065fa1_29238be9",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-09-11T22:46:44Z",
+      "side": 0,
+      "message": "Can you also update the sphinx docs too please.",
+      "range": {
+        "startLine": 32,
+        "startChar": 31,
+        "endLine": 32,
+        "endChar": 35
+      },
+      "revId": "863db948f381f74aea58a08a4b559facaf165ef0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad7a0771_39fe09fa",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-09-11T22:46:44Z",
+      "side": 0,
+      "message": "don\u0027t we still need this?",
+      "range": {
+        "startLine": 659,
+        "startChar": 37,
+        "endLine": 659,
+        "endChar": 42
+      },
+      "revId": "863db948f381f74aea58a08a4b559facaf165ef0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
