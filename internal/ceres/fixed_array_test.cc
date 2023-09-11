@@ -466,7 +466,7 @@ TEST(FixedArrayTest, ManySizedArraysOfArraysOf2) {
 //     will always overflow destination buffer [-Werror]
 TEST(FixedArrayTest, AvoidParanoidDiagnostics) {
   ceres::internal::FixedArray<char, 32> buf(32);
-  sprintf(buf.data(), "foo");  // NOLINT(runtime/printf)
+  snprintf(buf.data(), 32, "foo");
 }
 
 TEST(FixedArrayTest, TooBigInlinedSpace) {
