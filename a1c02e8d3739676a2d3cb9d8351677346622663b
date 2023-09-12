@@ -89,6 +89,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a9e45fa_1591f7d9",
+        "filename": "cmake/FindSphinx.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-09-12T19:31:14Z",
+      "side": 1,
+      "message": "Probably, even though CMake folks tend not to accept new find modules that easily due to the large number of existing find modules and the increasing maintenance burden.",
+      "parentUuid": "3861d9f5_3215cea4",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 6
+      },
+      "revId": "a1c02e8d3739676a2d3cb9d8351677346622663b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "90641acb_a3897e03",
