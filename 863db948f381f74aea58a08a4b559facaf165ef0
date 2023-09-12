@@ -24,6 +24,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfcccb4e_0451ddfa",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-09-12T17:33:43Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "02065fa1_29238be9",
+      "range": {
+        "startLine": 32,
+        "startChar": 31,
+        "endLine": 32,
+        "endChar": 35
+      },
+      "revId": "863db948f381f74aea58a08a4b559facaf165ef0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ad7a0771_39fe09fa",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-09-11T22:46:44Z",
       "side": 0,
       "message": "don\u0027t we still need this?",
+      "range": {
+        "startLine": 659,
+        "startChar": 37,
+        "endLine": 659,
+        "endChar": 42
+      },
+      "revId": "863db948f381f74aea58a08a4b559facaf165ef0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4dc19c3a_ae3f294e",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-09-12T17:33:43Z",
+      "side": 0,
+      "message": "Yes, we do. This is why the conditional definition is still there. I only removed the branch for unsupported CMake versions.",
+      "parentUuid": "ad7a0771_39fe09fa",
       "range": {
         "startLine": 659,
         "startChar": 37,
