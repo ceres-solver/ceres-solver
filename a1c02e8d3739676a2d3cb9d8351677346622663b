@@ -113,6 +113,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc4cdece_9c652002",
+        "filename": "cmake/FindSphinx.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-09-12T19:34:36Z",
+      "side": 1,
+      "message": "fair.",
+      "parentUuid": "0a9e45fa_1591f7d9",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 6
+      },
+      "revId": "a1c02e8d3739676a2d3cb9d8351677346622663b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "90641acb_a3897e03",
