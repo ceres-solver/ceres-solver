@@ -41,6 +41,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "797d3bd3_bf08a124",
+        "filename": "cmake/FindSphinx.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-09-12T19:19:47Z",
+      "side": 1,
+      "message": "Thanks. I believe the module is better suited as part of CMake rather than Sphinx because the latter does not use the former AFAIK.",
+      "parentUuid": "646bde53_c8ba925c",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 6
+      },
+      "revId": "a1c02e8d3739676a2d3cb9d8351677346622663b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "90641acb_a3897e03",
@@ -54,6 +78,30 @@
       "writtenOn": "2023-09-12T19:05:49Z",
       "side": 1,
       "message": "is this the only path it is searched for? I know it was hardcoded before, but should it be?",
+      "range": {
+        "startLine": 51,
+        "startChar": 13,
+        "endLine": 51,
+        "endChar": 18
+      },
+      "revId": "a1c02e8d3739676a2d3cb9d8351677346622663b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d227b7a_a7eb206a",
+        "filename": "cmake/FindSphinx.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-09-12T19:19:47Z",
+      "side": 1,
+      "message": "The answer is no to both of your questions, Sameer. 😊\n\nThe hardcoded paths I removed are considered by CMake anyway. I left the `/opt` one for compatibility, but this is rather a non-standard location which is probably very setup (and particularly OS) specific. Users can specify additional search paths using standard `Sphinx_ROOT` CMake/environment variable and/or `CMAKE_PREFIX_PATH`. Hence, this additional search path is not necessary and rather awkward.",
+      "parentUuid": "90641acb_a3897e03",
       "range": {
         "startLine": 51,
         "startChar": 13,
