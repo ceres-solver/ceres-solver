@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d42eb53_8b2f8e7f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-09-12T19:05:49Z",
+      "side": 1,
+      "message": "nice work, just one question about the hard coded path.",
+      "revId": "a1c02e8d3739676a2d3cb9d8351677346622663b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "646bde53_c8ba925c",
+        "filename": "cmake/FindSphinx.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-09-12T19:05:49Z",
+      "side": 1,
+      "message": "This is really nice. do you think this is worth contributing to the sphinx project itself?",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 6
+      },
+      "revId": "a1c02e8d3739676a2d3cb9d8351677346622663b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90641acb_a3897e03",
+        "filename": "cmake/FindSphinx.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-09-12T19:05:49Z",
+      "side": 1,
+      "message": "is this the only path it is searched for? I know it was hardcoded before, but should it be?",
+      "range": {
+        "startLine": 51,
+        "startChar": 13,
+        "endLine": 51,
+        "endChar": 18
+      },
+      "revId": "a1c02e8d3739676a2d3cb9d8351677346622663b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
