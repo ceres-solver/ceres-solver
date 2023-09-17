@@ -617,7 +617,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
       SPQR_ORDERING_BESTAMD,
       options_.column_pivot_threshold < 0 ? SPQR_DEFAULT_TOL
                                           : options_.column_pivot_threshold,
-      cholmod_jacobian.ncol,
+      static_cast<int64_t>(cholmod_jacobian.ncol),
       &cholmod_jacobian,
       &R,
       &permutation,
