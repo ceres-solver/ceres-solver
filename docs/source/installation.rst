@@ -9,7 +9,7 @@ Getting the source code
 .. _section-source:
 
 You can start with the `latest stable release
-<http://ceres-solver.org/ceres-solver-2.1.0.tar.gz>`_ . Or if you want
+<http://ceres-solver.org/ceres-solver-2.2.0.tar.gz>`_ . Or if you want
 the latest version, you can clone the git repository
 
 .. code-block:: bash
@@ -159,10 +159,10 @@ We are now ready to build, test, and install Ceres.
 
 .. code-block:: bash
 
- tar zxf ceres-solver-2.1.0.tar.gz
+ tar zxf ceres-solver-2.2.0.tar.gz
  mkdir ceres-bin
  cd ceres-bin
- cmake ../ceres-solver-2.1.0
+ cmake ../ceres-solver-2.2.0
  make -j3
  make test
  # Optionally install Ceres, it can also be exported using CMake which
@@ -176,7 +176,7 @@ dataset [Agarwal]_.
 
 .. code-block:: bash
 
- bin/simple_bundle_adjuster ../ceres-solver-2.1.0/data/problem-16-22106-pre.txt
+ bin/simple_bundle_adjuster ../ceres-solver-2.2.0/data/problem-16-22106-pre.txt
 
 This runs Ceres for a maximum of 10 iterations using the
 ``DENSE_SCHUR`` linear solver. The output should look something like
@@ -193,7 +193,7 @@ this.
        5  1.803399e+04    5.33e+01    1.48e+04   1.23e+01   9.99e-01  8.33e+05       1    1.45e-01    1.08e+00
        6  1.803390e+04    9.02e-02    6.35e+01   8.00e-01   1.00e+00  2.50e+06       1    1.50e-01    1.23e+00
 
-  Solver Summary (v 2.1.0-eigen-(3.4.0)-lapack-suitesparse-(5.10.1)-acceleratesparse-eigensparse-no_openmp)
+  Solver Summary (v 2.2.0-eigen-(3.4.0)-lapack-suitesparse-(5.10.1)-acceleratesparse-eigensparse-no_openmp)
 
 				       Original                  Reduced
   Parameter blocks                        22122                    22122
@@ -288,10 +288,10 @@ We are now ready to build, test, and install Ceres.
 
 .. code-block:: bash
 
-   tar zxf ceres-solver-2.1.0.tar.gz
+   tar zxf ceres-solver-2.2.0.tar.gz
    mkdir ceres-bin
    cd ceres-bin
-   cmake ../ceres-solver-2.1.0
+   cmake ../ceres-solver-2.2.0
    make -j3
    make test
    # Optionally install Ceres, it can also be exported using CMake which
@@ -389,7 +389,7 @@ Studio 2019 and newer.
 
 #. Unpack the Ceres tarball into ``ceres``. For the tarball, you
    should get a directory inside ``ceres`` similar to
-   ``ceres-solver-2.1.0``. Alternately, checkout Ceres via ``git`` to
+   ``ceres-solver-2.2.0``. Alternately, checkout Ceres via ``git`` to
    get ``ceres-solver.git`` inside ``ceres``.
 
 #. Install ``CMake``,
