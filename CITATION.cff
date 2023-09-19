@@ -8,8 +8,8 @@ authors:
 - family-names: Mierle
   given-names: Keir
 - name: The Ceres Solver Team
-version: 2.1
-date-released: 2022-03-28
+version: 2.2
+date-released: 2023-10-02
 license: Apache-2.0
 repository-code: https://github.com/ceres-solver/ceres-solver
 url: http://ceres-solver.org

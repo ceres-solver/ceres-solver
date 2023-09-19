@@ -85,7 +85,8 @@ class CudaBlockStructureTest : public ::testing::Test {
       const CudaBlockSparseStructure& structure) {
     const auto& cuda_buffer = structure.first_cell_in_row_block_;
     std::vector<int> first_cell_in_row_block(cuda_buffer.size());
-    cuda_buffer.CopyToCpu(first_cell_in_row_block.data(), first_cell_in_row_block.size());
+    cuda_buffer.CopyToCpu(first_cell_in_row_block.data(),
+                          first_cell_in_row_block.size());
     return first_cell_in_row_block;
   }
 
@@ -114,7 +115,8 @@ TEST_F(CudaBlockStructureTest, StructureIdentity) {
   }
 
   std::vector<Cell> cells = GetCells(cuda_block_structure);
-  std::vector<int> first_cell_in_row_block = GetRowBlockOffsets(cuda_block_structure);
+  std::vector<int> first_cell_in_row_block =
+      GetRowBlockOffsets(cuda_block_structure);
   blocks = GetRowBlocks(cuda_block_structure);
 
   ASSERT_EQ(blocks.size(), num_row_blocks);

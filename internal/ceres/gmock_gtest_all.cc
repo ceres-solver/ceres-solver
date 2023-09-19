@@ -12394,7 +12394,7 @@ void HasNewFatalFailureHelper::ReportTestPartResult(
 }  // namespace internal
 
 }  // namespace testing
-// Copyright 2008 Google Inc.
+// Copyright 2023 Google Inc.
 // All Rights Reserved.
 //
 // Redistribution and use in source and binary forms, with or without

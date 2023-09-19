@@ -49,9 +49,9 @@ If you use Ceres Solver for a publication, please cite it as::
     title = {{Ceres Solver}},
     license = {Apache-2.0},
     url = {https://github.com/ceres-solver/ceres-solver},
-    version = {2.1},
-    year = {2022},
-    month = {3}
+    version = {2.2},
+    year = {2023},
+    month = {10}
   }
 
 .. rubric:: Footnotes
