@@ -1,8 +1,8 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # encoding: utf-8
 #
 # Ceres Solver - A fast non-linear least squares minimizer
-# Copyright 2015 Google Inc. All rights reserved.
+# Copyright 2023 Google Inc. All rights reserved.
 # http://ceres-solver.org/
 #
 # Redistribution and use in source and binary forms, with or without
