@@ -404,7 +404,7 @@ Solving
    The solver does NOT take ownership of these pointers.
 
 
-.. member:: bool Solver::Options::update_state_every_iteration
+.. member:: bool GradientProblemSolver::Options::update_state_every_iteration
 
    Default: ``false``
 

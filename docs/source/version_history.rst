@@ -11,6 +11,140 @@
 Version History
 ===============
 
+2.2.0
+=====
+
+New Features
+------------
+
+#. Substantial improvement to threading performance across the board
+   (Dmitry Korchemkin)
+#. Mixed precision solves + iterative refinement when using ``CUDA`` or
+   CPU based dense linear solvers, or ``EIGEN_SPARSE`` as the sparse
+   linear algebra library. (Sameer Agarwal & Joydeep Biswas)
+#. Cuda based CGNR and preconditioner support (Joydeep Biswas & Sameer
+   Agarwal)
+#. Nested Dissection (``NESDIS``) is now supported as an ordering method
+   in addition to ``AMD``. (Sameer Agarwal, Alex Stewart & Sergiu
+   Deitsch)
+#. **Power Bundle Adjustment** is available as a linear solver and as
+   a preconditioner by the name of ``SCHUR POWER SERIES EXPANSION``
+   (Mark Shachkov).
+#. Generalized Euler Angle conversions (hs293go@)
+
+
+Backward Incompatible API Changes
+---------------------------------
+
+#. :class:`LocalParameterization` has been removed, use
+   :class:`Manifold` instead.
+#. Ceres Solver now requires a C++17 compliant compiler.
+#. Ceres Solver now requires CMake version 3.16 or later.
+#. Ceres Solver now requires SuiteSparse version 4.5.6 or later.
+#. OpenMP and NO_THREADING backends have been removed. C++ threads is
+   how all threading is done.
+#. Support for ``CX_SPARSE`` as a sparse linear algebra backend has
+   been removed. Similar or better performance can be expected from
+   ``Eigen`` as the sparse linear algebra library.
+
+
+Bug Fixes & Minor Changes
+-------------------------
+
+#. Modernize ``Sphinx`` related CMake handling as well the ``Sphinx``
+   build process in the terminal. (Sergiu Deitsch)
+#. Fix macos ``sprintf`` security related warnings (Sergiu Deitsch)
+#. Lots of Cuda releated build system fixes (Sergiu Deitsch, Dmitriy
+   Korchemkin, Jason Mak)
+#. Improved windows build support (Sergiu Deitsch)
+#. Various documentation fixes (Maxim Smolskiy, Evan Levine)
+#. Improved handling of large Jacobians (Sameer Agarwal)
+#. Improved handling of infinite initial cost (Sameer Agarwal)
+#. Improved traits support for Jets (Sameer Agarwal)
+#. Improved tests for Euler angle conversion routines (@Hs293Go)
+#. Use a std::tuple to store ProductManifold for better efficiency
+   (Sergiu Deitsch)
+#. Allow default construction of ProductManifold when underlying
+   manifolds have default constructors (Sergiu Deitsch)
+#. Move LineManifold and SphereManifold into their own headers (Sameer
+   Agarwal)
+#. Fix a byte vs number of elements error when dealing with CUDA
+   workspace computations (Joydeep Biswas)
+#. Hide and prevent internal symbols from being exported (Sergiu
+   Deitsch)
+#. Switch to imported SuiteSparse, CXSparse & METIS targets.
+#. Improve compilation on Ubuntu 20.04 (Sergiu Deitsch)
+#. Update to using gtest 1.11.0 (Sameer Agarwal)
+#. Fix Euler angle conversion code to not rely on constexpr
+   constrctors for Jets. (Sameer Agarwal)
+#. BlockRandomAccessSparseMatrix now uses a BlockSparseMatrix as
+   storage instead of TripletSparseMatrix. (Dmitriy Korchemkin)
+#. Deduction guide for DynamicAutoDiffCostFunction (Sergiu Deitsch)
+#. Explicit conversions from long to ints (Alexander Ivanov)
+#. Unused code deletion/commenting and code modernization (Alexander
+   Ivanov)
+#. Improve the bazel build & tests (Alexander Ivanov)
+#. Fix a bug in QuaternionRotatePoint introduced by the use of hypot
+   earlier in this release cycle (Jonathan Taylor & Sameer Agarwal)
+#. Lots of GitHub CI improvements (Sergiu Deitsch & Dmitry Korchemkin)
+#. Improve the robustness of the Cuda based dense linear algebra tests
+   (Joydeep Biswas)
+#. Refactor storage & threading support in BlockRandomAccessMatrix and
+   its subclasses (Sameer Agarwal)
+#. Fix a bug in CoordinateDescentMinimizer related to uninitialized
+   variables (Sameer Agarwal)
+#. Remove OpenMP and NO_THREADS backends. (Sameer Agarwal)
+#. Fix version string parsing starting with SuiteSparse 6.0 (Sergiu
+   Deitsch)
+#. Use FindCUDAToolkit for CMake >= 3.17 (Alex Stewart)
+#. Add a const accessor for the Problem::Options struct used by
+   Problem. (Alex Stewart)
+#. Fix a serious performance regression when using SuiteSparse
+   introduced in `d09f7e9d5e
+   <https://github.com/ceres-solver/ceres-solver/commit/d09f7e9d5e3bfab2d7ec7e81fd6a55786edca17a>`_. (Sameer
+   Agarwal)
+#. Fix the build on QNX (Alex Stewart)
+#. Improve testing macros and documentation for Manifolds (Alex
+   Stewart)
+#. Improved code formatting (Tyler Hovanec)
+#. Better use of std::unique_ptr in the code (Mike Vitus)
+#. Fix a memory leak in ContextImpl (Sameer Agarwal)
+#. Faster locking when num_thread = 1 (Sameer Agarwal)
+#. Fix how x_norm is computed in TrustRegionMinimizer (Sameer Agarwal)
+#. Faster JACOBI preconditioner for CGNR (Sameer Agarwal)
+#. Convert internal enums to class enums (Sameer Agarwal)
+#. Improve the code in small_blas to be more compiler friendly (Sameer
+   Agarwal)
+#. Add the ability to specify the pivot threshold in
+   ::class::`Covariance::Options` (Sameer Agarwal)
+#. Modernize the internals to use C++17 (Sameer Agarwal)
+#. Choose SPMV algorithm based on the CUDA SDK Version (Joydeep
+   Biswas)
+#. Better defaults in ``bundle_adjuster.cc`` (Sameer Agarwal)
+#. Use ``foo.data()`` instead of ``&foo[0]`` (Sameer Agarwal)
+#. Fix GCC 12.1.1 LTO -Walloc-size-larger-than= warnings (Sergiu
+   Deitsch)
+#. Improved determinism in tests by re-using the same PRNG (Sergiu
+   Deitsch)
+#. Improved docs for ``vcpkg`` installation. (Sergiu Deitsch)
+#. Update FindGlog.cmake to create glog::glog target (KrisThielemans@)
+#. Improve consistency & correctness of Sphere & Line Manifolds
+   (Julio L. Paneque)
+#. Remove ``ceres/internal/random.h`` in favor of ``<random>``.
+#. Fix a crash in ``InnerProductComputer`` (Sameer Agarwal)
+#. Various fixes to improve compilation on windows using MinGW & MSVC
+   (Sergiu Deitsch)
+#. Fix fmin/fmax() to use Jet averaging on equality (Alex Stewart)
+#. Fix use of conditional preprocessor checks within a macro in tests
+   (Alex Stewart)
+#. Better support for ``CUDA memcheck`` (Joydeep Biswas)
+#. Improve the logic for linking to the platform specific threading
+   library (Sergiu Deitsch)
+#. Generate the version string at compile time (Sergiu Deitsch)
+#. :class:`NumericDiffFirstOrderFunction` can now take a dynamically
+   sized parameter vector. (Sameer Agarwal)
+#. Fix compilation with SuiteSparse 7.2.0 (Mark Shackov)
+
 2.1.0
 =====
 
