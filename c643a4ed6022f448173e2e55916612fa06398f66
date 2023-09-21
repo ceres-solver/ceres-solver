@@ -33,6 +33,58 @@
       "message": "ping?",
       "revId": "c643a4ed6022f448173e2e55916612fa06398f66",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07a2f4e4_bf69e152",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-09-21T17:14:15Z",
+      "side": 1,
+      "message": "Sameer, looks good overall with only two remarks.",
+      "parentUuid": "9c07c167_25e230b3",
+      "revId": "c643a4ed6022f448173e2e55916612fa06398f66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b658125_5a25c3b9",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-09-21T17:14:15Z",
+      "side": 1,
+      "message": "This implies the issue was present in the 2.1.0 release. AFAIK, this is not the case; I produced the bug after the release, no? 😊",
+      "revId": "c643a4ed6022f448173e2e55916612fa06398f66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3986b7ab_bc4ca6d7",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-09-21T17:14:15Z",
+      "side": 1,
+      "message": "```suggestion\n#. Improve consistency \u0026 correctness of Sphere \u0026 Line Manifolds\n```",
+      "revId": "c643a4ed6022f448173e2e55916612fa06398f66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
