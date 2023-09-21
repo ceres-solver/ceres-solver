@@ -55,6 +55,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1711057d_c1abb657",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2023-09-21T17:24:27Z",
+      "side": 1,
+      "message": "Nit: wrapping",
+      "revId": "c643a4ed6022f448173e2e55916612fa06398f66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8b658125_5a25c3b9",
         "filename": "docs/source/version_history.rst",
         "patchSetId": 4
