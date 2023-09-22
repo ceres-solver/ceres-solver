@@ -79,7 +79,8 @@ CudaPartitionedBlockSparseCRSView::CudaPartitionedBlockSparseCRSView(
                               cols_e.data(),
                               rows_f.data(),
                               cols_f.data(),
-                              context->DefaultStream());
+                              context->DefaultStream(),
+                              context);
   f_is_crs_compatible_ = block_structure_->IsCrsCompatible();
   if (f_is_crs_compatible_) {
     block_structure_ = nullptr;
