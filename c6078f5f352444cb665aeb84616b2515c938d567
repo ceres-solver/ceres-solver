@@ -33,6 +33,92 @@
       "message": "Adding Joydeep Biswas as a reviewer",
       "revId": "c6078f5f352444cb665aeb84616b2515c938d567",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc485b16_c7d1a6a8",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-09-22T15:41:15Z",
+      "side": 1,
+      "message": "This is better named as IsCudaMemoryPoolSupported()",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 40
+      },
+      "revId": "c6078f5f352444cb665aeb84616b2515c938d567",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a75c8d43_28681888",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-09-22T15:41:15Z",
+      "side": 1,
+      "message": "I do not think passing a bool like this a good idea.\nwhy not pass the context object itself?",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 18
+      },
+      "revId": "c6078f5f352444cb665aeb84616b2515c938d567",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "849debdd_a9a25e39",
+        "filename": "internal/ceres/cuda_kernels_bsm_to_crs.cu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-09-22T15:41:15Z",
+      "side": 1,
+      "message": "is_memory_pool_supported ?",
+      "range": {
+        "startLine": 57,
+        "startChar": 32,
+        "endLine": 57,
+        "endChar": 54
+      },
+      "revId": "c6078f5f352444cb665aeb84616b2515c938d567",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "652d9f4e_7ee607cc",
+        "filename": "internal/ceres/cuda_kernels_bsm_to_crs.cu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-09-22T15:41:15Z",
+      "side": 1,
+      "message": "I am worried that this is not a particularly robust mechanism and we can have cudaMallocAsync show up in use over time again.\n\nWhat do you think about having a malloc/free methods in context which is used everywhere and it does the right thing based on the available capabilities?\n\notherwise I worry that we will have to be hunting down cudaMallockAsync and cudaFreeAsync calls all over.",
+      "revId": "c6078f5f352444cb665aeb84616b2515c938d567",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
