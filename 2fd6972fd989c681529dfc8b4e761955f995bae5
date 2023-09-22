@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4c365f3_4d613bf8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2023-09-22T18:52:43Z",
+      "side": 1,
+      "message": "Almost there, just minor nits.",
+      "revId": "2fd6972fd989c681529dfc8b4e761955f995bae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0b4f87d_5c5a33b6",
+        "filename": "internal/ceres/context_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2023-09-22T18:52:43Z",
+      "side": 1,
+      "message": "This is a helpful warning, but maybe mention specifically the version \u003e\u003d 11.4?",
+      "revId": "2fd6972fd989c681529dfc8b4e761955f995bae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52baa75e_fdc1092e",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2023-09-22T18:52:43Z",
+      "side": 1,
+      "message": "`CudaMalloc` for consistency?",
+      "revId": "2fd6972fd989c681529dfc8b4e761955f995bae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
