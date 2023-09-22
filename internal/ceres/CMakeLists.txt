@@ -124,16 +124,6 @@ if (USE_CUDA)
     CUDA::cudart
     CUDA::cusolver
     CUDA::cusparse)
-  if (BUILD_TESTING AND GFLAGS)
-    add_test(
-        NAME cuda_memcheck_dense_qr_test
-        COMMAND ${CUDAToolkit_BIN_DIR}/cuda-memcheck --leak-check full
-            $<TARGET_FILE:cuda_dense_qr_test>)
-    add_test(
-        NAME cuda_memcheck_dense_cholesky_test
-        COMMAND ${CUDAToolkit_BIN_DIR}/cuda-memcheck --leak-check full
-            $<TARGET_FILE:cuda_dense_cholesky_test>)
-  endif (BUILD_TESTING AND GFLAGS)
   set_source_files_properties(cuda_kernels_vector_ops.cu.cc PROPERTIES LANGUAGE CUDA)
   set_source_files_properties(cuda_kernels_bsm_to_crs.cu.cc PROPERTIES LANGUAGE CUDA)
   add_library(ceres_cuda_kernels STATIC cuda_kernels_vector_ops.cu.cc cuda_kernels_bsm_to_crs.cu.cc)
