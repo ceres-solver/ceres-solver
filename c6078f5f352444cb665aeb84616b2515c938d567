@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7918a96b_aabe1a24",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-09-22T15:34:40Z",
+      "side": 1,
+      "message": "Adds run-time check for cudaMallocAsync.\n\nWhen run with verbose logging, `ContextImpl::InitCuda()` prints information about selected device:\n```\n20230922 15:29:48.722558 25150 context_impl.cc:136] \n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d CUDA Device Properties \u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\nCuda version         : 12.2\nDevice ID            : 0\nDevice name          : Quadro T2000\nTotal GPU memory     :   3896 MiB\nGPU memory available :   3399 MiB\nCompute capability   : 7.5\nWarp size            : 32\nMax threads per block: 1024\nMax threads per dim  : 1024 1024 64\nMax grid size        : 2147483647 65535 65535\nMultiprocessor count : 16\ncudaMallocAsync()    : Supported\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\n```\n\nI expect it to print `cudaMallocAsync()   : Not supported` on the machine that showed problems with cudaMallocAsync.",
+      "revId": "c6078f5f352444cb665aeb84616b2515c938d567",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
