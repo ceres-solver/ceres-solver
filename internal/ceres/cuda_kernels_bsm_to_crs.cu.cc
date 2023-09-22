@@ -35,6 +35,7 @@
 #include <thrust/scan.h>
 
 #include "ceres/block_structure.h"
+#include "ceres/context_impl.h"
 #include "ceres/cuda_kernels_utils.h"
 
 namespace ceres {
@@ -48,31 +49,6 @@ inline auto ThrustCudaStreamExecutionPolicy(cudaStream_t stream) {
   return thrust::cuda::par.on(stream);
 #else
   return thrust::cuda::par_nosync.on(stream);
-#endif
-}
-// Allocate temporary memory on gpu, avoiding synchronization if possible
-template <typename T>
-T* AllocateTemporaryMemory(size_t num_elements, cudaStream_t stream) {
-  T* data;
-  // Stream-ordered alloactions are available since CUDA 11.4
-#if CUDART_VERSION < 11040
-#warning \
-    "Stream-ordered allocations are unavailable, consider updating CUDA toolkit"
-  cudaMalloc(&data, sizeof(T) * num_elements);
-#else
-  cudaMallocAsync(&data, sizeof(T) * num_elements, stream);
-#endif
-  return data;
-}
-
-void FreeTemporaryMemory(void* data, cudaStream_t stream) {
-  // Stream-ordered alloactions are available since CUDA 11.4
-#if CUDART_VERSION < 11040
-#warning \
-    "Stream-ordered allocations are unavailable, consider updating CUDA toolkit"
-  cudaFree(data);
-#else
-  cudaFreeAsync(data, stream);
 #endif
 }
 }  // namespace
@@ -211,10 +187,11 @@ void FillCRSStructure(const int num_row_blocks,
                       const Block* col_blocks,
                       int* rows,
                       int* cols,
-                      cudaStream_t stream) {
+                      cudaStream_t stream,
+                      ContextImpl* context) {
   // Set number of non-zeros per row in rows array and row to row-block map in
   // row_block_ids array
-  int* row_block_ids = AllocateTemporaryMemory<int>(num_rows, stream);
+  int* row_block_ids = context->CudaAllocate<int>(num_rows, stream);
   const int num_blocks_blockwise = NumBlocksInGrid(num_row_blocks + 1);
   RowBlockIdAndNNZ<false><<<num_blocks_blockwise, kCudaBlockSize, 0, stream>>>(
       num_row_blocks,
@@ -246,7 +223,7 @@ void FillCRSStructure(const int num_row_blocks,
       nullptr,
       rows,
       cols);
-  FreeTemporaryMemory(row_block_ids, stream);
+  context->CudaFree(row_block_ids, stream);
 }
 
 void FillCRSStructurePartitioned(const int num_row_blocks,
@@ -262,10 +239,11 @@ void FillCRSStructurePartitioned(const int num_row_blocks,
                                  int* cols_e,
                                  int* rows_f,
                                  int* cols_f,
-                                 cudaStream_t stream) {
+                                 cudaStream_t stream,
+                                 ContextImpl* context) {
   // Set number of non-zeros per row in rows array and row to row-block map in
   // row_block_ids array
-  int* row_block_ids = AllocateTemporaryMemory<int>(num_rows, stream);
+  int* row_block_ids = context->CudaAllocate<int>(num_rows, stream);
   const int num_blocks_blockwise = NumBlocksInGrid(num_row_blocks + 1);
   RowBlockIdAndNNZ<true><<<num_blocks_blockwise, kCudaBlockSize, 0, stream>>>(
       num_row_blocks,
@@ -303,7 +281,7 @@ void FillCRSStructurePartitioned(const int num_row_blocks,
       cols_e,
       rows_f,
       cols_f);
-  FreeTemporaryMemory(row_block_ids, stream);
+  context->CudaFree(row_block_ids, stream);
 }
 
 template <typename T, typename Predicate>
