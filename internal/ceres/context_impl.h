@@ -119,6 +119,20 @@ class CERES_NO_EXPORT ContextImpl final : public Context {
   // Returns the number of bytes of available global memory on the current CUDA
   // device. If it is called before InitCuda, it returns 0.
   size_t GpuMemoryAvailable() const;
+  // Allocate memory stream-synchronously, if cudaMallocAsync API is available
+  // in CUDA Toolkit and particular device supports it. Otherwise
+  // device-synchronous allocation is used
+  void* CudaMalloc(size_t size, cudaStream_t stream) const;
+  template <typename T>
+  T* CudaAllocate(size_t num_elements, cudaStream_t stream) const {
+    T* data = static_cast<T*>(CudaMalloc(num_elements * sizeof(T), stream));
+    return data;
+  }
+  // Free memory previously allocated by CudaMalloc. If cudaMallocAsync is
+  // supported by both CUDA Toolkit used for compilation and device used at
+  // runtime - deallocation will be performed stream-synchronously. Otherwise
+  // device-synchronous free is used.
+  void CudaFree(void* data, cudaStream_t stream) const;
 
   cusolverDnHandle_t cusolver_handle_ = nullptr;
   cublasHandle_t cublas_handle_ = nullptr;
