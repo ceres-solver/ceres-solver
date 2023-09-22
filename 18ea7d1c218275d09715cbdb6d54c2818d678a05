@@ -50,6 +50,24 @@
       "message": "Thanks for the quick patch Dmitriy and the reviewing Joydeep.",
       "revId": "18ea7d1c218275d09715cbdb6d54c2818d678a05",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91581f4d_e89ffc6a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-09-22T22:03:42Z",
+      "side": 1,
+      "message": "This patch is now causing the following compilation error. cuda_kernels_bsm_to_crs.cu.cc:38",
+      "tag": "mailMessageId\u003d\u003cCABqdRUBX8WLZJBm6eDVqc9N85SAQz_Dno0q37whOugzL_0\u003dkbA@mail.gmail.com\u003e",
+      "revId": "18ea7d1c218275d09715cbdb6d54c2818d678a05",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
