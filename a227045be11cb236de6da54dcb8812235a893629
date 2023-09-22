@@ -16,6 +16,24 @@
       "message": "Switching from cuda-memcheck should just require replacing `/cuda-memcheck --leak-check full` with `/compute-sanitizer --tool memcheck --leak-check full` .\n\nAre you sure you still want to remove this?",
       "revId": "a227045be11cb236de6da54dcb8812235a893629",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "924cf586_8e474b99",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-09-22T13:49:26Z",
+      "side": 1,
+      "message": "I think we should systematically introduce compute-sanitizer for all cuda tests rather than just these two. \n\nwe also have a sanitizer option in the top level cmake file, I think it would be good to integrate this into that option too.\n\nso yes for now lets remove this and come back and do this properly soon.",
+      "parentUuid": "8d0fb7d6_25667153",
+      "revId": "a227045be11cb236de6da54dcb8812235a893629",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
