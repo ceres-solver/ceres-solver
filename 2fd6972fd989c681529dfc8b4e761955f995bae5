@@ -35,6 +35,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec59ce1c_e1526b40",
+        "filename": "internal/ceres/context_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-09-22T19:35:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0b4f87d_5c5a33b6",
+      "revId": "2fd6972fd989c681529dfc8b4e761955f995bae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "52baa75e_fdc1092e",
@@ -48,6 +66,24 @@
       "writtenOn": "2023-09-22T18:52:43Z",
       "side": 1,
       "message": "`CudaMalloc` for consistency?",
+      "revId": "2fd6972fd989c681529dfc8b4e761955f995bae5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5938cdd8_2663f5e5",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-09-22T19:35:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52baa75e_fdc1092e",
       "revId": "2fd6972fd989c681529dfc8b4e761955f995bae5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f545fd7_6e9d6d44",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-09-22T19:35:26Z",
+      "side": 1,
+      "message": "Updated naming \u0026 comments",
+      "revId": "18ea7d1c218275d09715cbdb6d54c2818d678a05",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
