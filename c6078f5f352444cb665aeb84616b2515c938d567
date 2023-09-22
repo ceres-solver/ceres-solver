@@ -69,6 +69,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9bfebfe8_f1b5af0c",
+        "filename": "internal/ceres/context_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-09-22T18:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ed6681f_1971d3ed",
+      "revId": "c6078f5f352444cb665aeb84616b2515c938d567",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bc485b16_c7d1a6a8",
@@ -82,6 +100,30 @@
       "writtenOn": "2023-09-22T15:41:15Z",
       "side": 1,
       "message": "This is better named as IsCudaMemoryPoolSupported()",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 40
+      },
+      "revId": "c6078f5f352444cb665aeb84616b2515c938d567",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8e1ef74_d9341cea",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-09-22T18:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc485b16_c7d1a6a8",
       "range": {
         "startLine": 124,
         "startChar": 0,
@@ -139,6 +181,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "45cb243e_66081b2c",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-09-22T18:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbbbfa47_7015193d",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 18
+      },
+      "revId": "c6078f5f352444cb665aeb84616b2515c938d567",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "849debdd_a9a25e39",
@@ -152,6 +218,30 @@
       "writtenOn": "2023-09-22T15:41:15Z",
       "side": 1,
       "message": "is_memory_pool_supported ?",
+      "range": {
+        "startLine": 57,
+        "startChar": 32,
+        "endLine": 57,
+        "endChar": 54
+      },
+      "revId": "c6078f5f352444cb665aeb84616b2515c938d567",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc7705ea_1812a4a0",
+        "filename": "internal/ceres/cuda_kernels_bsm_to_crs.cu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-09-22T18:04:00Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "849debdd_a9a25e39",
       "range": {
         "startLine": 57,
         "startChar": 32,
@@ -197,6 +287,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b46ac1fb_b3433935",
+        "filename": "internal/ceres/cuda_kernels_bsm_to_crs.cu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-09-22T18:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "910518e9_c8a78a91",
+      "revId": "c6078f5f352444cb665aeb84616b2515c938d567",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "145010e1_de28db8c",
@@ -210,6 +318,24 @@
       "writtenOn": "2023-09-22T16:04:16Z",
       "side": 1,
       "message": "Should move this to the context as well.",
+      "revId": "c6078f5f352444cb665aeb84616b2515c938d567",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d06bbde_d5239ed6",
+        "filename": "internal/ceres/cuda_kernels_bsm_to_crs.cu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-09-22T18:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "145010e1_de28db8c",
       "revId": "c6078f5f352444cb665aeb84616b2515c938d567",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -231,6 +357,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7bdc21e5_efeeab0f",
+        "filename": "internal/ceres/cuda_kernels_bsm_to_crs.cu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-09-22T18:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "618722cd_a85a1ff5",
+      "revId": "c6078f5f352444cb665aeb84616b2515c938d567",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "55b03013_feb91e92",
@@ -244,6 +388,24 @@
       "writtenOn": "2023-09-22T16:04:16Z",
       "side": 1,
       "message": "Pass in contextimpl*",
+      "revId": "c6078f5f352444cb665aeb84616b2515c938d567",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45b78300_de28e3b4",
+        "filename": "internal/ceres/cuda_kernels_bsm_to_crs.cu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-09-22T18:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55b03013_feb91e92",
       "revId": "c6078f5f352444cb665aeb84616b2515c938d567",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -265,6 +427,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "de7dc79a_0f45dc5d",
+        "filename": "internal/ceres/cuda_kernels_bsm_to_crs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-09-22T18:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e4c05d_87b798dd",
+      "revId": "c6078f5f352444cb665aeb84616b2515c938d567",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "007f8a2a_65f2f2ce",
@@ -278,6 +458,24 @@
       "writtenOn": "2023-09-22T16:04:16Z",
       "side": 1,
       "message": "Ditto re. context.",
+      "revId": "c6078f5f352444cb665aeb84616b2515c938d567",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "494a6b7e_4648ae43",
+        "filename": "internal/ceres/cuda_kernels_bsm_to_crs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-09-22T18:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "007f8a2a_65f2f2ce",
       "revId": "c6078f5f352444cb665aeb84616b2515c938d567",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
