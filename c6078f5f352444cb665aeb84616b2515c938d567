@@ -35,6 +35,40 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f5cdce9_5de809ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2023-09-22T16:04:16Z",
+      "side": 1,
+      "message": "Thanks for looking into this, Dmitriy.\n\nTwo high-level suggestions:\n1. Pass in the contextimpl* to Cuda* object constructors\n2. Any device-specific or API-specific logic should be moved to the contextimpl so that it\u0027s all in one place.",
+      "revId": "c6078f5f352444cb665aeb84616b2515c938d567",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ed6681f_1971d3ed",
+        "filename": "internal/ceres/context_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2023-09-22T16:04:16Z",
+      "side": 1,
+      "message": "cudaMallocAsync supported:",
+      "revId": "c6078f5f352444cb665aeb84616b2515c938d567",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bc485b16_c7d1a6a8",
@@ -83,6 +117,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cbbbfa47_7015193d",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2023-09-22T16:04:16Z",
+      "side": 1,
+      "message": "+1\n\nThe original plan was for all Cuda* objects to take in the contextimpl* in the constructor, to avoid having to pass in bits and pieces of cuda-related information.\n\nhttps://github.com/ceres-solver/ceres-solver/commit/fc826c578032c19054a27e5bcac626a3ac6883ac",
+      "parentUuid": "a75c8d43_28681888",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 18
+      },
+      "revId": "c6078f5f352444cb665aeb84616b2515c938d567",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "849debdd_a9a25e39",
         "filename": "internal/ceres/cuda_kernels_bsm_to_crs.cu.cc",
         "patchSetId": 1
@@ -117,6 +175,109 @@
       "writtenOn": "2023-09-22T15:41:15Z",
       "side": 1,
       "message": "I am worried that this is not a particularly robust mechanism and we can have cudaMallocAsync show up in use over time again.\n\nWhat do you think about having a malloc/free methods in context which is used everywhere and it does the right thing based on the available capabilities?\n\notherwise I worry that we will have to be hunting down cudaMallockAsync and cudaFreeAsync calls all over.",
+      "revId": "c6078f5f352444cb665aeb84616b2515c938d567",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "910518e9_c8a78a91",
+        "filename": "internal/ceres/cuda_kernels_bsm_to_crs.cu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2023-09-22T16:04:16Z",
+      "side": 1,
+      "message": "+1 to moving this method to the context",
+      "parentUuid": "652d9f4e_7ee607cc",
+      "revId": "c6078f5f352444cb665aeb84616b2515c938d567",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "145010e1_de28db8c",
+        "filename": "internal/ceres/cuda_kernels_bsm_to_crs.cu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2023-09-22T16:04:16Z",
+      "side": 1,
+      "message": "Should move this to the context as well.",
+      "revId": "c6078f5f352444cb665aeb84616b2515c938d567",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "618722cd_a85a1ff5",
+        "filename": "internal/ceres/cuda_kernels_bsm_to_crs.cu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2023-09-22T16:04:16Z",
+      "side": 1,
+      "message": "Take in contextimpl*",
+      "revId": "c6078f5f352444cb665aeb84616b2515c938d567",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55b03013_feb91e92",
+        "filename": "internal/ceres/cuda_kernels_bsm_to_crs.cu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2023-09-22T16:04:16Z",
+      "side": 1,
+      "message": "Pass in contextimpl*",
+      "revId": "c6078f5f352444cb665aeb84616b2515c938d567",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87e4c05d_87b798dd",
+        "filename": "internal/ceres/cuda_kernels_bsm_to_crs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2023-09-22T16:04:16Z",
+      "side": 1,
+      "message": "Similarly, I think this should just take in the context.",
+      "revId": "c6078f5f352444cb665aeb84616b2515c938d567",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "007f8a2a_65f2f2ce",
+        "filename": "internal/ceres/cuda_kernels_bsm_to_crs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2023-09-22T16:04:16Z",
+      "side": 1,
+      "message": "Ditto re. context.",
       "revId": "c6078f5f352444cb665aeb84616b2515c938d567",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
