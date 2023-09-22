@@ -83,6 +83,7 @@ std::string ContextImpl::CudaConfigAsString() const {
       "Max threads per dim  : %d %d %d\n"
       "Max grid size        : %d %d %d\n"
       "Multiprocessor count : %d\n"
+      "cudaMallocAsync()    : %s\n"
       "====================================================================",
       cuda_version_major_,
       cuda_version_minor_,
@@ -100,7 +101,18 @@ std::string ContextImpl::CudaConfigAsString() const {
       gpu_device_properties_.maxGridSize[0],
       gpu_device_properties_.maxGridSize[1],
       gpu_device_properties_.maxGridSize[2],
-      gpu_device_properties_.multiProcessorCount);
+      gpu_device_properties_.multiProcessorCount,
+      CudaMemoryPoolsSupported() ? "Supported" : "Not supported");
+}
+
+bool ContextImpl::CudaMemoryPoolsSupported() const {
+  // In order to support multiple versions of CUDA Toolkit, we need to perform
+  // both compile-time and run-time checks
+#if CUDART_VERSION < 11040
+  return false;
+#else
+  return gpu_device_properties_.memoryPoolsSupported;
+#endif
 }
 
 size_t ContextImpl::GpuMemoryAvailable() const {

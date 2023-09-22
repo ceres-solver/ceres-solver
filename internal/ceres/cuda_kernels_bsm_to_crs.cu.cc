@@ -52,27 +52,41 @@ inline auto ThrustCudaStreamExecutionPolicy(cudaStream_t stream) {
 }
 // Allocate temporary memory on gpu, avoiding synchronization if possible
 template <typename T>
-T* AllocateTemporaryMemory(size_t num_elements, cudaStream_t stream) {
+T* AllocateTemporaryMemory(size_t num_elements,
+                           cudaStream_t stream,
+                           bool memory_pools_supported) {
   T* data;
-  // Stream-ordered alloactions are available since CUDA 11.4
+  // Stream-ordered alloaction API is available since CUDA 11.4, but might be
+  // not implemented by particular device
 #if CUDART_VERSION < 11040
 #warning \
     "Stream-ordered allocations are unavailable, consider updating CUDA toolkit"
   cudaMalloc(&data, sizeof(T) * num_elements);
 #else
-  cudaMallocAsync(&data, sizeof(T) * num_elements, stream);
+  if (memory_pools_supported) {
+    cudaMallocAsync(&data, sizeof(T) * num_elements, stream);
+  } else {
+    cudaMalloc(&data, sizeof(T) * num_elements);
+  }
 #endif
   return data;
 }
 
-void FreeTemporaryMemory(void* data, cudaStream_t stream) {
-  // Stream-ordered alloactions are available since CUDA 11.4
+void FreeTemporaryMemory(void* data,
+                         cudaStream_t stream,
+                         bool memory_pools_supported) {
+  // Stream-ordered alloaction API is available since CUDA 11.4, but might be
+  // not implemented by particular device
 #if CUDART_VERSION < 11040
 #warning \
     "Stream-ordered allocations are unavailable, consider updating CUDA toolkit"
   cudaFree(data);
 #else
-  cudaFreeAsync(data, stream);
+  if (memory_pools_supported) {
+    cudaFreeAsync(data, stream);
+  } else {
+    cudaFree(data);
+  }
 #endif
 }
 }  // namespace
@@ -211,10 +225,12 @@ void FillCRSStructure(const int num_row_blocks,
                       const Block* col_blocks,
                       int* rows,
                       int* cols,
-                      cudaStream_t stream) {
+                      cudaStream_t stream,
+                      bool memory_pools_supported) {
   // Set number of non-zeros per row in rows array and row to row-block map in
   // row_block_ids array
-  int* row_block_ids = AllocateTemporaryMemory<int>(num_rows, stream);
+  int* row_block_ids =
+      AllocateTemporaryMemory<int>(num_rows, stream, memory_pools_supported);
   const int num_blocks_blockwise = NumBlocksInGrid(num_row_blocks + 1);
   RowBlockIdAndNNZ<false><<<num_blocks_blockwise, kCudaBlockSize, 0, stream>>>(
       num_row_blocks,
@@ -246,7 +262,7 @@ void FillCRSStructure(const int num_row_blocks,
       nullptr,
       rows,
       cols);
-  FreeTemporaryMemory(row_block_ids, stream);
+  FreeTemporaryMemory(row_block_ids, stream, memory_pools_supported);
 }
 
 void FillCRSStructurePartitioned(const int num_row_blocks,
@@ -262,10 +278,12 @@ void FillCRSStructurePartitioned(const int num_row_blocks,
                                  int* cols_e,
                                  int* rows_f,
                                  int* cols_f,
-                                 cudaStream_t stream) {
+                                 cudaStream_t stream,
+                                 bool memory_pools_supported) {
   // Set number of non-zeros per row in rows array and row to row-block map in
   // row_block_ids array
-  int* row_block_ids = AllocateTemporaryMemory<int>(num_rows, stream);
+  int* row_block_ids =
+      AllocateTemporaryMemory<int>(num_rows, stream, memory_pools_supported);
   const int num_blocks_blockwise = NumBlocksInGrid(num_row_blocks + 1);
   RowBlockIdAndNNZ<true><<<num_blocks_blockwise, kCudaBlockSize, 0, stream>>>(
       num_row_blocks,
@@ -303,7 +321,7 @@ void FillCRSStructurePartitioned(const int num_row_blocks,
       cols_e,
       rows_f,
       cols_f);
-  FreeTemporaryMemory(row_block_ids, stream);
+  FreeTemporaryMemory(row_block_ids, stream, memory_pools_supported);
 }
 
 template <typename T, typename Predicate>

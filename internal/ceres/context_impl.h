@@ -119,6 +119,9 @@ class CERES_NO_EXPORT ContextImpl final : public Context {
   // Returns the number of bytes of available global memory on the current CUDA
   // device. If it is called before InitCuda, it returns 0.
   size_t GpuMemoryAvailable() const;
+  // Returns true if device supports cudaMallocAsync and cudaMemPool APIs,
+  // should only be called after InitCuda
+  bool CudaMemoryPoolsSupported() const;
 
   cusolverDnHandle_t cusolver_handle_ = nullptr;
   cublasHandle_t cublas_handle_ = nullptr;
