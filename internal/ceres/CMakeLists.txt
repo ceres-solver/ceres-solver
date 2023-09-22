@@ -131,7 +131,7 @@ if (USE_CUDA)
   target_compile_definitions(ceres_cuda_kernels PRIVATE CERES_STATIC_DEFINE)
   # Enable __host__ / __device__ annotations in lambda declarations
   target_compile_options(ceres_cuda_kernels PRIVATE --extended-lambda)
-  target_include_directories(ceres_cuda_kernels PRIVATE  ${Ceres_SOURCE_DIR}/internal  ${Ceres_BINARY_DIR}/${CMAKE_INSTALL_INCLUDEDIR})
+  target_include_directories(ceres_cuda_kernels PRIVATE  ${Ceres_SOURCE_DIR}/include  ${Ceres_SOURCE_DIR}/internal ${Ceres_BINARY_DIR}/${CMAKE_INSTALL_INCLUDEDIR})
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ceres_cuda_kernels)
 endif (USE_CUDA)
 
