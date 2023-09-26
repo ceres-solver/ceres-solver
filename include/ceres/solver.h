@@ -64,8 +64,6 @@ class CERES_EXPORT Solver {
     // with a message describing the problem.
     bool IsValid(std::string* error) const;
 
-    // Minimizer options ----------------------------------------
-
     // Ceres supports the two major families of optimization strategies -
     // Trust Region and Line Search.
     //
@@ -571,13 +569,6 @@ class CERES_EXPORT Solver {
     // This settings only affects the SPARSE_NORMAL_CHOLESKY solver.
     bool dynamic_sparsity = false;
 
-    // TODO(sameeragarwal): Further expand the documentation for the
-    // following two options.
-    // TODO(joydeepbiswas): Update the documentation for the mixed precision
-    // option with CUDA.
-
-    // NOTE1: EXPERIMENTAL FEATURE, UNDER DEVELOPMENT, USE AT YOUR OWN RISK.
-    //
     // If use_mixed_precision_solves is true, the Gauss-Newton matrix
     // is computed in double precision, but its factorization is
     // computed in single precision. This can result in significant
@@ -588,15 +579,56 @@ class CERES_EXPORT Solver {
     // If use_mixed_precision_solves is true, we recommend setting
     // max_num_refinement_iterations to 2-3.
     //
-    // NOTE2: The following two options are currently only applicable
-    // if sparse_linear_algebra_library_type is EIGEN_SPARSE or
-    // ACCELERATE_SPARSE, and linear_solver_type is SPARSE_NORMAL_CHOLESKY
-    // or SPARSE_SCHUR.
+    // This options is available when linear solver uses sparse or dense
+    // cholesky factorization, except when sparse_linear_algebra_library_type =
+    // SUITE_SPARSE.
     bool use_mixed_precision_solves = false;
 
     // Number steps of the iterative refinement process to run when
     // computing the Gauss-Newton step.
     int max_num_refinement_iterations = 0;
+
+    // Minimum number of iterations for which the linear solver should
+    // run, even if the convergence criterion is satisfied.
+    int min_linear_solver_iterations = 0;
+
+    // Maximum number of iterations for which the linear solver should
+    // run. If the solver does not converge in less than
+    // max_linear_solver_iterations, then it returns MAX_ITERATIONS,
+    // as its termination type.
+    int max_linear_solver_iterations = 500;
+
+    // Maximum number of iterations performed by SCHUR_POWER_SERIES_EXPANSION.
+    // Each iteration corresponds to one more term in the power series expansion
+    // od the inverse of the Schur complement.  This value controls the maximum
+    // number of iterations whether it is used as a preconditioner or just to
+    // initialize the solution for ITERATIVE_SCHUR.
+    int max_num_spse_iterations = 5;
+
+    // Use SCHUR_POWER_SERIES_EXPANSION to initialize the solution for
+    // ITERATIVE_SCHUR. This option can be set true regardless of what
+    // preconditioner is being used.
+    bool use_spse_initialization = false;
+
+    // When use_spse_initialization is true, this parameter along with
+    // max_num_spse_iterations controls the number of
+    // SCHUR_POWER_SERIES_EXPANSION iterations performed for initialization. It
+    // is not used to control the preconditioner.
+    double spse_tolerance = 0.1;
+
+    // Forcing sequence parameter. The truncated Newton solver uses
+    // this number to control the relative accuracy with which the
+    // Newton step is computed.
+    //
+    // This constant is passed to ConjugateGradientsSolver which uses
+    // it to terminate the iterations when
+    //
+    //  (Q_i - Q_{i-1})/Q_i < eta/i
+    double eta = 1e-1;
+
+    // Normalize the jacobian using Jacobi scaling before calling
+    // the linear least squares solver.
+    bool jacobi_scaling = true;
 
     // Some non-linear least squares problems have additional
     // structure in the way the parameter blocks interact that it is
@@ -680,49 +712,6 @@ class CERES_EXPORT Solver {
     // of inner iterations in subsequent trust region minimizer
     // iterations is disabled.
     double inner_iteration_tolerance = 1e-3;
-
-    // Minimum number of iterations for which the linear solver should
-    // run, even if the convergence criterion is satisfied.
-    int min_linear_solver_iterations = 0;
-
-    // Maximum number of iterations for which the linear solver should
-    // run. If the solver does not converge in less than
-    // max_linear_solver_iterations, then it returns MAX_ITERATIONS,
-    // as its termination type.
-    int max_linear_solver_iterations = 500;
-
-    // Maximum number of iterations performed by SCHUR_POWER_SERIES_EXPANSION.
-    // This value controls the maximum number of iterations whether it is used
-    // as a preconditioner or just to initialize the solution for
-    // ITERATIVE_SCHUR.
-    int max_num_spse_iterations = 5;
-
-    // Use SCHUR_POWER_SERIES_EXPANSION to initialize the solution for
-    // ITERATIVE_SCHUR. This option can be set true regardless of what
-    // preconditioner is being used.
-    bool use_spse_initialization = false;
-
-    // When use_spse_initialization is true, this parameter along with
-    // max_num_spse_iterations controls the number of
-    // SCHUR_POWER_SERIES_EXPANSION iterations performed for initialization. It
-    // is not used to control the preconditioner.
-    double spse_tolerance = 0.1;
-
-    // Forcing sequence parameter. The truncated Newton solver uses
-    // this number to control the relative accuracy with which the
-    // Newton step is computed.
-    //
-    // This constant is passed to ConjugateGradientsSolver which uses
-    // it to terminate the iterations when
-    //
-    //  (Q_i - Q_{i-1})/Q_i < eta/i
-    double eta = 1e-1;
-
-    // Normalize the jacobian using Jacobi scaling before calling
-    // the linear least squares solver.
-    bool jacobi_scaling = true;
-
-    // Logging options ---------------------------------------------------------
 
     LoggingType logging_type = PER_MINIMIZER_ITERATION;
 
@@ -860,10 +849,9 @@ class CERES_EXPORT Solver {
     // IterationSummary for each minimizer iteration in order.
     std::vector<IterationSummary> iterations;
 
-    // Number of minimizer iterations in which the step was
-    // accepted. Unless use_non_monotonic_steps is true this is also
-    // the number of steps in which the objective function value/cost
-    // went down.
+    // Number of minimizer iterations in which the step was accepted. Unless
+    // use_nonmonotonic_steps is true this is also the number of steps in which
+    // the objective function value/cost went down.
     int num_successful_steps = -1;
 
     // Number of minimizer iterations in which the step was rejected
@@ -1077,7 +1065,7 @@ class CERES_EXPORT Solver {
     PreconditionerType preconditioner_type_used = IDENTITY;
 
     // Type of clustering algorithm used for visibility based
-    // preconditioning. Only meaningful when the preconditioner_type
+    // preconditioning. Only meaningful when the preconditioner_type_used
     // is CLUSTER_JACOBI or CLUSTER_TRIDIAGONAL.
     VisibilityClusteringType visibility_clustering_type = CANONICAL_VIEWS;
 
