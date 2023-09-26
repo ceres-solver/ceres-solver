@@ -13,10 +13,10 @@ Solving Non-linear Least Squares
 Introduction
 ============
 
-Effective use of Ceres requires some familiarity with the basic
+Effective use of Ceres Solver requires some familiarity with the basic
 components of a non-linear least squares solver, so before we describe
 how to configure and use the solver, we will take a brief look at how
-some of the core optimization algorithms in Ceres work.
+some of the core optimization algorithms in Ceres Solver work.
 
 Let :math:`x \in \mathbb{R}^n` be an :math:`n`-dimensional vector of
 variables, and
@@ -28,15 +28,15 @@ solving the optimization problem [#f1]_
           L \le x \le U
   :label: nonlinsq
 
-Where, :math:`L` and :math:`U` are lower and upper bounds on the
-parameter vector :math:`x`.
+Where, :math:`L` and :math:`U` are vector lower and upper bounds on
+the parameter vector :math:`x`. The inequality holds component-wise.
 
 Since the efficient global minimization of :eq:`nonlinsq` for
 general :math:`F(x)` is an intractable problem, we will have to settle
 for finding a local minimum.
 
 In the following, the Jacobian :math:`J(x)` of :math:`F(x)` is an
-:math:`m\times n` matrix, where :math:`J_{ij}(x) = \partial_j f_i(x)`
+:math:`m\times n` matrix, where :math:`J_{ij}(x) = D_j f_i(x)`
 and the gradient vector is :math:`g(x) = \nabla \frac{1}{2}\|F(x)\|^2
 = J(x)^\top F(x)`.
 
@@ -76,7 +76,7 @@ algorithms can be divided into two major categories [NocedalWright]_.
 Trust region methods are in some sense dual to line search methods:
 trust region methods first choose a step size (the size of the trust
 region) and then a step direction while line search methods first
-choose a step direction and then a step size. Ceres implements
+choose a step direction and then a step size. Ceres Solver implements
 multiple algorithms in both categories.
 
 .. _section-trust-region-methods:
@@ -153,8 +153,9 @@ It can be shown, that the solution to :eq:`trp` can be obtained by
 solving an unconstrained optimization of the form
 
 .. math:: \arg\min_{\Delta x} \frac{1}{2}\|J(x)\Delta x + F(x)\|^2 +\lambda  \|D(x)\Delta x\|^2
+   :label: lsqr-naive
 
-Where, :math:`\lambda` is a Lagrange multiplier that is inverse
+Where, :math:`\lambda` is a Lagrange multiplier that is inversely
 related to :math:`\mu`. In Ceres, we solve for
 
 .. math:: \arg\min_{\Delta x} \frac{1}{2}\|J(x)\Delta x + F(x)\|^2 + \frac{1}{\mu} \|D(x)\Delta x\|^2
@@ -163,39 +164,47 @@ related to :math:`\mu`. In Ceres, we solve for
 The matrix :math:`D(x)` is a non-negative diagonal matrix, typically
 the square root of the diagonal of the matrix :math:`J(x)^\top J(x)`.
 
-Before going further, let us make some notational simplifications. We
-will assume that the matrix :math:`\frac{1}{\sqrt{\mu}} D` has been concatenated
-at the bottom of the matrix :math:`J` and similarly a vector of zeros
-has been added to the bottom of the vector :math:`f` and the rest of
-our discussion will be in terms of :math:`J` and :math:`F`, i.e, the
-linear least squares problem.
+Before going further, let us make some notational simplifications.
+
+We will assume that the matrix :math:`\frac{1}{\sqrt{\mu}} D` has been
+concatenated at the bottom of the matrix :math:`J(x)` and a
+corresponding vector of zeroes has been added to the bottom of
+:math:`F(x)`, i.e.:
+
+.. math:: J(x) = \begin{bmatrix} J(x) \\ \frac{1}{\sqrt{\mu}} D
+          \end{bmatrix},\quad F(x) = \begin{bmatrix} F(x) \\ 0
+          \end{bmatrix}.
+
+This allows us to re-write :eq:`lsqr` as
 
 .. math:: \min_{\Delta x} \frac{1}{2} \|J(x)\Delta x + F(x)\|^2 .
    :label: simple
 
-For all but the smallest problems the solution of :eq:`simple` in
-each iteration of the Levenberg-Marquardt algorithm is the dominant
-computational cost in Ceres. Ceres provides a number of different
-options for solving :eq:`simple`. There are two major classes of
-methods - factorization and iterative.
+and only talk about :math:`J(x)` and :math:`F(x)` going forward.
+
+For all but the smallest problems the solution of :eq:`simple` in each
+iteration of the Levenberg-Marquardt algorithm is the dominant
+computational cost. Ceres provides a number of different options for
+solving :eq:`simple`. There are two major classes of methods -
+factorization and iterative.
 
 The factorization methods are based on computing an exact solution of
-:eq:`lsqr` using a Cholesky or a QR factorization and lead to an exact
-step Levenberg-Marquardt algorithm. But it is not clear if an exact
-solution of :eq:`lsqr` is necessary at each step of the LM algorithm
-to solve :eq:`nonlinsq`. In fact, we have already seen evidence
-that this may not be the case, as :eq:`lsqr` is itself a regularized
-version of :eq:`linearapprox`. Indeed, it is possible to
-construct non-linear optimization algorithms in which the linearized
-problem is solved approximately. These algorithms are known as inexact
-Newton or truncated Newton methods [NocedalWright]_.
+:eq:`lsqr` using a Cholesky or a QR factorization and lead to the so
+called exact step Levenberg-Marquardt algorithm. But it is not clear
+if an exact solution of :eq:`lsqr` is necessary at each step of the
+Levenberg-Mardquardt algorithm.  We have already seen evidence that
+this may not be the case, as :eq:`lsqr` is itself a regularized
+version of :eq:`linearapprox`. Indeed, it is possible to construct
+non-linear optimization algorithms in which the linearized problem is
+solved approximately. These algorithms are known as inexact Newton or
+truncated Newton methods [NocedalWright]_.
 
 An inexact Newton method requires two ingredients. First, a cheap
 method for approximately solving systems of linear
 equations. Typically an iterative linear solver like the Conjugate
-Gradients method is used for this
-purpose [NocedalWright]_. Second, a termination rule for
-the iterative solver. A typical termination rule is of the form
+Gradients method is used for this purpose [NocedalWright]_. Second, a
+termination rule for the iterative solver. A typical termination rule
+is of the form
 
 .. math:: \|H(x) \Delta x + g(x)\| \leq \eta_k \|g(x)\|.
    :label: inexact
@@ -213,14 +222,18 @@ Levenberg-Marquardt algorithm is used. When the user chooses an
 iterative linear solver, the inexact step Levenberg-Marquardt
 algorithm is used.
 
+We will talk more about the various linear solvers that you can use in
+:ref:`section-linear-solver`.
+
 .. _section-dogleg:
 
 Dogleg
 ------
 
 Another strategy for solving the trust region problem :eq:`trp` was
-introduced by M. J. D. Powell. The key idea there is to compute two
-vectors
+introduced by
+`M. J. D. Powell <https://en.wikipedia.org/wiki/Michael_J._D._Powell>`_. The
+key idea there is to compute two vectors
 
 .. math::
 
@@ -254,10 +267,14 @@ result in sufficient decrease in the value of the objective function,
 Levenberg-Marquardt solves the linear approximation from scratch with
 a smaller value of :math:`\mu`. Dogleg on the other hand, only needs
 to compute the interpolation between the Gauss-Newton and the Cauchy
-vectors, as neither of them depend on the value of :math:`\mu`.
+vectors, as neither of them depend on the value of :math:`\mu`. As a
+result the Dogleg method only solves one linear system per successful
+step, while Levenberg-Marquardt may need to solve an arbitrary number
+of linear systems before it can make progress [LourakisArgyros]_.
 
-The Dogleg method can only be used with the exact factorization based
-linear solvers.
+A disadvantage of the Dogleg implementation in Ceres Solver is that is
+can only be used with method can only be used with exact factorization
+based linear solvers.
 
 .. _section-inner-iterations:
 
@@ -350,10 +367,10 @@ Setting :member:`Solver::Options::use_nonmonotonic_steps` to ``true``
 enables the non-monotonic trust region algorithm as described by Conn,
 Gould & Toint in [Conn]_.
 
-Even though the value of the objective function may be larger
-than the minimum value encountered over the course of the
-optimization, the final parameters returned to the user are the
-ones corresponding to the minimum cost over all iterations.
+Even though the value of the objective function may be larger than the
+minimum value encountered over the course of the optimization, the
+final parameters returned to the user are the ones corresponding to
+the minimum cost over all iterations.
 
 The option to take non-monotonic steps is available for all trust
 region strategies.
@@ -364,11 +381,13 @@ region strategies.
 Line Search Methods
 ===================
 
-The line search method in Ceres Solver cannot handle bounds
-constraints right now, so it can only be used for solving
-unconstrained problems.
+.. NOTE::
 
-Line search algorithms
+   The line search method in Ceres Solver cannot handle bounds
+   constraints right now, so it can only be used for solving
+   unconstrained problems.
+
+The basic line search algorithm looks something like this:
 
    1. Given an initial point :math:`x`
    2. :math:`\Delta x = -H^{-1}(x) g(x)`
@@ -388,7 +407,7 @@ Different line search algorithms differ in their choice of the search
 direction :math:`\Delta x` and the method used for one dimensional
 optimization along :math:`\Delta x`. The choice of :math:`H(x)` is the
 primary source of computational complexity in these
-methods. Currently, Ceres Solver supports three choices of search
+methods. Currently, Ceres Solver supports four choices of search
 directions, all aimed at large scale problems.
 
 1. ``STEEPEST_DESCENT`` This corresponds to choosing :math:`H(x)` to
@@ -406,8 +425,8 @@ directions, all aimed at large scale problems.
 3. ``BFGS`` A generalization of the Secant method to multiple
    dimensions in which a full, dense approximation to the inverse
    Hessian is maintained and used to compute a quasi-Newton step
-   [NocedalWright]_.  BFGS is currently the best known general
-   quasi-Newton algorithm.
+   [NocedalWright]_.  ``BFGS`` and its limited memory variant ``LBFGS``
+   are currently the best known general quasi-Newton algorithm.
 
 4. ``LBFGS`` A limited memory approximation to the full ``BFGS``
    method in which the last `M` iterations are used to approximate the
@@ -415,26 +434,31 @@ directions, all aimed at large scale problems.
    [ByrdNocedal]_.
 
 Currently Ceres Solver supports both a backtracking and interpolation
-based Armijo line search algorithm, and a sectioning / zoom
-interpolation (strong) Wolfe condition line search algorithm.
-However, note that in order for the assumptions underlying the
-``BFGS`` and ``LBFGS`` methods to be guaranteed to be satisfied the
-Wolfe line search algorithm should be used.
+based `Armijo line search algorithm
+<https://en.wikipedia.org/wiki/Backtracking_line_search>`_ (``ARMIJO``)
+, and a sectioning / zoom interpolation (strong) `Wolfe condition line
+search algorithm <https://en.wikipedia.org/wiki/Wolfe_conditions>`_
+(``WOLFE``).
+
+.. NOTE::
+
+   In order for the assumptions underlying the ``BFGS`` and ``LBFGS``
+   methods to be satisfied the ``WOLFE`` algorithm must be used.
 
 .. _section-linear-solver:
 
-LinearSolver
-============
+Linear Solvers
+==============
 
-Recall that in both of the trust-region methods described above, the
+Observe that for both of the trust-region methods described above, the
 key computational cost is the solution of a linear least squares
 problem of the form
 
-.. math:: \min_{\Delta x} \frac{1}{2} \|J(x)\Delta x + f(x)\|^2 .
+.. math:: \min_{\Delta x} \frac{1}{2} \|J(x)\Delta x + F(x)\|^2 .
    :label: simple2
 
 Let :math:`H(x)= J(x)^\top J(x)` and :math:`g(x) = -J(x)^\top
-f(x)`. For notational convenience let us also drop the dependence on
+F(x)`. For notational convenience let us also drop the dependence on
 :math:`x`. Then it is easy to see that solving :eq:`simple2` is
 equivalent to solving the *normal equations*.
 
@@ -445,31 +469,65 @@ Ceres provides a number of different options for solving :eq:`normal`.
 
 .. _section-qr:
 
-``DENSE_QR``
-------------
+DENSE_QR
+--------
 
 For small problems (a couple of hundred parameters and a few thousand
-residuals) with relatively dense Jacobians, ``DENSE_QR`` is the method
-of choice [Bjorck]_. Let :math:`J = QR` be the QR-decomposition of
-:math:`J`, where :math:`Q` is an orthonormal matrix and :math:`R` is
-an upper triangular matrix [TrefethenBau]_. Then it can be shown that
-the solution to :eq:`normal` is given by
+residuals) with relatively dense Jacobians, QR-decomposition is the
+method of choice [Bjorck]_. Let :math:`J = QR` be the QR-decomposition
+of :math:`J`, where :math:`Q` is an orthonormal matrix and :math:`R`
+is an upper triangular matrix [TrefethenBau]_. Then it can be shown
+that the solution to :eq:`normal` is given by
 
 .. math:: \Delta x^* = -R^{-1}Q^\top f
 
+You can use QR-decomposition by setting
+:member:`Solver::Options::linear_solver_type` to ``DENSE_QR``.
 
-Ceres uses ``Eigen`` 's dense QR factorization routines.
+By default (``Solver::Options::dense_linear_algebra_library_type =
+EIGEN``) Ceres Solver will use `Eigen Householder QR factorization
+<https://eigen.tuxfamily.org/dox-devel/classEigen_1_1HouseholderQR.html>`_
+.
 
-.. _section-cholesky:
+If Ceres Solver has been built with an optimized LAPACK
+implementation, then the user can also choose to use LAPACK's
+`DGEQRF`_ routine by setting
+:member:`Solver::Options::dense_linear_algebra_library_type` to
+``LAPACK``. Depending on the `LAPACK` and the underlying `BLAS`
+implementation this may perform better than using Eigen's Householder
+QR factorization.
 
-``DENSE_NORMAL_CHOLESKY`` & ``SPARSE_NORMAL_CHOLESKY``
-------------------------------------------------------
+.. _DGEQRF: https://netlib.org/lapack/explore-html/df/dc5/group__variants_g_ecomputational_ga3766ea903391b5cf9008132f7440ec7b.html
 
-Large non-linear least square problems are usually sparse. In such
-cases, using a dense QR factorization is inefficient. Let :math:`H =
-R^\top R` be the Cholesky factorization of the normal equations, where
-:math:`R` is an upper triangular matrix, then the solution to
-:eq:`normal` is given by
+
+If an NVIDIA GPU is available and Ceres Solver has been built with
+CUDA support enabled, then the user can also choose to perform the
+QR-decomposition on the GPU by setting
+:member:`Solver::Options::dense_linear_algebra_library_type` to
+``CUDA``. Depending on the GPU this can lead to a substantial
+speedup. Using CUDA only makes sense for moderate to large sized
+problems. This is because to perform the decomposition on the GPU the
+matrix :math:`J` needs to be transferred from the CPU to the GPU and
+this incurs a cost. So unless the speedup from doing the decomposition
+on the GPU is large enough to also account for the time taken to
+transfer the Jacobian to the GPU, using CUDA will not be better than
+just doing the decomposition on the CPU.
+
+.. _section-dense-normal-cholesky:
+
+DENSE_NORMAL_CHOLESKY
+---------------------
+
+It is often the case that the number of rows in the Jacobian :math:`J`
+are much larger than the the number of columns. The complexity of QR
+factorization scales linearly with the number of rows, so beyond a
+certain size it is more efficient to solve :eq:`normal` using a dense
+`Cholesky factorization
+<https://en.wikipedia.org/wiki/Cholesky_decomposition>`_.
+
+Let :math:`H = R^\top R` be the Cholesky factorization of the normal
+equations, where :math:`R` is an upper triangular matrix, then the
+solution to :eq:`normal` is given by
 
 .. math::
 
@@ -480,71 +538,196 @@ The observant reader will note that the :math:`R` in the Cholesky
 factorization of :math:`H` is the same upper triangular matrix
 :math:`R` in the QR factorization of :math:`J`. Since :math:`Q` is an
 orthonormal matrix, :math:`J=QR` implies that :math:`J^\top J = R^\top
-Q^\top Q R = R^\top R`. There are two variants of Cholesky
-factorization -- sparse and dense.
+Q^\top Q R = R^\top R`.
 
-``DENSE_NORMAL_CHOLESKY``  as the name implies performs a dense
-Cholesky factorization of the normal equations. Ceres uses
-``Eigen`` 's dense LDLT factorization routines.
+Unfortunately, forming the matrix :math:`H = J'J` squares the
+condition number. As a result while the cost of forming :math:`H` and
+computing its Cholesky factorization is lower than computing the
+QR-factorization of :math:`J`, we pay the price in terms of increased
+numerical instability and potential failure of the Cholesky
+factorization for ill-conditioned Jacobians.
 
-``SPARSE_NORMAL_CHOLESKY``, as the name implies performs a sparse
-Cholesky factorization of the normal equations. This leads to
-substantial savings in time and memory for large sparse problems. The
-use of this linear solver requires that Ceres is compiled with support
-for at least one of:
+You can use dense Cholesky factorization by setting
+:member:`Solver::Options::linear_solver_type` to
+``DENSE_NORMAL_CHOLESKY``.
 
- 1. SuiteSparse
- 2. Apple's Accelerate framework.
- 3. Eigen's sparse linear solvers.
+By default (``Solver::Options::dense_linear_algebra_library_type =
+EIGEN``) Ceres Solver will use `Eigen's LLT factorization`_ routine.
+
+.. _Eigen's LLT Factorization:  https://eigen.tuxfamily.org/dox/classEigen_1_1LLT.html
+
+If Ceres Solver has been built with an optimized LAPACK
+implementation, then the user can also choose to use LAPACK's
+`DPOTRF`_ routine by setting
+:member:`Solver::Options::dense_linear_algebra_library_type` to
+``LAPACK``. Depending on the `LAPACK` and the underlying `BLAS`
+implementation this may perform better than using Eigen's Cholesky
+factorization.
+
+.. _DPOTRF: https://www.netlib.org/lapack/explore-html/d1/d7a/group__double_p_ocomputational_ga2f55f604a6003d03b5cd4a0adcfb74d6.html
+
+If an NVIDIA GPU is available and Ceres Solver has been built with
+CUDA support enabled, then the user can also choose to perform the
+Cholesky factorization on the GPU by setting
+:member:`Solver::Options::dense_linear_algebra_library_type` to
+``CUDA``. Depending on the GPU this can lead to a substantial speedup.
+Using CUDA only makes sense for moderate to large sized problems. This
+is because to perform the decomposition on the GPU the matrix
+:math:`H` needs to be transferred from the CPU to the GPU and this
+incurs a cost. So unless the speedup from doing the decomposition on
+the GPU is large enough to also account for the time taken to transfer
+the Jacobian to the GPU, using CUDA will not be better than just doing
+the decomposition on the CPU.
+
+
+.. _section-mixed-dense-normal-cholesky:
+
+Mixed Precision Solves
+^^^^^^^^^^^^^^^^^^^^^^
+
+Generally speaking Ceres Solver does all its arithmetic in double
+precision. Sometimes though, one can use single precision arithmetic
+to get substantial speedups. When using ``DENSE_NORMAL_CHOLESKY`` the
+user has the option cast the matrix :math:`H` to single precision and
+then use single precision Cholesky factorization routines to solve the
+resulting linear system. This can be enabled by setting
+:member:`Solver::Options::use_mixed_precision_solves` to ``true``.
+
+Depending on the conditioning of the problem, the use of single
+precision factorization may lead to some loss of accuracy. Some of
+this accuracy can be recovered by performing `Iterative Refinement
+<https://en.wikipedia.org/wiki/Iterative_refinement>`_. The number of
+iterations of iterative refinement are controlled by
+:member:`Solver::Options::max_num_refinement_iterations`. The default
+value of this parameter is zero, which means if
+:member:`Solver::Options::use_mixed_precision_solves` is ``true``,
+then no iterative refinement is performed. Usually 2-3 refinement
+iterations are enough.
+
+.. _section-sparse-normal-cholesky:
+
+SPARSE_NORMAL_CHOLESKY
+----------------------
+
+Large non-linear least square problems are usually sparse. In such
+cases, using a dense QR or Cholesky factorization is inefficient. For
+such problems, Cholesky factorization routines which treat :math:`H`
+as a sparse matrix and computes a sparse factor :math:`R` are better
+suited [Davis]_. This can lead to substantial savings in memory and
+CPU time for large sparse problems.
+
+You can use dense Cholesky factorization by setting
+:member:`Solver::Options::linear_solver_type` to
+``SPARSE_NORMAL_CHOLESKY``.
+
+The use of this linear solver requires that Ceres is compiled with
+support for at least one of:
+
+ 1. `SuiteSparse <https://people.engr.tamu.edu/davis/suitesparse.html>`_ (``SUITE_SPARSE``).
+ 2. `Apple's Accelerate framework
+    <https://developer.apple.com/documentation/accelerate/sparse_solvers?language=objc>`_
+    (``ACCELERATE_SPARSE``).
+ 3. `Eigen's sparse linear solvers
+    <https://eigen.tuxfamily.org/dox/group__SparseCholesky__Module.html>`_
+    (``EIGEN_SPARSE``).
+
+SuiteSparse and Accelerate offer high performance sparse Cholesky
+factorization routines as they level-3 BLAS routines
+internally. Eigen's sparse Cholesky routines are *simplicial* and do
+not use dense linear algebra routines and as a result cannot compete
+with SuiteSparse and Accelerate, especially on large problems. As a
+result to get the best performance out of SuiteSparse it should be
+linked to high quality BLAS and LAPACK implementations e.g. `ATLAS
+<https://math-atlas.sourceforge.net/>`_, `OpenBLAS
+<https://www.openblas.net/>`_ or `Intel MKL
+<https://www.intel.com/content/www/us/en/developer/tools/oneapi/onemkl.html>`_.
+
+A critical part of a sparse Cholesky factorization routine is the use
+a fill-reducing ordering. By default Ceres Solver uses the Approximate
+Minimum Degree (``AMD``) ordering, which usually performs well, but
+there are other options that may perform better depending on the
+actual sparsity structure of the Jacobian. See :ref:`section-ordering`
+for more details.
+
+.. _section-mixed-sparse-normal-cholesky:
+
+Mixed Precision Solves
+^^^^^^^^^^^^^^^^^^^^^^
+
+Like ``DENSE_NORMAL_CHOLESKY``, ``SPARSE_NORMAL_CHOLESKY`` can also
+benefit from using mixed precision solves. Mixed precision solves are
+available when using ``ACCELERATE_SPARSE`` or ``EIGEN_SPARSE`` as the
+sparse linear algebra libraries. ``SUITE_SPARSE`` currently does not
+support single precision factorization.
+
+Again as is the case with ``DENSE_NORMAL_CHOLESKY``,
+:member:`Solver::Options::use_mixed_precision_solves` and
+:member:`Solver::Options::max_num_refinement_iterations` control the
+use of mixed precision solves and the number of iterations of
+itertative refinement that are performed.
 
 .. _section-cgnr:
 
-``CGNR``
---------
+CGNR
+----
 
-For general sparse problems, if the problem is too large for
-``CHOLMOD`` or a sparse linear algebra library is not linked into
-Ceres, another option is the ``CGNR`` solver. This solver uses the
-Conjugate Gradients solver on the *normal equations*, but without
-forming the normal equations explicitly. It exploits the relation
+For general sparse problems, if the problem is too large for sparse
+Cholesky factorization or a sparse linear algebra library is not
+linked into Ceres, another option is the ``CGNR`` solver. This solver
+uses the `Conjugate Gradients
+<https://en.wikipedia.org/wiki/Conjugate_gradient_method>_` method on
+the *normal equations*, but without forming the normal equations
+explicitly. It exploits the relation
 
 .. math::
     H x = J^\top J x = J^\top(J x)
 
-The convergence of Conjugate Gradients depends on the conditioner
-number :math:`\kappa(H)`. Usually :math:`H` is poorly conditioned and
-a :ref:`section-preconditioner` must be used to get reasonable
-performance. Currently only the ``JACOBI`` preconditioner is available
-for use with ``CGNR``. It uses the block diagonal of :math:`H` to
-precondition the normal equations.
+Because ``CGNR`` never solves the linear system exactly, when the user
+chooses ``CGNR`` as the linear solver, Ceres automatically switches
+from the exact step algorithm to an inexact step algorithm. This also
+means that ``CGNR`` can only be used with ``LEVENBERG_MARQUARDT`` and
+not with ``DOGLEG`` trust region strategy.
 
-When the user chooses ``CGNR`` as the linear solver, Ceres
-automatically switches from the exact step algorithm to an inexact
-step algorithm.
+``CGNR`` by default runs on the CPU. However, if an NVIDIA GPU is
+available and Ceres Solver has been built with CUDA support enabled,
+then the user can also choose to run ``CGNR`` on the GPU by setting
+:member:`Solver::Options::sparse_linear_algebra_library_type` to
+``CUDA_SPARSE``. The key complexity of ``CGNR`` comes from evaluating
+the two sparse-matrix vector products (SpMV) :math:`Jx` and
+:math:`J'y`. GPUs are particularly well suited for doing sparse
+matrix-vector products. As a result, for large problems using a GPU
+can lead to a substantial speedup.
+
+The convergence of Conjugate Gradients depends on the conditioner
+number :math:`\kappa(H)`. Usually :math:`H` is quite poorly
+conditioned and a `Preconditioner
+<https://en.wikipedia.org/wiki/Preconditioner>`_ must be used to get
+reasonable performance. See section on :ref:`section-preconditioner`
+for more details.
 
 .. _section-schur:
 
-``DENSE_SCHUR`` & ``SPARSE_SCHUR``
-----------------------------------
+DENSE_SCHUR & SPARSE_SCHUR
+--------------------------
 
 While it is possible to use ``SPARSE_NORMAL_CHOLESKY`` to solve bundle
-adjustment problems, bundle adjustment problem have a special
-structure, and a more efficient scheme for solving :eq:`normal`
-can be constructed.
+adjustment problems, they have a special sparsity structure that can
+be exploited to solve the normal equations more efficiently.
 
-Suppose that the SfM problem consists of :math:`p` cameras and
-:math:`q` points and the variable vector :math:`x` has the block
-structure :math:`x = [y_{1}, ... ,y_{p},z_{1}, ... ,z_{q}]`. Where,
-:math:`y` and :math:`z` correspond to camera and point parameters,
-respectively.  Further, let the camera blocks be of size :math:`c` and
-the point blocks be of size :math:`s` (for most problems :math:`c` =
-:math:`6`--`9` and :math:`s = 3`). Ceres does not impose any constancy
-requirement on these block sizes, but choosing them to be constant
-simplifies the exposition.
+Suppose that the bundle adjustment problem consists of :math:`p`
+cameras and :math:`q` points and the variable vector :math:`x` has the
+block structure :math:`x = [y_{1}, ... ,y_{p},z_{1},
+... ,z_{q}]`. Where, :math:`y` and :math:`z` correspond to camera and
+point parameters respectively.  Further, let the camera blocks be of
+size :math:`c` and the point blocks be of size :math:`s` (for most
+problems :math:`c` = :math:`6`--`9` and :math:`s = 3`). Ceres does not
+impose any constancy requirement on these block sizes, but choosing
+them to be constant simplifies the exposition.
 
-A key characteristic of the bundle adjustment problem is that there is
-no term :math:`f_{i}` that includes two or more point blocks.  This in
-turn implies that the matrix :math:`H` is of the form
+The key property of bundle adjustment problems which we will exploit
+is the fact that no term :math:`f_{i}` in :eq:`nonlinsq` includes two
+or more point blocks at the same time.  This in turn implies that the
+matrix :math:`H` is of the form
 
 .. math:: H = \left[ \begin{matrix} B & E\\ E^\top & C \end{matrix} \right]\ ,
    :label: hblock
@@ -588,123 +771,201 @@ c`. The block :math:`S_{ij}` corresponding to the pair of images
 observe at least one common point.
 
 
-Now, :eq:`linear2` can be solved by first forming :math:`S`, solving for
-:math:`\Delta y`, and then back-substituting :math:`\Delta y` to
+Now :eq:`linear2` can be solved by first forming :math:`S`, solving
+for :math:`\Delta y`, and then back-substituting :math:`\Delta y` to
 obtain the value of :math:`\Delta z`.  Thus, the solution of what was
 an :math:`n\times n`, :math:`n=pc+qs` linear system is reduced to the
 inversion of the block diagonal matrix :math:`C`, a few matrix-matrix
 and matrix-vector multiplies, and the solution of block sparse
 :math:`pc\times pc` linear system :eq:`schur`.  For almost all
 problems, the number of cameras is much smaller than the number of
-points, :math:`p \ll q`, thus solving :eq:`schur` is
-significantly cheaper than solving :eq:`linear2`. This is the
-*Schur complement trick* [Brown]_.
+points, :math:`p \ll q`, thus solving :eq:`schur` is significantly
+cheaper than solving :eq:`linear2`. This is the *Schur complement
+trick* [Brown]_.
 
-This still leaves open the question of solving :eq:`schur`. The
-method of choice for solving symmetric positive definite systems
-exactly is via the Cholesky factorization [TrefethenBau]_ and
-depending upon the structure of the matrix, there are, in general, two
-options. The first is direct factorization, where we store and factor
-:math:`S` as a dense matrix [TrefethenBau]_. This method has
-:math:`O(p^2)` space complexity and :math:`O(p^3)` time complexity and
-is only practical for problems with up to a few hundred cameras. Ceres
-implements this strategy as the ``DENSE_SCHUR`` solver.
+This still leaves open the question of solving :eq:`schur`. As we
+discussed when considering the exact solution of the normal equations
+using Cholesky factorization, we have two options.
 
+DENSE_SCHUR
+^^^^^^^^^^^
 
-But, :math:`S` is typically a fairly sparse matrix, as most images
-only see a small fraction of the scene. This leads us to the second
-option: Sparse Direct Methods. These methods store :math:`S` as a
-sparse matrix, use row and column re-ordering algorithms to maximize
-the sparsity of the Cholesky decomposition, and focus their compute
-effort on the non-zero part of the factorization [Chen]_. Sparse
-direct methods, depending on the exact sparsity structure of the Schur
-complement, allow bundle adjustment algorithms to significantly scale
-up over those based on dense factorization. Ceres implements this
-strategy as the ``SPARSE_SCHUR`` solver.
+The first is **dense
+Cholesky factorization**, where we store and factor :math:`S` as a dense
+matrix. This method has :math:`O(p^2)` space complexity and
+:math:`O(p^3)` time complexity and is only practical for problems with
+up to a few hundred cameras. Ceres implements this strategy as the
+``DENSE_SCHUR`` solver.
+
+When using ``DENSE_SCHUR``, like in the case of
+``DENSE_NORMAL_CHOLESKY``,
+:member:`Solver::Options::dense_linear_algebra_library_type` controls
+whether ``EIGEN``, ``LAPACK`` or ``CUDA`` is used to factor and solve
+the reduced linear system. Similarly, it is also possible to use mixed
+precision solves by setting
+:member:`Solver::Options::use_mixed_precision_solves` to ``true`` and
+:member:`Solver::Options::max_num_refinement_iterations` controls the
+number of iterative refinement steps.
+
+SPARSE_SCHUR
+^^^^^^^^^^^^
+
+For large bundle adjustment problems :math:`S` is typically a
+fairly sparse matrix, as most images only see a small fraction of the
+scene. This leads us to the second option: **sparse Cholesky
+factorization** [Davis]_.  Here we store :math:`S` as a sparse matrix,
+use row and column re-ordering algorithms to maximize the sparsity of
+the Cholesky decomposition, and focus their compute effort on the
+non-zero part of the factorization [Davis]_ [Chen]_ . Sparse direct methods,
+depending on the exact sparsity structure of the Schur complement,
+allow bundle adjustment algorithms to significantly scale up over
+those based on dense factorization. Ceres implements this strategy as
+the ``SPARSE_SCHUR`` solver.
+
+When using ``SPARSE_SCHUR``, like in the case of
+``SPARSE_NORMAL_CHOLESKY``,
+:member:`Solver::Options::sparse_linear_algebra_library_type` controls
+whether ``SUITE_SPARSE``, ``ACCELERATE_SPARSE`` or ``EIGEN_SPARSE`` is
+used to factor and solve the reduced linear system. Similarly when
+using ``ACCELERATE_SPARSE`` and ``EIGEN_SPARSE`` it is also possible
+to use mixed precision solves by setting
+:member:`Solver::Options::use_mixed_precision_solves` to ``true`` and
+:member:`Solver::Options::max_num_refinement_iterations` controls the
+number of iterative refinement steps. Mixed precision solves are not
+available when using ``SUITE_SPARSE`` because SuiteSparse does not yet
+support single precision Cholesky factorization.
 
 .. _section-iterative_schur:
 
-``ITERATIVE_SCHUR``
--------------------
+ITERATIVE_SCHUR
+---------------
 
-Another option for bundle adjustment problems is to apply
-Preconditioned Conjugate Gradients to the reduced camera matrix
-:math:`S` instead of :math:`H`. One reason to do this is that
-:math:`S` is a much smaller matrix than :math:`H`, but more
-importantly, it can be shown that :math:`\kappa(S)\leq \kappa(H)`.
+Another option for bundle adjustment problems is to apply Conjugate
+Gradients to the reduced camera matrix :math:`S` instead of
+:math:`H`. One reason to do this is that :math:`S` is a much smaller
+matrix than :math:`H`, but more importantly, it can be shown that
+:math:`\kappa(S)\leq \kappa(H)` [Agarwal]_.
+
 Ceres implements Conjugate Gradients on :math:`S` as the
 ``ITERATIVE_SCHUR`` solver. When the user chooses ``ITERATIVE_SCHUR``
 as the linear solver, Ceres automatically switches from the exact step
 algorithm to an inexact step algorithm.
 
+
 The key computational operation when using Conjuagate Gradients is the
 evaluation of the matrix vector product :math:`Sx` for an arbitrary
-vector :math:`x`. There are two ways in which this product can be
-evaluated, and this can be controlled using
-``Solver::Options::use_explicit_schur_complement``. Depending on the
-problem at hand, the performance difference between these two methods
-can be quite substantial.
+vector :math:`x`. Because PCG only needs access to :math:`S` via its
+product with a vector, one way to evaluate :math:`Sx` is to observe
+that
 
-  1. **Implicit** This is default. Implicit evaluation is suitable for
-     large problems where the cost of computing and storing the Schur
-     Complement :math:`S` is prohibitive. Because PCG only needs
-     access to :math:`S` via its product with a vector, one way to
-     evaluate :math:`Sx` is to observe that
+.. math::  x_1 &= E^\top x\\
+           x_2 &= C^{-1} x_1\\
+           x_3 &= Ex_2\\
+           x_4 &= Bx\\
+           Sx &= x_4 - x_3
+   :label: schurtrick1
 
-     .. math::  x_1 &= E^\top x\\
-                x_2 &= C^{-1} x_1\\
-                x_3 &= Ex_2\\
-                x_4 &= Bx\\
-                Sx &= x_4 - x_3
-        :label: schurtrick1
+Thus, we can run Conjugate Gradients on :math:`S` with the same
+computational effort per iteration as Conjugate Gradients on
+:math:`H`, while reaping the benefits of a more powerful
+preconditioner. In fact, we do not even need to compute :math:`H`,
+:eq:`schurtrick1` can be implemented using just the columns of
+:math:`J`.
 
-     Thus, we can run PCG on :math:`S` with the same computational
-     effort per iteration as PCG on :math:`H`, while reaping the
-     benefits of a more powerful preconditioner. In fact, we do not
-     even need to compute :math:`H`, :eq:`schurtrick1` can be
-     implemented using just the columns of :math:`J`.
+Equation :eq:`schurtrick1` is closely related to *Domain Decomposition
+methods* for solving large linear systems that arise in structural
+engineering and partial differential equations. In the language of
+Domain Decomposition, each point in a bundle adjustment problem is a
+domain, and the cameras form the interface between these domains. The
+iterative solution of the Schur complement then falls within the
+sub-category of techniques known as Iterative Sub-structuring [Saad]_
+[Mathew]_.
 
-     Equation :eq:`schurtrick1` is closely related to *Domain
-     Decomposition methods* for solving large linear systems that
-     arise in structural engineering and partial differential
-     equations. In the language of Domain Decomposition, each point in
-     a bundle adjustment problem is a domain, and the cameras form the
-     interface between these domains. The iterative solution of the
-     Schur complement then falls within the sub-category of techniques
-     known as Iterative Sub-structuring [Saad]_ [Mathew]_.
+While in most cases the above method for evaluating :math:`Sx` is the
+way to go, for some problems it is better to compute the Schur
+complemenent :math:`S` explicitly and then run Conjugate Gradients on
+it. This can be done by settin
+``Solver::Options::use_explicit_schur_complement`` to ``true``. This
+option can only be used with the ``SCHUR_JACOBI`` preconditioner.
 
-  2. **Explicit** The complexity of implicit matrix-vector product
-     evaluation scales with the number of non-zeros in the
-     Jacobian. For small to medium sized problems, the cost of
-     constructing the Schur Complement is small enough that it is
-     better to construct it explicitly in memory and use it to
-     evaluate the product :math:`Sx`.
 
-When the user chooses ``ITERATIVE_SCHUR`` as the linear solver, Ceres
-automatically switches from the exact step algorithm to an inexact
-step algorithm.
+.. _section-schur_power_series_expansion:
 
-  .. NOTE::
+SCHUR_POWER_SERIES_EXPANSION
+----------------------------
 
-     In exact arithmetic, the choice of implicit versus explicit Schur
-     complement would have no impact on solution quality. However, in
-     practice if the Jacobian is poorly conditioned, one may observe
-     (usually small) differences in solution quality. This is a
-     natural consequence of performing computations in finite arithmetic.
+It can be shown that the inverse of the Schur complement can be
+written as an infinite power-series [Weber]_ [Zheng]_:
 
+.. math:: S      &= B - EC^{-1}E^\top\\
+	         &= B(I - B^{-1}EC^{-1}E^\top)\\
+	  S^{-1} &= (I - B^{-1}EC^{-1}E^\top)^{-1} B^{-1}\\
+	         & = \sum_{i=0}^\infty \left(B^{-1}EC^{-1}E^\top\right)^{i} B^{-1}
+
+As a result a truncated version of this power series expansion can be
+used to approximate the inverse and therefore the solution to
+:eq:`schur`. Ceres allows the user to use Schur power series expansion
+in three ways.
+
+1. As a linear solver. This is what [Weber]_ calls **Power Bundle
+   Adjustment** and corresponds to using the truncated power series to
+   approximate the inverse of the Schur complement. This is done by
+   setting the following options.
+
+   .. code-block:: c++
+
+      Solver::Options::linear_solver_type = ITERATIVE_SCHUR
+      Solver::Options::preconditioner_type = IDENTITY
+      Solver::Options::use_spse_initialization = true
+      Solver::Options::max_linear_solver_iterations = 0;
+
+      // The following two settings are worth tuning for your application.
+      Solver::Options::max_num_spse_iterations = 5;
+      Solver::Options::spse_tolerance = 0.1;
+
+
+2. As a preconditioner for ``ITERATIVE_SCHUR``. Any method for
+   approximating the inverse of a matrix can also be used as a
+   preconditioner. This is enabled by setting the following options.
+
+   .. code-block:: c++
+
+      Solver::Options::linear_solver_type = ITERATIVE_SCHUR
+      Solver::Options::preconditioner_type = SCHUR_POWER_SERIES_EXPANSION;
+      Solver::Options::use_spse_initialization = false;
+
+      // This is worth tuning for your application.
+      Solver::Options::max_num_spse_iterations = 5;
+
+
+3. As initialization for ``ITERATIIVE_SCHUR`` with any
+   preconditioner. This is a combination of the above two, where the
+   Schur Power Series Expansion
+
+   .. code-block:: c++
+
+      Solver::Options::linear_solver_type = ITERATIVE_SCHUR
+      Solver::Options::preconditioner_type = ... // Preconditioner of your choice.
+      Solver::Options::use_spse_initialization = true
+      Solver::Options::max_linear_solver_iterations = 0;
+
+      // The following two settings are worth tuning for your application.
+      Solver::Options::max_num_spse_iterations = 5;
+      // This only affects the initialization but not the preconditioner.
+      Solver::Options::spse_tolerance = 0.1;
 
 .. _section-preconditioner:
 
-Preconditioner
-==============
+Preconditioners
+===============
 
-The convergence rate of Conjugate Gradients for
-solving :eq:`normal` depends on the distribution of eigenvalues
-of :math:`H` [Saad]_. A useful upper bound is
-:math:`\sqrt{\kappa(H)}`, where, :math:`\kappa(H)` is the condition
-number of the matrix :math:`H`. For most bundle adjustment problems,
-:math:`\kappa(H)` is high and a direct application of Conjugate
-Gradients to :eq:`normal` results in extremely poor performance.
+The convergence rate of Conjugate Gradients for solving :eq:`normal`
+depends on the distribution of eigenvalues of :math:`H` [Saad]_. A
+useful upper bound is :math:`\sqrt{\kappa(H)}`, where,
+:math:`\kappa(H)` is the condition number of the matrix :math:`H`. For
+most non-linear least squares problems, :math:`\kappa(H)` is high and
+a direct application of Conjugate Gradients to :eq:`normal` results in
+extremely poor performance.
 
 The solution to this problem is to replace :eq:`normal` with a
 *preconditioned* system.  Given a linear system, :math:`Ax =b` and a
@@ -736,8 +997,15 @@ Ceres Solver comes with an number of preconditioners suited for
 problems with general sparsity as well as the special sparsity
 structure encountered in bundle adjustment problems.
 
-``JACOBI``
-----------
+IDENTITY
+--------
+
+This is equivalent to using an identity matrix as a preconditioner,
+i.e. no preconditioner at all.
+
+
+JACOBI
+------
 
 The simplest of all preconditioners is the diagonal or Jacobi
 preconditioner, i.e., :math:`M=\operatorname{diag}(A)`, which for
@@ -745,24 +1013,27 @@ block structured matrices like :math:`H` can be generalized to the
 block Jacobi preconditioner. The ``JACOBI`` preconditioner in Ceres
 when used with :ref:`section-cgnr` refers to the block diagonal of
 :math:`H` and when used with :ref:`section-iterative_schur` refers to
-the block diagonal of :math:`B` [Mandel]_. For detailed performance
-data about the performance of ``JACOBI`` on bundle adjustment problems
-see [Agarwal]_.
+the block diagonal of :math:`B` [Mandel]_.
+
+For detailed performance data about the performance of ``JACOBI`` on
+bundle adjustment problems see [Agarwal]_.
 
 
-``SCHUR_JACOBI``
-----------------
+SCHUR_JACOBI
+------------
 
 Another obvious choice for :ref:`section-iterative_schur` is the block
 diagonal of the Schur complement matrix :math:`S`, i.e, the block
 Jacobi preconditioner for :math:`S`. In Ceres we refer to it as the
-``SCHUR_JACOBI`` preconditioner.  For detailed performance data about
-the performance of ``SCHUR_JACOBI`` on bundle adjustment problems see
-[Agarwal]_.
+``SCHUR_JACOBI`` preconditioner.
 
 
-``CLUSTER_JACOBI`` and ``CLUSTER_TRIDIAGONAL``
-----------------------------------------------
+For detailed performance data about the performance of
+``SCHUR_JACOBI`` on bundle adjustment problems see [Agarwal]_.
+
+
+CLUSTER_JACOBI and CLUSTER_TRIDIAGONAL
+--------------------------------------
 
 For bundle adjustment problems arising in reconstruction from
 community photo collections, more effective preconditioners can be
@@ -793,8 +1064,19 @@ Linkage Clustering
 algorithm. The choice of clustering algorithm is controlled by
 :member:`Solver::Options::visibility_clustering_type`.
 
-``SUBSET``
-----------
+SCHUR_POWER_SERIES_EXPANSION
+----------------------------
+
+As explained in :ref:`section-schur_power_series_expansion`, the Schur
+complement matrix admits a power series expansion and a truncated
+version of this power series can be used as a preconditioner for
+``ITERATIVE_SCHUR``. When used as a preconditioner
+:member:`Solver::Options::max_num_spse_iterations` controls the number
+of terms in the power series that are used.
+
+
+SUBSET
+------
 
 This is a  preconditioner for problems with general  sparsity. Given a
 subset  of residual  blocks of  a problem,  it uses  the corresponding
@@ -814,6 +1096,8 @@ The efficacy of the preconditioner depends on how well the matrix
 :math:`Q` approximates :math:`J^\top J`, or how well the chosen
 residual blocks approximate the full problem.
 
+This preconditioner is NOT available when running ``CGNR`` using
+``CUDA``.
 
 .. _section-ordering:
 
@@ -834,15 +1118,20 @@ ordering based on the user's choices like the linear solver being
 used, to an exact order in which the variables should be eliminated,
 and a variety of possibilities in between.
 
-Instances of the :class:`ParameterBlockOrdering` class are used to
-communicate this information to Ceres.
+The simplest thing to do is to just set
+:member:`Solver::Options::linear_solver_ordering_type` to ``AMD``
+(default) or ``NESDIS`` based on your understanding of the problem or
+empirical testing.
+
+
+More information can be commmuniucated by using an instance
+:class:`ParameterBlockOrdering` class.
 
 Formally an ordering is an ordered partitioning of the
 parameter blocks, i.e, each parameter block belongs to exactly
 one group, and each group has a unique non-negative integer
 associated with it, that determines its order in the set of
 groups.
-
 
 e.g. Consider the linear system
 
@@ -868,40 +1157,43 @@ order.
 ``linear_solver_ordering == nullptr`` and an ordering where all the
 parameter blocks are in one elimination group mean the same thing -
 the solver is free to choose what it thinks is the best elimination
-ordering. Therefore in the following we will only consider the case
-where ``linear_solver_ordering != nullptr``.
+ordering using the ordering algorithm (specified using
+:member:`Solver::Options::linear_solver_ordering_type`). Therefore in
+the following we will only consider the case where
+``linear_solver_ordering != nullptr``.
 
-The exact interpretation of the ``linear_solver_ordering depeneds`` on
-the values of ``Solver::Options::linear_solver_ordering_type``,
-``Solver::Options::linear_solver_type``,
-``Solver::Options::preconditioner_type`` and
-``Solver::Options::sparse_linear_algebra_type`` as we will explain
-below.
+The exact interpretation of the ``linear_solver_ordering`` depends on
+the values of :member:`Solver::Options::linear_solver_ordering_type`,
+:member:`Solver::Options::linear_solver_type`,
+:member:`Solver::Options::preconditioner_type` and
+:member:`Solver::Options::sparse_linear_algebra_library_type` as we will
+explain below.
 
 Bundle Adjustment
 -----------------
 
-If the user is using one of the Schur solvers (DENSE_SCHUR,
-SPARSE_SCHUR, ITERATIVE_SCHUR) and chooses to specify an ordering, it
-must have one important property. The lowest numbered elimination
-group must form an independent set in the graph corresponding to the
-Hessian, or in other words, no two parameter blocks in the first
-elimination group should co-occur in the same residual block. For the
-best performance, this elimination group should be as large as
-possible. For standard bundle adjustment problems, this corresponds to
-the first elimination group containing all the 3d points, and the
-second containing the parameter blocks for all the cameras.
+If the user is using one of the Schur solvers (``DENSE_SCHUR``,
+``SPARSE_SCHUR``, ``ITERATIVE_SCHUR``) and chooses to specify an
+ordering, it must have one important property. The lowest numbered
+elimination group must form an independent set in the graph
+corresponding to the Hessian, or in other words, no two parameter
+blocks in the first elimination group should co-occur in the same
+residual block. For the best performance, this elimination group
+should be as large as possible. For standard bundle adjustment
+problems, this corresponds to the first elimination group containing
+all the 3d points, and the second containing the parameter blocks for
+all the cameras.
 
 If the user leaves the choice to Ceres, then the solver uses an
 approximate maximum independent set algorithm to identify the first
 elimination group [LiSaad]_.
 
-sparse_linear_algebra_library_type = SUITE_SPARSE
--------------------------------------------------
+``sparse_linear_algebra_library_type = SUITE_SPARSE``
+-----------------------------------------------------
 
 **linear_solver_ordering_type = AMD**
 
-A constrained Approximate Minimum Degree (CAMD) ordering used where
+A constrained Approximate Minimum Degree (CAMD) ordering is used where
 the parameter blocks in the lowest numbered group are eliminated
 first, and then the parameter blocks in the next lowest numbered group
 and so on. Within each group, CAMD is free to order the parameter blocks
@@ -912,7 +1204,7 @@ as it chooses.
 a. ``linear_solver_type = SPARSE_NORMAL_CHOLESKY`` or
    ``linear_solver_type = CGNR`` and ``preconditioner_type = SUBSET``
 
-   The value of linear_solver_ordering is ignored and a Nested
+   The value of ``linear_solver_ordering`` is ignored and a Nested
    Dissection algorithm is used to compute a fill reducing ordering.
 
 b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
@@ -921,13 +1213,13 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    Nested Dissection is used to compute a fill reducing ordering for
    the Schur Complement (or its preconditioner).
 
-sparse_linear_algebra_library_type = EIGEN_SPARSE or ACCELERATE_SPARSE
-----------------------------------------------------------------------
+``sparse_linear_algebra_library_type = EIGEN_SPARSE/ACCELERATE_SPARSE``
+-----------------------------------------------------------------------
 
 a. ``linear_solver_type = SPARSE_NORMAL_CHOLESKY`` or
    ``linear_solver_type = CGNR`` and ``preconditioner_type = SUBSET``
 
-   The value of linear_solver_ordering is ignored and ``AMD`` or
+   The value of ``linear_solver_ordering`` is ignored and ``AMD`` or
    ``NESDIS`` is used to compute a fill reducing ordering as requested
    by the user.
 
@@ -935,7 +1227,9 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
 
    ONLY the lowest group are used to compute the Schur complement, and
    ``AMD`` or ``NESID`` is used to compute a fill reducing ordering
-   for the Schur Complement (or its preconditioner).
+   for the Schur Complement (or its preconditioner) as requested by
+   the user.
+
 
 .. _section-solver-options:
 
@@ -947,7 +1241,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    :class:`Solver::Options` controls the overall behavior of the
    solver. We list the various settings and their default values below.
 
-.. function:: bool Solver::Options::IsValid(string* error) const
+.. function:: bool Solver::Options::IsValid(std::string* error) const
 
    Validate the values in the options struct and returns true on
    success. If there is a problem, the method returns false with
@@ -968,14 +1262,18 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    Choices are ``STEEPEST_DESCENT``, ``NONLINEAR_CONJUGATE_GRADIENT``,
    ``BFGS`` and ``LBFGS``.
 
+   See :ref:`section-line-search-methods` for more details.
+
 .. member:: LineSearchType Solver::Options::line_search_type
 
    Default: ``WOLFE``
 
    Choices are ``ARMIJO`` and ``WOLFE`` (strong Wolfe conditions).
    Note that in order for the assumptions underlying the ``BFGS`` and
-   ``LBFGS`` line search direction algorithms to be guaranteed to be
-   satisfied, the ``WOLFE`` line search should be used.
+   ``LBFGS`` line search direction algorithms to be satisfied, the
+   ``WOLFE`` line search must be used.
+
+   See :ref:`section-line-search-methods` for more details.
 
 .. member:: NonlinearConjugateGradientType Solver::Options::nonlinear_conjugate_gradient_type
 
@@ -988,24 +1286,26 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
 
    Default: ``20``
 
-   The L-BFGS hessian approximation is a low rank approximation to the
-   inverse of the Hessian matrix. The rank of the approximation
-   determines (linearly) the space and time complexity of using the
-   approximation. Higher the rank, the better is the quality of the
-   approximation. The increase in quality is however is bounded for a
-   number of reasons.
+   The LBFGS hessian approximation is a low rank approximation to
+   the inverse of the Hessian matrix. The rank of the
+   approximation determines (linearly) the space and time
+   complexity of using the approximation. Higher the rank, the
+   better is the quality of the approximation. The increase in
+   quality is however is bounded for a number of reasons.
 
-     1. The method only uses secant information and not actual
-        derivatives.
+   1. The method only uses secant information and not actual
+   derivatives.
+   2. The Hessian approximation is constrained to be positive
+   definite.
 
-     2. The Hessian approximation is constrained to be positive
-        definite.
+   So increasing this rank to a large number will cost time and
+   space complexity without the corresponding increase in solution
+   quality. There are no hard and fast rules for choosing the
+   maximum rank. The best choice usually requires some problem
+   specific experimentation.
 
-   So increasing this rank to a large number will cost time and space
-   complexity without the corresponding increase in solution
-   quality. There are no hard and fast rules for choosing the maximum
-   rank. The best choice usually requires some problem specific
-   experimentation.
+   For more theoretical and implementation details of the LBFGS
+   method, please see [Nocedal]_.
 
 .. member:: bool Solver::Options::use_approximate_eigenvalue_bfgs_scaling
 
@@ -1329,8 +1629,9 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    The preconditioner used by the iterative linear solver. The default
    is the block Jacobi preconditioner. Valid values are (in increasing
    order of complexity) ``IDENTITY``, ``JACOBI``, ``SCHUR_JACOBI``,
-   ``CLUSTER_JACOBI`` and ``CLUSTER_TRIDIAGONAL``. See
-   :ref:`section-preconditioner` for more details.
+   ``CLUSTER_JACOBI``, ``CLUSTER_TRIDIAGONAL``, ``SUBSET`` and
+   ``SCHUR_POWER_SERIES_EXPANSION``. See :ref:`section-preconditioner`
+   for more details.
 
 .. member:: VisibilityClusteringType Solver::Options::visibility_clustering_type
 
@@ -1354,7 +1655,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    recommend that you try ``CANONICAL_VIEWS`` first and if it is too
    expensive try ``SINGLE_LINKAGE``.
 
-.. member:: std::unordered_set<ResidualBlockId> residual_blocks_for_subset_preconditioner
+.. member:: std::unordered_set<ResidualBlockId> Solver::Options::residual_blocks_for_subset_preconditioner
 
    ``SUBSET`` preconditioner is a preconditioner for problems with
    general sparsity. Given a subset of residual blocks of a problem,
@@ -1440,7 +1741,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
     matrices, so determining which algorithm works better is a matter
     of empirical experimentation.
 
-.. member:: shared_ptr<ParameterBlockOrdering> Solver::Options::linear_solver_ordering
+.. member:: std::shared_ptr<ParameterBlockOrdering> Solver::Options::linear_solver_ordering
 
    Default: ``nullptr``
 
@@ -1473,10 +1774,6 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    efficient to explicitly compute it and use it for evaluating the
    matrix-vector products.
 
-   Enabling this option tells ``ITERATIVE_SCHUR`` to use an explicitly
-   computed Schur complement. This can improve the performance of the
-   ``ITERATIVE_SCHUR`` solver significantly.
-
    .. NOTE::
 
      This option can only be used with the ``SCHUR_JACOBI``
@@ -1504,11 +1801,6 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
 
    Default: ``false``
 
-   .. NOTE::
-
-     This feature is EXPERIMENTAL and under development, use at your
-     own risk!
-
    If true, the Gauss-Newton matrix is computed in *double* precision, but
    its factorization is computed in **single** precision. This can result in
    significant time and memory savings at the cost of some accuracy in the
@@ -1518,17 +1810,16 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    If ``use_mixed_precision_solves`` is true, we recommend setting
    ``max_num_refinement_iterations`` to 2-3.
 
-   This option is currently only available if
-   ``sparse_linear_algebra_library_type`` is ``EIGEN_SPARSE`` or
-   ``ACCELERATE_SPARSE``, and ``linear_solver_type`` is
-   ``SPARSE_NORMAL_CHOLESKY`` or ``SPARSE_SCHUR``.
+   See :ref:`section-mixed-dense-normal-cholesky` and
+   :ref:`section-mixed-sparse-normal-cholesky` for more details.
 
 .. member:: int Solver::Options::max_num_refinement_iterations
 
    Default: ``0``
 
    Number steps of the iterative refinement process to run when
-   computing the Gauss-Newton step, see ``use_mixed_precision_solves``.
+   computing the Gauss-Newton step, see
+   :member:`Solver::Options::use_mixed_precision_solves`.
 
 .. member:: int Solver::Options::min_linear_solver_iterations
 
@@ -1545,6 +1836,34 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    Minimum number of iterations used by the linear solver. This only
    makes sense when the linear solver is an iterative solver, e.g.,
    ``ITERATIVE_SCHUR`` or ``CGNR``.
+
+.. member:: int Solver::Options::max_num_spse_iterations
+
+   Default: `5`
+
+   Maximum number of iterations performed by
+   ``SCHUR_POWER_SERIES_EXPANSION``. Each iteration corresponds to one
+   more term in the power series expansion od the inverse of the Schur
+   complement.  This value controls the maximum number of iterations
+   whether it is used as a preconditioner or just to initialize the
+   solution for ``ITERATIVE_SCHUR``.
+
+.. member:: bool Solver:Options::use_spse_initialization
+
+   Default: ``false``
+
+   Use Schur power series expansion to initialize the solution for
+   ``ITERATIVE_SCHUR``. This option can be set ``true`` regardless of
+   what preconditioner is being used.
+
+.. member:: double Solver::Options::spse_tolerance
+
+   Default: `0.1`
+
+   When ``use_spse_initialization`` is ``true``, this parameter along
+   with ``max_num_spse_iterations`` controls the number of
+   ``SCHUR_POWER_SERIES_EXPANSION`` iterations performed for
+   initialization. It is not used to control the preconditioner.
 
 .. member:: double Solver::Options::eta
 
@@ -1579,21 +1898,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    objects that have an :class:`EvaluationCallback` associated with
    them.
 
-.. member:: double Solver::Options::inner_iteration_tolerance
-
-   Default: ``1e-3``
-
-   Generally speaking, inner iterations make significant progress in
-   the early stages of the solve and then their contribution drops
-   down sharply, at which point the time spent doing inner iterations
-   is not worth it.
-
-   Once the relative decrease in the objective function due to inner
-   iterations drops below ``inner_iteration_tolerance``, the use of
-   inner iterations in subsequent trust region minimizer iterations is
-   disabled.
-
-.. member:: shared_ptr<ParameterBlockOrdering> Solver::Options::inner_iteration_ordering
+.. member:: std::shared_ptr<ParameterBlockOrdering> Solver::Options::inner_iteration_ordering
 
    Default: ``nullptr``
 
@@ -1612,9 +1917,26 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
 
    See :ref:`section-ordering` for more details.
 
+.. member:: double Solver::Options::inner_iteration_tolerance
+
+   Default: ``1e-3``
+
+   Generally speaking, inner iterations make significant progress in
+   the early stages of the solve and then their contribution drops
+   down sharply, at which point the time spent doing inner iterations
+   is not worth it.
+
+   Once the relative decrease in the objective function due to inner
+   iterations drops below ``inner_iteration_tolerance``, the use of
+   inner iterations in subsequent trust region minimizer iterations is
+   disabled.
+
+
 .. member:: LoggingType Solver::Options::logging_type
 
    Default: ``PER_MINIMIZER_ITERATION``
+
+   Valid values are ``SILENT`` and ``PER_MINIMIZER_ITERATION``.
 
 .. member:: bool Solver::Options::minimizer_progress_to_stdout
 
@@ -1672,7 +1994,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    #. ``it`` is the time take by the current iteration.
    #. ``tt`` is the total time taken by the minimizer.
 
-.. member:: vector<int> Solver::Options::trust_region_minimizer_iterations_to_dump
+.. member:: std::vector<int> Solver::Options::trust_region_minimizer_iterations_to_dump
 
    Default: ``empty``
 
@@ -1680,7 +2002,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    the trust region problem. Useful for testing and benchmarking. If
    ``empty``, no problems are dumped.
 
-.. member:: string Solver::Options::trust_region_problem_dump_directory
+.. member:: std::string Solver::Options::trust_region_problem_dump_directory
 
    Default: ``/tmp``
 
@@ -1785,7 +2107,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    should not expect to look at the parameter blocks and interpret
    their values.
 
-.. member:: vector<IterationCallback> Solver::Options::callbacks
+.. member:: std::vector<IterationCallback> Solver::Options::callbacks
 
    Default: ``empty``
 
@@ -1866,7 +2188,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    Number of groups with one or more elements.
 
 :class:`IterationSummary`
-==========================
+=========================
 
 .. class:: IterationSummary
 
@@ -2076,13 +2398,13 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
 
    Number of columns.
 
-.. member:: vector<int> CRSMatrix::rows
+.. member:: std::vector<int> CRSMatrix::rows
 
    :member:`CRSMatrix::rows` is a :member:`CRSMatrix::num_rows` + 1
    sized array that points into the :member:`CRSMatrix::cols` and
    :member:`CRSMatrix::values` array.
 
-.. member:: vector<int> CRSMatrix::cols
+.. member:: std::vector<int> CRSMatrix::cols
 
    :member:`CRSMatrix::cols` contain as many entries as there are
    non-zeros in the matrix.
@@ -2090,7 +2412,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    For each row ``i``, ``cols[rows[i]]`` ... ``cols[rows[i + 1] - 1]``
    are the indices of the non-zero columns of row ``i``.
 
-.. member:: vector<double> CRSMatrix::values
+.. member:: std::vector<double> CRSMatrix::values
 
    :member:`CRSMatrix::values` contain as many entries as there are
    non-zeros in the matrix.
@@ -2124,12 +2446,12 @@ The three arrays will be:
 
    Summary of the various stages of the solver after termination.
 
-.. function:: string Solver::Summary::BriefReport() const
+.. function:: std::string Solver::Summary::BriefReport() const
 
    A brief one line description of the state of the solver after
    termination.
 
-.. function:: string Solver::Summary::FullReport() const
+.. function:: std::string Solver::Summary::FullReport() const
 
    A full multiline description of the state of the solver after
    termination.
@@ -2152,7 +2474,7 @@ The three arrays will be:
 
    The cause of the minimizer terminating.
 
-.. member:: string Solver::Summary::message
+.. member:: std::string Solver::Summary::message
 
    Reason why the solver terminated.
 
@@ -2172,14 +2494,14 @@ The three arrays will be:
    were held fixed by the preprocessor because all the parameter
    blocks that they depend on were fixed.
 
-.. member:: vector<IterationSummary> Solver::Summary::iterations
+.. member:: std::vector<IterationSummary> Solver::Summary::iterations
 
    :class:`IterationSummary` for each minimizer iteration in order.
 
 .. member:: int Solver::Summary::num_successful_steps
 
    Number of minimizer iterations in which the step was
-   accepted. Unless :member:`Solver::Options::use_non_monotonic_steps`
+   accepted. Unless :member:`Solver::Options::use_nonmonotonic_steps`
    is `true` this is also the number of steps in which the objective
    function value/cost went down.
 
@@ -2321,12 +2643,12 @@ The three arrays will be:
    `SPARSE_NORMAL_CHOLESKY` but no sparse linear algebra library was
    available.
 
-.. member:: vector<int> Solver::Summary::linear_solver_ordering_given
+.. member:: std::vector<int> Solver::Summary::linear_solver_ordering_given
 
    Size of the elimination groups given by the user as hints to the
    linear solver.
 
-.. member:: vector<int> Solver::Summary::linear_solver_ordering_used
+.. member:: std::vector<int> Solver::Summary::linear_solver_ordering_used
 
    Size of the parameter groups used by the solver when ordering the
    columns of the Jacobian.  This maybe different from
@@ -2364,12 +2686,12 @@ The three arrays will be:
    actually performed. For example, in a problem with just one parameter
    block, inner iterations are not performed.
 
-.. member:: vector<int> inner_iteration_ordering_given
+.. member:: std::vector<int> Solver::Summary::inner_iteration_ordering_given
 
    Size of the parameter groups given by the user for performing inner
    iterations.
 
-.. member:: vector<int> inner_iteration_ordering_used
+.. member:: std::vector<int> Solver::Summary::inner_iteration_ordering_used
 
    Size of the parameter groups given used by the solver for
    performing inner iterations. This maybe different from
@@ -2394,7 +2716,7 @@ The three arrays will be:
 
    Type of clustering algorithm used for visibility based
    preconditioning. Only meaningful when the
-   :member:`Solver::Summary::preconditioner_type` is
+   :member:`Solver::Summary::preconditioner_type_used` is
    ``CLUSTER_JACOBI`` or ``CLUSTER_TRIDIAGONAL``.
 
 .. member:: TrustRegionStrategyType Solver::Summary::trust_region_strategy_type
