@@ -45,6 +45,9 @@ References
 .. [Conn] A.R. Conn, N.I.M. Gould, and P.L. Toint, **Trust region
    methods**, *Society for Industrial Mathematics*, 2000.
 
+.. [Davis] Timothy A. Davis, **Direct methods for Sparse Linear
+   Systems**, *SIAM*, 2006.
+
 .. [Dellaert] F. Dellaert, J. Carlson, V. Ila, K. Ni and C. E. Thorpe,
    **Subgraph-preconditioned conjugate gradients for large scale SLAM**,
    *International Conference on Intelligent Robots and Systems*, 2010.
@@ -58,7 +61,7 @@ References
    Preconditioners for Sparse Linear Least-Squares Problems**,
    *ACM Trans. Math. Softw.*, 43(4), 2017.
 
-.. [HartleyZisserman] R.I. Hartley & A. Zisserman, **Multiview
+.. [HartleyZisserman] R.I. Hartley and A. Zisserman, **Multiview
    Geometry in Computer Vision**, Cambridge University Press, 2004.
 
 .. [Hertzberg] C. Hertzberg, R. Wagner, U. Frese and L. Schroder,
@@ -93,6 +96,11 @@ References
    preconditioner for large sparse least squares problems**, *SIAM
    Journal on Matrix Analysis and Applications*, 28(2):524-550, 2007.
 
+.. [LourakisArgyros] M. L. A. Lourakis, A. A. Argyros, **Is
+   Levenberg-Marquardt the most efficient algorithm for implementing
+   bundle adjustment?**, *International Conference on Computer
+   Vision*, 2005.
+
 .. [Madsen] K. Madsen, H.B. Nielsen, and O. Tingleff, **Methods for
    nonlinear least squares problems**, 2004.
 
@@ -114,7 +122,7 @@ References
 .. [Nocedal] J. Nocedal, **Updating Quasi-Newton Matrices with Limited
    Storage**, *Mathematics of Computation*, 35(151): 773--782, 1980.
 
-.. [NocedalWright] J. Nocedal & S. Wright, **Numerical Optimization**,
+.. [NocedalWright] J. Nocedal and S. Wright, **Numerical Optimization**,
    Springer, 2004.
 
 .. [Oren] S. S. Oren, **Self-scaling Variable Metric (SSVM) Algorithms
@@ -122,7 +130,7 @@ References
    20(5), 863-874, 1974.
 
 .. [Press] W. H. Press, S. A. Teukolsky, W. T. Vetterling
-   & B. P. Flannery, **Numerical Recipes**, Cambridge University
+   and B. P. Flannery, **Numerical Recipes**, Cambridge University
    Press, 2007.
 
 .. [Ridders] C. J. F. Ridders, **Accurate computation of F'(x) and
@@ -136,27 +144,37 @@ References
    systems**, SIAM, 2003.
 
 .. [Simon] I. Simon, N. Snavely and S. M. Seitz, **Scene Summarization
-   for Online Image Collections**, *International Conference on Computer Vision*, 2007.
+   for Online Image Collections**, *International Conference on
+   Computer Vision*, 2007.
 
 .. [Stigler] S. M. Stigler, **Gauss and the invention of least
    squares**, *The Annals of Statistics*, 9(3):465-474, 1981.
 
-.. [TenenbaumDirector] J. Tenenbaum & B. Director, **How Gauss
+.. [TenenbaumDirector] J. Tenenbaum and B. Director, **How Gauss
    Determined the Orbit of Ceres**.
 
 .. [TrefethenBau] L.N. Trefethen and D. Bau, **Numerical Linear
    Algebra**, SIAM, 1997.
 
-.. [Triggs] B. Triggs, P. F. Mclauchlan, R. I. Hartley &
+.. [Triggs] B. Triggs, P. F. Mclauchlan, R. I. Hartley and
    A. W. Fitzgibbon, **Bundle Adjustment: A Modern Synthesis**,
    Proceedings of the International Workshop on Vision Algorithms:
    Theory and Practice, pp. 298-372, 1999.
+
+.. [Weber] S. Weber, N. Demmel, TC Chan, D. Cremers, **Power Bundle
+   Adjustment for Large-Scale 3D Reconstruction**, *IEEE Conference on
+   Computer Vision and Pattern Recognition*, 2023.
 
 .. [Wiberg] T. Wiberg, **Computation of principal components when data
    are missing**, In Proc. *Second Symp. Computational Statistics*,
    pages 229-236, 1976.
 
-.. [WrightHolt] S. J. Wright and J. N. Holt, **An Inexact
-   Levenberg Marquardt Method for Large Sparse Nonlinear Least
-   Squares**, *Journal of the Australian Mathematical Society Series
-   B*, 26(4):387-403, 1985.
+.. [WrightHolt] S. J. Wright and J. N. Holt, **An Inexact Levenberg
+   Marquardt Method for Large Sparse Nonlinear Least Squares**,
+   *Journal of the Australian Mathematical Society Series B*,
+   26(4):387-403, 1985.
+
+.. [Zheng] Q. Zheng, Y. Xi and Y. Saad, **A power Schur Complement
+   low-rank correction preconditioner for general sparse linear
+   systems**, *SIAM Journal on Matrix Analysis and
+   Applications*, 2021.
