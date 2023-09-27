@@ -136,15 +136,6 @@
 #include "gflags/gflags.h"
 #include "glog/logging.h"
 
-using ceres::AutoDiffCostFunction;
-using ceres::CauchyLoss;
-using ceres::CostFunction;
-using ceres::DynamicAutoDiffCostFunction;
-using ceres::LossFunction;
-using ceres::Problem;
-using ceres::Solve;
-using ceres::Solver;
-
 DEFINE_double(corridor_length,
               30.0,
               "Length of the corridor that the robot is travelling down.");
@@ -166,7 +157,8 @@ DEFINE_double(range_stddev,
 static constexpr int kStride = 10;
 
 struct OdometryConstraint {
-  using OdometryCostFunction = AutoDiffCostFunction<OdometryConstraint, 1, 1>;
+  using OdometryCostFunction =
+      ceres::AutoDiffCostFunction<OdometryConstraint, 1, 1>;
 
   OdometryConstraint(double odometry_mean, double odometry_stddev)
       : odometry_mean(odometry_mean), odometry_stddev(odometry_stddev) {}
@@ -188,7 +180,7 @@ struct OdometryConstraint {
 
 struct RangeConstraint {
   using RangeCostFunction =
-      DynamicAutoDiffCostFunction<RangeConstraint, kStride>;
+      ceres::DynamicAutoDiffCostFunction<RangeConstraint, kStride>;
 
   RangeConstraint(int pose_index,
                   double range_reading,
@@ -327,9 +319,9 @@ int main(int argc, char** argv) {
   ceres::Solver::Options solver_options;
   solver_options.minimizer_progress_to_stdout = true;
 
-  Solver::Summary summary;
+  ceres::Solver::Summary summary;
   printf("Solving...\n");
-  Solve(solver_options, &problem, &summary);
+  ceres::Solve(solver_options, &problem, &summary);
   printf("Done.\n");
   std::cout << summary.FullReport() << "\n";
   printf("Final values:\n");

@@ -35,19 +35,12 @@
 #include "ceres/cubic_interpolation.h"
 #include "glog/logging.h"
 
-using ceres::AutoDiffCostFunction;
-using ceres::CostFunction;
-using ceres::CubicInterpolator;
-using ceres::Grid1D;
-using ceres::Problem;
-using ceres::Solve;
-using ceres::Solver;
+using Interpolator = ceres::CubicInterpolator<ceres::Grid1D<double>>;
 
 // A simple cost functor that interfaces an interpolated table of
 // values with automatic differentiation.
 struct InterpolatedCostFunctor {
-  explicit InterpolatedCostFunctor(
-      const CubicInterpolator<Grid1D<double>>& interpolator)
+  explicit InterpolatedCostFunctor(const Interpolator& interpolator)
       : interpolator_(interpolator) {}
 
   template <typename T>
@@ -56,14 +49,13 @@ struct InterpolatedCostFunctor {
     return true;
   }
 
-  static CostFunction* Create(
-      const CubicInterpolator<Grid1D<double>>& interpolator) {
-    return new AutoDiffCostFunction<InterpolatedCostFunctor, 1, 1>(
+  static ceres::CostFunction* Create(const Interpolator& interpolator) {
+    return new ceres::AutoDiffCostFunction<InterpolatedCostFunctor, 1, 1>(
         new InterpolatedCostFunctor(interpolator));
   }
 
  private:
-  const CubicInterpolator<Grid1D<double>>& interpolator_;
+  const Interpolator& interpolator_;
 };
 
 int main(int argc, char** argv) {
@@ -76,18 +68,19 @@ int main(int argc, char** argv) {
     values[i] = (i - 4.5) * (i - 4.5);
   }
 
-  Grid1D<double> array(values, 0, kNumSamples);
-  CubicInterpolator<Grid1D<double>> interpolator(array);
+  ceres::Grid1D<double> array(values, 0, kNumSamples);
+  Interpolator interpolator(array);
 
   double x = 1.0;
-  Problem problem;
-  CostFunction* cost_function = InterpolatedCostFunctor::Create(interpolator);
+  ceres::Problem problem;
+  ceres::CostFunction* cost_function =
+      InterpolatedCostFunctor::Create(interpolator);
   problem.AddResidualBlock(cost_function, nullptr, &x);
 
-  Solver::Options options;
+  ceres::Solver::Options options;
   options.minimizer_progress_to_stdout = true;
-  Solver::Summary summary;
-  Solve(options, &problem, &summary);
+  ceres::Solver::Summary summary;
+  ceres::Solve(options, &problem, &summary);
   std::cout << summary.BriefReport() << "\n";
   std::cout << "Expected x: 4.5. Actual x : " << x << std::endl;
   return 0;
