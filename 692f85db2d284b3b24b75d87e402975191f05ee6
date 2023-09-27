@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "84aca1da_fcf7a0b6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-09-27T15:45:53Z",
+      "side": 1,
+      "message": "On one hand I agree with you, but then I am not sure about what benchmarks to point them to. Between various solvers, platforms and options, the number of benchmarks is rather large and I do not even have the hardware to report them. \n\nWhat I think is worth doing, is some basic performance advice for things to try on your problem. That is something I have been meaning to do for a while now.",
+      "parentUuid": "4ff1230a_41494ffd",
+      "revId": "692f85db2d284b3b24b75d87e402975191f05ee6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d46abdff_a1b03249",
@@ -31,6 +49,30 @@
       "writtenOn": "2023-09-27T13:20:26Z",
       "side": 1,
       "message": "What does the \"%\u0026\" do?",
+      "range": {
+        "startLine": 11,
+        "startChar": 46,
+        "endLine": 11,
+        "endChar": 47
+      },
+      "revId": "692f85db2d284b3b24b75d87e402975191f05ee6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b42d40b_18fedd2e",
+        "filename": "docs/source/bibliography.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-09-27T15:45:53Z",
+      "side": 1,
+      "message": "oh thats some sort of typo.",
+      "parentUuid": "d46abdff_a1b03249",
       "range": {
         "startLine": 11,
         "startChar": 46,
@@ -60,6 +102,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1b442943_cc51588d",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-09-27T15:45:53Z",
+      "side": 1,
+      "message": "This is a subsection of the dense normal cholesky, I thought that was evident. But I see your comment below, let me see if I can just pull this out on its own and see if I can make it a more coherent section on its own.",
+      "parentUuid": "4ad9e072_633825a0",
+      "revId": "692f85db2d284b3b24b75d87e402975191f05ee6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "314faf04_2d668afb",
         "filename": "docs/source/nnls_solving.rst",
         "patchSetId": 3
@@ -71,6 +131,24 @@
       "writtenOn": "2023-09-27T13:20:26Z",
       "side": 1,
       "message": "What if you moved the Mixed Precision Solves section out from under Dense and Sparse Cholesky, and just discussed it once, listing which underlying linear solvers support it?",
+      "revId": "692f85db2d284b3b24b75d87e402975191f05ee6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95eff8d4_7cc27900",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-09-27T15:45:53Z",
+      "side": 1,
+      "message": "I was wondering about this myself. let me take a whack at it.",
+      "parentUuid": "314faf04_2d668afb",
       "revId": "692f85db2d284b3b24b75d87e402975191f05ee6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
