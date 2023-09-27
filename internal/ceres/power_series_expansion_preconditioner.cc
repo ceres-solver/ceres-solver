@@ -30,15 +30,20 @@
 
 #include "ceres/power_series_expansion_preconditioner.h"
 
+#include "ceres/eigen_vector_ops.h"
+#include "ceres/parallel_vector_ops.h"
+
 namespace ceres::internal {
 
 PowerSeriesExpansionPreconditioner::PowerSeriesExpansionPreconditioner(
     const ImplicitSchurComplement* isc,
     const int max_num_spse_iterations,
-    const double spse_tolerance)
+    const double spse_tolerance,
+    const Preconditioner::Options& options)
     : isc_(isc),
       max_num_spse_iterations_(max_num_spse_iterations),
-      spse_tolerance_(spse_tolerance) {}
+      spse_tolerance_(spse_tolerance),
+      options_(options) {}
 
 PowerSeriesExpansionPreconditioner::~PowerSeriesExpansionPreconditioner() =
     default;
@@ -53,17 +58,21 @@ void PowerSeriesExpansionPreconditioner::RightMultiplyAndAccumulate(
   VectorRef yref(y, num_rows());
   Vector series_term(num_rows());
   Vector previous_series_term(num_rows());
-  yref.setZero();
-  isc_->block_diagonal_FtF_inverse()->RightMultiplyAndAccumulate(x, y);
-  previous_series_term = yref;
+  ParallelSetZero(options_.context, options_.num_threads, yref);
+  isc_->block_diagonal_FtF_inverse()->RightMultiplyAndAccumulate(
+      x, y, options_.context, options_.num_threads);
+  ParallelAssign(
+      options_.context, options_.num_threads, previous_series_term, yref);
 
-  const double norm_threshold = spse_tolerance_ * yref.norm();
+  const double norm_threshold =
+      spse_tolerance_ * Norm(yref, options_.context, options_.num_threads);
 
   for (int i = 1;; i++) {
-    series_term.setZero();
+    ParallelSetZero(options_.context, options_.num_threads, series_term);
     isc_->InversePowerSeriesOperatorRightMultiplyAccumulate(
         previous_series_term.data(), series_term.data());
-    yref += series_term;
+    ParallelAssign(
+        options_.context, options_.num_threads, yref, yref + series_term);
     if (i >= max_num_spse_iterations_ || series_term.norm() < norm_threshold) {
       break;
     }
