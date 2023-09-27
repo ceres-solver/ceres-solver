@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ff1230a_41494ffd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2023-09-27T13:20:26Z",
+      "side": 1,
+      "message": "Looks good, only minor questions.\n\nIn the discussion about linear solvers, it might be useful to point the advanced user to the benchmarks --- exactly which solver is the fastest depends on a lot of details including supported libraries, computer architecture, and exact GPU generation. Short of just trying all options out on the users\u0027 problem, the benchmarks provide a reasonable sense of performance across the many linear solvers, and using several simulated problem types.",
+      "revId": "692f85db2d284b3b24b75d87e402975191f05ee6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d46abdff_a1b03249",
+        "filename": "docs/source/bibliography.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2023-09-27T13:20:26Z",
+      "side": 1,
+      "message": "What does the \"%\u0026\" do?",
+      "range": {
+        "startLine": 11,
+        "startChar": 46,
+        "endLine": 11,
+        "endChar": 47
+      },
+      "revId": "692f85db2d284b3b24b75d87e402975191f05ee6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ad9e072_633825a0",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2023-09-27T13:20:26Z",
+      "side": 1,
+      "message": "It would be good to mention here which linear solvers support mixed precision. If it is all, let\u0027s note that as so.",
+      "revId": "692f85db2d284b3b24b75d87e402975191f05ee6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "314faf04_2d668afb",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2023-09-27T13:20:26Z",
+      "side": 1,
+      "message": "What if you moved the Mixed Precision Solves section out from under Dense and Sparse Cholesky, and just discussed it once, listing which underlying linear solvers support it?",
+      "revId": "692f85db2d284b3b24b75d87e402975191f05ee6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
