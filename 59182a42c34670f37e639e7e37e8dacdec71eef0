@@ -33,6 +33,24 @@
       "message": "LGTM. \nOne minor thing you could add or ignore: can you include an AMD reference? The wikipedia article on MD is at least a start.",
       "revId": "59182a42c34670f37e639e7e37e8dacdec71eef0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3eb89bc6_bfb8374e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-09-27T21:45:53Z",
+      "side": 1,
+      "message": "the wikipedia articles on minimum degree as well nested dissection are both not great, so I am loathe to link to them right now :/ maybe once they get better?",
+      "parentUuid": "bae1e8d1_b8b78dbc",
+      "revId": "59182a42c34670f37e639e7e37e8dacdec71eef0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
