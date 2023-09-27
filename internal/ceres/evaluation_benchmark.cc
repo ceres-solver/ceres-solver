@@ -43,6 +43,7 @@
 #include "ceres/evaluator.h"
 #include "ceres/implicit_schur_complement.h"
 #include "ceres/partitioned_matrix_view.h"
+#include "ceres/power_series_expansion_preconditioner.h"
 #include "ceres/preprocessor.h"
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"
@@ -325,6 +326,29 @@ static void Plus(benchmark::State& state, BALData* data, ContextImpl* context) {
         data->parameters.data(), delta.data(), state_plus_delta.data()));
   }
   CHECK_GT(state_plus_delta.squaredNorm(), 0.);
+}
+
+static void PSEPreconditioner(benchmark::State& state,
+                              BALData* data,
+                              ContextImpl* context) {
+  LinearSolver::Options options;
+  options.num_threads = static_cast<int>(state.range(0));
+  options.elimination_groups.push_back(data->bal_problem->num_points());
+  options.context = context;
+
+  auto jacobian = data->ImplicitSchurComplementWithDiagonal(options);
+  Preconditioner::Options preconditioner_options(options);
+
+  PowerSeriesExpansionPreconditioner preconditioner(
+      jacobian, 10, 0, preconditioner_options);
+
+  Vector y = Vector::Zero(jacobian->num_cols());
+  Vector x = Vector::Random(jacobian->num_cols());
+
+  for (auto _ : state) {
+    preconditioner.RightMultiplyAndAccumulate(x.data(), y.data());
+  }
+  CHECK_GT(y.squaredNorm(), 0.);
 }
 
 static void PMVRightMultiplyAndAccumulateF(benchmark::State& state,
@@ -878,6 +902,16 @@ int main(int argc, char** argv) {
                                    ceres::internal::PMVUpdateBlockDiagonalFtF,
                                    data,
                                    &context)
+        ->Arg(1)
+        ->Arg(2)
+        ->Arg(4)
+        ->Arg(8)
+        ->Arg(16);
+
+    const std::string name_pse =
+        "PSEPreconditionerRightMultiplyAndAccumulate<" + path + ">";
+    ::benchmark::RegisterBenchmark(
+        name_pse.c_str(), ceres::internal::PSEPreconditioner, data, &context)
         ->Arg(1)
         ->Arg(2)
         ->Arg(4)

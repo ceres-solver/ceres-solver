@@ -41,20 +41,15 @@ namespace ceres::internal {
 // This is a preconditioner via power series expansion of Schur
 // complement inverse based on "Weber et al, Power Bundle Adjustment for
 // Large-Scale 3D Reconstruction".
-//
-//
-// TODO(https://github.com/ceres-solver/ceres-solver/issues/934): In
-// PowerSeriesExpansionPreconditioner::RightMultiplyAndAccumulate only
-// operations performed via ImplicitSchurComplement are threaded.
-// PowerSeriesExpansionPreconditioner will benefit from multithreading
-// applied to remaning operations (block-sparse right product and several
-// vector operations)
 class CERES_NO_EXPORT PowerSeriesExpansionPreconditioner
     : public Preconditioner {
  public:
+  // TODO: Consider moving max_num_spse_iterations and spse_tolerance to
+  // Preconditioner::Options
   PowerSeriesExpansionPreconditioner(const ImplicitSchurComplement* isc,
                                      const int max_num_spse_iterations,
-                                     const double spse_tolerance);
+                                     const double spse_tolerance,
+                                     const Preconditioner::Options& options);
   PowerSeriesExpansionPreconditioner(
       const PowerSeriesExpansionPreconditioner&) = delete;
   void operator=(const PowerSeriesExpansionPreconditioner&) = delete;
@@ -68,6 +63,7 @@ class CERES_NO_EXPORT PowerSeriesExpansionPreconditioner
   const ImplicitSchurComplement* isc_;
   const int max_num_spse_iterations_;
   const double spse_tolerance_;
+  const Preconditioner::Options options_;
 };
 
 }  // namespace ceres::internal
