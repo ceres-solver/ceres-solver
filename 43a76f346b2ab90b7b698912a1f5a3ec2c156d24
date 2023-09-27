@@ -16,6 +16,24 @@
       "message": "Please add an overview comment block explaining what this example is illustrating.",
       "revId": "43a76f346b2ab90b7b698912a1f5a3ec2c156d24",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "735b30d0_52d97104",
+        "filename": "examples/iteration_callback_example.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-09-27T22:38:56Z",
+      "side": 1,
+      "message": "Let me do that for all the examples in a follow up CL.",
+      "parentUuid": "1027a089_492b5da3",
+      "revId": "43a76f346b2ab90b7b698912a1f5a3ec2c156d24",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
