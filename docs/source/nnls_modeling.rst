@@ -2433,7 +2433,7 @@ be constructed as
 
       class EvaluationCallback {
        public:
-        virtual ~EvaluationCallback() = default;
+        virtual ~EvaluationCallback();
         virtual void PrepareForEvaluation(bool evaluate_jacobians,
                                           bool new_evaluation_point) = 0;
       };
