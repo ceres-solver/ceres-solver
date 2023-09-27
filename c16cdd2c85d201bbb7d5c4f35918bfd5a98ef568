@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "167770b8_534537b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-09-27T15:48:43Z",
+      "side": 1,
+      "message": "The current version of the docs can be seen at \n\nhttp://ceres-solver.org/sandbox/",
+      "revId": "c16cdd2c85d201bbb7d5c4f35918bfd5a98ef568",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
