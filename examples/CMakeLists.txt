@@ -75,6 +75,9 @@ target_link_libraries(bicubic_interpolation PRIVATE Ceres::ceres)
 add_executable(bicubic_interpolation_analytic bicubic_interpolation_analytic.cc)
 target_link_libraries(bicubic_interpolation_analytic PRIVATE Ceres::ceres)
 
+add_executable(iteration_callback_example iteration_callback_example.cc)
+target_link_libraries(iteration_callback_example PRIVATE Ceres::ceres)
+
 if (GFLAGS)
   add_executable(powell powell.cc)
   target_link_libraries(powell PRIVATE Ceres::ceres gflags)
