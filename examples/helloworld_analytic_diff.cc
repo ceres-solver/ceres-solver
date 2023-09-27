@@ -37,17 +37,11 @@
 #include "ceres/ceres.h"
 #include "glog/logging.h"
 
-using ceres::CostFunction;
-using ceres::Problem;
-using ceres::SizedCostFunction;
-using ceres::Solve;
-using ceres::Solver;
-
 // A CostFunction implementing analytically derivatives for the
 // function f(x) = 10 - x.
 class QuadraticCostFunction
-    : public SizedCostFunction<1 /* number of residuals */,
-                               1 /* size of first parameter */> {
+    : public ceres::SizedCostFunction<1 /* number of residuals */,
+                                      1 /* size of first parameter */> {
  public:
   bool Evaluate(double const* const* parameters,
                 double* residuals,
@@ -86,17 +80,17 @@ int main(int argc, char** argv) {
   const double initial_x = x;
 
   // Build the problem.
-  Problem problem;
+  ceres::Problem problem;
 
   // Set up the only cost function (also known as residual).
-  CostFunction* cost_function = new QuadraticCostFunction;
+  ceres::CostFunction* cost_function = new QuadraticCostFunction;
   problem.AddResidualBlock(cost_function, nullptr, &x);
 
   // Run the solver!
-  Solver::Options options;
+  ceres::Solver::Options options;
   options.minimizer_progress_to_stdout = true;
-  Solver::Summary summary;
-  Solve(options, &problem, &summary);
+  ceres::Solver::Summary summary;
+  ceres::Solve(options, &problem, &summary);
 
   std::cout << summary.BriefReport() << "\n";
   std::cout << "x : " << initial_x << " -> " << x << "\n";

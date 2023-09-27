@@ -57,14 +57,6 @@
 #include "gflags/gflags.h"
 #include "glog/logging.h"
 
-using ceres::AutoDiffCostFunction;
-using ceres::CauchyLoss;
-using ceres::CostFunction;
-using ceres::LossFunction;
-using ceres::Problem;
-using ceres::Solve;
-using ceres::Solver;
-
 DEFINE_double(robust_threshold,
               0.0,
               "Robust loss parameter. Set to 0 for normal squared error (no "
@@ -128,20 +120,20 @@ int main(int argc, char** argv) {
   // Parameterize r as m^2 so that it can't be negative.
   double m = sqrt(r);
 
-  Problem problem;
+  ceres::Problem problem;
 
   // Configure the loss function.
-  LossFunction* loss = nullptr;
+  ceres::LossFunction* loss = nullptr;
   if (CERES_GET_FLAG(FLAGS_robust_threshold)) {
-    loss = new CauchyLoss(CERES_GET_FLAG(FLAGS_robust_threshold));
+    loss = new ceres::CauchyLoss(CERES_GET_FLAG(FLAGS_robust_threshold));
   }
 
   // Add the residuals.
   double xx, yy;
   int num_points = 0;
   while (scanf("%lf %lf\n", &xx, &yy) == 2) {
-    CostFunction* cost =
-        new AutoDiffCostFunction<DistanceFromCircleCost, 1, 1, 1, 1>(
+    ceres::CostFunction* cost =
+        new ceres::AutoDiffCostFunction<DistanceFromCircleCost, 1, 1, 1, 1>(
             new DistanceFromCircleCost(xx, yy));
     problem.AddResidualBlock(cost, loss, &x, &y, &m);
     num_points++;
@@ -150,11 +142,11 @@ int main(int argc, char** argv) {
   std::cout << "Got " << num_points << " points.\n";
 
   // Build and solve the problem.
-  Solver::Options options;
+  ceres::Solver::Options options;
   options.max_num_iterations = 500;
   options.linear_solver_type = ceres::DENSE_QR;
-  Solver::Summary summary;
-  Solve(options, &problem, &summary);
+  ceres::Solver::Summary summary;
+  ceres::Solve(options, &problem, &summary);
 
   // Recover r from m.
   r = m * m;

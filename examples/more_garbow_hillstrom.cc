@@ -585,7 +585,6 @@ bool Solve(bool is_constrained, int trial) {
 int main(int argc, char** argv) {
   GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
-
   using ceres::examples::Solve;
 
   int unconstrained_problems = 0;
