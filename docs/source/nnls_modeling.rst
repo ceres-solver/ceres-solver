@@ -2478,7 +2478,10 @@ be constructed as
    to use a global shared variable (discouraged; bug-prone).  As far
    as Ceres is concerned, it is evaluating cost functions like any
    other; it just so happens that behind the scenes the cost functions
-   reuse pre-computed data to execute faster.
+   reuse pre-computed data to execute faster. See
+   `examples/evaluation_callback_example.cc
+   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/evaluation_callback_example.cc>`_
+   for an example.
 
    See ``evaluation_callback_test.cc`` for code that explicitly
    verifies the preconditions between
