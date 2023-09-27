@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1027a089_492b5da3",
+        "filename": "examples/iteration_callback_example.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2023-09-27T22:24:59Z",
+      "side": 1,
+      "message": "Please add an overview comment block explaining what this example is illustrating.",
+      "revId": "43a76f346b2ab90b7b698912a1f5a3ec2c156d24",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
