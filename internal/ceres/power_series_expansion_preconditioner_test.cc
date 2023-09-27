@@ -49,6 +49,7 @@ class PowerSeriesExpansionPreconditionerTest : public ::testing::Test {
 
     options_.elimination_groups.push_back(problem_->num_eliminate_blocks);
     options_.preconditioner_type = SCHUR_POWER_SERIES_EXPANSION;
+    preconditioner_options_ = Preconditioner::Options(options_);
     isc_ = std::make_unique<ImplicitSchurComplement>(options_);
     isc_->Init(*A, D, problem_->b.get());
     num_f_cols_ = isc_->rhs().rows();
@@ -78,6 +79,7 @@ class PowerSeriesExpansionPreconditionerTest : public ::testing::Test {
   int num_f_cols_;
   Matrix sc_inverse_expected_;
   LinearSolver::Options options_;
+  Preconditioner::Options preconditioner_options_;
 };
 
 TEST_F(PowerSeriesExpansionPreconditionerTest,
@@ -85,7 +87,7 @@ TEST_F(PowerSeriesExpansionPreconditionerTest,
   const double spse_tolerance = kEpsilon;
   const int max_num_iterations = 50;
   PowerSeriesExpansionPreconditioner preconditioner(
-      isc_.get(), max_num_iterations, spse_tolerance);
+      isc_.get(), max_num_iterations, spse_tolerance, preconditioner_options_);
 
   Vector x(num_f_cols_), y(num_f_cols_);
   for (int i = 0; i < num_f_cols_; i++) {
@@ -108,7 +110,7 @@ TEST_F(PowerSeriesExpansionPreconditionerTest,
   const double spse_tolerance = 0;
   const int max_num_iterations = 50;
   PowerSeriesExpansionPreconditioner preconditioner_fixed_n_iterations(
-      isc_.get(), max_num_iterations, spse_tolerance);
+      isc_.get(), max_num_iterations, spse_tolerance, preconditioner_options_);
 
   Vector x(num_f_cols_), y(num_f_cols_);
   for (int i = 0; i < num_f_cols_; i++) {
@@ -132,7 +134,7 @@ TEST_F(PowerSeriesExpansionPreconditionerTest,
   const double spse_tolerance = 1 / kEpsilon;
   const int max_num_iterations = 50;
   PowerSeriesExpansionPreconditioner preconditioner_bad_tolerance(
-      isc_.get(), max_num_iterations, spse_tolerance);
+      isc_.get(), max_num_iterations, spse_tolerance, preconditioner_options_);
 
   Vector x(num_f_cols_), y(num_f_cols_);
   for (int i = 0; i < num_f_cols_; i++) {
@@ -153,7 +155,7 @@ TEST_F(PowerSeriesExpansionPreconditionerTest,
   const double spse_tolerance = kEpsilon;
   const int max_num_iterations = 1;
   PowerSeriesExpansionPreconditioner preconditioner_bad_iterations_limit(
-      isc_.get(), max_num_iterations, spse_tolerance);
+      isc_.get(), max_num_iterations, spse_tolerance, preconditioner_options_);
 
   Vector x(num_f_cols_), y(num_f_cols_);
   for (int i = 0; i < num_f_cols_; i++) {

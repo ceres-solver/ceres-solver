@@ -54,7 +54,8 @@ class CERES_NO_EXPORT PowerSeriesExpansionPreconditioner
  public:
   PowerSeriesExpansionPreconditioner(const ImplicitSchurComplement* isc,
                                      const int max_num_spse_iterations,
-                                     const double spse_tolerance);
+                                     const double spse_tolerance,
+                                     const Preconditioner::Options& options);
   PowerSeriesExpansionPreconditioner(
       const PowerSeriesExpansionPreconditioner&) = delete;
   void operator=(const PowerSeriesExpansionPreconditioner&) = delete;
@@ -68,6 +69,7 @@ class CERES_NO_EXPORT PowerSeriesExpansionPreconditioner
   const ImplicitSchurComplement* isc_;
   const int max_num_spse_iterations_;
   const double spse_tolerance_;
+  const Preconditioner::Options options_;
 };
 
 }  // namespace ceres::internal
