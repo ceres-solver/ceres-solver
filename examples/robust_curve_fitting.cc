@@ -27,6 +27,12 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
+//
+// This example fits the curve f(x;m,c) = e^(m * x + c) to data. However unlike
+// the data in curve_fitting.cc, the data here has outliers in it, so minimizing
+// the sum squared loss will result in a bad fit. So this example illustrates
+// the use of a robust loss function (CauchyLoss) to reduce the influence of the
+// outliers on the fit.
 
 #include "ceres/ceres.h"
 #include "glog/logging.h"

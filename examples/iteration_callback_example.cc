@@ -27,6 +27,11 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
+//
+// This example is a variant of curve_fitting.cc where we use an
+// IterationCallback to implement custom logging which prints out the values of
+// the parameter blocks as they evolve over the course of the optimization. This
+// also requires the use of Solver::Options::update_state_every_iteration.
 
 #include "ceres/ceres.h"
 #include "glog/logging.h"

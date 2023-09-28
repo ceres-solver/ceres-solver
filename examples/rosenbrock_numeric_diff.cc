@@ -27,6 +27,11 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
+//
+// Example of minimizing the Rosenbrock function
+// (https://en.wikipedia.org/wiki/Rosenbrock_function) using
+// GradientProblemSolver using derivatives computed using numeric
+// differentiation.
 
 #include "ceres/ceres.h"
 #include "glog/logging.h"

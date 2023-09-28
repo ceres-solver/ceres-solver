@@ -27,6 +27,9 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
+//
+// This example fits the curve f(x;m,c) = e^(m * x + c) to data, minimizing the
+// sum squared loss.
 
 #include "ceres/ceres.h"
 #include "glog/logging.h"
