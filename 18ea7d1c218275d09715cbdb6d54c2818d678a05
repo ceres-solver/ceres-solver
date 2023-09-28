@@ -86,6 +86,24 @@
       "tag": "mailMessageId\u003d\u003cCABqdRUBXGdnPdTQMSKHrq1bRSbFA353JBCV+ayAaELNL73Be8w@mail.gmail.com\u003e",
       "revId": "18ea7d1c218275d09715cbdb6d54c2818d678a05",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89f59364_a9c4307b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-09-28T20:46:06Z",
+      "side": 1,
+      "message": "I think this is still affecting windows builds.\nContextImpl depends on ThreadPool which depends on ConcurentQueue and other things, so passing ContextImpl into methods in ceres_cuda_kernels becomes very painful.\n\n\n\nI have three solutions in mind:\n\n a. Add dependencies of ceres as dependencies of ceres_cuda_kernels (on CMake level); this solves problems with include paths; however, I got the problem with nvcc not supporting nested namespaces (ceres::internal) once again (on windows).\n\n b. Add a CudaContext structure to ceres_cuda_kernels, and add a field of this type  in ContextImpl.\n\n c. Pass boolean flag for cudaMallocAsync support (as it was done in the initial version of CL).\n\nWhat option is the best in your opinion?",
+      "parentUuid": "a126e2fe_103cb699",
+      "revId": "18ea7d1c218275d09715cbdb6d54c2818d678a05",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
