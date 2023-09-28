@@ -1,5 +1,5 @@
 # Ceres Solver - A fast non-linear least squares minimizer
-# Copyright 2022 Google Inc. All rights reserved.
+# Copyright 2023 Google Inc. All rights reserved.
 # http://ceres-solver.org/
 #
 # Redistribution and use in source and binary forms, with or without
@@ -46,6 +46,7 @@ ceres_test(ba_sparseschur_eigensparse_auto)
 ceres_test(ba_sparseschur_acceleratesparse_auto)
 ceres_test(ba_iterschur_jacobi_auto)
 ceres_test(ba_iterschur_schurjacobi_auto)
+ceres_test(ba_iterschur_spse_auto)
 ceres_test(ba_iterschur_suitesparse_clustjacobi_auto)
 ceres_test(ba_iterschur_eigensparse_clustjacobi_auto)
 ceres_test(ba_iterschur_acceleratesparse_clustjacobi_auto)
@@ -63,6 +64,7 @@ ceres_test(ba_sparseschur_eigensparse_auto_threads)
 ceres_test(ba_sparseschur_acceleratesparse_auto_threads)
 ceres_test(ba_iterschur_jacobi_auto_threads)
 ceres_test(ba_iterschur_schurjacobi_auto_threads)
+ceres_test(ba_iterschur_spse_auto_threads)
 ceres_test(ba_iterschur_suitesparse_clustjacobi_auto_threads)
 ceres_test(ba_iterschur_eigensparse_clustjacobi_auto_threads)
 ceres_test(ba_iterschur_acceleratesparse_clustjacobi_auto_threads)
@@ -80,6 +82,7 @@ ceres_test(ba_sparseschur_eigensparse_user)
 ceres_test(ba_sparseschur_acceleratesparse_user)
 ceres_test(ba_iterschur_jacobi_user)
 ceres_test(ba_iterschur_schurjacobi_user)
+ceres_test(ba_iterschur_spse_user)
 ceres_test(ba_iterschur_suitesparse_clustjacobi_user)
 ceres_test(ba_iterschur_eigensparse_clustjacobi_user)
 ceres_test(ba_iterschur_acceleratesparse_clustjacobi_user)
@@ -97,6 +100,7 @@ ceres_test(ba_sparseschur_eigensparse_user_threads)
 ceres_test(ba_sparseschur_acceleratesparse_user_threads)
 ceres_test(ba_iterschur_jacobi_user_threads)
 ceres_test(ba_iterschur_schurjacobi_user_threads)
+ceres_test(ba_iterschur_spse_user_threads)
 ceres_test(ba_iterschur_suitesparse_clustjacobi_user_threads)
 ceres_test(ba_iterschur_eigensparse_clustjacobi_user_threads)
 ceres_test(ba_iterschur_acceleratesparse_clustjacobi_user_threads)

@@ -46,6 +46,7 @@ TEST_F(BundleAdjustmentTest,
        IterativeSchur_SuiteSparse_ClusterTridiagonal_UserOrdering) {  // NOLINT
   BundleAdjustmentProblem bundle_adjustment_problem;
   Solver::Options* options = bundle_adjustment_problem.mutable_solver_options();
+  options->eta = 0.01;
   options->num_threads = 1;
   options->linear_solver_type = ITERATIVE_SCHUR;
   options->dense_linear_algebra_library_type = EIGEN;

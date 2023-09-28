@@ -41,16 +41,16 @@
 namespace ceres::internal {
 
 TEST_F(BundleAdjustmentTest,
-       IterativeSchur_SchurJacobi_UserOrdering_Threads) {  // NOLINT
+       IterativeSchur_SchurPowerSeriesExpansion_AutomaticOrdering) {  // NOLINT
   BundleAdjustmentProblem bundle_adjustment_problem;
   Solver::Options* options = bundle_adjustment_problem.mutable_solver_options();
   options->eta = 0.01;
-  options->num_threads = 4;
+  options->num_threads = 1;
   options->linear_solver_type = ITERATIVE_SCHUR;
   options->dense_linear_algebra_library_type = EIGEN;
   options->sparse_linear_algebra_library_type = NO_SPARSE;
-  options->preconditioner_type = SCHUR_JACOBI;
-  if (kUserOrdering) {
+  options->preconditioner_type = SCHUR_POWER_SERIES_EXPANSION;
+  if (kAutomaticOrdering) {
     options->linear_solver_ordering = nullptr;
   }
   Problem* problem = bundle_adjustment_problem.mutable_problem();

@@ -62,6 +62,7 @@ ITERATIVE_SOLVER_CONFIGS = [
     # Linear solver            Sparse backend      Preconditioner
     ('ITERATIVE_SCHUR',        'NO_SPARSE',        'JACOBI'),
     ('ITERATIVE_SCHUR',        'NO_SPARSE',        'SCHUR_JACOBI'),
+    ('ITERATIVE_SCHUR',        'NO_SPARSE',        'SCHUR_POWER_SERIES_EXPANSION'),
     ('ITERATIVE_SCHUR',        'SUITE_SPARSE',     'CLUSTER_JACOBI'),
     ('ITERATIVE_SCHUR',        'EIGEN_SPARSE',     'CLUSTER_JACOBI'),
     ('ITERATIVE_SCHUR',        'ACCELERATE_SPARSE','CLUSTER_JACOBI'),
@@ -87,6 +88,7 @@ FILENAME_SHORTENING_MAP = dict(
   SCHUR_JACOBI='schurjacobi',
   CLUSTER_JACOBI='clustjacobi',
   CLUSTER_TRIDIAGONAL='clusttri',
+  SCHUR_POWER_SERIES_EXPANSION='spse',
   kAutomaticOrdering='auto',
   kUserOrdering='user',
 )
@@ -140,6 +142,7 @@ TEST_F(BundleAdjustmentTest,
        %(test_class_name)s) {  // NOLINT
   BundleAdjustmentProblem bundle_adjustment_problem;
   Solver::Options* options = bundle_adjustment_problem.mutable_solver_options();
+  options->eta = 0.01;
   options->num_threads = %(num_threads)s;
   options->linear_solver_type = %(linear_solver)s;
   options->dense_linear_algebra_library_type = %(dense_backend)s;
