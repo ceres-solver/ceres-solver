@@ -58,6 +58,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8866af5_0dbabbd2",
+        "filename": "internal/ceres/iterative_schur_complement_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-09-28T21:13:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "378c7895_cb871e50",
+      "range": {
+        "startLine": 104,
+        "startChar": 17,
+        "endLine": 104,
+        "endChar": 40
+      },
+      "revId": "3a4ecab1eb242e3eef79ce4fe64b08969d415fe8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b2262546_ec0154d3",
@@ -71,6 +95,30 @@
       "writtenOn": "2023-09-28T16:06:57Z",
       "side": 1,
       "message": "and this I assume is threaded via the threading in ISC -\u003e PartitionedMatrixViewImpl?",
+      "range": {
+        "startLine": 72,
+        "startChar": 10,
+        "endLine": 72,
+        "endChar": 59
+      },
+      "revId": "3a4ecab1eb242e3eef79ce4fe64b08969d415fe8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f12a046_119a04d5",
+        "filename": "internal/ceres/power_series_expansion_preconditioner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-09-28T21:13:53Z",
+      "side": 1,
+      "message": "Yes, both ImplicitSchurComplement and PartitionedMatrixViewImpl have own pointer context / number of threads and use them for matrix-vector products",
+      "parentUuid": "b2262546_ec0154d3",
       "range": {
         "startLine": 72,
         "startChar": 10,
@@ -104,6 +152,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d431e6f2_6c346399",
+        "filename": "internal/ceres/power_series_expansion_preconditioner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-09-28T21:13:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "441abfcc_8f7684e7",
+      "range": {
+        "startLine": 55,
+        "startChar": 37,
+        "endLine": 55,
+        "endChar": 42
+      },
+      "revId": "3a4ecab1eb242e3eef79ce4fe64b08969d415fe8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8c6858b4_4fd49c47",
@@ -117,6 +189,30 @@
       "writtenOn": "2023-09-28T16:06:57Z",
       "side": 1,
       "message": "move these to the top please, we keep methods before members.",
+      "range": {
+        "startLine": 108,
+        "startChar": 11,
+        "endLine": 108,
+        "endChar": 12
+      },
+      "revId": "3a4ecab1eb242e3eef79ce4fe64b08969d415fe8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db269892_9903f3ef",
+        "filename": "internal/ceres/preconditioner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-09-28T21:13:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c6858b4_4fd49c47",
       "range": {
         "startLine": 108,
         "startChar": 11,
