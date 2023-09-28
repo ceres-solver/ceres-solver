@@ -16,6 +16,115 @@
       "message": "Added parallel multiplication by block-matrix, parallel vector operations.\n\nThere is some statistically-significant improvement.",
       "revId": "3a4ecab1eb242e3eef79ce4fe64b08969d415fe8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c237daed_0cfa44de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-09-28T16:06:57Z",
+      "side": 1,
+      "message": "Thanks for doing this on short notice Dmitry. A couple of minor comments and this is good to go.",
+      "revId": "3a4ecab1eb242e3eef79ce4fe64b08969d415fe8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "378c7895_cb871e50",
+        "filename": "internal/ceres/iterative_schur_complement_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-09-28T16:06:57Z",
+      "side": 1,
+      "message": "I am wondering if it would be better to add these two settings to preconditioner options instead? its a bit odd to be passing two settings here and the rest in preconditioner::options.\n\nthat said there is a complication, spse_tolerance is not really a preconditioner option.. it is only used when we use spse for initialization.\n\nperhaps this is better done in a follow up CL and not this one.\n\nso for now, I think it would be better to leave a TODO here.",
+      "range": {
+        "startLine": 104,
+        "startChar": 17,
+        "endLine": 104,
+        "endChar": 40
+      },
+      "revId": "3a4ecab1eb242e3eef79ce4fe64b08969d415fe8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2262546_ec0154d3",
+        "filename": "internal/ceres/power_series_expansion_preconditioner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-09-28T16:06:57Z",
+      "side": 1,
+      "message": "and this I assume is threaded via the threading in ISC -\u003e PartitionedMatrixViewImpl?",
+      "range": {
+        "startLine": 72,
+        "startChar": 10,
+        "endLine": 72,
+        "endChar": 59
+      },
+      "revId": "3a4ecab1eb242e3eef79ce4fe64b08969d415fe8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "441abfcc_8f7684e7",
+        "filename": "internal/ceres/power_series_expansion_preconditioner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-09-28T16:06:57Z",
+      "side": 1,
+      "message": "actually the TODO should be left here to rationalize the constructor syntax.",
+      "range": {
+        "startLine": 55,
+        "startChar": 37,
+        "endLine": 55,
+        "endChar": 42
+      },
+      "revId": "3a4ecab1eb242e3eef79ce4fe64b08969d415fe8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c6858b4_4fd49c47",
+        "filename": "internal/ceres/preconditioner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-09-28T16:06:57Z",
+      "side": 1,
+      "message": "move these to the top please, we keep methods before members.",
+      "range": {
+        "startLine": 108,
+        "startChar": 11,
+        "endLine": 108,
+        "endChar": 12
+      },
+      "revId": "3a4ecab1eb242e3eef79ce4fe64b08969d415fe8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
