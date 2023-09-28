@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9916a47_1e7dc885",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-09-28T08:38:09Z",
+      "side": 1,
+      "message": "Added parallel multiplication by block-matrix, parallel vector operations.\n\nThere is some statistically-significant improvement.",
+      "revId": "3a4ecab1eb242e3eef79ce4fe64b08969d415fe8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
