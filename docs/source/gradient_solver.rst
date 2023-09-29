@@ -1,6 +1,6 @@
-.. default-domain:: cpp
-
 .. highlight:: c++
+
+.. default-domain:: cpp
 
 .. cpp:namespace:: ceres
 
@@ -103,7 +103,7 @@ Solving
    behavior of the solver. We list the various settings and their
    default values below.
 
-.. function:: bool GradientProblemSolver::Options::IsValid(string* error) const
+.. function:: bool GradientProblemSolver::Options::IsValid(std::string* error) const
 
    Validate the values in the options struct and returns true on
    success. If there is a problem, the method returns false with
@@ -388,14 +388,14 @@ Solving
    #. ``it`` is the time take by the current iteration.
    #. ``tt`` is the total time taken by the minimizer.
 
-.. member:: vector<IterationCallback> GradientProblemSolver::Options::callbacks
+.. member:: std::vector<IterationCallback> GradientProblemSolver::Options::callbacks
 
    Callbacks that are executed at the end of each iteration of the
    :class:`Minimizer`. They are executed in the order that they are
    specified in this vector. By default, parameter blocks are updated
    only at the end of the optimization, i.e., when the
    :class:`Minimizer` terminates. This behavior is controlled by
-   :member:`GradientProblemSolver::Options::update_state_every_variable`. If
+   :member:`GradientProblemSolver::Options::update_state_every_iteration`. If
    the user wishes to have access to the update parameter blocks when
    his/her callbacks are executed, then set
    :member:`GradientProblemSolver::Options::update_state_every_iteration`
@@ -420,12 +420,12 @@ Solving
 
    Summary of the various stages of the solver after termination.
 
-.. function:: string GradientProblemSolver::Summary::BriefReport() const
+.. function:: std::string GradientProblemSolver::Summary::BriefReport() const
 
    A brief one line description of the state of the solver after
    termination.
 
-.. function:: string GradientProblemSolver::Summary::FullReport() const
+.. function:: std::string GradientProblemSolver::Summary::FullReport() const
 
    A full multiline description of the state of the solver after
    termination.
@@ -444,7 +444,7 @@ Solving
 
    The cause of the minimizer terminating.
 
-.. member:: string GradientProblemSolver::Summary::message
+.. member:: std::string GradientProblemSolver::Summary::message
 
    Reason why the solver terminated.
 
@@ -458,7 +458,7 @@ Solving
    Cost of the problem (value of the objective function) after the
    optimization.
 
-.. member:: vector<IterationSummary> GradientProblemSolver::Summary::iterations
+.. member:: std::vector<IterationSummary> GradientProblemSolver::Summary::iterations
 
    :class:`IterationSummary` for each minimizer iteration in order.
 

@@ -1,3 +1,4 @@
+.. highlight:: c++
 
 .. default-domain:: cpp
 
@@ -49,7 +50,7 @@ Where :math:`S` is a positive semi-definite matrix denoting the
 covariance of :math:`y`, then the maximum likelihood problem to be
 solved is
 
-.. math:: x^* = \arg \min_x f'(x) S^{-1} f(x)
+o.. math:: x^* = \arg \min_x f'(x) S^{-1} f(x)
 
 and the corresponding covariance estimate of :math:`x^*` is given by
 
@@ -302,7 +303,7 @@ cases.
    entire documentation for :class:`Covariance::Options` before using
    :class:`Covariance`.
 
-.. function:: bool Covariance::Compute(const vector<pair<const double*, const double*> >& covariance_blocks, Problem* problem)
+.. function:: bool Covariance::Compute(const std::vector<std::pair<const double*, const double*> >& covariance_blocks, Problem* problem)
 
    Compute a part of the covariance matrix.
 
@@ -378,7 +379,7 @@ Example Usage
  Covariance::Options options;
  Covariance covariance(options);
 
- vector<pair<const double*, const double*> > covariance_blocks;
+ std::vector<std::pair<const double*, const double*> > covariance_blocks;
  covariance_blocks.push_back(make_pair(x, x));
  covariance_blocks.push_back(make_pair(y, y));
  covariance_blocks.push_back(make_pair(x, y));
