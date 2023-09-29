@@ -41,7 +41,6 @@ namespace ceres {
 namespace internal {
 struct Block;
 struct Cell;
-class ContextImpl;
 
 // Compute structure of CRS matrix using block-sparse structure.
 // Arrays corresponding to CRS matrix are to be allocated by caller
@@ -54,7 +53,7 @@ void FillCRSStructure(const int num_row_blocks,
                       int* rows,
                       int* cols,
                       cudaStream_t stream,
-                      ContextImpl* context);
+                      bool memory_pools_supported);
 
 // Compute structure of partitioned CRS matrix using block-sparse structure.
 // Arrays corresponding to CRS matrices are to be allocated by caller
@@ -72,7 +71,7 @@ void FillCRSStructurePartitioned(const int num_row_blocks,
                                  int* rows_f,
                                  int* cols_f,
                                  cudaStream_t stream,
-                                 ContextImpl* context);
+                                 bool memory_pools_supported);
 
 // Permute segment of values from block-sparse matrix with sequential layout to
 // CRS order. Segment starts at block_sparse_offset and has length of num_values
