@@ -35,7 +35,6 @@
 #include <thrust/scan.h>
 
 #include "ceres/block_structure.h"
-#include "ceres/context_impl.h"
 #include "ceres/cuda_kernels_utils.h"
 
 namespace ceres {
@@ -50,6 +49,50 @@ inline auto ThrustCudaStreamExecutionPolicy(cudaStream_t stream) {
 #else
   return thrust::cuda::par_nosync.on(stream);
 #endif
+}
+
+void* CudaMalloc(size_t size,
+                 cudaStream_t stream,
+                 bool memory_pools_supported) {
+  void* data = nullptr;
+  // Stream-ordered alloaction API is available since CUDA 11.4, but might be
+  // not implemented by particular device
+#if CUDART_VERSION < 11040
+#warning \
+    "Stream-ordered allocations are unavailable, consider updating CUDA toolkit to version 11.4+"
+  cudaMalloc(&data, size);
+#else
+  if (memory_pools_supported) {
+    cudaMallocAsync(&data, size, stream);
+  } else {
+    cudaMalloc(&data, size);
+  }
+#endif
+  return data;
+}
+
+void CudaFree(void* data, cudaStream_t stream, bool memory_pools_supported) {
+  // Stream-ordered alloaction API is available since CUDA 11.4, but might be
+  // not implemented by particular device
+#if CUDART_VERSION < 11040
+#warning \
+    "Stream-ordered allocations are unavailable, consider updating CUDA toolkit to version 11.4+"
+  cudaSuccess, cudaFree(data);
+#else
+  if (memory_pools_supported) {
+    cudaFreeAsync(data, stream);
+  } else {
+    cudaFree(data);
+  }
+#endif
+}
+template <typename T>
+T* CudaAllocate(size_t num_elements,
+                cudaStream_t stream,
+                bool memory_pools_supported) {
+  T* data = static_cast<T*>(
+      CudaMalloc(num_elements * sizeof(T), stream, memory_pools_supported));
+  return data;
 }
 }  // namespace
 
@@ -188,10 +231,11 @@ void FillCRSStructure(const int num_row_blocks,
                       int* rows,
                       int* cols,
                       cudaStream_t stream,
-                      ContextImpl* context) {
+                      bool memory_pools_supported) {
   // Set number of non-zeros per row in rows array and row to row-block map in
   // row_block_ids array
-  int* row_block_ids = context->CudaAllocate<int>(num_rows, stream);
+  int* row_block_ids =
+      CudaAllocate<int>(num_rows, stream, memory_pools_supported);
   const int num_blocks_blockwise = NumBlocksInGrid(num_row_blocks + 1);
   RowBlockIdAndNNZ<false><<<num_blocks_blockwise, kCudaBlockSize, 0, stream>>>(
       num_row_blocks,
@@ -223,7 +267,7 @@ void FillCRSStructure(const int num_row_blocks,
       nullptr,
       rows,
       cols);
-  context->CudaFree(row_block_ids, stream);
+  CudaFree(row_block_ids, stream, memory_pools_supported);
 }
 
 void FillCRSStructurePartitioned(const int num_row_blocks,
@@ -240,10 +284,11 @@ void FillCRSStructurePartitioned(const int num_row_blocks,
                                  int* rows_f,
                                  int* cols_f,
                                  cudaStream_t stream,
-                                 ContextImpl* context) {
+                                 bool memory_pools_supported) {
   // Set number of non-zeros per row in rows array and row to row-block map in
   // row_block_ids array
-  int* row_block_ids = context->CudaAllocate<int>(num_rows, stream);
+  int* row_block_ids =
+      CudaAllocate<int>(num_rows, stream, memory_pools_supported);
   const int num_blocks_blockwise = NumBlocksInGrid(num_row_blocks + 1);
   RowBlockIdAndNNZ<true><<<num_blocks_blockwise, kCudaBlockSize, 0, stream>>>(
       num_row_blocks,
@@ -281,7 +326,7 @@ void FillCRSStructurePartitioned(const int num_row_blocks,
       cols_e,
       rows_f,
       cols_f);
-  context->CudaFree(row_block_ids, stream);
+  CudaFree(row_block_ids, stream, memory_pools_supported);
 }
 
 template <typename T, typename Predicate>

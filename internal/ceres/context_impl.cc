@@ -171,40 +171,6 @@ bool ContextImpl::InitCuda(std::string* message) {
   is_cuda_initialized_ = true;
   return true;
 }
-
-void* ContextImpl::CudaMalloc(size_t size, cudaStream_t stream) const {
-  void* data = nullptr;
-  // Stream-ordered alloaction API is available since CUDA 11.4, but might be
-  // not implemented by particular device
-#if CUDART_VERSION < 11040
-#warning \
-    "Stream-ordered allocations are unavailable, consider updating CUDA toolkit to version 11.4+"
-  CHECK_EQ(cudaSuccess, cudaMalloc(&data, size));
-#else
-  if (gpu_device_properties_.memoryPoolsSupported) {
-    CHECK_EQ(cudaSuccess, cudaMallocAsync(&data, size, stream));
-  } else {
-    CHECK_EQ(cudaSuccess, cudaMalloc(&data, size));
-  }
-#endif
-  return data;
-}
-
-void ContextImpl::CudaFree(void* data, cudaStream_t stream) const {
-  // Stream-ordered alloaction API is available since CUDA 11.4, but might be
-  // not implemented by particular device
-#if CUDART_VERSION < 11040
-#warning \
-    "Stream-ordered allocations are unavailable, consider updating CUDA toolkit to version 11.4+"
-  CHECK_EQ(cudaSuccess, cudaFree(data));
-#else
-  if (gpu_device_properties_.memoryPoolsSupported) {
-    CHECK_EQ(cudaSuccess, cudaFreeAsync(data, stream));
-  } else {
-    CHECK_EQ(cudaSuccess, cudaFree(data));
-  }
-#endif
-}
 #endif  // CERES_NO_CUDA
 
 ContextImpl::~ContextImpl() {
