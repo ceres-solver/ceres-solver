@@ -2,6 +2,8 @@
 
 .. default-domain:: cpp
 
+.. cpp:namespace:: ceres
+
 .. _chapter-nnls_tutorial:
 
 ========================

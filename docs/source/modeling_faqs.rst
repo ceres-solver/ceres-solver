@@ -37,7 +37,7 @@ Modeling
    automatic and numeric differentiation. See
    :class:`CostFunctionToFunctor`.
 
-#. When using Quaternions,  consider using :class:`QuaternionParameterization`.
+#. When using Quaternions,  consider using :class:`QuaternionManifold`.
 
    `Quaternions <https://en.wikipedia.org/wiki/Quaternion>`_ are a
    four dimensional parameterization of the space of three dimensional
@@ -47,14 +47,14 @@ Modeling
    associate a local parameterization with parameter blocks
    representing a Quaternion. Assuming that the order of entries in
    your parameter block is :math:`w,x,y,z`, you can use
-   :class:`QuaternionParameterization`.
+   :class:`QuaternionManifold`.
 
    .. NOTE::
 
      If you are using `Eigen's Quaternion
      <http://eigen.tuxfamily.org/dox/classEigen_1_1Quaternion.html>`_
      object, whose layout is :math:`x,y,z,w`, then you should use
-     :class:`EigenQuaternionParameterization`.
+     :class:`EigenQuaternionManifold`.
 
 
 #. How do I solve problems with general linear & non-linear
@@ -81,8 +81,9 @@ Modeling
    and lower bounds constraints on the parameter blocks.
 
    The trick described above for dealing with inequality
-   constraints will **not** work for equality constraints.
+   constraints will **not** work.. default-domain:: cpp                                                                                                                  |
+                                        for equality constraints.
 
 #. How do I set one or more components of a parameter block constant?
 
-   Using :class:`SubsetParameterization`.
+   Using :class:`SubsetManifold`.

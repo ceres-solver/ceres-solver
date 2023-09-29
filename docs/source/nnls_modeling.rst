@@ -1,6 +1,6 @@
-.. default-domain:: cpp
-
 .. highlight:: c++
+
+.. default-domain:: cpp
 
 .. cpp:namespace:: ceres
 
@@ -83,11 +83,11 @@ Then, given :math:`\left[x_{1}, ... , x_{k}\right]`,
       virtual bool Evaluate(double const* const* parameters,
                             double* residuals,
                             double** jacobians) const = 0;
-      const vector<int32>& parameter_block_sizes();
+      const std::vector<int32>& parameter_block_sizes();
       int num_residuals() const;
 
      protected:
-      vector<int32>* mutable_parameter_block_sizes();
+      std::vector<int32>* mutable_parameter_block_sizes();
       void set_num_residuals(int num_residuals);
     };
 
@@ -842,7 +842,7 @@ Numeric Differentiation & Manifolds
        //  my_cost_function produces N residuals
        CostFunction* my_cost_function = ...
        CHECK_EQ(N, my_cost_function->num_residuals());
-       vector<CostFunction*> conditioners;
+       std::vector<CostFunction*> conditioners;
 
        //  Make N 1x1 cost functions (1 parameter, 1 residual)
        CostFunction* f_1 = ...
@@ -1190,7 +1190,7 @@ performance, so we upper bound it by zero. For more details see
 `corrector.cc <https://github.com/ceres-solver/ceres-solver/blob/master/internal/ceres/corrector.cc#L51>`_
 
 
-:class:`Manifolds`
+:class:`Manifold`
 ==================
 
 .. class:: Manifold
@@ -2014,7 +2014,7 @@ be constructed as
        on a :class:`Problem` with a non-null evaluation callback is an
        error.
 
-.. function:: ResidualBlockId Problem::AddResidualBlock(CostFunction* cost_function, LossFunction* loss_function, const vector<double*> parameter_blocks)
+.. function:: ResidualBlockId Problem::AddResidualBlock(CostFunction* cost_function, LossFunction* loss_function, const std::vector<double*> parameter_blocks)
 
 .. function:: template <typename Ts...> ResidualBlockId Problem::AddResidualBlock(CostFunction* cost_function, LossFunction* loss_function, double* x0, Ts... xs)
 
@@ -2055,9 +2055,9 @@ be constructed as
       double x1[] = {1.0, 2.0, 3.0};
       double x2[] = {1.0, 2.0, 5.0, 6.0};
       double x3[] = {3.0, 6.0, 2.0, 5.0, 1.0};
-      vector<double*> v1;
+      std::vector<double*> v1;
       v1.push_back(x1);
-      vector<double*> v2;
+      std::vector<double*> v2;
       v2.push_back(x2);
       v2.push_back(x1);
 
@@ -2234,24 +2234,24 @@ be constructed as
 
    Is the given parameter block present in the problem or not?
 
-.. function:: void Problem::GetParameterBlocks(vector<double*>* parameter_blocks) const
+.. function:: void Problem::GetParameterBlocks(std::vector<double*>* parameter_blocks) const
 
    Fills the passed ``parameter_blocks`` vector with pointers to the
    parameter blocks currently in the problem. After this call,
    ``parameter_block.size() == NumParameterBlocks``.
 
-.. function:: void Problem::GetResidualBlocks(vector<ResidualBlockId>* residual_blocks) const
+.. function:: void Problem::GetResidualBlocks(std::vector<ResidualBlockId>* residual_blocks) const
 
    Fills the passed `residual_blocks` vector with pointers to the
    residual blocks currently in the problem. After this call,
    `residual_blocks.size() == NumResidualBlocks`.
 
-.. function:: void Problem::GetParameterBlocksForResidualBlock(const ResidualBlockId residual_block, vector<double*>* parameter_blocks) const
+.. function:: void Problem::GetParameterBlocksForResidualBlock(const ResidualBlockId residual_block, std::vector<double*>* parameter_blocks) const
 
    Get all the parameter blocks that depend on the given residual
    block.
 
-.. function:: void Problem::GetResidualBlocksForParameterBlock(const double* values, vector<ResidualBlockId>* residual_blocks) const
+.. function:: void Problem::GetResidualBlocksForParameterBlock(const double* values, std::vector<ResidualBlockId>* residual_blocks) const
 
    Get all the residual blocks that depend on the given parameter
    block.
@@ -2327,7 +2327,7 @@ be constructed as
     :func:`Problem::EvaluateResidualBlock`).
 
 
-.. function:: bool Problem::Evaluate(const Problem::EvaluateOptions& options, double* cost, vector<double>* residuals, vector<double>* gradient, CRSMatrix* jacobian)
+.. function:: bool Problem::Evaluate(const Problem::EvaluateOptions& options, double* cost, std::vector<double>* residuals, std::vector<double>* gradient, CRSMatrix* jacobian)
 
    Evaluate a :class:`Problem`. Any of the output pointers can be
    ``nullptr``. Which residual blocks and parameter blocks are used is
@@ -2383,7 +2383,7 @@ be constructed as
 
    Options struct that is used to control :func:`Problem::Evaluate`.
 
-.. member:: vector<double*> Problem::EvaluateOptions::parameter_blocks
+.. member:: std::vector<double*> Problem::EvaluateOptions::parameter_blocks
 
    The set of parameter blocks for which evaluation should be
    performed. This vector determines the order in which parameter
@@ -2399,7 +2399,7 @@ be constructed as
    should NOT point to new memory locations. Bad things will happen if
    you do.
 
-.. member:: vector<ResidualBlockId> Problem::EvaluateOptions::residual_blocks
+.. member:: std::vector<ResidualBlockId> Problem::EvaluateOptions::residual_blocks
 
    The set of residual blocks for which evaluation should be
    performed. This vector determines the order in which the residuals

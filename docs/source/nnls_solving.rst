@@ -1,6 +1,6 @@
-.. default-domain:: cpp
-
 .. highlight:: c++
+
+.. default-domain:: cpp
 
 .. cpp:namespace:: ceres
 
@@ -2091,6 +2091,13 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    :member:`Solver::Options::update_state_every_iteration` to
    ``true``.
 
+   See `examples/iteration_callback_example.cc
+   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/iteration_callback_example.cc>`_
+   for an example of an :class:`IterationCallback` that uses
+   :member:`Solver::Options::update_state_every_iteration` to log
+   changes to the parameter blocks over the course of the
+   optimization.
+
    The solver does NOT take ownership of these pointers.
 
 :class:`ParameterBlockOrdering`
@@ -2307,6 +2314,10 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
   #. ``SOLVER_CONTINUE`` indicates that the solver should continue
      optimizing.
 
+  The return values can be used to implement custom termination
+  criterion that supercede the iteration/time/tolerance based
+  termination implemented by Ceres.
+
   For example, the following :class:`IterationCallback` is used
   internally by Ceres to log the progress of the optimization.
 
@@ -2345,6 +2356,12 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
       const bool log_to_stdout_;
     };
 
+
+  See `examples/evaluation_callback_example.cc
+  <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/iteration_callback_example.cc>`_
+  for another example that uses
+  :member:`Solver::Options::update_state_every_iteration` to log
+  changes to the parameter blocks over the course of the optimization.
 
 
 :class:`CRSMatrix`
