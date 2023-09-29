@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "590bc753_7ceff2c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-09-29T23:01:17Z",
+      "side": 1,
+      "message": "Moved host-synchronous allocations back inside ceres_cuda_kernels",
+      "revId": "ae3d0dbca400a5d0b960057c57a44713186766eb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
