@@ -81,8 +81,7 @@ Modeling
    and lower bounds constraints on the parameter blocks.
 
    The trick described above for dealing with inequality
-   constraints will **not** work.. default-domain:: cpp                                                                                                                  |
-                                        for equality constraints.
+   constraints will **not** work for equality constraints.
 
 #. How do I set one or more components of a parameter block constant?
 
