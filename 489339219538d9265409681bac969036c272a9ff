@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "483dbb32_0641ba34",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-09-30T18:00:17Z",
+      "side": 1,
+      "message": "Thanks for the comprehensive solution Sergiu! This looks great to me. I am going to commit, update the changelog and cut a new release shortly.",
+      "revId": "489339219538d9265409681bac969036c272a9ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
