@@ -301,7 +301,9 @@ class EndianAwareFileReader {
   template <typename T>
   T Read() const {
     T value;
+    CERES_DISABLE_DEPRECATED_WARNING
     CHECK_GT(read(file_descriptor_, &value, sizeof(value)), 0);
+    CERES_RESTORE_DEPRECATED_WARNING
     // Switch endian type if file contains data in different type
     // that current machine.
     if (file_endian_type_ != host_endian_type_) {

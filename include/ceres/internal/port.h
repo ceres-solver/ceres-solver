@@ -77,4 +77,15 @@
 //
 #define CERES_PREVENT_MACRO_SUBSTITUTION  // Yes, it's empty
 
+// CERES_DISABLE_DEPRECATED_WARNING and CERES_RESTORE_DEPRECATED_WARNING allow
+// to temporarily disable deprecation warnings
+#if defined(_MSC_VER)
+#define CERES_DISABLE_DEPRECATED_WARNING \
+  _Pragma("warning(push)") _Pragma("warning(disable : 4996)")
+#define CERES_RESTORE_DEPRECATED_WARNING _Pragma("warning(pop)")
+#else  // defined(_MSC_VER)
+#define CERES_DISABLE_DEPRECATED_WARNING
+#define CERES_RESTORE_DEPRECATED_WARNING
+#endif  // defined(_MSC_VER)
+
 #endif  // CERES_PUBLIC_INTERNAL_PORT_H_

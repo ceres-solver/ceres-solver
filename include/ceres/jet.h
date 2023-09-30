@@ -874,25 +874,19 @@ inline Jet<T, N> erfc(const Jet<T, N>& x) {
 // function errors in client code (the specific warning is suppressed when
 // Ceres itself is built).
 inline double BesselJ0(double x) {
-#if defined(CERES_MSVC_USE_UNDERSCORE_PREFIXED_BESSEL_FUNCTIONS)
-  return _j0(x);
-#else
+  CERES_DISABLE_DEPRECATED_WARNING
   return j0(x);
-#endif
+  CERES_RESTORE_DEPRECATED_WARNING
 }
 inline double BesselJ1(double x) {
-#if defined(CERES_MSVC_USE_UNDERSCORE_PREFIXED_BESSEL_FUNCTIONS)
-  return _j1(x);
-#else
+  CERES_DISABLE_DEPRECATED_WARNING
   return j1(x);
-#endif
+  CERES_RESTORE_DEPRECATED_WARNING
 }
 inline double BesselJn(int n, double x) {
-#if defined(CERES_MSVC_USE_UNDERSCORE_PREFIXED_BESSEL_FUNCTIONS)
-  return _jn(n, x);
-#else
+  CERES_DISABLE_DEPRECATED_WARNING
   return jn(n, x);
-#endif
+  CERES_RESTORE_DEPRECATED_WARNING
 }
 
 // For the formulae of the derivatives of the Bessel functions see the book:
@@ -1310,8 +1304,13 @@ struct numeric_limits<ceres::Jet<T, N>> {
   static constexpr bool is_bounded = std::numeric_limits<T>::is_bounded;
   static constexpr bool is_modulo = std::numeric_limits<T>::is_modulo;
 
+  // has_denorm (and has_denorm_loss, not defined for Jet) has been deprecated
+  // in C++23. However, without an intent to remove the declaration. Disable
+  // deprecation warnings temporarily just for the corresponding symbols.
+  CERES_DISABLE_DEPRECATED_WARNING
   static constexpr std::float_denorm_style has_denorm =
       std::numeric_limits<T>::has_denorm;
+  CERES_RESTORE_DEPRECATED_WARNING
   static constexpr std::float_round_style round_style =
       std::numeric_limits<T>::round_style;
 

@@ -521,18 +521,20 @@ if (MSVC)
   # that _USE_MATH_DEFINES is defined before the first inclusion of <cmath>.
   #
   # [1] https://msdn.microsoft.com/en-us/library/4hwaceh6.aspx
-  add_definitions("-D_USE_MATH_DEFINES")
+  add_compile_definitions(_USE_MATH_DEFINES)
+  # Insecure standard library functions
+  add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
+  # std::numeric_limits<T>::has_denorm is deprecated in C++23
+  add_compile_definitions($<$<COMPILE_LANGUAGE:CXX>:_SILENCE_CXX23_DENORM_DEPRECATION_WARNING>)
+  # std::aligned_storage is deprecated in C++23
+  add_compile_definitions($<$<COMPILE_LANGUAGE:CXX>:_SILENCE_CXX23_ALIGNED_STORAGE_DEPRECATION_WARNING>)
   # Disable signed/unsigned int conversion warnings.
   add_compile_options($<$<COMPILE_LANGUAGE:CXX>:/wd4018>)
   add_compile_options($<$<COMPILE_LANGUAGE:CXX>:/wd4267>)
   # Disable warning about using struct/class for the same symbol.
   add_compile_options($<$<COMPILE_LANGUAGE:CXX>:/wd4099>)
-  # Disable warning about the insecurity of using "std::copy".
-  add_compile_options($<$<COMPILE_LANGUAGE:CXX>:/wd4996>)
   # Disable performance warning about int-to-bool conversion.
   add_compile_options($<$<COMPILE_LANGUAGE:CXX>:/wd4800>)
-  # Disable performance warning about fopen insecurity.
-  add_compile_options($<$<COMPILE_LANGUAGE:CXX>:/wd4996>)
   # Disable warning about int64 to int32 conversion. Disabling
   # this warning may not be correct; needs investigation.
   # TODO(keir): Investigate these warnings in more detail.
@@ -556,14 +558,6 @@ if (MSVC)
 
   # Tuple sizes of 10 are used by Gtest.
   add_definitions("-D_VARIADIC_MAX=10")
-
-  include(CheckIfUnderscorePrefixedBesselFunctionsExist)
-  check_if_underscore_prefixed_bessel_functions_exist(
-    HAVE_UNDERSCORE_PREFIXED_BESSEL_FUNCTIONS)
-  if (HAVE_UNDERSCORE_PREFIXED_BESSEL_FUNCTIONS)
-    list(APPEND CERES_COMPILE_OPTIONS
-      CERES_MSVC_USE_UNDERSCORE_PREFIXED_BESSEL_FUNCTIONS)
-  endif()
 endif (MSVC)
 
 if (UNIX)
