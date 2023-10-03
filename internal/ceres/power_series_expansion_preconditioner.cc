@@ -32,6 +32,7 @@
 
 #include "ceres/eigen_vector_ops.h"
 #include "ceres/parallel_vector_ops.h"
+#include "ceres/preconditioner.h"
 
 namespace ceres::internal {
 

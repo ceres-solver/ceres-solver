@@ -34,11 +34,13 @@
 #ifndef CERES_PUBLIC_CERES_H_
 #define CERES_PUBLIC_CERES_H_
 
+// IWYU pragma: begin_exports
 #include "ceres/autodiff_cost_function.h"
 #include "ceres/autodiff_first_order_function.h"
 #include "ceres/autodiff_manifold.h"
 #include "ceres/conditioned_cost_function.h"
 #include "ceres/context.h"
+#include "ceres/constants.h"
 #include "ceres/cost_function.h"
 #include "ceres/cost_function_to_functor.h"
 #include "ceres/covariance.h"
@@ -68,5 +70,6 @@
 #include "ceres/sphere_manifold.h"
 #include "ceres/types.h"
 #include "ceres/version.h"
+// IWYU pragma: end_exports
 
 #endif  // CERES_PUBLIC_CERES_H_

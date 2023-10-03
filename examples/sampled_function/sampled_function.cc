@@ -41,11 +41,11 @@ using Interpolator = ceres::CubicInterpolator<ceres::Grid1D<double>>;
 // values with automatic differentiation.
 struct InterpolatedCostFunctor {
   explicit InterpolatedCostFunctor(const Interpolator& interpolator)
-      : interpolator_(interpolator) {}
+      : interpolator(interpolator) {}
 
   template <typename T>
   bool operator()(const T* x, T* residuals) const {
-    interpolator_.Evaluate(*x, residuals);
+    interpolator.Evaluate(*x, residuals);
     return true;
   }
 
@@ -55,7 +55,7 @@ struct InterpolatedCostFunctor {
   }
 
  private:
-  const Interpolator& interpolator_;
+  const Interpolator& interpolator;
 };
 
 int main(int argc, char** argv) {

@@ -44,6 +44,8 @@
 // residual per observation is that it is what is needed if and when we need to
 // introduce a loss function which is what we do in robust_curve_fitting.cc
 
+#include <iostream>
+
 #include "Eigen/Core"
 #include "ceres/ceres.h"
 #include "glog/logging.h"
@@ -135,6 +137,8 @@ const double data[] = {
 // residuals and Jacobians that the CostFunction copies their values from.
 class MyEvaluationCallback : public ceres::EvaluationCallback {
  public:
+  // m and c are passed by reference so that we have access to their values as
+  // they evolve over time through the course of optimization.
   MyEvaluationCallback(const double& m, const double& c) : m_(m), c_(c) {
     x_ = Eigen::VectorXd::Zero(kNumObservations);
     y_ = Eigen::VectorXd::Zero(kNumObservations);

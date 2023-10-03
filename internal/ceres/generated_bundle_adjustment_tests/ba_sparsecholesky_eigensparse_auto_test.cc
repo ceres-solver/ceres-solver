@@ -35,8 +35,9 @@
 //
 // This file is generated using generate_bundle_adjustment_tests.py.
 
+#include "ceres/bundle_adjustment_test_util.h"
 #include "ceres/internal/config.h"
-#include "bundle_adjustment_test_util.h"
+#include "gtest/gtest.h"
 
 #ifdef CERES_USE_EIGEN_SPARSE
 
