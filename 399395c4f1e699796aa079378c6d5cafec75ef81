@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "894cc775_88f4e9e4",
+        "filename": "examples/sampled_function/sampled_function.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2023-10-03T19:07:58Z",
+      "side": 1,
+      "message": "This should be a class.",
+      "revId": "399395c4f1e699796aa079378c6d5cafec75ef81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
