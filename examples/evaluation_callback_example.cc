@@ -200,7 +200,7 @@ class CostAndJacobianCopyingCostFunction
   CostAndJacobianCopyingCostFunction(
       int index, const MyEvaluationCallback& evaluation_callback)
       : index_(index), evaluation_callback_(evaluation_callback) {}
-  ~CostAndJacobianCopyingCostFunction() = default;
+  ~CostAndJacobianCopyingCostFunction() override = default;
 
   bool Evaluate(double const* const* parameters,
                 double* residuals,

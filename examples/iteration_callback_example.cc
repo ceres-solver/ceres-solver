@@ -33,6 +33,8 @@
 // the parameter blocks as they evolve over the course of the optimization. This
 // also requires the use of Solver::Options::update_state_every_iteration.
 
+#include <iostream>
+
 #include "ceres/ceres.h"
 #include "glog/logging.h"
 
@@ -120,17 +122,17 @@ const double data[] = {
 // clang-format on
 
 struct ExponentialResidual {
-  ExponentialResidual(double x, double y) : x_(x), y_(y) {}
+  ExponentialResidual(double x, double y) : x(x), y(y) {}
 
   template <typename T>
   bool operator()(const T* const m, const T* const c, T* residual) const {
-    residual[0] = y_ - exp(m[0] * x_ + c[0]);
+    residual[0] = y - exp(m[0] * x + c[0]);
     return true;
   }
 
  private:
-  const double x_;
-  const double y_;
+  const double x;
+  const double y;
 };
 
 // MyIterationCallback prints the iteration number, the cost and the value of
@@ -139,7 +141,7 @@ class MyIterationCallback : public ceres::IterationCallback {
  public:
   MyIterationCallback(const double* m, const double* c) : m_(m), c_(c) {}
 
-  ~MyIterationCallback() = default;
+  ~MyIterationCallback() override = default;
 
   ceres::CallbackReturnType operator()(
       const ceres::IterationSummary& summary) final {
