@@ -16,6 +16,46 @@
       "message": "This changes asynchronous allocations support to `cudaDeviceGetAttribute(... , cudaDevAttrMemoryPoolsSupported)` call, which is available on all versions.\n\n(constant `cudaDevAttrMemoryPoolsSupported` is available in 11.2 which introduces this functionality).",
       "revId": "923de6dc5dbd271aea4d3839cee9e772a0e11035",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "151befe9_43ffe52b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-10-04T16:48:46Z",
+      "side": 1,
+      "message": "Thanks for the quick fix Dmitriy, one minor comment.",
+      "revId": "923de6dc5dbd271aea4d3839cee9e772a0e11035",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c398ecca_0dbd545e",
+        "filename": "internal/ceres/context_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-10-04T16:48:46Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be a bool and named is_cuda_memory_pools_supported_",
+      "range": {
+        "startLine": 137,
+        "startChar": 6,
+        "endLine": 137,
+        "endChar": 34
+      },
+      "revId": "923de6dc5dbd271aea4d3839cee9e772a0e11035",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
