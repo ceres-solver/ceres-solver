@@ -16,6 +16,29 @@
       "message": "Fixed field naming.\n\nWith those cuda toolkit versions code builds fine:\n\n```\n11.0.2\n11.2.0\n11.3.0\n11.3.1\n11.4.0\n11.4.2\n11.4.3\n11.4.4\n11.5.0\n11.5.1\n11.5.2\n11.6.0\n11.6.1\n12.0.0\n```\n\nI hope it also builds with 11 remaining CUDA toolkit versions (supported by ubuntu 20.04 or 22.04).",
       "revId": "b027d3fbe87911b110265ed0d37fc363125a4582",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f80b8f3d_b652f716",
+        "filename": "internal/ceres/context_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-10-04T17:38:54Z",
+      "side": 1,
+      "message": "I understand why you have is_cuda_memory_pools_supported_ as an int because thats how cudaDeviceGetAttribute works, but why not grab it as an int and convert it into a bool for ContextImpl, the c like use of integer for bools seems really weird and out of place in the code.",
+      "range": {
+        "startLine": 129,
+        "startChar": 11,
+        "endLine": 129,
+        "endChar": 33
+      },
+      "revId": "b027d3fbe87911b110265ed0d37fc363125a4582",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
