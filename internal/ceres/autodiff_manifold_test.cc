@@ -32,6 +32,7 @@
 
 #include <cmath>
 
+#include "ceres/constants.h"
 #include "ceres/manifold.h"
 #include "ceres/manifold_test_utils.h"
 #include "ceres/rotation.h"
@@ -197,7 +198,7 @@ TEST(AutoDiffManifoldTest, QuaternionPlusPiBy2) {
 
   for (int i = 0; i < 3; ++i) {
     Vector delta = Vector::Zero(3);
-    delta[i] = M_PI / 2;
+    delta[i] = constants::pi / 2;
     Vector x_plus_delta = Vector::Zero(4);
     EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), x_plus_delta.data()));
 
@@ -285,7 +286,7 @@ TEST(AutoDiffManifold, QuaternionDeltaJustBelowPi) {
     const Vector y = RandomQuaternion();
     Vector delta = Vector::Random(3);
     delta.normalize();
-    delta *= (M_PI - 1e-6);
+    delta *= (constants::pi - 1e-6);
     EXPECT_THAT(manifold, QuaternionPlusIsCorrectAt(x, delta));
     EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
   }

@@ -223,7 +223,7 @@ BEGIN_MGH_PROBLEM(TestProblem7, 3, 3)
   const T x1 = x[0];
   const T x2 = x[1];
   const T x3 = x[2];
-  const T theta = (0.5 / M_PI)  * atan(x2 / x1) + (x1 > 0.0 ? 0.0 : 0.5);
+  const T theta = (0.5 / constants::pi)  * atan(x2 / x1) + (x1 > 0.0 ? 0.0 : 0.5);
   residual[0] = 10.0 * (x3 - 10.0 * theta);
   residual[1] = 10.0 * (sqrt(x1 * x1 + x2 * x2) - 1.0);
   residual[2] = x3;

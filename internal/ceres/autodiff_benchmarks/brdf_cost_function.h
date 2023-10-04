@@ -35,6 +35,8 @@
 #include <Eigen/Core>
 #include <cmath>
 
+#include "ceres/constants.h"
+
 namespace ceres {
 
 // The brdf is based on:
@@ -139,7 +141,7 @@ struct Brdf {
     const T gr = cggxn_dot_l * cggxn_dot_v;
 
     const Vec3 result_no_cosine =
-        (T(1.0 / M_PI) * Lerp(fd, ss, subsurface) * c + f_sheen) *
+        (T(1.0 / constants::pi) * Lerp(fd, ss, subsurface) * c + f_sheen) *
             (T(1) - metallic) +
         gs * fs * ds +
         Vec3(T(0.25), T(0.25), T(0.25)) * clearcoat * gr * fr * dr;
@@ -177,11 +179,11 @@ struct Brdf {
     T result = T(0);
 
     if (a >= T(1)) {
-      result = T(1 / M_PI);
+      result = T(1 / constants::pi);
     } else {
       const T a2 = a * a;
       const T t = T(1) + (a2 - T(1)) * n_dot_h * n_dot_h;
-      result = (a2 - T(1)) / (T(M_PI) * T(log(a2) * t));
+      result = (a2 - T(1)) / (T(constants::pi) * T(log(a2) * t));
     }
     return result;
   }
@@ -192,7 +194,7 @@ struct Brdf {
                      const T& h_dot_y,
                      const T& ax,
                      const T& ay) const {
-    return T(1) / (T(M_PI) * ax * ay *
+    return T(1) / (T(constants::pi) * ax * ay *
                    Square(Square(h_dot_x / ax) + Square(h_dot_y / ay) +
                           n_dot_h * n_dot_h));
   }

@@ -32,6 +32,7 @@
 #ifndef CERES_PUBLIC_INTERNAL_SPHERE_MANIFOLD_HELPERS_H_
 #define CERES_PUBLIC_INTERNAL_SPHERE_MANIFOLD_HELPERS_H_
 
+#include "ceres/constants.h"
 #include "ceres/internal/householder_vector.h"
 
 // This module contains functions to compute the SphereManifold plus and minus
@@ -122,7 +123,7 @@ inline void ComputeSphereManifoldMinus(
   const double hy_norm = hy.template head<TangentSpaceDim>(tangent_size).norm();
   if (hy_norm == 0.0) {
     y_minus_x->setZero();
-    y_minus_x->data()[tangent_size - 1] = y_last >= 0 ? 0.0 : M_PI;
+    y_minus_x->data()[tangent_size - 1] = y_last >= 0 ? 0.0 : constants::pi;
   } else {
     *y_minus_x = std::atan2(hy_norm, y_last) / hy_norm *
                  hy.template head<TangentSpaceDim>(tangent_size);

@@ -36,6 +36,7 @@
 namespace ceres::constants {
 template <typename T>
 inline constexpr T pi_v(3.141592653589793238462643383279502884);
+inline constexpr double pi = pi_v<double>;
 }  // namespace ceres::constants
 
 #endif  // CERES_PUBLIC_CONSTANTS_H_

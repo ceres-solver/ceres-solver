@@ -516,12 +516,6 @@ endif (MINGW)
 
 # After the tweaks for the compile settings, disable some warnings on MSVC.
 if (MSVC)
-  # On MSVC, math constants are not included in <cmath> or <math.h> unless
-  # _USE_MATH_DEFINES is defined [1].  As we use M_PI in the examples, ensure
-  # that _USE_MATH_DEFINES is defined before the first inclusion of <cmath>.
-  #
-  # [1] https://msdn.microsoft.com/en-us/library/4hwaceh6.aspx
-  add_compile_definitions(_USE_MATH_DEFINES)
   # Insecure standard library functions
   add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
   # std::numeric_limits<T>::has_denorm is deprecated in C++23
