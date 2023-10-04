@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0247813_2c14b05c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-10-04T15:04:43Z",
+      "side": 1,
+      "message": "This changes asynchronous allocations support to `cudaDeviceGetAttribute(... , cudaDevAttrMemoryPoolsSupported)` call, which is available on all versions.\n\n(constant `cudaDevAttrMemoryPoolsSupported` is available in 11.2 which introduces this functionality).",
+      "revId": "923de6dc5dbd271aea4d3839cee9e772a0e11035",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
