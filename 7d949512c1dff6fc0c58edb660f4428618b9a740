@@ -16,6 +16,46 @@
       "message": "Build are here https://github.com/sergiud/ceres-solver/actions?query\u003dbranch%3Api+. Better wait until the CI finishes to ensure nothing breaks.",
       "revId": "7d949512c1dff6fc0c58edb660f4428618b9a740",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e23289f_6ce0c73b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-10-04T21:00:42Z",
+      "side": 1,
+      "message": "Thanks for the quick fix Sergiu, just one comment.",
+      "revId": "7d949512c1dff6fc0c58edb660f4428618b9a740",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aaae272d_6ad87ba0",
+        "filename": "include/ceres/ceres.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-10-04T21:00:42Z",
+      "side": 1,
+      "message": "I had already added this file in a previous CL :) now we have it twice!",
+      "range": {
+        "startLine": 44,
+        "startChar": 16,
+        "endLine": 44,
+        "endChar": 25
+      },
+      "revId": "7d949512c1dff6fc0c58edb660f4428618b9a740",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
