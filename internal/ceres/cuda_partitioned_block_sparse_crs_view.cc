@@ -80,7 +80,7 @@ CudaPartitionedBlockSparseCRSView::CudaPartitionedBlockSparseCRSView(
                               rows_f.data(),
                               cols_f.data(),
                               context->DefaultStream(),
-                              context);
+                              context->is_cuda_memory_pools_supported_);
   f_is_crs_compatible_ = block_structure_->IsCrsCompatible();
   if (f_is_crs_compatible_) {
     block_structure_ = nullptr;

@@ -52,7 +52,7 @@ CudaBlockSparseCRSView::CudaBlockSparseCRSView(const BlockSparseMatrix& bsm,
                    rows.data(),
                    cols.data(),
                    context->DefaultStream(),
-                   context);
+                   context->is_cuda_memory_pools_supported_);
   is_crs_compatible_ = block_structure_->IsCrsCompatible();
   // if matrix is crs-compatible - we can drop block-structure and don't need
   // streamed_buffer_

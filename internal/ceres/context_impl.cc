@@ -102,7 +102,9 @@ std::string ContextImpl::CudaConfigAsString() const {
       gpu_device_properties_.maxGridSize[1],
       gpu_device_properties_.maxGridSize[2],
       gpu_device_properties_.multiProcessorCount,
-      gpu_device_properties_.memoryPoolsSupported ? "Yes" : "No");
+      // In CUDA 12.0.0+ cudaDeviceProp has field memoryPoolsSupported, but it
+      // is not available in older versions
+      is_cuda_memory_pools_supported_ ? "Yes" : "No");
 }
 
 size_t ContextImpl::GpuMemoryAvailable() const {
@@ -123,6 +125,12 @@ bool ContextImpl::InitCuda(std::string* message) {
   CHECK_EQ(
       cudaGetDeviceProperties(&gpu_device_properties_, gpu_device_id_in_use_),
       cudaSuccess);
+#if CUDART_VERSION >= 11020
+  CHECK_EQ(cudaDeviceGetAttribute(&is_cuda_memory_pools_supported_,
+                                  cudaDevAttrMemoryPoolsSupported,
+                                  gpu_device_id_in_use_),
+           cudaSuccess);
+#endif
   VLOG(3) << "\n" << CudaConfigAsString();
   EventLogger event_logger("InitCuda");
   if (cublasCreate(&cublas_handle_) != CUBLAS_STATUS_SUCCESS) {

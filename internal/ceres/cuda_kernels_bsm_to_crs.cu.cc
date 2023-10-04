@@ -55,11 +55,11 @@ void* CudaMalloc(size_t size,
                  cudaStream_t stream,
                  bool memory_pools_supported) {
   void* data = nullptr;
-  // Stream-ordered alloaction API is available since CUDA 11.4, but might be
+  // Stream-ordered alloaction API is available since CUDA 11.2, but might be
   // not implemented by particular device
-#if CUDART_VERSION < 11040
+#if CUDART_VERSION < 11020
 #warning \
-    "Stream-ordered allocations are unavailable, consider updating CUDA toolkit to version 11.4+"
+    "Stream-ordered allocations are unavailable, consider updating CUDA toolkit to version 11.2+"
   cudaMalloc(&data, size);
 #else
   if (memory_pools_supported) {
@@ -72,11 +72,11 @@ void* CudaMalloc(size_t size,
 }
 
 void CudaFree(void* data, cudaStream_t stream, bool memory_pools_supported) {
-  // Stream-ordered alloaction API is available since CUDA 11.4, but might be
+  // Stream-ordered alloaction API is available since CUDA 11.2, but might be
   // not implemented by particular device
-#if CUDART_VERSION < 11040
+#if CUDART_VERSION < 11020
 #warning \
-    "Stream-ordered allocations are unavailable, consider updating CUDA toolkit to version 11.4+"
+    "Stream-ordered allocations are unavailable, consider updating CUDA toolkit to version 11.2+"
   cudaSuccess, cudaFree(data);
 #else
   if (memory_pools_supported) {
