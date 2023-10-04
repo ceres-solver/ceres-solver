@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b698cc8_469abe8f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-10-04T20:58:34Z",
+      "side": 1,
+      "message": "Build are here https://github.com/sergiud/ceres-solver/actions?query\u003dbranch%3Api+. Better wait until the CI finishes to ensure nothing breaks.",
+      "revId": "7d949512c1dff6fc0c58edb660f4428618b9a740",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
