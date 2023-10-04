@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e0ac7f9_8297e55c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-10-04T17:54:49Z",
+      "side": 1,
+      "message": "Changed field type to bool.\n\nI decided to compare to 1 explicitly, this is an expected value according to the \n docs:\nhttps://docs.nvidia.com/cuda/archive/12.2.0/cuda-runtime-api/group__CUDART__DEVICE.html#group__CUDART__DEVICE_1gb22e8256592b836df9a9cc36c9db7151",
+      "revId": "8d875a312cd75a3d8c005baa56272c521b1a1c22",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
