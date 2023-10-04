@@ -1004,7 +1004,7 @@ class CERES_EXPORT Solver {
 
     bool mixed_precision_solves_used = false;
 
-    LinearSolverOrderingType linear_solver_ordering_type;
+    LinearSolverOrderingType linear_solver_ordering_type = AMD;
 
     // Size of the elimination groups given by the user as hints to
     // the linear solver.
