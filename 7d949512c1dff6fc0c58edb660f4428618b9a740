@@ -56,6 +56,30 @@
       },
       "revId": "7d949512c1dff6fc0c58edb660f4428618b9a740",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64677548_be785834",
+        "filename": "include/ceres/ceres.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-10-04T21:05:09Z",
+      "side": 1,
+      "message": "Already fixed by running `clang-format`. 😊",
+      "parentUuid": "aaae272d_6ad87ba0",
+      "range": {
+        "startLine": 44,
+        "startChar": 16,
+        "endLine": 44,
+        "endChar": 25
+      },
+      "revId": "7d949512c1dff6fc0c58edb660f4428618b9a740",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
