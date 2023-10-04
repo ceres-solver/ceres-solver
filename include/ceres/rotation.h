@@ -610,7 +610,7 @@ void RotationMatrixToEulerAngles(
   //   [-pi, pi) x [0, pi / 2) x [-pi, pi)
   // which is enforced here
   if constexpr (EulerSystem::kIsProperEuler) {
-    const T kPi(constants::pi_v<double>);
+    const T kPi(constants::pi);
     const T kTwoPi(2.0 * kPi);
     if (euler[1] < T(0.0) || ea[1] > kPi) {
       euler[0] += kPi;

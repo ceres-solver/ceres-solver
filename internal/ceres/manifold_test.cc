@@ -46,6 +46,7 @@
 #include "ceres/rotation.h"
 #include "ceres/sphere_manifold.h"
 #include "ceres/types.h"
+#include "ceres/constants.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
@@ -504,7 +505,7 @@ TEST(QuaternionManifold, PlusPiBy2) {
 
   for (int i = 0; i < 3; ++i) {
     Vector delta = Vector::Zero(3);
-    delta[i] = M_PI / 2;
+    delta[i] = constants::pi / 2;
     Vector x_plus_delta = Vector::Zero(4);
     EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), x_plus_delta.data()));
 
@@ -598,7 +599,7 @@ TEST(QuaternionManifold, DeltaJustBelowPi) {
     const Vector y = RandomQuaternion();
     Vector delta = Vector::Random(3);
     delta.normalize();
-    delta *= (M_PI - 1e-6);
+    delta *= (constants::pi - 1e-6);
     EXPECT_THAT(manifold, QuaternionManifoldPlusIsCorrectAt(x, delta));
     EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
   }
@@ -669,7 +670,7 @@ TEST(EigenQuaternionManifold, DeltaJustBelowPi) {
     const Vector y = RandomQuaternion();
     Vector delta = Vector::Random(3);
     delta.normalize();
-    delta *= (M_PI - 1e-6);
+    delta *= (constants::pi - 1e-6);
     EXPECT_THAT(manifold, EigenQuaternionManifoldPlusIsCorrectAt(x, delta));
     EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
   }
@@ -732,7 +733,7 @@ TEST(SphereManifold, Plus2DTest) {
   }
 
   {
-    double delta[1]{M_PI};
+    double delta[1]{constants::pi};
     Eigen::Vector2d y = Eigen::Vector2d::Zero();
     EXPECT_TRUE(manifold.Plus(x.data(), delta, y.data()));
     const Eigen::Vector2d gtY = -Eigen::Vector2d::UnitY();
@@ -740,7 +741,7 @@ TEST(SphereManifold, Plus2DTest) {
   }
 
   {
-    double delta[1]{2.0 * M_PI};
+    double delta[1]{2.0 * constants::pi};
     Eigen::Vector2d y = Eigen::Vector2d::Zero();
     EXPECT_TRUE(manifold.Plus(x.data(), delta, y.data()));
     const Eigen::Vector2d gtY = Eigen::Vector2d::UnitY();
@@ -761,7 +762,7 @@ TEST(SphereManifold, Plus3DTest) {
   }
 
   {
-    Eigen::Vector2d delta{M_PI, 0.0};
+    Eigen::Vector2d delta{constants::pi, 0.0};
     Eigen::Vector3d y = Eigen::Vector3d::Zero();
     EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
     const Eigen::Vector3d gtY = -Eigen::Vector3d::UnitZ();
@@ -769,7 +770,7 @@ TEST(SphereManifold, Plus3DTest) {
   }
 
   {
-    Eigen::Vector2d delta{2.0 * M_PI, 0.0};
+    Eigen::Vector2d delta{2.0 * constants::pi, 0.0};
     Eigen::Vector3d y = Eigen::Vector3d::Zero();
     EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
     const Eigen::Vector3d gtY = Eigen::Vector3d::UnitZ();
@@ -785,7 +786,7 @@ TEST(SphereManifold, Plus3DTest) {
   }
 
   {
-    Eigen::Vector2d delta{0.0, M_PI};
+    Eigen::Vector2d delta{0.0, constants::pi};
     Eigen::Vector3d y = Eigen::Vector3d::Zero();
     EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
     const Eigen::Vector3d gtY = -Eigen::Vector3d::UnitZ();
@@ -793,7 +794,7 @@ TEST(SphereManifold, Plus3DTest) {
   }
 
   {
-    Eigen::Vector2d delta{0.0, 2.0 * M_PI};
+    Eigen::Vector2d delta{0.0, 2.0 * constants::pi};
     Eigen::Vector3d y = Eigen::Vector3d::Zero();
     EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
     const Eigen::Vector3d gtY = Eigen::Vector3d::UnitZ();
@@ -809,7 +810,7 @@ TEST(SphereManifold, Plus3DTest) {
   }
 
   {
-    Eigen::Vector2d delta = Eigen::Vector2d(1, 1).normalized() * M_PI;
+    Eigen::Vector2d delta = Eigen::Vector2d(1, 1).normalized() * constants::pi;
     Eigen::Vector3d y = Eigen::Vector3d::Zero();
     EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
     const Eigen::Vector3d gtY = -Eigen::Vector3d::UnitZ();
@@ -832,7 +833,7 @@ TEST(SphereManifold, Minus2DTest) {
   {
     double delta[1];
     const Eigen::Vector2d y(-1, 0);
-    const double gtDelta{M_PI};
+    const double gtDelta{constants::pi};
     EXPECT_TRUE(manifold.Minus(y.data(), x.data(), delta));
     EXPECT_LT(std::abs(delta[0] - gtDelta), kTolerance);
   }
@@ -853,7 +854,7 @@ TEST(SphereManifold, Minus3DTest) {
   {
     Eigen::Vector2d delta;
     const Eigen::Vector3d y(-1, 0, 0);
-    const Eigen::Vector2d gtDelta(0.0, M_PI);
+    const Eigen::Vector2d gtDelta(0.0, constants::pi);
     EXPECT_TRUE(manifold.Minus(y.data(), x.data(), delta.data()));
     EXPECT_LT((delta - gtDelta).norm(), kTolerance);
   }

@@ -41,6 +41,7 @@
 #include "ceres/conditioned_cost_function.h"
 #include "ceres/context.h"
 #include "ceres/constants.h"
+#include "ceres/constants.h"
 #include "ceres/cost_function.h"
 #include "ceres/cost_function_to_functor.h"
 #include "ceres/covariance.h"
