@@ -50,6 +50,10 @@ Backward Incompatible API Changes
 
 Bug Fixes & Minor Changes
 -------------------------
+#. Fix handling of M_PI for MSVC (Sergiu Deitsch)
+#. Add a default value for Solver::Summary::linear_solver_ordering_type (Sameer Agarwal)
+#. Make sure that the code compiles well with CUDA 11 (Dmitriy
+   Korchemkin)
 #. Rework MSVC warning suppression (Sergiu Deitsch)
 #. Add an example for EvaluationCallback (Sameer Agarwal)
 #. Add an example for IterationCallback (Sameer Agarwal)
