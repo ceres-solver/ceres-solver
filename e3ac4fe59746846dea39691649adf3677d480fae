@@ -56,6 +56,30 @@
       },
       "revId": "e3ac4fe59746846dea39691649adf3677d480fae",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "143be0bb_d07aa7d7",
+        "filename": "internal/ceres/parallel_invoke.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-10-06T20:28:37Z",
+      "side": 1,
+      "message": "This is a needed to capture lambda inside itself.\n\nI think that before c++23 we cannot capture it directly because type is not deduced at this point.\nSo we declare generic lambda and pass itself as an argument.",
+      "parentUuid": "e3d2eec3_23c15952",
+      "range": {
+        "startLine": 189,
+        "startChar": 38,
+        "endLine": 189,
+        "endChar": 49
+      },
+      "revId": "e3ac4fe59746846dea39691649adf3677d480fae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
