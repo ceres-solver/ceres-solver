@@ -185,8 +185,10 @@ void ParallelInvoke(
   auto shared_state =
       std::make_shared<ParallelInvokeState>(start, end, num_work_blocks);
 
-  // A function which tries to perform several chunks of work.
-  auto task = [shared_state, num_threads, &function]() {
+  // A function which tries to schedule another task in the thread pool and
+  // perform several chunks of work. Function expects itself as the argument in
+  // order to schedule next task in the thread pool.
+  auto task = [context, shared_state, num_threads, &function](auto& task_copy) {
     int num_jobs_finished = 0;
     const int thread_id = shared_state->thread_id.fetch_add(1);
     // In order to avoid dead-locks in nested parallel for loops, task() will be
@@ -197,11 +199,21 @@ void ParallelInvoke(
     //  the last task being executed will be terminated here in order to avoid
     //  having more than num_threads active threads
     if (thread_id >= num_threads) return;
+    const int num_work_blocks = shared_state->num_work_blocks;
+    if (thread_id + 1 < num_threads &&
+        shared_state->block_id < num_work_blocks) {
+      // Add another thread to the thread pool.
+      // Note we are taking the task as value so the copy of shared_state shared
+      // pointer (captured by value at declaration of task lambda-function) is
+      // copied and the ref count is increased. This is to prevent it from being
+      // deleted when the main thread finishes all the work and exits before the
+      // threads finish.
+      context->thread_pool.AddTask([task_copy]() { task_copy(task_copy); });
+    }
 
     const int start = shared_state->start;
     const int base_block_size = shared_state->base_block_size;
     const int num_base_p1_sized_blocks = shared_state->num_base_p1_sized_blocks;
-    const int num_work_blocks = shared_state->num_work_blocks;
 
     while (true) {
       // Get the next available chunk of work to be performed. If there is no
@@ -242,20 +254,10 @@ void ParallelInvoke(
     shared_state->block_until_finished.Finished(num_jobs_finished);
   };
 
-  // Add all the tasks to the thread pool.
-  for (int i = 0; i < num_threads; ++i) {
-    // Note we are taking the task as value so the copy of shared_state shared
-    // pointer (captured by value at declaration of task lambda-function) is
-    // copied and the ref count is increased. This is to prevent it from being
-    // deleted when the main thread finishes all the work and exits before the
-    // threads finish.
-    context->thread_pool.AddTask([task]() { task(); });
-  }
-
-  // Try to do any available work on the main thread. This may steal work from
-  // the thread pool, but when there is no work left the thread pool tasks
-  // will be no-ops.
-  task();
+  // Start scheduling threads and doing work. We might end up with less threads
+  // scheduled than expected, if scheduling overhead is larger than the amount
+  // of work to be done.
+  task(task);
 
   // Wait until all tasks have finished.
   shared_state->block_until_finished.Block();
