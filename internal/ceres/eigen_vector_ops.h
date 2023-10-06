@@ -46,16 +46,19 @@ template <typename Derived>
 inline double Norm(const Eigen::DenseBase<Derived>& x,
                    ContextImpl* context,
                    int num_threads) {
-  std::vector<double> norms(num_threads);
-  ParallelFor(context,
-              0,
-              x.rows(),
-              num_threads,
-              [&x, &norms](int thread_id, std::tuple<int, int> range) {
-                auto [start, end] = range;
-                norms[thread_id] += x.segment(start, end - start).squaredNorm();
-              });
-  return std::sqrt(std::accumulate(norms.begin(), norms.end(), 0.));
+  double* norms = static_cast<double*>(alloca(num_threads * sizeof(double)));
+  std::fill(norms, norms + num_threads, 0.);
+  ParallelFor(
+      context,
+      0,
+      x.rows(),
+      num_threads,
+      [&x, &norms](int thread_id, std::tuple<int, int> range) {
+        auto [start, end] = range;
+        norms[thread_id] += x.segment(start, end - start).squaredNorm();
+      },
+      kMinBlockSizeParallelVectorOps);
+  return std::sqrt(std::accumulate(norms, norms + num_threads, 0.));
 }
 inline void SetZero(Vector& x, ContextImpl* context, int num_threads) {
   ParallelSetZero(context, num_threads, x);
@@ -74,19 +77,22 @@ inline double Dot(const VectorLikeX& x,
                   const VectorLikeY& y,
                   ContextImpl* context,
                   int num_threads) {
-  std::vector<double> dots(num_threads);
-  ParallelFor(context,
-              0,
-              x.rows(),
-              num_threads,
-              [&x, &y, &dots](int thread_id, std::tuple<int, int> range) {
-                auto [start, end] = range;
-                const int block_size = end - start;
-                const auto& x_block = x.segment(start, block_size);
-                const auto& y_block = y.segment(start, block_size);
-                dots[thread_id] += x_block.dot(y_block);
-              });
-  return std::accumulate(dots.begin(), dots.end(), 0.);
+  double* dots = static_cast<double*>(alloca(num_threads * sizeof(double)));
+  std::fill(dots, dots + num_threads, 0.);
+  ParallelFor(
+      context,
+      0,
+      x.rows(),
+      num_threads,
+      [&x, &y, &dots](int thread_id, std::tuple<int, int> range) {
+        auto [start, end] = range;
+        const int block_size = end - start;
+        const auto& x_block = x.segment(start, block_size);
+        const auto& y_block = y.segment(start, block_size);
+        dots[thread_id] += x_block.dot(y_block);
+      },
+      kMinBlockSizeParallelVectorOps);
+  return std::accumulate(dots, dots + num_threads, 0.);
 }
 inline void Copy(const Vector& from,
                  Vector& to,

@@ -50,14 +50,16 @@ void ParallelSetZero(ContextImpl* context,
                      int num_threads,
                      double* values,
                      int num_values) {
-  ParallelFor(context,
-              0,
-              num_values,
-              num_threads,
-              [values](std::tuple<int, int> range) {
-                auto [start, end] = range;
-                std::fill(values + start, values + end, 0.);
-              });
+  ParallelFor(
+      context,
+      0,
+      num_values,
+      num_threads,
+      [values](std::tuple<int, int> range) {
+        auto [start, end] = range;
+        std::fill(values + start, values + end, 0.);
+      },
+      kMinBlockSizeParallelVectorOps);
 }
 
 }  // namespace ceres::internal
