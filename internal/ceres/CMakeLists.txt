@@ -589,6 +589,9 @@ if (BUILD_BENCHMARKS)
   add_executable(parallel_vector_operations_benchmark parallel_vector_operations_benchmark.cc)
   add_dependencies_to_benchmark(parallel_vector_operations_benchmark)
 
+  add_executable(parallel_for_benchmark parallel_for_benchmark.cc)
+  add_dependencies_to_benchmark(parallel_for_benchmark)
+
   add_executable(block_jacobi_preconditioner_benchmark
     block_jacobi_preconditioner_benchmark.cc)
   add_dependencies_to_benchmark(block_jacobi_preconditioner_benchmark)
