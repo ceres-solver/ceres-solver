@@ -22,6 +22,30 @@
       },
       "revId": "1ea63732be1bd5be569add7fad94f6aaefa05815",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "421b7329_0fced362",
+        "filename": "internal/ceres/eigen_vector_ops.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-10-06T18:09:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "554b3dc3_53fc7f93",
+      "range": {
+        "startLine": 49,
+        "startChar": 39,
+        "endLine": 49,
+        "endChar": 45
+      },
+      "revId": "1ea63732be1bd5be569add7fad94f6aaefa05815",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
