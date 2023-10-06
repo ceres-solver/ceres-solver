@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0091dc7_6c3ccb29",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-10-06T18:34:05Z",
+      "side": 1,
+      "message": "This does not solve the issue of trying to run too short tasks with too much threads, but makes it less painful.\n\nInstead of creating all tasks for all thread at once from one thread, tasks are created from within the task, ensuring that:\n - Some work starts almost immideately\n - Some tasks might be skipped if already alive threads manage to complete work faster\n\n\n With the old scheme of launching all tasks from the main thread:\n ```\n ---------------------------------------------------------------------\nBenchmark                           Time             CPU   Iterations\n---------------------------------------------------------------------\nSchedulerBenchmark/128/1         14.1 ns         14.1 ns     49496153\nSchedulerBenchmark/128/2         3965 ns         3093 ns       240173\nSchedulerBenchmark/128/4        13162 ns         9754 ns        71478\nSchedulerBenchmark/128/8        30643 ns        23366 ns        29614\nSchedulerBenchmark/128/16       63694 ns        50700 ns        10000\nSchedulerBenchmark/256/1         24.1 ns         24.1 ns     28943598\nSchedulerBenchmark/256/2         3878 ns         3069 ns       227498\nSchedulerBenchmark/256/4        13293 ns         9939 ns        69817\nSchedulerBenchmark/256/8        31117 ns        23662 ns        32640\nSchedulerBenchmark/256/16       59503 ns        47098 ns        14910\nSchedulerBenchmark/1024/1        56.7 ns         56.7 ns     12048398\nSchedulerBenchmark/1024/2        4346 ns         3492 ns       203140\nSchedulerBenchmark/1024/4       13487 ns        10324 ns        66736\nSchedulerBenchmark/1024/8       30982 ns        23797 ns        33090\nSchedulerBenchmark/1024/16      63199 ns        50200 ns        14762\nSchedulerBenchmark/4096/1         189 ns          189 ns      3633540\nSchedulerBenchmark/4096/2        5932 ns         5141 ns       131884\nSchedulerBenchmark/4096/4       14784 ns        11539 ns        61236\nSchedulerBenchmark/4096/8       35857 ns        27114 ns        29276\nSchedulerBenchmark/4096/16      63934 ns        50643 ns        10000\n ```\n \n With the proposed scheme:\n  ```\n ---------------------------------------------------------------------\nBenchmark                           Time             CPU   Iterations\n---------------------------------------------------------------------\nSchedulerBenchmark/128/1         14.1 ns         14.1 ns     49323498\nSchedulerBenchmark/128/2         2411 ns         1907 ns       362916\nSchedulerBenchmark/128/4         3556 ns         2809 ns       243026\nSchedulerBenchmark/128/8         4346 ns         3487 ns       200626\nSchedulerBenchmark/128/16        5066 ns         4245 ns       169698\nSchedulerBenchmark/256/1         24.2 ns         24.2 ns     28960018\nSchedulerBenchmark/256/2         2330 ns         1906 ns       388470\nSchedulerBenchmark/256/4         3864 ns         3029 ns       219233\nSchedulerBenchmark/256/8         4399 ns         3528 ns       195225\nSchedulerBenchmark/256/16        5111 ns         4255 ns       161858\nSchedulerBenchmark/1024/1        55.9 ns         55.9 ns     12204777\nSchedulerBenchmark/1024/2        2541 ns         2083 ns       329807\nSchedulerBenchmark/1024/4        3977 ns         3259 ns       222628\nSchedulerBenchmark/1024/8        4607 ns         3726 ns       193548\nSchedulerBenchmark/1024/16       5031 ns         4175 ns       160285\nSchedulerBenchmark/4096/1         188 ns          188 ns      3714433\nSchedulerBenchmark/4096/2        4203 ns         3641 ns       188284\nSchedulerBenchmark/4096/4        4832 ns         4057 ns       171811\nSchedulerBenchmark/4096/8        5605 ns         4469 ns       159093\nSchedulerBenchmark/4096/16       6425 ns         5505 ns       126861\n ```",
+      "revId": "e3ac4fe59746846dea39691649adf3677d480fae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
