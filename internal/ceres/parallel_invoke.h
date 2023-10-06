@@ -145,9 +145,9 @@ struct ParallelInvokeState {
 
 // This implementation uses a fixed size max worker pool with a shared task
 // queue. The problem of executing the function for the interval of [start, end)
-// is broken up into at most num_threads * kWorkBlocksPerThread blocks
-// and added to the thread pool. To avoid deadlocks, the calling thread is
-// allowed to steal work from the worker pool.
+// is broken up into at most num_threads * kWorkBlocksPerThread blocks (each of
+// size at least min_block_size) and added to the thread pool. To avoid
+// deadlocks, the calling thread is allowed to steal work from the worker pool.
 // This is implemented via a shared state between the tasks. In order for
 // the calling thread or thread pool to get a block of work, it will query the
 // shared state for the next block of work to be done. If there is nothing left,
@@ -162,8 +162,12 @@ struct ParallelInvokeState {
 // A performance analysis has shown this implementation is on par with OpenMP
 // and TBB.
 template <typename F>
-void ParallelInvoke(
-    ContextImpl* context, int start, int end, int num_threads, F&& function) {
+void ParallelInvoke(ContextImpl* context,
+                    int start,
+                    int end,
+                    int num_threads,
+                    F&& function,
+                    int min_block_size) {
   CHECK(context != nullptr);
 
   // Maximal number of work items scheduled for a single thread
@@ -176,8 +180,8 @@ void ParallelInvoke(
   //
   // In order to avoid creating empty blocks of work, we need to limit
   // number of work blocks by a total number of indices.
-  const int num_work_blocks =
-      std::min((end - start), num_threads * kWorkBlocksPerThread);
+  const int num_work_blocks = std::min((end - start) / min_block_size,
+                                       num_threads * kWorkBlocksPerThread);
 
   // We use a std::shared_ptr because the main thread can finish all
   // the work before the tasks have been popped off the queue.  So the
