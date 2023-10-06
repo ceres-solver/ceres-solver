@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "554b3dc3_53fc7f93",
+        "filename": "internal/ceres/eigen_vector_ops.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-10-06T17:30:38Z",
+      "side": 1,
+      "message": "insetad of alloca you can use FixedArray which does the same thing, but allocates on the stack up to a certain size and then on the heap after that.\n\nfrom the spreadsheet it is not clear if this alloca thing actually helps much though.\n\nthe bigger issue is just not having the threads do too little work.",
+      "range": {
+        "startLine": 49,
+        "startChar": 39,
+        "endLine": 49,
+        "endChar": 45
+      },
+      "revId": "1ea63732be1bd5be569add7fad94f6aaefa05815",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
