@@ -33,20 +33,47 @@
 #include "ceres/parallel_for.h"
 
 namespace ceres::internal {
+// Older versions of benchmark library (for example, one shipped with
+// ubuntu 20.04) do not support range generation and range products
+#define VECTOR_SIZES(num_threads)    \
+      Args({1 << 7, num_threads})    \
+      ->Args({1 << 8, num_threads})  \
+      ->Args({1 << 9, num_threads})  \
+      ->Args({1 << 10, num_threads}) \
+      ->Args({1 << 11, num_threads}) \
+      ->Args({1 << 12, num_threads}) \
+      ->Args({1 << 13, num_threads}) \
+      ->Args({1 << 14, num_threads}) \
+      ->Args({1 << 15, num_threads}) \
+      ->Args({1 << 16, num_threads}) \
+      ->Args({1 << 17, num_threads}) \
+      ->Args({1 << 18, num_threads}) \
+      ->Args({1 << 19, num_threads}) \
+      ->Args({1 << 20, num_threads}) \
+      ->Args({1 << 21, num_threads}) \
+      ->Args({1 << 22, num_threads}) \
+      ->Args({1 << 23, num_threads})
 
-const int kVectorSize = 64 * 1024 * 1024 / sizeof(double);
+#define VECTOR_SIZE_THREADS \
+  VECTOR_SIZES(1)           \
+      ->VECTOR_SIZES(2)     \
+      ->VECTOR_SIZES(4)     \
+      ->VECTOR_SIZES(8)     \
+      ->VECTOR_SIZES(16)
 
 static void SetZero(benchmark::State& state) {
+  const int kVectorSize = static_cast<int>(state.range(0));
   Vector x = Vector::Random(kVectorSize);
   for (auto _ : state) {
     x.setZero();
   }
   CHECK_EQ(x.squaredNorm(), 0.);
 }
-BENCHMARK(SetZero);
+BENCHMARK(SetZero)->VECTOR_SIZES(1);
 
 static void SetZeroParallel(benchmark::State& state) {
-  const int num_threads = static_cast<int>(state.range(0));
+  const int kVectorSize = static_cast<int>(state.range(0));
+  const int num_threads = static_cast<int>(state.range(1));
   ContextImpl context;
   context.EnsureMinimumThreads(num_threads);
 
@@ -56,9 +83,10 @@ static void SetZeroParallel(benchmark::State& state) {
   }
   CHECK_EQ(x.squaredNorm(), 0.);
 }
-BENCHMARK(SetZeroParallel)->Arg(1)->Arg(2)->Arg(4)->Arg(8)->Arg(16);
+BENCHMARK(SetZeroParallel)->VECTOR_SIZE_THREADS;
 
 static void Negate(benchmark::State& state) {
+  const int kVectorSize = static_cast<int>(state.range(0));
   Vector x = Vector::Random(kVectorSize).normalized();
   const Vector x_init = x;
 
@@ -67,10 +95,11 @@ static void Negate(benchmark::State& state) {
   }
   CHECK((x - x_init).squaredNorm() == 0. || (x + x_init).squaredNorm() == 0);
 }
-BENCHMARK(Negate);
+BENCHMARK(Negate)->VECTOR_SIZES(1);
 
 static void NegateParallel(benchmark::State& state) {
-  const int num_threads = static_cast<int>(state.range(0));
+  const int kVectorSize = static_cast<int>(state.range(0));
+  const int num_threads = static_cast<int>(state.range(1));
   ContextImpl context;
   context.EnsureMinimumThreads(num_threads);
 
@@ -82,9 +111,10 @@ static void NegateParallel(benchmark::State& state) {
   }
   CHECK((x - x_init).squaredNorm() == 0. || (x + x_init).squaredNorm() == 0);
 }
-BENCHMARK(NegateParallel)->Arg(1)->Arg(2)->Arg(4)->Arg(8)->Arg(16);
+BENCHMARK(NegateParallel)->VECTOR_SIZE_THREADS;
 
 static void Assign(benchmark::State& state) {
+  const int kVectorSize = static_cast<int>(state.range(0));
   Vector x = Vector::Random(kVectorSize);
   Vector y = Vector(kVectorSize);
   for (auto _ : state) {
@@ -92,10 +122,11 @@ static void Assign(benchmark::State& state) {
   }
   CHECK_EQ((y - x).squaredNorm(), 0.);
 }
-BENCHMARK(Assign);
+BENCHMARK(Assign)->VECTOR_SIZES(1);
 
 static void AssignParallel(benchmark::State& state) {
-  const int num_threads = static_cast<int>(state.range(0));
+  const int kVectorSize = static_cast<int>(state.range(0));
+  const int num_threads = static_cast<int>(state.range(1));
   ContextImpl context;
   context.EnsureMinimumThreads(num_threads);
 
@@ -107,9 +138,10 @@ static void AssignParallel(benchmark::State& state) {
   }
   CHECK_EQ((y - x).squaredNorm(), 0.);
 }
-BENCHMARK(AssignParallel)->Arg(1)->Arg(2)->Arg(4)->Arg(8)->Arg(16);
+BENCHMARK(AssignParallel)->VECTOR_SIZE_THREADS;
 
 static void D2X(benchmark::State& state) {
+  const int kVectorSize = static_cast<int>(state.range(0));
   const Vector x = Vector::Random(kVectorSize);
   const Vector D = Vector::Random(kVectorSize);
   Vector y = Vector::Zero(kVectorSize);
@@ -118,10 +150,11 @@ static void D2X(benchmark::State& state) {
   }
   CHECK_GT(y.squaredNorm(), 0.);
 }
-BENCHMARK(D2X);
+BENCHMARK(D2X)->VECTOR_SIZES(1);
 
 static void D2XParallel(benchmark::State& state) {
-  const int num_threads = static_cast<int>(state.range(0));
+  const int kVectorSize = static_cast<int>(state.range(0));
+  const int num_threads = static_cast<int>(state.range(1));
   ContextImpl context;
   context.EnsureMinimumThreads(num_threads);
 
@@ -134,9 +167,10 @@ static void D2XParallel(benchmark::State& state) {
   }
   CHECK_GT(y.squaredNorm(), 0.);
 }
-BENCHMARK(D2XParallel)->Arg(1)->Arg(2)->Arg(4)->Arg(8)->Arg(16);
+BENCHMARK(D2XParallel)->VECTOR_SIZE_THREADS;
 
 static void DivideSqrt(benchmark::State& state) {
+  const int kVectorSize = static_cast<int>(state.range(0));
   Vector diagonal = Vector::Random(kVectorSize).array().abs();
   const double radius = 0.5;
   for (auto _ : state) {
@@ -144,10 +178,11 @@ static void DivideSqrt(benchmark::State& state) {
   }
   CHECK_GT(diagonal.squaredNorm(), 0.);
 }
-BENCHMARK(DivideSqrt);
+BENCHMARK(DivideSqrt)->VECTOR_SIZES(1);
 
 static void DivideSqrtParallel(benchmark::State& state) {
-  const int num_threads = static_cast<int>(state.range(0));
+  const int kVectorSize = static_cast<int>(state.range(0));
+  const int num_threads = static_cast<int>(state.range(1));
   ContextImpl context;
   context.EnsureMinimumThreads(num_threads);
 
@@ -159,9 +194,10 @@ static void DivideSqrtParallel(benchmark::State& state) {
   }
   CHECK_GT(diagonal.squaredNorm(), 0.);
 }
-BENCHMARK(DivideSqrtParallel)->Arg(1)->Arg(2)->Arg(4)->Arg(8)->Arg(16);
+BENCHMARK(DivideSqrtParallel)->VECTOR_SIZE_THREADS;
 
 static void Clamp(benchmark::State& state) {
+  const int kVectorSize = static_cast<int>(state.range(0));
   Vector diagonal = Vector::Random(kVectorSize);
   const double min = -0.5;
   const double max = 0.5;
@@ -173,10 +209,11 @@ static void Clamp(benchmark::State& state) {
   CHECK_LE(diagonal.maxCoeff(), 0.5);
   CHECK_GE(diagonal.minCoeff(), -0.5);
 }
-BENCHMARK(Clamp);
+BENCHMARK(Clamp)->VECTOR_SIZES(1);
 
 static void ClampParallel(benchmark::State& state) {
-  const int num_threads = static_cast<int>(state.range(0));
+  const int kVectorSize = static_cast<int>(state.range(0));
+  const int num_threads = static_cast<int>(state.range(1));
   ContextImpl context;
   context.EnsureMinimumThreads(num_threads);
 
@@ -190,9 +227,10 @@ static void ClampParallel(benchmark::State& state) {
   CHECK_LE(diagonal.maxCoeff(), 0.5);
   CHECK_GE(diagonal.minCoeff(), -0.5);
 }
-BENCHMARK(ClampParallel)->Arg(1)->Arg(2)->Arg(4)->Arg(8)->Arg(16);
+BENCHMARK(ClampParallel)->VECTOR_SIZE_THREADS;
 
 static void Norm(benchmark::State& state) {
+  const int kVectorSize = static_cast<int>(state.range(0));
   const Vector x = Vector::Random(kVectorSize);
 
   double total = 0.;
@@ -201,10 +239,11 @@ static void Norm(benchmark::State& state) {
   }
   CHECK_GT(total, 0.);
 }
-BENCHMARK(Norm);
+BENCHMARK(Norm)->VECTOR_SIZES(1);
 
 static void NormParallel(benchmark::State& state) {
-  const int num_threads = static_cast<int>(state.range(0));
+  const int kVectorSize = static_cast<int>(state.range(0));
+  const int num_threads = static_cast<int>(state.range(1));
   ContextImpl context;
   context.EnsureMinimumThreads(num_threads);
 
@@ -216,9 +255,10 @@ static void NormParallel(benchmark::State& state) {
   }
   CHECK_GT(total, 0.);
 }
-BENCHMARK(NormParallel)->Arg(1)->Arg(2)->Arg(4)->Arg(8)->Arg(16);
+BENCHMARK(NormParallel)->VECTOR_SIZE_THREADS;
 
 static void Dot(benchmark::State& state) {
+  const int kVectorSize = static_cast<int>(state.range(0));
   const Vector x = Vector::Random(kVectorSize);
   const Vector y = Vector::Random(kVectorSize);
 
@@ -228,10 +268,11 @@ static void Dot(benchmark::State& state) {
   }
   CHECK_NE(total, 0.);
 }
-BENCHMARK(Dot);
+BENCHMARK(Dot)->VECTOR_SIZES(1);
 
 static void DotParallel(benchmark::State& state) {
-  const int num_threads = static_cast<int>(state.range(0));
+  const int kVectorSize = static_cast<int>(state.range(0));
+  const int num_threads = static_cast<int>(state.range(1));
   ContextImpl context;
   context.EnsureMinimumThreads(num_threads);
 
@@ -244,9 +285,10 @@ static void DotParallel(benchmark::State& state) {
   }
   CHECK_NE(total, 0.);
 }
-BENCHMARK(DotParallel)->Arg(1)->Arg(2)->Arg(4)->Arg(8)->Arg(16);
+BENCHMARK(DotParallel)->VECTOR_SIZE_THREADS;
 
 static void Axpby(benchmark::State& state) {
+  const int kVectorSize = static_cast<int>(state.range(0));
   const Vector x = Vector::Random(kVectorSize);
   const Vector y = Vector::Random(kVectorSize);
   Vector z = Vector::Zero(kVectorSize);
@@ -258,10 +300,11 @@ static void Axpby(benchmark::State& state) {
   }
   CHECK_GT(z.squaredNorm(), 0.);
 }
-BENCHMARK(Axpby);
+BENCHMARK(Axpby)->VECTOR_SIZES(1);
 
 static void AxpbyParallel(benchmark::State& state) {
-  const int num_threads = static_cast<int>(state.range(0));
+  const int kVectorSize = static_cast<int>(state.range(0));
+  const int num_threads = static_cast<int>(state.range(1));
   ContextImpl context;
   context.EnsureMinimumThreads(num_threads);
 
@@ -276,7 +319,7 @@ static void AxpbyParallel(benchmark::State& state) {
   }
   CHECK_GT(z.squaredNorm(), 0.);
 }
-BENCHMARK(AxpbyParallel)->Arg(1)->Arg(2)->Arg(4)->Arg(8)->Arg(16);
+BENCHMARK(AxpbyParallel)->VECTOR_SIZE_THREADS;
 
 }  // namespace ceres::internal
 

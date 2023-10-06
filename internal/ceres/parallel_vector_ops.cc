@@ -25,15 +25,28 @@
 // CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
-//
-// Author: vitus@google.com (Michael Vitus)
+
+#include "ceres/parallel_vector_ops.h"
+
+#include <algorithm>
 
 #include "ceres/parallel_for.h"
 
-#include "ceres/thread_pool.h"
-
 namespace ceres::internal {
-
-int MaxNumThreadsAvailable() { return ThreadPool::MaxNumThreadsAvailable(); }
+void ParallelSetZero(ContextImpl* context,
+                     int num_threads,
+                     double* values,
+                     int num_values) {
+  ParallelFor(
+      context,
+      0,
+      num_values,
+      num_threads,
+      [values](std::tuple<int, int> range) {
+        auto [start, end] = range;
+        std::fill(values + start, values + end, 0.);
+      },
+      kMinBlockSizeParallelVectorOps);
+}
 
 }  // namespace ceres::internal

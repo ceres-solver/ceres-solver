@@ -214,6 +214,7 @@ add_library(ceres_internal OBJECT
     parallel_for.cc
     parallel_invoke.cc
     parallel_utils.cc
+    parallel_vector_ops.cc
     parameter_block_ordering.cc
     partitioned_matrix_view.cc
     polynomial.cc
