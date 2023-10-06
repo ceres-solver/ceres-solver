@@ -94,6 +94,29 @@ TEST(ParallelForWithRange, NumThreads) {
   }
 }
 
+// Tests parallel for loop with ranges and lower bound on minimal range size
+TEST(ParallelForWithRange, MinimalSize) {
+  ContextImpl context;
+  context.EnsureMinimumThreads(/*num_threads=*/2);
+
+  const int min_block_size = 5;
+  const int num_threads = 4;
+  for (int size = min_block_size; size <= 25; ++size) {
+    std::atomic<bool> failed(false);
+    ParallelFor(
+        &context,
+        0,
+        size,
+        num_threads,
+        [&failed](std::tuple<int, int> range) {
+          auto [start, end] = range;
+          if (end - start < min_block_size) failed = true;
+        },
+        min_block_size);
+    EXPECT_EQ(failed, false);
+  }
+}
+
 // Tests the parallel for loop with the thread ID interface computes the correct
 // result for various number of threads.
 TEST(ParallelForWithThreadId, NumThreads) {
