@@ -42,14 +42,16 @@
 
 namespace ceres::internal {
 
+// Lower bound on block size for parallel vector operations.
+// Operations with vectors of less than kMinBlockSizeParallelVectorOps elements
+// will be executed in a single thread.
+constexpr int kMinBlockSizeParallelVectorOps = 1 << 16;
 // Evaluate vector expression in parallel
-// Assuming LhsExpression and RhsExpression are some sort of
-// column-vector expression, assignment lhs = rhs
-// is eavluated over a set of contiguous blocks in parallel.
-// This is expected to work well in the case of vector-based
-// expressions (since they typically do not result into
-// temporaries).
-// This method expects lhs to be size-compatible with rhs
+// Assuming LhsExpression and RhsExpression are some sort of column-vector
+// expression, assignment lhs = rhs is eavluated over a set of contiguous blocks
+// in parallel. This is expected to work well in the case of vector-based
+// expressions (since they typically do not result into temporaries). This
+// method expects lhs to be size-compatible with rhs
 template <typename LhsExpression, typename RhsExpression>
 void ParallelAssign(ContextImpl* context,
                     int num_threads,
@@ -59,15 +61,16 @@ void ParallelAssign(ContextImpl* context,
   static_assert(RhsExpression::ColsAtCompileTime == 1);
   CHECK_EQ(lhs.rows(), rhs.rows());
   const int num_rows = lhs.rows();
-  ParallelFor(context,
-              0,
-              num_rows,
-              num_threads,
-              [&lhs, &rhs](const std::tuple<int, int>& range) {
-                auto [start, end] = range;
-                lhs.segment(start, end - start) =
-                    rhs.segment(start, end - start);
-              });
+  ParallelFor(
+      context,
+      0,
+      num_rows,
+      num_threads,
+      [&lhs, &rhs](const std::tuple<int, int>& range) {
+        auto [start, end] = range;
+        lhs.segment(start, end - start) = rhs.segment(start, end - start);
+      },
+      kMinBlockSizeParallelVectorOps);
 }
 
 // Set vector to zero using num_threads
