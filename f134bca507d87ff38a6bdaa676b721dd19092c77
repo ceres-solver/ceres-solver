@@ -35,6 +35,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "047239ed_c17f1a99",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-10-09T13:01:58Z",
+      "side": 1,
+      "message": "https://ceres-solver-review.git.corp.google.com/c/ceres-solver/+/25320",
+      "revId": "f134bca507d87ff38a6bdaa676b721dd19092c77",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6a0e1704_2e934a65",
