@@ -50,6 +50,8 @@ Backward Incompatible API Changes
 
 Bug Fixes & Minor Changes
 -------------------------
+#. Improvements to multi-threaded performance for small problems that
+   had regressed due to changes to threading (Dmitrity Korchemkin)
 #. Fix handling of M_PI for MSVC (Sergiu Deitsch)
 #. Add a default value for Solver::Summary::linear_solver_ordering_type (Sameer Agarwal)
 #. Make sure that the code compiles well with CUDA 11 (Dmitriy
