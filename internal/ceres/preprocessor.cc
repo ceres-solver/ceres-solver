@@ -35,9 +35,9 @@
 #include "ceres/callbacks.h"
 #include "ceres/gradient_checking_cost_function.h"
 #include "ceres/line_search_preprocessor.h"
-#include "ceres/parallel_for.h"
 #include "ceres/problem_impl.h"
 #include "ceres/solver.h"
+#include "ceres/thread_pool.h"
 #include "ceres/trust_region_preprocessor.h"
 
 namespace ceres::internal {
@@ -62,7 +62,7 @@ void ChangeNumThreadsIfNeeded(Solver::Options* options) {
   if (options->num_threads == 1) {
     return;
   }
-  const int num_threads_available = MaxNumThreadsAvailable();
+  const int num_threads_available = ThreadPool::MaxNumThreadsAvailable();
   if (options->num_threads > num_threads_available) {
     LOG(WARNING) << "Specified options.num_threads: " << options->num_threads
                  << " exceeds maximum available from the threading model Ceres "

@@ -44,8 +44,6 @@
 
 namespace ceres::internal {
 
-int MaxNumThreadsAvailable() { return ThreadPool::MaxNumThreadsAvailable(); }
-
 void ParallelSetZero(ContextImpl* context,
                      int num_threads,
                      double* values,

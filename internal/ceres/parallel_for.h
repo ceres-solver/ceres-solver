@@ -51,9 +51,6 @@ inline decltype(auto) MakeConditionalLock(const int num_threads,
                             : std::unique_lock<std::mutex>{m};
 }
 
-// Returns the maximum supported number of threads
-CERES_NO_EXPORT int MaxNumThreadsAvailable();
-
 // Execute the function for every element in the range [start, end) with at most
 // num_threads. It will execute all the work on the calling thread if
 // num_threads or (end - start) is equal to 1.
