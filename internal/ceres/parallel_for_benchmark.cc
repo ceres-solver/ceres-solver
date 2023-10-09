@@ -27,7 +27,10 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include "benchmark/benchmark.h"
+#include "ceres/context_impl.h"
+#include "ceres/internal/eigen.h"
 #include "ceres/parallel_for.h"
+#include "glog/logging.h"
 
 namespace ceres::internal {
 

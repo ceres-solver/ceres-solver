@@ -29,7 +29,9 @@
 #include "ceres/parallel_vector_ops.h"
 
 #include <algorithm>
+#include <tuple>
 
+#include "ceres/context_impl.h"
 #include "ceres/parallel_for.h"
 
 namespace ceres::internal {
