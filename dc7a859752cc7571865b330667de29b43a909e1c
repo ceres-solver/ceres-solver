@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8839dea8_250e3caa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-10-09T14:38:33Z",
+      "side": 1,
+      "message": "- Improved commit message\n- Removed parallel_for.cc file because it becomes empty after removing MaxNumThreadsAvailable and moving ParallelSetZero to a separate file.",
+      "revId": "dc7a859752cc7571865b330667de29b43a909e1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

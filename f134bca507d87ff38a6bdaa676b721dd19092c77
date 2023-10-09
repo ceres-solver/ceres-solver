@@ -90,6 +90,30 @@
       },
       "revId": "f134bca507d87ff38a6bdaa676b721dd19092c77",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ddeb2158_389c6dc5",
+        "filename": "internal/ceres/parallel_for.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-10-09T14:38:33Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "6a0e1704_2e934a65",
+      "range": {
+        "startLine": 37,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 4
+      },
+      "revId": "f134bca507d87ff38a6bdaa676b721dd19092c77",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
