@@ -109,7 +109,7 @@ TEST(ParallelForWithRange, MinimalSize) {
         0,
         size,
         kNumThreads,
-        [&failed](std::tuple<int, int> range) {
+        [&failed, kMinBlockSize](std::tuple<int, int> range) {
           auto [start, end] = range;
           if (end - start < kMinBlockSize) failed = true;
         },
