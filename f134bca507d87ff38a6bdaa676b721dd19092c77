@@ -16,6 +16,46 @@
       "message": "Rebased on top of new task scheduling",
       "revId": "f134bca507d87ff38a6bdaa676b721dd19092c77",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "799b320c_66979429",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-10-09T12:54:03Z",
+      "side": 1,
+      "message": "minor comment, please also expand the commit log.\nI commented on the github issue that I cannot see the multiple sheets you are talking about, are you revising it?",
+      "revId": "f134bca507d87ff38a6bdaa676b721dd19092c77",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a0e1704_2e934a65",
+        "filename": "internal/ceres/parallel_for.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2023-10-09T12:54:03Z",
+      "side": 1,
+      "message": "this does not need to happen in this CL, but what is the purpose of this function wrapper? I suspect it made sense in the past with multiple backends, but now callers should just call ThreadPool::MaxNumThreadsAvailable() no?",
+      "range": {
+        "startLine": 37,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 4
+      },
+      "revId": "f134bca507d87ff38a6bdaa676b721dd19092c77",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
