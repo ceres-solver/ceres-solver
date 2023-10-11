@@ -2072,7 +2072,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    should not expect to look at the parameter blocks and interpret
    their values.
 
-.. member:: std::vector<IterationCallback> Solver::Options::callbacks
+.. member:: std::vector<IterationCallback*> Solver::Options::callbacks
 
    Default: ``empty``
 
