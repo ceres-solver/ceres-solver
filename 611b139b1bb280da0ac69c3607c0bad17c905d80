@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "535102cf_71ef5182",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-10-11T14:35:54Z",
+      "side": 1,
+      "message": "Asterisk was missing in documentation of Solver::Options::callbacks",
+      "revId": "611b139b1bb280da0ac69c3607c0bad17c905d80",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
