@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad99aa79_57f66b13",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-10-13T21:42:01Z",
+      "side": 1,
+      "message": "Mostly LGTM. Only a minor remark.",
+      "revId": "77497373193a6304a67d0993ceb433100f0a39d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2e9eec1_60021c75",
+        "filename": "scripts/make_docs.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2023-10-13T21:42:01Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this change is intended or just an artifact.",
+      "range": {
+        "startLine": 63,
+        "startChar": 17,
+        "endLine": 63,
+        "endChar": 19
+      },
+      "revId": "77497373193a6304a67d0993ceb433100f0a39d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
