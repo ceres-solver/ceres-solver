@@ -9,7 +9,7 @@ authors:
   given-names: Keir
 - name: The Ceres Solver Team
 version: 2.2
-date-released: 2023-10-09
+date-released: 2023-10-13
 license: Apache-2.0
 repository-code: https://github.com/ceres-solver/ceres-solver
 url: http://ceres-solver.org

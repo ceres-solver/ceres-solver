@@ -50,6 +50,7 @@ Backward Incompatible API Changes
 
 Bug Fixes & Minor Changes
 -------------------------
+#. Optimize the computation of the LM diagonal in TinySolver
 #. Improvements to multi-threaded performance for small problems that
    had regressed due to changes to threading (Dmitrity Korchemkin)
 #. Fix handling of M_PI for MSVC (Sergiu Deitsch)

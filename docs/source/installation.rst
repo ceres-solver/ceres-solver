@@ -185,54 +185,54 @@ this.
 .. code-block:: bash
 
     iter      cost      cost_change  |gradient|   |step|    tr_ratio  tr_radius  ls_iter  iter_time  total_time
-       0  4.185660e+06    0.00e+00    1.09e+08   0.00e+00   0.00e+00  1.00e+04       0    7.59e-02    3.37e-01
-       1  1.062590e+05    4.08e+06    8.99e+06   5.36e+02   9.82e-01  3.00e+04       1    1.65e-01    5.03e-01
-       2  4.992817e+04    5.63e+04    8.32e+06   3.19e+02   6.52e-01  3.09e+04       1    1.45e-01    6.48e-01
-       3  1.899774e+04    3.09e+04    1.60e+06   1.24e+02   9.77e-01  9.26e+04       1    1.43e-01    7.92e-01
-       4  1.808729e+04    9.10e+02    3.97e+05   6.39e+01   9.51e-01  2.78e+05       1    1.45e-01    9.36e-01
-       5  1.803399e+04    5.33e+01    1.48e+04   1.23e+01   9.99e-01  8.33e+05       1    1.45e-01    1.08e+00
-       6  1.803390e+04    9.02e-02    6.35e+01   8.00e-01   1.00e+00  2.50e+06       1    1.50e-01    1.23e+00
+       0  4.185660e+06    0.00e+00    1.09e+08   0.00e+00   0.00e+00  1.00e+04        0    2.18e-02    6.57e-02
+       1  1.062590e+05    4.08e+06    8.99e+06   0.00e+00   9.82e-01  3.00e+04        1    5.07e-02    1.16e-01
+       2  4.992817e+04    5.63e+04    8.32e+06   3.19e+02   6.52e-01  3.09e+04        1    4.75e-02    1.64e-01
+       3  1.899774e+04    3.09e+04    1.60e+06   1.24e+02   9.77e-01  9.26e+04        1    4.74e-02    2.11e-01
+       4  1.808729e+04    9.10e+02    3.97e+05   6.39e+01   9.51e-01  2.78e+05        1    4.75e-02    2.59e-01
+       5  1.803399e+04    5.33e+01    1.48e+04   1.23e+01   9.99e-01  8.33e+05        1    4.74e-02    3.06e-01
+       6  1.803390e+04    9.02e-02    6.35e+01   8.00e-01   1.00e+00  2.50e+06        1    4.76e-02    3.54e-01
 
-  Solver Summary (v 2.2.0-eigen-(3.4.0)-lapack-suitesparse-(5.10.1)-acceleratesparse-eigensparse-no_openmp)
+    Solver Summary (v 2.2.0-eigen-(3.4.0)-lapack-suitesparse-(7.1.0)-metis-(5.1.0)-acceleratesparse-eigensparse)
 
-				       Original                  Reduced
-  Parameter blocks                        22122                    22122
-  Parameters                              66462                    66462
-  Residual blocks                         83718                    83718
-  Residuals                              167436                   167436
+                                         Original                  Reduced
+    Parameter blocks                        22122                    22122
+    Parameters                              66462                    66462
+    Residual blocks                         83718                    83718
+    Residuals                              167436                   167436
 
-  Minimizer                        TRUST_REGION
+    Minimizer                        TRUST_REGION
 
-  Dense linear algebra library            EIGEN
-  Trust region strategy     LEVENBERG_MARQUARDT
+    Dense linear algebra library            EIGEN
+    Trust region strategy     LEVENBERG_MARQUARDT
+                                            Given                     Used
+    Linear solver                     DENSE_SCHUR              DENSE_SCHUR
+    Threads                                     1                        1
+    Linear solver ordering              AUTOMATIC                 22106,16
+    Schur structure                         2,3,9                    2,3,9
 
-					  Given                     Used
-  Linear solver                     DENSE_SCHUR              DENSE_SCHUR
-  Threads                                     1                        1
-  Linear solver ordering              AUTOMATIC                 22106,16
-  Schur structure                         2,3,9                    2,3,9
+    Cost:
+    Initial                          4.185660e+06
+    Final                            1.803390e+04
+    Change                           4.167626e+06
 
-  Cost:
-  Initial                          4.185660e+06
-  Final                            1.803390e+04
-  Change                           4.167626e+06
+    Minimizer iterations                        7
+    Successful steps                            7
+    Unsuccessful steps                          0
 
-  Minimizer iterations                        7
-  Successful steps                            7
-  Unsuccessful steps                          0
+    Time (in seconds):
+    Preprocessor                         0.043895
 
-  Time (in seconds):
-  Preprocessor                         0.121654
+      Residual only evaluation           0.029855 (7)
+      Jacobian & residual evaluation     0.120581 (7)
+      Linear solver                      0.153665 (7)
+    Minimizer                            0.339275
 
-    Residual only evaluation           0.065968 (7)
-    Jacobian & residual evaluation     0.303356 (7)
-    Linear solver                      0.436650 (7)
-  Minimizer                            0.890535
+    Postprocessor                        0.000540
+    Total                                0.383710
 
-  Postprocessor                        0.001684
-  Total                                1.013873
+    Termination:                      CONVERGENCE (Function tolerance reached. |cost_change|/cost: 1.769759e-09 <= 1.000000e-06)
 
-  Termination:                      CONVERGENCE (Function tolerance reached. |cost_change|/cost: 1.769756e-09 <= 1.000000e-06)
 
 .. section-macos:
 
