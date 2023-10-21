@@ -68,7 +68,7 @@ class CERES_NO_EXPORT BlockJacobianWriter {
 
   // JacobianWriter interface.
 
-  // Create evaluate prepareres that point directly into the final jacobian.
+  // Create evaluate preparers that point directly into the final jacobian.
   // This makes the final Write() a nop.
   std::unique_ptr<BlockEvaluatePreparer[]> CreateEvaluatePreparers(
       unsigned num_threads);

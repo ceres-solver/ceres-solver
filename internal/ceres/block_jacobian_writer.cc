@@ -178,7 +178,7 @@ BlockJacobianWriter::BlockJacobianWriter(const Evaluator::Options& options,
                                                   &jacobian_layout_storage_);
 }
 
-// Create evaluate prepareres that point directly into the final jacobian. This
+// Create evaluate preparers that point directly into the final jacobian. This
 // makes the final Write() a nop.
 std::unique_ptr<BlockEvaluatePreparer[]>
 BlockJacobianWriter::CreateEvaluatePreparers(unsigned num_threads) {
