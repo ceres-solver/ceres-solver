@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3bf260dd_a0d56eea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2023-10-28T18:51:17Z",
+      "side": 1,
+      "message": "In ee90f6cbf7ce6cd91e3b9e8cb8c36f098f1546da a check for overflows in block offsets was introduced; however, when Schur-complement linear solver is used, triggering this check will result in crash because pointer to jacobian is null.\n\nThis patch performs structure detection only if preprocessor succeeds.",
+      "revId": "095d483927d26bffc36d1fcc5fe8e2f1ef7da6b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
