@@ -773,7 +773,7 @@ void Solver::Solve(const Solver::Options& options,
   // modified_options.linear_solver_type because, depending on the
   // lack of a Schur structure, the preprocessor may change the linear
   // solver type.
-  if (IsSchurType(pp.linear_solver_options.type)) {
+  if (status && IsSchurType(pp.linear_solver_options.type)) {
     // TODO(sameeragarwal): We can likely eliminate the duplicate call
     // to DetectStructure here and inside the linear solver, by
     // calling this in the preprocessor.
