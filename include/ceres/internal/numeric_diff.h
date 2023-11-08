@@ -214,7 +214,15 @@ struct NumericDiff {
         return false;
       }
 
-      residuals -= temp_residuals;
+      for (int i = 0; i < num_residuals; ++i) {
+        if (residuals[i] > residuals_at_eval_point[i] &&
+            temp_residuals[i] > residuals_at_eval_point[i]) {
+          residuals[i] = 0;
+        } else {
+          residuals[i] -= temp_residuals[i];
+        }
+      }
+
       one_over_delta /= 2;
     } else {
       // Forward difference only; reuse existing residuals evaluation.
