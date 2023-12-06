@@ -103,7 +103,7 @@ Ceres solve it.
      google::InitGoogleLogging(argv[0]);
 
      // The variable to solve for with its initial value.
-     double initial_x = 5.0;
+     double initial_x = 0.5;
      double x = initial_x;
 
      // Build the problem.
