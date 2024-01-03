@@ -16,6 +16,23 @@
       "message": "Here is the test code to reproduce the issue. Before the fix, the correct answer was not obtained when i\u003d\u003d5. After the fix, the correct answer is obtained for all values of i.\n\nstruct CostFunction {\n    bool operator()(const double* const x, double* residual) const {\n        residual[0] \u003d std::abs(x[0] - 5.0) * (x[0] \u003e 5.0 ? 2.0 : 1.0) + std::abs(x[1] - 10.0);\n        return true;\n    }\n};\n\nvoid Test(const std::array\u003cdouble, 2\u003e\u0026 initial_x)\n{\n    auto x \u003d initial_x;\n\n    ceres::Problem problem;\n\n    ceres::CostFunction* cost_function \u003d\n        new ceres::NumericDiffCostFunction\u003cCostFunction, ceres::CENTRAL, 1, 2\u003e(\n            new CostFunction);\n\n    problem.AddResidualBlock(cost_function, NULL, x.data());\n\n    ceres::Solver::Options options;\n    options.linear_solver_type \u003d ceres::DENSE_QR;\n    options.minimizer_progress_to_stdout \u003d true;\n\n    ceres::Solver::Summary summary;\n    ceres::Solve(options, \u0026problem, \u0026summary);\n\n    std::cout \u003c\u003c summary.BriefReport() \u003c\u003c \"\\n\";\n    std::cout \u003c\u003c \"x : (\" \u003c\u003c initial_x[0] \u003c\u003c \", \" \u003c\u003c initial_x[1] \u003c\u003c \")\"\n        \u003c\u003c \" -\u003e (\" \u003c\u003c x[0] \u003c\u003c \", \" \u003c\u003c x[1] \u003c\u003c \")\\n\";\n}\n\nint main(int argc, char** argv) {\n    google::InitGoogleLogging(argv[0]);\n\n    for (int i \u003d 0; i \u003c 10; ++i) {\n        Test({ static_cast\u003cdouble\u003e(i), 5.0 });  // wrong when i \u003d\u003d 5\n    }\n    return 0;\n}",
       "revId": "9a62590ce22e8aedaf0000f1a566da11c2561527",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8eb13f63_072b0c4d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-01-03T20:41:55Z",
+      "side": 1,
+      "message": "Changing the numerical differentiation algorithm by making such local decisions is not a great idea. The decision making should be done by the high level optimization algorithm rather than the differentiation routine whose job is to estimate derivatives.",
+      "revId": "9a62590ce22e8aedaf0000f1a566da11c2561527",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
