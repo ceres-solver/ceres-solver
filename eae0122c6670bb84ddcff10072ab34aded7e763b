@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "380177ce_4fef93cb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-01-16T21:09:50Z",
+      "side": 1,
+      "message": "I have been thinking about this some more, especially in light of \n\nhttps://github.com/ceres-solver/ceres-solver/issues/1026\n\nI think we should think about this patch again and what would be the best way to land this in ceres.",
+      "revId": "eae0122c6670bb84ddcff10072ab34aded7e763b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
