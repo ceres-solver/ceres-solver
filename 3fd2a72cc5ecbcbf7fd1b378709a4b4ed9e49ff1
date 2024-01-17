@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10a1105e_45f1147f",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-01-17T20:03:17Z",
+      "side": 0,
+      "message": "is this comment still relevant? and do we also need to update the docs for installation on macos ?",
+      "range": {
+        "startLine": 38,
+        "startChar": 47,
+        "endLine": 38,
+        "endChar": 56
+      },
+      "revId": "3fd2a72cc5ecbcbf7fd1b378709a4b4ed9e49ff1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
