@@ -22,6 +22,30 @@
       },
       "revId": "3fd2a72cc5ecbcbf7fd1b378709a4b4ed9e49ff1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7340681_3ac05110",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-01-17T20:41:17Z",
+      "side": 0,
+      "message": "I do not believe the comment is relevant which is why I removed it.\n\nWe could extend the docs to mention that `CMAKE_PREFIX_PATH` needs to be set if the dependencies are located in non-default directories. This is however not Homebrew specific and applies to any kind of toolchain used to compile for the host.",
+      "parentUuid": "10a1105e_45f1147f",
+      "range": {
+        "startLine": 38,
+        "startChar": 47,
+        "endLine": 38,
+        "endChar": 56
+      },
+      "revId": "3fd2a72cc5ecbcbf7fd1b378709a4b4ed9e49ff1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
