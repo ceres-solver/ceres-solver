@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "230af1e8_981ecb16",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-01-17T19:54:35Z",
+      "side": 1,
+      "message": "This fixes failing Github MinGW workflow.",
+      "revId": "3fd2a72cc5ecbcbf7fd1b378709a4b4ed9e49ff1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
