@@ -30,134 +30,122 @@
 //
 // This example fits the curve f(x;m,c) = e^(m * x + c) to data, minimizing the
 // sum squared loss.
+// #include "FitTest.h"
+#include <ceres/ceres.h>
+#include <glog/logging.h>
 
-#include "ceres/ceres.h"
-#include "glog/logging.h"
+template <typename T>
+class SphericalCovariance {
+ public:
+  SphericalCovariance(T range, T sill, T nugget)
+      : _nugget(nugget), _range(range), _sill(sill) {
+    _psill = _sill - _nugget;
+  }
 
-// Data generated using the following octave code.
-//   randn('seed', 23497);
-//   m = 0.3;
-//   c = 0.1;
-//   x=[0:0.075:5];
-//   y = exp(m * x + c);
-//   noise = randn(size(x)) * 0.2;
-//   y_observed = y + noise;
-//   data = [x', y_observed'];
+ public:
+  T compute(double d) const {
+    if (d <= _range) {
+      return _psill * ((3.0 * d) / (2.0 * _range) -
+                       (d * d * d) / (2.0 * _range * _range * _range)) +
+             _nugget;
+    } else {
+      return _psill + _nugget;
+    }
+  }
 
-const int kNumObservations = 67;
-// clang-format off
-const double data[] = {
-  0.000000e+00, 1.133898e+00,
-  7.500000e-02, 1.334902e+00,
-  1.500000e-01, 1.213546e+00,
-  2.250000e-01, 1.252016e+00,
-  3.000000e-01, 1.392265e+00,
-  3.750000e-01, 1.314458e+00,
-  4.500000e-01, 1.472541e+00,
-  5.250000e-01, 1.536218e+00,
-  6.000000e-01, 1.355679e+00,
-  6.750000e-01, 1.463566e+00,
-  7.500000e-01, 1.490201e+00,
-  8.250000e-01, 1.658699e+00,
-  9.000000e-01, 1.067574e+00,
-  9.750000e-01, 1.464629e+00,
-  1.050000e+00, 1.402653e+00,
-  1.125000e+00, 1.713141e+00,
-  1.200000e+00, 1.527021e+00,
-  1.275000e+00, 1.702632e+00,
-  1.350000e+00, 1.423899e+00,
-  1.425000e+00, 1.543078e+00,
-  1.500000e+00, 1.664015e+00,
-  1.575000e+00, 1.732484e+00,
-  1.650000e+00, 1.543296e+00,
-  1.725000e+00, 1.959523e+00,
-  1.800000e+00, 1.685132e+00,
-  1.875000e+00, 1.951791e+00,
-  1.950000e+00, 2.095346e+00,
-  2.025000e+00, 2.361460e+00,
-  2.100000e+00, 2.169119e+00,
-  2.175000e+00, 2.061745e+00,
-  2.250000e+00, 2.178641e+00,
-  2.325000e+00, 2.104346e+00,
-  2.400000e+00, 2.584470e+00,
-  2.475000e+00, 1.914158e+00,
-  2.550000e+00, 2.368375e+00,
-  2.625000e+00, 2.686125e+00,
-  2.700000e+00, 2.712395e+00,
-  2.775000e+00, 2.499511e+00,
-  2.850000e+00, 2.558897e+00,
-  2.925000e+00, 2.309154e+00,
-  3.000000e+00, 2.869503e+00,
-  3.075000e+00, 3.116645e+00,
-  3.150000e+00, 3.094907e+00,
-  3.225000e+00, 2.471759e+00,
-  3.300000e+00, 3.017131e+00,
-  3.375000e+00, 3.232381e+00,
-  3.450000e+00, 2.944596e+00,
-  3.525000e+00, 3.385343e+00,
-  3.600000e+00, 3.199826e+00,
-  3.675000e+00, 3.423039e+00,
-  3.750000e+00, 3.621552e+00,
-  3.825000e+00, 3.559255e+00,
-  3.900000e+00, 3.530713e+00,
-  3.975000e+00, 3.561766e+00,
-  4.050000e+00, 3.544574e+00,
-  4.125000e+00, 3.867945e+00,
-  4.200000e+00, 4.049776e+00,
-  4.275000e+00, 3.885601e+00,
-  4.350000e+00, 4.110505e+00,
-  4.425000e+00, 4.345320e+00,
-  4.500000e+00, 4.161241e+00,
-  4.575000e+00, 4.363407e+00,
-  4.650000e+00, 4.161576e+00,
-  4.725000e+00, 4.619728e+00,
-  4.800000e+00, 4.737410e+00,
-  4.875000e+00, 4.727863e+00,
-  4.950000e+00, 4.669206e+00,
+ private:
+  T _sill;
+  T _range;
+  T _nugget;
+  T _psill;
 };
-// clang-format on
 
-struct ExponentialResidual {
-  ExponentialResidual(double x, double y) : x_(x), y_(y) {}
+struct ModelResidual {
+  ModelResidual(double lag, double gamma) : _lag(lag), _gamma(gamma) {}
 
   template <typename T>
-  bool operator()(const T* const m, const T* const c, T* residual) const {
-    residual[0] = y_ - exp(m[0] * x_ + c[0]);
+  bool operator()(const T* const range,
+                  const T* const nugget,
+                  const T* const sill,
+                  T* residual) const {
+    residual[0] =
+        _gamma -
+        SphericalCovariance(range[0], sill[0], nugget[0]).compute(_lag);
+
+    // residual[0] = y_ - exp(m[0] * x_ + c[0]);
     return true;
   }
 
  private:
-  const double x_;
-  const double y_;
+  // Observations for a sample.
+  const double _lag;
+  const double _gamma;
 };
+
+void ceres_test() {
+  using namespace ceres;
+  ceres::Problem problem;
+
+  std::vector<double> lag = {
+      175.65234, 390.07074, 617.2337,  846.20544, 1079.8468, 1312.8428,
+      1545.525,  1777.5623, 2009.1091, 2239.874,  2472.7234, 2709.9663,
+      2941.5889, 3174.672,  3406.3713, 3639.4817, 3873.5212, 4107.823,
+      4341.223,  4571.714,  4805.605,  5041.677,  5271.1084, 5503.067,
+      5737.291,  5970.111,  6202.1523, 6437.138,  6670.4116, 6892.423};
+  std::vector<double> gamma = {
+      20.815123, 21.075365, 19.551971, 20.397446, 22.835442, 24.360342,
+      28.06185,  27.736881, 28.389353, 27.340208, 30.65644,  31.15702,
+      29.316727, 28.009079, 26.655233, 24.42093,  20.318785, 23.195473,
+      22.581009, 23.794619, 22.329227, 22.553814, 21.483736, 20.519196,
+      21.407993, 18.173586, 21.122591, 25.138948, 24.998138, 34.060234};
+
+  double nugget = 20.601930259621913;
+  double sill = 28.062121873701631;
+  double range = 3639.4816871947096;
+
+  // nugget = 18.362237;
+  // sill = 25.0602215;
+  // range = 1901.215665;
+
+  double maxRange = 6892.4227592761508;
+  double maxNugget = 34.060233524360626;
+  double maxSill = 34.060233524360626;
+
+  for (size_t i = 0; i < lag.size(); ++i) {
+    ceres::CostFunction* cost_function =
+        new ceres::AutoDiffCostFunction<ModelResidual, 1, 1, 1, 1>(
+            new ModelResidual{lag[i], gamma[i]});
+
+    // SoftLOneLoss CauchyLoss HuberLoss
+    ceres::LossFunction* loss = nullptr;
+
+    problem.AddResidualBlock(cost_function, loss, &range, &nugget, &sill);
+  }
+
+  problem.SetParameterLowerBound(&nugget, 0, 0.0);
+  // problem.SetParameterUpperBound(&nugget, 0, maxNugget);
+
+  problem.SetParameterLowerBound(&range, 0, 0.0);
+  // problem.SetParameterUpperBound(&range, 0, maxRange);
+
+  problem.SetParameterLowerBound(&sill, 0, 0.0);
+  // problem.SetParameterUpperBound(&sill, 0, maxSill);
+
+  ceres::Solver::Options options;
+  options.linear_solver_type = ceres::DENSE_QR;
+  options.minimizer_progress_to_stdout = true;
+  options.function_tolerance = 0.0;
+  ceres::Solver::Summary summary;
+  ceres::Solve(options, &problem, &summary);
+
+  std::cout << summary.FullReport() << std::endl;
+  std::cout << "Fitted parameters:" << std::endl;
+  std::cout << "Nugget = " << nugget << std::endl;
+  std::cout << "Range = " << range << std::endl;
+  std::cout << "Sill = " << sill << std::endl;
+}
 
 int main(int argc, char** argv) {
   google::InitGoogleLogging(argv[0]);
-
-  const double initial_m = 0.0;
-  const double initial_c = 0.0;
-  double m = initial_m;
-  double c = initial_c;
-
-  ceres::Problem problem;
-  for (int i = 0; i < kNumObservations; ++i) {
-    problem.AddResidualBlock(
-        new ceres::AutoDiffCostFunction<ExponentialResidual, 1, 1, 1>(
-            new ExponentialResidual(data[2 * i], data[2 * i + 1])),
-        nullptr,
-        &m,
-        &c);
-  }
-
-  ceres::Solver::Options options;
-  options.max_num_iterations = 25;
-  options.linear_solver_type = ceres::DENSE_QR;
-  options.minimizer_progress_to_stdout = true;
-
-  ceres::Solver::Summary summary;
-  ceres::Solve(options, &problem, &summary);
-  std::cout << summary.BriefReport() << "\n";
-  std::cout << "Initial m: " << initial_m << " c: " << initial_c << "\n";
-  std::cout << "Final   m: " << m << " c: " << c << "\n";
-  return 0;
+  ceres_test();
 }
