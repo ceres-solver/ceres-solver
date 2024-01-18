@@ -46,6 +46,30 @@
       },
       "revId": "40d12c1219d759269f097241e7bcb84882bf2483",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6672f8ef_659332c9",
+        "filename": "include/ceres/autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-01-18T22:53:24Z",
+      "side": 1,
+      "message": "Good points, Sameer. Will look into all of the above for completeness.\n\nShould we maybe remove the restriction that at least one argument is necessary? Then the default constructor would instantiate the cost functor using its own default constructor if available. Currently, there is no default constructor in `AutoDiffCostFunction`.",
+      "parentUuid": "3372fd5f_64788d23",
+      "range": {
+        "startLine": 163,
+        "startChar": 11,
+        "endLine": 163,
+        "endChar": 31
+      },
+      "revId": "40d12c1219d759269f097241e7bcb84882bf2483",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
