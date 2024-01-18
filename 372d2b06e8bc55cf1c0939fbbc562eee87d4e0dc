@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed5d0fc2_3598a431",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-01-18T00:58:56Z",
+      "side": 1,
+      "message": "This is a nice simplification. Alex should take a look.",
+      "revId": "372d2b06e8bc55cf1c0939fbbc562eee87d4e0dc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
