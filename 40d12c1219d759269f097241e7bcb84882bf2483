@@ -22,6 +22,30 @@
       },
       "revId": "40d12c1219d759269f097241e7bcb84882bf2483",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3372fd5f_64788d23",
+        "filename": "include/ceres/autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-01-18T22:44:34Z",
+      "side": 1,
+      "message": "(2,3,4) don\u0027t need to happen in this CL, they should be follow up CLs. (1) belongs here.",
+      "parentUuid": "d6837e96_b7ea218c",
+      "range": {
+        "startLine": 163,
+        "startChar": 11,
+        "endLine": 163,
+        "endChar": 31
+      },
+      "revId": "40d12c1219d759269f097241e7bcb84882bf2483",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
