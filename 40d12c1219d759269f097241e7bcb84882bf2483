@@ -70,6 +70,30 @@
       },
       "revId": "40d12c1219d759269f097241e7bcb84882bf2483",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d692d6c_eaa7b607",
+        "filename": "include/ceres/autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-01-18T22:57:25Z",
+      "side": 1,
+      "message": "I don\u0027t see why not. I suspect that is also a sort of a corner case, because in most cases I expect users to be passing some data into the functor. \n\nI think it is worth looking into the numericdiffcostfunction though to see that we can be consistent with it.",
+      "parentUuid": "6672f8ef_659332c9",
+      "range": {
+        "startLine": 163,
+        "startChar": 11,
+        "endLine": 163,
+        "endChar": 31
+      },
+      "revId": "40d12c1219d759269f097241e7bcb84882bf2483",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
