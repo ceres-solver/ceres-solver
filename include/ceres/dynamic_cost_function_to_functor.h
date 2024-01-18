@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2025 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -105,20 +105,13 @@ namespace ceres {
 class CERES_EXPORT DynamicCostFunctionToFunctor {
  public:
   // Takes ownership of cost_function.
-  explicit DynamicCostFunctionToFunctor(CostFunction* cost_function)
-      : DynamicCostFunctionToFunctor{
-            std::unique_ptr<CostFunction>{cost_function}} {}
+  explicit DynamicCostFunctionToFunctor(CostFunction* cost_function);
 
   // Takes ownership of cost_function.
   explicit DynamicCostFunctionToFunctor(
-      std::unique_ptr<CostFunction> cost_function)
-      : cost_function_(std::move(cost_function)) {
-    CHECK(cost_function_ != nullptr);
-  }
+      std::unique_ptr<CostFunction> cost_function);
 
-  bool operator()(double const* const* parameters, double* residuals) const {
-    return cost_function_->Evaluate(parameters, residuals, nullptr);
-  }
+  bool operator()(double const* const* parameters, double* residuals) const;
 
   template <typename JetT>
   bool operator()(JetT const* const* inputs, JetT* output) const {

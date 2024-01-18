@@ -1,5 +1,5 @@
 # Ceres Solver - A fast non-linear least squares minimizer
-# Copyright 2022 Google Inc. All rights reserved.
+# Copyright 2024 Google Inc. All rights reserved.
 # http://ceres-solver.org/
 #
 # Redistribution and use in source and binary forms, with or without
@@ -179,6 +179,7 @@ add_library(ceres_internal OBJECT
     dogleg_strategy.cc
     dynamic_compressed_row_jacobian_writer.cc
     dynamic_compressed_row_sparse_matrix.cc
+    dynamic_cost_function_to_functor.cc
     dynamic_sparse_normal_cholesky_solver.cc
     eigensparse.cc
     evaluation_callback.cc
