@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6837e96_b7ea218c",
+        "filename": "include/ceres/autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-01-18T22:36:35Z",
+      "side": 1,
+      "message": "This is great. Couple of things that we should update.\n\n1. Updating the documentation for this class here and in the sphinx docs to show this new style of usage which most people should use. The old style is likely only needed for some exceptional cases.\n2. Also update the example code to use this new style, so that people start using it.\n3. Should we do the same for numeric differentiation?\n4. what about the two dynamic variants?",
+      "range": {
+        "startLine": 163,
+        "startChar": 11,
+        "endLine": 163,
+        "endChar": 31
+      },
+      "revId": "40d12c1219d759269f097241e7bcb84882bf2483",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
