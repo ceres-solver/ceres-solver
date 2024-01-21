@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b76783e_181e8cf8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-01-21T16:48:41Z",
+      "side": 1,
+      "message": "BTW, at some point it would be nice to deprecate `ceres::Ownership` and move towards `std::variant\u003cT*, std::unique_ptr\u003cT\u003e, std::shared_ptr\u003cT\u003e\u003e` (maybe even taking whole copies to avoid heap allocations) to represent non-owning, owning, and multiply shared pointers to avoid (often unsafe) `new` invocations. WDYT?",
+      "revId": "bb692eff30e3290423055980789b8bbd79df9506",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
