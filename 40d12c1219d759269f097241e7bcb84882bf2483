@@ -94,6 +94,30 @@
       },
       "revId": "40d12c1219d759269f097241e7bcb84882bf2483",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7307d2c7_1b67a86a",
+        "filename": "include/ceres/autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-01-21T16:43:03Z",
+      "side": 1,
+      "message": "Sameer, the new changes hopefully address all of the above points. Please let me know if I missed something.",
+      "parentUuid": "2d692d6c_eaa7b607",
+      "range": {
+        "startLine": 163,
+        "startChar": 11,
+        "endLine": 163,
+        "endChar": 31
+      },
+      "revId": "40d12c1219d759269f097241e7bcb84882bf2483",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
