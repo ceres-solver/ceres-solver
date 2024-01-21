@@ -62,6 +62,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1b571eec_938be828",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-01-21T18:59:16Z",
+      "side": 1,
+      "message": "I believe this is a similar situation to `NOMINMAX` on Windows. We should not mess with user\u0027s defines.",
+      "parentUuid": "d055a4a9_47de624b",
+      "range": {
+        "startLine": 91,
+        "startChar": 41,
+        "endLine": 91,
+        "endChar": 72
+      },
+      "revId": "4a73372ad478c026d08d101a6273396acff76dbc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9ccab61d_d1c64afd",
         "filename": "include/ceres/internal/port.h",
         "patchSetId": 2
@@ -73,6 +97,24 @@
       "writtenOn": "2022-08-16T21:49:17Z",
       "side": 1,
       "message": "add a comment about what happens if both of these defines are true?\n\nor only check for this case if CERES_HAS_CPP17_BESSEL_FUNCTIONS is not defined at this point?",
+      "revId": "4a73372ad478c026d08d101a6273396acff76dbc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99637e51_18f2b98c",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-01-21T18:59:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ccab61d_d1c64afd",
       "revId": "4a73372ad478c026d08d101a6273396acff76dbc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -112,6 +154,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9304e856_948e115e",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-01-21T18:59:16Z",
+      "side": 1,
+      "message": "Deprecation removed.",
+      "parentUuid": "c49da0df_961d218e",
+      "revId": "4a73372ad478c026d08d101a6273396acff76dbc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4dba2533_8880cec2",
@@ -125,6 +185,30 @@
       "writtenOn": "2022-08-16T21:49:17Z",
       "side": 1,
       "message": "isn\u0027t it better to have these idefs inverted and use the positive version rather than the negative version?",
+      "range": {
+        "startLine": 908,
+        "startChar": 8,
+        "endLine": 908,
+        "endChar": 40
+      },
+      "revId": "4a73372ad478c026d08d101a6273396acff76dbc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "17429e2f_86b4e175",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-01-21T18:59:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dba2533_8880cec2",
       "range": {
         "startLine": 908,
         "startChar": 8,
@@ -154,6 +238,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dcd75d9a_48dae846",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-01-21T18:59:16Z",
+      "side": 1,
+      "message": "In that case `cyl_bessel_j` will not be defined . POSIX Bessel functions cannot be mapped to math library Bessel functions since the former are defined only for an input subset of the latter (related to https://ceres-solver-review.googlesource.com/c/ceres-solver/+/22445/comment/dab0ca75_bd8f8ff2/).",
+      "parentUuid": "0d1ad027_619a5295",
+      "revId": "4a73372ad478c026d08d101a6273396acff76dbc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dab0ca75_bd8f8ff2",
         "filename": "include/ceres/jet.h",
         "patchSetId": 2
@@ -165,6 +267,30 @@
       "writtenOn": "2022-08-16T21:49:17Z",
       "side": 1,
       "message": "should v be a double? shouldn\u0027t this be int n?",
+      "range": {
+        "startLine": 974,
+        "startChar": 37,
+        "endLine": 974,
+        "endChar": 38
+      },
+      "revId": "4a73372ad478c026d08d101a6273396acff76dbc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff1a2a3b_f42301b7",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-01-21T18:59:16Z",
+      "side": 1,
+      "message": "According to https://en.cppreference.com/w/cpp/numeric/special_functions/cyl_bessel_j it can be any arithmetic type promotable to `double` or `long double`. POSIX functions accept only an `int`.",
+      "parentUuid": "dab0ca75_bd8f8ff2",
       "range": {
         "startLine": 974,
         "startChar": 37,
