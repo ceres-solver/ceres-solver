@@ -58,6 +58,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "79b0f6df_27b17494",
+        "filename": "include/ceres/autodiff_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-01-22T21:36:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4817c8f_7f4aecba",
+      "range": {
+        "startLine": 60,
+        "startChar": 12,
+        "endLine": 60,
+        "endChar": 14
+      },
+      "revId": "bb692eff30e3290423055980789b8bbd79df9506",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "06fc3a31_4541075a",
@@ -71,6 +95,30 @@
       "writtenOn": "2024-01-22T20:29:29Z",
       "side": 1,
       "message": "I am in two minds about this particular constructor. I am curious what you think.\n\nThe idea that that it takes a unique_ptr but also allows variable ownership doesn\u0027t pass the smell test for me. \n\nI am used to unique_ptr being used to pass ownership. So having an option Ownership enum is bugging me. \n\nwhat do you think about the constructor with unique_ptr only ever takes ownership?",
+      "range": {
+        "startLine": 159,
+        "startChar": 11,
+        "endLine": 159,
+        "endChar": 31
+      },
+      "revId": "bb692eff30e3290423055980789b8bbd79df9506",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19120ece_75fed306",
+        "filename": "include/ceres/autodiff_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-01-22T21:36:09Z",
+      "side": 1,
+      "message": "I agree. This is a smell that might also cause problems in the future.",
+      "parentUuid": "06fc3a31_4541075a",
       "range": {
         "startLine": 159,
         "startChar": 11,
