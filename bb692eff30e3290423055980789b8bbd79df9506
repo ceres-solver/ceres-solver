@@ -16,6 +16,69 @@
       "message": "BTW, at some point it would be nice to deprecate `ceres::Ownership` and move towards `std::variant\u003cT*, std::unique_ptr\u003cT\u003e, std::shared_ptr\u003cT\u003e\u003e` (maybe even taking whole copies to avoid heap allocations) to represent non-owning, owning, and multiply shared pointers to avoid (often unsafe) `new` invocations. WDYT?",
       "revId": "bb692eff30e3290423055980789b8bbd79df9506",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac489278_0765af09",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-01-22T20:29:29Z",
+      "side": 1,
+      "message": "One point of discussion about unique_ptr and ownership, which is common to a number of classes. I am curious to hear what you think.",
+      "revId": "bb692eff30e3290423055980789b8bbd79df9506",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4817c8f_7f4aecba",
+        "filename": "include/ceres/autodiff_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-01-22T20:29:29Z",
+      "side": 1,
+      "message": "The header here and elsewhere also needs to be updated to match the sphinx docs.",
+      "range": {
+        "startLine": 60,
+        "startChar": 12,
+        "endLine": 60,
+        "endChar": 14
+      },
+      "revId": "bb692eff30e3290423055980789b8bbd79df9506",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06fc3a31_4541075a",
+        "filename": "include/ceres/autodiff_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-01-22T20:29:29Z",
+      "side": 1,
+      "message": "I am in two minds about this particular constructor. I am curious what you think.\n\nThe idea that that it takes a unique_ptr but also allows variable ownership doesn\u0027t pass the smell test for me. \n\nI am used to unique_ptr being used to pass ownership. So having an option Ownership enum is bugging me. \n\nwhat do you think about the constructor with unique_ptr only ever takes ownership?",
+      "range": {
+        "startLine": 159,
+        "startChar": 11,
+        "endLine": 159,
+        "endChar": 31
+      },
+      "revId": "bb692eff30e3290423055980789b8bbd79df9506",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
