@@ -84,6 +84,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "48e3151d_66d067c5",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-01-22T01:13:51Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "1b571eec_938be828",
+      "range": {
+        "startLine": 91,
+        "startChar": 41,
+        "endLine": 91,
+        "endChar": 72
+      },
+      "revId": "4a73372ad478c026d08d101a6273396acff76dbc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9ccab61d_d1c64afd",
@@ -254,6 +278,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3712f4d8_c438c0a0",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-01-22T01:13:51Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "dcd75d9a_48dae846",
+      "revId": "4a73372ad478c026d08d101a6273396acff76dbc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dab0ca75_bd8f8ff2",
@@ -291,6 +333,30 @@
       "side": 1,
       "message": "According to https://en.cppreference.com/w/cpp/numeric/special_functions/cyl_bessel_j it can be any arithmetic type promotable to `double` or `long double`. POSIX functions accept only an `int`.",
       "parentUuid": "dab0ca75_bd8f8ff2",
+      "range": {
+        "startLine": 974,
+        "startChar": 37,
+        "endLine": 974,
+        "endChar": 38
+      },
+      "revId": "4a73372ad478c026d08d101a6273396acff76dbc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b282efdc_5f9b620c",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-01-22T01:13:51Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "ff1a2a3b_f42301b7",
       "range": {
         "startLine": 974,
         "startChar": 37,
