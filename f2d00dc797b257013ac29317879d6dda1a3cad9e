@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f3df602_e382bc81",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-01-22T23:12:44Z",
+      "side": 1,
+      "message": "Almost there.\n\nCouple of minor comments in the code and two here.\n\n1. The commit log is quite outdated w.r.t the current state of this PR. Could you expand it to be detailed enough to capture all the changes you have made? \n\n2. Can you also add tests for all the API classes you have modified. Currently there are no tests for the dynamic_ variants and a few others.",
+      "revId": "f2d00dc797b257013ac29317879d6dda1a3cad9e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cbe6a92_b0a952e8",
+        "filename": "include/ceres/autodiff_cost_function.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-01-22T23:12:44Z",
+      "side": 1,
+      "message": "I think it is worth documenting here, that num_residuals cannot be an argument in this case. which also reveals a bit of an asymmtery, where if you are using dynamic number of residuals, you cannot use this style of construction.",
+      "range": {
+        "startLine": 168,
+        "startChar": 11,
+        "endLine": 168,
+        "endChar": 31
+      },
+      "revId": "f2d00dc797b257013ac29317879d6dda1a3cad9e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1be80b5a_5e84e485",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-01-22T23:12:44Z",
+      "side": 1,
+      "message": "this should not have an ownership enum no?",
+      "range": {
+        "startLine": 148,
+        "startChar": 6,
+        "endLine": 148,
+        "endChar": 15
+      },
+      "revId": "f2d00dc797b257013ac29317879d6dda1a3cad9e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e816225f_18215226",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-01-22T23:12:44Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 177,
+        "startChar": 27,
+        "endLine": 177,
+        "endChar": 28
+      },
+      "revId": "f2d00dc797b257013ac29317879d6dda1a3cad9e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
