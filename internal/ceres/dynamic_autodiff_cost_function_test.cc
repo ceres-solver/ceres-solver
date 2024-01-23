@@ -36,6 +36,7 @@
 #include <memory>
 #include <vector>
 
+#include "ceres/types.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {

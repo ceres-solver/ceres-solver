@@ -34,7 +34,6 @@
 #include <algorithm>
 #include <cfenv>
 #include <cmath>
-#include <stdexcept>
 
 #include "ceres/stringprintf.h"
 #include "ceres/test_util.h"
