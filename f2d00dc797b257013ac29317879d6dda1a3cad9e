@@ -41,6 +41,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a183d03_7d1216ab",
+        "filename": "include/ceres/autodiff_cost_function.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-01-23T00:33:40Z",
+      "side": 1,
+      "message": "Good point. I would also consider splitting dynamic and fixed size version of cost function using corresponding partial class specializations in a separate CL to avoid providing the constructor with this signature in the first place. This would eliminate the `static_assert` in unfeasible ctor overloads.",
+      "parentUuid": "7cbe6a92_b0a952e8",
+      "range": {
+        "startLine": 168,
+        "startChar": 11,
+        "endLine": 168,
+        "endChar": 31
+      },
+      "revId": "f2d00dc797b257013ac29317879d6dda1a3cad9e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1be80b5a_5e84e485",
@@ -64,6 +88,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "566fcc07_bce3391d",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-01-23T00:33:40Z",
+      "side": 1,
+      "message": "Whoops, correct.",
+      "parentUuid": "1be80b5a_5e84e485",
+      "range": {
+        "startLine": 148,
+        "startChar": 6,
+        "endLine": 148,
+        "endChar": 15
+      },
+      "revId": "f2d00dc797b257013ac29317879d6dda1a3cad9e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e816225f_18215226",
@@ -77,6 +125,30 @@
       "writtenOn": "2024-01-22T23:12:44Z",
       "side": 1,
       "message": "same here",
+      "range": {
+        "startLine": 177,
+        "startChar": 27,
+        "endLine": 177,
+        "endChar": 28
+      },
+      "revId": "f2d00dc797b257013ac29317879d6dda1a3cad9e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db1bb5f5_b06c75a3",
+        "filename": "include/ceres/numeric_diff_first_order_function.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-01-23T00:33:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e816225f_18215226",
       "range": {
         "startLine": 177,
         "startChar": 27,
