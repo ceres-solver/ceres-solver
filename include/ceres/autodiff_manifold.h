@@ -47,8 +47,8 @@ namespace ceres {
 //   x_plus_delta = Plus(x, delta);
 //   y_minus_x    = Minus(y, x);
 //
-// Where, x, y and x_plus_y are vectors on the manifold in the ambient space (so
-// they are kAmbientSize vectors) and delta, y_minus_x are vectors in the
+// Where, x, y and x_plus_delta are vectors on the manifold in the ambient space
+// (so they are kAmbientSize vectors) and delta, y_minus_x are vectors in the
 // tangent space (so they are kTangentSize vectors).
 //
 // The Functor should have the signature:
