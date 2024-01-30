@@ -50,7 +50,7 @@ Where :math:`S` is a positive semi-definite matrix denoting the
 covariance of :math:`y`, then the maximum likelihood problem to be
 solved is
 
-o.. math:: x^* = \arg \min_x f'(x) S^{-1} f(x)
+.. math:: x^* = \arg \min_x f'(x) S^{-1} f(x)
 
 and the corresponding covariance estimate of :math:`x^*` is given by
 
