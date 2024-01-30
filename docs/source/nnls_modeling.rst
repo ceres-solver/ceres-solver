@@ -1331,7 +1331,7 @@ consistent, the following identities must be satisfied at all points
    element.
 2. For all :math:`y` on the manifold, :math:`\boxplus(x,
    \boxminus(y,x)) = y`. This ensures that any :math:`y` can be
-   reached from math:`x`.
+   reached from :math:`x`.
 3. For all :math:`\Delta`, :math:`\boxminus(\boxplus(x, \Delta), x) =
    \Delta`. This ensures that :math:`\boxplus` is an injective
    (one-to-one) map.
