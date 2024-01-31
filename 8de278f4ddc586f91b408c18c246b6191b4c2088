@@ -16,6 +16,29 @@
       "message": "Hi, I have sent an email to the group describing this issue in detail.",
       "revId": "8de278f4ddc586f91b408c18c246b6191b4c2088",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c44cfce_2b2f9831",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-01-31T15:15:51Z",
+      "side": 1,
+      "message": "for future proofing I think it should EIGEN_WORLD_VERSION \u003e\u003d 3 rather than \u003d\u003d no?",
+      "range": {
+        "startLine": 726,
+        "startChar": 26,
+        "endLine": 726,
+        "endChar": 27
+      },
+      "revId": "8de278f4ddc586f91b408c18c246b6191b4c2088",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
