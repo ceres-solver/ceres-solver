@@ -39,6 +39,30 @@
       },
       "revId": "8de278f4ddc586f91b408c18c246b6191b4c2088",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f6b3c27_1f414c69",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-01-31T18:43:53Z",
+      "side": 1,
+      "message": "Btw, there is a handy macro for such checks:\nhttps://gitlab.com/libeigen/eigen/-/blob/3.4/Eigen/src/Core/util/Macros.h?ref_type\u003dheads#L22",
+      "parentUuid": "6c44cfce_2b2f9831",
+      "range": {
+        "startLine": 726,
+        "startChar": 26,
+        "endLine": 726,
+        "endChar": 27
+      },
+      "revId": "8de278f4ddc586f91b408c18c246b6191b4c2088",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
