@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ddaf355_04fb09e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3268236
+      },
+      "writtenOn": "2024-01-31T05:50:30Z",
+      "side": 1,
+      "message": "Hi, I have sent an email to the group describing this issue in detail.",
+      "revId": "8de278f4ddc586f91b408c18c246b6191b4c2088",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
