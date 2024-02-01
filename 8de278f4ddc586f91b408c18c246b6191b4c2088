@@ -63,6 +63,30 @@
       },
       "revId": "8de278f4ddc586f91b408c18c246b6191b4c2088",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7176cc63_c17357b4",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 3268236
+      },
+      "writtenOn": "2024-02-01T00:37:50Z",
+      "side": 1,
+      "message": "Good. I will ues the handy macro to check both World and Major version.",
+      "parentUuid": "8f6b3c27_1f414c69",
+      "range": {
+        "startLine": 726,
+        "startChar": 26,
+        "endLine": 726,
+        "endChar": 27
+      },
+      "revId": "8de278f4ddc586f91b408c18c246b6191b4c2088",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
