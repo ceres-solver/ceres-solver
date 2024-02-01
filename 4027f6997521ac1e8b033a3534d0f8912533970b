@@ -51,6 +51,24 @@
       "tag": "mailMessageId\u003d\u003cCABqdRUDgAza3bfiTURhmGDfJNFaF1jj4ZBEq2hPmDotrFTyHaw@mail.gmail.com\u003e",
       "revId": "4027f6997521ac1e8b033a3534d0f8912533970b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f26a7108_37e4336e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3268236
+      },
+      "writtenOn": "2024-02-01T02:50:46Z",
+      "side": 1,
+      "message": "Since it\u0027s closed. I connot use git commit --amend -a to push new patch. So I made a new commit: https://ceres-solver-review.googlesource.com/c/ceres-solver/+/25680",
+      "parentUuid": "cf54fa8c_1861261b",
+      "revId": "4027f6997521ac1e8b033a3534d0f8912533970b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
