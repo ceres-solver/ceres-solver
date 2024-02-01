@@ -34,6 +34,24 @@
       "parentUuid": "77e90534_7547e246",
       "revId": "433775a5c481f90096216007415bd26cb25587d3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4037074_2d38d167",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3268236
+      },
+      "writtenOn": "2024-02-01T05:05:51Z",
+      "side": 1,
+      "message": "Agree. Sorry for wasting your time on it. Stable release should be considered.",
+      "parentUuid": "5649182f_7e27ec5f",
+      "revId": "433775a5c481f90096216007415bd26cb25587d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
