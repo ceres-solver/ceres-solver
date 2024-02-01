@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77e90534_7547e246",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3268236
+      },
+      "writtenOn": "2024-02-01T02:10:05Z",
+      "side": 1,
+      "message": "This is a patch of my last commit. It should be fine. I check the version 3.4.0 and 3.4(with version number macro 3.4.1). Both of them have the same construction of BDCSVD. Only the master branch have changed it. So here I check 3.4.90(the master branch version) and use at_least to make it works with the future version (like 3.5).",
+      "revId": "433775a5c481f90096216007415bd26cb25587d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
