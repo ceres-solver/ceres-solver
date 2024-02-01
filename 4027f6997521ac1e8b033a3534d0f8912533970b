@@ -33,6 +33,24 @@
       "message": "I noticed the error on the action. The version 3.4.0(two years ago) is totally different from 3.4. I should check 3.4.1 here. Since it has already been merged, how should I make modifications?",
       "revId": "4027f6997521ac1e8b033a3534d0f8912533970b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf54fa8c_1861261b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-02-01T01:53:13Z",
+      "side": 1,
+      "message": "You can send me another patch.",
+      "tag": "mailMessageId\u003d\u003cCABqdRUDgAza3bfiTURhmGDfJNFaF1jj4ZBEq2hPmDotrFTyHaw@mail.gmail.com\u003e",
+      "revId": "4027f6997521ac1e8b033a3534d0f8912533970b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
