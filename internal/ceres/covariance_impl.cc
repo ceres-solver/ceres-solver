@@ -723,7 +723,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingDenseSVD() {
   }
   event_logger.AddEvent("ConvertToDenseMatrix");
 
-#if EIGEN_VERSION_AT_LEAST(3, 4, 0)
+#if EIGEN_VERSION_AT_LEAST(3, 4, 90)
   Eigen::BDCSVD<Matrix, Eigen::ComputeThinU | Eigen::ComputeThinV> svd(
       dense_jacobian);
 #else
