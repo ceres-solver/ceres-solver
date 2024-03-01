@@ -120,10 +120,10 @@ endif()
 
 if (USE_CUDA)
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES
-    CUDA::cublas
-    CUDA::cudart
-    CUDA::cusolver
-    CUDA::cusparse)
+    CUDA::cublas${CUDA_LIB_EXT}
+    CUDA::cudart${CUDA_LIB_EXT}
+    CUDA::cusolver${CUDA_LIB_EXT}
+    CUDA::cusparse${CUDA_LIB_EXT})
   set_source_files_properties(cuda_kernels_vector_ops.cu.cc PROPERTIES LANGUAGE CUDA)
   set_source_files_properties(cuda_kernels_bsm_to_crs.cu.cc PROPERTIES LANGUAGE CUDA)
   add_library(ceres_cuda_kernels STATIC cuda_kernels_vector_ops.cu.cc cuda_kernels_bsm_to_crs.cu.cc)
