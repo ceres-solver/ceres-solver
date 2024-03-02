@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31eaf97e_dbd747b5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-03-02T14:29:10Z",
+      "side": 1,
+      "message": "Thanks for the patch! A few remarks.",
+      "revId": "19e70bfb4c2ce768b1605a8fdc28152d8d35ecf8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11f05d51_ae47ce63",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-03-02T14:29:10Z",
+      "side": 1,
+      "message": "Why is this enabled on Unix-like systems only?\n\nAlso, I\u0027d rather keep the previous logic and only use static libraries on demand. Technically, static CUDA libraries are not tied to a static Ceres build and the other way around. Thus all four combinations are possible (i.e., CUDA: static, Ceres: static; CUDA: shared, Ceres: static, etc.)",
+      "revId": "19e70bfb4c2ce768b1605a8fdc28152d8d35ecf8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92cf8731_f2732bbc",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-03-02T14:29:10Z",
+      "side": 1,
+      "message": "The variable name is slightly misleading. It does not denote an extension but rather a suffix:\n```suggestion\n        set(CERES_CUDA_TARGET_SUFFIX \"_static\")\n```",
+      "revId": "19e70bfb4c2ce768b1605a8fdc28152d8d35ecf8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71381376_31896b13",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-03-02T14:29:10Z",
+      "side": 1,
+      "message": "Please unset the variable once it is no longer necessary:\n```suggestion\n      set(CMAKE_CUDA_RUNTIME_LIBRARY NONE)\n      unset (CERES_CUDA_TARGET_SUFFIX)\n```\n```",
+      "revId": "19e70bfb4c2ce768b1605a8fdc28152d8d35ecf8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
