@@ -120,10 +120,10 @@ endif()
 
 if (USE_CUDA)
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES
-    CUDA::cublas
-    CUDA::cudart
-    CUDA::cusolver
-    CUDA::cusparse)
+    CUDA::cublas${CERES_CUDA_TARGET_SUFFIX}
+    CUDA::cudart${CERES_CUDA_TARGET_SUFFIX}
+    CUDA::cusolver${CERES_CUDA_TARGET_SUFFIX}
+    CUDA::cusparse${CERES_CUDA_TARGET_SUFFIX})
   set_source_files_properties(cuda_kernels_vector_ops.cu.cc PROPERTIES LANGUAGE CUDA)
   set_source_files_properties(cuda_kernels_bsm_to_crs.cu.cc PROPERTIES LANGUAGE CUDA)
   add_library(ceres_cuda_kernels STATIC cuda_kernels_vector_ops.cu.cc cuda_kernels_bsm_to_crs.cu.cc)

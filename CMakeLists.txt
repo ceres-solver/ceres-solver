@@ -231,11 +231,23 @@ if (USE_CUDA)
         set(CMAKE_CUDA_ARCHITECTURES "50;60;70;80")
         message("-- Setting CUDA Architecture to ${CMAKE_CUDA_ARCHITECTURES}")
       endif()
+
+      if (BUILD_SHARED_LIBS)
+        set(CERES_CUDA_LIBS_LINK_STATIC_DEFAULT FALSE)
+      else()
+        set(CERES_CUDA_LIBS_LINK_STATIC_DEFAULT TRUE)
+      endif()
+      option(CERES_CUDA_LIBS_LINK_STATIC "Link static CUDA libraries." ${CERES_CUDA_LIBS_LINK_STATIC_DEFAULT})
+
+      if(CERES_CUDA_LINK_STATIC)
+        set(CERES_CUDA_TARGET_SUFFIX "_static")
+      endif()
+
       list(APPEND CERES_CUDA_LIBRARIES
-        CUDA::cublas
-        CUDA::cudart
-        CUDA::cusolver
-        CUDA::cusparse)
+        CUDA::cublas${CERES_CUDA_TARGET_SUFFIX}
+        CUDA::cudart${CERES_CUDA_TARGET_SUFFIX}
+        CUDA::cusolver${CERES_CUDA_TARGET_SUFFIX}
+        CUDA::cusparse${CERES_CUDA_TARGET_SUFFIX})
       set(CMAKE_CUDA_RUNTIME_LIBRARY NONE)
     else (CUDAToolkit_FOUND)
       message("-- Did not find CUDA, disabling CUDA support.")
