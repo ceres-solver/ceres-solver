@@ -119,11 +119,7 @@ if (ACCELERATESPARSE AND AccelerateSparse_FOUND)
 endif()
 
 if (USE_CUDA)
-  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES
-    CUDA::cublas
-    CUDA::cudart
-    CUDA::cusolver
-    CUDA::cusparse)
+  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${CERES_CUDA_LIBRARIES})
   set_source_files_properties(cuda_kernels_vector_ops.cu.cc PROPERTIES LANGUAGE CUDA)
   set_source_files_properties(cuda_kernels_bsm_to_crs.cu.cc PROPERTIES LANGUAGE CUDA)
   add_library(ceres_cuda_kernels STATIC cuda_kernels_vector_ops.cu.cc cuda_kernels_bsm_to_crs.cu.cc)
