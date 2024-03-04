@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1cedadb8_dd5d3f85",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 3326575
+      },
+      "writtenOn": "2024-03-04T08:25:18Z",
+      "side": 1,
+      "message": "added an option to configure it",
+      "parentUuid": "11f05d51_ae47ce63",
+      "revId": "19e70bfb4c2ce768b1605a8fdc28152d8d35ecf8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "92cf8731_f2732bbc",
         "filename": "CMakeLists.txt",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "writtenOn": "2024-03-02T14:29:10Z",
       "side": 1,
       "message": "The variable name is slightly misleading. It does not denote an extension but rather a suffix:\n```suggestion\n        set(CERES_CUDA_TARGET_SUFFIX \"_static\")\n```",
+      "revId": "19e70bfb4c2ce768b1605a8fdc28152d8d35ecf8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee36b69a_20b202ce",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 3326575
+      },
+      "writtenOn": "2024-03-04T08:25:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92cf8731_f2732bbc",
       "revId": "19e70bfb4c2ce768b1605a8fdc28152d8d35ecf8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -65,6 +101,24 @@
       "writtenOn": "2024-03-02T14:29:10Z",
       "side": 1,
       "message": "Please unset the variable once it is no longer necessary:\n```suggestion\n      set(CMAKE_CUDA_RUNTIME_LIBRARY NONE)\n      unset (CERES_CUDA_TARGET_SUFFIX)\n```\n```",
+      "revId": "19e70bfb4c2ce768b1605a8fdc28152d8d35ecf8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b47f462_195d65b8",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 3326575
+      },
+      "writtenOn": "2024-03-04T08:25:18Z",
+      "side": 1,
+      "message": "I think it is still necessary in internal/ceres/CMakeLists.txt",
+      "parentUuid": "71381376_31896b13",
       "revId": "19e70bfb4c2ce768b1605a8fdc28152d8d35ecf8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
