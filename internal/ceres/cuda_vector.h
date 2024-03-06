@@ -67,6 +67,16 @@ class CERES_NO_EXPORT CudaVector {
 
   CudaVector(CudaVector&& other);
 
+  // Analogue of Eigen::Map<Eigen::Vector<...>>
+  // Caller is responsible for handling objects' lifetimes correctly
+  // Operation on mapped CudaVectors might result into aliasing (no checks are
+  // performed neither at compile-time nor at runtime)
+  CudaVector(double* data_pointer, ContextImpl* context, int size);
+  // Analogue of Eigen::Map<const Eigen::Vector<...>>
+  static const CudaVector ConstMap(const double* data_pointer,
+                                   ContextImpl* context,
+                                   int size);
+
   ~CudaVector();
 
   void Resize(int size);
@@ -112,6 +122,22 @@ class CERES_NO_EXPORT CudaVector {
   double* mutable_data() { return data_.data(); }
 
   const cusparseDnVecDescr_t& descr() const { return descr_; }
+
+  // tail() and head() methods are for intercompatibility with Vector and return
+  // "mapped" CudaVector
+  const CudaVector tail(int size) const {
+    return ConstMap(data() + num_rows_ - size, context_, size);
+  }
+  CudaVector tail(int size) {
+    return CudaVector(mutable_data() + num_rows_ - size, context_, size);
+  }
+
+  const CudaVector head(int size) const {
+    return ConstMap(data(), context_, size);
+  }
+  CudaVector head(int size) {
+    return CudaVector(mutable_data(), context_, size);
+  }
 
  private:
   CudaVector(const CudaVector&) = delete;

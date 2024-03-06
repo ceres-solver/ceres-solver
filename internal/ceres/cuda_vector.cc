@@ -66,6 +66,18 @@ CudaVector::CudaVector(CudaVector&& other)
   other.descr_ = nullptr;
 }
 
+CudaVector::CudaVector(double* data_pointer, ContextImpl* context, int size)
+    : num_rows_(size), context_(context), data_(data_pointer, context, size) {
+  CHECK_EQ(cusparseCreateDnVec(&descr_, num_rows_, data_.data(), CUDA_R_64F),
+           CUSPARSE_STATUS_SUCCESS);
+}
+
+const CudaVector CudaVector::ConstMap(const double* data_pointer,
+                                      ContextImpl* context,
+                                      int size) {
+  return CudaVector(const_cast<double*>(data_pointer), context, size);
+}
+
 CudaVector& CudaVector::operator=(const CudaVector& other) {
   if (this != &other) {
     Resize(other.num_rows());

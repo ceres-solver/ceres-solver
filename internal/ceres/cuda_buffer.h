@@ -52,13 +52,24 @@ template <typename T>
 class CudaBuffer {
  public:
   explicit CudaBuffer(ContextImpl* context) : context_(context) {}
-  CudaBuffer(ContextImpl* context, int size) : context_(context) {
+  CudaBuffer(ContextImpl* context, int size)
+      : mapped_memory_(false), context_(context) {
     Reserve(size);
   }
 
+  CudaBuffer(T* data_pointer, ContextImpl* context, int size)
+      : mapped_memory_(true),
+        data_(data_pointer),
+        context_(context),
+        size_(size) {}
+
   CudaBuffer(CudaBuffer&& other)
-      : data_(other.data_), size_(other.size_), context_(other.context_) {
+      : mapped_memory_(other.mapped_memory_),
+        data_(other.data_),
+        size_(other.size_),
+        context_(other.context_) {
     other.data_ = nullptr;
+    other.mapped_memory_ = false;
     other.size_ = 0;
   }
 
@@ -66,7 +77,7 @@ class CudaBuffer {
   CudaBuffer& operator=(const CudaBuffer&) = delete;
 
   ~CudaBuffer() {
-    if (data_ != nullptr) {
+    if (data_ != nullptr && !mapped_memory_) {
       CHECK_EQ(cudaFree(data_), cudaSuccess);
     }
   }
@@ -75,6 +86,8 @@ class CudaBuffer {
   // size
   void Reserve(const size_t size) {
     if (size > size_) {
+      // Deliberately fail on resizing mapped buffer
+      CHECK(!mapped_memory_);
       if (data_ != nullptr) {
         CHECK_EQ(cudaFree(data_), cudaSuccess);
       }
@@ -161,6 +174,8 @@ class CudaBuffer {
   size_t size() const { return size_; }
 
  private:
+  // True if this instance only maps but not owns memory
+  bool mapped_memory_ = false;
   T* data_ = nullptr;
   size_t size_ = 0;
   ContextImpl* context_ = nullptr;
