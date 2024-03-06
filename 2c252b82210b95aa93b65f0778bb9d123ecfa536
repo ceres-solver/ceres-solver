@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0135e733_661b20d5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-03-06T10:03:25Z",
+      "side": 1,
+      "message": "Implementing ISC without \"type erasure\" via pointers to data requires some additional operations to be implemented.\n\nNamely, an analogue of Vector::head() and Vector::tail() is required.\n(those methods are named in lower-case in order to allow interoperability with Eigen::Vector in code templated by vector type).\n\nIn this change-set those operations are added via introducing a concept of CudaVector that does not own the memory block.\n\nIt comes with the same nuances as Eigen::Map (possibility of aliasing, requiring user to properly control objects\u0027 lifetimes), which I consider reasonable since the goal is to have some level of interoperability with Eigen::Vector.",
+      "revId": "2c252b82210b95aa93b65f0778bb9d123ecfa536",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
