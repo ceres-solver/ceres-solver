@@ -121,6 +121,24 @@
       "parentUuid": "71381376_31896b13",
       "revId": "19e70bfb4c2ce768b1605a8fdc28152d8d35ecf8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c37b156_2008feeb",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-03-10T14:11:21Z",
+      "side": 1,
+      "message": "True. However, can\u0027t we just use `CERES_CUDA_LIBRARIES` instead? The libraries referenced there seem to be exactly identical.",
+      "parentUuid": "4b47f462_195d65b8",
+      "revId": "19e70bfb4c2ce768b1605a8fdc28152d8d35ecf8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }

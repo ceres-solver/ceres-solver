@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae156665_ff0d8f8a",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-03-10T14:11:21Z",
+      "side": 1,
+      "message": "Two things:\n1. New behavior should be opt in. Set a default compatible to current logic unless there is a compelling reason to break this compatibility.\n2. Another CUDA option seems unnecessary. We can reuse `USE_CUDA` and let it accept the values `no/none/disabled`, `default`, and `static` instead of booleans.",
+      "revId": "55ee6133033c6b42f9cddf58e9de49e1ba4f6ce4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
