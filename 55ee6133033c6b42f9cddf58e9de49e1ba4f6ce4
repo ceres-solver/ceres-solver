@@ -16,6 +16,24 @@
       "message": "Two things:\n1. New behavior should be opt in. Set a default compatible to current logic unless there is a compelling reason to break this compatibility.\n2. Another CUDA option seems unnecessary. We can reuse `USE_CUDA` and let it accept the values `no/none/disabled`, `default`, and `static` instead of booleans.",
       "revId": "55ee6133033c6b42f9cddf58e9de49e1ba4f6ce4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1735cf9_5ce6de53",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 3326575
+      },
+      "writtenOn": "2024-03-11T14:31:40Z",
+      "side": 1,
+      "message": "Regarding 1.: Ok, I can do that.\n\nRegarding 2.:\n\nImho a separate variable is the better choice.\n1. `USE_CUDA` describes if CUDA is should be used. A boolean would be natural here. It also can be better evaluated (`if (USE_CUDA)`). How CUDA should be linked is another option in my opinion.\n2. I think the old `FindCuda` (which is used on CMake \u003c 3.17) does not provide static libs. So in this case there would not be a `static` option.\n\nWould that be ok for you?",
+      "parentUuid": "ae156665_ff0d8f8a",
+      "revId": "55ee6133033c6b42f9cddf58e9de49e1ba4f6ce4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }

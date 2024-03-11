@@ -139,6 +139,24 @@
       "parentUuid": "4b47f462_195d65b8",
       "revId": "19e70bfb4c2ce768b1605a8fdc28152d8d35ecf8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4537ee41_9f8abe1c",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 3326575
+      },
+      "writtenOn": "2024-03-11T14:31:40Z",
+      "side": 1,
+      "message": "Ok, I will try to use `CERES_CUDA_LIBRARIES`. It seems that this variable is currently not used anywhere. Don\u0027t know the reason for that.",
+      "parentUuid": "4c37b156_2008feeb",
+      "revId": "19e70bfb4c2ce768b1605a8fdc28152d8d35ecf8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
