@@ -34,6 +34,24 @@
       "parentUuid": "ae156665_ff0d8f8a",
       "revId": "55ee6133033c6b42f9cddf58e9de49e1ba4f6ce4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10790c77_ebcc0d21",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-03-11T15:09:14Z",
+      "side": 1,
+      "message": "As to 1: `USE_CUDA` does not need to imply a boolean. The name solely indicates that CUDA should be enabled albeit without specifying the variant.\n\nI would avoid any additional options if possible to keep the overall number of options down particularly when the feasible values are mutually exclusive (which is the case here). To this end, take a look at the `STRINGS` property (https://cmake.org/cmake/help/latest/prop_cache/STRINGS.html) for providing a set of possible option values through the CMake UI.\n\nYou can evaluate `USE_CUDA` as before if you keep `NO/OFF` as the negative variant (CMake treats almost everything as a string anyway, see https://cmake.org/cmake/help/latest/command/if.html#basic-expressions) but only need to differentiate between `default` and `static`.\n\nRegarding 2: This is fairly easy to manage: simply do not provide the `static` variant if the corresponding targets are not available.",
+      "parentUuid": "b1735cf9_5ce6de53",
+      "revId": "55ee6133033c6b42f9cddf58e9de49e1ba4f6ce4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
