@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f69e4b9f_8289be1a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-03-25T19:30:04Z",
+      "side": 1,
+      "message": "Markus, I\u0027m very sorry for the delayed review. The last two weeks were very busy for me.\n\nI have only one minor remark. After that the changes are good to go.",
+      "revId": "36d83b799c428f3606723b50c20dc04513d42eaa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "775572c2_036fe0af",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-03-25T19:30:04Z",
+      "side": 1,
+      "message": "```suggestion\n      if (USE_CUDA STREQUAL \"static\")\n```",
+      "revId": "36d83b799c428f3606723b50c20dc04513d42eaa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
