@@ -33,6 +33,24 @@
       "message": "```suggestion\n      if (USE_CUDA STREQUAL \"static\")\n```",
       "revId": "36d83b799c428f3606723b50c20dc04513d42eaa",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6a7242c_eef8b81a",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 3326575
+      },
+      "writtenOn": "2024-04-03T09:28:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "775572c2_036fe0af",
+      "revId": "36d83b799c428f3606723b50c20dc04513d42eaa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
