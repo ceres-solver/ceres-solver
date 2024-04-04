@@ -16,6 +16,23 @@
       "message": "Looks great! Thank you.",
       "revId": "125c06882960d87f25f2e0ccb217a949528b017c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89a97d44_a9a37151",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-04-04T13:24:26Z",
+      "side": 1,
+      "message": "Sameer, it looks like the merge was not synchronized with Github. At least I don\u0027t the commit in the repository.",
+      "revId": "125c06882960d87f25f2e0ccb217a949528b017c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
