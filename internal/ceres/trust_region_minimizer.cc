@@ -380,7 +380,7 @@ bool TrustRegionMinimizer::ComputeTrustRegionStep() {
   iteration_summary_.step_is_valid = false;
   TrustRegionStrategy::PerSolveOptions per_solve_options;
   per_solve_options.eta = options_.eta;
-  if (find(options_.trust_region_minimizer_iterations_to_dump.begin(),
+  if (std::find(options_.trust_region_minimizer_iterations_to_dump.begin(),
            options_.trust_region_minimizer_iterations_to_dump.end(),
            iteration_summary_.iteration) !=
       options_.trust_region_minimizer_iterations_to_dump.end()) {
