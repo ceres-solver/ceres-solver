@@ -148,7 +148,7 @@ std::unique_ptr<SparseMatrix> CompressedRowJacobianWriter::CreateJacobian()
     }
 
     // Sort the parameters by their position in the state vector.
-    std::sort(parameter_indices.begin(), parameter_indices.end());
+    sort(parameter_indices.begin(), parameter_indices.end());
     if (adjacent_find(parameter_indices.begin(), parameter_indices.end()) !=
         parameter_indices.end()) {
       std::string parameter_block_description;
