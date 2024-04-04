@@ -286,9 +286,9 @@ bool LexicographicallyOrderResidualBlocks(
       << "Congratulations, you found a Ceres bug! Please report this error "
       << "to the developers.";
 
-  CHECK(find(residual_blocks_per_e_block.begin(),
-             residual_blocks_per_e_block.end() - 1,
-             0) == residual_blocks_per_e_block.end() - 1)
+  CHECK(std::find(residual_blocks_per_e_block.begin(),
+                  residual_blocks_per_e_block.end() - 1,
+                  0) == residual_blocks_per_e_block.end() - 1)
       << "Congratulations, you found a Ceres bug! Please report this error "
       << "to the developers.";
 

@@ -257,8 +257,9 @@ void SparseSchurComplementSolver::InitStorage(
       }
     }
 
-    sort(f_blocks.begin(), f_blocks.end());
-    f_blocks.erase(unique(f_blocks.begin(), f_blocks.end()), f_blocks.end());
+    std::sort(f_blocks.begin(), f_blocks.end());
+    f_blocks.erase(std::unique(f_blocks.begin(), f_blocks.end()),
+                   f_blocks.end());
     for (int i = 0; i < f_blocks.size(); ++i) {
       for (int j = i + 1; j < f_blocks.size(); ++j) {
         block_pairs.emplace(f_blocks[i], f_blocks[j]);
