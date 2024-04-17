@@ -67,7 +67,6 @@ void ComputeCumulativeNumberOfNonZeros(std::vector<CompressedList>& rows) {
 template <bool transpose>
 std::unique_ptr<CompressedRowSparseMatrix>
 CreateStructureOfCompressedRowSparseMatrix(
-    const double* values,
     int num_rows,
     int num_cols,
     int num_nonzeros,
@@ -451,7 +450,7 @@ std::unique_ptr<CompressedRowSparseMatrix>
 BlockSparseMatrix::ToCompressedRowSparseMatrixTranspose() const {
   auto bs = transpose_block_structure_.get();
   auto crs_matrix = CreateStructureOfCompressedRowSparseMatrix<true>(
-      values(), num_cols_, num_rows_, num_nonzeros_, bs);
+      num_cols_, num_rows_, num_nonzeros_, bs);
 
   SetBlockStructureOfCompressedRowSparseMatrix(crs_matrix.get(), bs);
 
@@ -462,7 +461,7 @@ BlockSparseMatrix::ToCompressedRowSparseMatrixTranspose() const {
 std::unique_ptr<CompressedRowSparseMatrix>
 BlockSparseMatrix::ToCompressedRowSparseMatrix() const {
   auto crs_matrix = CreateStructureOfCompressedRowSparseMatrix<false>(
-      values(), num_rows_, num_cols_, num_nonzeros_, block_structure_.get());
+      num_rows_, num_cols_, num_nonzeros_, block_structure_.get());
 
   SetBlockStructureOfCompressedRowSparseMatrix(crs_matrix.get(),
                                                block_structure_.get());
