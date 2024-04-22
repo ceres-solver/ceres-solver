@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e285deeb_3e70c7f0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-04-22T17:22:36Z",
+      "side": 1,
+      "message": "Thanks Johannes. Please add me as a reviewer in the future, that way I will get an email when you upload a patch.",
+      "revId": "cd2dd06e9a9e1c9795696a729f3ce4a2ec906db8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
