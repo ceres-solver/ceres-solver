@@ -426,38 +426,41 @@ TEST(DynamicSparsity, StaticAndDynamicSparsityProduceSameSolution) {
 
   Solver::Options options;
   options.max_num_iterations = 100;
-  options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
-  // Only SuiteSparse & EigenSparse currently support dynamic sparsity.
-  options.sparse_linear_algebra_library_type =
+  SparseLinearAlgebraLibraryType sparse_library_types[] = {
 #if !defined(CERES_NO_SUITESPARSE)
-      ceres::SUITE_SPARSE;
-#elif defined(CERES_USE_EIGEN_SPARSE)
-      ceres::EIGEN_SPARSE;
+      ceres::SUITE_SPARSE,
 #endif
-
-  // First, solve `X` and `t` jointly with dynamic_sparsity = true.
-  Matrix X0 = X;
-  Vector t0 = t;
-  options.dynamic_sparsity = false;
-  Solver::Summary static_summary;
-  Solve(options, &problem, &static_summary);
-  EXPECT_EQ(static_summary.termination_type, CONVERGENCE)
-      << static_summary.FullReport();
-
-  X = X0;
-  t = t0;
-  options.dynamic_sparsity = true;
-  Solver::Summary dynamic_summary;
-  Solve(options, &problem, &dynamic_summary);
-  EXPECT_EQ(dynamic_summary.termination_type, CONVERGENCE)
-      << dynamic_summary.FullReport();
-
-  EXPECT_NEAR(static_summary.final_cost,
-              dynamic_summary.final_cost,
-              std::numeric_limits<double>::epsilon())
-      << "Static: \n"
-      << static_summary.FullReport() << "\nDynamic: \n"
-      << dynamic_summary.FullReport();
+#if defined(CERES_USE_EIGEN_SPARSE)
+      ceres::EIGEN_SPARSE,
+#endif
+#if !defined(CERES_NO_CUDSS)
+      ceres::CUDA_SPARSE,
+#endif
+  };
+  for (auto type : sparse_library_types) {
+    options.sparse_linear_algebra_library_type = type;
+    // First, solve `X` and `t` jointly with dynamic_sparsity = true.
+    Matrix X0 = X;
+    Vector t0 = t;
+    options.dynamic_sparsity = false;
+    Solver::Summary static_summary;
+    Solve(options, &problem, &static_summary);
+    EXPECT_EQ(static_summary.termination_type, CONVERGENCE)
+        << static_summary.FullReport();
+    X = X0;
+    t = t0;
+    options.dynamic_sparsity = true;
+    Solver::Summary dynamic_summary;
+    Solve(options, &problem, &dynamic_summary);
+    EXPECT_EQ(dynamic_summary.termination_type, CONVERGENCE)
+        << dynamic_summary.FullReport();
+    EXPECT_NEAR(static_summary.final_cost,
+                dynamic_summary.final_cost,
+                std::numeric_limits<double>::epsilon())
+        << "Static: \n"
+        << static_summary.FullReport() << "\nDynamic: \n"
+        << dynamic_summary.FullReport();
+  }
 }
 
 }  // namespace ceres::internal

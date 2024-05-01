@@ -100,6 +100,8 @@ VisibilityBasedPreconditioner::VisibilityBasedPreconditioner(
   sparse_cholesky_options.sparse_linear_algebra_library_type =
       options_.sparse_linear_algebra_library_type;
   sparse_cholesky_options.ordering_type = options_.ordering_type;
+  sparse_cholesky_options.context = options_.context;
+
   sparse_cholesky_ = SparseCholesky::Create(sparse_cholesky_options);
 
   const time_t init_time = time(nullptr);
@@ -350,10 +352,7 @@ bool VisibilityBasedPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
   // semidefinite.
   if (status == LinearSolverTerminationType::FAILURE &&
       options_.type == CLUSTER_TRIDIAGONAL) {
-    VLOG(1) << "Unscaled factorization failed. Retrying with off-diagonal "
-            << "scaling";
-    ScaleOffDiagonalCells();
-    status = Factorize();
+    status = ScaleOffDiagonalCellsAndFactorize();
   }
 
   VLOG(2) << "Compute time: " << time(nullptr) - start_time;
@@ -365,7 +364,10 @@ bool VisibilityBasedPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
 // to edges in the degree-2 forest are off diagonal entries of this
 // matrix. Scaling these off-diagonal entries by 1/2 forces this
 // matrix to be positive definite.
-void VisibilityBasedPreconditioner::ScaleOffDiagonalCells() {
+LinearSolverTerminationType
+VisibilityBasedPreconditioner::ScaleOffDiagonalCellsAndFactorize() {
+  VLOG(1) << "Unscaled factorization failed. Retrying with off-diagonal "
+          << "scaling";
   for (const auto& block_pair : block_pairs_) {
     const int block1 = block_pair.first;
     const int block2 = block_pair.second;
@@ -387,6 +389,8 @@ void VisibilityBasedPreconditioner::ScaleOffDiagonalCells() {
     MatrixRef m(cell_info->values, row_stride, col_stride);
     m.block(r, c, blocks_[block1].size, blocks_[block2].size) *= 0.5;
   }
+
+  return Factorize();
 }
 
 // Compute the sparse Cholesky factorization of the preconditioner
@@ -428,6 +432,14 @@ void VisibilityBasedPreconditioner::RightMultiplyAndAccumulate(
   CHECK(sparse_cholesky_ != nullptr);
   std::string message;
   sparse_cholesky_->Solve(x, y, &message);
+
+  if (options_.sparse_linear_algebra_library_type == CUDA_SPARSE &&
+      options_.type == CLUSTER_TRIDIAGONAL &&
+      !ConstVectorRef(y, m_crs_->num_rows()).allFinite()) {
+    const_cast<VisibilityBasedPreconditioner*>(this)
+        ->ScaleOffDiagonalCellsAndFactorize();
+    sparse_cholesky_->Solve(x, y, &message);
+  }
 }
 
 int VisibilityBasedPreconditioner::num_rows() const { return m_->num_rows(); }

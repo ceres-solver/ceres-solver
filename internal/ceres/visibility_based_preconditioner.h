@@ -153,7 +153,7 @@ class CERES_NO_EXPORT VisibilityBasedPreconditioner
   void InitStorage(const CompressedRowBlockStructure& bs);
   void InitEliminator(const CompressedRowBlockStructure& bs);
   LinearSolverTerminationType Factorize();
-  void ScaleOffDiagonalCells();
+  LinearSolverTerminationType ScaleOffDiagonalCellsAndFactorize();
 
   void ClusterCameras(const std::vector<std::set<int>>& visibility);
   void FlattenMembershipMap(const std::unordered_map<int, int>& membership_map,
