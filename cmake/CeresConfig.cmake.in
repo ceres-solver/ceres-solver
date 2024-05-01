@@ -180,6 +180,7 @@ include(CMakeFindDependencyMacro)
 @METIS_DEPENDENCY@
 @SuiteSparse_DEPENDENCY@
 @CUDAToolkit_DEPENDENCY@
+@cudss_DEPENDENCY@
 @Threads_DEPENDENCY@
 
 # As imported CMake targets are not re-exported when a dependent target is

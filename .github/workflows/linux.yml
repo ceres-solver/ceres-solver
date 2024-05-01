@@ -79,6 +79,13 @@ jobs:
           apt-get install -y nvidia-cuda-toolkit
           echo "CUDACXX=/usr/lib/nvidia-cuda-toolkit/bin/nvcc" >> $GITHUB_ENV
 
+      - name: Setup cuDSS
+        if: matrix.gpu == 'cuda'
+        run: |
+          wget https://developer.download.nvidia.com/compute/cudss/redist/libcudss/linux-x86_64/libcudss-linux-x86_64-0.2.1.3_cuda12-archive.tar.xz
+          tar -xf libcudss-linux-x86_64-0.2.1.3_cuda12-archive.tar.xz
+          echo "cudss_DIR=${{github.workspace}}/libcudss-linux-x86_64-0.2.1.3_cuda12-archive/lib/cmake/cudss" >> $GITHUB_ENV
+
       - name: Cache Build
         id: cache-build
         uses: actions/cache@v4

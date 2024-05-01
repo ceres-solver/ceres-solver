@@ -170,6 +170,7 @@ add_library(ceres_internal OBJECT
     cuda_partitioned_block_sparse_crs_view.cc
     cuda_block_structure.cc
     cuda_sparse_matrix.cc
+    cuda_sparse_cholesky.cc
     cuda_vector.cc
     dense_cholesky.cc
     dense_normal_cholesky_solver.cc
