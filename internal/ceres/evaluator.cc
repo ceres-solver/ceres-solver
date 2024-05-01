@@ -63,7 +63,11 @@ std::unique_ptr<Evaluator> Evaluator::Create(const Evaluator::Options& options,
           options, program);
     case DENSE_SCHUR:
     case SPARSE_SCHUR:
-    case ITERATIVE_SCHUR:
+    case ITERATIVE_SCHUR: {
+      return std::make_unique<
+            ProgramEvaluator<BlockEvaluatePreparer, BlockJacobianWriter>>(
+            options, program);
+    }
     case CGNR: {
       if (options.sparse_linear_algebra_library_type == CUDA_SPARSE) {
         return std::make_unique<ProgramEvaluator<ScratchEvaluatePreparer,

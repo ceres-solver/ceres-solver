@@ -257,6 +257,16 @@ if (USE_CUDA)
     CUDA::cudart${CERES_CUDA_TARGET_SUFFIX}
     CUDA::cusolver${CERES_CUDA_TARGET_SUFFIX}
     CUDA::cusparse${CERES_CUDA_TARGET_SUFFIX})
+
+  find_package(cudss CONFIG)
+  if (cudss_FOUND)
+    set(cudss_DEPENDENCY "find_dependency(cudss)")
+    list(APPEND CERES_CUDA_LIBRARIES cudss${CERES_CUDA_TARGET_SUFFIX})
+    list(APPEND CERES_COMPILE_OPTIONS CERES_USE_CUDSS)
+  else (cudss_FOUND)
+    message("-- Did not find cuDSS, SPARSE_SCHUR and SPARSE_NORMAL_CHOLESKY with CUDA_SPARSE will not be available.")
+  endif (cudss_FOUND)
+
   unset (CERES_CUDA_TARGET_SUFFIX)
   set(CMAKE_CUDA_RUNTIME_LIBRARY NONE)
 else (USE_CUDA)
@@ -359,10 +369,10 @@ else()
 endif()
 
 # Ensure that the user understands they have disabled all sparse libraries.
-if (NOT SUITESPARSE AND NOT EIGENSPARSE AND NOT ACCELERATESPARSE)
+if (NOT SUITESPARSE AND NOT EIGENSPARSE AND NOT ACCELERATESPARSE AND NOT cudss_FOUND)
   message("   ===============================================================")
-  message("   Compiling without any sparse library: SuiteSparse, ")
-  message("   EigenSparse & Apple's Accelerate are all disabled or unavailable.  ")
+  message("   Compiling without any sparse library: SuiteSparse, EigenSparse")
+  message("   Apple's Accelerate & cuDSS are all disabled or unavailable.  ")
   message("   No sparse linear solvers (SPARSE_NORMAL_CHOLESKY & SPARSE_SCHUR)")
   message("   will be available when Ceres is used.")
   message("   ===============================================================")

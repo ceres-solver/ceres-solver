@@ -41,6 +41,7 @@
 #include "ceres/casts.h"
 #include "ceres/context.h"
 #include "ceres/context_impl.h"
+#include "ceres/cuda_sparse_cholesky.h"
 #include "ceres/detect_structure.h"
 #include "ceres/eigensparse.h"
 #include "ceres/gradient_checking_cost_function.h"
@@ -113,7 +114,12 @@ bool IsNestedDissectionAvailable(SparseLinearAlgebraLibraryType type) {
            internal::SuiteSparse::IsNestedDissectionAvailable()) ||
           (type == ACCELERATE_SPARSE) ||
           ((type == EIGEN_SPARSE) &&
-           internal::EigenSparse::IsNestedDissectionAvailable()));
+           internal::EigenSparse::IsNestedDissectionAvailable())
+#ifdef CERES_USE_CUDSS
+          || ((type == CUDA_SPARSE) &&
+              internal::CudaSparseCholesky<>::IsNestedDissectionAvailable())
+#endif
+  );
 }
 
 bool IsIterativeSolver(LinearSolverType type) {
@@ -169,7 +175,11 @@ bool OptionsAreValidForSparseCholeskyBasedSolver(const Solver::Options& options,
   }
 
   if (!IsSparseLinearAlgebraLibraryTypeAvailable(
-          options.sparse_linear_algebra_library_type)) {
+          options.sparse_linear_algebra_library_type)
+#if !defined(CERES_USE_CUDSS)
+      || options.sparse_linear_algebra_library_type == CUDA_SPARSE
+#endif
+  ) {
     *error = StringPrintf(kNoLibraryFormat, solver_name, library_name);
     return false;
   }
@@ -678,7 +688,9 @@ bool IsCudaRequired(const Solver::Options& options) {
       options.linear_solver_type == DENSE_QR) {
     return (options.dense_linear_algebra_library_type == CUDA);
   }
-  if (options.linear_solver_type == CGNR) {
+  if (options.linear_solver_type == CGNR ||
+      options.linear_solver_type == SPARSE_SCHUR ||
+      options.linear_solver_type == SPARSE_NORMAL_CHOLESKY) {
     return (options.sparse_linear_algebra_library_type == CUDA_SPARSE);
   }
   return false;
