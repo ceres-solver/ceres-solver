@@ -47,6 +47,9 @@
 #include "cuda_runtime.h"
 #include "cusolverDn.h"
 #include "cusparse.h"
+#ifdef CERES_USE_CUDSS
+#include "cuDSS.h"
+#endif  // CERES_USE_CUDSS
 #endif  // CERES_NO_CUDA
 
 #include "ceres/thread_pool.h"
@@ -122,6 +125,9 @@ class CERES_NO_EXPORT ContextImpl final : public Context {
 
   cusolverDnHandle_t cusolver_handle_ = nullptr;
   cublasHandle_t cublas_handle_ = nullptr;
+#ifdef CERES_USE_CUDSS
+  cudssHandle_t cudss_handle_ = nullptr;
+#endif  // CERES_USE_CUDSS
 
   // Default stream.
   // Kernel invocations and memory copies on this stream can be left without

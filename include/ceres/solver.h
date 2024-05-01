@@ -384,6 +384,8 @@ class CERES_EXPORT Solver {
         ACCELERATE_SPARSE;
 #elif defined(CERES_USE_EIGEN_SPARSE)
         EIGEN_SPARSE;
+#elif defined(CERES_USE_CUDSS)
+        CUDSS;
 #else
         NO_SPARSE;
 #endif

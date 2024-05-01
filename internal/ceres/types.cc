@@ -107,6 +107,7 @@ const char* SparseLinearAlgebraLibraryTypeToString(
     CASESTR(EIGEN_SPARSE);
     CASESTR(ACCELERATE_SPARSE);
     CASESTR(CUDA_SPARSE);
+    CASESTR(CUDSS);
     CASESTR(NO_SPARSE);
     default:
       return "UNKNOWN";
@@ -120,6 +121,7 @@ bool StringToSparseLinearAlgebraLibraryType(
   STRENUM(EIGEN_SPARSE);
   STRENUM(ACCELERATE_SPARSE);
   STRENUM(CUDA_SPARSE);
+  STRENUM(CUDSS);
   STRENUM(NO_SPARSE);
   return false;
 }
@@ -426,6 +428,14 @@ bool IsSparseLinearAlgebraLibraryTypeAvailable(
     return false;
 #else
     return true;
+#endif
+  }
+
+  if (type == CUDSS) {
+#ifdef CERES_USE_CUDSS
+    return true;
+#else
+    return false;
 #endif
   }
 

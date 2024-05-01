@@ -55,7 +55,10 @@
 #include "ceres/cuda_kernels_vector_ops.h"
 #include "ceres/cuda_vector.h"
 #include "cuda_runtime_api.h"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #include "cusparse.h"
+#pragma GCC diagnostic pop
 
 namespace ceres::internal {
 namespace {

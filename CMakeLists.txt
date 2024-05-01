@@ -106,6 +106,7 @@ endif()
 # We can't have an option called 'CUDA' since that is a reserved word -- a
 # language definition.
 set(USE_CUDA "default" CACHE STRING "Enable use of CUDA linear algebra solvers.")
+option(CUDSS "Enable use of cuDSS as a GPGPU-accelerated direct solver" ON)
 option(LAPACK "Enable use of LAPACK directly within Ceres." ON)
 # Template specializations for the Schur complement based solvers. If
 # compile time, binary size or compiler performance is an issue, you
@@ -257,6 +258,21 @@ if (USE_CUDA)
     CUDA::cudart${CERES_CUDA_TARGET_SUFFIX}
     CUDA::cusolver${CERES_CUDA_TARGET_SUFFIX}
     CUDA::cusparse${CERES_CUDA_TARGET_SUFFIX})
+
+  if (CUDSS)
+    find_package(cudss CONFIG)
+    if (cudss_FOUND)
+      set(cudss_DEPENDENCY "find_dependency(cudss)")
+      list(APPEND CERES_CUDA_LIBRARIES cudss${CERES_CUDA_TARGET_SUFFIX})
+      list(APPEND CERES_COMPILE_OPTIONS CERES_USE_CUDSS)
+    else (cudss_FOUND)
+      message("-- Did not find cuDSS, disabling cuDSS support")
+      update_cache_variable(CUDSS OFF)
+    endif (cudss_FOUND)
+  else(CUDSS)
+    message("-- Building without cuDSS")
+  endif (CUDSS)
+
   unset (CERES_CUDA_TARGET_SUFFIX)
   set(CMAKE_CUDA_RUNTIME_LIBRARY NONE)
 else (USE_CUDA)
@@ -359,10 +375,10 @@ else()
 endif()
 
 # Ensure that the user understands they have disabled all sparse libraries.
-if (NOT SUITESPARSE AND NOT EIGENSPARSE AND NOT ACCELERATESPARSE)
+if (NOT SUITESPARSE AND NOT EIGENSPARSE AND NOT ACCELERATESPARSE AND NOT CUDSS)
   message("   ===============================================================")
-  message("   Compiling without any sparse library: SuiteSparse, ")
-  message("   EigenSparse & Apple's Accelerate are all disabled or unavailable.  ")
+  message("   Compiling without any sparse library: SuiteSparse, EigenSparse")
+  message("   Apple's Accelerate & cuDSS are all disabled or unavailable.  ")
   message("   No sparse linear solvers (SPARSE_NORMAL_CHOLESKY & SPARSE_SCHUR)")
   message("   will be available when Ceres is used.")
   message("   ===============================================================")

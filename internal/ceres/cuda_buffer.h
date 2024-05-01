@@ -165,6 +165,49 @@ class CudaBuffer {
   size_t size_ = 0;
   ContextImpl* context_ = nullptr;
 };
+
+template <typename T>
+class CudaPinnedHostBuffer {
+ public:
+  CudaPinnedHostBuffer() = default;
+  CudaPinnedHostBuffer(int size) { Reserve(size); }
+
+  CudaPinnedHostBuffer(CudaPinnedHostBuffer&& other)
+      : data_(other.data_), size_(other.size_) {
+    other.data_ = nullptr;
+    other.size_ = 0;
+  }
+
+  CudaPinnedHostBuffer(const CudaPinnedHostBuffer&) = delete;
+  CudaPinnedHostBuffer& operator=(const CudaPinnedHostBuffer&) = delete;
+
+  ~CudaPinnedHostBuffer() { Free(); }
+
+  void Reserve(const size_t size) {
+    if (size > size_) {
+      Free();
+      CHECK_EQ(cudaMallocHost(&data_, size * sizeof(T)), cudaSuccess)
+          << "Failed to allocate " << size * sizeof(T)
+          << " bytes of pinned host memory";
+      size_ = size;
+    }
+  }
+
+  T* data() { return data_; }
+  const T* data() const { return data_; }
+  size_t size() const { return size_; }
+
+ private:
+  void Free() {
+    if (data_ != nullptr) {
+      CHECK_EQ(cudaFreeHost(data_), cudaSuccess);
+    }
+  }
+
+  T* data_ = nullptr;
+  size_t size_ = 0;
+};
+
 }  // namespace ceres::internal
 
 #endif  // CERES_NO_CUDA

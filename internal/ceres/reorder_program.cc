@@ -576,7 +576,9 @@ bool ReorderProgramForSparseCholesky(
     // would involve performing two symbolic factorisations instead of one
     // which would have a negative overall impact on performance.
     return true;
-
+  } else if (sparse_linear_algebra_library_type == CUDSS) {
+    // Same as for Accelerate
+    return true;
   } else if (sparse_linear_algebra_library_type == EIGEN_SPARSE) {
     OrderingForSparseNormalCholeskyUsingEigenSparse(
         linear_solver_ordering_type,
