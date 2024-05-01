@@ -53,9 +53,11 @@ SPARSE_SOLVER_CONFIGS = [
     ('SPARSE_NORMAL_CHOLESKY', 'SUITE_SPARSE'),
     ('SPARSE_NORMAL_CHOLESKY', 'EIGEN_SPARSE'),
     ('SPARSE_NORMAL_CHOLESKY', 'ACCELERATE_SPARSE'),
+    ('SPARSE_NORMAL_CHOLESKY', 'CUDA_SPARSE'),
     ('SPARSE_SCHUR',           'SUITE_SPARSE'),
     ('SPARSE_SCHUR',           'EIGEN_SPARSE'),
     ('SPARSE_SCHUR',           'ACCELERATE_SPARSE'),
+    ('SPARSE_SCHUR',           'CUDA_SPARSE')
 ]
 
 ITERATIVE_SOLVER_CONFIGS = [
@@ -83,6 +85,7 @@ FILENAME_SHORTENING_MAP = dict(
   SUITE_SPARSE='suitesparse',
   EIGEN_SPARSE='eigensparse',
   ACCELERATE_SPARSE='acceleratesparse',
+  CUDA_SPARSE='cudasparse',
   IDENTITY='identity',
   JACOBI='jacobi',
   SCHUR_JACOBI='schurjacobi',
@@ -217,6 +220,9 @@ def generate_bundle_test(linear_solver,
   elif sparse_backend == 'EIGEN_SPARSE':
     preprocessor_conditions_begin.append('#ifdef CERES_USE_EIGEN_SPARSE')
     preprocessor_conditions_end.insert(0, '#endif  // CERES_USE_EIGEN_SPARSE')
+  elif sparse_backend == 'CUDA_SPARSE':
+    preprocessor_conditions_begin.append('#ifdef CERES_USE_CUDSS')
+    preprocessor_conditions_end.insert(0, '#endif  // CERES_USE_CUDSS')
 
   if dense_backend == "LAPACK":
     preprocessor_conditions_begin.append('#ifndef CERES_NO_LAPACK')
