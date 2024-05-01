@@ -34,6 +34,7 @@
 #include <utility>
 
 #include "ceres/accelerate_sparse.h"
+#include "ceres/cuda_sparse_cholesky.h"
 #include "ceres/eigensparse.h"
 #include "ceres/float_suitesparse.h"
 #include "ceres/iterative_refiner.h"
@@ -87,6 +88,19 @@ std::unique_ptr<SparseCholesky> SparseCholesky::Create(
       LOG(FATAL) << "Ceres was compiled without support for Apple's Accelerate "
                  << "framework solvers.";
 #endif
+    case CUDSS:
+#ifdef CERES_USE_CUDSS
+      if (options.use_mixed_precision_solves) {
+        sparse_cholesky = CudaSparseCholesky<float>::Create(
+            options.context, options.ordering_type);
+      } else {
+        sparse_cholesky = CudaSparseCholesky<double>::Create(
+            options.context, options.ordering_type);
+      }
+      break;
+#else   // CERES_USE_CUDSS
+      LOG(FATAL) << "Ceres was compiled without support for cuDSS.";
+#endif  // CERES_USE_CUDSS
 
     default:
       LOG(FATAL) << "Unknown sparse linear algebra library type : "
