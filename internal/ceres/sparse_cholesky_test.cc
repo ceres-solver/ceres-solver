@@ -39,6 +39,7 @@
 #include "Eigen/SparseCore"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/compressed_row_sparse_matrix.h"
+#include "ceres/cuda_sparse_cholesky.h"
 #include "ceres/inner_product_computer.h"
 #include "ceres/internal/config.h"
 #include "ceres/internal/eigen.h"
@@ -117,6 +118,12 @@ void SparseCholeskySolverUnitTest(
   sparse_cholesky_options.sparse_linear_algebra_library_type =
       sparse_linear_algebra_library_type;
   sparse_cholesky_options.ordering_type = ordering_type;
+#ifndef CERES_NO_CUDSS
+  ContextImpl context;
+  sparse_cholesky_options.context = &context;
+  std::string error;
+  CHECK(context.InitCuda(&error)) << error;
+#endif  // CERES_NO_CUDSS
   auto sparse_cholesky = SparseCholesky::Create(sparse_cholesky_options);
   const CompressedRowSparseMatrix::StorageType storage_type =
       sparse_cholesky->StorageType();
@@ -251,7 +258,7 @@ INSTANTIATE_TEST_SUITE_P(
     ParamInfoToString);
 
 INSTANTIATE_TEST_SUITE_P(
-    EigenSparseCholeskySingle,
+    FloatEigenSparseCholesky,
     SparseCholeskyTest,
     ::testing::Combine(::testing::Values(EIGEN_SPARSE),
                        ::testing::Values(OrderingType::AMD,
@@ -259,6 +266,26 @@ INSTANTIATE_TEST_SUITE_P(
                        ::testing::Values(true, false)),
     ParamInfoToString);
 #endif  // CERES_USE_EIGEN_SPARSE
+
+#ifndef CERES_NO_CUDSS
+using CuDSSCholeskyDouble = CudaSparseCholesky<double>;
+INSTANTIATE_TEST_SUITE_P(
+    CuDSSCholeskyDouble,
+    SparseCholeskyTest,
+    ::testing::Combine(::testing::Values(CUDA_SPARSE),
+                       ::testing::Values(OrderingType::AMD),
+                       ::testing::Values(true, false)),
+    ParamInfoToString);
+
+using CuDSSCholeskySingle = CudaSparseCholesky<float>;
+INSTANTIATE_TEST_SUITE_P(
+    CuDSSCholeskySingle,
+    SparseCholeskyTest,
+    ::testing::Combine(::testing::Values(CUDA_SPARSE),
+                       ::testing::Values(OrderingType::AMD),
+                       ::testing::Values(true, false)),
+    ParamInfoToString);
+#endif  // CERES_NO_CUDSS
 
 #if defined(CERES_USE_EIGEN_SPARSE) && !defined(CERES_NO_EIGEN_METIS)
 INSTANTIATE_TEST_SUITE_P(

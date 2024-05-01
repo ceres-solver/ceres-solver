@@ -100,6 +100,24 @@ VisibilityBasedPreconditioner::VisibilityBasedPreconditioner(
   sparse_cholesky_options.sparse_linear_algebra_library_type =
       options_.sparse_linear_algebra_library_type;
   sparse_cholesky_options.ordering_type = options_.ordering_type;
+  if (options_.sparse_linear_algebra_library_type == CUDA_SPARSE) {
+#ifndef CERES_NO_CUDSS
+    sparse_cholesky_options.context = options_.context;
+    std::string message;
+    if (!options_.context->InitCuda(&message)) {
+      LOG(FATAL) << message;
+    }
+#else
+    LOG(FATAL) << PreconditionerTypeToString(options_.type)
+               << " preconditioner cannot be used with "
+               << SparseLinearAlgebraLibraryTypeToString(
+                      options_.sparse_linear_algebra_library_type)
+               << " because Ceres was not built with support for cuDSS. This "
+                  "requires enabling building with -DUSE_CUDA=ON and ensuring "
+                  "that cuDSS is found.";
+#endif
+  }
+
   sparse_cholesky_ = SparseCholesky::Create(sparse_cholesky_options);
 
   const time_t init_time = time(nullptr);

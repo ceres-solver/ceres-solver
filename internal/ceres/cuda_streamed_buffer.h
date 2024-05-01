@@ -34,6 +34,8 @@
 #include "ceres/internal/config.h"
 
 #ifndef CERES_NO_CUDA
+#include <algorithm>
+
 #include "ceres/cuda_buffer.h"
 
 namespace ceres::internal {
