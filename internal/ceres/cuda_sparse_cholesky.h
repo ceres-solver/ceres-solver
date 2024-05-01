@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2024 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -26,71 +26,41 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: sameeragarwal@google.com (Sameer Agarwal)
+// Author: markshachkov@gmail.com (Mark Shachkov)
+//
+// A C++ interface to cuDSS.
 
-#include "ceres/solver_utils.h"
+#ifndef CERES_INTERNAL_CUDA_SPARSE_CHOLESKY_H_
+#define CERES_INTERNAL_CUDA_SPARSE_CHOLESKY_H_
 
-#include "Eigen/Core"
+// This include must come before any #ifndef check on Ceres compile options.
 #include "ceres/internal/config.h"
-#include "ceres/internal/export.h"
-#include "ceres/version.h"
-#ifndef CERES_NO_CUDA
-#include "cuda_runtime.h"
+
 #ifndef CERES_NO_CUDSS
-#include "cudss.h"
-#endif  // CERES_NO_CUDSS
-#endif  // CERES_NO_CUDA
+
+#include <memory>
+
+#include "ceres/internal/export.h"
+#include "ceres/linear_solver.h"
+#include "ceres/sparse_cholesky.h"
 
 namespace ceres::internal {
 
-constexpr char kVersion[] =
-    // clang-format off
-  CERES_VERSION_STRING "-eigen-("
-  CERES_SEMVER_VERSION(EIGEN_WORLD_VERSION,
-                       EIGEN_MAJOR_VERSION,
-                       EIGEN_MINOR_VERSION) ")"
+// This class is a factory for implementation of sparse cholesky that uses cuDSS
+// on CUDA capable GPU's to solve sparse linear systems. Scalar controls the
+// precision used during computations, currently float and double are supported.
+// Details of implementation are incapsulated into cuda_sparse_cholesky.cc
+template <typename Scalar = double>
+class CERES_NO_EXPORT CudaSparseCholesky : public SparseCholesky {
+ public:
+  static constexpr bool IsNestedDissectionAvailable() noexcept { return false; }
 
-#ifdef CERES_NO_LAPACK
-  "-no_lapack"
-#else
-  "-lapack"
-#endif
-
-#ifndef CERES_NO_SUITESPARSE
-  "-suitesparse-(" CERES_SUITESPARSE_VERSION ")"
-#endif
-
-#if !defined(CERES_NO_EIGEN_METIS) || !defined(CERES_NO_CHOLMOD_PARTITION)
-  "-metis-(" CERES_METIS_VERSION ")"
-#endif
-
-#ifndef CERES_NO_ACCELERATE_SPARSE
-  "-acceleratesparse"
-#endif
-
-#ifdef CERES_USE_EIGEN_SPARSE
-  "-eigensparse"
-#endif
-
-#ifdef CERES_RESTRUCT_SCHUR_SPECIALIZATIONS
-  "-no_schur_specializations"
-#endif
-
-#ifdef CERES_NO_CUSTOM_BLAS
-  "-no_custom_blas"
-#endif
-
-#ifndef CERES_NO_CUDA
-  "-cuda-(" CERES_TO_STRING(CUDART_VERSION) ")"
-#ifndef CERES_NO_CUDSS
-  "-cudss-(" CERES_SEMVER_VERSION(CUDSS_VERSION_MAJOR,
-                                  CUDSS_VERSION_MINOR,
-                                  CUDSS_VERSION_PATCH) ")"
-#endif // CERES_NO_CUDSS
-#endif
-  ;
-// clang-format on
-
-std::string_view VersionString() noexcept { return kVersion; }
+  static std::unique_ptr<SparseCholesky> Create(
+      ContextImpl* context, const OrderingType ordering_type);
+};
 
 }  // namespace ceres::internal
+
+#endif  // CERES_NO_CUDSS
+
+#endif  // CERES_INTERNAL_CUDA_SPARSE_CHOLESKY_H_

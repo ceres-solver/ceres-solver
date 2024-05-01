@@ -88,8 +88,9 @@ class SparseNormalCholeskySolverTest : public ::testing::Test {
 
     EXPECT_EQ(summary.termination_type, LinearSolverTerminationType::SUCCESS);
 
+    const double eps = options.use_mixed_precision_solves ? 2e-6 : 1e-8;
     for (int i = 0; i < A_->num_cols(); ++i) {
-      EXPECT_NEAR(expected_solution(i), actual_solution(i), 1e-8)
+      EXPECT_NEAR(expected_solution(i), actual_solution(i), eps)
           << "\nExpected: " << expected_solution.transpose()
           << "\nActual: " << actual_solution.transpose();
     }
@@ -173,6 +174,33 @@ TEST_F(SparseNormalCholeskySolverTest,
   options.ordering_type = OrderingType::AMD;
   ContextImpl context;
   options.context = &context;
+  TestSolver(options);
+}
+#endif  // CERES_USE_EIGEN_SPARSE
+
+#ifndef CERES_NO_CUDSS
+TEST_F(SparseNormalCholeskySolverTest, SparseNormalCholeskyUsingCuDSSSingle) {
+  LinearSolver::Options options;
+  options.sparse_linear_algebra_library_type = CUDA_SPARSE;
+  options.type = SPARSE_NORMAL_CHOLESKY;
+  options.ordering_type = OrderingType::AMD;
+  options.use_mixed_precision_solves = true;
+  ContextImpl context;
+  options.context = &context;
+  std::string error;
+  CHECK(context.InitCuda(&error)) << error;
+  TestSolver(options);
+}
+
+TEST_F(SparseNormalCholeskySolverTest, SparseNormalCholeskyUsingCuDSSDouble) {
+  LinearSolver::Options options;
+  options.sparse_linear_algebra_library_type = CUDA_SPARSE;
+  options.type = SPARSE_NORMAL_CHOLESKY;
+  options.ordering_type = OrderingType::AMD;
+  ContextImpl context;
+  options.context = &context;
+  std::string error;
+  CHECK(context.InitCuda(&error)) << error;
   TestSolver(options);
 }
 #endif  // CERES_USE_EIGEN_SPARSE

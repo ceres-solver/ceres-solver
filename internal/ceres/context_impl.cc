@@ -60,6 +60,12 @@ void ContextImpl::TearDown() {
     cusparseDestroy(cusparse_handle_);
     cusparse_handle_ = nullptr;
   }
+#ifndef CERES_NO_CUDSS
+  if (cudss_handle_ != nullptr) {
+    cudssDestroy(cudss_handle_);
+    cudss_handle_ = nullptr;
+  }
+#endif  // CERES_NO_CUDSS
   for (auto& s : streams_) {
     if (s != nullptr) {
       cudaStreamDestroy(s);
@@ -157,6 +163,13 @@ bool ContextImpl::InitCuda(std::string* message) {
     return false;
   }
   event_logger.AddEvent("cusparseCreate");
+#ifndef CERES_NO_CUDSS
+  if (cudssCreate(&cudss_handle_) != CUDSS_STATUS_SUCCESS) {
+    *message = "CUDA initialization failed because cudssCreate() failed.";
+    TearDown();
+    return false;
+  }
+#endif  // CERES_NO_CUDSS
   for (auto& s : streams_) {
     if (cudaStreamCreateWithFlags(&s, cudaStreamNonBlocking) != cudaSuccess) {
       *message =
@@ -172,7 +185,11 @@ bool ContextImpl::InitCuda(std::string* message) {
       cublasSetStream(cublas_handle_, DefaultStream()) !=
           CUBLAS_STATUS_SUCCESS ||
       cusparseSetStream(cusparse_handle_, DefaultStream()) !=
-          CUSPARSE_STATUS_SUCCESS) {
+          CUSPARSE_STATUS_SUCCESS
+#ifndef CERES_NO_CUDSS
+      || cudssSetStream(cudss_handle_, DefaultStream()) != CUDSS_STATUS_SUCCESS
+#endif  // CERES_NO_CUDSS
+  ) {
     *message = "CUDA initialization failed because SetStream failed.";
     TearDown();
     return false;
