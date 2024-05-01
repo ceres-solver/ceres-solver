@@ -46,6 +46,7 @@
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
 #include "ceres/wall_time.h"
+#include "cuda_sparse_cholesky.h"
 
 #ifdef CERES_USE_EIGEN_SPARSE
 #include "Eigen/SparseCholesky"
@@ -87,6 +88,9 @@ LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImpl(
       break;
     case EIGEN_SPARSE:
       summary = SolveImplUsingEigen(A, x);
+      break;
+    case CUDA_SPARSE:
+      summary = SolveImplUsingCuda(A, x);
       break;
     default:
       LOG(FATAL) << "Unsupported sparse linear algebra library for "
@@ -228,6 +232,65 @@ DynamicSparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
   event_logger.AddEvent("Teardown");
   return summary;
 
+#endif
+}
+
+LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImplUsingCuda(
+    CompressedRowSparseMatrix* A, double* rhs_and_solution) {
+#ifdef CERES_NO_CUDSS
+  (void)A;
+  (void)rhs_and_solution;
+
+  LinearSolver::Summary summary;
+  summary.num_iterations = 0;
+  summary.termination_type = LinearSolverTerminationType::FATAL_ERROR;
+  summary.message =
+      "SPARSE_NORMAL_CHOLESKY cannot be used with CUDA_SPARSE "
+      "because Ceres was not built with support for cuDSS. "
+      "This requires enabling building with -DUSE_CUDA=ON and ensuring that "
+      "cuDSS is found.";
+  return summary;
+#else
+
+  EventLogger event_logger("DynamicSparseNormalCholeskySolver::cuDSS::Solve");
+
+  // TODO: Consider computing A^T*A on device via cuSPARSE
+  // https://github.com/ceres-solver/ceres-solver/issues/1066
+  Eigen::Map<Eigen::SparseMatrix<double, Eigen::RowMajor>> a(
+      A->num_rows(),
+      A->num_cols(),
+      A->num_nonzeros(),
+      A->mutable_rows(),
+      A->mutable_cols(),
+      A->mutable_values());
+  Eigen::SparseMatrix<double, Eigen::RowMajor> ata =
+      (a.transpose() * a).triangularView<Eigen::Lower>();
+
+  CompressedRowSparseMatrix lhs(ata.rows(), ata.cols(), ata.nonZeros());
+  std::copy_n(ata.outerIndexPtr(), lhs.num_rows() + 1, lhs.mutable_rows());
+  std::copy_n(ata.innerIndexPtr(), lhs.num_nonzeros(), lhs.mutable_cols());
+  std::copy_n(ata.valuePtr(), lhs.num_nonzeros(), lhs.mutable_values());
+  lhs.set_storage_type(
+      CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR);
+  event_logger.AddEvent("Compute A^T * A");
+
+  auto sparse_cholesky = CudaSparseCholesky<double>::Create(
+      options_.context, options_.ordering_type);
+
+  LinearSolver::Summary summary;
+  summary.num_iterations = 1;
+  summary.termination_type = sparse_cholesky->Factorize(&lhs, &summary.message);
+  if (summary.termination_type != LinearSolverTerminationType::SUCCESS) {
+    return summary;
+  }
+  event_logger.AddEvent("Analyze");
+
+  const Vector rhs = ConstVectorRef(rhs_and_solution, A->num_cols());
+  summary.termination_type =
+      sparse_cholesky->Solve(rhs.data(), rhs_and_solution, &summary.message);
+  event_logger.AddEvent("Solve");
+
+  return summary;
 #endif
 }
 
