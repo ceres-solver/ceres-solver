@@ -121,13 +121,26 @@ jobs:
       - name: Download and install CUDA toolkit
         if: matrix.gpu == 'cuda'
         run: |
-          Invoke-WebRequest https://developer.download.nvidia.com/compute/cuda/12.2.1/network_installers/cuda_12.2.1_windows_network.exe -OutFile cuda_toolkit_windows.exe
-          Start-Process -Wait -FilePath .\cuda_toolkit_windows.exe -ArgumentList "-s cusolver_dev_12.2 cusparse_dev_12.2 cublas_dev_12.2 thrust_12.2 nvcc_12.2 cudart_12.2 nvrtc_dev_12.2 visual_studio_integration_12.2"
+          Invoke-WebRequest https://developer.download.nvidia.com/compute/cuda/12.5.0/network_installers/cuda_12.5.0_windows_network.exe -OutFile cuda_toolkit_windows.exe
+          Start-Process -Wait -FilePath .\cuda_toolkit_windows.exe -ArgumentList "-s cusolver_dev_12.5 cusparse_dev_12.5 cublas_dev_12.5 thrust_12.5 nvcc_12.5 cudart_12.5 nvrtc_dev_12.5 visual_studio_integration_12.5"
           Remove-Item .\cuda_toolkit_windows.exe
-          $CUDA_PATH = "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.2"
+          $CUDA_PATH = "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.5"
           echo "CUDA_PATH=$CUDA_PATH" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          echo "CUDA_PATH_V12_2=$CUDA_PATH" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "CUDA_PATH_V12_5=$CUDA_PATH" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           echo "$CUDA_PATH/bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+      - name: Setup cuDSS
+        if: matrix.gpu == 'cuda'
+        run: |
+          Invoke-WebRequest https://developer.download.nvidia.com/compute/cudss/redist/libcudss/windows-x86_64/libcudss-windows-x86_64-0.2.1.3_cuda12-archive.zip -OutFile libcudss-windows-x86_64-0.2.1.3_cuda12-archive.zip
+          Expand-Archive -Path .\libcudss-windows-x86_64-0.2.1.3_cuda12-archive.zip -DestinationPath "C:/"
+          Remove-Item .\libcudss-windows-x86_64-0.2.1.3_cuda12-archive.zip
+          $CUDSS_PATH = "C:/libcudss-windows-x86_64-0.2.1.3_cuda12-archive/"
+          $CUDSS_CMAKE_CONFIG = "$CUDSS_PATH/lib/cmake/cudss/cudss-config.cmake"
+          # cudss cmake windows config provided by 0.2.1 contains a wrong search path that we patch here. It is expected that this issue would be fixed in cudss 0.3.0
+          (Get-Content $CUDSS_CMAKE_CONFIG) | Foreach-Object { if ($_ -match "expecting") { "get_filename_component`(_cudss_search_prefix `"`$`{CMAKE_CURRENT_LIST_DIR`}/../`" ABSOLUTE`)" } else { $_ } } | Set-Content $CUDSS_CMAKE_CONFIG
+          echo "cudss_DIR=$CUDSS_PATH/lib/cmake/cudss" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "$CUDSS_PATH/bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
       - name: Cache gflags
         id: cache-gflags

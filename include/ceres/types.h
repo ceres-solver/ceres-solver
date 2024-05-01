@@ -175,7 +175,7 @@ enum SparseLinearAlgebraLibraryType {
   // Apple's Accelerate framework sparse linear algebra routines.
   ACCELERATE_SPARSE,
 
-  // Nvidia's cuSPARSE library.
+  // Nvidia's cuDSS and cuSPARSE libraries.
   CUDA_SPARSE,
 
   // No sparse linear solver should be used.  This does not necessarily
