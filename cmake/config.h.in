@@ -53,11 +53,15 @@
 // If defined, Ceres was compiled without CUDA.
 @CERES_NO_CUDA@
 
+// If defined, Ceres was compiled without cuDSS.
+@CERES_NO_CUDSS@
+
 // If defined, Ceres was compiled without Apple's Accelerate framework solvers.
 @CERES_NO_ACCELERATE_SPARSE@
 
 #if defined(CERES_NO_SUITESPARSE) &&              \
     defined(CERES_NO_ACCELERATE_SPARSE) &&        \
+    defined(CERES_NO_CUDSS) &&                    \
     !defined(CERES_USE_EIGEN_SPARSE)  // NOLINT
 // If defined Ceres was compiled without any sparse linear algebra support.
 #define CERES_NO_SPARSE
@@ -89,6 +93,9 @@
 #endif
 #if defined(CERES_USE_EIGEN_SPARSE)
 #error CERES_NO_SPARSE requires !CERES_USE_EIGEN_SPARSE
+#endif
+#if !defined(CERES_NO_CUDSS)
+#error CERES_NO_SPARSE required CERES_NO_CUDSS
 #endif
 #endif
 

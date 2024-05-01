@@ -41,6 +41,7 @@
 #include "ceres/casts.h"
 #include "ceres/context.h"
 #include "ceres/context_impl.h"
+#include "ceres/cuda_sparse_cholesky.h"
 #include "ceres/detect_structure.h"
 #include "ceres/eigensparse.h"
 #include "ceres/gradient_checking_cost_function.h"
@@ -113,7 +114,12 @@ bool IsNestedDissectionAvailable(SparseLinearAlgebraLibraryType type) {
            internal::SuiteSparse::IsNestedDissectionAvailable()) ||
           (type == ACCELERATE_SPARSE) ||
           ((type == EIGEN_SPARSE) &&
-           internal::EigenSparse::IsNestedDissectionAvailable()));
+           internal::EigenSparse::IsNestedDissectionAvailable())
+#ifndef CERES_NO_CUDSS
+          || ((type == CUDA_SPARSE) &&
+              internal::CudaSparseCholesky<>::IsNestedDissectionAvailable())
+#endif
+  );
 }
 
 bool IsIterativeSolver(LinearSolverType type) {
@@ -168,8 +174,15 @@ bool OptionsAreValidForSparseCholeskyBasedSolver(const Solver::Options& options,
     return false;
   }
 
-  if (!IsSparseLinearAlgebraLibraryTypeAvailable(
+  if (IsSparseLinearAlgebraLibraryTypeAvailable(
           options.sparse_linear_algebra_library_type)) {
+    if (options.sparse_linear_algebra_library_type == CUDA_SPARSE) {
+#if defined(CERES_NO_CUDSS)
+      *error = StringPrintf(kNoLibraryFormat, solver_name, library_name);
+      return false;
+#endif
+    }
+  } else {
     *error = StringPrintf(kNoLibraryFormat, solver_name, library_name);
     return false;
   }
@@ -678,7 +691,12 @@ bool IsCudaRequired(const Solver::Options& options) {
       options.linear_solver_type == DENSE_QR) {
     return (options.dense_linear_algebra_library_type == CUDA);
   }
-  if (options.linear_solver_type == CGNR) {
+  if (options.linear_solver_type == CGNR ||
+      options.linear_solver_type == SPARSE_SCHUR ||
+      options.linear_solver_type == SPARSE_NORMAL_CHOLESKY ||
+      (options.linear_solver_type == ITERATIVE_SCHUR &&
+       (options.preconditioner_type == CLUSTER_JACOBI ||
+        options.preconditioner_type == CLUSTER_TRIDIAGONAL))) {
     return (options.sparse_linear_algebra_library_type == CUDA_SPARSE);
   }
   return false;

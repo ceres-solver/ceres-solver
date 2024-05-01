@@ -100,6 +100,8 @@ VisibilityBasedPreconditioner::VisibilityBasedPreconditioner(
   sparse_cholesky_options.sparse_linear_algebra_library_type =
       options_.sparse_linear_algebra_library_type;
   sparse_cholesky_options.ordering_type = options_.ordering_type;
+  sparse_cholesky_options.context = options_.context;
+
   sparse_cholesky_ = SparseCholesky::Create(sparse_cholesky_options);
 
   const time_t init_time = time(nullptr);

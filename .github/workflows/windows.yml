@@ -133,6 +133,17 @@ jobs:
           echo "CUDA_PATH_V12_5=$CUDA_PATH" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           echo "$CUDA_PATH/bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
+      - name: Setup cuDSS
+        if: matrix.gpu == 'cuda'
+        run: |
+          Invoke-WebRequest https://developer.download.nvidia.com/compute/cudss/redist/libcudss/windows-x86_64/libcudss-windows-x86_64-0.3.0.9_cuda12-archive.zip -OutFile libcudss-windows-x86_64-0.3.0.9_cuda12-archive.zip
+          Expand-Archive -Path .\libcudss-windows-x86_64-0.3.0.9_cuda12-archive.zip -DestinationPath "C:/"
+          Remove-Item .\libcudss-windows-x86_64-0.3.0.9_cuda12-archive.zip
+          $CUDSS_PATH = "C:/libcudss-windows-x86_64-0.3.0.9_cuda12-archive/"
+          $CUDSS_CMAKE_CONFIG = "$CUDSS_PATH/lib/cmake/cudss/cudss-config.cmake"
+          echo "cudss_DIR=$CUDSS_PATH/lib/cmake/cudss" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "$CUDSS_PATH/bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
       - name: Cache gflags
         id: cache-gflags
         uses: actions/cache@v4

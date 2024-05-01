@@ -36,6 +36,8 @@
 
 #ifndef CERES_NO_CUDA
 
+#include <cstddef>
+#include <utility>
 #include <vector>
 
 #include "cuda_runtime.h"
@@ -165,6 +167,55 @@ class CudaBuffer {
   size_t size_ = 0;
   ContextImpl* context_ = nullptr;
 };
+
+// This class wraps host memory region allocated via cudaMallocHost. Such memory
+// region is page-locked, hence enabling direct transfer to/from device,
+// avoiding implicit buffering under the hood of CUDA API.
+template <typename T>
+class CudaPinnedHostBuffer {
+ public:
+  CudaPinnedHostBuffer() noexcept = default;
+  CudaPinnedHostBuffer(int size) { Reserve(size); }
+  CudaPinnedHostBuffer(CudaPinnedHostBuffer&& other) noexcept
+      : data_(std::exchange(other.data_, nullptr)),
+        size_(std::exchange(other.size_, 0)) {}
+  CudaPinnedHostBuffer(const CudaPinnedHostBuffer&) = delete;
+  CudaPinnedHostBuffer& operator=(const CudaPinnedHostBuffer&) = delete;
+  CudaPinnedHostBuffer& operator=(CudaPinnedHostBuffer&& other) noexcept {
+    Free();
+    data_ = std::exchange(other.data_, nullptr);
+    size_ = std::exchange(other.size_, 0);
+    return *this;
+  }
+  ~CudaPinnedHostBuffer() { Free(); }
+
+  void Reserve(const std::size_t size) {
+    if (size > size_) {
+      Free();
+      CHECK_EQ(cudaMallocHost(&data_, size * sizeof(T)), cudaSuccess)
+          << "Failed to allocate " << size * sizeof(T)
+          << " bytes of pinned host memory";
+      size_ = size;
+    }
+  }
+
+  T* data() noexcept { return data_; }
+  const T* data() const noexcept { return data_; }
+  std::size_t size() const noexcept { return size_; }
+
+ private:
+  void Free() {
+    if (data_ != nullptr) {
+      CHECK_EQ(cudaFreeHost(data_), cudaSuccess);
+      data_ = nullptr;
+      size_ = 0;
+    }
+  }
+
+  T* data_ = nullptr;
+  std::size_t size_ = 0;
+};
+
 }  // namespace ceres::internal
 
 #endif  // CERES_NO_CUDA
