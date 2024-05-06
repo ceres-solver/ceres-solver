@@ -40,17 +40,12 @@
 
 namespace ceres::internal {
 
-// clang-format off
-#define CERES_EIGEN_VERSION                 \
-  CERES_TO_STRING(EIGEN_WORLD_VERSION) "."  \
-  CERES_TO_STRING(EIGEN_MAJOR_VERSION) "."  \
-  CERES_TO_STRING(EIGEN_MINOR_VERSION)
-// clang-format on
-
 constexpr char kVersion[] =
     // clang-format off
-  CERES_VERSION_STRING
-  "-eigen-(" CERES_EIGEN_VERSION ")"
+  CERES_VERSION_STRING "-eigen-("
+  CERES_SEMVER_VERSION(EIGEN_WORLD_VERSION,
+                       EIGEN_MAJOR_VERSION,
+                       EIGEN_MINOR_VERSION) ")"
 
 #ifdef CERES_NO_LAPACK
   "-no_lapack"
