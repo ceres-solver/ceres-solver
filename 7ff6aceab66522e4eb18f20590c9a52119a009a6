@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0f8662b_7f7798b7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-06T22:39:32Z",
+      "side": 1,
+      "message": "Results of benchmarking via bundle_adjuster on BAL are available here: https://drive.google.com/file/d/1MhmtrO_e-1lU9fnd1Jy8p7Tk0est948A/view?usp\u003dsharing (problem-13682-4456117-pre is omitted due to my gpu not having enough memory - this problem requires a bit more then 8 Gb).\n\nSingle precision seems to be unstable, i did not directly compared the solutions, but i observed variations in \"cost change\" between various runs.\n\ncuDSS cmake config for windows seems to be a bit broken, hence the patching in windows.yml, although i might simply be using it in a wrong way.",
+      "revId": "7ff6aceab66522e4eb18f20590c9a52119a009a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
