@@ -16,6 +16,184 @@
       "message": "Results of benchmarking via bundle_adjuster on BAL are available here: https://drive.google.com/file/d/1MhmtrO_e-1lU9fnd1Jy8p7Tk0est948A/view?usp\u003dsharing (problem-13682-4456117-pre is omitted due to my gpu not having enough memory - this problem requires a bit more then 8 Gb).\n\nSingle precision seems to be unstable, i did not directly compared the solutions, but i observed variations in \"cost change\" between various runs.\n\ncuDSS cmake config for windows seems to be a bit broken, hence the patching in windows.yml, although i might simply be using it in a wrong way.",
       "revId": "7ff6aceab66522e4eb18f20590c9a52119a009a6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "16c66514_e98eaad5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-06T23:38:00Z",
+      "side": 1,
+      "message": "Mark this looks quite nice and clean and very complete. I have taken a quick first pass. There are some minor design points that are worth talking about like the new enum. I would also like sergiu to take a look at the cmake and the github workflow integration, but other than that unless I hear strong objections from the nvidia folks, I would very much like to see this checked in, and then work on improving its performance further.",
+      "revId": "7ff6aceab66522e4eb18f20590c9a52119a009a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8365f601_3ace3477",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-06T23:38:00Z",
+      "side": 1,
+      "message": "CUDSS -\u003e USE_CUDSS",
+      "range": {
+        "startLine": 109,
+        "startChar": 7,
+        "endLine": 109,
+        "endChar": 12
+      },
+      "revId": "7ff6aceab66522e4eb18f20590c9a52119a009a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3499f9af_ee203c39",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-06T23:38:00Z",
+      "side": 1,
+      "message": "this is a bit nasty, where we have CUDA_SPARSE as well as CUDSS. Is it the case that CUDSS will eventually replace the sparse cholesky routines that ship with CUDA_SPARSE? or will CUDSS continue to be a separate library? if it is the former, then we do not need to introduce a new enum here.",
+      "range": {
+        "startLine": 181,
+        "startChar": 5,
+        "endLine": 181,
+        "endChar": 13
+      },
+      "revId": "7ff6aceab66522e4eb18f20590c9a52119a009a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "146c2597_38d264a9",
+        "filename": "include/ceres/version.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-06T23:38:00Z",
+      "side": 1,
+      "message": "this change seems independent of this CL no? want to send it to me separately?",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 44,
+        "endChar": 28
+      },
+      "revId": "7ff6aceab66522e4eb18f20590c9a52119a009a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e66e9a12_50ffaf36",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-06T23:38:00Z",
+      "side": 1,
+      "message": "class documentation. When should the user use this vs just CudaBuffer.\n\nalso I have this vague recollection that there is a pinned buffer elsewere in the codebase that dmitriy added, or is in the process of adding.",
+      "range": {
+        "startLine": 170,
+        "startChar": 6,
+        "endLine": 170,
+        "endChar": 26
+      },
+      "revId": "7ff6aceab66522e4eb18f20590c9a52119a009a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b34d097_501a0ee4",
+        "filename": "internal/ceres/cuda_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-06T23:38:00Z",
+      "side": 1,
+      "message": "this seems to be independent of this CL.",
+      "range": {
+        "startLine": 59,
+        "startChar": 7,
+        "endLine": 59,
+        "endChar": 8
+      },
+      "revId": "7ff6aceab66522e4eb18f20590c9a52119a009a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9c1c92a_7be3f49a",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-06T23:38:00Z",
+      "side": 1,
+      "message": "this is what I meant when I was talking about the new enum, we could just stick to using CUDA_SPARSE as the enum, but only support sparse cholesky if CUDSS was available.",
+      "range": {
+        "startLine": 692,
+        "startChar": 58,
+        "endLine": 692,
+        "endChar": 63
+      },
+      "revId": "7ff6aceab66522e4eb18f20590c9a52119a009a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8f4e033_90017e2a",
+        "filename": "internal/ceres/solver_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-06T23:38:00Z",
+      "side": 1,
+      "message": "please send me this change separate from this CL.",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 22
+      },
+      "revId": "7ff6aceab66522e4eb18f20590c9a52119a009a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
