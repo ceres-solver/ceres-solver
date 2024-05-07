@@ -17,6 +17,155 @@
       "tag": "mailMessageId\u003d\u003cCABqdRUCikwPi5yU3vtFSEogFgR994tC\u003ddhH5s-p-bB6o9n-J7A@mail.gmail.com\u003e",
       "revId": "799da46f39e4f64e1906bcf075ad86d78f22fddd",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d635856_70ae07f8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3416472
+      },
+      "writtenOn": "2024-05-07T17:44:57Z",
+      "side": 1,
+      "message": "Nice patch, Mark!\nWe have a internal patch that integrates cudss into ceres, I compared my impl with yours and found following discrepancy",
+      "revId": "799da46f39e4f64e1906bcf075ad86d78f22fddd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8311bd1e_4787073c",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3416472
+      },
+      "writtenOn": "2024-05-07T17:44:57Z",
+      "side": 1,
+      "message": "maybe add a few macros here to simplify error handling? e.g.\n\n```\n#define CUDSS_STATUS_CHECK(IN)                               \\\n  {                                                          \\\n    cudssStatus_t cudss_error \u003d IN;                          \\\n    CHECK(cudss_error \u003d\u003d CUDSS_STATUS_SUCCESS)               \\\n        \u003c\u003c \"Got error: \" \u003c\u003c cuDssErrorToString(cudss_error); \\\n  }\n\n#define CUDSS_STATUS_OK_OR_RETURN(IN, additional_message)          \\\n  {                                                                \\\n    cudssStatus_t cudss_error \u003d IN;                                \\\n    if (cudss_error !\u003d CUDSS_STATUS_SUCCESS) {                     \\\n      *message \u003d std::string(additional_message) +                 \\\n                 \" Got error: \" + cuDssErrorToString(cudss_error); \\\n      return LinearSolverTerminationType::FAILURE;                 \\\n    }                                                              \\\n  }\n\n#define CUDA_STATUS_OK_OR_RETURN(IN, message_out)      \\\n  {                                                    \\\n    if (IN !\u003d cudaSuccess) {                           \\\n      *message \u003d message_out;                          \\\n      return LinearSolverTerminationType::FATAL_ERROR; \\\n    }                                                  \\\n  }\n```\n\nnot sure though if that matches with ceres\u0027s coding standard.",
+      "revId": "799da46f39e4f64e1906bcf075ad86d78f22fddd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5477173c_15fd8899",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 3416472
+      },
+      "writtenOn": "2024-05-07T17:44:57Z",
+      "side": 1,
+      "message": "just curious why do you need this copy here? why not directly copy the input lhs to cuda?",
+      "range": {
+        "startLine": 209,
+        "startChar": 0,
+        "endLine": 209,
+        "endChar": 69
+      },
+      "revId": "799da46f39e4f64e1906bcf075ad86d78f22fddd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fce8cb0a_82b9dc94",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 3416472
+      },
+      "writtenOn": "2024-05-07T17:44:57Z",
+      "side": 1,
+      "message": "the input lhs has can have different storage type, I would suggest doing following to be on the safe side\n\n\n                           lhs-\u003estorage_type() \u003d\u003d\n                                   ceres::internal::CompressedRowSparseMatrix::\n                                       StorageType::UPPER_TRIANGULAR\n                               ? CUDSS_MVIEW_UPPER\n                               : CUDSS_MVIEW_LOWER,",
+      "range": {
+        "startLine": 260,
+        "startChar": 39,
+        "endLine": 260,
+        "endChar": 56
+      },
+      "revId": "799da46f39e4f64e1906bcf075ad86d78f22fddd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b37e6af2_346ffcc2",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 3416472
+      },
+      "writtenOn": "2024-05-07T17:44:57Z",
+      "side": 1,
+      "message": "cudss_config_",
+      "range": {
+        "startLine": 308,
+        "startChar": 16,
+        "endLine": 308,
+        "endChar": 29
+      },
+      "revId": "799da46f39e4f64e1906bcf075ad86d78f22fddd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a36eb14_acd546cf",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 3416472
+      },
+      "writtenOn": "2024-05-07T17:44:57Z",
+      "side": 1,
+      "message": "cudss_data_",
+      "range": {
+        "startLine": 309,
+        "startChar": 14,
+        "endLine": 309,
+        "endChar": 25
+      },
+      "revId": "799da46f39e4f64e1906bcf075ad86d78f22fddd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7334e264_ed67d4aa",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 3416472
+      },
+      "writtenOn": "2024-05-07T17:44:57Z",
+      "side": 1,
+      "message": "I don\u0027t see how those pinned host buffer is useful if the data is eventually copied to CudaBuffer",
+      "range": {
+        "startLine": 314,
+        "startChar": 0,
+        "endLine": 318,
+        "endChar": 36
+      },
+      "revId": "799da46f39e4f64e1906bcf075ad86d78f22fddd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
