@@ -54,6 +54,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c0a785d_192c4c4d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-07T20:14:58Z",
+      "side": 1,
+      "message": "Thanks for review, Di!",
+      "parentUuid": "d217a9f6_54e701a7",
+      "revId": "799da46f39e4f64e1906bcf075ad86d78f22fddd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8311bd1e_4787073c",
@@ -89,6 +107,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2e3f112_03639fc8",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-07T20:14:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f826171_4c00c32e",
+      "revId": "799da46f39e4f64e1906bcf075ad86d78f22fddd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5477173c_15fd8899",
@@ -102,6 +138,30 @@
       "writtenOn": "2024-05-07T17:44:57Z",
       "side": 1,
       "message": "just curious why do you need this copy here? why not directly copy the input lhs to cuda?",
+      "range": {
+        "startLine": 209,
+        "startChar": 0,
+        "endLine": 209,
+        "endChar": 69
+      },
+      "revId": "799da46f39e4f64e1906bcf075ad86d78f22fddd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b236402_9a0dd332",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-07T20:14:58Z",
+      "side": 1,
+      "message": "My understanding of memory transfers between host and device is following: in order to perform such transfer, virtual memory page, which residence in physical RAM is controlled by OS\u0027s \"virtual memory manager\", should by blocked from \"automatic\" eviction to lower tier storage (disk). Such operation (pinning) enables usage of DMA to perform transfers over PCI bus.\n\nI believe that cudaMemcpy() is implemented in such a way, that if invoked with a source that is not pinned, additional copy to staging host pinned buffer is performed, which is then used for actual transfer to device.\n\nSo, if we do not expect here that user-provided lhs-\u003erows() is pointing to a pinned memory region (btw, it is reasonable to consider such change to the provider of lhs-\u003erows()), we are bound to perform such copy-to-pinned-buffer, either implicitly (under the hood of cudaMemcpy()) or explicitly. I opted in to explicit option.\n\nAnother option would be to call cudaHostRegister() on lhs-\u003erows(), but i believe that such option would be slower in case if lhs-\u003erows() is not the same between calls to Solve().\n\nPlease, correct me if i understand cudaMemcpy() behavior and its performance implications erroneously, i am all for making this part as simple as possible for understanding/maintaining.",
+      "parentUuid": "5477173c_15fd8899",
       "range": {
         "startLine": 209,
         "startChar": 0,
@@ -137,6 +197,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2ebe8bce_5a3b946e",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-07T20:14:58Z",
+      "side": 1,
+      "message": "I believe that by design of SparseCholesky its users are expected to respect the storage type returned by a call to StorageType(). So in this particular place, having lhs-\u003estorage_type() !\u003d CudaSparseCholeskyImpl\u003c\u003e::StorageType() (which evaluates to CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR) is an error condition. We probably should add an explicit check for such invariant. Sameer wdyt?",
+      "parentUuid": "fce8cb0a_82b9dc94",
+      "range": {
+        "startLine": 260,
+        "startChar": 39,
+        "endLine": 260,
+        "endChar": 56
+      },
+      "revId": "799da46f39e4f64e1906bcf075ad86d78f22fddd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b37e6af2_346ffcc2",
         "filename": "internal/ceres/cuda_sparse_cholesky.cc",
         "patchSetId": 2
@@ -148,6 +232,30 @@
       "writtenOn": "2024-05-07T17:44:57Z",
       "side": 1,
       "message": "cudss_config_",
+      "range": {
+        "startLine": 308,
+        "startChar": 16,
+        "endLine": 308,
+        "endChar": 29
+      },
+      "revId": "799da46f39e4f64e1906bcf075ad86d78f22fddd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4965c798_bc9504f9",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-07T20:14:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b37e6af2_346ffcc2",
       "range": {
         "startLine": 308,
         "startChar": 16,
@@ -171,6 +279,30 @@
       "writtenOn": "2024-05-07T17:44:57Z",
       "side": 1,
       "message": "cudss_data_",
+      "range": {
+        "startLine": 309,
+        "startChar": 14,
+        "endLine": 309,
+        "endChar": 25
+      },
+      "revId": "799da46f39e4f64e1906bcf075ad86d78f22fddd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee72e3b1_847ea3dd",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-07T20:14:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a36eb14_acd546cf",
       "range": {
         "startLine": 309,
         "startChar": 14,
