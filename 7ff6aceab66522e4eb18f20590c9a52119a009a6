@@ -58,6 +58,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3aeb2219_027f07a5",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-07T00:19:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8365f601_3ace3477",
+      "range": {
+        "startLine": 109,
+        "startChar": 7,
+        "endLine": 109,
+        "endChar": 12
+      },
+      "revId": "7ff6aceab66522e4eb18f20590c9a52119a009a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3499f9af_ee203c39",
@@ -83,6 +107,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a7ceddd5_d97dc9de",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-07T00:19:57Z",
+      "side": 1,
+      "message": "\u003e or will CUDSS continue to be a separate library?\n\nMy current understanding is that this the case, but we should check this with Kirill and, in case if cuDSS will be shipped as part of CUDA distribution, then we could reuse CUDA_SPARSE.",
+      "parentUuid": "3499f9af_ee203c39",
+      "range": {
+        "startLine": 181,
+        "startChar": 5,
+        "endLine": 181,
+        "endChar": 13
+      },
+      "revId": "7ff6aceab66522e4eb18f20590c9a52119a009a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "146c2597_38d264a9",
         "filename": "include/ceres/version.h",
         "patchSetId": 1
@@ -94,6 +142,30 @@
       "writtenOn": "2024-05-06T23:38:00Z",
       "side": 1,
       "message": "this change seems independent of this CL no? want to send it to me separately?",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 44,
+        "endChar": 28
+      },
+      "revId": "7ff6aceab66522e4eb18f20590c9a52119a009a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19bf92cf_761b27a0",
+        "filename": "include/ceres/version.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-07T00:19:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "146c2597_38d264a9",
       "range": {
         "startLine": 44,
         "startChar": 8,
@@ -129,6 +201,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "82e1e867_ff0f74bd",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-07T00:19:57Z",
+      "side": 1,
+      "message": "\u003e also I have this vague recollection that there is a pinned buffer elsewere in the codebase that dmitriy added\n\nI failed to find such structure in current codebase and in currently opened PR\u0027s.",
+      "parentUuid": "e66e9a12_50ffaf36",
+      "range": {
+        "startLine": 170,
+        "startChar": 6,
+        "endLine": 170,
+        "endChar": 26
+      },
+      "revId": "7ff6aceab66522e4eb18f20590c9a52119a009a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8b34d097_501a0ee4",
         "filename": "internal/ceres/cuda_sparse_matrix.cc",
         "patchSetId": 1
@@ -140,6 +236,30 @@
       "writtenOn": "2024-05-06T23:38:00Z",
       "side": 1,
       "message": "this seems to be independent of this CL.",
+      "range": {
+        "startLine": 59,
+        "startChar": 7,
+        "endLine": 59,
+        "endChar": 8
+      },
+      "revId": "7ff6aceab66522e4eb18f20590c9a52119a009a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "513b9afd_01ba48cb",
+        "filename": "internal/ceres/cuda_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-07T00:19:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b34d097_501a0ee4",
       "range": {
         "startLine": 59,
         "startChar": 7,
@@ -186,6 +306,30 @@
       "writtenOn": "2024-05-06T23:38:00Z",
       "side": 1,
       "message": "please send me this change separate from this CL.",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 22
+      },
+      "revId": "7ff6aceab66522e4eb18f20590c9a52119a009a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3dc787fe_4c567c85",
+        "filename": "internal/ceres/solver_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-07T00:19:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8f4e033_90017e2a",
       "range": {
         "startLine": 49,
         "startChar": 2,
