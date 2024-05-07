@@ -131,6 +131,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8b226a78_9ffb6c5a",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 3415050
+      },
+      "writtenOn": "2024-05-07T22:41:50Z",
+      "side": 1,
+      "message": "Mark is right about cuDSS vs CUDA distribution, I do see cuDSS staying a product outside of CUDA distribution [one of the reasons being our plans to go distributed which is not possible within CUDA distribution].\nAlso, we definitely want to steer the users away from sparse Cholesky from cusolverSp towards cuDSS, for better functionality and performance. I actually hope cudss can already replace the calls to sparse Cholesky from cusolverSp and be a uniformly better replacement.\nSo we can assume cuDSS remains outside CUDA and I\u0027d suggest keeping CUDSS flag separately.",
+      "parentUuid": "a7ceddd5_d97dc9de",
+      "range": {
+        "startLine": 181,
+        "startChar": 5,
+        "endLine": 181,
+        "endChar": 13
+      },
+      "revId": "7ff6aceab66522e4eb18f20590c9a52119a009a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "146c2597_38d264a9",
         "filename": "include/ceres/version.h",
         "patchSetId": 1
