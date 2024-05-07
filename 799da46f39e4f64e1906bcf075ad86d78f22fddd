@@ -36,6 +36,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d217a9f6_54e701a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-07T18:25:52Z",
+      "side": 1,
+      "message": "thank you for looking Di.",
+      "parentUuid": "8d635856_70ae07f8",
+      "revId": "799da46f39e4f64e1906bcf075ad86d78f22fddd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8311bd1e_4787073c",
@@ -49,6 +67,24 @@
       "writtenOn": "2024-05-07T17:44:57Z",
       "side": 1,
       "message": "maybe add a few macros here to simplify error handling? e.g.\n\n```\n#define CUDSS_STATUS_CHECK(IN)                               \\\n  {                                                          \\\n    cudssStatus_t cudss_error \u003d IN;                          \\\n    CHECK(cudss_error \u003d\u003d CUDSS_STATUS_SUCCESS)               \\\n        \u003c\u003c \"Got error: \" \u003c\u003c cuDssErrorToString(cudss_error); \\\n  }\n\n#define CUDSS_STATUS_OK_OR_RETURN(IN, additional_message)          \\\n  {                                                                \\\n    cudssStatus_t cudss_error \u003d IN;                                \\\n    if (cudss_error !\u003d CUDSS_STATUS_SUCCESS) {                     \\\n      *message \u003d std::string(additional_message) +                 \\\n                 \" Got error: \" + cuDssErrorToString(cudss_error); \\\n      return LinearSolverTerminationType::FAILURE;                 \\\n    }                                                              \\\n  }\n\n#define CUDA_STATUS_OK_OR_RETURN(IN, message_out)      \\\n  {                                                    \\\n    if (IN !\u003d cudaSuccess) {                           \\\n      *message \u003d message_out;                          \\\n      return LinearSolverTerminationType::FATAL_ERROR; \\\n    }                                                  \\\n  }\n```\n\nnot sure though if that matches with ceres\u0027s coding standard.",
+      "revId": "799da46f39e4f64e1906bcf075ad86d78f22fddd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f826171_4c00c32e",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-07T18:25:52Z",
+      "side": 1,
+      "message": "I am open to using macros if they are restricted to the file and the intent is clear.",
+      "parentUuid": "8311bd1e_4787073c",
       "revId": "799da46f39e4f64e1906bcf075ad86d78f22fddd",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
