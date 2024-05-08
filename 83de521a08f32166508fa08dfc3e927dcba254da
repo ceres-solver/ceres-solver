@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d75a3308_89dd3549",
+        "filename": "internal/ceres/context_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-08T09:47:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63f07113_41794f10",
+      "revId": "83de521a08f32166508fa08dfc3e927dcba254da",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7ceb6c17_72cff037",
@@ -31,6 +49,24 @@
       "writtenOn": "2024-05-08T05:44:05Z",
       "side": 1,
       "message": "(nit)\n```suggestion\n// region is page-locked, hence enabling direct transfer to/from device,\n```",
+      "revId": "83de521a08f32166508fa08dfc3e927dcba254da",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1eb830b0_3c3c4346",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-08T09:47:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ceb6c17_72cff037",
       "revId": "83de521a08f32166508fa08dfc3e927dcba254da",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -54,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "388be045_794e9a97",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-08T09:47:37Z",
+      "side": 1,
+      "message": "Current interface of SparseCholesky is not designed for such non-default settings, but in case if such arguments will be added to methods of SparseCholesky or producers of their children, then we would need to add their propagation/mapping to appropriate fields of solver_config_ either here or in Factor/Solve.",
+      "parentUuid": "168c4ff1_8eb482f4",
+      "revId": "83de521a08f32166508fa08dfc3e927dcba254da",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7d1f103a_fd3402da",
         "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
         "patchSetId": 3
@@ -65,6 +119,24 @@
       "writtenOn": "2024-05-08T05:44:05Z",
       "side": 1,
       "message": "(nit, not sure)\n```suggestion\n      \"This requires enabling building with -DUSE_CUDSS\u003dON.\";\n```",
+      "revId": "83de521a08f32166508fa08dfc3e927dcba254da",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c949801_9e929aa0",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-08T09:47:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d1f103a_fd3402da",
       "revId": "83de521a08f32166508fa08dfc3e927dcba254da",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
