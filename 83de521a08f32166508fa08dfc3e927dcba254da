@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63f07113_41794f10",
+        "filename": "internal/ceres/context_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 3415050
+      },
+      "writtenOn": "2024-05-08T05:44:05Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we add cudssDestroy() here?",
+      "revId": "83de521a08f32166508fa08dfc3e927dcba254da",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ceb6c17_72cff037",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 3415050
+      },
+      "writtenOn": "2024-05-08T05:44:05Z",
+      "side": 1,
+      "message": "(nit)\n```suggestion\n// region is page-locked, hence enabling direct transfer to/from device,\n```",
+      "revId": "83de521a08f32166508fa08dfc3e927dcba254da",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "168c4ff1_8eb482f4",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 3415050
+      },
+      "writtenOn": "2024-05-08T05:44:05Z",
+      "side": 1,
+      "message": "I wonder if we ever want to use non-default settings (say, change pivoting strategy or pivoting tolerance or number of steps for the iterative refinement)? Then, one would need to call cudssConfigSet and I wonder what would be a good place to do so.\nOr is the idea to keep the ceres code simple and always call solvers with default settings?",
+      "revId": "83de521a08f32166508fa08dfc3e927dcba254da",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d1f103a_fd3402da",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 3415050
+      },
+      "writtenOn": "2024-05-08T05:44:05Z",
+      "side": 1,
+      "message": "(nit, not sure)\n```suggestion\n      \"This requires enabling building with -DUSE_CUDSS\u003dON.\";\n```",
+      "revId": "83de521a08f32166508fa08dfc3e927dcba254da",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

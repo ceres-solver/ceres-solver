@@ -174,6 +174,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "073165a1_14655db9",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 3415050
+      },
+      "writtenOn": "2024-05-08T05:44:05Z",
+      "side": 1,
+      "message": "Let me double check with an expert on this. But if we leave the explicit copy I\u0027d suggest making an extensive comment for future references as to why this copy is there.\nMy immediate take would be to leave it to cudaMemcpy.",
+      "parentUuid": "5b236402_9a0dd332",
+      "range": {
+        "startLine": 209,
+        "startChar": 0,
+        "endLine": 209,
+        "endChar": 69
+      },
+      "revId": "799da46f39e4f64e1906bcf075ad86d78f22fddd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fce8cb0a_82b9dc94",
         "filename": "internal/ceres/cuda_sparse_cholesky.cc",
         "patchSetId": 2
