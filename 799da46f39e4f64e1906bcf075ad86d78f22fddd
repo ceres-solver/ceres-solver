@@ -198,6 +198,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8754417b_903d062d",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 3415050
+      },
+      "writtenOn": "2024-05-08T20:19:12Z",
+      "side": 1,
+      "message": "I\u0027ve talked to one of the experts. While your understanding is correct, it is usually recommended to rely on cudaMemcpy to handle the necessary transfers under the hood.\nI am still learning my way around ceres so I hope that it is possible to remove these pinned buffers without affecting the amount of transfers (so that just these explicit copies are replaced with the implicit ones)?\nOne other thing: I haven\u0027t checked but I suspect cudss can operate on the device accessible pointers for the input matrix, so maybe even the memcpy is not needed as the required transfers will be done with cuda calls inside cudss.",
+      "parentUuid": "073165a1_14655db9",
+      "range": {
+        "startLine": 209,
+        "startChar": 0,
+        "endLine": 209,
+        "endChar": 69
+      },
+      "revId": "799da46f39e4f64e1906bcf075ad86d78f22fddd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fce8cb0a_82b9dc94",
         "filename": "internal/ceres/cuda_sparse_cholesky.cc",
         "patchSetId": 2

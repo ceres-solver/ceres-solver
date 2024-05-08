@@ -106,6 +106,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc6ce128_d82ad839",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 3415050
+      },
+      "writtenOn": "2024-05-08T20:19:12Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "388be045_794e9a97",
+      "revId": "83de521a08f32166508fa08dfc3e927dcba254da",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7d1f103a_fd3402da",
