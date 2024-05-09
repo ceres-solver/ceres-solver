@@ -222,6 +222,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "432b9f15_5007a4e6",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-09T23:27:11Z",
+      "side": 1,
+      "message": "\u003e While your understanding is correct, it is usually recommended to rely on cudaMemcpy to handle the necessary transfers under the hood.\n\nI measured both variants and it seems that calling cudaMemcpy directly is more performant. My guess is that this is because cudaMemcpy for unpinned input implemented as a two-stage pipeline which overlaps input-\u003epinned and pinned-\u003edevice transfers for chunks of input (i guess such behavior should be observable via PCI TX/RX metrics, but nsys not letting me to collect such metrics on my laptop gpu, so it would be nice to get a confirmation for that). In case of single precision, we still need to perform a conversion of lhs, rhs and solution values, such conversion\u0026transfer could be optimized in similar fashion.\n\nOne more caveat regarding cudaMemcpy from unpinned buffer is that it is synchronous wrt other streams, but in current context i don\u0027t see any significant optimizations which would require to overlap data transfers with kernel compute (one could save a bit by transferring initial lhs values during call to analyze, but it seems to be marginal).\n\n\u003e One other thing: I haven\u0027t checked but I suspect cudss can operate on the device accessible pointers for the input matrix\n\nI am not sure that i understood you correctly. Documentation on cudssMatrixCreate{Dn, Csr} requires \"values\" to be a device pointer, hence the need to manually manage the underlying buffer. But even if it could accept a host pointer and manage device buffers internally, i think that would be less performant due to the need to create/destroy cudssMatrix_t objects for each Factorize/Solve invocation.",
+      "parentUuid": "8754417b_903d062d",
+      "range": {
+        "startLine": 209,
+        "startChar": 0,
+        "endLine": 209,
+        "endChar": 69
+      },
+      "revId": "799da46f39e4f64e1906bcf075ad86d78f22fddd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fce8cb0a_82b9dc94",
         "filename": "internal/ceres/cuda_sparse_cholesky.cc",
         "patchSetId": 2
