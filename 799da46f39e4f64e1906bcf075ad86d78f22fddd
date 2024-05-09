@@ -246,6 +246,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "832a19ea_67ee6586",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-09T23:32:28Z",
+      "side": 1,
+      "message": "\u003e need to create/destroy cudssMatrix_t objects for each Factorize/Solve invocation.\n\nActually, it seems like cudssMatrixSetValues could\u0027ve been used in such scenario.",
+      "parentUuid": "432b9f15_5007a4e6",
+      "range": {
+        "startLine": 209,
+        "startChar": 0,
+        "endLine": 209,
+        "endChar": 69
+      },
+      "revId": "799da46f39e4f64e1906bcf075ad86d78f22fddd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fce8cb0a_82b9dc94",
         "filename": "internal/ceres/cuda_sparse_cholesky.cc",
         "patchSetId": 2
