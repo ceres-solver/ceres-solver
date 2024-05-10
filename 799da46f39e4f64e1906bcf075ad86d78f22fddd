@@ -270,6 +270,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cf1a5702_a3bb0bab",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 3415050
+      },
+      "writtenOn": "2024-05-10T06:18:23Z",
+      "side": 1,
+      "message": "You are right about the docs, we decided originally to be cautious about what we request from the user data but in fact I think device accessibility is enough. Anyway, my remark about this is a bit off the topic.\nI like how the latest patch looks with less explicit copies.\nIf only the matrix values are changing, yes, using cudssMatrixSetValues should be preferred to cudssMatrixCreate/Destroy.\nOverall, the cudssMatrix_t is quite a shallow object, so the overhead of deletion/creation mostly comes to the interaction with OS to allocate a small piece of host memory for the internal structure.",
+      "parentUuid": "832a19ea_67ee6586",
+      "range": {
+        "startLine": 209,
+        "startChar": 0,
+        "endLine": 209,
+        "endChar": 69
+      },
+      "revId": "799da46f39e4f64e1906bcf075ad86d78f22fddd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fce8cb0a_82b9dc94",
         "filename": "internal/ceres/cuda_sparse_cholesky.cc",
         "patchSetId": 2
