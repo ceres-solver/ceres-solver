@@ -292,6 +292,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "954b31ee_69661666",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-10T18:14:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf1a5702_a3bb0bab",
+      "range": {
+        "startLine": 209,
+        "startChar": 0,
+        "endLine": 209,
+        "endChar": 69
+      },
+      "revId": "799da46f39e4f64e1906bcf075ad86d78f22fddd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fce8cb0a_82b9dc94",
@@ -470,6 +494,30 @@
       "side": 1,
       "message": "https://ceres-solver-review.googlesource.com/c/ceres-solver/+/25800/comment/5477173c_15fd8899/\n\nAlso, in case if single precision is requested (via template parameter \"Scalar\") we need to perform conversions from/to double, which requires us to have some buffer.",
       "parentUuid": "7334e264_ed67d4aa",
+      "range": {
+        "startLine": 314,
+        "startChar": 0,
+        "endLine": 318,
+        "endChar": 36
+      },
+      "revId": "799da46f39e4f64e1906bcf075ad86d78f22fddd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f87dd6e_35863da5",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-10T18:14:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11a1dfaf_3efc7f13",
       "range": {
         "startLine": 314,
         "startChar": 0,
