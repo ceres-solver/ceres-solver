@@ -365,6 +365,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8cb589cc_047e7e58",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-14T17:43:57Z",
+      "side": 1,
+      "message": "You are right, SparseCholesky tells the user what kind of storage it expects from the user. The user is expected to respect that.",
+      "parentUuid": "2ebe8bce_5a3b946e",
+      "range": {
+        "startLine": 260,
+        "startChar": 39,
+        "endLine": 260,
+        "endChar": 56
+      },
+      "revId": "799da46f39e4f64e1906bcf075ad86d78f22fddd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b37e6af2_346ffcc2",
         "filename": "internal/ceres/cuda_sparse_cholesky.cc",
         "patchSetId": 2

@@ -155,6 +155,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "22cca048_9c7b2ae7",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-14T17:43:57Z",
+      "side": 1,
+      "message": "Thanks for the explanation.\n\nCurrently there is no support for cusolverSp in ceres, because in the past it was not found not to have a great API or performance compared to our CPU based backends. With the availabilty CUDSS, I suspect the chances of cusolverSp support being added are even less. \n\nSo what do you think about treating CUDA_SPARSE as a general enum which corresponds to CUDA based sparse linear algebra support in ceres? if ceres is compiled with CUDSS, the user can select this as the backend and get access to CUDSS\u0027s sparse cholesky, and if not then not. \n\nI suppose we should also account for the case where CUDSS is available bit CUDA is not available. I am assuming that is not something that should/will happen. I imagine CUDSS also depends on CUDA at least internally.\n\nOr we can demand that user must have CUDA for basic CUDA support and then CUDSS for sparse factorization support?\n\nWDYT?",
+      "parentUuid": "8b226a78_9ffb6c5a",
+      "range": {
+        "startLine": 181,
+        "startChar": 5,
+        "endLine": 181,
+        "endChar": 13
+      },
+      "revId": "7ff6aceab66522e4eb18f20590c9a52119a009a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "146c2597_38d264a9",
         "filename": "include/ceres/version.h",
         "patchSetId": 1
@@ -237,6 +261,30 @@
       "side": 1,
       "message": "\u003e also I have this vague recollection that there is a pinned buffer elsewere in the codebase that dmitriy added\n\nI failed to find such structure in current codebase and in currently opened PR\u0027s.",
       "parentUuid": "e66e9a12_50ffaf36",
+      "range": {
+        "startLine": 170,
+        "startChar": 6,
+        "endLine": 170,
+        "endChar": 26
+      },
+      "revId": "7ff6aceab66522e4eb18f20590c9a52119a009a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19c8652a_b1791b62",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-14T17:43:57Z",
+      "side": 1,
+      "message": "I was thinking about the mapped memory support for CudaBuffer. See \n\nhttps://ceres-solver-review.git.corp.google.com/c/ceres-solver/+/25740/1/internal/ceres/cuda_buffer.h",
+      "parentUuid": "82e1e867_ff0f74bd",
       "range": {
         "startLine": 170,
         "startChar": 6,
