@@ -16,6 +16,23 @@
       "message": "I have been thinking about this some more, especially in light of \n\nhttps://github.com/ceres-solver/ceres-solver/issues/1026\n\nI think we should think about this patch again and what would be the best way to land this in ceres.",
       "revId": "eae0122c6670bb84ddcff10072ab34aded7e763b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38c885f5_b823fa6c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-14T17:46:36Z",
+      "side": 1,
+      "message": "Mark,\nSince you are looking into GPU based sparse cholesky already. I was wondering if you wanted to take a look at this too. \n\nI think Dmitry has become busy with other things, so I am wondering if you would be interested in taking this CL on and landing it.\n\nUnless Dmitriy you are paying attention and are interested.. \n\nSameer",
+      "revId": "eae0122c6670bb84ddcff10072ab34aded7e763b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
