@@ -179,6 +179,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4dd179ba_cebe0807",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 3415050
+      },
+      "writtenOn": "2024-05-15T04:14:10Z",
+      "side": 1,
+      "message": "Your suspicion about cusolverSp is correct, if it is not used now, there is only a small chance that it will be used given that there is cuDSS.\ncuDSS indeed internally depends on CUDA.\nOne caveat about using CUDA_SPARSE for me is that there are sparse libraries cuSPARSE and cuSPARSELt, and as a user I\u0027d expect that CUDA_SPARSE is about using them (w/ or w/o cuDSS). E.g., what if there will be another direct sparse solver on Nvidia GPU as a cered backend? I am not sure if bundling cuSPARSE/cuSPARSELt/(cusparseDX)/cuDSS together will always remain a good idea.\n\nSo I\u0027d suggest separating basic CUDA support and CUDSS.",
+      "parentUuid": "22cca048_9c7b2ae7",
+      "range": {
+        "startLine": 181,
+        "startChar": 5,
+        "endLine": 181,
+        "endChar": 13
+      },
+      "revId": "7ff6aceab66522e4eb18f20590c9a52119a009a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "146c2597_38d264a9",
         "filename": "include/ceres/version.h",
         "patchSetId": 1
@@ -355,6 +379,30 @@
       "writtenOn": "2024-05-06T23:38:00Z",
       "side": 1,
       "message": "this is what I meant when I was talking about the new enum, we could just stick to using CUDA_SPARSE as the enum, but only support sparse cholesky if CUDSS was available.",
+      "range": {
+        "startLine": 692,
+        "startChar": 58,
+        "endLine": 692,
+        "endChar": 63
+      },
+      "revId": "7ff6aceab66522e4eb18f20590c9a52119a009a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad27640e_7d37879a",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 3415050
+      },
+      "writtenOn": "2024-05-15T04:14:10Z",
+      "side": 1,
+      "message": "I\u0027d weakly suggest to keep the logic within ceres simple and avoid implicit assumptions which might confuse the users. But you have definitely a better view of the entire picture here.",
+      "parentUuid": "f9c1c92a_7be3f49a",
       "range": {
         "startLine": 692,
         "startChar": 58,
