@@ -235,6 +235,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "930c40d0_2b0628e0",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-15T18:43:41Z",
+      "side": 1,
+      "message": "see my comment in the cmake file.",
+      "parentUuid": "9ed0a439_e436bb55",
+      "range": {
+        "startLine": 214,
+        "startChar": 5,
+        "endLine": 214,
+        "endChar": 34
+      },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ccdcf3b4_0cbbd5a7",
         "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
         "patchSetId": 1

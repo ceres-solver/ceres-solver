@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "39467f80_be003fcc",
+        "filename": ".github/workflows/linux.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-15T18:43:41Z",
+      "side": 1,
+      "message": "drop tab/convert to space?",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 6
+      },
+      "revId": "eae0122c6670bb84ddcff10072ab34aded7e763b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "380177ce_4fef93cb",
@@ -65,6 +88,197 @@
       "writtenOn": "2024-05-15T13:57:12Z",
       "side": 1,
       "message": "Welcome back Dmitriy! I am so glad to hear from you. \n\nI will take a close look to refresh both my memory as well go over the code with a fine toothed comb later today now that we have decided to land this backend.\n\nCan you rebase this on the latest version of Ceres at head.\n\nI am also curious if anything has changed in intel oneapi in the intervening year.",
+      "revId": "eae0122c6670bb84ddcff10072ab34aded7e763b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1449f0ec_3d5fee5c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-15T18:43:41Z",
+      "side": 1,
+      "message": "a few high level comments, I will take a closer look at mkl_sparse.h/cc once you rebase and have had a look at any new changes to the oneapi.",
+      "revId": "eae0122c6670bb84ddcff10072ab34aded7e763b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1329c41_99864925",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-15T18:43:41Z",
+      "side": 1,
+      "message": "shouldn\u0027t this detection also interact with the lapack detection below?\nin that if MKL detection succeeds, then LAPACK detection also effectively succeeds?\nsame for BLAS.",
+      "range": {
+        "startLine": 283,
+        "startChar": 4,
+        "endLine": 283,
+        "endChar": 11
+      },
+      "revId": "eae0122c6670bb84ddcff10072ab34aded7e763b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07bbb7da_e1f37557",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-15T18:43:41Z",
+      "side": 1,
+      "message": "add MKL_SPARSE here also.",
+      "range": {
+        "startLine": 71,
+        "startChar": 23,
+        "endLine": 71,
+        "endChar": 31
+      },
+      "revId": "eae0122c6670bb84ddcff10072ab34aded7e763b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5718f2c0_09900a37",
+        "filename": "internal/ceres/generated_bundle_adjustment_tests/ba_sparsecholesky_mklsparse_auto_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-15T18:43:41Z",
+      "side": 1,
+      "message": "not that it matters, but in this case should the dense linear algebra library be eigen? or should we also have an option for the dense linear algebra library being intel?",
+      "range": {
+        "startLine": 51,
+        "startChar": 47,
+        "endLine": 51,
+        "endChar": 52
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "f7bf70c0_351fe07d",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/generated_bundle_adjustment_tests/ba_sparsecholesky_mklsparse_auto_test.cc",
+              "range": {
+                "startLine": 51,
+                "startChar": 0,
+                "endLine": 52,
+                "endChar": 0
+              },
+              "replacement": "  options-\u003edense_linear_algebra_library_type \u003d DENSE_LINEAR_ALGEBRA_LIBRARY_DEFAULT;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "eae0122c6670bb84ddcff10072ab34aded7e763b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0db7758c_8595fc27",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-15T18:43:41Z",
+      "side": 1,
+      "message": "you should not need this since sparse_cholesky.h is already included in this file.",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 5
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "8f8bf35d_e4d0ca17",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/mkl_sparse.h",
+              "range": {
+                "startLine": 45,
+                "startChar": 0,
+                "endLine": 46,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "eae0122c6670bb84ddcff10072ab34aded7e763b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d808c7b2_c3858dc1",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-15T18:43:41Z",
+      "side": 1,
+      "message": "are you going to test this class explicitly? otherwise is there a reason to keep this file in a header file or move it to mkl_sparse.cc?",
+      "range": {
+        "startLine": 68,
+        "startChar": 18,
+        "endLine": 68,
+        "endChar": 24
+      },
+      "revId": "eae0122c6670bb84ddcff10072ab34aded7e763b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4f06a0c_ddb3cdf2",
+        "filename": "internal/ceres/sparse_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-15T18:43:41Z",
+      "side": 1,
+      "message": "since MKL supports single precision solves, we should plan on adding this.\nalso new versions of suitesparse support single precision solves, so it would be nice to have this more uniformly.",
+      "range": {
+        "startLine": 53,
+        "startChar": 29,
+        "endLine": 53,
+        "endChar": 38
+      },
       "revId": "eae0122c6670bb84ddcff10072ab34aded7e763b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
