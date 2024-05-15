@@ -251,6 +251,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "99fd59ac_f8e6d50f",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-15T20:45:41Z",
+      "side": 1,
+      "message": "Thanks Joydeep. \nLets go with this.\nWe already have Options::IsValid, we should enhance that checking.",
+      "parentUuid": "e2292013_505a033a",
+      "range": {
+        "startLine": 181,
+        "startChar": 5,
+        "endLine": 181,
+        "endChar": 13
+      },
+      "revId": "7ff6aceab66522e4eb18f20590c9a52119a009a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "146c2597_38d264a9",
         "filename": "include/ceres/version.h",
         "patchSetId": 1
