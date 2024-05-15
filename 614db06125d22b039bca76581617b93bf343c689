@@ -162,6 +162,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "00f31523_242dfc90",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-15T11:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b15729c_b0502326",
+      "range": {
+        "startLine": 182,
+        "startChar": 5,
+        "endLine": 182,
+        "endChar": 6
+      },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0ea6fa39_dc4cf46e",
@@ -175,6 +199,30 @@
       "writtenOn": "2023-05-09T19:19:56Z",
       "side": 1,
       "message": "Is it the case that if intel mkl is linked in, then when using LAPACK we will end up calling Intel MKL?",
+      "range": {
+        "startLine": 214,
+        "startChar": 5,
+        "endLine": 214,
+        "endChar": 34
+      },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ed0a439_e436bb55",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-15T11:58:39Z",
+      "side": 1,
+      "message": "Yes",
+      "parentUuid": "0ea6fa39_dc4cf46e",
       "range": {
         "startLine": 214,
         "startChar": 5,
@@ -225,6 +273,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "70cf23da_d40e558a",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-15T11:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54548719_3f780f76",
+      "range": {
+        "startLine": 190,
+        "startChar": 45,
+        "endLine": 190,
+        "endChar": 49
+      },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7071535d_1802d339",
@@ -238,6 +310,30 @@
       "writtenOn": "2023-05-09T19:19:56Z",
       "side": 1,
       "message": "move this right after the else.",
+      "range": {
+        "startLine": 198,
+        "startChar": 28,
+        "endLine": 198,
+        "endChar": 61
+      },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c421607_28afe0e3",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-15T11:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7071535d_1802d339",
       "range": {
         "startLine": 198,
         "startChar": 28,
@@ -265,6 +361,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "457ba9b6_b8df7987",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-15T11:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88a667c5_70038f1a",
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8dff69c8_4ab1efd0",
@@ -278,6 +392,30 @@
       "writtenOn": "2023-05-09T19:19:56Z",
       "side": 1,
       "message": "Intel MKL.",
+      "range": {
+        "startLine": 49,
+        "startChar": 45,
+        "endLine": 49,
+        "endChar": 50
+      },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50dfc999_33928fe2",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-15T11:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dff69c8_4ab1efd0",
       "range": {
         "startLine": 49,
         "startChar": 45,
@@ -330,6 +468,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "07abe6dc_df1d0d1a",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-15T11:58:39Z",
+      "side": 1,
+      "message": "It is already set to upper triangular.\n\nThe problem is upper triangular is not \"strict\" in ceres-solver (in other words, \"upper triangular\" \u003d only upper part should be used), and \"strict\" in MKL (\"upper triangular\" \u003d matrix should not have any elements below diagonal).\n\nWith StorageType being set to upper triangular, ceres-solver will create a upper block-triangular matrix, not upper triangular.",
+      "parentUuid": "2c6d1273_51ff24b3",
+      "range": {
+        "startLine": 63,
+        "startChar": 17,
+        "endLine": 63,
+        "endChar": 27
+      },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "16cea9f8_5d07c912",
         "filename": "internal/ceres/mkl_sparse.h",
         "patchSetId": 1
@@ -341,6 +503,30 @@
       "writtenOn": "2023-05-09T19:19:56Z",
       "side": 1,
       "message": "why do we need three variants of this function all of which are public?",
+      "range": {
+        "startLine": 65,
+        "startChar": 7,
+        "endLine": 65,
+        "endChar": 23
+      },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41693963_a3d7c41c",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-15T11:58:39Z",
+      "side": 1,
+      "message": "Moved one to private section",
+      "parentUuid": "16cea9f8_5d07c912",
       "range": {
         "startLine": 65,
         "startChar": 7,
@@ -374,6 +560,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "27881a69_3326161e",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-15T11:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca6148d3_c611297c",
+      "range": {
+        "startLine": 77,
+        "startChar": 7,
+        "endLine": 77,
+        "endChar": 14
+      },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "db443768_e93e6cbf",
@@ -387,6 +597,30 @@
       "writtenOn": "2023-05-09T19:19:56Z",
       "side": 1,
       "message": "I do not understand the semantics of this function. what are the semantics of this function, why we are returning a sparse_matrix_t and an array too?",
+      "range": {
+        "startLine": 91,
+        "startChar": 19,
+        "endLine": 91,
+        "endChar": 34
+      },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2a54144_a0aff9bd",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-15T11:58:39Z",
+      "side": 1,
+      "message": "This method creates handle that reuses structure of the input, but adds a separate array of values.\n\nThis is utilized when computing structure of schur-complement (only matrix structure is used till the last moment, when there is no method to compute sparsity pattern of matrix subtraction).",
+      "parentUuid": "db443768_e93e6cbf",
       "range": {
         "startLine": 91,
         "startChar": 19,
@@ -443,6 +677,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "606f2d0f_595f7424",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-15T11:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "279c6b1d_2f6ba805",
+      "range": {
+        "startLine": 96,
+        "startChar": 16,
+        "endLine": 96,
+        "endChar": 22
+      },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0f56db86_a2198102",
@@ -468,6 +726,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1394cfea_2f3d72e9",
+        "filename": "internal/ceres/sparse_cholesky.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-15T11:58:39Z",
+      "side": 1,
+      "message": "Yes, mkl supports single-precision for direct solvers",
+      "parentUuid": "0f56db86_a2198102",
+      "range": {
+        "startLine": 53,
+        "startChar": 38,
+        "endLine": 53,
+        "endChar": 39
+      },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c37f8bb6_94ad002d",
         "filename": "internal/ceres/sparse_normal_cholesky_solver_test.cc",
         "patchSetId": 1
@@ -479,6 +761,30 @@
       "writtenOn": "2023-05-09T19:19:56Z",
       "side": 1,
       "message": "nesdis?",
+      "range": {
+        "startLine": 145,
+        "startChar": 7,
+        "endLine": 145,
+        "endChar": 47
+      },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2de0c6cf_2fa70d52",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-15T11:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c37f8bb6_94ad002d",
       "range": {
         "startLine": 145,
         "startChar": 7,

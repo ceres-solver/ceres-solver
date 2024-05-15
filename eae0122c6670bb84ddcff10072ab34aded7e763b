@@ -33,6 +33,23 @@
       "message": "Mark,\nSince you are looking into GPU based sparse cholesky already. I was wondering if you wanted to take a look at this too. \n\nI think Dmitry has become busy with other things, so I am wondering if you would be interested in taking this CL on and landing it.\n\nUnless Dmitriy you are paying attention and are interested.. \n\nSameer",
       "revId": "eae0122c6670bb84ddcff10072ab34aded7e763b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d932b9a9_aa22ef54",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-15T11:58:39Z",
+      "side": 1,
+      "message": "There seem to be no support of accessing parts of sparse QR decomposition in intel mkl.\n\nhttps://community.intel.com/t5/Intel-oneAPI-Math-Kernel-Library/Q-and-R-factors-in-Sparse-QR/td-p/1158789\nhttps://community.intel.com/t5/Intel-oneAPI-Math-Kernel-Library/Access-to-R-factor-in-SparseQR/m-p/1491029\n\nNot sure how we can effectively perform covariance computations without them.",
+      "revId": "eae0122c6670bb84ddcff10072ab34aded7e763b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
