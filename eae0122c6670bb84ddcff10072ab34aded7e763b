@@ -50,6 +50,23 @@
       "message": "There seem to be no support of accessing parts of sparse QR decomposition in intel mkl.\n\nhttps://community.intel.com/t5/Intel-oneAPI-Math-Kernel-Library/Q-and-R-factors-in-Sparse-QR/td-p/1158789\nhttps://community.intel.com/t5/Intel-oneAPI-Math-Kernel-Library/Access-to-R-factor-in-SparseQR/m-p/1491029\n\nNot sure how we can effectively perform covariance computations without them.",
       "revId": "eae0122c6670bb84ddcff10072ab34aded7e763b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d185007a_6140df83",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-15T13:57:12Z",
+      "side": 1,
+      "message": "Welcome back Dmitriy! I am so glad to hear from you. \n\nI will take a close look to refresh both my memory as well go over the code with a fine toothed comb later today now that we have decided to land this backend.\n\nCan you rebase this on the latest version of Ceres at head.\n\nI am also curious if anything has changed in intel oneapi in the intervening year.",
+      "revId": "eae0122c6670bb84ddcff10072ab34aded7e763b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
