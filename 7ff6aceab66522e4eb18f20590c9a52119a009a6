@@ -227,6 +227,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e2292013_505a033a",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2024-05-15T19:56:11Z",
+      "side": 1,
+      "message": "Currently, CUDA_SPARSE only affects CGNR, where cuSPARSE is used.\n\nI think from a user standpoint, the details of which parts of the CUDA library are used are not as important - I agree with Sameer that the user will just want the library to select the best option in the library selected.\n\nI think it would be good to simplify as follows:\n- Have a single CUDA_SPARSE option.\n- When SPARSE_NORMAL_CHOLESKY or SPARSE_SCHUR is selected, this should use the new cuDSS library. \n- When CGNR is selected, it should use the existing cuSPARSE CGNR implementation (unless cuDSS has something that\u0027s faster).\n\nIn CMakeLists.txt, I propose the following:\nIf USE_CUDA is enabled but cuDSS is not found, it should enable two things:\n1. A warning during build that cuDSS was not found, so CUDA sparse direct solvers are disabled\n2. An error message in the magical `OptionsAreValidForSparseCholeskyBasedSolver`  and `OptionsAreValidForSparseNormalCholesky` functions that says the same things at runtime when CUDA_SPARSE is selected but cuDSS was not found at compile time.",
+      "parentUuid": "84354aae_b8408ce8",
+      "range": {
+        "startLine": 181,
+        "startChar": 5,
+        "endLine": 181,
+        "endChar": 13
+      },
+      "revId": "7ff6aceab66522e4eb18f20590c9a52119a009a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "146c2597_38d264a9",
         "filename": "include/ceres/version.h",
         "patchSetId": 1
@@ -333,6 +357,30 @@
       "side": 1,
       "message": "I was thinking about the mapped memory support for CudaBuffer. See \n\nhttps://ceres-solver-review.git.corp.google.com/c/ceres-solver/+/25740/1/internal/ceres/cuda_buffer.h",
       "parentUuid": "82e1e867_ff0f74bd",
+      "range": {
+        "startLine": 170,
+        "startChar": 6,
+        "endLine": 170,
+        "endChar": 26
+      },
+      "revId": "7ff6aceab66522e4eb18f20590c9a52119a009a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0436b8bc_a4ab7a61",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2024-05-15T19:56:11Z",
+      "side": 1,
+      "message": "Public link: https://ceres-solver-review.googlesource.com/c/ceres-solver/+/25740/1/internal/ceres/cuda_buffer.h\n\n+1 to using pinned memory, and using CudaBuffer.",
+      "parentUuid": "19c8652a_b1791b62",
       "range": {
         "startLine": 170,
         "startChar": 6,
