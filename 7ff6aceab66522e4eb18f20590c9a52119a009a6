@@ -203,6 +203,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "84354aae_b8408ce8",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-15T19:16:34Z",
+      "side": 1,
+      "message": "Thinking out aloud here. (I apologize for the rambling in advance).\n\nFrom a user\u0027s perspective CUDA_SPARSE and CUDSS are  nvidia\u0027s sparse math libraries, and if they have access to nvidia hardware, they just want the  fast thing that works on nvidia hardware. So I think of CUDA_SPARSE more as sparse stuff on nvidia hardware, rather than the specific packaging of libraries. In that sense, it makes for keeping this as a single enum indicating whether you want the sparse compute to happen on an nvidia GPU or not. \n\nHere is a small counter argument.\n\nWe currently have a function \n\nIsSparseLinearAlgebraLibraryTypeAvailable\n\nwhich if we only have one enum will return true if we compile with support for CUDA but not CUDSS, and then the user still has to figure out if SPARSE_CHOLESKY + CUDA_SPARSE is a valid combination or not. \n\nThe reason I think this is not a very strong argument is because even right now it is the case that sparse_linear_algebra_library_type can be CUDA_SPARSE but SPARSE_CHOLESKY is not available, and the user needs to know what is going on. \n\nI also expect gpu based sparse_cholesky (single and double precision) will actually have a bigger use case than what we have right now (CUDA_SPARSE + CGNR as the only supported solver), so once this feature becomes available I expect users to take CUDA + CUDSS as the default dependency rather than just CUDA. We can add warning to the cmakefile is CUDA is enabled by CUDSS is not that the SPARSE_CHOLESKY is not available. \n\nWe could even consider one step further, which is if USE_CUDA is enabled, then the user must have CUDA and CUDSS available.. unless it is the case that there is hardware that we want to run CUDA based iterative solvers on and CUDSS is not available. Or only an older version of CUDA is available -- I think this is actually the case. \n\nLet me add joydeep to this CL, he is the one who initially added cuda support to ceres and is one of the users who has a sense of the landscape.",
+      "parentUuid": "4dd179ba_cebe0807",
+      "range": {
+        "startLine": 181,
+        "startChar": 5,
+        "endLine": 181,
+        "endChar": 13
+      },
+      "revId": "7ff6aceab66522e4eb18f20590c9a52119a009a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "146c2597_38d264a9",
         "filename": "include/ceres/version.h",
         "patchSetId": 1
