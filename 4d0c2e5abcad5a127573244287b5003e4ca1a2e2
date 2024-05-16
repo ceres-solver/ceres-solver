@@ -1,0 +1,85 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ca5a128_08670333",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-16T23:52:05Z",
+      "side": 1,
+      "message": "We are getting close Mark.",
+      "revId": "4d0c2e5abcad5a127573244287b5003e4ca1a2e2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c261fb4_d52515cc",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-16T23:52:05Z",
+      "side": 1,
+      "message": "I think with cholesky on GPU you have also enabled the ability to do visibility based preconditioning on the GPU.  Can you try ITERATIVE_SCHUR + CLUSTER_JACOBI using bundle_adjuster? I am pretty sure it will work. It may not work well (because of the per iteration back and forth with the GPU) but I think it will work.\n\nIf that is the case, then we need to make two more changes.\n\n1. update \n\n\nITERATIVE_SOLVER_CONFIGS \u003d [\n    # Linear solver            Sparse backend      Preconditioner\n    (\u0027ITERATIVE_SCHUR\u0027,        \u0027NO_SPARSE\u0027,        \u0027JACOBI\u0027),\n    (\u0027ITERATIVE_SCHUR\u0027,        \u0027NO_SPARSE\u0027,        \u0027SCHUR_JACOBI\u0027),\n    (\u0027ITERATIVE_SCHUR\u0027,        \u0027NO_SPARSE\u0027,        \u0027SCHUR_POWER_SERIES_EXPANSION\u0027),\n    (\u0027ITERATIVE_SCHUR\u0027,        \u0027SUITE_SPARSE\u0027,     \u0027CLUSTER_JACOBI\u0027),\n    (\u0027ITERATIVE_SCHUR\u0027,        \u0027EIGEN_SPARSE\u0027,     \u0027CLUSTER_JACOBI\u0027),\n    (\u0027ITERATIVE_SCHUR\u0027,        \u0027ACCELERATE_SPARSE\u0027,\u0027CLUSTER_JACOBI\u0027),\n    (\u0027ITERATIVE_SCHUR\u0027,        \u0027SUITE_SPARSE\u0027,     \u0027CLUSTER_TRIDIAGONAL\u0027),\n    (\u0027ITERATIVE_SCHUR\u0027,        \u0027EIGEN_SPARSE\u0027,     \u0027CLUSTER_TRIDIAGONAL\u0027),\n    (\u0027ITERATIVE_SCHUR\u0027,        \u0027ACCELERATE_SPARSE\u0027,\u0027CLUSTER_TRIDIAGONAL\u0027),\n]\n\nto include CUDA_SPARSE\n\nand this nested if will also need to check for iterative_schur + either of these two preconditioners.",
+      "range": {
+        "startLine": 226,
+        "startChar": 25,
+        "endLine": 226,
+        "endChar": 37
+      },
+      "revId": "4d0c2e5abcad5a127573244287b5003e4ca1a2e2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac8fc8ed_e4091b28",
+        "filename": "internal/ceres/generated_bundle_adjustment_tests/ba_sparsecholesky_cudasparse_auto_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-16T23:52:05Z",
+      "side": 1,
+      "message": "at the risk of creating work for you, but in the interest of consistency these two macros should have the same polarity. \n\nIf we stick with CERES_NO_CUDA then CERES_NO_CUDSS is what we should do no?",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 22
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "388f325d_7496fe06",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/generated_bundle_adjustment_tests/ba_sparsecholesky_cudasparse_auto_test.cc",
+              "range": {
+                "startLine": 43,
+                "startChar": 0,
+                "endLine": 44,
+                "endChar": 0
+              },
+              "replacement": "#ifndef CERES_USE_CUDSS\n"
+            }
+          ]
+        }
+      ],
+      "revId": "4d0c2e5abcad5a127573244287b5003e4ca1a2e2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

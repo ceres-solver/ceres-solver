@@ -67,6 +67,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "10685001_409625b3",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-16T23:52:05Z",
+      "side": 1,
+      "message": "I may have garbled my comment. Yes, a simple todo here, with perhaps a github issue link is the best thing to do here.",
+      "parentUuid": "6c7956b5_c5f76e69",
+      "range": {
+        "startLine": 257,
+        "startChar": 12,
+        "endLine": 257,
+        "endChar": 21
+      },
+      "revId": "bbbf385ac2ba2c3c74fba8e946508cff4ace62a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "287722de_e83eb884",
         "filename": "internal/ceres/evaluator.cc",
         "patchSetId": 6
@@ -238,6 +262,30 @@
       "side": 1,
       "message": "This would require to repeat the error string formatting line, so it would actually look like this:\n```\n  if (IsSparseLinearAlgebraLibraryTypeAvailable(\n          options.sparse_linear_algebra_library_type)) {\n    if (options.sparse_linear_algebra_library_type \u003d\u003d CUDA_SPARSE) {\n#if !defined(CERES_USE_CUDSS)\n      *error \u003d StringPrintf(kNoLibraryFormat, solver_name, library_name);\n      return false;\n#endif\n    }\n  } else {\n    *error \u003d StringPrintf(kNoLibraryFormat, solver_name, library_name);\n    return false;\n  }\n```\n\nwhich does not look easier imo. Should we proceed with this option or should i left it unchanged?",
       "parentUuid": "b279d529_3906123b",
+      "range": {
+        "startLine": 179,
+        "startChar": 5,
+        "endLine": 179,
+        "endChar": 12
+      },
+      "revId": "bbbf385ac2ba2c3c74fba8e946508cff4ace62a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36d7935c_26345bdc",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-16T23:52:05Z",
+      "side": 1,
+      "message": "fair point it is more verbose but its more robust than putting a macro inside a conditional. so I would say proceed with this option for now.",
+      "parentUuid": "fcbd969c_eeb841b2",
       "range": {
         "startLine": 179,
         "startChar": 5,
