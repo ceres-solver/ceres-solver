@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0c5368a_4a20d86e",
+        "filename": ".github/workflows/windows.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T01:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d91f504_feedc42d",
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ad0efee9_e0c176f3",
@@ -157,6 +175,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "80bb6ec2_f42de3c3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T01:22:01Z",
+      "side": 1,
+      "message": "No worries, Sameer.",
+      "parentUuid": "462d94f3_b727be8d",
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "62df73ca_89a1f3a2",
@@ -180,6 +216,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ee8440f_2a88f301",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T01:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62df73ca_89a1f3a2",
+      "range": {
+        "startLine": 273,
+        "startChar": 16,
+        "endLine": 273,
+        "endChar": 24
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "af75bb39_46c824b6",
@@ -193,6 +253,30 @@
       "writtenOn": "2024-05-15T20:45:41Z",
       "side": 1,
       "message": "I am a bit surprised that we do not already have an entry here for CUDA. Ami I missing something about cuda ?",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 24
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d808f0f1_f6ec9932",
+        "filename": "cmake/CeresCompileOptionsToComponents.cmake",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T01:22:01Z",
+      "side": 1,
+      "message": "My guess is it was not there because CUDA_SPARSE was not a feature-complete alternative to other sparse backends (there was no support for direct Cholesky solves).\n\nStill, given that currently the aim is to not have a hard requirement for cuDSS in case if USE_CUDA is requested, listing CUDA_SPARSE as an alternative to e.g. SuiteSparse without dependency on cuDSS availability status seems to be misleading.\n\nWhat would be your suggestion?",
+      "parentUuid": "af75bb39_46c824b6",
       "range": {
         "startLine": 81,
         "startChar": 2,
@@ -239,6 +323,30 @@
       "writtenOn": "2024-05-15T20:45:41Z",
       "side": 1,
       "message": "No need to change this line",
+      "range": {
+        "startLine": 100,
+        "startChar": 31,
+        "endLine": 100,
+        "endChar": 36
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d74a89b4_68b7668b",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T01:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "389bc222_d96585b6",
       "range": {
         "startLine": 100,
         "startChar": 31,
@@ -300,6 +408,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "623f0b5b_da417e93",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T01:22:01Z",
+      "side": 1,
+      "message": "The exact change that you proposed would lead to variouse tests failing due to implicit assumptions about sparse_linear_algebra_library_type being set to not NO_SPARSE by default. So i reverted this section to its state in master.",
+      "parentUuid": "416ad7d7_6bb3d3f9",
+      "range": {
+        "startLine": 387,
+        "startChar": 13,
+        "endLine": 387,
+        "endChar": 14
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "21dfe17a_68443249",
@@ -313,6 +445,30 @@
       "writtenOn": "2024-05-15T20:45:41Z",
       "side": 1,
       "message": "undef these macros at the bottom of the file.",
+      "range": {
+        "startLine": 70,
+        "startChar": 1,
+        "endLine": 70,
+        "endChar": 7
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "936a3431_b5988a44",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T01:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21dfe17a_68443249",
       "range": {
         "startLine": 70,
         "startChar": 1,
@@ -364,6 +520,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0dcb0296_f6d98ec4",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T01:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfc8e3ae_e5f3db97",
+      "range": {
+        "startLine": 80,
+        "startChar": 8,
+        "endLine": 80,
+        "endChar": 19
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e6abf23f_a2170c5a",
@@ -377,6 +557,30 @@
       "writtenOn": "2024-05-15T20:45:41Z",
       "side": 1,
       "message": "ld is a cryptic variable name",
+      "range": {
+        "startLine": 146,
+        "startChar": 30,
+        "endLine": 146,
+        "endChar": 32
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "182266a3_15791e78",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T01:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6abf23f_a2170c5a",
       "range": {
         "startLine": 146,
         "startChar": 30,
@@ -424,6 +628,30 @@
           ]
         }
       ],
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4e7d669_d0284a91",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T01:22:01Z",
+      "side": 1,
+      "message": "I\u0027v added a skip for host buffers allocation in case of double precision and fixed usage of x_h_.size(). \n\nRegarding suggestion to explicitly store the sizes: i believe using the sizes that are already stored by operands is actually less less error-prone. Wdyt?",
+      "parentUuid": "138613e4_44576c94",
+      "range": {
+        "startLine": 231,
+        "startChar": 36,
+        "endLine": 231,
+        "endChar": 40
+      },
       "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -561,6 +789,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d64e593b_16bdfc33",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T01:22:01Z",
+      "side": 1,
+      "message": "In case of double precision, we are skipping the conversion and calling CopyFromCpu() directly on input. This leads to cudaMemcpyAsync() (which is called by CopyFromCpu()) to block a host thread until host-\u003edevice transfer is finished. In such case we are indeed do not need any intermediate host buffers and such case handled by first branch in ConvertAndCopyToDevice().\n\nIn case if single precision is requested, we are performing a conversion (via Eigen maps) of input, storing converted result in pinned host memory buffer. After conversion is performed, we call CopyFromCpu on such pinned host memory buffer which leads to cudaMemcpyAsync() to actually perform asynchronously wrt host thread. This means that after values of lhs are converted and host-\u003edevice transfer is scheduled (in the scope of Factorize()) execution of host thread continues and eventually arriving to the point (in the scope of Solve()) where we handle values of rhs. If we would use the same intermediate pinned host memory buffer for conversion of rhs at this point, we would overwrite the converted values of lhs, host-\u003edevice transfer of which is still not finished at this point. Hence the need for individual buffers.\n\nFollowing nsys timeline visualization (with some additional nvtx range annotations) could be more helpful: https://drive.google.com/file/d/1mllTPJ_yr-IItNAPFb4ZsNW6Eq7Q4rH6/view?usp\u003dsharing\n\nI hope i explained the need for individual buffers, but if such explanation is not clear enough please ask me to elaborate.",
+      "parentUuid": "969c10dd_cfb77537",
+      "range": {
+        "startLine": 269,
+        "startChar": 4,
+        "endLine": 269,
+        "endChar": 17
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2d7304cf_12538fc4",
         "filename": "internal/ceres/cuda_sparse_cholesky.cc",
         "patchSetId": 5
@@ -607,6 +859,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e21df549_1a4393bc",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T01:22:01Z",
+      "side": 1,
+      "message": "Should it be a LOG(FATAL) rather then LOG(WARNING)?",
+      "parentUuid": "355fbfbc_7f52fea8",
+      "range": {
+        "startLine": 366,
+        "startChar": 38,
+        "endLine": 366,
+        "endChar": 55
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d5e219a7_93280c38",
         "filename": "internal/ceres/cuda_sparse_cholesky.h",
         "patchSetId": 5
@@ -630,6 +906,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bc897220_abc5e503",
+        "filename": "internal/ceres/cuda_sparse_cholesky.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T01:22:01Z",
+      "side": 1,
+      "message": "It is indeed. The only documentation regarding reordering that i found (https://docs.nvidia.com/cuda/cudss/types.html#cudssconfigparam-t) does not explicitly state the algorithm that is to be used if specific reordering parameter value is chosen, hence i opted for a \"default\" one without any additional options to be given for a user.\n\nIt would be nice if Kirill or Di would provide us more info on that topic.",
+      "parentUuid": "d5e219a7_93280c38",
+      "range": {
+        "startLine": 52,
+        "startChar": 24,
+        "endLine": 52,
+        "endChar": 51
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1a8d0895_e6d75f05",
         "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
         "patchSetId": 5
@@ -641,6 +941,30 @@
       "writtenOn": "2024-05-15T20:45:41Z",
       "side": 1,
       "message": "update",
+      "range": {
+        "startLine": 248,
+        "startChar": 50,
+        "endLine": 248,
+        "endChar": 55
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d4fc88e_3c36ad23",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T01:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a8d0895_e6d75f05",
       "range": {
         "startLine": 248,
         "startChar": 50,
@@ -692,6 +1016,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5865f59_4d95a51a",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T01:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc07dd79_0a507b7b",
+      "range": {
+        "startLine": 256,
+        "startChar": 20,
+        "endLine": 256,
+        "endChar": 29
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c761c3a1_a43a97f0",
@@ -733,6 +1081,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f35a6295_8199d797",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T01:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c761c3a1_a43a97f0",
+      "range": {
+        "startLine": 73,
+        "startChar": 24,
+        "endLine": 73,
+        "endChar": 43
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c65eb06d_20da8dcd",
@@ -746,6 +1118,30 @@
       "writtenOn": "2024-05-15T20:45:41Z",
       "side": 1,
       "message": "update",
+      "range": {
+        "startLine": 56,
+        "startChar": 32,
+        "endLine": 56,
+        "endChar": 37
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cc84b12_f2411e7a",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T01:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c65eb06d_20da8dcd",
       "range": {
         "startLine": 56,
         "startChar": 32,
@@ -779,6 +1175,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3edb096c_99b02209",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T01:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edfa4b1d_69e0c8e8",
+      "range": {
+        "startLine": 119,
+        "startChar": 23,
+        "endLine": 119,
+        "endChar": 28
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "96be1a0b_a3de9e05",
@@ -792,6 +1212,30 @@
       "writtenOn": "2024-05-15T20:45:41Z",
       "side": 1,
       "message": "update this to check for CUDA_SPARSE + CUDSS and so on,",
+      "range": {
+        "startLine": 147,
+        "startChar": 5,
+        "endLine": 147,
+        "endChar": 48
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee353877_e5ce8d18",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T01:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96be1a0b_a3de9e05",
       "range": {
         "startLine": 147,
         "startChar": 5,
@@ -825,6 +1269,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b7a2fe5_09e345d6",
+        "filename": "internal/ceres/sparse_cholesky_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T01:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c9c5877_868b1745",
+      "range": {
+        "startLine": 275,
+        "startChar": 41,
+        "endLine": 275,
+        "endChar": 46
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aea1f36b_5b94881c",
@@ -848,6 +1316,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "29c16d6c_e4a7bf2c",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T01:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aea1f36b_5b94881c",
+      "range": {
+        "startLine": 184,
+        "startChar": 52,
+        "endLine": 184,
+        "endChar": 53
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8023214b_c4381bc5",
@@ -861,6 +1353,30 @@
       "writtenOn": "2024-05-15T20:45:41Z",
       "side": 1,
       "message": "drop",
+      "range": {
+        "startLine": 434,
+        "startChar": 14,
+        "endLine": 434,
+        "endChar": 19
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1a16f7f_f4bcbdda",
+        "filename": "internal/ceres/types.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T01:22:01Z",
+      "side": 1,
+      "message": "Removed it here and added in `OptionsAreValidForSparseCholeskyBasedSolver` a check for a case when CUDA_SPARSE requested without cuDSS being available.\n\nImo this is a bit confusing, given the name of this method, but i am not sure what could be a better option (unless we would make a cuDSS a hard requirement for the case of USE_CUDA and thus would not need to use additional checks for cuDSS given !CERES_NO_CUDA).",
+      "parentUuid": "8023214b_c4381bc5",
       "range": {
         "startLine": 434,
         "startChar": 14,

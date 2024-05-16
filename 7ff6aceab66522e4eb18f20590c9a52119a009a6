@@ -273,6 +273,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f00ffa73_4e228395",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T01:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99fd59ac_f8e6d50f",
+      "range": {
+        "startLine": 181,
+        "startChar": 5,
+        "endLine": 181,
+        "endChar": 13
+      },
+      "revId": "7ff6aceab66522e4eb18f20590c9a52119a009a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "146c2597_38d264a9",
@@ -404,6 +428,30 @@
       "writtenOn": "2024-05-15T19:56:11Z",
       "side": 1,
       "message": "Public link: https://ceres-solver-review.googlesource.com/c/ceres-solver/+/25740/1/internal/ceres/cuda_buffer.h\n\n+1 to using pinned memory, and using CudaBuffer.",
+      "parentUuid": "19c8652a_b1791b62",
+      "range": {
+        "startLine": 170,
+        "startChar": 6,
+        "endLine": 170,
+        "endChar": 26
+      },
+      "revId": "7ff6aceab66522e4eb18f20590c9a52119a009a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2121b26b_0af4c569",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T01:22:01Z",
+      "side": 1,
+      "message": "Currently, CudaBuffer is managing a region of memory that resides on device (allocated via cudaMalloc() and released via cudaFree()). In pr that you referred a change introduced to enable CudaBuffer to act as a non-owning wrapper over user provided device pointer.\n\nThe CudaPinnedHostBuffer introduced here is a struct to manage (in RAII fashion) a region of \"pinned\" memory that resides in host memory (allocated via cudaMallocHost() and released via cudaFreeHost()), so i don\u0027t see how we could simplify things by using CudaBuffer for that.\n\nMy suggesting on that topic would be to rename CudaBuffer -\u003e CudaDeviceBuffer in order to express such class semantics a bit more clear.",
       "parentUuid": "19c8652a_b1791b62",
       "range": {
         "startLine": 170,
