@@ -289,6 +289,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "81697815_4750654e",
+        "filename": "cmake/CeresCompileOptionsToComponents.cmake",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-16T04:50:40Z",
+      "side": 1,
+      "message": "I think we should treat this along the same ways in which we treat SuiteSparse.\nSuiteSparse maybe available with or without METIS, but we just treat that as a sparse linear algebra library.\n\nThat said, I am not a cmake expert. I am going to add sergiu to this CL after this revision and he should be able to advise.",
+      "parentUuid": "d808f0f1_f6ec9932",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 24
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7924bd28_23a857e8",
         "filename": "cmake/config.h.in",
         "patchSetId": 5
@@ -422,6 +446,30 @@
       "side": 1,
       "message": "The exact change that you proposed would lead to variouse tests failing due to implicit assumptions about sparse_linear_algebra_library_type being set to not NO_SPARSE by default. So i reverted this section to its state in master.",
       "parentUuid": "416ad7d7_6bb3d3f9",
+      "range": {
+        "startLine": 387,
+        "startChar": 13,
+        "endLine": 387,
+        "endChar": 14
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cba50c5b_9753cda4",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-16T04:50:40Z",
+      "side": 1,
+      "message": "oh I just meant to revert it back to the state of affairs in the master.",
+      "parentUuid": "623f0b5b_da417e93",
       "range": {
         "startLine": 387,
         "startChar": 13,
@@ -658,6 +706,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c67bfa0f_f92176bb",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-16T04:50:40Z",
+      "side": 1,
+      "message": "I am okay with using the operand size.",
+      "parentUuid": "f4e7d669_d0284a91",
+      "range": {
+        "startLine": 231,
+        "startChar": 36,
+        "endLine": 231,
+        "endChar": 40
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "969c10dd_cfb77537",
         "filename": "internal/ceres/cuda_sparse_cholesky.cc",
         "patchSetId": 5
@@ -811,6 +883,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8350c06_a7fb2328",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-16T04:50:40Z",
+      "side": 1,
+      "message": "Thanks for the explanation that makes sense. I had not realized that the transfers were async.",
+      "parentUuid": "d64e593b_16bdfc33",
+      "range": {
+        "startLine": 269,
+        "startChar": 4,
+        "endLine": 269,
+        "endChar": 17
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2d7304cf_12538fc4",
@@ -824,6 +920,30 @@
       "writtenOn": "2024-05-15T20:45:41Z",
       "side": 1,
       "message": "why take intermediate as an argument? shouldn\u0027t there just be one buffer which is the max of the lhs and rhs size which you use, and it is just private to this class which this method uses?",
+      "range": {
+        "startLine": 325,
+        "startChar": 30,
+        "endLine": 325,
+        "endChar": 36
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd6f1ed6_a73cdfdb",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-16T04:50:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d7304cf_12538fc4",
       "range": {
         "startLine": 325,
         "startChar": 30,
@@ -883,6 +1003,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "469ff809_0863ae82",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-16T04:50:40Z",
+      "side": 1,
+      "message": "I guess the calling routine should handle the fact that we are getting a nullptr and deal with it. Crashing is generally a bad idea for a library like ours which works as part of other systems.\n\nThat said, I think it is worth logging the reason why we are returning a nullptr, otherwise the user when they see a nullptr will have to do that instrumentation themselves.",
+      "parentUuid": "e21df549_1a4393bc",
+      "range": {
+        "startLine": 366,
+        "startChar": 38,
+        "endLine": 366,
+        "endChar": 55
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d5e219a7_93280c38",
         "filename": "internal/ceres/cuda_sparse_cholesky.h",
         "patchSetId": 5
@@ -918,6 +1062,30 @@
       "side": 1,
       "message": "It is indeed. The only documentation regarding reordering that i found (https://docs.nvidia.com/cuda/cudss/types.html#cudssconfigparam-t) does not explicitly state the algorithm that is to be used if specific reordering parameter value is chosen, hence i opted for a \"default\" one without any additional options to be given for a user.\n\nIt would be nice if Kirill or Di would provide us more info on that topic.",
       "parentUuid": "d5e219a7_93280c38",
+      "range": {
+        "startLine": 52,
+        "startChar": 24,
+        "endLine": 52,
+        "endChar": 51
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7edcd31e_d2bc1adc",
+        "filename": "internal/ceres/cuda_sparse_cholesky.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-16T04:50:40Z",
+      "side": 1,
+      "message": "Yes it would be nice if cudss provided us with this control to choose between AMD and METIS.",
+      "parentUuid": "bc897220_abc5e503",
       "range": {
         "startLine": 52,
         "startChar": 24,
