@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "287722de_e83eb884",
+        "filename": "internal/ceres/evaluator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T01:29:15Z",
+      "side": 1,
+      "message": "This change fixes a segfault at https://github.com/ceres-solver/ceres-solver/blob/522210a08dc9d098307416e204fa79a3a2fc3132/internal/ceres/detect_structure.cc#L54 (which could\u0027ve been caught if dynamic_cast with following check for nullptr would\u0027ve been used at https://github.com/ceres-solver/ceres-solver/blob/522210a08dc9d098307416e204fa79a3a2fc3132/internal/ceres/solver.cc#L783), but currently i don\u0027t really have a capacity to dig into the hierarchy/semantics to fully understand the problem and to be sure that this is indeed a proper fix.\n\nI hope that you can suggest if this is enough or i should investigate that more thoroughly.",
+      "revId": "bbbf385ac2ba2c3c74fba8e946508cff4ace62a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

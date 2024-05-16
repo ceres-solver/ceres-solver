@@ -557,6 +557,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "68bd8d64_c8677909",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T01:29:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad27640e_7d37879a",
+      "range": {
+        "startLine": 692,
+        "startChar": 58,
+        "endLine": 692,
+        "endChar": 63
+      },
+      "revId": "7ff6aceab66522e4eb18f20590c9a52119a009a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b8f4e033_90017e2a",
