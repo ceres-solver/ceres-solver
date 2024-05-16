@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6c7956b5_c5f76e69",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T18:40:54Z",
+      "side": 1,
+      "message": "So your original commentary was to highlight the possibility for improvement with no particular action to be taken in the scope of this PR? Should i just revert to original TODO wording?",
+      "parentUuid": "9829ffd1_314c6332",
+      "range": {
+        "startLine": 257,
+        "startChar": 12,
+        "endLine": 257,
+        "endChar": 21
+      },
+      "revId": "bbbf385ac2ba2c3c74fba8e946508cff4ace62a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "287722de_e83eb884",
         "filename": "internal/ceres/evaluator.cc",
         "patchSetId": 6
@@ -72,6 +96,24 @@
       "side": 1,
       "message": "oh this is an interesting bug.  Let me see if I can figure it out.\nPreviously sparse_schur and iterative_schur both fall back to whatever CGNR was doing. except that cuda_sparse was never an option for sparse_schur it would get caught as an invalid configuration in solver.cc\n\nnow however sparse_schur + cuda_sparse is a thing, but in the case of cuda_sparse we do not want the compressed sparse row jacobian.\n\nso yes this is the right fix.",
       "parentUuid": "287722de_e83eb884",
+      "revId": "bbbf385ac2ba2c3c74fba8e946508cff4ace62a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d9aa32c_aab74089",
+        "filename": "internal/ceres/evaluator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T18:40:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0737820e_3f1e23b5",
       "revId": "bbbf385ac2ba2c3c74fba8e946508cff4ace62a8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -117,6 +159,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d03cc6d1_b180c85f",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T18:40:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31aa3673_d9e46210",
+      "range": {
+        "startLine": 224,
+        "startChar": 49,
+        "endLine": 224,
+        "endChar": 64
+      },
+      "revId": "bbbf385ac2ba2c3c74fba8e946508cff4ace62a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b279d529_3906123b",
@@ -154,6 +220,30 @@
           ]
         }
       ],
+      "revId": "bbbf385ac2ba2c3c74fba8e946508cff4ace62a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcbd969c_eeb841b2",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T18:40:54Z",
+      "side": 1,
+      "message": "This would require to repeat the error string formatting line, so it would actually look like this:\n```\n  if (IsSparseLinearAlgebraLibraryTypeAvailable(\n          options.sparse_linear_algebra_library_type)) {\n    if (options.sparse_linear_algebra_library_type \u003d\u003d CUDA_SPARSE) {\n#if !defined(CERES_USE_CUDSS)\n      *error \u003d StringPrintf(kNoLibraryFormat, solver_name, library_name);\n      return false;\n#endif\n    }\n  } else {\n    *error \u003d StringPrintf(kNoLibraryFormat, solver_name, library_name);\n    return false;\n  }\n```\n\nwhich does not look easier imo. Should we proceed with this option or should i left it unchanged?",
+      "parentUuid": "b279d529_3906123b",
+      "range": {
+        "startLine": 179,
+        "startChar": 5,
+        "endLine": 179,
+        "endChar": 12
+      },
       "revId": "bbbf385ac2ba2c3c74fba8e946508cff4ace62a8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }

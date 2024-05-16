@@ -336,6 +336,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a1ab047a_57873dd6",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T18:40:54Z",
+      "side": 1,
+      "message": "I believe we should leave it as it is due to CERES_NO_SPARSE controlling, in multiple places, if SPARSE_SCHUR/SPARSE_NORMAL_CHOLESKY linear solver should be used, and it definitely shouldn\u0027t in case if CERES_USE_CUDSS is not defined while CUDA_SPARSE being selected as sparse backend.",
+      "parentUuid": "7924bd28_23a857e8",
+      "range": {
+        "startLine": 97,
+        "startChar": 12,
+        "endLine": 97,
+        "endChar": 27
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "389bc222_d96585b6",
         "filename": "examples/bundle_adjuster.cc",
         "patchSetId": 5
@@ -728,6 +752,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfe595b6_16b87840",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T18:40:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c67bfa0f_f92176bb",
+      "range": {
+        "startLine": 231,
+        "startChar": 36,
+        "endLine": 231,
+        "endChar": 40
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "969c10dd_cfb77537",
@@ -1015,6 +1063,30 @@
       "side": 1,
       "message": "I guess the calling routine should handle the fact that we are getting a nullptr and deal with it. Crashing is generally a bad idea for a library like ours which works as part of other systems.\n\nThat said, I think it is worth logging the reason why we are returning a nullptr, otherwise the user when they see a nullptr will have to do that instrumentation themselves.",
       "parentUuid": "e21df549_1a4393bc",
+      "range": {
+        "startLine": 366,
+        "startChar": 38,
+        "endLine": 366,
+        "endChar": 55
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1dfbbe9f_887ece0e",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-16T18:40:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "469ff809_0863ae82",
       "range": {
         "startLine": 366,
         "startChar": 38,
