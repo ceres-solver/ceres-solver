@@ -67,6 +67,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "89654b4a_0de69292",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-17T20:41:50Z",
+      "side": 1,
+      "message": "Thanks, this is interesting. If you can share logs of your experiments maybe I can help debug this too (I do not have a cuda machine setup to do these experiments, but I suppose I should find a vm with cuda hardware).",
+      "parentUuid": "0e296444_b73ae23a",
+      "range": {
+        "startLine": 226,
+        "startChar": 25,
+        "endLine": 226,
+        "endChar": 37
+      },
+      "revId": "4d0c2e5abcad5a127573244287b5003e4ca1a2e2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ac8fc8ed_e4091b28",
         "filename": "internal/ceres/generated_bundle_adjustment_tests/ba_sparsecholesky_cudasparse_auto_test.cc",
         "patchSetId": 7

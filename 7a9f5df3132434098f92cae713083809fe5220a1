@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a54be6da_0dfce7a6",
+        "filename": "internal/ceres/visibility_based_preconditioner.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-17T20:41:50Z",
+      "side": 1,
+      "message": "I am surprised that you need to add this code, if CUDSS is not available, the code in solver.cc should never allow control to flow here. \n\nAlso why are you having to call InitCuda here? we should only be calling InitCuda inside solver.cc",
+      "range": {
+        "startLine": 104,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 22
+      },
+      "revId": "7a9f5df3132434098f92cae713083809fe5220a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
