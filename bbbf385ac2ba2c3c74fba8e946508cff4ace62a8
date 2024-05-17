@@ -89,6 +89,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f418d9ed_9ac91250",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-17T19:17:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10685001_409625b3",
+      "range": {
+        "startLine": 257,
+        "startChar": 12,
+        "endLine": 257,
+        "endChar": 21
+      },
+      "revId": "bbbf385ac2ba2c3c74fba8e946508cff4ace62a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "287722de_e83eb884",
@@ -286,6 +310,30 @@
       "side": 1,
       "message": "fair point it is more verbose but its more robust than putting a macro inside a conditional. so I would say proceed with this option for now.",
       "parentUuid": "fcbd969c_eeb841b2",
+      "range": {
+        "startLine": 179,
+        "startChar": 5,
+        "endLine": 179,
+        "endChar": 12
+      },
+      "revId": "bbbf385ac2ba2c3c74fba8e946508cff4ace62a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d762ab6_f2f003e5",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-17T19:17:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36d7935c_26345bdc",
       "range": {
         "startLine": 179,
         "startChar": 5,

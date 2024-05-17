@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0e296444_b73ae23a",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-17T19:17:53Z",
+      "side": 1,
+      "message": "While it is indeed working via bundle_adjuster (no errors and final cost is close to the suite_sparse variant), it seems to be not stable (based on differences in \"cost_change\") and following tests are failing:\n        125 - ba_iterschur_cudasparse_clusttri_auto_test (Failed)\n        147 - ba_iterschur_cudasparse_clusttri_auto_threads_test (Failed)\n        169 - ba_iterschur_cudasparse_clusttri_user_test (Failed)\n        191 - ba_iterschur_cudasparse_clusttri_user_threads_test (Failed)\n\nStill, i pushed the change and i will try to find some time for digging into that tomorrow.",
+      "parentUuid": "6c261fb4_d52515cc",
+      "range": {
+        "startLine": 226,
+        "startChar": 25,
+        "endLine": 226,
+        "endChar": 37
+      },
+      "revId": "4d0c2e5abcad5a127573244287b5003e4ca1a2e2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ac8fc8ed_e4091b28",
         "filename": "internal/ceres/generated_bundle_adjustment_tests/ba_sparsecholesky_cudasparse_auto_test.cc",
         "patchSetId": 7
@@ -78,6 +102,30 @@
           ]
         }
       ],
+      "revId": "4d0c2e5abcad5a127573244287b5003e4ca1a2e2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c8eed3c_3a371d65",
+        "filename": "internal/ceres/generated_bundle_adjustment_tests/ba_sparsecholesky_cudasparse_auto_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-17T19:17:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac8fc8ed_e4091b28",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 22
+      },
       "revId": "4d0c2e5abcad5a127573244287b5003e4ca1a2e2",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
