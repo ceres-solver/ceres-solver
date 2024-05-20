@@ -18,8 +18,8 @@ jobs:
       fail-fast: true
       matrix:
         os:
-          - ubuntu:20.04
           - ubuntu:22.04
+          - ubuntu:24.04
         build_type:
           - Release
         lib:
@@ -49,26 +49,35 @@ jobs:
             libsuitesparse-dev \
             ninja-build \
             wget
-      # nvidia cuda toolkit shipped with 20.04 LTS does not support stream-ordered allocations
-      - name: Setup CUDA toolkit repositories (20.04)
-        if: matrix.gpu == 'cuda' && matrix.os == 'ubuntu:20.04'
-        run: |
-          wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.0-1_all.deb
-          dpkg -i cuda-keyring_1.0-1_all.deb
+
       # nvidia cuda toolkit + gcc combo shipped with 22.04LTS is broken
       # and is not able to compile code that uses thrust
       # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1006962
-      - name: Setup CUDA toolkit repositories (22.04)
+      - name: Setup CUDA Toolkit Repositories (22.04)
         if: matrix.gpu == 'cuda' && matrix.os == 'ubuntu:22.04'
         run: |
           wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.0-1_all.deb
           dpkg -i cuda-keyring_1.0-1_all.deb
-      - name: Setup CUDA toolkit
-        if: matrix.gpu == 'cuda'
+
+      - name: Setup CUDA Toolkit Repositories (24.04)
+        if: matrix.gpu == 'cuda' && matrix.os == 'ubuntu:24.04'
+        run: |
+          wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb
+          dpkg -i cuda-keyring_1.1-1_all.deb
+
+      - name: Setup CUDA Toolkit (<24.04)
+        if: matrix.gpu == 'cuda' && matrix.os != 'ubuntu:24.04'
         run: |
           apt-get update
           apt-get install -y cuda
           echo "CUDACXX=/usr/local/cuda/bin/nvcc" >> $GITHUB_ENV
+
+      - name: Setup CUDA Toolkit (>=24.04)
+        if: matrix.gpu == 'cuda' && matrix.os == 'ubuntu:24.04'
+        run: |
+          apt-get update
+          apt-get install -y nvidia-cuda-toolkit
+          echo "CUDACXX=/usr/lib/nvidia-cuda-toolkit/bin/nvcc" >> $GITHUB_ENV
 
       - name: Cache Build
         id: cache-build
