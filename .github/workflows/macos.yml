@@ -16,9 +16,9 @@ jobs:
       fail-fast: true
       matrix:
         os:
-          - macos-11
           - macos-12
           - macos-13
+          - macos-14
         build_type:
           - Release
         lib:
@@ -74,7 +74,7 @@ jobs:
                 -DCMAKE_C_COMPILER_LAUNCHER=$(which ccache) \
                 -DCMAKE_CXX_COMPILER_LAUNCHER=$(which ccache) \
                 -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/cmake/iOS.cmake \
-                -DEigen3_DIR=/usr/local/share/eigen3/cmake \
+                -DEigen3_DIR=$(brew --prefix)/share/eigen3/cmake \
                 -DIOS_PLATFORM=OS \
                 -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install
 
