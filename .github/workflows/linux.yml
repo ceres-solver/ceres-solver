@@ -87,6 +87,19 @@ jobs:
           tar -xf libcudss-linux-x86_64-0.3.0.9_cuda12-archive.tar.xz
           echo "cudss_DIR=${{github.workspace}}/libcudss-linux-x86_64-0.3.0.9_cuda12-archive/lib/cmake/cudss" >> $GITHUB_ENV
 
+      - name: Cache Mold
+        id: cache-mold
+        uses: actions/cache@v4
+        with:
+          path: mold-2.36.0-x86_64-linux/
+          key: mold-2.36.0
+
+      - name: Setup Mold
+        if: steps.cache-mold.outputs.cache-hit != 'true'
+        run: |
+          wget https://github.com/rui314/mold/releases/download/v2.36.0/mold-2.36.0-x86_64-linux.tar.gz
+          tar xvf mold-2.36.0-x86_64-linux.tar.gz
+
       - name: Cache Build
         id: cache-build
         uses: actions/cache@v4
@@ -95,10 +108,14 @@ jobs:
           key: ${{matrix.os}}-ccache-${{matrix.build_type}}-${{matrix.lib}}-${{matrix.gpu}}-${{github.run_id}}
           restore-keys: ${{matrix.os}}-ccache-${{matrix.build_type}}-${{matrix.lib}}-${{matrix.gpu}}-
 
-      - name: Setup Environment
+      - name: Setup Build Environment
         if: matrix.build_type == 'Release'
         run: |
           echo 'CXXFLAGS=-flto' >> $GITHUB_ENV
+
+      - name: Setup Runtime Environment
+        run: |
+          echo "${{github.workspace}}/mold-2.36.0-x86_64-linux/libexec/mold" >> $GITHUB_PATH
 
       - name: Configure
         run: |
