@@ -140,7 +140,7 @@ __global__ void RowBlockIdAndNNZ(
   const auto& row_block = row_blocks[row_block_id];
   auto first_cell = cells + first_cell_in_row_block[row_block_id];
   const auto last_cell = cells + first_cell_in_row_block[row_block_id + 1];
-  int row_nnz_e = 0;
+  [[maybe_unused]] int row_nnz_e = 0;
   if (partitioned && row_block_id < num_row_blocks_e) {
     // First cell is a cell from E
     row_nnz_e = col_blocks[first_cell->block_id].size;
