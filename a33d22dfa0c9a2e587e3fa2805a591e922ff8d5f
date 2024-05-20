@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ad80b7e_50f45e9d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-20T11:16:47Z",
+      "side": 1,
+      "message": "Moved everything MKL-specific into mkl_sparse.cc, mkl_sparse.h does not \"leak\" mkl types outside anymore.\n\nWith mkl being found, cmake automatically selects it as lapack implementation. At least on linux.",
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

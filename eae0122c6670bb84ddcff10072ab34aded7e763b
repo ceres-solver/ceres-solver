@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "2f8e3ab0_87669d67",
+        "filename": ".github/workflows/linux.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-20T11:16:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39467f80_be003fcc",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 6
+      },
+      "revId": "eae0122c6670bb84ddcff10072ab34aded7e763b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "380177ce_4fef93cb",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 2
@@ -150,6 +174,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2456023e_165f6d07",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-20T11:16:47Z",
+      "side": 1,
+      "message": "Seem to work out-of-the-box\n```\ndkorchemkin@temp:~/oss/ceres-mkl/build$ cmake ../ -DUSE_MKL\u003dON                                                                                                                                                                          \n...\n-- MKL_VERSION: 2024.1.0                                                                                                                                                                                                                      \n-- MKL_ROOT: /home/dkorchemkin/intel/oneapi/mkl/2024.1                                                \n-- MKL_ARCH: None, set to ` intel64` by default                                             \n-- MKL_LINK: None, set to ` dynamic` by default                                               \n-- MKL_INTERFACE_FULL: intel_lp64                                                                                                                                                                                                             \n-- MKL_THREADING: None, set to ` intel_thread` by default                                                        \n-- MKL_MPI: None, set to ` intelmpi` by default                                                                   \n-- Found /home/dkorchemkin/intel/oneapi/mkl/2024.1/lib/libmkl_scalapack_lp64.so  \n-- Found /home/dkorchemkin/intel/oneapi/mkl/2024.1/lib/libmkl_cdft_core.so                                                                                                                                                                    \n-- Found /home/dkorchemkin/intel/oneapi/mkl/2024.1/lib/libmkl_intel_lp64.so                     \n-- Found /home/dkorchemkin/intel/oneapi/mkl/2024.1/lib/libmkl_intel_thread.so           \n-- Found /home/dkorchemkin/intel/oneapi/mkl/2024.1/lib/libmkl_core.so                 \n-- Found /home/dkorchemkin/intel/oneapi/mkl/2024.1/lib/libmkl_blacs_intelmpi_lp64.so             \n-- Found /home/dkorchemkin/intel/oneapi/compiler/2024.1/lib/libiomp5.so                     \n-- Found MKL 2024.1.0, building with MKL                                                                    \n-- Found LAPACK library: /home/dkorchemkin/intel/oneapi/mkl/2024.1/lib/libmkl_intel_lp64.so;/home/dkorchemkin/intel/oneapi/mkl/2024.1/lib/libmkl_intel_thread.so;/home/dkorchemkin/intel/oneapi/mkl/2024.1/lib/libmkl_core.so;/home/dkorchemkin/intel/oneapi/compiler/2024.1/lib/libiomp5.so;-lm;-ldl;-lm;-ldl\n...\n\n```",
+      "parentUuid": "b1329c41_99864925",
+      "range": {
+        "startLine": 283,
+        "startChar": 4,
+        "endLine": 283,
+        "endChar": 11
+      },
+      "revId": "eae0122c6670bb84ddcff10072ab34aded7e763b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "07bbb7da_e1f37557",
@@ -163,6 +211,30 @@
       "writtenOn": "2024-05-15T18:43:41Z",
       "side": 1,
       "message": "add MKL_SPARSE here also.",
+      "range": {
+        "startLine": 71,
+        "startChar": 23,
+        "endLine": 71,
+        "endChar": 31
+      },
+      "revId": "eae0122c6670bb84ddcff10072ab34aded7e763b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69c4451e_6a351148",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-20T11:16:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07bbb7da_e1f37557",
       "range": {
         "startLine": 71,
         "startChar": 23,
@@ -216,6 +288,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c4cba70c_710ff6e4",
+        "filename": "internal/ceres/generated_bundle_adjustment_tests/ba_sparsecholesky_mklsparse_auto_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-20T11:16:47Z",
+      "side": 1,
+      "message": "It already can be achieved with `dense_linear_algebra_library_type \u003d LAPACK`.\nShould we parameterize sparse solver tests by dense linear algebra type?",
+      "parentUuid": "5718f2c0_09900a37",
+      "range": {
+        "startLine": 51,
+        "startChar": 47,
+        "endLine": 51,
+        "endChar": 52
+      },
+      "revId": "eae0122c6670bb84ddcff10072ab34aded7e763b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0db7758c_8595fc27",
         "filename": "internal/ceres/mkl_sparse.h",
         "patchSetId": 2
@@ -255,6 +351,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "edbcfa1f_014b6ccd",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-20T11:16:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0db7758c_8595fc27",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 5
+      },
+      "revId": "eae0122c6670bb84ddcff10072ab34aded7e763b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d808c7b2_c3858dc1",
@@ -268,6 +388,30 @@
       "writtenOn": "2024-05-15T18:43:41Z",
       "side": 1,
       "message": "are you going to test this class explicitly? otherwise is there a reason to keep this file in a header file or move it to mkl_sparse.cc?",
+      "range": {
+        "startLine": 68,
+        "startChar": 18,
+        "endLine": 68,
+        "endChar": 24
+      },
+      "revId": "eae0122c6670bb84ddcff10072ab34aded7e763b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "564af0df_e0fc0eaa",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-20T11:16:47Z",
+      "side": 1,
+      "message": "This is being used in re-ordering. Ordering computation is only exposed via PARDISO interface in MKL.\n\nI\u0027ve factored MKL-specific pieces into mkl_sparse.cc and now mkl_sparse.h does not \"leak\" mkl-specific stuff outside",
+      "parentUuid": "d808c7b2_c3858dc1",
       "range": {
         "startLine": 68,
         "startChar": 18,

@@ -259,6 +259,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dc591494_fc603f69",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-20T11:16:47Z",
+      "side": 1,
+      "message": "On linux LAPACK is auto-detected as MKL implementation if MKL is found.",
+      "parentUuid": "930c40d0_2b0628e0",
+      "range": {
+        "startLine": 214,
+        "startChar": 5,
+        "endLine": 214,
+        "endChar": 34
+      },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ccdcf3b4_0cbbd5a7",
         "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
         "patchSetId": 1
@@ -317,6 +341,24 @@
         "endLine": 190,
         "endChar": 49
       },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4500532c_f28fac21",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-20T11:16:47Z",
+      "side": 1,
+      "message": "Added a separate `EventLogger` to `MKLSparseCholesky::Factorize`",
+      "parentUuid": "ccdcf3b4_0cbbd5a7",
       "revId": "614db06125d22b039bca76581617b93bf343c689",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -467,6 +509,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ac7475d_4896fb9a",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-20T11:16:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3c073ea_f73ac4ea",
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2c6d1273_51ff24b3",
@@ -551,6 +611,30 @@
       "side": 1,
       "message": "Moved one to private section",
       "parentUuid": "16cea9f8_5d07c912",
+      "range": {
+        "startLine": 65,
+        "startChar": 7,
+        "endLine": 65,
+        "endChar": 23
+      },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40784d7b_46616893",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-20T11:16:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41693963_a3d7c41c",
       "range": {
         "startLine": 65,
         "startChar": 7,
@@ -668,6 +752,30 @@
       "writtenOn": "2023-05-09T19:19:56Z",
       "side": 1,
       "message": "why do we need a conversion back from a sparse_matrix_t to CSR?",
+      "range": {
+        "startLine": 94,
+        "startChar": 35,
+        "endLine": 94,
+        "endChar": 48
+      },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6437cc29_481c4864",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-20T11:16:47Z",
+      "side": 1,
+      "message": "For returning AtA matrix when it is used in dynamic normal Cholesky solver.",
+      "parentUuid": "dc2d119d_f748c594",
       "range": {
         "startLine": 94,
         "startChar": 35,
