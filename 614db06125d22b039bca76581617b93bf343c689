@@ -281,6 +281,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3791ad29_4081a860",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "dc591494_fc603f69",
+      "range": {
+        "startLine": 214,
+        "startChar": 5,
+        "endLine": 214,
+        "endChar": 34
+      },
+      "revId": "614db06125d22b039bca76581617b93bf343c689",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ccdcf3b4_0cbbd5a7",

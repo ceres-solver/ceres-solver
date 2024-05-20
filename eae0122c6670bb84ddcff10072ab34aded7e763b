@@ -443,6 +443,30 @@
       },
       "revId": "eae0122c6670bb84ddcff10072ab34aded7e763b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6547d094_0a2ea266",
+        "filename": "internal/ceres/sparse_cholesky.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "can you file a github bug for this and add a todo here please.",
+      "parentUuid": "d4f06a0c_ddb3cdf2",
+      "range": {
+        "startLine": 53,
+        "startChar": 29,
+        "endLine": 53,
+        "endChar": 38
+      },
+      "revId": "eae0122c6670bb84ddcff10072ab34aded7e763b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }

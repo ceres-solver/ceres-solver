@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd96b4e9_97804535",
+        "filename": ".github/workflows/linux.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be USE_MKL?",
+      "range": {
+        "startLine": 104,
+        "startChar": 17,
+        "endLine": 104,
+        "endChar": 21
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "5ad80b7e_50f45e9d",
@@ -14,6 +37,1194 @@
       "writtenOn": "2024-05-20T11:16:47Z",
       "side": 1,
       "message": "Moved everything MKL-specific into mkl_sparse.cc, mkl_sparse.h does not \"leak\" mkl types outside anymore.\n\nWith mkl being found, cmake automatically selects it as lapack implementation. At least on linux.",
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a34dd7de_eaadc262",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "I have some minor style questions, but mostly I am trying to understand whats happening in mkl_sparse.cc \n\nI think I am missing some basics about the impedence mismatch between ceres and mkl. but perhaps as I understand your answers to my questions I will understand better as to whats going on.",
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5acf1320_d14053b7",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "the cmake MKL routines do not use MKLROOT automatically?",
+      "range": {
+        "startLine": 271,
+        "startChar": 38,
+        "endLine": 271,
+        "endChar": 45
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e71a09a_7bad3848",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "document what this is and why it is needed.",
+      "range": {
+        "startLine": 274,
+        "startChar": 8,
+        "endLine": 274,
+        "endChar": 32
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d890978a_183bf775",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "what is MKL_DEPENDENCY vs MKL_DEPDENCY_INTERFACE? please document here.",
+      "range": {
+        "startLine": 182,
+        "startChar": 1,
+        "endLine": 182,
+        "endChar": 25
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60a6b853_b7d688b7",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "PardisoErrorToString",
+      "range": {
+        "startLine": 43,
+        "startChar": 12,
+        "endLine": 43,
+        "endChar": 32
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "8bb11400_72d4fcf1",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/mkl_sparse.cc",
+              "range": {
+                "startLine": 43,
+                "startChar": 0,
+                "endLine": 44,
+                "endChar": 0
+              },
+              "replacement": "const char* PardisoErrorToString(MKL_INT pardiso_error) {\n"
+            },
+            {
+              "path": "internal/ceres/mkl_sparse.cc",
+              "range": {
+                "startLine": 295,
+                "startChar": 0,
+                "endLine": 296,
+                "endChar": 0
+              },
+              "replacement": "                     PardisoErrorToString(pardiso_status),                \\\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3109e339_2421729a",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "FromMklHandle(...) add docs.",
+      "range": {
+        "startLine": 75,
+        "startChar": 43,
+        "endLine": 75,
+        "endChar": 56
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "44553807_5374853f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/mkl_sparse.cc",
+              "range": {
+                "startLine": 75,
+                "startChar": 0,
+                "endLine": 75,
+                "endChar": 0
+              },
+              "replacement": "// Create CRS matrix from MKL handle\n// Returned handle stores references to structure and values of the input\n// matrix; callee is responsible for keeping matrix m as long as MKL handle is\n// used.\n// When object is no more needed, it should be destroyed with mkl_sparse_destroy\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1caee8f1_d676d9ae",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "Function name does not match all that this function does.\n\nAlso I do not really understand whats going on here and why. this looks like a really awkward API.",
+      "range": {
+        "startLine": 125,
+        "startChar": 54,
+        "endLine": 125,
+        "endChar": 68
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2851bcb2_30b5a214",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "a_mkl",
+      "range": {
+        "startLine": 159,
+        "startChar": 52,
+        "endLine": 159,
+        "endChar": 53
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "393b02bf_82246b5c",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "result",
+      "range": {
+        "startLine": 160,
+        "startChar": 18,
+        "endLine": 160,
+        "endChar": 21
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "312a431b_7784ae52",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "I am a bit confused about the structure of this object. It seems to be storing both Pardiso state but also has arrays like\n\nstd::vector\u003cint\u003e order_;\n  std::vector\u003cint\u003e rows_out_;\n  std::vector\u003cint\u003e cols_out_;\n  std::vector\u003cstd::pair\u003cint, int\u003e\u003e permutation_;\n  std::vector\u003cdouble\u003e values_prem_;\n  \n  which seem to be associated with a particular matrix. This seems a bit odd.",
+      "range": {
+        "startLine": 179,
+        "startChar": 6,
+        "endLine": 179,
+        "endChar": 21
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b63d190a_59b7a05f",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "upper",
+      "range": {
+        "startLine": 188,
+        "startChar": 5,
+        "endLine": 188,
+        "endChar": 11
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e88ae263_5688b862",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "do we ever call this with something other than UPPER_TRIANGULAR? in which case why bother?",
+      "range": {
+        "startLine": 191,
+        "startChar": 7,
+        "endLine": 191,
+        "endChar": 22
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b8e14bf_82b6a5de",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "this makes it sound that this function returns a bool, (result of the check). what happens if the check fails?\n\nHaving looked at the function I am still not sure what this function is doing and why.",
+      "range": {
+        "startLine": 213,
+        "startChar": 14,
+        "endLine": 213,
+        "endChar": 20
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c960873_f2750a73",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "what does this function do?",
+      "range": {
+        "startLine": 232,
+        "startChar": 7,
+        "endLine": 232,
+        "endChar": 22
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5153dfbd_3ad373b2",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "what about threading?",
+      "range": {
+        "startLine": 255,
+        "startChar": 12,
+        "endLine": 255,
+        "endChar": 22
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e5f9b5d_7cba482e",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "I am not fond of this structure where the state of the current matrix is being stored in this pardiso object. also what is this function actually doing?\n\nI am not seeing any pardiso operations here. so what does it mean to analyze structure?",
+      "range": {
+        "startLine": 348,
+        "startChar": 2,
+        "endLine": 348,
+        "endChar": 11
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee978d0b_4adf0841",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "why do we need to do this? if the matrix is already an mkl matrix, why are we having to call export_csr ?",
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e36c9525_1b2081d4",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "document whats happening here.",
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "171ba2e0_15da94f8",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "in case of natural why do we need to do any work at all?",
+      "range": {
+        "startLine": 455,
+        "startChar": 9,
+        "endLine": 455,
+        "endChar": 21
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "6cdb5a57_968442d8",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/mkl_sparse.cc",
+              "range": {
+                "startLine": 456,
+                "startChar": 0,
+                "endLine": 460,
+                "endChar": 0
+              },
+              "replacement": "      // No reordering is required\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90dc0738_380e29f3",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "document what is going on in this function.",
+      "range": {
+        "startLine": 491,
+        "startChar": 6,
+        "endLine": 491,
+        "endChar": 21
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "1d26162d_c57302e3",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/mkl_sparse.cc",
+              "range": {
+                "startLine": 492,
+                "startChar": 0,
+                "endLine": 492,
+                "endChar": 0
+              },
+              "replacement": "    // MKL direct solver interface requires symmetric matrices to be\n    // strictly upper-triangular. In ceres-solver matrices are stored as\n    // upper-block-triangular. A remap is stored in MKLPardiso wrapper from\n    // uppper-block-triangular to upper-triangular matrix\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6934ddd0_ed98ddce",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "a_crs",
+      "range": {
+        "startLine": 572,
+        "startChar": 51,
+        "endLine": 572,
+        "endChar": 52
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b82b7bf_5ef8a588",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "a_mkl",
+      "range": {
+        "startLine": 575,
+        "startChar": 7,
+        "endLine": 575,
+        "endChar": 12
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6717cea5_c8d926ba",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "ata_mkl",
+      "range": {
+        "startLine": 576,
+        "startChar": 7,
+        "endLine": 576,
+        "endChar": 10
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "619c6083_07bc78e6",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "why doesn\u0027t AtaStructure call mkl_sprase_order? why does the caller have to make this call?",
+      "range": {
+        "startLine": 578,
+        "startChar": 2,
+        "endLine": 578,
+        "endChar": 18
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "8eb62eec_7f47015f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/mkl_sparse.cc",
+              "range": {
+                "startLine": 578,
+                "startChar": 0,
+                "endLine": 578,
+                "endChar": 0
+              },
+              "replacement": "  // mkl_sparse_order requires values to be allocated\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef359e4f_de647926",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "you can just name this pardiso and save a bunch of text. It is clear in the context of this code that pardiso is part of mkl.",
+      "range": {
+        "startLine": 580,
+        "startChar": 17,
+        "endLine": 580,
+        "endChar": 18
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cd5c246_052c1568",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "why not just mkl_pardiso.Reorder(ordering_type, ordering)\n\nbut I am assuming that you are trying to avoid the case where ordering_type \u003d NATURAL, in which case shouldn\u0027t you early return at the top of the function anyways? and not spend time creating A_mkl and AtA ?",
+      "range": {
+        "startLine": 583,
+        "startChar": 6,
+        "endLine": 583,
+        "endChar": 19
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c3f6967_5b0a10b0",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "e_crs",
+      "range": {
+        "startLine": 592,
+        "startChar": 31,
+        "endLine": 592,
+        "endChar": 32
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bb1ba9b_510c4e63",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "f_crs",
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d25e4fe5_770da738",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "same comment about NATURAL ordering in this case.",
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31d13dc5_ac0267fe",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "f_mkl, e_mkl",
+      "range": {
+        "startLine": 597,
+        "startChar": 7,
+        "endLine": 597,
+        "endChar": 12
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37eb6571_38c1be63",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "I prefer to avoid hard crashes. what are the cases where this CHECK_EQ will fail? why not return bool and deal with it up above?",
+      "range": {
+        "startLine": 602,
+        "startChar": 2,
+        "endLine": 602,
+        "endChar": 10
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30be5a0e_2bb3e8bc",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "S -\u003e block_schur_complement",
+      "range": {
+        "startLine": 620,
+        "startChar": 18,
+        "endLine": 620,
+        "endChar": 19
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "164653a5_54f26dff",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "mkl_pardiso -\u003e pardiso",
+      "range": {
+        "startLine": 627,
+        "startChar": 13,
+        "endLine": 627,
+        "endChar": 24
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e7b5d3b_10c7b382",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "same comment as above about NATURAL",
+      "range": {
+        "startLine": 637,
+        "startChar": 23,
+        "endLine": 637,
+        "endChar": 47
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ce25719_71c6f5df",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "instead of introducing a new namespace here, I suggest naming this\n\nComputeAtAUsingMkl",
+      "range": {
+        "startLine": 45,
+        "startChar": 10,
+        "endLine": 45,
+        "endChar": 18
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "46ea29e8_0e6f7e84",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/mkl_sparse.h",
+              "range": {
+                "startLine": 45,
+                "startChar": 0,
+                "endLine": 46,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "internal/ceres/mkl_sparse.h",
+              "range": {
+                "startLine": 48,
+                "startChar": 0,
+                "endLine": 49,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67d5fac6_c232017e",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "Style note, Google style guide recommends Mkl rather than MKL",
+      "range": {
+        "startLine": 51,
+        "startChar": 5,
+        "endLine": 51,
+        "endChar": 23
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "4570ac27_f3c57731",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/mkl_sparse.h",
+              "range": {
+                "startLine": 51,
+                "startChar": 0,
+                "endLine": 52,
+                "endChar": 0
+              },
+              "replacement": "void MklComputeOrdering(CompressedRowSparseMatrix\u0026 A,\n"
+            },
+            {
+              "path": "internal/ceres/mkl_sparse.h",
+              "range": {
+                "startLine": 55,
+                "startChar": 0,
+                "endLine": 56,
+                "endChar": 0
+              },
+              "replacement": "void MklComputeOrderingSchurComplement(\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9945ea46_1c00e4f3",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "MklPardiso or even just Pardiso should be fine.",
+      "range": {
+        "startLine": 61,
+        "startChar": 6,
+        "endLine": 61,
+        "endChar": 16
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "689f4b93_e5b48886",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "Do we need to propagate the number of threads the sparse cholesky solver uses explicitly in this interface from the linear solver?",
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5fe92d12_5bab8490",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "mkl_ -\u003e pardiso_\n\nthis will be more consistent with the free standing functions.",
+      "range": {
+        "startLine": 79,
+        "startChar": 30,
+        "endLine": 79,
+        "endChar": 34
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe0aebc9_bd578471",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "e_matrix, f_matrix",
+      "range": {
+        "startLine": 255,
+        "startChar": 9,
+        "endLine": 255,
+        "endChar": 10
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0a94df5_9697105d",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "add a comment here that F is the empty matrix.",
+      "range": {
+        "startLine": 255,
+        "startChar": 35,
+        "endLine": 255,
+        "endChar": 63
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "66fb2619_4513d921",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/reorder_program.cc",
+              "range": {
+                "startLine": 255,
+                "startChar": 0,
+                "endLine": 255,
+                "endChar": 0
+              },
+              "replacement": "  // Split the block jacobian into E and F.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b396c1dd_2c8ec397",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "e_matrix_crs",
+      "range": {
+        "startLine": 257,
+        "startChar": 7,
+        "endLine": 257,
+        "endChar": 12
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbb90601_df64161e",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "e_matrix, f_matrix",
+      "range": {
+        "startLine": 439,
+        "startChar": 8,
+        "endLine": 439,
+        "endChar": 9
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c7b3034_ca63083b",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-20T19:26:27Z",
+      "side": 1,
+      "message": "order and ordering are too similar. How about schur_column_ordering or schur_ordering",
+      "range": {
+        "startLine": 446,
+        "startChar": 19,
+        "endLine": 446,
+        "endChar": 24
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "f2affb8c_b40c2700",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/reorder_program.cc",
+              "range": {
+                "startLine": 446,
+                "startChar": 0,
+                "endLine": 447,
+                "endChar": 0
+              },
+              "replacement": "  std::vector\u003cint\u003e perm(F.num_cols());\n"
+            },
+            {
+              "path": "internal/ceres/reorder_program.cc",
+              "range": {
+                "startLine": 448,
+                "startChar": 0,
+                "endLine": 449,
+                "endChar": 0
+              },
+              "replacement": "      *E_crs, *F_crs, ordering_type, perm.data());\n"
+            },
+            {
+              "path": "internal/ceres/reorder_program.cc",
+              "range": {
+                "startLine": 463,
+                "startChar": 0,
+                "endLine": 464,
+                "endChar": 0
+              },
+              "replacement": "        parameter_blocks[size_of_first_elimination_group + perm[i]];\n"
+            }
+          ]
+        }
+      ],
       "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
