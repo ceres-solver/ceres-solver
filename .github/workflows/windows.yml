@@ -15,11 +15,9 @@ jobs:
       fail-fast: true
       matrix:
         build_type: [Release]
-        sys: [mingw32, mingw64]
+        sys: [mingw64]
         lib: [shared, static]
         include:
-          - sys: mingw32
-            env: i686
           - sys: mingw64
             env: x86_64
 
