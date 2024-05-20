@@ -29,7 +29,7 @@ jobs:
           - ios
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup Dependencies (iOS)
         if: matrix.target == 'ios'
@@ -54,7 +54,7 @@ jobs:
 
       - name: Cache Build
         id: cache-build
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{env.CCACHE_DIR}}
           key: ${{matrix.os}}-ccache-${{matrix.build_type}}-${{matrix.lib}}-${{matrix.target}}-${{github.run_id}}

@@ -32,7 +32,7 @@ jobs:
           - '28'
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup Dependencies
         run: |
@@ -53,7 +53,7 @@ jobs:
 
       - name: Cache Eigen
         id: cache-eigen
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: eigen/
           key: NDK-${{matrix.os}}-eigen-3.4.0-${{matrix.abi}}
@@ -82,7 +82,7 @@ jobs:
 
       - name: Cache gflags
         id: cache-gflags
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: gflags/
           key: NDK-${{matrix.os}}-gflags-2.2.2-${{matrix.abi}}-${{matrix.build_type}}-${{matrix.lib}}
@@ -111,7 +111,7 @@ jobs:
 
       - name: Cache glog
         id: cache-glog
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: glog/
           key: NDK-${{matrix.os}}-glog-0.5-${{matrix.abi}}-${{matrix.build_type}}-${{matrix.lib}}
@@ -141,7 +141,7 @@ jobs:
 
       - name: Cache Build
         id: cache-build
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{env.CCACHE_DIR}}
           key: NDK-${{matrix.os}}-ccache-${{matrix.abi}}-${{matrix.build_type}}-${{matrix.lib}}-${{github.run_id}}
