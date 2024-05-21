@@ -52,6 +52,24 @@
       "parentUuid": "c71da9c3_8613bd7b",
       "revId": "3d163386480394c1142b3d89c67ad25879595ea5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "556233db_bc176602",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-21T17:29:37Z",
+      "side": 1,
+      "message": "oh I had forgotten about that. \n\nlooking at the compressedrowsparsematrix itself, it stores the row and column blocks but it does not store the block structure itself. \n\nThey are updated using AppendRow/DelteRows etc, but internally they are not used for any other purpose.\n\nI think instead of modifying the existing routine, which is called at a number of places and will likely require more extensive modifications to the code, it maybe better to add another routine, which makes it explicit that we are assuming that we are converting a block sparse matrix which is symmetric block upper triangular.\n\nwe can then transition other call sites to use this routine as appropriate.\n\nAlso are you saying that the matrices coming out of ToCompressedRowSparseMatrix is such that the entries of the rows are not sorted in increasing order of columns or is there some other invariant thats broken? It would be good to document this in the header of block_sparse_matrix.h for the existing functions so that we do not have to depend on your memory of this.",
+      "parentUuid": "0d2b434f_117ccc94",
+      "revId": "3d163386480394c1142b3d89c67ad25879595ea5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
