@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "0e0b4deb_b485ab43",
+        "filename": ".github/workflows/linux.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd96b4e9_97804535",
+      "range": {
+        "startLine": 104,
+        "startChar": 17,
+        "endLine": 104,
+        "endChar": 21
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "5ad80b7e_50f45e9d",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
@@ -83,6 +107,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2b61dcf0_5486c0cb",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "CMake does not have mkl routines (for finding the whole MKL not just lapack).\nThus `find_package(MKL)` will look for `MKL_DIR` variable.\n\nBut it is not set by `${INSTALLATION_ROOT}/intel/oneapi/setvars.sh` script (that seem to be recommended by intel).",
+      "parentUuid": "5acf1320_d14053b7",
+      "range": {
+        "startLine": 271,
+        "startChar": 38,
+        "endLine": 271,
+        "endChar": 45
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5e71a09a_7bad3848",
         "filename": "CMakeLists.txt",
         "patchSetId": 3
@@ -94,6 +142,30 @@
       "writtenOn": "2024-05-20T19:26:27Z",
       "side": 1,
       "message": "document what this is and why it is needed.",
+      "range": {
+        "startLine": 274,
+        "startChar": 8,
+        "endLine": 274,
+        "endChar": 32
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b64da6d_1472819e",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e71a09a_7bad3848",
       "range": {
         "startLine": 274,
         "startChar": 8,
@@ -117,6 +189,30 @@
       "writtenOn": "2024-05-20T19:26:27Z",
       "side": 1,
       "message": "what is MKL_DEPENDENCY vs MKL_DEPDENCY_INTERFACE? please document here.",
+      "range": {
+        "startLine": 182,
+        "startChar": 1,
+        "endLine": 182,
+        "endChar": 25
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3866d36d_8fbaea1f",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "I modified it to error on interface mismatch.",
+      "parentUuid": "d890978a_183bf775",
       "range": {
         "startLine": 182,
         "startChar": 1,
@@ -178,6 +274,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa3513b8_fcc0ce6c",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60a6b853_b7d688b7",
+      "range": {
+        "startLine": 43,
+        "startChar": 12,
+        "endLine": 43,
+        "endChar": 32
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3109e339_2421729a",
@@ -219,6 +339,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5a4c2f7_8b0d5a9b",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3109e339_2421729a",
+      "range": {
+        "startLine": 75,
+        "startChar": 43,
+        "endLine": 75,
+        "endChar": 56
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1caee8f1_d676d9ae",
@@ -232,6 +376,30 @@
       "writtenOn": "2024-05-20T19:26:27Z",
       "side": 1,
       "message": "Function name does not match all that this function does.\n\nAlso I do not really understand whats going on here and why. this looks like a really awkward API.",
+      "range": {
+        "startLine": 125,
+        "startChar": 54,
+        "endLine": 125,
+        "endChar": 68
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7dc0bb99_6349d6cf",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "This function returns the matrix with the same structure (stored in the same memory region), but with a separate (non-owned by the handle) value array.\n\nThis is used to skip computing values of FtF and FtEEtF in MklComputeOrderingSchurComplement (since we only need their NNZ pattern), and  introducing dummy values afterwards since MKL does not have a method to compute sparsity pattern of sum of two sparse matrices, only a sum (that is sparsity pattern and values) of sum of two sparse matrices (value-free version is only available for multiplication).",
+      "parentUuid": "1caee8f1_d676d9ae",
       "range": {
         "startLine": 125,
         "startChar": 54,
@@ -265,6 +433,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "51eeba5d_e2958096",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2851bcb2_30b5a214",
+      "range": {
+        "startLine": 159,
+        "startChar": 52,
+        "endLine": 159,
+        "endChar": 53
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "393b02bf_82246b5c",
@@ -278,6 +470,30 @@
       "writtenOn": "2024-05-20T19:26:27Z",
       "side": 1,
       "message": "result",
+      "range": {
+        "startLine": 160,
+        "startChar": 18,
+        "endLine": 160,
+        "endChar": 21
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "55695073_50f2c2f3",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "393b02bf_82246b5c",
       "range": {
         "startLine": 160,
         "startChar": 18,
@@ -313,6 +529,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e4de47f2_cf1ee4b5",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "This is pardiso state and some data that is required to bring ceres-solver representation to one that can be used with MKL PARDISO interface (please check comment for `AnalyzeStructure` below)",
+      "parentUuid": "312a431b_7784ae52",
+      "range": {
+        "startLine": 179,
+        "startChar": 6,
+        "endLine": 179,
+        "endChar": 21
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b63d190a_59b7a05f",
         "filename": "internal/ceres/mkl_sparse.cc",
         "patchSetId": 3
@@ -324,6 +564,30 @@
       "writtenOn": "2024-05-20T19:26:27Z",
       "side": 1,
       "message": "upper",
+      "range": {
+        "startLine": 188,
+        "startChar": 5,
+        "endLine": 188,
+        "endChar": 11
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00b4016e_d76ff79f",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b63d190a_59b7a05f",
       "range": {
         "startLine": 188,
         "startChar": 5,
@@ -359,6 +623,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d343b462_429837d6",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "Because corresponding function accepting CompressedRowSparseMatrix has to check if matrix is UPPER_TRIANGULAR, and act accordingly.\n\nWould you prefer defining this one without StorageType argument and adding a comment that it only utilizes upper-diagonal part?",
+      "parentUuid": "e88ae263_5688b862",
+      "range": {
+        "startLine": 191,
+        "startChar": 7,
+        "endLine": 191,
+        "endChar": 22
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9b8e14bf_82b6a5de",
         "filename": "internal/ceres/mkl_sparse.cc",
         "patchSetId": 3
@@ -370,6 +658,30 @@
       "writtenOn": "2024-05-20T19:26:27Z",
       "side": 1,
       "message": "this makes it sound that this function returns a bool, (result of the check). what happens if the check fails?\n\nHaving looked at the function I am still not sure what this function is doing and why.",
+      "range": {
+        "startLine": 213,
+        "startChar": 14,
+        "endLine": 213,
+        "endChar": 20
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c48eab90_24a9e908",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "If it is not compatible [not exactly upper-diagonal] the following data is being computed and stored in Pardiso object:\n - `rows_out_` - new rows array\n - `cols_out_` - new cols array\n - `permutation` - \"instructions\" on where to copy data from\n - `values_perm_` - new values array",
+      "parentUuid": "9b8e14bf_82b6a5de",
       "range": {
         "startLine": 213,
         "startChar": 14,
@@ -426,6 +738,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1bb1c97_90557c8a",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5153dfbd_3ad373b2",
+      "range": {
+        "startLine": 255,
+        "startChar": 12,
+        "endLine": 255,
+        "endChar": 22
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3e5f9b5d_7cba482e",
@@ -439,6 +775,30 @@
       "writtenOn": "2024-05-20T19:26:27Z",
       "side": 1,
       "message": "I am not fond of this structure where the state of the current matrix is being stored in this pardiso object. also what is this function actually doing?\n\nI am not seeing any pardiso operations here. so what does it mean to analyze structure?",
+      "range": {
+        "startLine": 348,
+        "startChar": 2,
+        "endLine": 348,
+        "endChar": 11
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1073027_90fa0f5c",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "Analyze structure \u003d check if the matrix is upper-diagonal. Because if matrix has any extra values under the main diagonal - mkl pardiso will fail with an error.\n\nThus, a set of arrays is computed that allows for reasonably fast converting matrix to required form.",
+      "parentUuid": "3e5f9b5d_7cba482e",
       "range": {
         "startLine": 348,
         "startChar": 2,
@@ -468,6 +828,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "39a5ccb9_04e3c6c0",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "In order to get pointers to data. For working with [symmetric] mkl matrices in non-upper-diagonal-form",
+      "parentUuid": "ee978d0b_4adf0841",
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e36c9525_1b2081d4",
         "filename": "internal/ceres/mkl_sparse.cc",
         "patchSetId": 3
@@ -479,6 +857,24 @@
       "writtenOn": "2024-05-20T19:26:27Z",
       "side": 1,
       "message": "document whats happening here.",
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ee6d418_ff0d7fa8",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e36c9525_1b2081d4",
       "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -526,6 +922,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3b0d7094_1e4fbd84",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "There are two parameters controlling reordering:\n - `iparam[kIParamUserPermutation]`\n - `iparam[kIParamFillInReducingPermutationAlgorithm]`\n\nWhen `iparam[kIParamUserPermutation] \u003d\u003d 0`, the following algorithms can be selected using `iparam[kIParamFillInReducingPermutationAlgorithm]` :\n - 0 \u003d minimum degree\n - 2 \u003d nested dissection (sequential)\n - 3 \u003d nested dissection (parallel)\n\nWhen `iparam[kIParamUserPermutation] \u003d\u003d 1` user has to supply fill-in reducing permutation and `iparm[kIParamFillInReducingPermutationAlgorithm]` is ignored.\n\n(Check \"Developer Reference for Intel® oneAPI Math Kernel Library for C\" https://cdrdv2.intel.com/v1/dl/getContent/766685?fileName\u003donemkl_developer-reference-c_2023.0-766684-766685.pdf pages 1826-1827 for details)\n\nThus, the only (documented) way to not perform permutation is to perform identity permutation",
+      "parentUuid": "171ba2e0_15da94f8",
+      "range": {
+        "startLine": 455,
+        "startChar": 9,
+        "endLine": 455,
+        "endChar": 21
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "90dc0738_380e29f3",
         "filename": "internal/ceres/mkl_sparse.cc",
         "patchSetId": 3
@@ -565,6 +985,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b17e81fe_0494f2dd",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90dc0738_380e29f3",
+      "range": {
+        "startLine": 491,
+        "startChar": 6,
+        "endLine": 491,
+        "endChar": 21
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6934ddd0_ed98ddce",
@@ -578,6 +1022,30 @@
       "writtenOn": "2024-05-20T19:26:27Z",
       "side": 1,
       "message": "a_crs",
+      "range": {
+        "startLine": 572,
+        "startChar": 51,
+        "endLine": 572,
+        "endChar": 52
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a51ecae_d3dcc3ab",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6934ddd0_ed98ddce",
       "range": {
         "startLine": 572,
         "startChar": 51,
@@ -611,6 +1079,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb1277e1_aafe768e",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b82b7bf_5ef8a588",
+      "range": {
+        "startLine": 575,
+        "startChar": 7,
+        "endLine": 575,
+        "endChar": 12
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6717cea5_c8d926ba",
@@ -624,6 +1116,30 @@
       "writtenOn": "2024-05-20T19:26:27Z",
       "side": 1,
       "message": "ata_mkl",
+      "range": {
+        "startLine": 576,
+        "startChar": 7,
+        "endLine": 576,
+        "endChar": 10
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff13d6c7_8f6e7f79",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6717cea5_c8d926ba",
       "range": {
         "startLine": 576,
         "startChar": 7,
@@ -677,6 +1193,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b29b492b_6c1309dc",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "Because some methods of intel mkl accept/produce non-sorted crs.\n\nFor example, `mkl_sparse_d_add` (used in `MklComputeOrderingSchurComplement`) accepts non-ordered values (thus, we can sort it once for result that is being fed into Pardiso)",
+      "parentUuid": "619c6083_07bc78e6",
+      "range": {
+        "startLine": 578,
+        "startChar": 2,
+        "endLine": 578,
+        "endChar": 18
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ef359e4f_de647926",
         "filename": "internal/ceres/mkl_sparse.cc",
         "patchSetId": 3
@@ -688,6 +1228,30 @@
       "writtenOn": "2024-05-20T19:26:27Z",
       "side": 1,
       "message": "you can just name this pardiso and save a bunch of text. It is clear in the context of this code that pardiso is part of mkl.",
+      "range": {
+        "startLine": 580,
+        "startChar": 17,
+        "endLine": 580,
+        "endChar": 18
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df2198d4_21952634",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef359e4f_de647926",
       "range": {
         "startLine": 580,
         "startChar": 17,
@@ -723,6 +1287,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4a485ce6_0578bb6d",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "The nuance is `OrderingType` vs `LinearSolverOrdering`. `LinearSolverOrdering`.\nThe latter never gets NATURAL.\nI\u0027ve added an extra oveload to Pardiso::Reorder",
+      "parentUuid": "0cd5c246_052c1568",
+      "range": {
+        "startLine": 583,
+        "startChar": 6,
+        "endLine": 583,
+        "endChar": 19
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7c3f6967_5b0a10b0",
         "filename": "internal/ceres/mkl_sparse.cc",
         "patchSetId": 3
@@ -734,6 +1322,30 @@
       "writtenOn": "2024-05-20T19:26:27Z",
       "side": 1,
       "message": "e_crs",
+      "range": {
+        "startLine": 592,
+        "startChar": 31,
+        "endLine": 592,
+        "endChar": 32
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6fa3cab0_10e84111",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c3f6967_5b0a10b0",
       "range": {
         "startLine": 592,
         "startChar": 31,
@@ -761,6 +1373,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c553a7d4_916e7ab2",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bb1ba9b_510c4e63",
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d25e4fe5_770da738",
@@ -778,6 +1408,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f035d51f_c74b6399",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "`LinearSolverOrderingType` is never `NATURAL`",
+      "parentUuid": "d25e4fe5_770da738",
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "31d13dc5_ac0267fe",
@@ -791,6 +1439,30 @@
       "writtenOn": "2024-05-20T19:26:27Z",
       "side": 1,
       "message": "f_mkl, e_mkl",
+      "range": {
+        "startLine": 597,
+        "startChar": 7,
+        "endLine": 597,
+        "endChar": 12
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "280337fa_01296274",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31d13dc5_ac0267fe",
       "range": {
         "startLine": 597,
         "startChar": 7,
@@ -826,6 +1498,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9bde123e_ff59d731",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "When something went horribly wrong (dimensions/matrix formats/etc are not consistent, failed to allocate memory for result, ...)",
+      "parentUuid": "37eb6571_38c1be63",
+      "range": {
+        "startLine": 602,
+        "startChar": 2,
+        "endLine": 602,
+        "endChar": 10
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "30be5a0e_2bb3e8bc",
         "filename": "internal/ceres/mkl_sparse.cc",
         "patchSetId": 3
@@ -837,6 +1533,30 @@
       "writtenOn": "2024-05-20T19:26:27Z",
       "side": 1,
       "message": "S -\u003e block_schur_complement",
+      "range": {
+        "startLine": 620,
+        "startChar": 18,
+        "endLine": 620,
+        "endChar": 19
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fccc7b6_6fb95347",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30be5a0e_2bb3e8bc",
       "range": {
         "startLine": 620,
         "startChar": 18,
@@ -870,6 +1590,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "568ab225_1bec9f01",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "164653a5_54f26dff",
+      "range": {
+        "startLine": 627,
+        "startChar": 13,
+        "endLine": 627,
+        "endChar": 24
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4e7b5d3b_10c7b382",
@@ -883,6 +1627,30 @@
       "writtenOn": "2024-05-20T19:26:27Z",
       "side": 1,
       "message": "same comment as above about NATURAL",
+      "range": {
+        "startLine": 637,
+        "startChar": 23,
+        "endLine": 637,
+        "endChar": 47
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15f73e82_4bb5de0e",
+        "filename": "internal/ceres/mkl_sparse.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "`LinearSolverOrderingType` is never `NATURAL`",
+      "parentUuid": "4e7b5d3b_10c7b382",
       "range": {
         "startLine": 637,
         "startChar": 23,
@@ -944,6 +1712,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f6e7f3a_a5f39f38",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ce25719_71c6f5df",
+      "range": {
+        "startLine": 45,
+        "startChar": 10,
+        "endLine": 45,
+        "endChar": 18
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "67d5fac6_c232017e",
@@ -995,6 +1787,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d25c5a9_07611165",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67d5fac6_c232017e",
+      "range": {
+        "startLine": 51,
+        "startChar": 5,
+        "endLine": 51,
+        "endChar": 23
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9945ea46_1c00e4f3",
@@ -1008,6 +1824,30 @@
       "writtenOn": "2024-05-20T19:26:27Z",
       "side": 1,
       "message": "MklPardiso or even just Pardiso should be fine.",
+      "range": {
+        "startLine": 61,
+        "startChar": 6,
+        "endLine": 61,
+        "endChar": 16
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "93a9c2b0_b1734f36",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9945ea46_1c00e4f3",
       "range": {
         "startLine": 61,
         "startChar": 6,
@@ -1037,6 +1877,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1a0b0bd6_bcfdeece",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "Added setting number of threads (in terms of upper bound; there is an option to make it exact in mkl).",
+      "parentUuid": "689f4b93_e5b48886",
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5fe92d12_5bab8490",
         "filename": "internal/ceres/mkl_sparse.h",
         "patchSetId": 3
@@ -1048,6 +1906,30 @@
       "writtenOn": "2024-05-20T19:26:27Z",
       "side": 1,
       "message": "mkl_ -\u003e pardiso_\n\nthis will be more consistent with the free standing functions.",
+      "range": {
+        "startLine": 79,
+        "startChar": 30,
+        "endLine": 79,
+        "endChar": 34
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d006897_2c96737e",
+        "filename": "internal/ceres/mkl_sparse.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fe92d12_5bab8490",
       "range": {
         "startLine": 79,
         "startChar": 30,
@@ -1122,6 +2004,54 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "53b27b2d_6dceb1a7",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0a94df5_9697105d",
+      "range": {
+        "startLine": 255,
+        "startChar": 35,
+        "endLine": 255,
+        "endChar": 63
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "518c4230_e269d519",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe0aebc9_bd578471",
+      "range": {
+        "startLine": 255,
+        "startChar": 9,
+        "endLine": 255,
+        "endChar": 10
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b396c1dd_2c8ec397",
@@ -1135,6 +2065,30 @@
       "writtenOn": "2024-05-20T19:26:27Z",
       "side": 1,
       "message": "e_matrix_crs",
+      "range": {
+        "startLine": 257,
+        "startChar": 7,
+        "endLine": 257,
+        "endChar": 12
+      },
+      "revId": "a33d22dfa0c9a2e587e3fa2805a591e922ff8d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1da17b16_adbc72a8",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b396c1dd_2c8ec397",
       "range": {
         "startLine": 257,
         "startChar": 7,

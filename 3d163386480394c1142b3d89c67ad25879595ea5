@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "870cd4b2_327e66af",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T01:23:40Z",
+      "side": 1,
+      "message": "I guess the largest difference is upper-block-diagonal vs upper-diagonal matrices.\n\nMKL requires the latter and this is the reason why I compute a transformation from one to another and have to store some matrix-related stuff nearby MKL PARDISO state.\n\nAnother difference is that it seems the only documented way to get a natural ordering is to supply an identity permutation.",
+      "revId": "3d163386480394c1142b3d89c67ad25879595ea5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
