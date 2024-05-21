@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a933e8dc_2cde6bd5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-21T20:55:22Z",
+      "side": 1,
+      "message": "Folks, here is my very rough and crude attempt at adding abseil as a dependency. Please take a look. I am sure I am doing the cmake stuff wrong/incompletely.",
+      "revId": "695c1fc923eb794dfec7322df357556380f04fe5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
