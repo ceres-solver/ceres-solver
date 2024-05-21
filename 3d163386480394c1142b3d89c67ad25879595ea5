@@ -34,6 +34,24 @@
       "parentUuid": "870cd4b2_327e66af",
       "revId": "3d163386480394c1142b3d89c67ad25879595ea5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d2b434f_117ccc94",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-21T17:17:43Z",
+      "side": 1,
+      "message": "There is (now) an invariant of each CRS matrix in ceres-solver being sort-of block-sparse matrix (with values of row-block being stored interleaved), which will be broken by this change.\n\nDo you think we have any other places (except this conversion routine) that rely on this invariant?\n\nIs only an easy case to be implemented? (upper-block-triangular with square non-empty blocks on main diagonal -\u003e upper/lower-triangular)",
+      "parentUuid": "c71da9c3_8613bd7b",
+      "revId": "3d163386480394c1142b3d89c67ad25879595ea5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
