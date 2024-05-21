@@ -33,9 +33,9 @@
 #include <map>
 #include <memory>
 #include <set>
-#include <unordered_set>
 #include <vector>
 
+#include "absl/container/flat_hash_set.h"
 #include "ceres/graph.h"
 #include "ceres/graph_algorithms.h"
 #include "ceres/map_util.h"
@@ -57,7 +57,7 @@ int ComputeStableSchurOrdering(const Program& program,
 
   const std::vector<ParameterBlock*>& parameter_blocks =
       program.parameter_blocks();
-  const std::unordered_set<ParameterBlock*>& vertices = graph->vertices();
+  const absl::flat_hash_set<ParameterBlock*>& vertices = graph->vertices();
   for (auto* parameter_block : parameter_blocks) {
     if (vertices.count(parameter_block) > 0) {
       ordering->push_back(parameter_block);
@@ -168,7 +168,7 @@ void OrderingToGroupSizes(const ParameterBlockOrdering* ordering,
   }
 
   // TODO(sameeragarwal): Investigate if this should be a set or an
-  // unordered_set.
+  // flat_hash_set.
   const std::map<int, std::set<double*>>& group_to_elements =
       ordering->group_to_elements();
   for (const auto& g_t_e : group_to_elements) {

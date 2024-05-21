@@ -32,9 +32,9 @@
 
 #include <cstddef>
 #include <memory>
-#include <unordered_set>
 #include <vector>
 
+#include "absl/container/flat_hash_set.h"
 #include "ceres/cost_function.h"
 #include "ceres/graph.h"
 #include "ceres/problem_impl.h"
@@ -45,7 +45,7 @@
 
 namespace ceres::internal {
 
-using VertexSet = std::unordered_set<ParameterBlock*>;
+using VertexSet = absl::flat_hash_set<ParameterBlock*>;
 
 template <int M, int... Ns>
 class DummyCostFunction : public SizedCostFunction<M, Ns...> {

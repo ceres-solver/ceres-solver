@@ -50,15 +50,14 @@
 
 #include <memory>
 #include <set>
-#include <unordered_map>
-#include <unordered_set>
 #include <utility>
 #include <vector>
 
+#include "absl/container/flat_hash_map.h"
+#include "absl/container/flat_hash_set.h"
 #include "ceres/block_structure.h"
 #include "ceres/graph.h"
 #include "ceres/linear_solver.h"
-#include "ceres/pair_hash.h"
 #include "ceres/preconditioner.h"
 #include "ceres/sparse_cholesky.h"
 
@@ -156,7 +155,7 @@ class CERES_NO_EXPORT VisibilityBasedPreconditioner
   void ScaleOffDiagonalCells();
 
   void ClusterCameras(const std::vector<std::set<int>>& visibility);
-  void FlattenMembershipMap(const std::unordered_map<int, int>& membership_map,
+  void FlattenMembershipMap(const absl::flat_hash_map<int, int>& membership_map,
                             std::vector<int>* membership_vector) const;
   void ComputeClusterVisibility(
       const std::vector<std::set<int>>& visibility,
@@ -165,7 +164,7 @@ class CERES_NO_EXPORT VisibilityBasedPreconditioner
       const std::vector<std::set<int>>& visibility) const;
   void ForestToClusterPairs(
       const WeightedGraph<int>& forest,
-      std::unordered_set<std::pair<int, int>, pair_hash>* cluster_pairs) const;
+      absl::flat_hash_set<std::pair<int, int>>* cluster_pairs) const;
   void ComputeBlockPairsInPreconditioner(const CompressedRowBlockStructure& bs);
   bool IsBlockPairInPreconditioner(int block1, int block2) const;
   bool IsBlockPairOffDiagonal(int block1, int block2) const;
@@ -189,7 +188,7 @@ class CERES_NO_EXPORT VisibilityBasedPreconditioner
 
   // Set of cluster pairs (including self pairs (i,i)) in the
   // preconditioner.
-  std::unordered_set<std::pair<int, int>, pair_hash> cluster_pairs_;
+  absl::flat_hash_set<std::pair<int, int>> cluster_pairs_;
   std::unique_ptr<SchurEliminatorBase> eliminator_;
 
   // Preconditioner matrix.

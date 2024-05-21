@@ -33,6 +33,7 @@
 #include <memory>
 
 #include "Eigen/Dense"
+#include "absl/container/flat_hash_set.h"
 #include "ceres/block_random_access_dense_matrix.h"
 #include "ceres/block_random_access_sparse_matrix.h"
 #include "ceres/block_sparse_matrix.h"
@@ -112,7 +113,7 @@ namespace ceres::internal {
 
 //   AssertionResult IsSparsityStructureValid() {
 //     preconditioner_->InitStorage(*A_->block_structure());
-//     const std::unordered_set<pair<int, int>, pair_hash>& cluster_pairs =
+//     const absl::flat_hash_set<pair<int, int>>& cluster_pairs =
 //     get_cluster_pairs(); const vector<int>& cluster_membership =
 //     get_cluster_membership();
 
@@ -137,7 +138,7 @@ namespace ceres::internal {
 
 //   AssertionResult PreconditionerValuesMatch() {
 //     preconditioner_->Update(*A_, D_.get());
-//     const std::unordered_set<pair<int, int>, pair_hash>& cluster_pairs =
+//     const absl::flat_hash_set<pair<int, int>>& cluster_pairs =
 //     get_cluster_pairs(); const BlockRandomAccessSparseMatrix* m = get_m();
 //     Matrix preconditioner_matrix;
 //     m->matrix()->ToDenseMatrix(&preconditioner_matrix);
@@ -205,11 +206,11 @@ namespace ceres::internal {
 //     return &preconditioner_->block_pairs_;
 //   }
 
-//   const std::unordered_set<pair<int, int>, pair_hash>& get_cluster_pairs() {
+//   const absl::flat_hash_set<pair<int, int>>& get_cluster_pairs() {
 //     return preconditioner_->cluster_pairs_;
 //   }
 
-//   std::unordered_set<pair<int, int>, pair_hash>* get_mutable_cluster_pairs()
+//   absl::flat_hash_set<pair<int, int>>* get_mutable_cluster_pairs()
 //   {
 //     return &preconditioner_->cluster_pairs_;
 //   }
@@ -255,7 +256,7 @@ namespace ceres::internal {
 
 //   *get_mutable_num_clusters() = 1;
 
-//   std::unordered_set<pair<int, int>, pair_hash>& cluster_pairs =
+//   absl::flat_hash_set<pair<int, int>>& cluster_pairs =
 //   *get_mutable_cluster_pairs(); cluster_pairs.clear();
 //   cluster_pairs.insert(make_pair(0, 0));
 
@@ -302,7 +303,7 @@ namespace ceres::internal {
 //   }
 //   *get_mutable_num_clusters() = kNumClusters;
 
-//   std::unordered_set<pair<int, int>, pair_hash>& cluster_pairs =
+//   absl::flat_hash_set<pair<int, int>>& cluster_pairs =
 //   *get_mutable_cluster_pairs(); cluster_pairs.clear(); for (int i = 0; i <
 //   kNumClusters; ++i) {
 //     cluster_pairs.insert(make_pair(i, i));
@@ -328,7 +329,7 @@ namespace ceres::internal {
 //   *get_mutable_num_clusters() = kNumClusters;
 
 //   // Spanning forest has structure 0-1 2
-//   std::unordered_set<pair<int, int>, pair_hash>& cluster_pairs =
+//   absl::flat_hash_set<pair<int, int>>& cluster_pairs =
 //   *get_mutable_cluster_pairs(); cluster_pairs.clear(); for (int i = 0; i <
 //   kNumClusters; ++i) {
 //     cluster_pairs.insert(make_pair(i, i));

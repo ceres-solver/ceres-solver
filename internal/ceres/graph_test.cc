@@ -30,8 +30,7 @@
 
 #include "ceres/graph.h"
 
-#include <unordered_set>
-
+#include "absl/container/flat_hash_set.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
@@ -47,7 +46,7 @@ TEST(Graph, AddVertexAndEdge) {
   graph.AddVertex(1);
   graph.AddEdge(0, 1);
 
-  const std::unordered_set<int>& vertices = graph.vertices();
+  const absl::flat_hash_set<int>& vertices = graph.vertices();
   EXPECT_EQ(vertices.size(), 2);
   EXPECT_EQ(graph.Neighbors(0).size(), 1);
   EXPECT_EQ(graph.Neighbors(1).size(), 1);
@@ -59,7 +58,7 @@ TEST(Graph, AddVertexIdempotence) {
   graph.AddVertex(1);
   graph.AddEdge(0, 1);
 
-  const std::unordered_set<int>& vertices = graph.vertices();
+  const absl::flat_hash_set<int>& vertices = graph.vertices();
 
   EXPECT_EQ(vertices.size(), 2);
 
@@ -92,7 +91,7 @@ TEST(WeightedGraph, AddVertexAndEdge) {
   graph.AddVertex(1, 2.0);
   graph.AddEdge(0, 1, 0.5);
 
-  const std::unordered_set<int>& vertices = graph.vertices();
+  const absl::flat_hash_set<int>& vertices = graph.vertices();
   EXPECT_EQ(vertices.size(), 2);
   EXPECT_EQ(graph.VertexWeight(0), 1.0);
   EXPECT_EQ(graph.VertexWeight(1), 2.0);
@@ -108,7 +107,7 @@ TEST(WeightedGraph, AddVertexIdempotence) {
   graph.AddVertex(1, 2.0);
   graph.AddEdge(0, 1, 0.5);
 
-  const std::unordered_set<int>& vertices = graph.vertices();
+  const absl::flat_hash_set<int>& vertices = graph.vertices();
 
   EXPECT_EQ(vertices.size(), 2);
 
