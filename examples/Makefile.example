@@ -53,9 +53,6 @@ CERES_LIBRARY_DEPENDENCIES = -lgflags -lglog
 # If Ceres was built with Suitesparse:
 CERES_LIBRARY_DEPENDENCIES += -llapack -lcamd -lamd -lccolamd -lcolamd -lcholmod
 
-# If Ceres was built with CXSparse:
-CERES_LIBRARY_DEPENDENCIES += -lcxsparse
-
 # If Ceres was built with OpenMP:
 CERES_LIBRARY_DEPENDENCIES += -fopenmp -lpthread -lgomp -lm
 

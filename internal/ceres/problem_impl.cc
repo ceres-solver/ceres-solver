@@ -667,11 +667,11 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
 
   Evaluator::Options evaluator_options;
 
-  // Even though using SPARSE_NORMAL_CHOLESKY requires SuiteSparse or
-  // CXSparse, here it just being used for telling the evaluator to
-  // use a SparseRowCompressedMatrix for the jacobian. This is because
-  // the Evaluator decides the storage for the Jacobian based on the
-  // type of linear solver being used.
+  // Even though using SPARSE_NORMAL_CHOLESKY requires a sparse linear algebra
+  // library here it just being used for telling the evaluator to use a
+  // SparseRowCompressedMatrix for the jacobian. This is because the Evaluator
+  // decides the storage for the Jacobian based on the type of linear solver
+  // being used.
   evaluator_options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
   evaluator_options.num_threads = evaluate_options.num_threads;
 
