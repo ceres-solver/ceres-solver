@@ -16,6 +16,24 @@
       "message": "I guess the largest difference is upper-block-diagonal vs upper-diagonal matrices.\n\nMKL requires the latter and this is the reason why I compute a transformation from one to another and have to store some matrix-related stuff nearby MKL PARDISO state.\n\nAnother difference is that it seems the only documented way to get a natural ordering is to supply an identity permutation.",
       "revId": "3d163386480394c1142b3d89c67ad25879595ea5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c71da9c3_8613bd7b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-21T16:34:38Z",
+      "side": 1,
+      "message": "Thanks for the explanation.\n\nBlock Upper Triangular: For your purposes the only case this will happen is for sparse_schur, because for sparse_normal_cholesky you are computing A^TA yourself.\n\nI think I have a solution for this.\n\nThe way SparseSchurComplementSolver works is that it takes the underlying BlockSparseMatrix which contains the schur_complement matrix, and calls \n\nToCompressedRowSparseMatrix/Transpose on it and then UpdateCompressedRowSoarseMatrix/Transpose on it in subsequent calls. In fact I think you actually wrote this code no?\n\nIt is these two functions in block_sparse_matrix.cc which need to be updated to ensure that we are not including the the lower triangular part of the block diagonals and we will be okay. \n\nThis is a change thats independent of this CL and can be landed before we continue work on this CL. What do you think?\n\nI will look at the identity permutation issue next.",
+      "parentUuid": "870cd4b2_327e66af",
+      "revId": "3d163386480394c1142b3d89c67ad25879595ea5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
