@@ -159,6 +159,11 @@ endif (IOS)
 
 unset(CERES_COMPILE_OPTIONS)
 
+find_package(absl REQUIRED)
+if (absl_FOUND)
+  message("-- Found Abseil version ${absl_VERSION}: ${absl_DIR}")
+endif (absl_FOUND)
+
 # Eigen.
 # Eigen delivers Eigen3Config.cmake since v3.3.3
 find_package(Eigen3 3.3 REQUIRED)

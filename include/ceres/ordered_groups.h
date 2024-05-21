@@ -33,9 +33,9 @@
 
 #include <map>
 #include <set>
-#include <unordered_map>
 #include <vector>
 
+#include "absl/container/flat_hash_map.h"
 #include "ceres/internal/export.h"
 #include "glog/logging.h"
 
@@ -186,7 +186,7 @@ class OrderedGroups {
 
  private:
   std::map<int, std::set<T>> group_to_elements_;
-  std::unordered_map<T, int> element_to_group_;
+  absl::flat_hash_map<T, int> element_to_group_;
 };
 
 // Typedef for the most commonly used version of OrderedGroups.

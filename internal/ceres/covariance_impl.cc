@@ -35,13 +35,13 @@
 #include <memory>
 #include <numeric>
 #include <sstream>
-#include <unordered_set>
 #include <utility>
 #include <vector>
 
 #include "Eigen/SVD"
 #include "Eigen/SparseCore"
 #include "Eigen/SparseQR"
+#include "absl/container/flat_hash_set.h"
 #include "ceres/compressed_col_sparse_matrix_utils.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/covariance.h"
@@ -366,7 +366,7 @@ bool CovarianceImpl::ComputeCovarianceSparsity(
   std::vector<double*> all_parameter_blocks;
   problem->GetParameterBlocks(&all_parameter_blocks);
   const ProblemImpl::ParameterMap& parameter_map = problem->parameter_map();
-  std::unordered_set<ParameterBlock*> parameter_blocks_in_use;
+  absl::flat_hash_set<ParameterBlock*> parameter_blocks_in_use;
   std::vector<ResidualBlock*> residual_blocks;
   problem->GetResidualBlocks(&residual_blocks);
 
