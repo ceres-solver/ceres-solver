@@ -33,6 +33,7 @@
 
 #include <string>
 
+#include "absl/container/flat_hash_set.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
 #include "ceres/linear_solver.h"
@@ -111,7 +112,7 @@ CERES_NO_EXPORT bool ReorderProgramForSparseCholesky(
 // bottom_residual_blocks to contain residual blocks not present in
 // the Program.
 CERES_NO_EXPORT int ReorderResidualBlocksByPartition(
-    const std::unordered_set<ResidualBlockId>& bottom_residual_blocks,
+    const absl::flat_hash_set<ResidualBlockId>& bottom_residual_blocks,
     Program* program);
 
 // The return value of this function indicates whether the columns of

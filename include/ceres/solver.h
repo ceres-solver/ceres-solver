@@ -34,9 +34,9 @@
 #include <cmath>
 #include <memory>
 #include <string>
-#include <unordered_set>
 #include <vector>
 
+#include "absl/container/flat_hash_set.h"
 #include "ceres/crs_matrix.h"
 #include "ceres/internal/config.h"
 #include "ceres/internal/disable_warnings.h"
@@ -359,7 +359,7 @@ class CERES_EXPORT Solver {
     //
     // If Solver::Options::preconditioner_type == SUBSET, then
     // residual_blocks_for_subset_preconditioner must be non-empty.
-    std::unordered_set<ResidualBlockId>
+    absl::flat_hash_set<ResidualBlockId>
         residual_blocks_for_subset_preconditioner;
 
     // Ceres supports using multiple dense linear algebra libraries for dense

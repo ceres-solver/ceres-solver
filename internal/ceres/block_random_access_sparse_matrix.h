@@ -34,10 +34,10 @@
 #include <cstdint>
 #include <memory>
 #include <set>
-#include <unordered_map>
 #include <utility>
 #include <vector>
 
+#include "absl/container/flat_hash_map.h"
 #include "ceres/block_random_access_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
@@ -52,7 +52,7 @@ namespace ceres::internal {
 // A thread safe square block sparse implementation of
 // BlockRandomAccessMatrix. Internally a BlockSparseMatrix is used
 // for doing the actual storage. This class augments this matrix with
-// an unordered_map that allows random read/write access.
+// an flat_hash_map that allows random read/write access.
 class CERES_NO_EXPORT BlockRandomAccessSparseMatrix
     : public BlockRandomAccessMatrix {
  public:
@@ -114,7 +114,7 @@ class CERES_NO_EXPORT BlockRandomAccessSparseMatrix
 
   // A mapping from <row_block_id, col_block_id> to the position in
   // the values array of tsm_ where the block is stored.
-  using LayoutType = std::unordered_map<int64_t, std::unique_ptr<CellInfo>>;
+  using LayoutType = absl::flat_hash_map<int64_t, std::unique_ptr<CellInfo>>;
   LayoutType layout_;
 
   // The underlying matrix object which actually stores the cells.

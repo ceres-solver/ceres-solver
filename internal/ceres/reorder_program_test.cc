@@ -33,6 +33,7 @@
 #include <random>
 #include <vector>
 
+#include "absl/container/flat_hash_set.h"
 #include "ceres/internal/config.h"
 #include "ceres/parameter_block.h"
 #include "ceres/problem_impl.h"
@@ -269,7 +270,7 @@ TEST(_, ReorderResidualBlocksbyPartition) {
   for (int i = 1; i < 6; ++i) {
     std::shuffle(
         std::begin(residual_block_ids), std::end(residual_block_ids), rng);
-    std::unordered_set<ResidualBlockId> bottom(residual_block_ids.begin(),
+    absl::flat_hash_set<ResidualBlockId> bottom(residual_block_ids.begin(),
                                                residual_block_ids.begin() + i);
     const int start_bottom =
         ReorderResidualBlocksByPartition(bottom, problem.mutable_program());

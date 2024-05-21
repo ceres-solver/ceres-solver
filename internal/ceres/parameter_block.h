@@ -37,8 +37,8 @@
 #include <limits>
 #include <memory>
 #include <string>
-#include <unordered_set>
 
+#include "absl/container/flat_hash_set.h"
 #include "ceres/array_utils.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/eigen.h"
@@ -63,7 +63,7 @@ class ResidualBlock;
 // proper disposal of the manifold.
 class CERES_NO_EXPORT ParameterBlock {
  public:
-  using ResidualBlockSet = std::unordered_set<ResidualBlock*>;
+  using ResidualBlockSet = absl::flat_hash_set<ResidualBlock*>;
 
   // Create a parameter block with the user state, size, and index specified.
   // The size is the size of the parameter block and the index is the position

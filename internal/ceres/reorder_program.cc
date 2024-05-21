@@ -39,6 +39,7 @@
 #include <vector>
 
 #include "Eigen/SparseCore"
+#include "absl/container/flat_hash_set.h"
 #include "ceres/internal/config.h"
 #include "ceres/internal/export.h"
 #include "ceres/ordered_groups.h"
@@ -231,7 +232,7 @@ bool ApplyOrdering(const ProblemImpl::ParameterMap& parameter_map,
   parameter_blocks->clear();
 
   // TODO(sameeragarwal): Investigate whether this should be a set or an
-  // unordered_set.
+  // flat_hash_set.
   const std::map<int, std::set<double*>>& groups = ordering.group_to_elements();
   for (const auto& p : groups) {
     const std::set<double*>& group = p.second;
@@ -491,7 +492,7 @@ bool ReorderProgramForSchurTypeLinearSolver(
     // Verify that the first elimination group is an independent set.
 
     // TODO(sameeragarwal): Investigate if this should be a set or an
-    // unordered_set.
+    // flat_hash_set.
     const std::set<double*>& first_elimination_group =
         parameter_block_ordering->group_to_elements().begin()->second;
     if (!program->IsParameterBlockSetIndependent(first_elimination_group)) {
@@ -595,7 +596,7 @@ bool ReorderProgramForSparseCholesky(
 }
 
 int ReorderResidualBlocksByPartition(
-    const std::unordered_set<ResidualBlockId>& bottom_residual_blocks,
+    const absl::flat_hash_set<ResidualBlockId>& bottom_residual_blocks,
     Program* program) {
   auto residual_blocks = program->mutable_residual_blocks();
   auto it = std::partition(residual_blocks->begin(),
