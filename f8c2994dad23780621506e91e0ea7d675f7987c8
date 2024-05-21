@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43087ffa_b00f9393",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-21T21:21:44Z",
+      "side": 1,
+      "message": "Dmitry FYI since stream ordered allocations is something that affected your code.",
+      "revId": "f8c2994dad23780621506e91e0ea7d675f7987c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
