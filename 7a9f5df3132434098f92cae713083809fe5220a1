@@ -3,6 +3,411 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9ea4223f_e910067c",
+        "filename": ".github/workflows/linux.yml",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-05-21T20:41:58Z",
+      "side": 1,
+      "message": "Undo unnecessary whitespace changes.",
+      "revId": "7a9f5df3132434098f92cae713083809fe5220a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6df6b703_0bb81ff2",
+        "filename": ".github/workflows/linux.yml",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-05-21T20:41:58Z",
+      "side": 1,
+      "message": "CUDA and libcudass setup steps are largely independent. I would therefore suggest moving the corresponding logic to another stage `Setup cuDSS` for a clearer structure.",
+      "range": {
+        "startLine": 72,
+        "startChar": 10,
+        "endLine": 72,
+        "endChar": 14
+      },
+      "revId": "7a9f5df3132434098f92cae713083809fe5220a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58f72479_7326a33e",
+        "filename": ".github/workflows/linux.yml",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-05-21T20:41:58Z",
+      "side": 1,
+      "message": "```suggestion\n          echo \"${{github.workspace}}/libcudss-linux-x86_64-0.2.1.3_cuda12-archive/lib/cmake/cudss\" \u003e\u003e $GITHUB_ENV\n```\nand drop the line above.",
+      "range": {
+        "startLine": 75,
+        "startChar": 16,
+        "endLine": 75,
+        "endChar": 36
+      },
+      "revId": "7a9f5df3132434098f92cae713083809fe5220a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42e59378_dd2d0aa9",
+        "filename": ".github/workflows/windows.yml",
+        "patchSetId": 8
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-05-21T20:41:58Z",
+      "side": 1,
+      "message": "Similar to Linux workflow, move the cuDSS setup to a separate stage.",
+      "revId": "7a9f5df3132434098f92cae713083809fe5220a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "771753a4_78bf1db0",
+        "filename": ".github/workflows/windows.yml",
+        "patchSetId": 8
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-05-21T20:41:58Z",
+      "side": 1,
+      "message": "Please add a brief comment here that explains what is happening and why. It looks like you are patching the cuDSS CMake package configuration file. However, it is not clear why this needs to be done.",
+      "range": {
+        "startLine": 138,
+        "startChar": 10,
+        "endLine": 138,
+        "endChar": 11
+      },
+      "revId": "7a9f5df3132434098f92cae713083809fe5220a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c738e61c_a6da7046",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-05-21T20:41:58Z",
+      "side": 1,
+      "message": "Hi Mark,\n\nThank you for contributing the cuDSS solver support! The changes look already pretty solid to me.\n\nStill, I have several (rather minor) remarks regarding the Github workflow organization and the CMake integration with some general suggestions.",
+      "revId": "7a9f5df3132434098f92cae713083809fe5220a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "317a9625_1ce3a326",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-05-21T20:41:58Z",
+      "side": 1,
+      "message": "Do we care about the cuDSS version (i.e., a minimum one)? If we do and the version is provided by the package configuration, it should be part of the `find_dependency` invocation:\n\n```suggestion\n    set(cudss_DEPENDENCY \"find_dependency(cudss ${cudss_VERSION})\")\n```\nOtherwise I assume cuDSS is both forward and backward compatible meaning a Ceres deployment can be used both with older and new versions of cuDSS without any restrictions. Is this the case here?",
+      "revId": "7a9f5df3132434098f92cae713083809fe5220a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "697dd6e9_6b553eb5",
+        "filename": "internal/ceres/context_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-05-21T20:41:58Z",
+      "side": 1,
+      "message": "```suggestion\n    cudssDestroy(cudss_handle_);\n    cudss_handle_ \u003d nullptr;\n```",
+      "range": {
+        "startLine": 65,
+        "startChar": 17,
+        "endLine": 65,
+        "endChar": 30
+      },
+      "revId": "7a9f5df3132434098f92cae713083809fe5220a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67004d4c_c3dea0cb",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-05-21T20:41:58Z",
+      "side": 1,
+      "message": "```suggestion\n  CudaPinnedHostBuffer() noexcept \u003d default;\n```",
+      "revId": "7a9f5df3132434098f92cae713083809fe5220a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4192a9e_0360ccd8",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-05-21T20:41:58Z",
+      "side": 1,
+      "message": "There\u0027s a move constructor but no move assignment? This seems incomplete.\n\nAlso, move ctor and assignment should be `noexcept` as most of query methods that do not allocate/deallocate memory.\n```suggestion\n  CudaPinnedHostBuffer(CudaPinnedHostBuffer\u0026\u0026 other) noexcept\n```",
+      "revId": "7a9f5df3132434098f92cae713083809fe5220a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85a05b7e_d1df7013",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-05-21T20:41:58Z",
+      "side": 1,
+      "message": "```suggestion\n      : data_(std::exchange(other.data_, nullptr)), size_(std::exchange(other.size_, 0)) {\n```\nand drop assignments to `other` below. You need to include `\u003cutility\u003e`.",
+      "range": {
+        "startLine": 179,
+        "startChar": 8,
+        "endLine": 179,
+        "endChar": 46
+      },
+      "revId": "7a9f5df3132434098f92cae713083809fe5220a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "672a88b7_b79322f5",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-05-21T20:41:58Z",
+      "side": 1,
+      "message": "```suggestion\n  void Reserve(const std::size_t size) {\n```\nAlso make sure to include `\u003ccstddef\u003e` for the type definition (IWYU).",
+      "range": {
+        "startLine": 189,
+        "startChar": 21,
+        "endLine": 189,
+        "endChar": 27
+      },
+      "revId": "7a9f5df3132434098f92cae713083809fe5220a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06d844bc_272dc9c1",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-05-21T20:41:58Z",
+      "side": 1,
+      "message": "```suggestion\n  T* data() noexcept { return data_; }\n```",
+      "revId": "7a9f5df3132434098f92cae713083809fe5220a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75b18e80_b454f81d",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-05-21T20:41:58Z",
+      "side": 1,
+      "message": "```suggestion\n  const T* data() const noexcept { return data_; }\n```",
+      "revId": "7a9f5df3132434098f92cae713083809fe5220a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1d5beff_56e42092",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-05-21T20:41:58Z",
+      "side": 1,
+      "message": "```suggestion\n  size_t size() const noexcept { return size_; }\n```",
+      "revId": "7a9f5df3132434098f92cae713083809fe5220a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1200cc4_9fad9c35",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-05-21T20:41:58Z",
+      "side": 1,
+      "message": "In case `cudaMallocHost` fails during a `Reserve` invocation, the `data_` member will continue pointing to a freed memory block with `size_` being also incorrect.\n\n```suggestion\n      CHECK_EQ(cudaFreeHost(data_), cudaSuccess);\n      data_ \u003d nullptr;\n      size_ \u003d 0;\n```",
+      "revId": "7a9f5df3132434098f92cae713083809fe5220a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8f8fc2d_0edfca77",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-05-21T20:41:58Z",
+      "side": 1,
+      "message": "```suggestion\n  std::size_t size_ \u003d 0;\n```",
+      "range": {
+        "startLine": 211,
+        "startChar": 2,
+        "endLine": 211,
+        "endChar": 8
+      },
+      "revId": "7a9f5df3132434098f92cae713083809fe5220a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ada399db_637069e6",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-05-21T20:41:58Z",
+      "side": 1,
+      "message": "Implicitly defined copy/move constructor/assignment will bit-copy `matrix_` which is probably not what you want here. Delete the operators instead?",
+      "revId": "7a9f5df3132434098f92cae713083809fe5220a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "daa5e05e_4b938d21",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-05-21T20:41:58Z",
+      "side": 1,
+      "message": "Set `matrix_` to `nullptr` after `cudssMatrixDestroy` returns to be sure.",
+      "revId": "7a9f5df3132434098f92cae713083809fe5220a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6728655f_8b44d50d",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-05-21T20:41:58Z",
+      "side": 1,
+      "message": "```suggestion\n  operator cudssMatrix_t() const noexcept { return matrix_; }\n```\nIs implicit conversion really necessary? Maybe use `explicit operator cudssMatrix_t` or a dedicated getter instead (e.g., simply `.get()`)?",
+      "revId": "7a9f5df3132434098f92cae713083809fe5220a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49bd25fb_3df0143b",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-05-21T20:41:58Z",
+      "side": 1,
+      "message": "`\u003ctype_traits\u003e` include seems to be missing above (IWYU).",
+      "range": {
+        "startLine": 160,
+        "startChar": 21,
+        "endLine": 160,
+        "endChar": 30
+      },
+      "revId": "7a9f5df3132434098f92cae713083809fe5220a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a54be6da_0dfce7a6",
         "filename": "internal/ceres/visibility_based_preconditioner.cc",
         "patchSetId": 8
