@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e43284e8_8d4a4160",
+        "filename": "internal/ceres/block_random_access_sparse_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-22T17:23:33Z",
+      "side": 1,
+      "message": "```suggestion\n  // the values array of bsm_ where the block is stored.\n```\nMy bad, haven\u0027t changed this when we have transitioned to block-sparse matrices in random-access matrices",
+      "range": {
+        "startLine": 116,
+        "startChar": 25,
+        "endLine": 116,
+        "endChar": 29
+      },
+      "revId": "37a834a0c0a19913cff9f92a16fa02b5db4f11c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
