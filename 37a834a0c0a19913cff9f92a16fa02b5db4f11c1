@@ -22,6 +22,30 @@
       },
       "revId": "37a834a0c0a19913cff9f92a16fa02b5db4f11c1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f94f27dd_cc5ce2ef",
+        "filename": "internal/ceres/block_random_access_sparse_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-22T18:04:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e43284e8_8d4a4160",
+      "range": {
+        "startLine": 116,
+        "startChar": 25,
+        "endLine": 116,
+        "endChar": 29
+      },
+      "revId": "37a834a0c0a19913cff9f92a16fa02b5db4f11c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
