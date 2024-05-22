@@ -91,8 +91,7 @@ BlockRandomAccessSparseMatrix::BlockRandomAccessSparseMatrix(
     for (auto& c : cells) {
       const int col_block_id = c.block_id;
       double* const data = values + c.position;
-      layout_[IntPairToInt64(row_block_id, col_block_id)] =
-          std::make_unique<CellInfo>(data);
+      layout_.emplace(IntPairToInt64(row_block_id, col_block_id), data);
     }
   }
 }
@@ -113,7 +112,7 @@ CellInfo* BlockRandomAccessSparseMatrix::GetCell(int row_block_id,
   *col = 0;
   *row_stride = blocks_[row_block_id].size;
   *col_stride = blocks_[col_block_id].size;
-  return it->second.get();
+  return &it->second;
 }
 
 // Assume that the user does not hold any locks on any cell blocks
