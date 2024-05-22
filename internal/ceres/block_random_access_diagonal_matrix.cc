@@ -52,10 +52,10 @@ BlockRandomAccessDiagonalMatrix::BlockRandomAccessDiagonalMatrix(
     : context_(context), num_threads_(num_threads) {
   m_ = CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(nullptr, blocks);
   double* values = m_->mutable_values();
-  layout_.reserve(blocks.size());
-  for (auto& block : blocks) {
-    layout_.emplace_back(std::make_unique<CellInfo>(values));
-    values += block.size * block.size;
+  layout_ = std::make_unique<CellInfo[]>(blocks.size());
+  for (int i = 0; i < blocks.size(); ++i) {
+    layout_[i].values = values;
+    values += blocks[i].size * blocks[i].size;
   }
 }
 
@@ -77,7 +77,7 @@ CellInfo* BlockRandomAccessDiagonalMatrix::GetCell(int row_block_id,
   *col = 0;
   *row_stride = stride;
   *col_stride = stride;
-  return layout_[row_block_id].get();
+  return &layout_[row_block_id];
 }
 
 // Assume that the user does not hold any locks on any cell blocks
@@ -91,9 +91,9 @@ void BlockRandomAccessDiagonalMatrix::Invert() {
   auto& blocks = m_->row_blocks();
   const int num_blocks = blocks.size();
   ParallelFor(context_, 0, num_blocks, num_threads_, [this, blocks](int i) {
-    auto* cell_info = layout_[i].get();
+    auto& cell_info = layout_[i];
     auto& block = blocks[i];
-    MatrixRef b(cell_info->values, block.size, block.size);
+    MatrixRef b(cell_info.values, block.size, block.size);
     b = b.selfadjointView<Eigen::Upper>().llt().solve(
         Matrix::Identity(block.size, block.size));
   });
@@ -107,9 +107,9 @@ void BlockRandomAccessDiagonalMatrix::RightMultiplyAndAccumulate(
   const int num_blocks = blocks.size();
   ParallelFor(
       context_, 0, num_blocks, num_threads_, [this, blocks, x, y](int i) {
-        auto* cell_info = layout_[i].get();
+        auto& cell_info = layout_[i];
         auto& block = blocks[i];
-        ConstMatrixRef b(cell_info->values, block.size, block.size);
+        ConstMatrixRef b(cell_info.values, block.size, block.size);
         VectorRef(y + block.position, block.size).noalias() +=
             b * ConstVectorRef(x + block.position, block.size);
       });

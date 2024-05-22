@@ -33,7 +33,6 @@
 
 #include <memory>
 #include <utility>
-#include <vector>
 
 #include "ceres/block_random_access_matrix.h"
 #include "ceres/block_structure.h"
@@ -85,7 +84,7 @@ class CERES_NO_EXPORT BlockRandomAccessDiagonalMatrix
   ContextImpl* context_ = nullptr;
   const int num_threads_ = 1;
   std::unique_ptr<CompressedRowSparseMatrix> m_;
-  std::vector<std::unique_ptr<CellInfo>> layout_;
+  std::unique_ptr<CellInfo[]> layout_;
 };
 
 }  // namespace ceres::internal
