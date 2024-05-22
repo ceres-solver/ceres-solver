@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b11895b_50c453b3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-22T18:07:44Z",
+      "side": 1,
+      "message": "I may or may not actually land these changes in all these files, but I wanted to just see what it would take to actually take on the dependency. The things I want to actually get rid off is our string functions etc.",
+      "revId": "504ebba8f0221d483d4a7d307ced8a5492ea32c7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
