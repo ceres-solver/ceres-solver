@@ -139,6 +139,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4e87e38c_0dbcc914",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-23T22:06:13Z",
+      "side": 1,
+      "message": "\u003e I am going to assume that you had a good eigenvalue solver and that the indefiniteness of the preconditioner is real. \n\nEigen\u0027s SelfAdjointEigenSolver (https://gitlab.com/libeigen/eigen/-/blob/master/Eigen/src/Eigenvalues/SelfAdjointEigenSolver.h?ref_type\u003dheads#L199) and octave\u0027s eig() seems to agree on the value.\n\n\u003e when you say that cudss returns nans, do you mean that when we call solve on the factorized preconditioner matrix and CG iterates we get nans starting with the very first call?\n\nYes, i\u0027v logged all the lhs, rhs and solutions that are consumed/produced by an instance of SparseCholesky and the issue appears at the very first factorization/solve iteration in cuDSS case.\n\n\u003e In that case isn\u0027t the problem that the LLT factorization failed and \ncuDSS did not tell us that it failed? as in the following line should \nreturn failure no? \n\nNot quite, given that call to cudssExecute() is non-blocking. I assume, that CUDSS_STATUS_SUCCESS, that is indeed returned from such call, means the success of work scheduling, not the absence of numerical errors encountered during the computation which is actually performed on device while Factorize already returned success to its caller. And i don\u0027t see any methods in cuDSS API to check if factorization scheduled via call to cudssExecute(..., CUDSS_PHASE_FACTORIZATION, ...) is finished without numerical issues. It would be nice if Kirill or Di could verify if such behavior is by design and no relevant changes are to be expected. \n\nAssuming that atm there is no option to check quality of cuDSS factorization prior to solve, i\u0027ve added diagonal scaling and factorization to the VisibilityBasedPreconditioner::RightMultiplyAndAccumulate() in case if failure detected based on explicit check for solution being finite in case of CUDA_SPARSE and CLUSTER_TRIDIAGONAL.",
+      "parentUuid": "464f32f3_47f3c695",
+      "range": {
+        "startLine": 226,
+        "startChar": 25,
+        "endLine": 226,
+        "endChar": 37
+      },
+      "revId": "4d0c2e5abcad5a127573244287b5003e4ca1a2e2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ac8fc8ed_e4091b28",
         "filename": "internal/ceres/generated_bundle_adjustment_tests/ba_sparsecholesky_cudasparse_auto_test.cc",
         "patchSetId": 7
