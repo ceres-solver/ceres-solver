@@ -187,6 +187,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "555b7507_5dff1307",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-23T23:36:41Z",
+      "side": 1,
+      "message": "perhaps this offers a clue, the cudssget and set api is to be used for getting runtime errors?\n\nhttps://github.com/NVIDIA/CUDALibrarySamples/blob/master/cuDSS/get_set/get_set.cpp#L279",
+      "parentUuid": "81b63d75_d8ad6267",
+      "range": {
+        "startLine": 226,
+        "startChar": 25,
+        "endLine": 226,
+        "endChar": 37
+      },
+      "revId": "4d0c2e5abcad5a127573244287b5003e4ca1a2e2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ac8fc8ed_e4091b28",
         "filename": "internal/ceres/generated_bundle_adjustment_tests/ba_sparsecholesky_cudasparse_auto_test.cc",
         "patchSetId": 7
