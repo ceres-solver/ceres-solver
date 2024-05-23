@@ -91,6 +91,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "de745c97_eafbc82c",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-23T00:57:00Z",
+      "side": 1,
+      "message": "Focusing on ba_iterschur_cudasparse_clusttri_auto_test i checked that initial lhs\u0026rhs that three solvers in comparation are receiving are identical. I compared the solutions returned by solvers: Eigen\u0027s LDLT returns the most accurate one (7.8859e-03 norm of error), SuiteSparse returns something that results to an error of 93.878 and cuDSS returns vector of NaNs. Even if SuiteSparse returned quite bad \"solution\", it still lets the outer loop to continue and eventually to pass the test, while this is not the case for cuDSS.\n\nThe reason for such behavior is that lhs matrix of a system to be solved is not positive definite (its min eigenvalue is -2.8296e-03), but cuDSS, being configured to assume positive definite lhs, computes LLT instead of LDLT. Changing the type of cuDSS wrapper over lhs to indicate that it is only symmetric leads to cuDSS returning a solution that is almost identical to Eigen\u0027s and to test being passed.\n\nIt seems that proper solution for that issue would be on the side of producer of such matrices, to ensure that Cholesky solver is not receiving such matrices (not really sure if that is possible given presence of numerical errors). If not, then we could unconditionally configure cuDSS to assume only symmetry and always compute LDLT (with a cost of slowdown of about 1.3, measured on that particular test example). Another option would be to, conditioned on initial solution being NaN, try to solve with LDLT, paying more in \"bad\" cases.\n\nWhat would be your suggestion?",
+      "parentUuid": "89654b4a_0de69292",
+      "range": {
+        "startLine": 226,
+        "startChar": 25,
+        "endLine": 226,
+        "endChar": 37
+      },
+      "revId": "4d0c2e5abcad5a127573244287b5003e4ca1a2e2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ac8fc8ed_e4091b28",
         "filename": "internal/ceres/generated_bundle_adjustment_tests/ba_sparsecholesky_cudasparse_auto_test.cc",
         "patchSetId": 7
