@@ -1170,6 +1170,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "aa836a3b_d1418067",
+        "filename": "internal/ceres/cuda_sparse_cholesky.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-23T22:13:50Z",
+      "side": 1,
+      "message": "Kirill/Di, could you please elaborate on the topic of cuDSS ordering knobs?",
+      "parentUuid": "7edcd31e_d2bc1adc",
+      "range": {
+        "startLine": 52,
+        "startChar": 24,
+        "endLine": 52,
+        "endChar": 51
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1a8d0895_e6d75f05",
         "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
         "patchSetId": 5
