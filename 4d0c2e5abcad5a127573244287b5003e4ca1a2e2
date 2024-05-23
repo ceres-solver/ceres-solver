@@ -163,6 +163,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "81b63d75_d8ad6267",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-23T23:33:56Z",
+      "side": 1,
+      "message": "I had forgotten that the call to cudssExecute is non-blocking. \n\nThat raises a number of questions.\n\n1. The current line 208 of cuda_sparse_cholesky.cc is not correct, because it is signaling that the factorization succeeded, when it is just the scheduling.\n\n2. How do you know that the factorization has finished before calling solve? in line 222? is it because all the operations are being sent on the same cuda stream and they are executed in order in the stream? \n\n3. Forgive my ignorance here, but then how does the call to CopyToCpu work? as in how does it know that the solve has actually finished before it copies the data to the CPU? is there a lock somewhere which blocks this call waiting for CUDSS_PHASE_SOLVE to finish before you copy the data to the cpu memory? otherwise there would be a race condition no?\n\n4. If these calls are non-blocking, then cuDSS API should absolutely have a way of checking for both checking that the operation is done, and what the state of the operation is before further operations can be scheduled no?",
+      "parentUuid": "4e87e38c_0dbcc914",
+      "range": {
+        "startLine": 226,
+        "startChar": 25,
+        "endLine": 226,
+        "endChar": 37
+      },
+      "revId": "4d0c2e5abcad5a127573244287b5003e4ca1a2e2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ac8fc8ed_e4091b28",
         "filename": "internal/ceres/generated_bundle_adjustment_tests/ba_sparsecholesky_cudasparse_auto_test.cc",
         "patchSetId": 7
