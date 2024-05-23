@@ -115,6 +115,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "464f32f3_47f3c695",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-23T15:54:01Z",
+      "side": 1,
+      "message": "Hi Mark,\nVery nice debugging.\n\nI am going to assume that you had a good eigenvalue solver and that the indefiniteness of the preconditioner is real. \n\nwhen you say that cudss returns nans, do you mean that when we call solve on the factorized preconditioner matrix and CG iterates we get nans starting with the very first call?\n\nIn that case isn\u0027t the problem that the LLT factorization failed and cuDSS did not tell us that it failed? as in the following line should return failure no? \n\n```\nCUDSS_STATUS_OK_OR_RETURN_SOLVER_ERROR(\n        cudssExecute(context_-\u003ecudss_handle_,\n                     CUDSS_PHASE_FACTORIZATION,\n                     solver_config_,\n                     solver_data_,\n                     cudss_lhs_,\n                     cudss_x_,\n                     cudss_rhs_),\n        \"cudssExecute with CUDSS_PHASE_FACTORIZATION failed\");\n\n    return factorize_result_ \u003d LinearSolverTerminationType::SUCCESS;\n  }\n```\n\nwhich should get propagated up to the implicit_schur_complement_solver as a failed preconditioner update (line 114 of implicit_schur_complement_solver.cc).\n\nAvoiding such matrices at construction time is a bit hard, because bundle adjustment problems are fundamentally poorly conditioned. But cluster-tridiagonal is actually a bit more special. It is expected that sometimes the first call to factorize may fail, See \n\nhttps://github.com/ceres-solver/ceres-solver/blob/master/internal/ceres/visibility_based_preconditioner.cc#L351\n\nwhere if the factorization fails, we rescale the offdiagonal blocks to make the matrix more diagonally dominant and thus more positive definite. \n\nSo its important that cuDSS actually detect the first failure correctly. \n\nso my question here is, is it the first factorization thats failing silently, or the second one? and in that case shouldn\u0027t we treat this as a cuDSS bug?",
+      "parentUuid": "de745c97_eafbc82c",
+      "range": {
+        "startLine": 226,
+        "startChar": 25,
+        "endLine": 226,
+        "endChar": 37
+      },
+      "revId": "4d0c2e5abcad5a127573244287b5003e4ca1a2e2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ac8fc8ed_e4091b28",
         "filename": "internal/ceres/generated_bundle_adjustment_tests/ba_sparsecholesky_cudasparse_auto_test.cc",
         "patchSetId": 7
