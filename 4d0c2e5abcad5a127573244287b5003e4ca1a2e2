@@ -235,6 +235,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9a084b65_61608459",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 3415050
+      },
+      "writtenOn": "2024-05-24T05:16:31Z",
+      "side": 1,
+      "message": "I think Mark was right in all of his assumptions about cuDSS in this thread.\nLet me get back to you about the two facts:\n1) Absence of errors from cuDSS when it assumes an s.p.d matrix but doesn\u0027t get one. \nI can confirm right away that we don\u0027t detect this during factorization at the moment and hence don\u0027t return anything helpful in such a case. I\u0027ll discuss it with the team and advocate for adding such a check (which would then lead to cudssDataGet() with CUDSS_DATA_INFO return some indication of an error)\n2) Garbage in sizeWritten [something is not quite right...]",
+      "parentUuid": "493f0729_2f1d68ab",
+      "range": {
+        "startLine": 226,
+        "startChar": 25,
+        "endLine": 226,
+        "endChar": 37
+      },
+      "revId": "4d0c2e5abcad5a127573244287b5003e4ca1a2e2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ac8fc8ed_e4091b28",
         "filename": "internal/ceres/generated_bundle_adjustment_tests/ba_sparsecholesky_cudasparse_auto_test.cc",
         "patchSetId": 7
