@@ -211,6 +211,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "493f0729_2f1d68ab",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-05-24T00:14:59Z",
+      "side": 1,
+      "message": "\u003e 2. ...\n\nYes, we are calling cuDSS routines with cuDSS context configured to use single cuda stream, thus the solve step being placed in the same stream as factorize is evaluated only after factorization is finished.\n\n\u003e 3. ...\n\nCopyToCpu, schedules (https://github.com/ceres-solver/ceres-solver/blob/f8c2994dad23780621506e91e0ea7d675f7987c8/internal/ceres/cuda_buffer.h#L132) the copy in the same stream as we previously used for cuDSS factor/solve routines and then it calls cudaStreamSynchronize (https://github.com/ceres-solver/ceres-solver/blob/f8c2994dad23780621506e91e0ea7d675f7987c8/internal/ceres/cuda_buffer.h#L138) which blocks until all the work that was submitted in the stream is finished.\n\n\u003e 4. ...\n\nI\u0027v not found an explicit API for such error checking. The only relevant part is indeed seems to be cudssDataGet(...CUDSS_DATA_INFO...), which i tried to use after the call to factorize (syncing the stream) and it always returns 0 (although, the value returned to sizeWritten seems to be some garbage). Following is the code\n```\n    CUDSS_STATUS_OK_OR_RETURN_SOLVER_ERROR(\n        cudssExecute(context_-\u003ecudss_handle_,\n                     CUDSS_PHASE_FACTORIZATION,\n                     solver_config_,\n                     solver_data_,\n                     cudss_lhs_,\n                     cudss_x_,\n                     cudss_rhs_),\n        \"cudssExecute with CUDSS_PHASE_FACTORIZATION failed\");\n    if (cudaStreamSynchronize(context_-\u003eDefaultStream()) !\u003d cudaSuccess) {\n      CHECK(false) \u003c\u003c \"cudaStreamSynchronize() failed\";\n    }\n    int info \u003d 42;\n    size_t sizeWritten \u003d 42;\n    CUDSS_STATUS_OK_OR_RETURN_SOLVER_ERROR(\n        cudssDataGet(context_-\u003ecudss_handle_,\n                     solver_data_,\n                     CUDSS_DATA_INFO,\n                     \u0026info,\n                     sizeof(info),\n                     \u0026sizeWritten),\n        \"cudssDataGet CUDSS_DATA_INFO failed\");\n    printf(\"cuDSS info \u003d %d, sizeWritten: %lu\\n\", info, sizeWritten);\n```\nand its output during ba_iterschur_cudasparse_clusttri_auto_test \n```\ncuDSS info \u003d 0, sizeWritten: 101175079538848\ncuDSS info \u003d 0, sizeWritten: 101176022616272\ncuDSS info \u003d 0, sizeWritten: 0\ncuDSS info \u003d 0, sizeWritten: 101176022616272\ncuDSS info \u003d 0, sizeWritten: 0\ncuDSS info \u003d 0, sizeWritten: 101176022616272\ncuDSS info \u003d 0, sizeWritten: 0\ncuDSS info \u003d 0, sizeWritten: 101176022616272\ncuDSS info \u003d 0, sizeWritten: 0\ncuDSS info \u003d 0, sizeWritten: 101176022616272\ncuDSS info \u003d 0, sizeWritten: 0\ncuDSS info \u003d 0, sizeWritten: 101176022616272\ncuDSS info \u003d 0, sizeWritten: 0\ncuDSS info \u003d 0, sizeWritten: 101176022616272\ncuDSS info \u003d 0, sizeWritten: 0\ncuDSS info \u003d 0, sizeWritten: 101176022616272\n```",
+      "parentUuid": "555b7507_5dff1307",
+      "range": {
+        "startLine": 226,
+        "startChar": 25,
+        "endLine": 226,
+        "endChar": 37
+      },
+      "revId": "4d0c2e5abcad5a127573244287b5003e4ca1a2e2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ac8fc8ed_e4091b28",
         "filename": "internal/ceres/generated_bundle_adjustment_tests/ba_sparsecholesky_cudasparse_auto_test.cc",
         "patchSetId": 7
