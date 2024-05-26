@@ -70,6 +70,24 @@
       "parentUuid": "0d2b434f_117ccc94",
       "revId": "3d163386480394c1142b3d89c67ad25879595ea5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11db73e7_60dc5aaa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6141
+      },
+      "writtenOn": "2024-05-26T15:23:59Z",
+      "side": 1,
+      "message": "Another place where we produce CRS matrices with extra elements is InnerProductComputer.\n\nI have updated ToCompressedRowSparseMatrix/UpdateCompressedRowSoarseMatrix, but there are still places I need to change to remove the code for discarding extra parts.",
+      "parentUuid": "556233db_bc176602",
+      "revId": "3d163386480394c1142b3d89c67ad25879595ea5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
