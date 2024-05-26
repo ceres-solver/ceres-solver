@@ -88,6 +88,24 @@
       "parentUuid": "556233db_bc176602",
       "revId": "3d163386480394c1142b3d89c67ad25879595ea5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10007f21_445c126b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-26T18:33:47Z",
+      "side": 1,
+      "message": "Dmitriy,\nWe can go about this two ways.\n\n1. We can modify InnerProductComputer to not produce stuff on the otherside of the diagonal. InnerProductComputer is not a particularly nice bit of code, but this is possible to do. \n\n2. The other other possibility is that when using IntelMKL we do not use InnerProductComputer at all, and instead use the symrk/AtA routine from IntelMKL to compute the product, just like we are doing for DynamicSparseNormalCholesky. It will require creating a SparseNormalCholesky solver which is MKL specific, but perhaps this is the simpler thing to do? if intel\u0027s symrk routine is threaded this should also be faster than InnerProductComputer, which is not threaded.\n\nWDYT?",
+      "parentUuid": "11db73e7_60dc5aaa",
+      "revId": "3d163386480394c1142b3d89c67ad25879595ea5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
