@@ -30,6 +30,9 @@
 
 #include "ceres/thread_pool.h"
 
+#include <gmock/gmock.h>
+#include <gtest/gtest.h>
+
 #include <chrono>
 #include <condition_variable>
 #include <mutex>
@@ -37,8 +40,6 @@
 
 #include "ceres/internal/config.h"
 #include "glog/logging.h"
-#include "gmock/gmock.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 

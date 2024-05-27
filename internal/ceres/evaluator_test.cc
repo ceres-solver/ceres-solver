@@ -33,6 +33,8 @@
 
 #include "ceres/evaluator.h"
 
+#include <gtest/gtest.h>
+
 #include <memory>
 #include <string>
 #include <vector>
@@ -49,7 +51,6 @@
 #include "ceres/sparse_matrix.h"
 #include "ceres/stringprintf.h"
 #include "ceres/types.h"
-#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {

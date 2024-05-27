@@ -30,6 +30,8 @@
 
 #include "ceres/partitioned_matrix_view.h"
 
+#include <gtest/gtest.h>
+
 #include <memory>
 #include <random>
 #include <sstream>
@@ -42,7 +44,6 @@
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/sparse_matrix.h"
 #include "glog/logging.h"
-#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {

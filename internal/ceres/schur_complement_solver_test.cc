@@ -30,6 +30,8 @@
 
 #include "ceres/schur_complement_solver.h"
 
+#include <gtest/gtest.h>
+
 #include <cstddef>
 #include <memory>
 
@@ -43,7 +45,6 @@
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
 #include "glog/logging.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 
