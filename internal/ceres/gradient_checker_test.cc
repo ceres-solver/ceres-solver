@@ -32,6 +32,8 @@
 
 #include "ceres/gradient_checker.h"
 
+#include <gtest/gtest.h>
+
 #include <cmath>
 #include <random>
 #include <utility>
@@ -42,7 +44,6 @@
 #include "ceres/solver.h"
 #include "ceres/test_util.h"
 #include "glog/logging.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 

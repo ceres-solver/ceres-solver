@@ -30,6 +30,8 @@
 
 #include "ceres/covariance.h"
 
+#include <gtest/gtest.h>
+
 #include <algorithm>
 #include <cmath>
 #include <cstdint>
@@ -46,7 +48,6 @@
 #include "ceres/manifold.h"
 #include "ceres/map_util.h"
 #include "ceres/problem_impl.h"
-#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {

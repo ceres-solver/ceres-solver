@@ -30,6 +30,8 @@
 
 #include "ceres/cuda_sparse_matrix.h"
 
+#include <gtest/gtest.h>
+
 #include <string>
 
 #include "ceres/block_sparse_matrix.h"
@@ -40,7 +42,6 @@
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "glog/logging.h"
-#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {

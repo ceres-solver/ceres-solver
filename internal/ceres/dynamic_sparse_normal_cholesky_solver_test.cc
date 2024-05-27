@@ -28,6 +28,8 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
+#include <gtest/gtest.h>
+
 #include <memory>
 
 #include "Eigen/Cholesky"
@@ -40,7 +42,6 @@
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
 #include "glog/logging.h"
-#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {
