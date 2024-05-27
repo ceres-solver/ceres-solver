@@ -30,6 +30,9 @@
 
 #include "ceres/reorder_program.h"
 
+#include <gmock/gmock.h>
+#include <gtest/gtest.h>
+
 #include <random>
 #include <vector>
 
@@ -39,8 +42,6 @@
 #include "ceres/program.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/solver.h"
-#include "gmock/gmock.h"
-#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {

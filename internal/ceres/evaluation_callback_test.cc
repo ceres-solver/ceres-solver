@@ -30,6 +30,8 @@
 
 #include "ceres/evaluation_callback.h"
 
+#include <gtest/gtest.h>
+
 #include <cmath>
 #include <limits>
 #include <memory>
@@ -40,7 +42,6 @@
 #include "ceres/problem_impl.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/solver.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 

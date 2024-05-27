@@ -31,6 +31,8 @@
 
 #include "ceres/polynomial.h"
 
+#include <gtest/gtest.h>
+
 #include <algorithm>
 #include <cmath>
 #include <cstddef>
@@ -39,7 +41,6 @@
 
 #include "ceres/function_sample.h"
 #include "ceres/test_util.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 

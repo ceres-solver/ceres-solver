@@ -30,6 +30,8 @@
 
 #include "ceres/residual_block_utils.h"
 
+#include <gtest/gtest.h>
+
 #include <cmath>
 #include <limits>
 #include <memory>
@@ -38,7 +40,6 @@
 #include "ceres/parameter_block.h"
 #include "ceres/residual_block.h"
 #include "ceres/sized_cost_function.h"
-#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {

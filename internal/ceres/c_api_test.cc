@@ -30,10 +30,11 @@
 
 #include "ceres/c_api.h"
 
+#include <gtest/gtest.h>
+
 #include <cmath>
 
 #include "glog/logging.h"
-#include "gtest/gtest.h"
 
 // Duplicated from curve_fitting.cc.
 int num_observations = 67;
