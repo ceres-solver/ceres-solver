@@ -42,7 +42,7 @@
 #include "ceres/residual_block.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/triplet_sparse_matrix.h"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 namespace ceres {
 namespace internal {

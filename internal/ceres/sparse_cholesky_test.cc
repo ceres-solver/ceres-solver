@@ -44,8 +44,8 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/iterative_refiner.h"
 #include "glog/logging.h"
-#include "gmock/gmock.h"
-#include "gtest/gtest.h"
+#include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
 namespace ceres::internal {
 

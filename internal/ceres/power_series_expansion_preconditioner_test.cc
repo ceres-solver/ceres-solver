@@ -34,7 +34,7 @@
 
 #include "Eigen/Dense"
 #include "ceres/linear_least_squares_problems.h"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 namespace ceres::internal {
 

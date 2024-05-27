@@ -35,7 +35,7 @@
 #include <cmath>
 
 #include "ceres/tiny_solver_test_util.h"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 namespace ceres {
 

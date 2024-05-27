@@ -48,7 +48,7 @@
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
 #include "glog/logging.h"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 // TODO(sameeragarwal): Reduce the size of these tests and redo the
 // parameterization to be more efficient.

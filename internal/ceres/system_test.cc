@@ -41,7 +41,7 @@
 #include "ceres/test_util.h"
 #include "ceres/types.h"
 #include "glog/logging.h"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 namespace ceres::internal {
 

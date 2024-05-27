@@ -41,7 +41,7 @@
 #include "ceres/program.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/stl_util.h"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 namespace ceres::internal {
 

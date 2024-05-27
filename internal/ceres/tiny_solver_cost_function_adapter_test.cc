@@ -36,7 +36,7 @@
 
 #include "ceres/cost_function.h"
 #include "ceres/sized_cost_function.h"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 namespace ceres {
 

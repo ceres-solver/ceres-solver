@@ -38,7 +38,7 @@
 #include "ceres/problem_impl.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/solver.h"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 namespace ceres {
 namespace internal {

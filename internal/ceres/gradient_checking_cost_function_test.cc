@@ -46,8 +46,8 @@
 #include "ceres/sized_cost_function.h"
 #include "ceres/types.h"
 #include "glog/logging.h"
-#include "gmock/gmock.h"
-#include "gtest/gtest.h"
+#include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
 namespace ceres::internal {
 

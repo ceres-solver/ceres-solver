@@ -33,7 +33,7 @@
 #include "Eigen/Core"
 #include "ceres/block_structure.h"
 #include "glog/logging.h"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 namespace ceres {
 namespace internal {

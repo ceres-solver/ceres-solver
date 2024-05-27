@@ -33,7 +33,7 @@
 #include <unordered_map>
 
 #include "ceres/graph.h"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 namespace ceres::internal {
 

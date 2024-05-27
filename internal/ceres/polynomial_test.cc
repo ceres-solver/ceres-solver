@@ -39,7 +39,7 @@
 
 #include "ceres/function_sample.h"
 #include "ceres/test_util.h"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 namespace ceres::internal {
 

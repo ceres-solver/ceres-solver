@@ -31,7 +31,7 @@
 #include "ceres/gradient_problem_solver.h"
 
 #include "ceres/gradient_problem.h"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 namespace ceres::internal {
 

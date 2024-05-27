@@ -40,7 +40,7 @@
 #include "ceres/preconditioner.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 namespace ceres::internal {
 

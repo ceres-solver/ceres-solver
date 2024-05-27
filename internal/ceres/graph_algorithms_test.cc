@@ -37,7 +37,7 @@
 
 #include "ceres/graph.h"
 #include "ceres/internal/export.h"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 namespace ceres::internal {
 

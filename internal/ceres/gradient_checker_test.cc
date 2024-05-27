@@ -42,7 +42,7 @@
 #include "ceres/solver.h"
 #include "ceres/test_util.h"
 #include "glog/logging.h"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 namespace ceres::internal {
 

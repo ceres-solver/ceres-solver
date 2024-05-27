@@ -38,7 +38,7 @@
 #include "ceres/manifold.h"
 #include "ceres/parameter_block.h"
 #include "ceres/sized_cost_function.h"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 namespace ceres::internal {
 

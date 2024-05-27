@@ -36,7 +36,7 @@
 #include "ceres/manifold.h"
 #include "ceres/manifold_test_utils.h"
 #include "ceres/rotation.h"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 namespace ceres::internal {
 

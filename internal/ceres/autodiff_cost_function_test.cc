@@ -34,7 +34,7 @@
 
 #include "ceres/array_utils.h"
 #include "ceres/cost_function.h"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 namespace ceres::internal {
 

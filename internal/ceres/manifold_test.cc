@@ -47,8 +47,8 @@
 #include "ceres/rotation.h"
 #include "ceres/sphere_manifold.h"
 #include "ceres/types.h"
-#include "gmock/gmock.h"
-#include "gtest/gtest.h"
+#include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
 namespace ceres::internal {
 

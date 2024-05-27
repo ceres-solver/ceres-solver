@@ -34,7 +34,7 @@
 #include <string>
 
 #include "ceres/internal/eigen.h"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 namespace ceres {
 namespace internal {

@@ -33,7 +33,7 @@
 #include <memory>
 
 #include "ceres/crs_matrix.h"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 namespace ceres::internal {
 

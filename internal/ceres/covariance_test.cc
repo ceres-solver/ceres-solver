@@ -46,7 +46,7 @@
 #include "ceres/manifold.h"
 #include "ceres/map_util.h"
 #include "ceres/problem_impl.h"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 namespace ceres {
 namespace internal {

@@ -38,7 +38,7 @@
 #include "ceres/sparse_cholesky.h"
 #include "ceres/sparse_matrix.h"
 #include "glog/logging.h"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 namespace ceres::internal {
 

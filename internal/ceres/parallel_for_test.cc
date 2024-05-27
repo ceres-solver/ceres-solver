@@ -44,8 +44,8 @@
 #include "ceres/internal/config.h"
 #include "ceres/parallel_vector_ops.h"
 #include "glog/logging.h"
-#include "gmock/gmock.h"
-#include "gtest/gtest.h"
+#include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
 namespace ceres::internal {
 

@@ -48,7 +48,7 @@
 #include "ceres/minimizer.h"
 #include "ceres/problem.h"
 #include "ceres/trust_region_strategy.h"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 namespace ceres::internal {
 

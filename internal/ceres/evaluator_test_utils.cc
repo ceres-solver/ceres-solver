@@ -32,7 +32,7 @@
 #include "ceres/evaluator_test_utils.h"
 
 #include "ceres/internal/eigen.h"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 namespace ceres::internal {
 

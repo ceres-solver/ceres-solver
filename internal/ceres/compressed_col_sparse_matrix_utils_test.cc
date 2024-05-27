@@ -38,7 +38,7 @@
 #include "ceres/internal/export.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "glog/logging.h"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 namespace ceres::internal {
 
