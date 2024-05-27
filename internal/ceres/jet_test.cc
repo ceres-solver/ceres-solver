@@ -30,6 +30,9 @@
 
 #include "ceres/jet.h"
 
+#include <gmock/gmock.h>
+#include <gtest/gtest.h>
+
 #include <Eigen/Dense>
 #include <algorithm>
 #include <cfenv>
@@ -38,8 +41,6 @@
 #include "ceres/stringprintf.h"
 #include "ceres/test_util.h"
 #include "glog/logging.h"
-#include "gmock/gmock.h"
-#include "gtest/gtest.h"
 
 // The floating-point environment access and modification is only meaningful
 // with the following pragma.

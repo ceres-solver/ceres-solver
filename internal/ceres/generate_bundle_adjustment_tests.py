@@ -135,7 +135,7 @@ BUNDLE_ADJUSTMENT_TEST_TEMPLATE = (COPYRIGHT_HEADER + """
 
 #include "ceres/bundle_adjustment_test_util.h"
 #include "ceres/internal/config.h"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 %(preprocessor_conditions_begin)s
 namespace ceres::internal {
 
