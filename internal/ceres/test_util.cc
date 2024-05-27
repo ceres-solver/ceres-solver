@@ -36,11 +36,16 @@
 #include <cmath>
 #include <gtest/gtest.h>
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/file.h"
 #include "ceres/internal/port.h"
 #include "ceres/stringprintf.h"
 #include "ceres/types.h"
+<<<<<<< HEAD
 #include "glog/logging.h"
+=======
+>>>>>>> 81e86358 (Add absl::log and absl::flags)
 
 // This macro is used to inject additional path information specific
 // to the build system.

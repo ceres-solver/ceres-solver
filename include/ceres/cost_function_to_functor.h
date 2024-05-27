@@ -92,11 +92,12 @@
 #include <utility>
 #include <vector>
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/cost_function.h"
 #include "ceres/dynamic_cost_function_to_functor.h"
 #include "ceres/internal/parameter_dims.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 
 namespace ceres {
 

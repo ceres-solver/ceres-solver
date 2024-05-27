@@ -32,7 +32,8 @@
 #define CERES_PUBLIC_INTERNAL_HOUSEHOLDER_VECTOR_H_
 
 #include "Eigen/Core"
-#include "glog/logging.h"
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 
 namespace ceres::internal {
 

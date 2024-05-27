@@ -41,6 +41,7 @@
 #include <memory>
 #include <vector>
 
+#include "absl/log/log.h"
 #include "ceres/block_structure.h"
 #include "ceres/internal/config.h"
 #include "ceres/internal/disable_warnings.h"
@@ -48,7 +49,6 @@
 #include "ceres/internal/export.h"
 #include "ceres/linear_solver.h"
 #include "ceres/small_blas.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

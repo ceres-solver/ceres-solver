@@ -43,10 +43,10 @@
 #include <tuple>
 #include <vector>
 
+#include "absl/log/log.h"
 #include "ceres/context_impl.h"
 #include "ceres/internal/config.h"
 #include "ceres/parallel_vector_ops.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

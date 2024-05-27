@@ -38,6 +38,8 @@
 #include <cstddef>
 #include <utility>
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/eigen_vector_ops.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/eigen.h"
@@ -46,7 +48,6 @@
 #include "ceres/linear_solver.h"
 #include "ceres/stringprintf.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

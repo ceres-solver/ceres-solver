@@ -36,8 +36,9 @@
 #include <unordered_map>
 #include <vector>
 
+#include "absl/log/log.h"
+#include "absl/log/check.h"
 #include "ceres/internal/export.h"
-#include "glog/logging.h"
 
 namespace ceres {
 

@@ -39,6 +39,7 @@
 #include <random>
 #include <vector>
 
+#include "absl/log/log.h"
 #include "ceres/cost_function.h"
 #include "ceres/loss_function.h"
 #include "ceres/manifold.h"
@@ -48,7 +49,6 @@
 #include "ceres/residual_block.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 
