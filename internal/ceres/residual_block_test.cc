@@ -30,6 +30,8 @@
 
 #include "ceres/residual_block.h"
 
+#include <gtest/gtest.h>
+
 #include <cstdint>
 #include <string>
 #include <vector>
@@ -38,7 +40,6 @@
 #include "ceres/manifold.h"
 #include "ceres/parameter_block.h"
 #include "ceres/sized_cost_function.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 

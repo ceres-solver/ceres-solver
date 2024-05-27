@@ -30,10 +30,11 @@
 
 #include "ceres/block_random_access_dense_matrix.h"
 
+#include <gtest/gtest.h>
+
 #include <vector>
 
 #include "ceres/internal/eigen.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 

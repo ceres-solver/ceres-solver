@@ -31,7 +31,7 @@
 
 #include "ceres/internal/array_selector.h"
 
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 namespace ceres::internal {
 

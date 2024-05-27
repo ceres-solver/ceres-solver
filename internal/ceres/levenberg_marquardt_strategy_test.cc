@@ -30,6 +30,8 @@
 
 #include "ceres/levenberg_marquardt_strategy.h"
 
+#include <gmock/gmock.h>
+
 #include <memory>
 
 #include "ceres/internal/eigen.h"

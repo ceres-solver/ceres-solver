@@ -33,6 +33,8 @@
 
 #include "ceres/conjugate_gradients_solver.h"
 
+#include <gtest/gtest.h>
+
 #include <memory>
 
 #include "ceres/internal/eigen.h"
@@ -40,7 +42,6 @@
 #include "ceres/preconditioner.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 

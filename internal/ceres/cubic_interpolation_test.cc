@@ -30,11 +30,12 @@
 
 #include "ceres/cubic_interpolation.h"
 
+#include <gtest/gtest.h>
+
 #include <memory>
 
 #include "ceres/jet.h"
 #include "glog/logging.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 

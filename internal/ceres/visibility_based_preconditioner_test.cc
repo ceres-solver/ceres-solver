@@ -30,6 +30,8 @@
 
 #include "ceres/visibility_based_preconditioner.h"
 
+#include <gtest/gtest.h>
+
 #include <memory>
 
 #include "Eigen/Dense"
@@ -45,7 +47,6 @@
 #include "ceres/test_util.h"
 #include "ceres/types.h"
 #include "glog/logging.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 

@@ -35,6 +35,8 @@
 
 #include "ceres/trust_region_minimizer.h"
 
+#include <gtest/gtest.h>
+
 #include <cmath>
 #include <memory>
 
@@ -48,7 +50,6 @@
 #include "ceres/minimizer.h"
 #include "ceres/problem.h"
 #include "ceres/trust_region_strategy.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 
