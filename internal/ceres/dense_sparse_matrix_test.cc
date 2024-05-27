@@ -38,11 +38,12 @@
 
 #include <memory>
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/casts.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/triplet_sparse_matrix.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

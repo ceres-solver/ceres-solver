@@ -30,10 +30,12 @@
 
 #include "ceres/internal/householder_vector.h"
 
+
 #include <gtest/gtest.h>
 
 #include "ceres/internal/eigen.h"
-#include "glog/logging.h"
+#include "absl/log/log.h"
+#include "ceres/internal/eigen.h"
 
 namespace ceres::internal {
 

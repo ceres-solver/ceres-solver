@@ -37,6 +37,7 @@
 #include <memory>
 #include <vector>
 
+#include "absl/log/check.h"
 #include "ceres/cost_function.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/types.h"

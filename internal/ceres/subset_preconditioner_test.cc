@@ -37,12 +37,12 @@
 
 #include "Eigen/Dense"
 #include "Eigen/SparseCore"
+#include "absl/log/log.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/inner_product_computer.h"
 #include "ceres/internal/config.h"
 #include "ceres/internal/eigen.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

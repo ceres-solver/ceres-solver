@@ -37,10 +37,10 @@
 #include <random>
 
 #include "Eigen/SparseCore"
+#include "absl/log/log.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/triplet_sparse_matrix.h"
-#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {

@@ -37,9 +37,9 @@
 #include <set>
 #include <vector>
 
+#include "absl/log/log.h"
 #include "ceres/block_structure.h"
 #include "ceres/graph.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

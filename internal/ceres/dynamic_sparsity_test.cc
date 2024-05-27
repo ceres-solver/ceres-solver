@@ -37,8 +37,8 @@
 #include <utility>
 #include <vector>
 
+#include "absl/log/log.h"
 #include "ceres/ceres.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

@@ -39,11 +39,11 @@
 #include <utility>
 #include <vector>
 
+#include "absl/log/log.h"
 #include "ceres/cost_function.h"
 #include "ceres/problem.h"
 #include "ceres/solver.h"
 #include "ceres/test_util.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

@@ -33,7 +33,7 @@
 #include <gtest/gtest.h>
 
 #include "ceres/internal/config.h"
-#include "glog/logging.h"
+#include "absl/log/log.h"
 
 namespace ceres::internal {
 

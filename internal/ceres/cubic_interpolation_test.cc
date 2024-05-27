@@ -34,8 +34,8 @@
 
 #include <memory>
 
+#include "absl/log/log.h"
 #include "ceres/jet.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 
