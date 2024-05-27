@@ -263,10 +263,6 @@ endif (MINIGLOG)
 include(CheckCXXCompilerFlag)
 check_cxx_compiler_flag("-Wno-missing-declarations"
                         CHECK_CXX_FLAG_Wno_missing_declarations)
-if (CHECK_CXX_FLAG_Wno_missing_declarations)
-  set_property(SOURCE gmock_gtest_all.cc
-               APPEND_STRING PROPERTY COMPILE_FLAGS "-Wno-missing-declarations")
-endif()
 
 add_library(ceres $<TARGET_OBJECTS:ceres_internal> ${CERES_LIBRARY_SOURCE})
 
@@ -393,14 +389,13 @@ install(TARGETS ceres
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
-if (BUILD_TESTING AND GFLAGS)
-  add_library(gtest STATIC gmock_gtest_all.cc gmock_main.cc)
+if (BUILD_TESTING)
+  find_package(GTest REQUIRED COMPONENTS GTest GMock CONFIG)
+  if (GTest_FOUND)
+    message("-- Found GTest version ${GTest_VERSION}: ${GTest_DIR}")
+    include(GoogleTest)
+  endif (GTest_FOUND)
 
-  target_include_directories(gtest PRIVATE ${Ceres_SOURCE_DIR}/internal/ceres)
-  if (CMAKE_SYSTEM_NAME MATCHES "QNX")
-    target_link_libraries(gtest PUBLIC regex)
-  endif()
-  target_link_libraries(gtest PRIVATE Ceres::ceres gflags)
 
   add_library(test_util STATIC
               evaluator_test_utils.cc
@@ -408,7 +403,16 @@ if (BUILD_TESTING AND GFLAGS)
               test_util.cc)
 
   target_include_directories(test_util PUBLIC ${Ceres_SOURCE_DIR}/internal)
-  target_link_libraries (test_util PUBLIC ceres_static gflags gtest)
+  target_link_libraries (test_util PUBLIC ceres_static GTest::gtest)
+  if (GTest_VERSION VERSION_LESS 1.14.0)
+    target_compile_definitions(test_util PRIVATE CERES_NO_TESTING_SRCDIR)
+    target_compile_definitions(test_util PRIVATE CERES_TEST_DATADIR="./bin/../../data")
+  else (GTest_VERSION VERSION_LESS 1.14.0)
+    target_compile_definitions(test_util PRIVATE CERES_TEST_SRCDIR_SUFFIX="../../data")
+  endif (GTest_VERSION VERSION_LESS 1.14.0)
+
+
+
 
   macro (CERES_TEST NAME)
     add_executable(${NAME}_test ${NAME}_test.cc)
@@ -422,8 +426,8 @@ if (BUILD_TESTING AND GFLAGS)
     # Some tests include direct references/includes of private dependency
     # headers which are not propagated via the ceres targets, so link them
     # explicitly.
-    target_link_libraries(${NAME}_test PRIVATE gtest test_util ceres_static
-      ${CERES_LIBRARY_PRIVATE_DEPENDENCIES})
+    target_link_libraries(${NAME}_test PRIVATE test_util ceres_static
+      ${CERES_LIBRARY_PRIVATE_DEPENDENCIES} GTest::gmock_main)
 
     # covariance_test uses SuiteSparseQR.hpp. However, since SuiteSparse import
     # targets are private (link only) dependencies not propagated to consumers,
@@ -433,9 +437,7 @@ if (BUILD_TESTING AND GFLAGS)
     endif (TARGET SuiteSparse::SPQR)
 
     add_test(NAME ${NAME}_test
-             COMMAND ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${NAME}_test
-             --test_srcdir
-             ${Ceres_SOURCE_DIR}/data)
+             COMMAND ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${NAME}_test)
   endmacro (CERES_TEST)
 
   ceres_test(array_utils)
@@ -544,7 +546,7 @@ if (BUILD_TESTING AND GFLAGS)
 
   add_subdirectory(generated_bundle_adjustment_tests)
 
-endif (BUILD_TESTING AND GFLAGS)
+endif (BUILD_TESTING)
 
 macro(add_dependencies_to_benchmark BENCHMARK_TARGET)
   target_include_directories(${BENCHMARK_TARGET}
@@ -552,9 +554,12 @@ macro(add_dependencies_to_benchmark BENCHMARK_TARGET)
             ${CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS})
   # Benchmarks include direct references/includes of private dependency headers
   # which are not propagated via the ceres targets, so link them explicitly.
+  #
+  # We need to depend on gtest because we depend on test_util.h, which in turn
+  # requires gtest.
   target_link_libraries(${BENCHMARK_TARGET}
     PRIVATE benchmark::benchmark ceres_static
-            ${CERES_LIBRARY_PRIVATE_DEPENDENCIES})
+            ${CERES_LIBRARY_PRIVATE_DEPENDENCIES} GTest::gtest)
 endmacro()
 
 if (BUILD_BENCHMARKS)

@@ -31,13 +31,14 @@
 //
 // Based on examples/ellipse_approximation.cc
 
+#include <gtest/gtest.h>
+
 #include <cmath>
 #include <utility>
 #include <vector>
 
 #include "ceres/ceres.h"
 #include "glog/logging.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 

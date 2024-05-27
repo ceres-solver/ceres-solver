@@ -30,10 +30,11 @@
 
 #include "ceres/loss_function.h"
 
+#include <gtest/gtest.h>
+
 #include <cstddef>
 
 #include "glog/logging.h"
-#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {

@@ -30,9 +30,10 @@
 
 #include "ceres/minimizer.h"
 
+#include <gtest/gtest.h>
+
 #include "ceres/iteration_callback.h"
 #include "ceres/solver.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 

@@ -30,12 +30,13 @@
 
 #include "ceres/cuda_vector.h"
 
+#include <gtest/gtest.h>
+
 #include <string>
 
 #include "ceres/internal/config.h"
 #include "ceres/internal/eigen.h"
 #include "glog/logging.h"
-#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {

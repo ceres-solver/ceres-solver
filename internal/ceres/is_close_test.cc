@@ -32,7 +32,7 @@
 
 #include "ceres/is_close.h"
 
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 namespace ceres::internal {
 
