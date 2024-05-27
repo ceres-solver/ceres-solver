@@ -36,7 +36,7 @@ namespace ceres::internal {
 // Older versions of benchmark library (for example, one shipped with
 // ubuntu 20.04) do not support range generation and range products
 #define VECTOR_SIZES(num_threads)    \
-      Args({1 << 7, num_threads})    \
+  Args({1 << 7, num_threads})        \
       ->Args({1 << 8, num_threads})  \
       ->Args({1 << 9, num_threads})  \
       ->Args({1 << 10, num_threads}) \

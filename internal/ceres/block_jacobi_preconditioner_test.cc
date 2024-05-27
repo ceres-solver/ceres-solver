@@ -30,6 +30,8 @@
 
 #include "ceres/block_jacobi_preconditioner.h"
 
+#include <gtest/gtest.h>
+
 #include <memory>
 #include <random>
 #include <vector>
@@ -38,7 +40,6 @@
 #include "ceres/block_random_access_diagonal_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/linear_least_squares_problems.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 

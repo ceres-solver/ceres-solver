@@ -135,8 +135,7 @@ void ExpectArraysClose(int n, const double* p, const double* q, double tol) {
 }
 
 std::string TestFileAbsolutePath(const std::string& filename) {
-  return JoinPath(CERES_GET_FLAG(FLAGS_test_srcdir) + CERES_TEST_SRCDIR_SUFFIX,
-                  filename);
+  return JoinPath(::testing::SrcDir() + CERES_TEST_SRCDIR_SUFFIX, filename);
 }
 
 std::string ToString(const Solver::Options& options) {
