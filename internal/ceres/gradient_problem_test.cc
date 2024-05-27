@@ -30,7 +30,7 @@
 
 #include "ceres/gradient_problem.h"
 
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 namespace ceres::internal {
 

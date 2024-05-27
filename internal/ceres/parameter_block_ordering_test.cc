@@ -30,6 +30,8 @@
 
 #include "ceres/parameter_block_ordering.h"
 
+#include <gtest/gtest.h>
+
 #include <cstddef>
 #include <memory>
 #include <unordered_set>
@@ -41,7 +43,6 @@
 #include "ceres/program.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/stl_util.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 

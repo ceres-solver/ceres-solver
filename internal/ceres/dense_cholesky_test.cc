@@ -30,6 +30,9 @@
 
 #include "ceres/dense_cholesky.h"
 
+#include <gmock/gmock.h>
+#include <gtest/gtest.h>
+
 #include <memory>
 #include <numeric>
 #include <sstream>
@@ -43,8 +46,6 @@
 #include "ceres/iterative_refiner.h"
 #include "ceres/linear_solver.h"
 #include "glog/logging.h"
-#include "gmock/gmock.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 

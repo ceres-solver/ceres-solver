@@ -31,13 +31,14 @@
 
 #include "ceres/dynamic_numeric_diff_cost_function.h"
 
+#include <gtest/gtest.h>
+
 #include <cstddef>
 #include <memory>
 #include <vector>
 
 #include "ceres/numeric_diff_options.h"
 #include "ceres/types.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 

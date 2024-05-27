@@ -30,6 +30,8 @@
 
 #include "ceres/trust_region_preprocessor.h"
 
+#include <gtest/gtest.h>
+
 #include <array>
 #include <map>
 
@@ -38,7 +40,6 @@
 #include "ceres/problem_impl.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/solver.h"
-#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {

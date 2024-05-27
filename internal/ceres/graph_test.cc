@@ -30,9 +30,9 @@
 
 #include "ceres/graph.h"
 
-#include <unordered_set>
+#include <gtest/gtest.h>
 
-#include "gtest/gtest.h"
+#include <unordered_set>
 
 namespace ceres::internal {
 

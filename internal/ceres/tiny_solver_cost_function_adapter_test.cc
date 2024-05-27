@@ -30,13 +30,14 @@
 
 #include "ceres/tiny_solver_cost_function_adapter.h"
 
+#include <gtest/gtest.h>
+
 #include <algorithm>
 #include <cmath>
 #include <memory>
 
 #include "ceres/cost_function.h"
 #include "ceres/sized_cost_function.h"
-#include "gtest/gtest.h"
 
 namespace ceres {
 

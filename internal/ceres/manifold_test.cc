@@ -30,6 +30,9 @@
 
 #include "ceres/manifold.h"
 
+#include <gmock/gmock.h>
+#include <gtest/gtest.h>
+
 #include <cmath>
 #include <limits>
 #include <memory>
@@ -47,8 +50,6 @@
 #include "ceres/rotation.h"
 #include "ceres/sphere_manifold.h"
 #include "ceres/types.h"
-#include "gmock/gmock.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 

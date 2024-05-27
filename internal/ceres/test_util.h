@@ -31,6 +31,8 @@
 #ifndef CERES_INTERNAL_TEST_UTIL_H_
 #define CERES_INTERNAL_TEST_UTIL_H_
 
+#include <gtest/gtest.h>
+
 #include <string>
 
 #include "ceres/internal/disable_warnings.h"
@@ -38,7 +40,6 @@
 #include "ceres/problem.h"
 #include "ceres/solver.h"
 #include "ceres/stringprintf.h"
-#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {

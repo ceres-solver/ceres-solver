@@ -30,6 +30,8 @@
 
 #include "ceres/dogleg_strategy.h"
 
+#include <gtest/gtest.h>
+
 #include <limits>
 #include <memory>
 
@@ -38,7 +40,6 @@
 #include "ceres/linear_solver.h"
 #include "ceres/trust_region_strategy.h"
 #include "glog/logging.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 namespace {
