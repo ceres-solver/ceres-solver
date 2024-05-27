@@ -41,11 +41,11 @@
 #include <string>
 #include <vector>
 
+#include "absl/log/log.h"
 #include "ceres/array_utils.h"
 #include "ceres/numeric_diff_test_utils.h"
 #include "ceres/test_util.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

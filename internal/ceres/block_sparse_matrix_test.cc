@@ -38,12 +38,12 @@
 #include <string>
 #include <vector>
 
+#include "absl/log/log.h"
 #include "ceres/casts.h"
 #include "ceres/crs_matrix.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/triplet_sparse_matrix.h"
-#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {

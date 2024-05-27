@@ -41,6 +41,7 @@
 #include <string>
 #include <utility>
 
+#include "absl/log/log.h"
 #include "ceres/constants.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/euler_angles.h"
@@ -49,7 +50,6 @@
 #include "ceres/jet.h"
 #include "ceres/stringprintf.h"
 #include "ceres/test_util.h"
-#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {

@@ -39,6 +39,8 @@
 #include <tuple>
 #include <type_traits>
 
+#include "absl/log/check.h"
+
 namespace ceres::internal {
 
 // InvokeWithThreadId handles passing thread_id to the function

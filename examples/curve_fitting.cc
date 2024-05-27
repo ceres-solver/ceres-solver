@@ -132,8 +132,6 @@ struct ExponentialResidual {
 };
 
 int main(int argc, char** argv) {
-  google::InitGoogleLogging(argv[0]);
-
   const double initial_m = 0.0;
   const double initial_c = 0.0;
   double m = initial_m;

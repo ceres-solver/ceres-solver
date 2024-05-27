@@ -33,7 +33,6 @@
 
 #include "ceres/ceres.h"
 #include "ceres/cubic_interpolation.h"
-#include "glog/logging.h"
 
 using Interpolator = ceres::CubicInterpolator<ceres::Grid1D<double>>;
 
@@ -59,8 +58,6 @@ struct InterpolatedCostFunctor {
 };
 
 int main(int argc, char** argv) {
-  google::InitGoogleLogging(argv[0]);
-
   // Evaluate the function f(x) = (x - 4.5)^2;
   const int kNumSamples = 10;
   double values[kNumSamples];

@@ -38,8 +38,8 @@
 #include <utility>
 #include <vector>
 
+#include "absl/log/log.h"
 #include "ceres/internal/eigen.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

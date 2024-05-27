@@ -34,7 +34,6 @@
 
 #include <cmath>
 
-#include "glog/logging.h"
 
 // Duplicated from curve_fitting.cc.
 int num_observations = 67;

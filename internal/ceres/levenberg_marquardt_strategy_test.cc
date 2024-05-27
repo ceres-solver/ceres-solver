@@ -30,15 +30,15 @@
 
 #include "ceres/levenberg_marquardt_strategy.h"
 
+#include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
 #include <memory>
 
+#include "absl/log/log.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
 #include "ceres/trust_region_strategy.h"
-#include "glog/logging.h"
-#include <gtest/gtest.h>
 
 using testing::_;
 using testing::AllOf;
