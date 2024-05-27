@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6218386_a90b0bd2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-27T21:44:27Z",
+      "side": 1,
+      "message": "Gentlemen, \n\nThis is a rather large change to how we do testing. So I would appreciate you looking at it. \n\nI need to do this before we can move to abseil, since test_utils.cc depends on flags which made testimg dependent on gflags etc.\n\nThe new more modern approach simplifies things enormously. \n\nI suspect my cmake logic is not particularly robust, so I would appreciate feedback there too.",
+      "revId": "a4898e69c1d944b15d830d555c961f19af951a9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
