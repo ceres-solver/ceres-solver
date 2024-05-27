@@ -30,6 +30,8 @@
 
 #include "ceres/inner_product_computer.h"
 
+#include <gtest/gtest.h>
+
 #include <memory>
 #include <numeric>
 #include <random>
@@ -39,7 +41,6 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "glog/logging.h"
-#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {

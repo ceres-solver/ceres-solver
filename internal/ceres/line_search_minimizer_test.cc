@@ -28,12 +28,13 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
+#include <gtest/gtest.h>
+
 #include <cmath>
 #include <cstdlib>
 
 #include "ceres/ceres.h"
 #include "glog/logging.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 

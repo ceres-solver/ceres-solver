@@ -31,6 +31,8 @@
 //
 // End-to-end tests for Ceres using Powell's function.
 
+#include <gtest/gtest.h>
+
 #include <cmath>
 #include <cstdlib>
 
@@ -41,7 +43,6 @@
 #include "ceres/test_util.h"
 #include "ceres/types.h"
 #include "glog/logging.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 

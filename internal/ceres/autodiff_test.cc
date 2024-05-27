@@ -30,11 +30,11 @@
 
 #include "ceres/internal/autodiff.h"
 
+#include <gtest/gtest.h>
+
 #include <algorithm>
 #include <iterator>
 #include <random>
-
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 
