@@ -32,9 +32,9 @@
 
 #include <string>
 
+#include "absl/log/log.h"
 #include "ceres/dense_qr.h"
 #include "ceres/internal/eigen.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

@@ -42,6 +42,7 @@
 #include "Eigen/SVD"
 #include "Eigen/SparseCore"
 #include "Eigen/SparseQR"
+#include "absl/log/log.h"
 #include "ceres/compressed_col_sparse_matrix_utils.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/covariance.h"
@@ -55,7 +56,6 @@
 #include "ceres/residual_block.h"
 #include "ceres/suitesparse.h"
 #include "ceres/wall_time.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

@@ -32,7 +32,7 @@
 
 #ifndef CERES_NO_CUDA
 
-#include <glog/logging.h>
+#include <absl/log/log.h>
 #include <gtest/gtest.h>
 
 #include <numeric>

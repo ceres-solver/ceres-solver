@@ -33,8 +33,8 @@
 #include <gtest/gtest.h>
 
 #include <cstddef>
-
-#include "glog/logging.h"
+#include "absl/log/log.h"
+#include "absl/log/check.h"
 
 namespace ceres {
 namespace internal {

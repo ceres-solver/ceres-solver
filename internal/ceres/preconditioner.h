@@ -33,6 +33,7 @@
 
 #include <vector>
 
+#include "absl/log/check.h"
 #include "ceres/casts.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/context_impl.h"
