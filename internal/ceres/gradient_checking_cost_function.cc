@@ -40,6 +40,7 @@
 #include <utility>
 #include <vector>
 
+#include "absl/log/log.h"
 #include "ceres/dynamic_numeric_diff_cost_function.h"
 #include "ceres/gradient_checker.h"
 #include "ceres/internal/eigen.h"
@@ -50,7 +51,6 @@
 #include "ceres/residual_block.h"
 #include "ceres/stringprintf.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

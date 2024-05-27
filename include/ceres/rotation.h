@@ -48,9 +48,9 @@
 #include <algorithm>
 #include <cmath>
 
+#include "absl/log/check.h"
 #include "ceres/constants.h"
 #include "ceres/internal/euler_angles.h"
-#include "glog/logging.h"
 
 namespace ceres {
 

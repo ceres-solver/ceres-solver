@@ -30,10 +30,10 @@
 
 #include <string>
 
+#include "absl/log/log.h"
 #include "ceres/dense_cholesky.h"
 #include "ceres/internal/config.h"
 #include "ceres/internal/eigen.h"
-#include "glog/logging.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {

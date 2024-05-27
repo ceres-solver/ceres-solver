@@ -32,6 +32,8 @@
 
 #include <cstring>
 
+#include "absl/log/check.h"
+
 namespace ceres::internal {
 
 DynamicCompressedRowSparseMatrix::DynamicCompressedRowSparseMatrix(

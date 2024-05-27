@@ -33,11 +33,11 @@
 #include <utility>
 
 #include "Eigen/Dense"
+#include "absl/log/log.h"
 #include "ceres/dense_cholesky.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/sparse_cholesky.h"
 #include "ceres/sparse_matrix.h"
-#include "glog/logging.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {

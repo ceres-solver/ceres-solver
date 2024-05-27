@@ -58,8 +58,6 @@ class Rosenbrock final : public ceres::FirstOrderFunction {
 };
 
 int main(int argc, char** argv) {
-  google::InitGoogleLogging(argv[0]);
-
   double parameters[2] = {-1.2, 1.0};
 
   ceres::GradientProblemSolver::Options options;

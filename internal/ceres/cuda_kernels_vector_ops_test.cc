@@ -36,11 +36,11 @@
 #include <string>
 #include <vector>
 
+#include "absl/log/log.h"
 #include "ceres/context_impl.h"
 #include "ceres/cuda_buffer.h"
 #include "ceres/internal/config.h"
 #include "ceres/internal/eigen.h"
-#include "glog/logging.h"
 #include "gtest/gtest.h"
 
 namespace ceres {

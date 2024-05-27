@@ -81,44 +81,44 @@ target_link_libraries(iteration_callback_example PRIVATE Ceres::ceres)
 add_executable(evaluation_callback_example evaluation_callback_example.cc)
 target_link_libraries(evaluation_callback_example PRIVATE Ceres::ceres)
 
-if (GFLAGS)
-  add_executable(powell powell.cc)
-  target_link_libraries(powell PRIVATE Ceres::ceres gflags)
 
-  add_executable(nist nist.cc)
-  target_link_libraries(nist PRIVATE Ceres::ceres gflags)
-  if (HAVE_BIGOBJ)
-    target_compile_options(nist PRIVATE /bigobj)
-  endif()
+add_executable(powell powell.cc)
+target_link_libraries(powell PRIVATE Ceres::ceres absl::flags absl::flags_parse)
 
-  add_executable(more_garbow_hillstrom more_garbow_hillstrom.cc)
-  target_link_libraries(more_garbow_hillstrom PRIVATE Ceres::ceres gflags)
+add_executable(nist nist.cc)
+target_link_libraries(nist PRIVATE Ceres::ceres absl::flags absl::flags_parse)
+if (HAVE_BIGOBJ)
+  target_compile_options(nist PRIVATE /bigobj)
+endif()
 
-  add_executable(circle_fit circle_fit.cc)
-  target_link_libraries(circle_fit PRIVATE Ceres::ceres gflags)
+add_executable(more_garbow_hillstrom more_garbow_hillstrom.cc)
+target_link_libraries(more_garbow_hillstrom PRIVATE Ceres::ceres absl::flags absl::flags_parse)
 
-  add_executable(bundle_adjuster
-                 bundle_adjuster.cc
-                 bal_problem.cc)
-  target_link_libraries(bundle_adjuster PRIVATE Ceres::ceres gflags)
+add_executable(circle_fit circle_fit.cc)
+target_link_libraries(circle_fit PRIVATE Ceres::ceres absl::flags absl::flags_parse)
 
-  add_executable(libmv_bundle_adjuster
-                 libmv_bundle_adjuster.cc)
-  target_link_libraries(libmv_bundle_adjuster PRIVATE Ceres::ceres gflags)
+add_executable(bundle_adjuster
+  bundle_adjuster.cc
+  bal_problem.cc)
+target_link_libraries(bundle_adjuster PRIVATE Ceres::ceres absl::flags absl::flags_parse)
 
-  add_executable(libmv_homography
-                 libmv_homography.cc)
-  target_link_libraries(libmv_homography PRIVATE Ceres::ceres gflags)
+add_executable(libmv_bundle_adjuster
+  libmv_bundle_adjuster.cc)
+target_link_libraries(libmv_bundle_adjuster PRIVATE Ceres::ceres absl::flags absl::flags_parse)
 
-  add_executable(denoising
-                 denoising.cc
-                 fields_of_experts.cc)
-  target_link_libraries(denoising PRIVATE Ceres::ceres gflags)
+add_executable(libmv_homography
+  libmv_homography.cc)
+target_link_libraries(libmv_homography PRIVATE Ceres::ceres absl::flags absl::flags_parse)
 
-  add_executable(robot_pose_mle
-                 robot_pose_mle.cc)
-  target_link_libraries(robot_pose_mle PRIVATE Ceres::ceres gflags)
-endif (GFLAGS)
+add_executable(denoising
+  denoising.cc
+  fields_of_experts.cc)
+target_link_libraries(denoising PRIVATE Ceres::ceres absl::flags absl::flags_parse)
+
+add_executable(robot_pose_mle
+  robot_pose_mle.cc)
+target_link_libraries(robot_pose_mle PRIVATE Ceres::ceres absl::flags absl::flags_parse)
+
 
 add_subdirectory(sampled_function)
 add_subdirectory(slam)
