@@ -31,6 +31,8 @@
 
 #include "ceres/numeric_diff_cost_function.h"
 
+#include <gtest/gtest.h>
+
 #include <algorithm>
 #include <array>
 #include <cmath>
@@ -44,7 +46,6 @@
 #include "ceres/test_util.h"
 #include "ceres/types.h"
 #include "glog/logging.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 

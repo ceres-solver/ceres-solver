@@ -14,6 +14,9 @@
 
 #include "ceres/internal/fixed_array.h"
 
+#include <gmock/gmock.h>
+#include <gtest/gtest.h>
+
 #include <cstdio>
 #include <cstring>
 #include <list>
@@ -23,9 +26,6 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
-
-#include "gmock/gmock.h"
-#include "gtest/gtest.h"
 
 using ::testing::ElementsAreArray;
 

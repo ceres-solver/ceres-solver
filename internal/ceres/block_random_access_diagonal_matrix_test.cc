@@ -30,6 +30,8 @@
 
 #include "ceres/block_random_access_diagonal_matrix.h"
 
+#include <gtest/gtest.h>
+
 #include <limits>
 #include <memory>
 #include <vector>
@@ -37,7 +39,6 @@
 #include "Eigen/Cholesky"
 #include "ceres/internal/eigen.h"
 #include "glog/logging.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 

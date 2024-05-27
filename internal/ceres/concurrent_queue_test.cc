@@ -30,12 +30,13 @@
 
 #include "ceres/concurrent_queue.h"
 
+#include <gmock/gmock.h>
+#include <gtest/gtest.h>
+
 #include <chrono>
 #include <thread>
 
 #include "ceres/internal/config.h"
-#include "gmock/gmock.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 

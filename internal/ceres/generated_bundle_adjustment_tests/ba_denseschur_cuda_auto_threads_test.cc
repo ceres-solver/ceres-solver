@@ -37,7 +37,7 @@
 
 #include "ceres/bundle_adjustment_test_util.h"
 #include "ceres/internal/config.h"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 #ifndef CERES_NO_CUDA
 
