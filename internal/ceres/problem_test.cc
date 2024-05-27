@@ -31,6 +31,9 @@
 
 #include "ceres/problem.h"
 
+#include <gmock/gmock.h>
+#include <gtest/gtest.h>
+
 #include <memory>
 #include <string>
 #include <vector>
@@ -49,8 +52,6 @@
 #include "ceres/sized_cost_function.h"
 #include "ceres/sparse_matrix.h"
 #include "ceres/types.h"
-#include "gmock/gmock.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 
