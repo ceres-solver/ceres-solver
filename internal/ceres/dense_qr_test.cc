@@ -30,6 +30,9 @@
 
 #include "ceres/dense_qr.h"
 
+#include <gmock/gmock.h>
+#include <gtest/gtest.h>
+
 #include <memory>
 #include <numeric>
 #include <string>
@@ -40,8 +43,6 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
 #include "glog/logging.h"
-#include "gmock/gmock.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 

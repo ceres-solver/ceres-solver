@@ -30,6 +30,8 @@
 
 #include "ceres/block_random_access_sparse_matrix.h"
 
+#include <gtest/gtest.h>
+
 #include <limits>
 #include <memory>
 #include <set>
@@ -38,7 +40,6 @@
 
 #include "ceres/internal/eigen.h"
 #include "glog/logging.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 

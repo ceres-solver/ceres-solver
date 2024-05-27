@@ -31,10 +31,11 @@
 
 #include "ceres/canonical_views_clustering.h"
 
+#include <gtest/gtest.h>
+
 #include <unordered_map>
 
 #include "ceres/graph.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 
