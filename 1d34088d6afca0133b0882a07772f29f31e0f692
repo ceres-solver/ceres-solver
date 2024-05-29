@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9bdbf5fa_402035aa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-29T00:52:26Z",
+      "side": 1,
+      "message": "Here is what the initial transition to absl looks like, where we replace glog/flags/miniglog et al with absl::log, absl::check and absl::flags.",
+      "revId": "1d34088d6afca0133b0882a07772f29f31e0f692",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
