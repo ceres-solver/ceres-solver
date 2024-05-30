@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ff3427fd_306c53c1",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-30T23:30:34Z",
+      "side": 1,
+      "message": "Before I do this, let me share something quite weird that I just observed on my laptop and maybe you have some insight.\n\nWhen I was initially developing this version I did not have googletest installed on my laptop and this patch worked fine.\n\nThen I used homebrew to install googletest and suddenly I started getting link errors of the form\n\nUndefined symbols for architecture arm64:\n  \"testing::internal::MakeAndRegisterTestInfo(char const*, char const*, char const*, char const*, testing::internal::CodeLocation, void const*, void (*)(), void (*)(), testing::internal::TestFactoryBase*)\", referenced from:\n      __GLOBAL__sub_I_array_utils_test.cc in array_utils_test.cc.o\n      __GLOBAL__sub_I_array_utils_test.cc in array_utils_test.cc.o\n      __GLOBAL__sub_I_array_utils_test.cc in array_utils_test.cc.o\n      __GLOBAL__sub_I_array_utils_test.cc in array_utils_test.cc.o\n      __GLOBAL__sub_I_array_utils_test.cc in array_utils_test.cc.o\nld: symbol(s) not found for architecture arm64\nclang: error: linker command failed with exit code 1 (use -v to see invocation)\nninja: build stopped: subcommand failed.\n\nI think it may have to do with the fact that the command line is of the form\n\n\nc++ -Wmissing-declarations -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter -Wno-missing-field-initializers -Qunused-arguments -mllvm -inline-threshold\u003d600 -Wno-return-type-c-linkage -O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names  internal/ceres/CMakeFiles/array_utils_test.dir/array_utils_test.cc.o -o bin/array_utils_test  -Wl,-rpath,/opt/homebrew/lib  lib/libtest_util.a  lib/libceres.a  lib/libgmock_main.a  /opt/homebrew/lib/libspqr.dylib  /opt/homebrew/lib/libcholmod.dylib  /opt/homebrew/lib/libamd.dylib  /opt/homebrew/lib/libcamd.dylib  /opt/homebrew/lib/libccolamd.dylib  /opt/homebrew/lib/libcolamd.dylib  /opt/homebrew/lib/libsuitesparseconfig.dylib  /opt/homebrew/lib/libmetis.dylib  -framework Accelerate  -lm  -ldl  /opt/homebrew/lib/libglog.0.6.0.dylib  /opt/homebrew/lib/libgflags.2.2.2.dylib  lib/libgmock.a  lib/libgtest.a\n\nand the key part being \n\n-Wl,-rpath,/opt/homebrew/lib \n\nwhich is where gtest is installed. so trying to use the fetched gtest seems to conflict with the version thats installed, but I am not entirely sure why, because it is explicitly trying to link to the locally built versions as listed in the last two entries of the command line.\n\nAny ideas as to what maybe going on?",
+      "parentUuid": "9ee11d2c_a4ff0166",
+      "revId": "a17be386d65f49752ffbab405a379130280e4625",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f3aee627_715ad5ff",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 7
