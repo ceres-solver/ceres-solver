@@ -110,6 +110,24 @@
       "message": "```suggestion\n  using LayoutType \u003d std::unordered_map\u003cstd::int64_t, CellInfo\u003e;\n```",
       "revId": "99250dc4ae01734b67b1c41a77a8532af80cde94",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0cb5ffec_50c7af17",
+        "filename": "internal/ceres/block_random_access_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-30T22:53:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dc1ddff_b58df969",
+      "revId": "99250dc4ae01734b67b1c41a77a8532af80cde94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
