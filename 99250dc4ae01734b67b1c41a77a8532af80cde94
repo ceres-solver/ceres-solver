@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3e196dd4_3238e050",
+        "filename": "internal/ceres/block_random_access_diagonal_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-05-30T22:55:40Z",
+      "side": 1,
+      "message": "Sameer, I can only find this note in the guide:\n\u003e We use int very often, for integers we know are not going to be too big, e.g., loop counters. Use plain old int for such things.\n\nIs this what you refer to? I don\u0027t see any mention of standard containers, which you use here.\n\nEither way, it is still a good idea to abstain from integer conversions due to [performance implications](https://www.youtube.com/watch?v\u003djKpIZ4UcaNw).",
+      "parentUuid": "66e32c7b_d2ea745a",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 10
+      },
+      "revId": "99250dc4ae01734b67b1c41a77a8532af80cde94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "65d8734d_db23087b",
         "filename": "internal/ceres/block_random_access_diagonal_matrix.cc",
         "patchSetId": 3
