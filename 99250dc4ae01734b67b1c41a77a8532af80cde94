@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "726fd95a_b9d59a31",
+        "filename": "internal/ceres/block_random_access_diagonal_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-05-30T20:36:48Z",
+      "side": 1,
+      "message": "I\u0027d avoid unnecessary integer sign conversion which can potentially overflow, resulting in UB:\n\n\n```suggestion\n  for (std::size_t i \u003d 0; i \u003c blocks.size(); ++i) {\n```\n\nIn particular, Google C++ Style guide [states](https://google.github.io/styleguide/cppguide.html#Integer_Types):\n\n\u003e [...] mixing signedness of integer types is responsible for an equally large class of problems. The best advice we can provide: try to use iterators and containers rather than pointers and sizes, **try not to mix signedness**, and try to avoid unsigned types (except for representing bitfields or modular arithmetic). Do not use an unsigned type merely to assert that a variable is non-negative.",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 10
+      },
+      "revId": "99250dc4ae01734b67b1c41a77a8532af80cde94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65d8734d_db23087b",
+        "filename": "internal/ceres/block_random_access_diagonal_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-05-30T20:36:48Z",
+      "side": 1,
+      "message": "```suggestion\n  const std::size_t num_blocks \u003d blocks.size();\n```",
+      "range": {
+        "startLine": 107,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 11
+      },
+      "revId": "99250dc4ae01734b67b1c41a77a8532af80cde94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2dc1ddff_b58df969",
+        "filename": "internal/ceres/block_random_access_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-05-30T20:36:48Z",
+      "side": 1,
+      "message": "```suggestion\n  using LayoutType \u003d std::unordered_map\u003cstd::int64_t, CellInfo\u003e;\n```",
+      "revId": "99250dc4ae01734b67b1c41a77a8532af80cde94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
