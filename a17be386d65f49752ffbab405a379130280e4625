@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9ee11d2c_a4ff0166",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-05-30T23:16:25Z",
+      "side": 1,
+      "message": "This is exactly what I had in mind. `BUILD_GTEST` as a flag name should do the job here.\n\nWe could cascade the checks to allow for a fallback in case `BUILD_GTEST` has not been initialized yet and `find_package` fails:\n\n```cmake\n# Undefined or OFF\nif (NOT BUILD_GTEST)\n  find_package (GTest)\nendif (NOT BUILD_GTEST)\n\nif (NOT DEFINED BUILD_GTEST)\n  if (GTest_FOUND)\n    option (BUILD_GTEST \"...\" OFF)\n  else (GTest_FOUND)\n    option (BUILD_GTEST \"...\" ON)\n  endif (GTest_FOUND)\nendif (NOT DEFINED BUILD_GTEST)\n\nif (BUILD_GTEST)\n  FetchContent (...)\nendif (BUILD_GTEST)\n```",
+      "parentUuid": "707580c0_e7e2705c",
+      "revId": "a17be386d65f49752ffbab405a379130280e4625",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f3aee627_715ad5ff",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 7
@@ -97,6 +115,30 @@
       "side": 1,
       "message": "it has to be a relative path, because SrcDir returns \"./bin\" so adding an absolute path here won\u0027t quite work.",
       "parentUuid": "0240e243_4a75f385",
+      "range": {
+        "startLine": 402,
+        "startChar": 73,
+        "endLine": 402,
+        "endChar": 74
+      },
+      "revId": "a17be386d65f49752ffbab405a379130280e4625",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db3ee03b_c30e9399",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-05-30T23:16:25Z",
+      "side": 1,
+      "message": "Does this imply that running test executables manually from a directory other than the build directory does not work?",
+      "parentUuid": "df2de8f6_a05592c5",
       "range": {
         "startLine": 402,
         "startChar": 73,
