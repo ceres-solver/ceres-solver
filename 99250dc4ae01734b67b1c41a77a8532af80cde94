@@ -74,6 +74,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d870e72b_856346ff",
+        "filename": "internal/ceres/block_random_access_diagonal_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-30T23:34:53Z",
+      "side": 1,
+      "message": "yes exactly, there is little to no size_t usage inside google. In fact we use ints almost exclusively for all our index based loop. If we are going to go down this path, this is not the change to do it in, it will have to be a large change to the whole code base.",
+      "parentUuid": "3e196dd4_3238e050",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 10
+      },
+      "revId": "99250dc4ae01734b67b1c41a77a8532af80cde94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "65d8734d_db23087b",
         "filename": "internal/ceres/block_random_access_diagonal_matrix.cc",
         "patchSetId": 3
