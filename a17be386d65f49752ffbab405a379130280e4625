@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4f53d994_16ec9557",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-05-30T20:22:41Z",
+      "side": 1,
+      "message": "I generally advise against the unconditional use of `FetchContent`. There are two main reasons for this:\n1. `FetchContent` requires internet connection at CMake configuration time (not during repository checkout). In case Github is offline or internet access is limited due to certain network security policies (e.g., in a Docker container, firewall restrictions in an enterprise network), building tests or any other components for that matter will fail.\n2. Many systems (e.g., various Linux distributions such as Arch Linux, Alpine Linux) and package managers (Homebrew, msys2, vcpkg to name a few) already provide a (precompiled) version of gtest whose use should be prioritized over the bundled one (included via `FetchContent`).\n\nFor these reasons, I suggest adding either an opt-out option for using system packages and/or prioritizing the system package and falling back to `FetchContent` if the corresponding package is not available.\n\nIn general, `FetchContent` should only be used as an additional layer for injecting dependencies into the project but not as the main one, which should be left to the basic `find_package` integration mechanism.",
+      "revId": "a17be386d65f49752ffbab405a379130280e4625",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f3aee627_715ad5ff",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 7
@@ -14,6 +31,30 @@
       "writtenOn": "2024-05-30T19:52:40Z",
       "side": 1,
       "message": "there should be a better way to do this, since we are hard coding the path separator here, which may or may not work on windows.",
+      "range": {
+        "startLine": 402,
+        "startChar": 73,
+        "endLine": 402,
+        "endChar": 74
+      },
+      "revId": "a17be386d65f49752ffbab405a379130280e4625",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0240e243_4a75f385",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-05-30T20:22:41Z",
+      "side": 1,
+      "message": "I\u0027d set the path to `${Ceres_SOURCE_DIR}/data` as used before.",
+      "parentUuid": "f3aee627_715ad5ff",
       "range": {
         "startLine": 402,
         "startChar": 73,
