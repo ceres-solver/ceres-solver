@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "66e32c7b_d2ea745a",
+        "filename": "internal/ceres/block_random_access_diagonal_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-30T22:31:20Z",
+      "side": 1,
+      "message": "The google style is to use signed integers for loops. Generally speaking loop variables being unsigned variables is frowned upon.",
+      "parentUuid": "726fd95a_b9d59a31",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 10
+      },
+      "revId": "99250dc4ae01734b67b1c41a77a8532af80cde94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "65d8734d_db23087b",
         "filename": "internal/ceres/block_random_access_diagonal_matrix.cc",
         "patchSetId": 3
@@ -37,6 +61,30 @@
       "writtenOn": "2024-05-30T20:36:48Z",
       "side": 1,
       "message": "```suggestion\n  const std::size_t num_blocks \u003d blocks.size();\n```",
+      "range": {
+        "startLine": 107,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 11
+      },
+      "revId": "99250dc4ae01734b67b1c41a77a8532af80cde94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "386f07ab_2a20d2bd",
+        "filename": "internal/ceres/block_random_access_diagonal_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-30T22:31:20Z",
+      "side": 1,
+      "message": "same here.",
+      "parentUuid": "65d8734d_db23087b",
       "range": {
         "startLine": 107,
         "startChar": 8,
