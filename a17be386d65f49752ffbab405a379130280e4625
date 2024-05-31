@@ -144,6 +144,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a8da8e9_f0300f78",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-31T02:50:36Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "42f7d769_9930832b",
+      "revId": "a17be386d65f49752ffbab405a379130280e4625",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f3aee627_715ad5ff",
@@ -229,6 +247,30 @@
       "side": 1,
       "message": "Does this imply that running test executables manually from a directory other than the build directory does not work?",
       "parentUuid": "df2de8f6_a05592c5",
+      "range": {
+        "startLine": 402,
+        "startChar": 73,
+        "endLine": 402,
+        "endChar": 74
+      },
+      "revId": "a17be386d65f49752ffbab405a379130280e4625",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b64cc507_8a6f5774",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-31T02:50:36Z",
+      "side": 1,
+      "message": "Unfortunately yes.",
+      "parentUuid": "db3ee03b_c30e9399",
       "range": {
         "startLine": 402,
         "startChar": 73,
