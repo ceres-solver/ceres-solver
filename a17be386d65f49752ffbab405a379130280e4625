@@ -1,6 +1,24 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c81596a_daed4f3b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-31T00:15:42Z",
+      "side": 1,
+      "message": "Yes it\u0027s possible that the brew installed version is bringing in headers that do not match the version of the core that we are building from GitHub.\n\nSo this is going to be a problem quite generally. Should we just not use the fetched version and stick to using the version which is already installed with a minimum version requirement?\n\nThat seems simpler than trying to navigate both of these worlds imo.",
+      "tag": "mailMessageId\u003d\u003cCABqdRUCeKUKeG8MoZ6g-\u003dJk2i9RhJ1Cvn1PvEyC_HW0K3otB9A@mail.gmail.com\u003e",
+      "revId": "a17be386d65f49752ffbab405a379130280e4625",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4f53d994_16ec9557",
