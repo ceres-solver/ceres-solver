@@ -74,6 +74,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "42f7d769_9930832b",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-05-31T00:07:49Z",
+      "side": 1,
+      "message": "Is it possible that there\u0027s a mismatch between the gtest headers being included and the version of the library being linked (i.e., brew gtest includes vs. fetched gtest lib or the other way around). What include directories (and their order) are used by the compiler?",
+      "parentUuid": "ff3427fd_306c53c1",
+      "revId": "a17be386d65f49752ffbab405a379130280e4625",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f3aee627_715ad5ff",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 7
