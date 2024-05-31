@@ -37,6 +37,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a995b93_9bce9ede",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-05-31T00:33:19Z",
+      "side": 1,
+      "message": "Okay then I am going to just change things to a find_package based solution and link to the system installed googletest and make sure we are at a minimum version.",
+      "tag": "mailMessageId\u003d\u003cCABqdRUAF9hTFuXfxJjVOS0Mnpei0c5xPBhadpwAFg55rSK05uQ@mail.gmail.com\u003e",
+      "revId": "a17be386d65f49752ffbab405a379130280e4625",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4f53d994_16ec9557",
