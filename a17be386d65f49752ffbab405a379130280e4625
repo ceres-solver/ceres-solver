@@ -303,6 +303,30 @@
       },
       "revId": "a17be386d65f49752ffbab405a379130280e4625",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f369d13b_6aa11f65",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-06-03T19:36:16Z",
+      "side": 1,
+      "message": "Unfortunately, this relative path does not work with the Visual Studio generator:\n\nhttps://github.com/sergiud/ceres-solver/actions/runs/9355681890/job/25751383556#step:22:2590\n\nThis is because there\u0027s an additional subdirectory involved which is not considered here. In fact, the relative path imposes several constraints on the build directory in a conjunction:\n1. The build directory must be created within the project root directory.\n2. The tests are executed from the `bin/` subdirectory in the build directory.\n\nWhile 2. can be dealt with, 1. is a major restriction which should probably be avoided.",
+      "parentUuid": "3192d9e0_375c2fa7",
+      "range": {
+        "startLine": 402,
+        "startChar": 73,
+        "endLine": 402,
+        "endChar": 74
+      },
+      "revId": "a17be386d65f49752ffbab405a379130280e4625",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
