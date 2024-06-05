@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e1b7f96e_ae67cd17",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-06-05T03:58:08Z",
+      "side": 1,
+      "message": "I had updated my local copy to say \n\n find_package(GTest 1.14.0 REQUIRED)\n \n but I can change it to the version you have recommended including the version number which is what introduced SrcDir()",
+      "parentUuid": "fdb4d734_b451faf9",
+      "revId": "b619ea22a523ff1b31d4f95ec8c77290aee36c7f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "be108bcd_e44f728d",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 8
@@ -60,6 +78,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "61757a06_ed39bb7f",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-06-05T03:58:08Z",
+      "side": 1,
+      "message": "okay back to add_test then",
+      "parentUuid": "be108bcd_e44f728d",
+      "range": {
+        "startLine": 426,
+        "startChar": 4,
+        "endLine": 426,
+        "endChar": 24
+      },
+      "revId": "b619ea22a523ff1b31d4f95ec8c77290aee36c7f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8915b215_5c753cbc",
         "filename": "internal/ceres/test_util.cc",
         "patchSetId": 8
@@ -71,6 +113,24 @@
       "writtenOn": "2024-06-03T19:10:49Z",
       "side": 1,
       "message": "Unfortunately, this does not work with gtest bundled with Ubuntu 22.04: https://github.com/sergiud/ceres-solver/actions/runs/9355681880/job/25751382923#step:12:175\n\nWe probably need to set the minimum version of GTest that introduced `SrcDir()`.",
+      "revId": "b619ea22a523ff1b31d4f95ec8c77290aee36c7f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f697891a_0ac94d4b",
+        "filename": "internal/ceres/test_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-06-05T03:58:08Z",
+      "side": 1,
+      "message": "yeah we need 1.14.0\n\nhttps://packages.ubuntu.com/search?keywords\u003dgoogletest",
+      "parentUuid": "8915b215_5c753cbc",
       "revId": "b619ea22a523ff1b31d4f95ec8c77290aee36c7f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
