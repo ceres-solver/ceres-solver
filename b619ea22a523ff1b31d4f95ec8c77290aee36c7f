@@ -133,6 +133,24 @@
       "parentUuid": "8915b215_5c753cbc",
       "revId": "b619ea22a523ff1b31d4f95ec8c77290aee36c7f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bddbc57a_2a744faf",
+        "filename": "internal/ceres/test_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-06-05T04:02:03Z",
+      "side": 1,
+      "message": "if testing::SrcDir() is not available I can hardcode it as \"./bin\" for now, which is what it is right now. would that work?",
+      "parentUuid": "f697891a_0ac94d4b",
+      "revId": "b619ea22a523ff1b31d4f95ec8c77290aee36c7f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
