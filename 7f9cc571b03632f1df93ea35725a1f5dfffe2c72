@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "589a75a7_098543ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3326575
+      },
+      "writtenOn": "2024-06-06T12:58:04Z",
+      "side": 1,
+      "message": "Note: CTK Compatibility table can be found in the FAQs: https://docs.nvidia.com/deploy/cuda-compatibility/#frequently-asked-questions",
+      "revId": "7f9cc571b03632f1df93ea35725a1f5dfffe2c72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
