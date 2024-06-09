@@ -30,6 +30,8 @@
 
 #include "ceres/cost_function_to_functor.h"
 
+#include <gtest/gtest.h>
+
 #include <cstdint>
 #include <memory>
 #include <utility>
@@ -38,7 +40,6 @@
 #include "ceres/autodiff_cost_function.h"
 #include "ceres/dynamic_autodiff_cost_function.h"
 #include "ceres/dynamic_cost_function_to_functor.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 

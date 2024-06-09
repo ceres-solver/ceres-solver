@@ -30,12 +30,13 @@
 
 #include "ceres/normal_prior.h"
 
+#include <gtest/gtest.h>
+
 #include <algorithm>
 #include <cstddef>
 #include <random>
 
 #include "ceres/internal/eigen.h"
-#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {

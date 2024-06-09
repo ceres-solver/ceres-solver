@@ -30,11 +30,12 @@
 
 #include "ceres/numeric_diff_first_order_function.h"
 
+#include <gtest/gtest.h>
+
 #include <memory>
 
 #include "ceres/array_utils.h"
 #include "ceres/first_order_function.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 

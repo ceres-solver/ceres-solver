@@ -32,12 +32,13 @@
 
 #include "ceres/dynamic_autodiff_cost_function.h"
 
+#include <gtest/gtest.h>
+
 #include <cstddef>
 #include <memory>
 #include <vector>
 
 #include "ceres/types.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 

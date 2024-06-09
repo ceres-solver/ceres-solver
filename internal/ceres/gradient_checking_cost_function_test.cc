@@ -30,6 +30,9 @@
 
 #include "ceres/gradient_checking_cost_function.h"
 
+#include <gmock/gmock.h>
+#include <gtest/gtest.h>
+
 #include <cmath>
 #include <cstdint>
 #include <memory>
@@ -46,8 +49,6 @@
 #include "ceres/sized_cost_function.h"
 #include "ceres/types.h"
 #include "glog/logging.h"
-#include "gmock/gmock.h"
-#include "gtest/gtest.h"
 
 namespace ceres::internal {
 
