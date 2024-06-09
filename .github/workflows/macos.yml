@@ -50,7 +50,8 @@ jobs:
             google-benchmark \
             metis \
             ninja \
-            suite-sparse
+            suite-sparse \
+	    googletest
 
       - name: Cache Build
         id: cache-build

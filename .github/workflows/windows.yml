@@ -35,6 +35,7 @@ jobs:
           mingw-w64-${{matrix.env}}-gcc
           mingw-w64-${{matrix.env}}-gflags
           mingw-w64-${{matrix.env}}-glog
+	  mingw-w64-${{matrix.env}}-gtest
           ${{matrix.sys == 'mingw64' && format('mingw-w64-{0}-metis', matrix.env) || ''}}
           mingw-w64-${{matrix.env}}-ninja
           mingw-w64-${{matrix.env}}-suitesparse
