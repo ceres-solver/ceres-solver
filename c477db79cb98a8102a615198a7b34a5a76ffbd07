@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fa5f775_7c2a4691",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-06-09T18:04:32Z",
+      "side": 1,
+      "message": "Ensure that this works as intended after 0.3.0",
+      "revId": "c477db79cb98a8102a615198a7b34a5a76ffbd07",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46061c53_1f26487c",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-06-09T18:04:32Z",
+      "side": 1,
+      "message": "Enable after 0.3.0",
+      "revId": "c477db79cb98a8102a615198a7b34a5a76ffbd07",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
