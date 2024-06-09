@@ -351,6 +351,30 @@
       },
       "revId": "a17be386d65f49752ffbab405a379130280e4625",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "465fcb1b_6fa56b02",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-06-09T09:57:06Z",
+      "side": 1,
+      "message": "Since we are back at using `add_test`, yes, we should probably use the command-line ideally by passing the absolute path to `data/`.",
+      "parentUuid": "ca71e2f4_d3558631",
+      "range": {
+        "startLine": 402,
+        "startChar": 73,
+        "endLine": 402,
+        "endChar": 74
+      },
+      "revId": "a17be386d65f49752ffbab405a379130280e4625",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }

@@ -16,6 +16,40 @@
       "message": "Sergiu, can you try patch 11?",
       "revId": "00246152dec575a6e7766206624be5f379173038",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4bcaf38_818315ed",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-06-09T09:57:06Z",
+      "side": 1,
+      "message": "```suggestion\n  find_package(GTest 1.11 REQUIRED COMPONENTS GTest GMock CONFIG)\n```\nAFAIK, this is the minimum version that provides the corresponding CMake package configuration.",
+      "revId": "00246152dec575a6e7766206624be5f379173038",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b729e6c9_d49f4313",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-06-09T09:57:06Z",
+      "side": 1,
+      "message": "This is a tautological statement since we already use `REQUIRED` in the line above.",
+      "revId": "00246152dec575a6e7766206624be5f379173038",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6a4ae92_e58dbbbd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-06-09T09:57:06Z",
+      "side": 1,
+      "message": "Sameer, sorry for the late review. I will run the Github workflow next week because Visual Studio builds are currently broken due to https://github.com/actions/runner-images/issues/10004.",
+      "revId": "3eac4d1dd659ba9f206c39a534d7823c20c96616",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
