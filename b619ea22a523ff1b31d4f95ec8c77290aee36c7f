@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "387c51ca_15cdde7b",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-06-09T19:03:14Z",
+      "side": 1,
+      "message": "that would explain why my attempts at getting my workflow tests to work were failing.\n\nFrankly I am not sure what the right thing to do here is. 22.04 is not a terribly old release, so breaking the build on it does not sound like a great idea. It is also going to be supported till 2027, waiting till then to update things does not sound like a great idea either.\n\nso here is another idea.\n\nwe go back to packaging googletest with ceres, but we do not use the gflags/custom main function, which will break the dependency on gflags and we can assume that testing::SrcDir() is always available to us. \n\nThis latter bit is a bigger deal than packaging googletest with ceres, because it unblocks the abseil transition. \n\nI suspect we are going to have a similar conversation about abseil, since we need the release from 2024 which has vlog in it for us to be able to use abseil, and the version in 22.04 is much older.\n\nif we decide to go down this route, then what is the simplest and cleanest way to package googletest and build it using its own cmake file instead of the custom stuff we were doing earlier?\n\ndo I just download the googletest repo as a subdirectory in ceres/internal and add_subdirectory(googletest) on it in the cmake file?",
+      "parentUuid": "485bccda_84a1eb43",
+      "revId": "b619ea22a523ff1b31d4f95ec8c77290aee36c7f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "be108bcd_e44f728d",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 8

@@ -16,6 +16,23 @@
       "message": "Sameer, sorry for the late review. I will run the Github workflow next week because Visual Studio builds are currently broken due to https://github.com/actions/runner-images/issues/10004.",
       "revId": "3eac4d1dd659ba9f206c39a534d7823c20c96616",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd0b9036_eda83a44",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-06-09T19:03:14Z",
+      "side": 1,
+      "message": "Sergiu,\nI am curious what you think of my alternate approach suggested in the comment below.",
+      "revId": "3eac4d1dd659ba9f206c39a534d7823c20c96616",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
