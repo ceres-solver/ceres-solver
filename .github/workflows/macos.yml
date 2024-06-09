@@ -51,7 +51,7 @@ jobs:
             metis \
             ninja \
             suite-sparse \
-	    googletest
+            googletest
 
       - name: Cache Build
         id: cache-build

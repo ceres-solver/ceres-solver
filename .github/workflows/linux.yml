@@ -48,7 +48,7 @@ jobs:
             libmetis-dev \
             libsuitesparse-dev \
             ninja-build \
-	    libgtest-dev \
+            libgtest-dev \
             wget
 
       # nvidia cuda toolkit + gcc combo shipped with 22.04LTS is broken
