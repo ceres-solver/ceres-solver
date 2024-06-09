@@ -109,6 +109,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "309767f2_bcac75c5",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-06-09T22:44:15Z",
+      "side": 1,
+      "message": "I think including googletest as a submodule and periodically updating it is effectively how we have been doing it up till now. All I am proposing it is to modernize/streamline the way we manage building it. \n\nIt used to be the case (before this cmake refactoring in gtest) that there were python scrips which would combine everything into a single gtest and gmock header which projects could include -- which is what we have in our source code right now. \n\nThat has now been replaced by the more elaborate cmake file and they got rid of the python scripts for building the single header.\n\nI think depending on pre-packaged gtest doesn\u0027t really work given the state of affairs in 22.04. Similarly if we decide to carry a new version of the googletest in our own code base anyways, then this srcdir thing is not an issue anymore.\n\nIf this sounds reasonable to you, I will take a whack at the submodule version of googletest.",
+      "parentUuid": "40cae28a_8321a7f1",
+      "revId": "b619ea22a523ff1b31d4f95ec8c77290aee36c7f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "be108bcd_e44f728d",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 8
