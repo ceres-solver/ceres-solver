@@ -91,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "40cae28a_8321a7f1",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-06-09T19:42:12Z",
+      "side": 1,
+      "message": "Embedding GoogleTest as a submodule and including it via `add_subdirectory` is the easiest and cleanest approach for tracking the upstream. However, we would have an issue if we need to patch the sources, i.e., we would not be able to push the changes unless we track the submodule from a GoogleTest fork (e.g., managed by Ceres Solver). Also personally, I would still prefer to use a prepackaged GoogleTest, e.g., installed through a package manager, to avoid compiling GoogleTest altogether.\n\nAnother suggestion: in case `testing::SrcDir` is the only reason we require GoogleTest 1.14, can\u0027t we just backport the function\u0027s implementation to `test_util` and use it as a fallback for GTest\u003c1.14? This way we can avoid bundling GoogleTest on Ubuntu.",
+      "parentUuid": "387c51ca_15cdde7b",
+      "revId": "b619ea22a523ff1b31d4f95ec8c77290aee36c7f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "be108bcd_e44f728d",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 8
