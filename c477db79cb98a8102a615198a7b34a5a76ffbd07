@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "2a24a881_5df58b17",
+        "filename": ".github/workflows/linux.yml",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-06-09T18:15:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32405792_f63c4758",
+      "revId": "c477db79cb98a8102a615198a7b34a5a76ffbd07",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "94af4b82_1b0e1cdb",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 10
@@ -48,6 +66,30 @@
       "writtenOn": "2024-06-09T18:10:01Z",
       "side": 1,
       "message": "Looks like I missed this one previously:\n```suggestion\n  cudssStatus_t Free() noexcept {\n```",
+      "range": {
+        "startLine": 97,
+        "startChar": 16,
+        "endLine": 97,
+        "endChar": 20
+      },
+      "revId": "c477db79cb98a8102a615198a7b34a5a76ffbd07",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ec7915e_21f88814",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-06-09T18:15:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "502c5866_219d4b72",
       "range": {
         "startLine": 97,
         "startChar": 16,
@@ -88,6 +130,30 @@
       "writtenOn": "2024-06-09T18:10:01Z",
       "side": 1,
       "message": "```suggestion\n    std::size_t size_written \u003d 0;\n```",
+      "range": {
+        "startLine": 274,
+        "startChar": 4,
+        "endLine": 274,
+        "endChar": 10
+      },
+      "revId": "c477db79cb98a8102a615198a7b34a5a76ffbd07",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6ef1fa3_e43756d4",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-06-09T18:15:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f1654e2_bb49cf12",
       "range": {
         "startLine": 274,
         "startChar": 4,
