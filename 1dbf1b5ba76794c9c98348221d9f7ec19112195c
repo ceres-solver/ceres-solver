@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d17dd90_b768f4be",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-06-15T22:10:36Z",
+      "side": 1,
+      "message": "Hi Sergiu,\nhere is my second attempt at googletest. It half works. in the following sense,\nif there is no googletest installed on my mac then things work fine, but if there is a version installed then it fails with the following linking error.\n\n\nUndefined symbols for architecture arm64:\n  \"testing::internal::MakeAndRegisterTestInfo(char const*, char const*, char const*, char const*, testing::internal::CodeLocation, void const*, void (*)(), void (*)(), testing::internal::TestFactoryBase*)\", referenced from:\n      __GLOBAL__sub_I_array_utils_test.cc in array_utils_test.cc.o\n      __GLOBAL__sub_I_array_utils_test.cc in array_utils_test.cc.o\n      __GLOBAL__sub_I_array_utils_test.cc in array_utils_test.cc.o\n      __GLOBAL__sub_I_array_utils_test.cc in array_utils_test.cc.o\n      __GLOBAL__sub_I_array_utils_test.cc in array_utils_test.cc.o\nld: symbol(s) not found for architecture arm64\nclang: error: linker command failed with exit code 1 (use -v to see invocation)\nninja: build stopped: subcommand failed.\n\nI also tried pushing the include path for googletest manually to the front of the list of include paths, see line 420 of internal/ceres/CMakeLists.txt but that did not seem to help.\n\nI am at a bit of a loss as to what is going on, clearly the installed googletest is interfering, but I would think that demanding that the search path be to the installed version would do the trick.\n\nAny help would be appreciated.",
+      "revId": "1dbf1b5ba76794c9c98348221d9f7ec19112195c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
