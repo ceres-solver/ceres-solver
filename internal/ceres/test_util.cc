@@ -34,16 +34,14 @@
 
 #include <algorithm>
 #include <cmath>
+#include <gtest/gtest.h>
 
 #include "ceres/file.h"
 #include "ceres/internal/port.h"
 #include "ceres/stringprintf.h"
 #include "ceres/types.h"
-#include "gflags/gflags.h"
 #include "glog/logging.h"
-#include "gtest/gtest.h"
 
-DECLARE_string(test_srcdir);
 
 // This macro is used to inject additional path information specific
 // to the build system.
@@ -135,8 +133,11 @@ void ExpectArraysClose(int n, const double* p, const double* q, double tol) {
 }
 
 std::string TestFileAbsolutePath(const std::string& filename) {
-  return JoinPath(CERES_GET_FLAG(FLAGS_test_srcdir) + CERES_TEST_SRCDIR_SUFFIX,
-                  filename);
+#ifndef CERES_NO_TESTING_SRCDIR
+  return JoinPath(::testing::SrcDir() + CERES_TEST_SRCDIR_SUFFIX, filename);
+#else
+  return JoinPath(CERES_TEST_DATADIR, filename);
+#endif
 }
 
 std::string ToString(const Solver::Options& options) {
