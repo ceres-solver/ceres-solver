@@ -1,0 +1,3 @@
+[submodule "internal/ceres/googletest"]
+	path = internal/ceres/googletest
+	url = https://github.com/google/googletest.git
