@@ -16,6 +16,63 @@
       "message": "gentle ping?",
       "revId": "57139b5a4309eed5aa388c8735d0cec7a9250b9d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e7ab840_11cb7b80",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-06-25T18:44:42Z",
+      "side": 1,
+      "message": "Sameer, apologies for my slow responses. It\u0027s been busy lately.",
+      "revId": "57139b5a4309eed5aa388c8735d0cec7a9250b9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb6b7b45_da7d5803",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-06-25T18:44:42Z",
+      "side": 1,
+      "message": "We probably no longer need this include.",
+      "revId": "57139b5a4309eed5aa388c8735d0cec7a9250b9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c8745ef_6fb9c308",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-06-25T18:44:42Z",
+      "side": 1,
+      "message": "I\u0027d replace `CMAKE_SOURCE_DIR` by `Ceres_SOURCE_DIR` since the former will break Ceres inclusion via `add_subdirectory`. But aside from that, I do not think we actually need this. It should be sufficient to let `test_util` pull both `GTest::gtest` and `GTest::gmock` targets as `PUBLIC` dependencies but before `ceres_static` in the `target_link_libraries` call above. This way we avoid code duplication in lines 424-430.",
+      "range": {
+        "startLine": 409,
+        "startChar": 4,
+        "endLine": 409,
+        "endChar": 20
+      },
+      "revId": "57139b5a4309eed5aa388c8735d0cec7a9250b9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
