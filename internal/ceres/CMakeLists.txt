@@ -555,7 +555,7 @@ macro(add_dependencies_to_benchmark BENCHMARK_TARGET)
   # which are not propagated via the ceres targets, so link them explicitly.
   target_link_libraries(${BENCHMARK_TARGET}
     PRIVATE benchmark::benchmark ceres_static
-            ${CERES_LIBRARY_PRIVATE_DEPENDENCIES})
+            ${CERES_LIBRARY_PRIVATE_DEPENDENCIES} absl::flags_parse absl::log_initialize)
 endmacro()
 
 if (BUILD_BENCHMARKS)
