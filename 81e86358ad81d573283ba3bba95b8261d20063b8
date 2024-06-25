@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "791719e1_1bfb23b1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6457
+      },
+      "writtenOn": "2024-06-25T23:41:36Z",
+      "side": 1,
+      "message": "internal/ceres/gmock/mock-log.h can be removed now.\n\nhttps://github.com/ceres-solver/ceres-solver/pull/1075/commits/bd323ce698748bef0686eb27cb6cea4f88bb4f44#diff-5493ff8e9397811510e780de47c57abb70137f1afe85d1519130dc3679d60ce5 has the Workspace changes needed to support the bazel side of this.  (I\u0027m happy to send those out as a follow-on review)",
+      "revId": "81e86358ad81d573283ba3bba95b8261d20063b8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abfd0013_34cc39cb",
+        "filename": "examples/circle_fit.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 6457
+      },
+      "writtenOn": "2024-06-25T23:41:36Z",
+      "side": 1,
+      "message": "Do you need to call `absl::InitializeLog();` after this?  The docs aren\u0027t overly clear.",
+      "revId": "81e86358ad81d573283ba3bba95b8261d20063b8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb276e9a_48e0bff9",
+        "filename": "internal/ceres/c_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6457
+      },
+      "writtenOn": "2024-06-25T23:41:36Z",
+      "side": 1,
+      "message": "If you are going to drop InitGoogleLogging, drop this as well.",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 31
+      },
+      "revId": "81e86358ad81d573283ba3bba95b8261d20063b8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93752689_414e337c",
+        "filename": "internal/ceres/cuda_block_sparse_crs_view_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 6457
+      },
+      "writtenOn": "2024-06-25T23:41:36Z",
+      "side": 1,
+      "message": "It would be good to be consistent about \"\" vs \u003c\u003e.  \"\" is probably the right answer if we download a version of absl to use (and plays better with Bazel when trying to use a version of absl from the WORKSPACE file)",
+      "revId": "81e86358ad81d573283ba3bba95b8261d20063b8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
