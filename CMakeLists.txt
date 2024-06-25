@@ -93,9 +93,9 @@ enable_testing()
 
 include(CMakeDependentOption)
 include(PrettyPrintCMakeList)
+include(FetchContent)
 
 option(MINIGLOG "Use a stripped down version of glog." OFF)
-option(GFLAGS "Enable Google Flags." ON)
 option(SUITESPARSE "Enable SuiteSparse." ON)
 if (APPLE)
   option(ACCELERATESPARSE
@@ -150,7 +150,7 @@ if (IOS)
   # Apple claims that the BLAS call dsyrk_ is a private API, and will not allow
   # you to submit to the Apple Store if the symbol is present.
   update_cache_variable(LAPACK OFF)
-  message(STATUS "Building for iOS: SuiteSparse, LAPACK, gflags "
+  message(STATUS "Building for iOS: SuiteSparse, LAPACK "
     "are not available.")
 
   update_cache_variable(BUILD_EXAMPLES OFF)
@@ -408,67 +408,14 @@ if (ANDROID)
   message("  ================================================================")
 endif()
 
-# GFlags.
-if (GFLAGS)
-  # Don't search with REQUIRED as we can continue without gflags.
-  find_package(gflags 2.2.0)
-  if (gflags_FOUND)
-    if (TARGET gflags)
-      message("-- Found Google Flags (gflags) version ${gflags_VERSION}: ${gflags_DIR}")
-    else()
-      message("-- Detected version of gflags: ${gflags_VERSION} does not define "
-        "expected gflags CMake target which should be exported by gflags 2.2+. "
-        "Building without gflags.")
-      update_cache_variable(GFLAGS OFF)
-    endif()
-  else (gflags_FOUND)
-    message("-- Did not find Google Flags (gflags), Building without gflags.")
-    update_cache_variable(GFLAGS OFF)
-  endif (gflags_FOUND)
-endif()
-if (NOT GFLAGS)
-  message("-- Use of gflags disabled - no tests or tools will be built!")
-endif()
-
-# MiniGLog.
-if (MINIGLOG)
-  message("-- Compiling minimal glog substitute into Ceres.")
-  set(GLOG_INCLUDE_DIRS internal/ceres/miniglog)
-  set(MINIGLOG_MAX_LOG_LEVEL 2 CACHE STRING "The maximum message severity level to be logged")
-  add_definitions("-DMAX_LOG_LEVEL=${MINIGLOG_MAX_LOG_LEVEL}")
-  message("-- Using minimal glog substitute (include): ${GLOG_INCLUDE_DIRS}")
-  message("-- Max log level for minimal glog substitute: ${MINIGLOG_MAX_LOG_LEVEL}")
-
-  # Mark as advanced (remove from default GUI view) the glog search
-  # variables in case user disables MINIGLOG, FindGlog did not find it, so
-  # made search variables visible in GUI for user to set, but then user enables
-  # MINIGLOG instead of setting them.
-  mark_as_advanced(FORCE GLOG_INCLUDE_DIR
-                         GLOG_LIBRARY)
-else (MINIGLOG)
-  unset(MINIGLOG_MAX_LOG_LEVEL CACHE)
-  # Don't search with REQUIRED so that configuration continues if not found and
-  # we can output an error messages explaining MINIGLOG option.
-  find_package(Glog)
-  if (NOT GLOG_FOUND)
-    message(FATAL_ERROR "Can't find Google Log (glog). Please set either: "
-      "glog_DIR (newer CMake built versions of glog) or GLOG_INCLUDE_DIR & "
-      "GLOG_LIBRARY or enable MINIGLOG option to use minimal glog "
-      "implementation.")
-  endif(NOT GLOG_FOUND)
-  # By default, assume gflags was found, updating the message if it was not.
-  set(GLOG_GFLAGS_DEPENDENCY_MESSAGE
-    " Assuming glog was built with gflags support as gflags was found. "
-    "This will make gflags a public dependency of Ceres.")
-  if (NOT gflags_FOUND)
-    set(GLOG_GFLAGS_DEPENDENCY_MESSAGE
-      " Assuming glog was NOT built with gflags support as gflags was "
-      "not found.  If glog was built with gflags, please set the "
-      "gflags search locations such that it can be found by Ceres.  "
-      "Otherwise, Ceres may fail to link due to missing gflags symbols.")
-  endif(NOT gflags_FOUND)
-  message("-- Found Google Log (glog)." ${GLOG_GFLAGS_DEPENDENCY_MESSAGE})
-endif (MINIGLOG)
+FetchContent_Declare(
+  absl
+  GIT_REPOSITORY https://github.com/abseil/abseil-cpp.git
+  GIT_TAG 20240116.2
+)
+set(ABSL_PROPAGATE_CXX_STD ON)
+set(ABSL_ENABLE_INSTALL ON)
+FetchContent_MakeAvailable(absl)
 
 if (NOT SCHUR_SPECIALIZATIONS)
   list(APPEND CERES_COMPILE_OPTIONS CERES_RESTRICT_SCHUR_SPECIALIZATION)

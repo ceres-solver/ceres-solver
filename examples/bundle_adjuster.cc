@@ -34,7 +34,7 @@
 // For a simpler bare bones example of doing bundle adjustment with
 // Ceres, please see simple_bundle_adjuster.cc.
 //
-// NOTE: This example will not compile without gflags and SuiteSparse.
+// NOTE: This example will not compile without absl flags and SuiteSparse.
 //
 // The problem being solved here is known as a Bundle Adjustment
 // problem in computer vision. Given a set of 3d points X_1, ..., X_n,
@@ -69,7 +69,7 @@
 #include "ceres/ceres.h"
 #include "snavely_reprojection_error.h"
 
-// clang-format makes the gflags definitions too verbose
+// clang-format makes the flag definitions too verbose
 // clang-format off
 
 ABSL_FLAG(std::string, input, "", "Input File name");

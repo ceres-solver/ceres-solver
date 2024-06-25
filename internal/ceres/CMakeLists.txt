@@ -54,6 +54,8 @@ set(CERES_EXPORTED_SRCS
 
 # Also depend on the header files so that they appear in IDEs.
 file(GLOB CERES_INTERNAL_HDRS *.h)
+list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES absl::log absl::check)
+
 if (MINIGLOG)
   file(GLOB MINIGLOG_HDRS miniglog/glog/*.h)
   list(APPEND CERES_INTERNAL_HDRS ${MINIGLOG_HDRS})
@@ -84,18 +86,6 @@ endif (SCHUR_SPECIALIZATIONS)
 # so the gains from a unity build would be marginal.
 set_source_files_properties(${CERES_INTERNAL_SCHUR_FILES} PROPERTIES
   SKIP_UNITY_BUILD_INCLUSION ON)
-
-if (NOT MINIGLOG AND GLOG_FOUND)
-  list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES ${GLOG_LIBRARIES})
-  if (gflags_FOUND)
-    # If glog & gflags are both found, we assume that glog was built with
-    # gflags, as it is awkward to perform a try_compile() to verify this
-    # when gflags is an imported target (as it is in newer versions).
-    # As glog #includes gflags/gflags.h in glog/logging.h if compiled with
-    # gflags, it is thus a public dependency for Ceres in this case.
-    list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES gflags)
-  endif()
-endif (NOT MINIGLOG AND GLOG_FOUND)
 
 if (SUITESPARSE AND SuiteSparse_FOUND)
   # Define version information for use in Solver::FullReport.
@@ -246,6 +236,8 @@ add_library(ceres_internal OBJECT
     wall_time.cc
 )
 
+target_link_libraries(ceres_internal absl::check absl::log)
+
 set(CERES_LIBRARY_SOURCE
     ${CERES_EXPORTED_SRCS}
     ${CERES_INTERNAL_HDRS}
@@ -394,13 +386,22 @@ install(TARGETS ceres
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 if (BUILD_TESTING AND GFLAGS)
-  add_library(gtest STATIC gmock_gtest_all.cc gmock_main.cc)
+  FetchContent_Declare(
+    googletest
+    GIT_REPOSITORY https://github.com/google/googletest.git
+    GIT_TAG release-1.12.1
+  )
+  # For Windows: Prevent overriding the parent project's compiler/linker settings
+  set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+  FetchContent_MakeAvailable(googletest)
+
+  add_library(gtest STATIC gmock_main.cc)
 
   target_include_directories(gtest PRIVATE ${Ceres_SOURCE_DIR}/internal/ceres)
   if (CMAKE_SYSTEM_NAME MATCHES "QNX")
     target_link_libraries(gtest PUBLIC regex)
   endif()
-  target_link_libraries(gtest PRIVATE Ceres::ceres gflags)
+  target_link_libraries(gtest PRIVATE googletest Ceres::ceres)
 
   add_library(test_util STATIC
               evaluator_test_utils.cc
@@ -408,7 +409,7 @@ if (BUILD_TESTING AND GFLAGS)
               test_util.cc)
 
   target_include_directories(test_util PUBLIC ${Ceres_SOURCE_DIR}/internal)
-  target_link_libraries (test_util PUBLIC ceres_static gflags gtest)
+  target_link_libraries (test_util PUBLIC ceres_static gtest)
 
   macro (CERES_TEST NAME)
     add_executable(${NAME}_test ${NAME}_test.cc)

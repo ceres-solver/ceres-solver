@@ -35,8 +35,8 @@
 
 #include <iostream>
 
-#include "absl/log/check.h"
-#include "absl/log/log.h"
+#include "absl/flags/parse.h"
+#include "absl/log/initialize.h"
 #include "ceres/ceres.h"
 
 // Data generated using the following octave code.
@@ -157,7 +157,8 @@ class MyIterationCallback : public ceres::IterationCallback {
 };
 
 int main(int argc, char** argv) {
-  google::InitGoogleLogging(argv[0]);
+  absl::ParseCommandLine(argc, argv);
+  absl::InitializeLog();
 
   const double initial_m = 0.0;
   const double initial_c = 0.0;
