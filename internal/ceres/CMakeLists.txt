@@ -54,7 +54,7 @@ set(CERES_EXPORTED_SRCS
 
 # Also depend on the header files so that they appear in IDEs.
 file(GLOB CERES_INTERNAL_HDRS *.h)
-list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES absl::log absl::check)
+list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES absl::log absl::check absl::log_initialize)
 
 if (MINIGLOG)
   file(GLOB MINIGLOG_HDRS miniglog/glog/*.h)
