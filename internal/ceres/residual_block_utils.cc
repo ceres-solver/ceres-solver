@@ -35,13 +35,14 @@
 #include <limits>
 #include <string>
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/array_utils.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/parameter_block.h"
 #include "ceres/residual_block.h"
 #include "ceres/stringprintf.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

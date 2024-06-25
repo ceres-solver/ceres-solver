@@ -40,12 +40,13 @@
 
 #include "Eigen/Dense"
 #include "Eigen/StdVector"
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/cost_function.h"
 #include "ceres/internal/fixed_array.h"
 #include "ceres/internal/variadic_evaluate.h"
 #include "ceres/numeric_diff_options.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

@@ -35,9 +35,10 @@
 #include <set>
 #include <vector>
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/block_structure.h"
 #include "ceres/graph.h"
-#include "glog/logging.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {

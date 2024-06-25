@@ -31,12 +31,13 @@
 #ifndef CERES_INTERNAL_LINE_SEARCH_MINIMIZER_H_
 #define CERES_INTERNAL_LINE_SEARCH_MINIMIZER_H_
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/minimizer.h"
 #include "ceres/solver.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

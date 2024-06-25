@@ -41,6 +41,8 @@
 #include <utility>
 #include <vector>
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/casts.h"
 #include "ceres/compressed_row_jacobian_writer.h"
 #include "ceres/compressed_row_sparse_matrix.h"
@@ -61,7 +63,6 @@
 #include "ceres/scratch_evaluate_preparer.h"
 #include "ceres/stl_util.h"
 #include "ceres/stringprintf.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 namespace {

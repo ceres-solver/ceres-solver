@@ -40,10 +40,11 @@
 #include <utility>
 #include <vector>
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/graph.h"
 #include "ceres/internal/export.h"
 #include "ceres/wall_time.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

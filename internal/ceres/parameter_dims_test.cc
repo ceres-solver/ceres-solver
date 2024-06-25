@@ -24,10 +24,10 @@
 
 #include "ceres/internal/parameter_dims.h"
 
-#include <gtest/gtest.h>
-
 #include <type_traits>
 #include <utility>
+
+#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {

@@ -36,6 +36,8 @@
 #include <vector>
 
 #include "Eigen/Dense"
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
 #include "ceres/conjugate_gradients_solver.h"
@@ -50,7 +52,6 @@
 #include "ceres/types.h"
 #include "ceres/visibility_based_preconditioner.h"
 #include "ceres/wall_time.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

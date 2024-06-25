@@ -34,9 +34,10 @@
 #include <iostream>  // NO LINT
 #include <string>
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/program.h"
 #include "ceres/stringprintf.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

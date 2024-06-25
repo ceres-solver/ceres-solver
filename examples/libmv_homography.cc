@@ -62,8 +62,10 @@
 
 #include <utility>
 
+#include "absl/flags/parse.h"
+#include "absl/log/initialize.h"
+#include "absl/log/log.h"
 #include "ceres/ceres.h"
-#include "glog/logging.h"
 
 using EigenDouble = Eigen::NumTraits<double>;
 
@@ -358,7 +360,8 @@ bool EstimateHomography2DFromCorrespondences(
 }  // namespace
 
 int main(int argc, char** argv) {
-  google::InitGoogleLogging(argv[0]);
+  absl::ParseCommandLine(argc, argv);
+  absl::InitializeLog();
 
   Mat x1(2, 100);
   for (int i = 0; i < x1.cols(); ++i) {

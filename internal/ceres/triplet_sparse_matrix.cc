@@ -34,12 +34,13 @@
 #include <memory>
 #include <random>
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/crs_matrix.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

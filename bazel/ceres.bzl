@@ -140,14 +140,15 @@ CERES_SRCS = ["internal/ceres/" + filename for filename in [
 # TODO(rodrigoq): add support to configure Ceres into various permutations,
 # like SuiteSparse or not, threading or not, glog or not, and so on.
 # See https://github.com/ceres-solver/ceres-solver/issues/335.
-def ceres_library(name,
-                  restrict_schur_specializations=False):
+def ceres_library(
+        name,
+        restrict_schur_specializations = False):
     # The path to internal/ depends on whether Ceres is the main workspace or
     # an external repository.
-    if native.repository_name() != '@':
-        internal = 'external/%s/internal' % native.repository_name().lstrip('@')
+    if native.repository_name() != "@":
+        internal = "external/%s/internal" % native.repository_name().lstrip("@")
     else:
-        internal = 'internal'
+        internal = "internal"
 
     # The fixed-size Schur eliminator template instantiations incur a large
     # binary size penalty, and are slow to compile, so support disabling them.
@@ -215,6 +216,9 @@ def ceres_library(name,
         visibility = ["//visibility:public"],
         deps = [
             "@com_gitlab_libeigen_eigen//:eigen",
-            "@com_github_google_glog//:glog",
+            "@com_google_absl//absl/flags:flag",
+            "@com_google_absl//absl/log",
+            "@com_google_absl//absl/log:check",
+            "@com_google_absl//absl/log:initialize",
         ],
     )

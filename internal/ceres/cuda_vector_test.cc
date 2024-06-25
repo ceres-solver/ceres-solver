@@ -32,9 +32,10 @@
 
 #include <string>
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/internal/config.h"
 #include "ceres/internal/eigen.h"
-#include "glog/logging.h"
 #include "gtest/gtest.h"
 
 namespace ceres {

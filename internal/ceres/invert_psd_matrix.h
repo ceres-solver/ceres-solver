@@ -32,8 +32,9 @@
 #define CERES_INTERNAL_INVERT_PSD_MATRIX_H_
 
 #include "Eigen/Dense"
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/internal/eigen.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

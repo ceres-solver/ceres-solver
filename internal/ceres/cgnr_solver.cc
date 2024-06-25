@@ -33,6 +33,8 @@
 #include <memory>
 #include <utility>
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/block_jacobi_preconditioner.h"
 #include "ceres/conjugate_gradients_solver.h"
 #include "ceres/cuda_sparse_matrix.h"
@@ -41,7 +43,6 @@
 #include "ceres/linear_solver.h"
 #include "ceres/subset_preconditioner.h"
 #include "ceres/wall_time.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

@@ -34,8 +34,9 @@
 #include <cctype>
 #include <string>
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/internal/config.h"
-#include "glog/logging.h"
 
 namespace ceres {
 

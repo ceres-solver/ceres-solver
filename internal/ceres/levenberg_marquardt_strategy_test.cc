@@ -32,19 +32,20 @@
 
 #include <memory>
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
+#include "absl/log/scoped_mock_log.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
 #include "ceres/trust_region_strategy.h"
-#include "glog/logging.h"
 #include "gmock/gmock.h"
-#include "gmock/mock-log.h"
 #include "gtest/gtest.h"
 
+using absl::ScopedMockLog;
 using testing::_;
 using testing::AllOf;
 using testing::AnyNumber;
 using testing::HasSubstr;
-using testing::ScopedMockLog;
 
 namespace ceres {
 namespace internal {
@@ -143,19 +144,13 @@ TEST(LevenbergMarquardtStrategy, CorrectDiagonalToLinearSolver) {
   {
     ScopedMockLog log;
     EXPECT_CALL(log, Log(_, _, _)).Times(AnyNumber());
-    // This using directive is needed get around the fact that there
-    // are versions of glog which are not in the google namespace.
-    using namespace google;
 
-#if defined(GLOG_NO_ABBREVIATED_SEVERITIES)
-    // Use GLOG_WARNING to support MSVC if GLOG_NO_ABBREVIATED_SEVERITIES
-    // is defined.
     EXPECT_CALL(log,
-                Log(GLOG_WARNING, _, HasSubstr("Failed to compute a step")));
-#else
-    EXPECT_CALL(log,
-                Log(google::WARNING, _, HasSubstr("Failed to compute a step")));
-#endif
+                Log(absl::LogSeverity::kWarning,
+                    _,
+                    HasSubstr("Failed to compute a step")));
+
+    log.StartCapturingLogs();
 
     TrustRegionStrategy::Summary summary =
         lms.ComputeStep(pso, &dsm, &residual, x);

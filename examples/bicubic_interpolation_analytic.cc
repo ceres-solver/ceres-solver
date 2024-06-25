@@ -39,9 +39,11 @@
 
 #include <utility>
 
+#include "absl/flags/parse.h"
+#include "absl/log/check.h"
+#include "absl/log/initialize.h"
 #include "ceres/ceres.h"
 #include "ceres/cubic_interpolation.h"
-#include "glog/logging.h"
 
 using Grid = ceres::Grid2D<double>;
 using Interpolator = ceres::BiCubicInterpolator<Grid>;
@@ -98,7 +100,8 @@ static double f(const double& x, const double& y) {
 }
 
 int main(int argc, char** argv) {
-  google::InitGoogleLogging(argv[0]);
+  absl::ParseCommandLine(argc, argv);
+  absl::InitializeLog();
   // Problem sizes
   const int kGridRowsHalf = 9;
   const int kGridColsHalf = 11;

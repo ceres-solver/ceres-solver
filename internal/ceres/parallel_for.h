@@ -35,12 +35,13 @@
 #include <mutex>
 #include <vector>
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/context_impl.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/parallel_invoke.h"
 #include "ceres/partition_range_for_parallel_for.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

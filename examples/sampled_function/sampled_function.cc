@@ -31,9 +31,10 @@
 // A simple example of optimizing a sampled function by using cubic
 // interpolation.
 
+#include "absl/flags/parse.h"
+#include "absl/log/initialize.h"
 #include "ceres/ceres.h"
 #include "ceres/cubic_interpolation.h"
-#include "glog/logging.h"
 
 using Interpolator = ceres::CubicInterpolator<ceres::Grid1D<double>>;
 
@@ -59,7 +60,8 @@ struct InterpolatedCostFunctor {
 };
 
 int main(int argc, char** argv) {
-  google::InitGoogleLogging(argv[0]);
+  absl::ParseCommandLine(argc, argv);
+  absl::InitializeLog();
 
   // Evaluate the function f(x) = (x - 4.5)^2;
   const int kNumSamples = 10;

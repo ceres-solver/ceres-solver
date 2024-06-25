@@ -44,17 +44,8 @@ cc_library(
         "evaluator_test_utils.cc",
         "numeric_diff_test_utils.cc",
         "test_util.cc",
-        "gmock_gtest_all.cc",
         "gmock_main.cc",
-        "gmock/gmock.h",
-        "gmock/mock-log.h",
-        "gtest/gtest.h",
     ]],
-    hdrs = [
-        "internal/ceres/gmock/gmock.h",
-        "internal/ceres/gmock/mock-log.h",
-        "internal/ceres/gtest/gtest.h",
-    ],
     copts = [
         "-Wno-sign-compare",
         "-DCERES_TEST_SRCDIR_SUFFIX=\\\"data/\\\"",
@@ -65,7 +56,9 @@ cc_library(
     ],
     deps = [
         "//:ceres",
-        "@com_github_gflags_gflags//:gflags",
+        "@com_google_absl//absl/flags:parse",
+        "@com_google_absl//absl/log:flags",
+        "@com_google_googletest//:gtest",
     ],
 )
 
@@ -171,7 +164,7 @@ TEST_DEPS = [
     "//:ceres",
     "//:test_util",
     "@com_gitlab_libeigen_eigen//:eigen",
-    "@com_github_gflags_gflags//:gflags",
+    "@com_google_absl//absl/flags:flag",
 ]
 
 # Instantiate all the tests with a template.
@@ -180,7 +173,9 @@ TEST_DEPS = [
     timeout = "short",
     srcs = ["internal/ceres/" + test_name + "_test.cc"],
     copts = TEST_COPTS,
-    deps = TEST_DEPS,
+    deps = TEST_DEPS + [
+        "@com_google_absl//absl/log:scoped_mock_log",
+    ],
 ) for test_name in CERES_TESTS]
 
 # Instantiate all the bundle adjustment tests. These are separate to

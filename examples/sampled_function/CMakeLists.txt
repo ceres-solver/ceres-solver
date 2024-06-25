@@ -29,4 +29,4 @@
 # Author: vitus@google.com (Michael Vitus)
 
 add_executable(sampled_function sampled_function.cc)
-target_link_libraries(sampled_function PRIVATE Ceres::ceres)
+target_link_libraries(sampled_function PRIVATE ${CERES_EXAMPLES_COMMON_DEPENDENCIES})

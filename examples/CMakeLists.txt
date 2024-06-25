@@ -28,29 +28,38 @@
 #
 # Author: keir@google.com (Keir Mierle)
 
+list(APPEND
+     CERES_EXAMPLES_COMMON_DEPENDENCIES
+     Ceres::ceres
+     absl::log
+     absl::check
+     absl::flags
+     absl::flags_parse
+     absl::log_initialize)
+
 add_executable(helloworld helloworld.cc)
-target_link_libraries(helloworld PRIVATE Ceres::ceres)
+target_link_libraries(helloworld PRIVATE ${CERES_EXAMPLES_COMMON_DEPENDENCIES})
 
 add_executable(helloworld_numeric_diff helloworld_numeric_diff.cc)
-target_link_libraries(helloworld_numeric_diff PRIVATE Ceres::ceres)
+target_link_libraries(helloworld_numeric_diff PRIVATE ${CERES_EXAMPLES_COMMON_DEPENDENCIES})
 
 add_executable(helloworld_analytic_diff helloworld_analytic_diff.cc)
-target_link_libraries(helloworld_analytic_diff PRIVATE Ceres::ceres)
+target_link_libraries(helloworld_analytic_diff PRIVATE ${CERES_EXAMPLES_COMMON_DEPENDENCIES})
 
 add_executable(curve_fitting curve_fitting.cc)
-target_link_libraries(curve_fitting PRIVATE Ceres::ceres)
+target_link_libraries(curve_fitting PRIVATE ${CERES_EXAMPLES_COMMON_DEPENDENCIES})
 
 add_executable(rosenbrock rosenbrock.cc)
-target_link_libraries(rosenbrock PRIVATE Ceres::ceres)
+target_link_libraries(rosenbrock PRIVATE ${CERES_EXAMPLES_COMMON_DEPENDENCIES})
 
 add_executable(rosenbrock_analytic_diff rosenbrock_analytic_diff.cc)
-target_link_libraries(rosenbrock_analytic_diff PRIVATE Ceres::ceres)
+target_link_libraries(rosenbrock_analytic_diff PRIVATE ${CERES_EXAMPLES_COMMON_DEPENDENCIES})
 
 add_executable(rosenbrock_numeric_diff rosenbrock_numeric_diff.cc)
-target_link_libraries(rosenbrock_numeric_diff PRIVATE Ceres::ceres)
+target_link_libraries(rosenbrock_numeric_diff PRIVATE ${CERES_EXAMPLES_COMMON_DEPENDENCIES})
 
 add_executable(curve_fitting_c curve_fitting.c)
-target_link_libraries(curve_fitting_c PRIVATE Ceres::ceres)
+target_link_libraries(curve_fitting_c PRIVATE ${CERES_EXAMPLES_COMMON_DEPENDENCIES})
 # Force CMake to link curve_fitting_c using the C++ linker.
 set_target_properties(curve_fitting_c PROPERTIES LINKER_LANGUAGE CXX)
 # As this is a C file #including <math.h> we have to explicitly add the math
@@ -61,64 +70,62 @@ if (HAVE_LIBM)
 endif (HAVE_LIBM)
 
 add_executable(ellipse_approximation ellipse_approximation.cc)
-target_link_libraries(ellipse_approximation PRIVATE Ceres::ceres)
+target_link_libraries(ellipse_approximation PRIVATE ${CERES_EXAMPLES_COMMON_DEPENDENCIES})
 
 add_executable(robust_curve_fitting robust_curve_fitting.cc)
-target_link_libraries(robust_curve_fitting PRIVATE Ceres::ceres)
+target_link_libraries(robust_curve_fitting PRIVATE ${CERES_EXAMPLES_COMMON_DEPENDENCIES})
 
 add_executable(simple_bundle_adjuster simple_bundle_adjuster.cc)
-target_link_libraries(simple_bundle_adjuster PRIVATE Ceres::ceres)
+target_link_libraries(simple_bundle_adjuster PRIVATE ${CERES_EXAMPLES_COMMON_DEPENDENCIES})
 
 add_executable(bicubic_interpolation bicubic_interpolation.cc)
-target_link_libraries(bicubic_interpolation PRIVATE Ceres::ceres)
+target_link_libraries(bicubic_interpolation PRIVATE ${CERES_EXAMPLES_COMMON_DEPENDENCIES})
 
 add_executable(bicubic_interpolation_analytic bicubic_interpolation_analytic.cc)
-target_link_libraries(bicubic_interpolation_analytic PRIVATE Ceres::ceres)
+target_link_libraries(bicubic_interpolation_analytic PRIVATE ${CERES_EXAMPLES_COMMON_DEPENDENCIES})
 
 add_executable(iteration_callback_example iteration_callback_example.cc)
-target_link_libraries(iteration_callback_example PRIVATE Ceres::ceres)
+target_link_libraries(iteration_callback_example PRIVATE ${CERES_EXAMPLES_COMMON_DEPENDENCIES})
 
 add_executable(evaluation_callback_example evaluation_callback_example.cc)
-target_link_libraries(evaluation_callback_example PRIVATE Ceres::ceres)
+target_link_libraries(evaluation_callback_example PRIVATE ${CERES_EXAMPLES_COMMON_DEPENDENCIES})
 
-if (GFLAGS)
-  add_executable(powell powell.cc)
-  target_link_libraries(powell PRIVATE Ceres::ceres gflags)
+add_executable(powell powell.cc)
+target_link_libraries(powell PRIVATE ${CERES_EXAMPLES_COMMON_DEPENDENCIES})
 
-  add_executable(nist nist.cc)
-  target_link_libraries(nist PRIVATE Ceres::ceres gflags)
-  if (HAVE_BIGOBJ)
-    target_compile_options(nist PRIVATE /bigobj)
-  endif()
+add_executable(nist nist.cc)
+target_link_libraries(nist PRIVATE ${CERES_EXAMPLES_COMMON_DEPENDENCIES})
+if (HAVE_BIGOBJ)
+  target_compile_options(nist PRIVATE /bigobj)
+endif()
 
-  add_executable(more_garbow_hillstrom more_garbow_hillstrom.cc)
-  target_link_libraries(more_garbow_hillstrom PRIVATE Ceres::ceres gflags)
+add_executable(more_garbow_hillstrom more_garbow_hillstrom.cc)
+target_link_libraries(more_garbow_hillstrom PRIVATE ${CERES_EXAMPLES_COMMON_DEPENDENCIES})
 
-  add_executable(circle_fit circle_fit.cc)
-  target_link_libraries(circle_fit PRIVATE Ceres::ceres gflags)
+add_executable(circle_fit circle_fit.cc)
+target_link_libraries(circle_fit PRIVATE ${CERES_EXAMPLES_COMMON_DEPENDENCIES})
 
-  add_executable(bundle_adjuster
-                 bundle_adjuster.cc
-                 bal_problem.cc)
-  target_link_libraries(bundle_adjuster PRIVATE Ceres::ceres gflags)
+add_executable(bundle_adjuster
+               bundle_adjuster.cc
+               bal_problem.cc)
+target_link_libraries(bundle_adjuster PRIVATE ${CERES_EXAMPLES_COMMON_DEPENDENCIES})
 
-  add_executable(libmv_bundle_adjuster
-                 libmv_bundle_adjuster.cc)
-  target_link_libraries(libmv_bundle_adjuster PRIVATE Ceres::ceres gflags)
+add_executable(libmv_bundle_adjuster
+               libmv_bundle_adjuster.cc)
+target_link_libraries(libmv_bundle_adjuster PRIVATE ${CERES_EXAMPLES_COMMON_DEPENDENCIES})
 
-  add_executable(libmv_homography
-                 libmv_homography.cc)
-  target_link_libraries(libmv_homography PRIVATE Ceres::ceres gflags)
+add_executable(libmv_homography
+               libmv_homography.cc)
+target_link_libraries(libmv_homography PRIVATE ${CERES_EXAMPLES_COMMON_DEPENDENCIES})
 
-  add_executable(denoising
-                 denoising.cc
-                 fields_of_experts.cc)
-  target_link_libraries(denoising PRIVATE Ceres::ceres gflags)
+add_executable(denoising
+               denoising.cc
+               fields_of_experts.cc)
+target_link_libraries(denoising PRIVATE ${CERES_EXAMPLES_COMMON_DEPENDENCIES})
 
-  add_executable(robot_pose_mle
-                 robot_pose_mle.cc)
-  target_link_libraries(robot_pose_mle PRIVATE Ceres::ceres gflags)
-endif (GFLAGS)
+add_executable(robot_pose_mle
+               robot_pose_mle.cc)
+target_link_libraries(robot_pose_mle PRIVATE ${CERES_EXAMPLES_COMMON_DEPENDENCIES})
 
 add_subdirectory(sampled_function)
 add_subdirectory(slam)

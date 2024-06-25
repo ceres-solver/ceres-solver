@@ -37,6 +37,8 @@
 #include <random>
 #include <vector>
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/block_structure.h"
 #include "ceres/crs_matrix.h"
 #include "ceres/internal/eigen.h"
@@ -44,7 +46,6 @@
 #include "ceres/parallel_vector_ops.h"
 #include "ceres/small_blas.h"
 #include "ceres/triplet_sparse_matrix.h"
-#include "glog/logging.h"
 
 #ifndef CERES_NO_CUDA
 #include "cuda_runtime.h"

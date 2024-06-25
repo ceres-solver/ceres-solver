@@ -35,15 +35,16 @@
 #include <algorithm>
 #include <cmath>
 
+#include "absl/flags/declare.h"
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/file.h"
 #include "ceres/internal/port.h"
 #include "ceres/stringprintf.h"
 #include "ceres/types.h"
-#include "gflags/gflags.h"
-#include "glog/logging.h"
 #include "gtest/gtest.h"
 
-DECLARE_string(test_srcdir);
+ABSL_DECLARE_FLAG(std::string, test_srcdir);
 
 // This macro is used to inject additional path information specific
 // to the build system.

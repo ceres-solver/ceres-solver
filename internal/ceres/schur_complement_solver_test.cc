@@ -33,6 +33,8 @@
 #include <cstddef>
 #include <memory>
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
 #include "ceres/casts.h"
@@ -42,7 +44,6 @@
 #include "ceres/linear_solver.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {

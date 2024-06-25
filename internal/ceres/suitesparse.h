@@ -44,12 +44,13 @@
 #include <vector>
 
 #include "SuiteSparseQR.hpp"
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/block_structure.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/linear_solver.h"
 #include "ceres/sparse_cholesky.h"
 #include "cholmod.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

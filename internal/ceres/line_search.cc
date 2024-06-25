@@ -39,6 +39,8 @@
 #include <string>
 #include <vector>
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/evaluator.h"
 #include "ceres/function_sample.h"
 #include "ceres/internal/eigen.h"
@@ -46,7 +48,6 @@
 #include "ceres/polynomial.h"
 #include "ceres/stringprintf.h"
 #include "ceres/wall_time.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

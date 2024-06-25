@@ -32,12 +32,11 @@
 
 #ifndef CERES_NO_CUDA
 
-#include <glog/logging.h>
-#include <gtest/gtest.h>
-
 #include <numeric>
 
+#include "absl/log/log.h"
 #include "ceres/cuda_streamed_buffer.h"
+#include "gtest/gtest.h"
 
 namespace ceres::internal {
 

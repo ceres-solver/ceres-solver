@@ -32,7 +32,8 @@
 
 #include <cmath>
 
-#include "glog/logging.h"
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "gtest/gtest.h"
 
 // Duplicated from curve_fitting.cc.

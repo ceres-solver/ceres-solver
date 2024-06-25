@@ -54,6 +54,8 @@
 #include <map>
 
 #include "Eigen/Dense"
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/block_random_access_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
@@ -67,7 +69,6 @@
 #include "ceres/small_blas.h"
 #include "ceres/stl_util.h"
 #include "ceres/thread_token_provider.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 
