@@ -31,6 +31,8 @@
 #include "ceres/implicit_schur_complement.h"
 
 #include "Eigen/Dense"
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
 #include "ceres/internal/eigen.h"
@@ -38,7 +40,6 @@
 #include "ceres/parallel_for.h"
 #include "ceres/parallel_vector_ops.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

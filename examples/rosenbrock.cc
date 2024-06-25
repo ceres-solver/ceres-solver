@@ -32,8 +32,9 @@
 // (https://en.wikipedia.org/wiki/Rosenbrock_function) using
 // GradientProblemSolver using automatically computed derivatives.
 
+#include "absl/flags/parse.h"
+#include "absl/log/initialize.h"
 #include "ceres/ceres.h"
-#include "glog/logging.h"
 
 // f(x,y) = (1-x)^2 + 100(y - x^2)^2;
 struct Rosenbrock {
@@ -53,7 +54,8 @@ struct Rosenbrock {
 };
 
 int main(int argc, char** argv) {
-  google::InitGoogleLogging(argv[0]);
+  absl::ParseCommandLine(argc, argv);
+  absl::InitializeLog();
 
   double parameters[2] = {-1.2, 1.0};
 

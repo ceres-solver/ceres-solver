@@ -40,10 +40,11 @@
 #include <vector>
 
 #include "Eigen/Dense"
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/context_impl.h"
 #include "ceres/cuda_buffer.h"
 #include "ceres/linear_solver.h"
-#include "glog/logging.h"
 #ifndef CERES_NO_CUDA
 #include "ceres/context_impl.h"
 #include "cuda_runtime.h"

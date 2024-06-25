@@ -131,27 +131,33 @@
 #include <random>
 #include <vector>
 
+#include "absl/flags/flag.h"
+#include "absl/flags/parse.h"
+#include "absl/log/check.h"
+#include "absl/log/initialize.h"
 #include "ceres/ceres.h"
 #include "ceres/dynamic_autodiff_cost_function.h"
-#include "gflags/gflags.h"
-#include "glog/logging.h"
 
-DEFINE_double(corridor_length,
-              30.0,
-              "Length of the corridor that the robot is travelling down.");
+ABSL_FLAG(double,
+          corridor_length,
+          30.0,
+          "Length of the corridor that the robot is travelling down.");
 
-DEFINE_double(pose_separation,
-              0.5,
-              "The distance that the robot traverses between successive "
-              "odometry updates.");
+ABSL_FLAG(double,
+          pose_separation,
+          0.5,
+          "The distance that the robot traverses between successive "
+          "odometry updates.");
 
-DEFINE_double(odometry_stddev,
-              0.1,
-              "The standard deviation of odometry error of the robot.");
+ABSL_FLAG(double,
+          odometry_stddev,
+          0.1,
+          "The standard deviation of odometry error of the robot.");
 
-DEFINE_double(range_stddev,
-              0.01,
-              "The standard deviation of range readings of the robot.");
+ABSL_FLAG(double,
+          range_stddev,
+          0.01,
+          "The standard deviation of range readings of the robot.");
 
 // The stride length of the dynamic_autodiff_cost_function evaluator.
 static constexpr int kStride = 10;
@@ -284,8 +290,9 @@ void PrintState(const std::vector<double>& odometry_readings,
 }  // namespace
 
 int main(int argc, char** argv) {
-  google::InitGoogleLogging(argv[0]);
-  GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
+  absl::ParseCommandLine(argc, argv);
+  absl::InitializeLog();
+
   // Make sure that the arguments parsed are all positive.
   CHECK_GT(CERES_GET_FLAG(FLAGS_corridor_length), 0.0);
   CHECK_GT(CERES_GET_FLAG(FLAGS_pose_separation), 0.0);

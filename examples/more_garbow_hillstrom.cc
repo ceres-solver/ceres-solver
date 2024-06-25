@@ -55,22 +55,27 @@
 #include <sstream>   // NOLINT
 #include <string>
 
+#include "absl/flags/flag.h"
+#include "absl/flags/parse.h"
+#include "absl/log/initialize.h"
+#include "absl/log/log.h"
 #include "ceres/ceres.h"
-#include "gflags/gflags.h"
-#include "glog/logging.h"
 
-DEFINE_string(problem, "all", "Which problem to solve");
-DEFINE_bool(use_numeric_diff,
-            false,
-            "Use numeric differentiation instead of automatic"
-            " differentiation.");
-DEFINE_string(numeric_diff_method,
-              "ridders",
-              "When using numeric differentiation, selects algorithm. Options "
-              "are: central, forward, ridders.");
-DEFINE_int32(ridders_extrapolations,
-             3,
-             "Maximal number of extrapolations in Ridders' method.");
+ABSL_FLAG(std::string, problem, "all", "Which problem to solve");
+ABSL_FLAG(bool,
+          use_numeric_diff,
+          false,
+          "Use numeric differentiation instead of automatic"
+          " differentiation.");
+ABSL_FLAG(std::string,
+          numeric_diff_method,
+          "ridders",
+          "When using numeric differentiation, selects algorithm. Options "
+          "are: central, forward, ridders.");
+ABSL_FLAG(int32_t,
+          ridders_extrapolations,
+          3,
+          "Maximal number of extrapolations in Ridders' method.");
 
 namespace ceres::examples {
 
@@ -584,8 +589,8 @@ bool Solve(bool is_constrained, int trial) {
 }  // namespace ceres::examples
 
 int main(int argc, char** argv) {
-  GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
-  google::InitGoogleLogging(argv[0]);
+  absl::ParseCommandLine(argc, argv);
+  absl::InitializeLog();
   using ceres::examples::Solve;
 
   int unconstrained_problems = 0;

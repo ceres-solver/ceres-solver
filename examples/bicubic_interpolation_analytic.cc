@@ -39,9 +39,10 @@
 
 #include <utility>
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/ceres.h"
 #include "ceres/cubic_interpolation.h"
-#include "glog/logging.h"
 
 using Grid = ceres::Grid2D<double>;
 using Interpolator = ceres::BiCubicInterpolator<Grid>;

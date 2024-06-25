@@ -60,87 +60,90 @@
 #include <thread>
 #include <vector>
 
+#include "absl/flags/flag.h"
+#include "absl/flags/parse.h"
+#include "absl/log/check.h"
+#include "absl/log/initialize.h"
+#include "absl/log/log.h"
 #include "bal_problem.h"
 #include "ceres/ceres.h"
-#include "gflags/gflags.h"
-#include "glog/logging.h"
 #include "snavely_reprojection_error.h"
 
 // clang-format makes the gflags definitions too verbose
 // clang-format off
 
-DEFINE_string(input, "", "Input File name");
-DEFINE_string(trust_region_strategy, "levenberg_marquardt",
-              "Options are: levenberg_marquardt, dogleg.");
-DEFINE_string(dogleg, "traditional_dogleg", "Options are: traditional_dogleg,"
-              "subspace_dogleg.");
+ABSL_FLAG(std::string, input, "", "Input File name");
+ABSL_FLAG(std::string, trust_region_strategy, "levenberg_marquardt",
+          "Options are: levenberg_marquardt, dogleg.");
+ABSL_FLAG(std::string, dogleg, "traditional_dogleg", "Options are: traditional_dogleg,"
+          "subspace_dogleg.");
 
-DEFINE_bool(inner_iterations, false, "Use inner iterations to non-linearly "
-            "refine each successful trust region step.");
+ABSL_FLAG(bool, inner_iterations, false, "Use inner iterations to non-linearly "
+          "refine each successful trust region step.");
 
-DEFINE_string(blocks_for_inner_iterations, "automatic", "Options are: "
-              "automatic, cameras, points, cameras,points, points,cameras");
+ABSL_FLAG(std::string, blocks_for_inner_iterations, "automatic", "Options are: "
+          "automatic, cameras, points, cameras,points, points,cameras");
 
-DEFINE_string(linear_solver, "sparse_schur", "Options are: "
-              "sparse_schur, dense_schur, iterative_schur, "
-              "sparse_normal_cholesky, dense_qr, dense_normal_cholesky, "
-              "and cgnr.");
-DEFINE_bool(explicit_schur_complement, false, "If using ITERATIVE_SCHUR "
-            "then explicitly compute the Schur complement.");
-DEFINE_string(preconditioner, "jacobi", "Options are: "
-              "identity, jacobi, schur_jacobi, schur_power_series_expansion, cluster_jacobi, "
-              "cluster_tridiagonal.");
-DEFINE_string(visibility_clustering, "canonical_views",
-              "single_linkage, canonical_views");
-DEFINE_bool(use_spse_initialization, false,
-            "Use power series expansion to initialize the solution in ITERATIVE_SCHUR linear solver.");
+ABSL_FLAG(std::string, linear_solver, "sparse_schur", "Options are: "
+          "sparse_schur, dense_schur, iterative_schur, "
+          "sparse_normal_cholesky, dense_qr, dense_normal_cholesky, "
+          "and cgnr.");
+ABSL_FLAG(bool, explicit_schur_complement, false, "If using ITERATIVE_SCHUR "
+          "then explicitly compute the Schur complement.");
+ABSL_FLAG(std::string, preconditioner, "jacobi", "Options are: "
+          "identity, jacobi, schur_jacobi, schur_power_series_expansion, cluster_jacobi, "
+          "cluster_tridiagonal.");
+ABSL_FLAG(std::string, visibility_clustering, "canonical_views",
+          "single_linkage, canonical_views");
+ABSL_FLAG(bool, use_spse_initialization, false,
+          "Use power series expansion to initialize the solution in ITERATIVE_SCHUR linear solver.");
 
-DEFINE_string(sparse_linear_algebra_library, "suite_sparse",
-              "Options are: suite_sparse, accelerate_sparse, eigen_sparse, and "
-              "cuda_sparse.");
-DEFINE_string(dense_linear_algebra_library, "eigen",
-              "Options are: eigen, lapack, and cuda");
-DEFINE_string(ordering_type, "amd", "Options are: amd, nesdis");
-DEFINE_string(linear_solver_ordering, "user",
-              "Options are: automatic and user");
+ABSL_FLAG(std::string, sparse_linear_algebra_library, "suite_sparse",
+          "Options are: suite_sparse, accelerate_sparse, eigen_sparse, and "
+          "cuda_sparse.");
+ABSL_FLAG(std::string, dense_linear_algebra_library, "eigen",
+          "Options are: eigen, lapack, and cuda");
+ABSL_FLAG(std::string, ordering_type, "amd", "Options are: amd, nesdis");
+ABSL_FLAG(std::string, linear_solver_ordering, "user",
+          "Options are: automatic and user");
 
-DEFINE_bool(use_quaternions, false, "If true, uses quaternions to represent "
-            "rotations. If false, angle axis is used.");
-DEFINE_bool(use_manifolds, false, "For quaternions, use a manifold.");
-DEFINE_bool(robustify, false, "Use a robust loss function.");
+ABSL_FLAG(bool, use_quaternions, false, "If true, uses quaternions to represent "
+          "rotations. If false, angle axis is used.");
+ABSL_FLAG(bool, use_manifolds, false, "For quaternions, use a manifold.");
+ABSL_FLAG(bool, robustify, false, "Use a robust loss function.");
 
-DEFINE_double(eta, 1e-2, "Default value for eta. Eta determines the "
-              "accuracy of each linear solve of the truncated newton step. "
-              "Changing this parameter can affect solve performance.");
+ABSL_FLAG(double, eta, 1e-2, "Default value for eta. Eta determines the "
+          "accuracy of each linear solve of the truncated newton step. "
+          "Changing this parameter can affect solve performance.");
 
-DEFINE_int32(num_threads, -1, "Number of threads. -1 = std::thread::hardware_concurrency.");
-DEFINE_int32(num_iterations, 5, "Number of iterations.");
-DEFINE_int32(max_linear_solver_iterations, 500, "Maximum number of iterations"
-            " for solution of linear system.");
-DEFINE_double(spse_tolerance, 0.1,
-             "Tolerance to reach during the iterations of power series expansion initialization or preconditioning.");
-DEFINE_int32(max_num_spse_iterations, 5,
-             "Maximum number of iterations for power series expansion initialization or preconditioning.");
-DEFINE_double(max_solver_time, 1e32, "Maximum solve time in seconds.");
-DEFINE_bool(nonmonotonic_steps, false, "Trust region algorithm can use"
-            " nonmonotic steps.");
+ABSL_FLAG(int32_t, num_threads, -1, "Number of threads. -1 = std::thread::hardware_concurrency.");
+ABSL_FLAG(int32_t, num_iterations, 5, "Number of iterations.");
+ABSL_FLAG(int32_t, max_linear_solver_iterations, 500, "Maximum number of iterations"
+          " for solution of linear system.");
+ABSL_FLAG(double, spse_tolerance, 0.1,
+          "Tolerance to reach during the iterations of power series expansion initialization or preconditioning.");
+ABSL_FLAG(int32_t, max_num_spse_iterations, 5,
+          "Maximum number of iterations for power series expansion initialization or preconditioning.");
+ABSL_FLAG(double, max_solver_time, 1e32, "Maximum solve time in seconds.");
+ABSL_FLAG(bool, nonmonotonic_steps, false, "Trust region algorithm can use"
+          " nonmonotic steps.");
 
-DEFINE_double(rotation_sigma, 0.0, "Standard deviation of camera rotation "
-              "perturbation.");
-DEFINE_double(translation_sigma, 0.0, "Standard deviation of the camera "
-              "translation perturbation.");
-DEFINE_double(point_sigma, 0.0, "Standard deviation of the point "
-              "perturbation.");
-DEFINE_int32(random_seed, 38401, "Random seed used to set the state "
-             "of the pseudo random number generator used to generate "
-             "the perturbations.");
-DEFINE_bool(line_search, false, "Use a line search instead of trust region "
-            "algorithm.");
-DEFINE_bool(mixed_precision_solves, false, "Use mixed precision solves.");
-DEFINE_int32(max_num_refinement_iterations, 0, "Iterative refinement iterations");
-DEFINE_string(initial_ply, "", "Export the BAL file data as a PLY file.");
-DEFINE_string(final_ply, "", "Export the refined BAL file data as a PLY "
-              "file.");
+ABSL_FLAG(double, rotation_sigma, 0.0, "Standard deviation of camera rotation "
+          "perturbation.");
+ABSL_FLAG(double, translation_sigma, 0.0, "Standard deviation of the camera "
+          "translation perturbation.");
+ABSL_FLAG(double, point_sigma, 0.0, "Standard deviation of the point "
+          "perturbation.");
+ABSL_FLAG(int32_t, random_seed, 38401, "Random seed used to set the state "
+          "of the pseudo random number generator used to generate "
+          "the perturbations.");
+ABSL_FLAG(bool, line_search, false, "Use a line search instead of trust region "
+          "algorithm.");
+ABSL_FLAG(bool, mixed_precision_solves, false, "Use mixed precision solves.");
+ABSL_FLAG(int32_t, max_num_refinement_iterations, 0, "Iterative refinement iterations");
+ABSL_FLAG(std::string, initial_ply, "", "Export the BAL file data as a PLY file.");
+ABSL_FLAG(std::string, final_ply, "", "Export the refined BAL file data as a PLY "
+          "file.");
 // clang-format on
 
 namespace ceres::examples {
@@ -379,8 +382,8 @@ void SolveProblem(const char* filename) {
 }  // namespace ceres::examples
 
 int main(int argc, char** argv) {
-  GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
-  google::InitGoogleLogging(argv[0]);
+  absl::ParseCommandLine(argc, argv);
+  absl::InitializeLog();
   if (CERES_GET_FLAG(FLAGS_input).empty()) {
     LOG(ERROR) << "Usage: bundle_adjuster --input=bal_problem";
     return 1;

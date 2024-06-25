@@ -113,20 +113,24 @@ typedef unsigned __int32 uint32_t;
 
 #endif
 
+#include "absl/flags/flag.h"
+#include "absl/flags/parse.h"
+#include "absl/log/check.h"
+#include "absl/log/initialize.h"
+#include "absl/log/log.h"
 #include "ceres/ceres.h"
 #include "ceres/rotation.h"
-#include "gflags/gflags.h"
-#include "glog/logging.h"
 
 using Mat3 = Eigen::Matrix<double, 3, 3>;
 using Vec6 = Eigen::Matrix<double, 6, 1>;
 using Vec3 = Eigen::Vector3d;
 using Vec4 = Eigen::Vector4d;
 
-DEFINE_string(input, "", "Input File name");
-DEFINE_string(refine_intrinsics,
-              "",
-              "Camera intrinsics to be refined. Options are: none, radial.");
+ABSL_FLAG(std::string, input, "", "Input File name");
+ABSL_FLAG(std::string,
+          refine_intrinsics,
+          "",
+          "Camera intrinsics to be refined. Options are: none, radial.");
 
 namespace {
 
@@ -791,8 +795,8 @@ void EuclideanBundleCommonIntrinsics(const std::vector<Marker>& all_markers,
 }  // namespace
 
 int main(int argc, char** argv) {
-  GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
-  google::InitGoogleLogging(argv[0]);
+  absl::ParseCommandLine(argc, argv);
+  absl::InitializeLog();
 
   if (CERES_GET_FLAG(FLAGS_input).empty()) {
     LOG(ERROR) << "Usage: libmv_bundle_adjuster --input=blender_problem";

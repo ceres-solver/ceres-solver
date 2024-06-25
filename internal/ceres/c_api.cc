@@ -39,21 +39,18 @@
 #include <string>
 #include <vector>
 
+#include "absl/log/check.h"
+#include "absl/log/initialize.h"
+#include "absl/log/log.h"
 #include "ceres/cost_function.h"
 #include "ceres/loss_function.h"
 #include "ceres/problem.h"
 #include "ceres/solver.h"
 #include "ceres/types.h"  // for std
-#include "glog/logging.h"
 
 using ceres::Problem;
 
-void ceres_init() {
-  // This is not ideal, but it's not clear what to do if there is no gflags and
-  // no access to command line arguments.
-  char message[] = "<unknown>";
-  google::InitGoogleLogging(message);
-}
+void ceres_init() { absl::InitializeLog(); }
 
 ceres_problem_t* ceres_create_problem() {
   return reinterpret_cast<ceres_problem_t*>(new Problem);

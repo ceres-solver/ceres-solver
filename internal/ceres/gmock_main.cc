@@ -30,15 +30,19 @@
 // Author: wan@google.com (Zhanyong Wan)
 
 #include <iostream>
-#include "gflags/gflags.h"
-#include "glog/logging.h"
+
+#include "absl/flags/flag.h"
+#include "absl/flags/parse.h"
+#include "absl/log/check.h"
+#include "absl/log/initialize.h"
+#include "absl/log/log.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 // NOTE(keir): This flag is normally part of gtest within Google but isn't in
 // the open source Google Test, since it is build-system dependent. However for
 // Ceres this is needed for our tests. Add the new flag here.
-DEFINE_string(test_srcdir, "", "The location of the source code.");
+ABSL_FLAG(std::string, test_srcdir, "", "The location of the source code.");
 
 // MS C++ compiler/linker has a bug on Windows (not on Windows CE), which
 // causes a link error when _tmain is defined in a static library and UNICODE
@@ -53,7 +57,7 @@ GTEST_API_ int _tmain(int argc, TCHAR** argv) {
 GTEST_API_ int main(int argc, char** argv) {
 #endif  // GTEST_OS_WINDOWS_MOBILE
   std::cout << "Running main() from gmock_main.cc\n";
-  google::InitGoogleLogging(argv[0]);
+  absl::InitializeLog();
   // Since Google Mock depends on Google Test, InitGoogleMock() is
   // also responsible for initializing Google Test.  Therefore there's
   // no need for calling testing::InitGoogleTest() separately.
@@ -64,6 +68,6 @@ GTEST_API_ int main(int argc, char** argv) {
   // gflags, InitGoogleTest() (called by InitGoogleMock()) must be called
   // before ParseCommandLineFlags() to handle & remove them before gflags
   // parses the remaining flags.
-  GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
+  absl::ParseCommandLine(argc, argv);
   return RUN_ALL_TESTS();
 }

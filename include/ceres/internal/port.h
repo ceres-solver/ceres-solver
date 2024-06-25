@@ -33,6 +33,8 @@
 
 #include <cmath>  // Necessary for __cpp_lib_math_special_functions feature test
 
+#include "absl/flags/flag.h"
+
 // A macro to mark a function/variable/class as deprecated.
 // We use compiler specific attributes rather than the c++
 // attribute because they do not mix well with each other.
@@ -46,7 +48,7 @@
 #endif
 
 #ifndef CERES_GET_FLAG
-#define CERES_GET_FLAG(X) X
+#define CERES_GET_FLAG(X) absl::GetFlag(X)
 #endif
 
 // Indicates whether C++20 is currently active

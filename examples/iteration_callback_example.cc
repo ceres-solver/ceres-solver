@@ -35,8 +35,9 @@
 
 #include <iostream>
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/ceres.h"
-#include "glog/logging.h"
 
 // Data generated using the following octave code.
 //   randn('seed', 23497);

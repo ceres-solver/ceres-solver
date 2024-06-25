@@ -53,14 +53,16 @@
 #include <cstdio>
 #include <vector>
 
+#include "absl/flags/flag.h"
+#include "absl/flags/parse.h"
+#include "absl/log/initialize.h"
 #include "ceres/ceres.h"
-#include "gflags/gflags.h"
-#include "glog/logging.h"
 
-DEFINE_double(robust_threshold,
-              0.0,
-              "Robust loss parameter. Set to 0 for normal squared error (no "
-              "robustification).");
+ABSL_FLAG(double,
+          robust_threshold,
+          0.0,
+          "Robust loss parameter. Set to 0 for normal squared error (no "
+          "robustification).");
 
 // The cost for a single sample. The returned residual is related to the
 // distance of the point from the circle (passed in as x, y, m parameters).
@@ -102,8 +104,8 @@ class DistanceFromCircleCost {
 };
 
 int main(int argc, char** argv) {
-  GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
-  google::InitGoogleLogging(argv[0]);
+  absl::ParseCommandLine(argc, argv);
+  absl::InitializeLog();
 
   double x, y, r;
   if (scanf("%lg %lg %lg", &x, &y, &r) != 3) {

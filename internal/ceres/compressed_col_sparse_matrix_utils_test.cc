@@ -35,9 +35,10 @@
 #include <vector>
 
 #include "Eigen/SparseCore"
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/internal/export.h"
 #include "ceres/triplet_sparse_matrix.h"
-#include "glog/logging.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {

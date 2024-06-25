@@ -38,7 +38,12 @@ EXAMPLE_COPTS = [
 EXAMPLE_DEPS = [
     "//:ceres",
     "@com_gitlab_libeigen_eigen//:eigen",
-    "@com_github_gflags_gflags//:gflags",
+    "@com_google_absl//absl/flags:flag",
+    "@com_google_absl//absl/log:log",
+    "@com_google_absl//absl/log:check",
+    "@com_google_absl//absl/log:initialize",
+    "@com_google_absl//absl/log:flags",
+    "@com_google_absl//absl/flags:parse",
 ]
 
 cc_binary(

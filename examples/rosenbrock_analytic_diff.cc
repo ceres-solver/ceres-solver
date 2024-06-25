@@ -32,8 +32,9 @@
 // (https://en.wikipedia.org/wiki/Rosenbrock_function) using
 // GradientProblemSolver using analytic derivatives.
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/ceres.h"
-#include "glog/logging.h"
 
 // f(x,y) = (1-x)^2 + 100(y - x^2)^2;
 class Rosenbrock final : public ceres::FirstOrderFunction {

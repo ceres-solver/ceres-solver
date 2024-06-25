@@ -33,8 +33,9 @@
 // GradientProblemSolver using derivatives computed using numeric
 // differentiation.
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/ceres.h"
-#include "glog/logging.h"
 
 // f(x,y) = (1-x)^2 + 100(y - x^2)^2;
 struct Rosenbrock {

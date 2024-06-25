@@ -46,61 +46,80 @@
 #include <string>
 #include <vector>
 
+#include "absl/flags/flag.h"
+#include "absl/flags/parse.h"
+#include "absl/log/check.h"
+#include "absl/log/initialize.h"
 #include "ceres/ceres.h"
 #include "fields_of_experts.h"
-#include "gflags/gflags.h"
-#include "glog/logging.h"
 #include "pgm_image.h"
 
-DEFINE_string(input, "", "File to which the output image should be written");
-DEFINE_string(foe_file, "", "FoE file to use");
-DEFINE_string(output, "", "File to which the output image should be written");
-DEFINE_double(sigma, 20.0, "Standard deviation of noise");
-DEFINE_string(trust_region_strategy,
-              "levenberg_marquardt",
-              "Options are: levenberg_marquardt, dogleg.");
-DEFINE_string(dogleg,
-              "traditional_dogleg",
-              "Options are: traditional_dogleg,"
-              "subspace_dogleg.");
-DEFINE_string(linear_solver,
-              "sparse_normal_cholesky",
-              "Options are: "
-              "sparse_normal_cholesky and cgnr.");
-DEFINE_string(preconditioner,
-              "jacobi",
-              "Options are: "
-              "identity, jacobi, subset");
-DEFINE_string(sparse_linear_algebra_library,
-              "suite_sparse",
-              "Options are: suite_sparse, cx_sparse and eigen_sparse");
-DEFINE_double(eta,
-              1e-2,
-              "Default value for eta. Eta determines the "
-              "accuracy of each linear solve of the truncated newton step. "
-              "Changing this parameter can affect solve performance.");
-DEFINE_int32(num_threads, 1, "Number of threads.");
-DEFINE_int32(num_iterations, 10, "Number of iterations.");
-DEFINE_bool(nonmonotonic_steps,
-            false,
-            "Trust region algorithm can use"
-            " nonmonotic steps.");
-DEFINE_bool(inner_iterations,
-            false,
-            "Use inner iterations to non-linearly "
-            "refine each successful trust region step.");
-DEFINE_bool(mixed_precision_solves, false, "Use mixed precision solves.");
-DEFINE_int32(max_num_refinement_iterations,
-             0,
-             "Iterative refinement iterations");
-DEFINE_bool(line_search,
-            false,
-            "Use a line search instead of trust region "
-            "algorithm.");
-DEFINE_double(subset_fraction,
-              0.2,
-              "The fraction of residual blocks to use for the"
-              " subset preconditioner.");
+ABSL_FLAG(std::string,
+          input,
+          "",
+          "File to which the output image should be written");
+ABSL_FLAG(std::string, foe_file, "", "FoE file to use");
+ABSL_FLAG(std::string,
+          output,
+          "",
+          "File to which the output image should be written");
+ABSL_FLAG(double, sigma, 20.0, "Standard deviation of noise");
+ABSL_FLAG(std::string,
+          trust_region_strategy,
+          "levenberg_marquardt",
+          "Options are: levenberg_marquardt, dogleg.");
+ABSL_FLAG(std::string,
+          dogleg,
+          "traditional_dogleg",
+          "Options are: traditional_dogleg,"
+          "subspace_dogleg.");
+ABSL_FLAG(std::string,
+          linear_solver,
+          "sparse_normal_cholesky",
+          "Options are: "
+          "sparse_normal_cholesky and cgnr.");
+ABSL_FLAG(std::string,
+          preconditioner,
+          "jacobi",
+          "Options are: "
+          "identity, jacobi, subset");
+ABSL_FLAG(std::string,
+          sparse_linear_algebra_library,
+          "suite_sparse",
+          "Options are: suite_sparse, cx_sparse and eigen_sparse");
+ABSL_FLAG(double,
+          eta,
+          1e-2,
+          "Default value for eta. Eta determines the "
+          "accuracy of each linear solve of the truncated newton step. "
+          "Changing this parameter can affect solve performance.");
+ABSL_FLAG(int32_t, num_threads, 1, "Number of threads.");
+ABSL_FLAG(int32_t, num_iterations, 10, "Number of iterations.");
+ABSL_FLAG(bool,
+          nonmonotonic_steps,
+          false,
+          "Trust region algorithm can use"
+          " nonmonotic steps.");
+ABSL_FLAG(bool,
+          inner_iterations,
+          false,
+          "Use inner iterations to non-linearly "
+          "refine each successful trust region step.");
+ABSL_FLAG(bool, mixed_precision_solves, false, "Use mixed precision solves.");
+ABSL_FLAG(int32_t,
+          max_num_refinement_iterations,
+          0,
+          "Iterative refinement iterations");
+ABSL_FLAG(bool,
+          line_search,
+          false,
+          "Use a line search instead of trust region "
+          "algorithm.");
+ABSL_FLAG(double,
+          subset_fraction,
+          0.2,
+          "The fraction of residual blocks to use for the"
+          " subset preconditioner.");
 
 namespace ceres::examples {
 namespace {
@@ -255,8 +274,8 @@ void SolveProblem(Problem* problem, PGMImage<double>* solution) {
 
 int main(int argc, char** argv) {
   using namespace ceres::examples;
-  GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
-  google::InitGoogleLogging(argv[0]);
+  absl::ParseCommandLine(argc, argv);
+  absl::InitializeLog();
 
   if (CERES_GET_FLAG(FLAGS_input).empty()) {
     std::cerr << "Please provide an image file name using -input.\n";
