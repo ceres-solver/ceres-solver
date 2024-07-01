@@ -33,6 +33,23 @@
       "message": "Thanks Markus.",
       "revId": "7f9cc571b03632f1df93ea35725a1f5dfffe2c72",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24660382_c6f47938",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-01T16:08:22Z",
+      "side": 1,
+      "message": "Markus,\nThis seems to have broken our windows build. Can you take a look please?\n\nhttps://github.com/ceres-solver/ceres-solver/actions/runs/9647822756/job/26607546286",
+      "revId": "7f9cc571b03632f1df93ea35725a1f5dfffe2c72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
