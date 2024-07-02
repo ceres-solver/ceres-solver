@@ -68,6 +68,24 @@
       "parentUuid": "24660382_c6f47938",
       "revId": "7f9cc571b03632f1df93ea35725a1f5dfffe2c72",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "922ab108_fa922cc0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-02T16:53:28Z",
+      "side": 1,
+      "message": "Sergiu do you know what is happening here?",
+      "parentUuid": "da37f4fc_7107ad0d",
+      "revId": "7f9cc571b03632f1df93ea35725a1f5dfffe2c72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
