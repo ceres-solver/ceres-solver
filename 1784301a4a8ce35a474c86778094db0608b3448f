@@ -35,6 +35,24 @@
       "parentUuid": "ffcf9b20_443ff5ae",
       "revId": "1784301a4a8ce35a474c86778094db0608b3448f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ce33794_6c810678",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-07-06T15:37:21Z",
+      "side": 1,
+      "message": "I\u0027ve made a change to check for sign of value returned by cudssDataGet with CUDSS_DATA_INFO and it seems to be working as Kirill described in our email thread, although for for some reason (i guess cudssDataGet does not reset previously returned error) it required to (re)init cudss context (cudssData_t) at each analyze call, because when i reused the same cudssData_t to analyze/factorize problem with rescaled diagonal after unsuccessful attempt to analyze/factorize original problem, cudssDataGet returned the same error value.\n\nAlso, value returned in size_written argument of cudssDataGet with CUDSS_DATA_INFO still seems to be some garbage (it does not match the sizeof(int)), so i left this check disabled until this would be fixed.",
+      "parentUuid": "d5979b30_f6b9d8d2",
+      "revId": "1784301a4a8ce35a474c86778094db0608b3448f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }

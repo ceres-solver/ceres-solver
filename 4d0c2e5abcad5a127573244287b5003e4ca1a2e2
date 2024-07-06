@@ -257,6 +257,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae1a29f8_b93b34fc",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-07-06T15:37:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a084b65_61608459",
+      "range": {
+        "startLine": 226,
+        "startChar": 25,
+        "endLine": 226,
+        "endChar": 37
+      },
+      "revId": "4d0c2e5abcad5a127573244287b5003e4ca1a2e2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ac8fc8ed_e4091b28",

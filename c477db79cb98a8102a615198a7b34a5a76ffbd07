@@ -117,6 +117,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4370e36_831b9a19",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-07-06T15:37:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fa5f775_7c2a4691",
+      "revId": "c477db79cb98a8102a615198a7b34a5a76ffbd07",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0f1654e2_bb49cf12",
@@ -177,6 +195,24 @@
       "writtenOn": "2024-06-09T18:04:32Z",
       "side": 1,
       "message": "Enable after 0.3.0",
+      "revId": "c477db79cb98a8102a615198a7b34a5a76ffbd07",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96cf6263_b2a70a1d",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-07-06T15:37:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46061c53_1f26487c",
       "revId": "c477db79cb98a8102a615198a7b34a5a76ffbd07",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
