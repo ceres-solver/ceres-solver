@@ -489,6 +489,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "38c3f414_769ba0e0",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-06T22:00:05Z",
+      "side": 1,
+      "message": "I think your suggestion for renaming CudaBuffer to CudaDeviceBuffer is good. Can you file an issue for this, and consider this comment resolved.",
+      "parentUuid": "100e3824_6c6f5951",
+      "range": {
+        "startLine": 170,
+        "startChar": 6,
+        "endLine": 170,
+        "endChar": 26
+      },
+      "revId": "7ff6aceab66522e4eb18f20590c9a52119a009a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8b34d097_501a0ee4",
         "filename": "internal/ceres/cuda_sparse_matrix.cc",
         "patchSetId": 1

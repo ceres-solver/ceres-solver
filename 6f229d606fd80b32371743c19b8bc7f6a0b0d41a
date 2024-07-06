@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2342eadb_9fe954b9",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-06T22:00:05Z",
+      "side": 1,
+      "message": "why are we analyzing again if factorization failed? if analysis succeeded, but factorization failed, shouldn\u0027t we just be retrying factorization?",
+      "range": {
+        "startLine": 195,
+        "startChar": 10,
+        "endLine": 195,
+        "endChar": 17
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "9ef1a885_460adc4f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/cuda_sparse_cholesky.cc",
+              "range": {
+                "startLine": 195,
+                "startChar": 0,
+                "endLine": 198,
+                "endChar": 0
+              },
+              "replacement": "      return factorize_result_ \u003d LinearSolverTerminationType::FATAL_ERROR;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "6f229d606fd80b32371743c19b8bc7f6a0b0d41a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d973775_a0655f23",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-06T22:00:05Z",
+      "side": 1,
+      "message": "this is still an issue?",
+      "range": {
+        "startLine": 278,
+        "startChar": 42,
+        "endLine": 278,
+        "endChar": 54
+      },
+      "revId": "6f229d606fd80b32371743c19b8bc7f6a0b0d41a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec962c3b_d6080eda",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-06T22:00:05Z",
+      "side": 1,
+      "message": "This deserves a comment to explain what is going on here and why.\n\nalso this means that calls to factorization etc should check that this pointer is not null.",
+      "revId": "6f229d606fd80b32371743c19b8bc7f6a0b0d41a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f95bb913_d9df23e3",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-06T22:00:05Z",
+      "side": 1,
+      "message": "its odd to have this struct defined inside this class, I think it should stand on its own.",
+      "range": {
+        "startLine": 383,
+        "startChar": 2,
+        "endLine": 383,
+        "endChar": 8
+      },
+      "revId": "6f229d606fd80b32371743c19b8bc7f6a0b0d41a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09aefe83_49c3a22b",
+        "filename": "internal/ceres/visibility_based_preconditioner.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-06T22:00:05Z",
+      "side": 1,
+      "message": "none of the changes you are making to this file are needed anymore no?",
+      "range": {
+        "startLine": 355,
+        "startChar": 13,
+        "endLine": 355,
+        "endChar": 46
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "68ed3151_71cf87d0",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/visibility_based_preconditioner.cc",
+              "range": {
+                "startLine": 355,
+                "startChar": 0,
+                "endLine": 356,
+                "endChar": 0
+              },
+              "replacement": "    status \u003d ScaleOffDiagonalBlocksAndFactorize();\n"
+            },
+            {
+              "path": "internal/ceres/visibility_based_preconditioner.cc",
+              "range": {
+                "startLine": 368,
+                "startChar": 0,
+                "endLine": 369,
+                "endChar": 0
+              },
+              "replacement": "VisibilityBasedPreconditioner::ScaleOffDiagonalBlocksAndFactorize() {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "6f229d606fd80b32371743c19b8bc7f6a0b0d41a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
