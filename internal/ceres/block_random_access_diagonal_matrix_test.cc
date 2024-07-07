@@ -36,7 +36,6 @@
 
 #include "Eigen/Cholesky"
 #include "ceres/internal/eigen.h"
-#include "glog/logging.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {

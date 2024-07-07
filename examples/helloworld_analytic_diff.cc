@@ -34,8 +34,8 @@
 
 #include <vector>
 
+#include "absl/log/initialize.h"
 #include "ceres/ceres.h"
-#include "glog/logging.h"
 
 // A CostFunction implementing analytically derivatives for the
 // function f(x) = 10 - x.
@@ -72,7 +72,7 @@ class QuadraticCostFunction
 };
 
 int main(int argc, char** argv) {
-  google::InitGoogleLogging(argv[0]);
+  absl::InitializeLog();
 
   // The variable to solve for with its initial value. It will be
   // mutated in place by the solver.

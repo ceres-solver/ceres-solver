@@ -32,6 +32,12 @@
 cmake_minimum_required(VERSION 3.16...3.29)
 project(Ceres C CXX)
 
+# In the normal course of things, we would not need the following
+# constraint. However, if we do not set the standard, then
+# std::basic_string_view is not available, which absl depends on and
+# linking the test fails.
+set(CMAKE_CXX_STANDARD 17)
+
 # NOTE: The following CMake variables must be applied consistently to all
 # targets in project to avoid visibility warnings by placing the variables at
 # the project top.
@@ -94,8 +100,6 @@ enable_testing()
 include(CMakeDependentOption)
 include(PrettyPrintCMakeList)
 
-option(MINIGLOG "Use a stripped down version of glog." OFF)
-option(GFLAGS "Enable Google Flags." ON)
 option(SUITESPARSE "Enable SuiteSparse." ON)
 if (APPLE)
   option(ACCELERATESPARSE
@@ -144,20 +148,33 @@ if (IOS)
       "requires at least iOS version 7.0")
   endif()
 
-  update_cache_variable(MINIGLOG ON)
-  message(STATUS "Building for iOS: Forcing use of miniglog instead of glog.")
-
   # Apple claims that the BLAS call dsyrk_ is a private API, and will not allow
   # you to submit to the Apple Store if the symbol is present.
   update_cache_variable(LAPACK OFF)
-  message(STATUS "Building for iOS: SuiteSparse, LAPACK, gflags "
-    "are not available.")
+  message(STATUS "Building for iOS: SuiteSparse, LAPACK are not available.")
 
   update_cache_variable(BUILD_EXAMPLES OFF)
   message(STATUS "Building for iOS: Will not build examples.")
 endif (IOS)
 
 unset(CERES_COMPILE_OPTIONS)
+
+# Abseil
+#
+# TODO: We are currently adding the submodule unconditionally. Going
+# foward, this should be replaced with a more sophisticated logic,
+# where we use the system installed version of abseil if it is more
+# recent than the version we are tracking. This will also affect how
+# we are installing ceres.
+
+# ABSL plans to enable this flag to be on by default in the future. If
+# it is not set, then it issues a warning. We force enable it, both to
+# silence the warning but to also be safe going forward.
+set(ABSL_PROPAGATE_CXX_STD ON CACHE BOOL "Use CMake C++ standard meta
+features (e.g. cxx_std_14) that propagate to targets that link to
+Abseil")
+add_subdirectory(third_party/abseil-cpp)
+
 
 # Eigen.
 # Eigen delivers Eigen3Config.cmake since v3.3.3
@@ -419,68 +436,6 @@ if (ANDROID)
   message("  ================================================================")
 endif()
 
-# GFlags.
-if (GFLAGS)
-  # Don't search with REQUIRED as we can continue without gflags.
-  find_package(gflags 2.2.0)
-  if (gflags_FOUND)
-    if (TARGET gflags)
-      message("-- Found Google Flags (gflags) version ${gflags_VERSION}: ${gflags_DIR}")
-    else()
-      message("-- Detected version of gflags: ${gflags_VERSION} does not define "
-        "expected gflags CMake target which should be exported by gflags 2.2+. "
-        "Building without gflags.")
-      update_cache_variable(GFLAGS OFF)
-    endif()
-  else (gflags_FOUND)
-    message("-- Did not find Google Flags (gflags), Building without gflags.")
-    update_cache_variable(GFLAGS OFF)
-  endif (gflags_FOUND)
-endif()
-if (NOT GFLAGS)
-  message("-- Use of gflags disabled - no tests or tools will be built!")
-endif()
-
-# MiniGLog.
-if (MINIGLOG)
-  message("-- Compiling minimal glog substitute into Ceres.")
-  set(GLOG_INCLUDE_DIRS internal/ceres/miniglog)
-  set(MINIGLOG_MAX_LOG_LEVEL 2 CACHE STRING "The maximum message severity level to be logged")
-  add_definitions("-DMAX_LOG_LEVEL=${MINIGLOG_MAX_LOG_LEVEL}")
-  message("-- Using minimal glog substitute (include): ${GLOG_INCLUDE_DIRS}")
-  message("-- Max log level for minimal glog substitute: ${MINIGLOG_MAX_LOG_LEVEL}")
-
-  # Mark as advanced (remove from default GUI view) the glog search
-  # variables in case user disables MINIGLOG, FindGlog did not find it, so
-  # made search variables visible in GUI for user to set, but then user enables
-  # MINIGLOG instead of setting them.
-  mark_as_advanced(FORCE GLOG_INCLUDE_DIR
-                         GLOG_LIBRARY)
-else (MINIGLOG)
-  unset(MINIGLOG_MAX_LOG_LEVEL CACHE)
-  # Don't search with REQUIRED so that configuration continues if not found and
-  # we can output an error messages explaining MINIGLOG option.
-  find_package(Glog)
-  if (NOT GLOG_FOUND)
-    message(FATAL_ERROR "Can't find Google Log (glog). Please set either: "
-      "glog_DIR (newer CMake built versions of glog) or GLOG_INCLUDE_DIR & "
-      "GLOG_LIBRARY or enable MINIGLOG option to use minimal glog "
-      "implementation.")
-  endif(NOT GLOG_FOUND)
-  # By default, assume gflags was found, updating the message if it was not.
-  set(GLOG_GFLAGS_DEPENDENCY_MESSAGE
-    " Assuming glog was built with gflags support as gflags was found. "
-    "This will make gflags a public dependency of Ceres.")
-  if (NOT gflags_FOUND)
-    set(GLOG_GFLAGS_DEPENDENCY_MESSAGE
-      " Assuming glog was NOT built with gflags support as gflags was "
-      "not found.  If glog was built with gflags, please set the "
-      "gflags search locations such that it can be found by Ceres.  "
-      "Otherwise, Ceres may fail to link due to missing gflags symbols.")
-  endif(NOT gflags_FOUND)
-  message("-- Found Google Log (glog)." ${GLOG_GFLAGS_DEPENDENCY_MESSAGE})
-endif (MINIGLOG)
-
 if (NOT SCHUR_SPECIALIZATIONS)
   list(APPEND CERES_COMPILE_OPTIONS CERES_RESTRICT_SCHUR_SPECIALIZATION)
   message("-- Disabling Schur specializations (faster compiles)")
@@ -669,13 +624,6 @@ install(FILES ${CERES_PUBLIC_INTERNAL_HDRS} DESTINATION
 install(DIRECTORY ${Ceres_BINARY_DIR}/${CMAKE_INSTALL_INCLUDEDIR}/
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
-if (MINIGLOG)
-  # Install miniglog header if being used as logging #includes appear in
-  # installed public Ceres headers.
-  install(FILES ${Ceres_SOURCE_DIR}/internal/ceres/miniglog/glog/logging.h
-          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/ceres/internal/miniglog/glog)
-endif (MINIGLOG)
-
 # Ceres supports two mechanisms by which it can be detected & imported into
 # client code which uses CMake via find_package(Ceres):
 #
@@ -718,9 +666,12 @@ write_basic_package_version_file("${Ceres_BINARY_DIR}/CeresConfigVersion.cmake"
 # when read in by a client project as part of find_package(Ceres) creates
 # imported library targets for Ceres (with dependency relations) which can be
 # used in target_link_libraries() calls in the client project to use Ceres.
-install(EXPORT CeresExport
-        NAMESPACE Ceres::
-        DESTINATION ${RELATIVE_CMAKECONFIG_INSTALL_DIR} FILE CeresTargets.cmake)
+#
+# TODO: Re-enable this
+#
+#install(EXPORT CeresExport
+#        NAMESPACE Ceres::
+#        DESTINATION ${RELATIVE_CMAKECONFIG_INSTALL_DIR} FILE CeresTargets.cmake)
 
 # Save the relative path from the installed CeresConfig.cmake file to the
 # install prefix.  We do not save an absolute path in case the installed package
@@ -749,12 +700,6 @@ install(FILES "${Ceres_BINARY_DIR}/CeresConfig-install.cmake"
         DESTINATION ${RELATIVE_CMAKECONFIG_INSTALL_DIR})
 install(FILES "${Ceres_BINARY_DIR}/CeresConfigVersion.cmake"
         DESTINATION ${RELATIVE_CMAKECONFIG_INSTALL_DIR})
-if (GLOG_FOUND AND NOT FOUND_INSTALLED_GLOG_CMAKE_CONFIGURATION)
-  # Version of glog detected was not built with CMake, install our glog module
-  # file to enable detection in CeresConfig.
-  install(FILES "${Ceres_SOURCE_DIR}/cmake/FindGlog.cmake"
-          DESTINATION ${RELATIVE_CMAKECONFIG_INSTALL_DIR})
-endif()
 
 if (PROVIDE_UNINSTALL_TARGET)
   # Create an uninstall target to remove all installed files.

@@ -33,7 +33,6 @@
 
 #include "Eigen/Dense"
 #include "ceres/internal/eigen.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

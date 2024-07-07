@@ -35,9 +35,9 @@
 #ifndef CERES_INTERNAL_SMALL_BLAS_H_
 #define CERES_INTERNAL_SMALL_BLAS_H_
 
+#include "absl/log/check.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
-#include "glog/logging.h"
 #include "small_blas_generic.h"
 
 namespace ceres::internal {

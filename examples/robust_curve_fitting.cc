@@ -34,8 +34,9 @@
 // the use of a robust loss function (CauchyLoss) to reduce the influence of the
 // outliers on the fit.
 
+#include "absl/log/check.h"
+#include "absl/log/initialize.h"
 #include "ceres/ceres.h"
-#include "glog/logging.h"
 
 // Data generated using the following octave code.
 //   randn('seed', 23497);
@@ -136,7 +137,7 @@ struct ExponentialResidual {
 };
 
 int main(int argc, char** argv) {
-  google::InitGoogleLogging(argv[0]);
+  absl::InitializeLog();
 
   const double initial_m = 0.0;
   const double initial_c = 0.0;

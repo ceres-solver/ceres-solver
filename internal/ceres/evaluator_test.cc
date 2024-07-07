@@ -37,6 +37,7 @@
 #include <string>
 #include <vector>
 
+#include "absl/log/log.h"
 #include "ceres/casts.h"
 #include "ceres/cost_function.h"
 #include "ceres/crs_matrix.h"

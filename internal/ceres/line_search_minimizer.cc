@@ -48,6 +48,8 @@
 #include <vector>
 
 #include "Eigen/Dense"
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/array_utils.h"
 #include "ceres/evaluator.h"
 #include "ceres/internal/eigen.h"
@@ -57,7 +59,6 @@
 #include "ceres/stringprintf.h"
 #include "ceres/types.h"
 #include "ceres/wall_time.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 namespace {

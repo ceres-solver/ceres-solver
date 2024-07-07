@@ -40,7 +40,6 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/triplet_sparse_matrix.h"
-#include "glog/logging.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
@@ -72,7 +71,7 @@ class DenseSparseMatrixTest : public ::testing::Test {
     std::unique_ptr<LinearLeastSquaresProblem> problem =
         CreateLinearLeastSquaresProblemFromId(1);
 
-    CHECK(problem != nullptr);
+    ASSERT_TRUE(problem != nullptr);
 
     tsm.reset(down_cast<TripletSparseMatrix*>(problem->A.release()));
     dsm = std::make_unique<DenseSparseMatrix>(*tsm);

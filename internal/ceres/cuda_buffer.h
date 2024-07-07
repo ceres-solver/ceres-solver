@@ -40,8 +40,8 @@
 #include <utility>
 #include <vector>
 
+#include "absl/log/check.h"
 #include "cuda_runtime.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 // An encapsulated buffer to maintain GPU memory, and handle transfers between

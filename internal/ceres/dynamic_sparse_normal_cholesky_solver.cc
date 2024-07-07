@@ -38,6 +38,7 @@
 #include <utility>
 
 #include "Eigen/SparseCore"
+#include "absl/log/log.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/internal/config.h"
 #include "ceres/internal/eigen.h"

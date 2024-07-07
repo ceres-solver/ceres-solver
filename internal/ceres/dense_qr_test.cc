@@ -39,7 +39,6 @@
 #include "Eigen/Dense"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
-#include "glog/logging.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
@@ -70,7 +69,7 @@ TEST_P(DenseQRTest, FactorAndSolve) {
 #ifndef CERES_NO_CUDA
   options.context = &context;
   std::string error;
-  CHECK(context.InitCuda(&error)) << error;
+  ASSERT_TRUE(context.InitCuda(&error)) << error;
 #endif  // CERES_NO_CUDA
   options.dense_linear_algebra_library_type = GetParam();
   const double kEpsilon = std::numeric_limits<double>::epsilon() * 1.5e4;
