@@ -35,11 +35,12 @@
 #include <algorithm>
 #include <cmath>
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/file.h"
 #include "ceres/internal/port.h"
 #include "ceres/stringprintf.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 #include "gtest/gtest.h"
 
 // This macro is used to inject additional path information specific

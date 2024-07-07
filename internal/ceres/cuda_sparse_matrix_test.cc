@@ -39,7 +39,6 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/triplet_sparse_matrix.h"
-#include "glog/logging.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -51,15 +50,15 @@ class CudaSparseMatrixTest : public ::testing::Test {
  protected:
   void SetUp() final {
     std::string message;
-    CHECK(context_.InitCuda(&message))
+    ASSERT_TRUE(context_.InitCuda(&message))
         << "InitCuda() failed because: " << message;
     std::unique_ptr<LinearLeastSquaresProblem> problem =
         CreateLinearLeastSquaresProblemFromId(2);
-    CHECK(problem != nullptr);
+    ASSERT_TRUE(problem != nullptr);
     A_.reset(down_cast<BlockSparseMatrix*>(problem->A.release()));
-    CHECK(A_ != nullptr);
-    CHECK(problem->b != nullptr);
-    CHECK(problem->x != nullptr);
+    ASSERT_TRUE(A_ != nullptr);
+    ASSERT_TRUE(problem->b != nullptr);
+    ASSERT_TRUE(problem->x != nullptr);
     b_.resize(A_->num_rows());
     for (int i = 0; i < A_->num_rows(); ++i) {
       b_[i] = problem->b[i];
@@ -68,8 +67,8 @@ class CudaSparseMatrixTest : public ::testing::Test {
     for (int i = 0; i < A_->num_cols(); ++i) {
       x_[i] = problem->x[i];
     }
-    CHECK_EQ(A_->num_rows(), b_.rows());
-    CHECK_EQ(A_->num_cols(), x_.rows());
+    ASSERT_EQ(A_->num_rows(), b_.rows());
+    ASSERT_EQ(A_->num_cols(), x_.rows());
   }
 
   std::unique_ptr<BlockSparseMatrix> A_;
@@ -119,7 +118,8 @@ TEST(CudaSparseMatrix, CopyValuesFromCpu) {
 
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
+  ASSERT_TRUE(context.InitCuda(&message))
+      << "InitCuda() failed because: " << message;
   auto A1_crs = CompressedRowSparseMatrix::FromTripletSparseMatrix(A1);
   CudaSparseMatrix A_gpu(&context, *A1_crs);
   CudaVector b_gpu(&context, A1.num_cols());
@@ -157,7 +157,8 @@ TEST(CudaSparseMatrix, RightMultiplyAndAccumulate) {
 
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
+  ASSERT_TRUE(context.InitCuda(&message))
+      << "InitCuda() failed because: " << message;
   auto A_crs = CompressedRowSparseMatrix::FromTripletSparseMatrix(A);
   CudaSparseMatrix A_gpu(&context, *A_crs);
   CudaVector b_gpu(&context, A.num_cols());
@@ -187,7 +188,8 @@ TEST(CudaSparseMatrix, LeftMultiplyAndAccumulate) {
 
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
+  ASSERT_TRUE(context.InitCuda(&message))
+      << "InitCuda() failed because: " << message;
   auto A_crs = CompressedRowSparseMatrix::FromTripletSparseMatrix(A);
   CudaSparseMatrix A_gpu(&context, *A_crs);
   CudaVector b_gpu(&context, A.num_rows());
@@ -242,7 +244,8 @@ TEST(CudaSparseMatrix, LargeMultiplyAndAccumulate) {
 
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
+  ASSERT_TRUE(context.InitCuda(&message))
+      << "InitCuda() failed because: " << message;
   auto A_crs = CompressedRowSparseMatrix::FromTripletSparseMatrix(A);
   CudaSparseMatrix A_gpu(&context, *A_crs);
   CudaVector b_gpu(&context, N);

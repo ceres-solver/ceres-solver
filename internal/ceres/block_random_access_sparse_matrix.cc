@@ -36,11 +36,12 @@
 #include <utility>
 #include <vector>
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/internal/export.h"
 #include "ceres/parallel_vector_ops.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

@@ -42,7 +42,6 @@
 #include "ceres/linear_solver.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
@@ -53,7 +52,7 @@ class SchurComplementSolverTest : public ::testing::Test {
     std::unique_ptr<LinearLeastSquaresProblem> problem =
         CreateLinearLeastSquaresProblemFromId(problem_id);
 
-    CHECK(problem != nullptr);
+    ASSERT_TRUE(problem != nullptr);
     A.reset(down_cast<BlockSparseMatrix*>(problem->A.release()));
     b = std::move(problem->b);
     D = std::move(problem->D);

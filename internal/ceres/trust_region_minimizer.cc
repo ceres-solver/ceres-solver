@@ -40,6 +40,8 @@
 #include <vector>
 
 #include "Eigen/Core"
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/array_utils.h"
 #include "ceres/coordinate_descent_minimizer.h"
 #include "ceres/eigen_vector_ops.h"
@@ -50,7 +52,6 @@
 #include "ceres/stringprintf.h"
 #include "ceres/types.h"
 #include "ceres/wall_time.h"
-#include "glog/logging.h"
 
 // Helper macro to simplify some of the control flow.
 #define RETURN_IF_ERROR_AND_LOG(expr)                            \

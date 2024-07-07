@@ -39,7 +39,6 @@
 #include "ceres/linear_solver.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 #include "gtest/gtest.h"
 
 namespace ceres {

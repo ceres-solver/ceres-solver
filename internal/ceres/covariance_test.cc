@@ -38,6 +38,7 @@
 #include <utility>
 #include <vector>
 
+#include "absl/log/log.h"
 #include "ceres/autodiff_cost_function.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/cost_function.h"

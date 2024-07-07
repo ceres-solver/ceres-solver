@@ -26,11 +26,11 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+#include "absl/log/check.h"
 #include "benchmark/benchmark.h"
 #include "ceres/context_impl.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/parallel_for.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

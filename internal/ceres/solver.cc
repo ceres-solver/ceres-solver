@@ -38,6 +38,7 @@
 #include <string>
 #include <vector>
 
+#include "absl/log/log.h"
 #include "ceres/casts.h"
 #include "ceres/context.h"
 #include "ceres/context_impl.h"

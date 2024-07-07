@@ -35,7 +35,6 @@
 
 #include "ceres/internal/eigen.h"
 #include "ceres/parallel_vector_ops.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 
