@@ -121,12 +121,12 @@ jobs:
       - name: Download and install CUDA toolkit
         if: matrix.gpu == 'cuda'
         run: |
-          Invoke-WebRequest https://developer.download.nvidia.com/compute/cuda/12.2.1/network_installers/cuda_12.2.1_windows_network.exe -OutFile cuda_toolkit_windows.exe
-          Start-Process -Wait -FilePath .\cuda_toolkit_windows.exe -ArgumentList "-s cusolver_dev_12.2 cusparse_dev_12.2 cublas_dev_12.2 thrust_12.2 nvcc_12.2 cudart_12.2 nvrtc_dev_12.2 visual_studio_integration_12.2"
+          Invoke-WebRequest https://developer.download.nvidia.com/compute/cuda/12.5.1/network_installers/cuda_12.5.1_windows_network.exe -OutFile cuda_toolkit_windows.exe
+          Start-Process -Wait -FilePath .\cuda_toolkit_windows.exe -ArgumentList "-s cusolver_dev_12.5 cusparse_dev_12.5 cublas_dev_12.5 thrust_12.5 nvcc_12.5 cudart_12.5 nvrtc_dev_12.5 visual_studio_integration_12.5"
           Remove-Item .\cuda_toolkit_windows.exe
-          $CUDA_PATH = "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.2"
+          $CUDA_PATH = "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.5"
           echo "CUDA_PATH=$CUDA_PATH" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          echo "CUDA_PATH_V12_2=$CUDA_PATH" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "CUDA_PATH_V12_5=$CUDA_PATH" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           echo "$CUDA_PATH/bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
       - name: Cache gflags
