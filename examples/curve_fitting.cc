@@ -31,8 +31,8 @@
 // This example fits the curve f(x;m,c) = e^(m * x + c) to data, minimizing the
 // sum squared loss.
 
+#include "absl/log/initialize.h"
 #include "ceres/ceres.h"
-#include "glog/logging.h"
 
 // Data generated using the following octave code.
 //   randn('seed', 23497);
@@ -132,8 +132,7 @@ struct ExponentialResidual {
 };
 
 int main(int argc, char** argv) {
-  google::InitGoogleLogging(argv[0]);
-
+  absl::InitializeLog();
   const double initial_m = 0.0;
   const double initial_c = 0.0;
   double m = initial_m;

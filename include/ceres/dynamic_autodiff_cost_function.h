@@ -38,11 +38,11 @@
 #include <type_traits>
 #include <vector>
 
+#include "absl/log/check.h"
 #include "ceres/dynamic_cost_function.h"
 #include "ceres/internal/fixed_array.h"
 #include "ceres/jet.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 
 namespace ceres {
 

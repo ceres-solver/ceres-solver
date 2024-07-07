@@ -41,6 +41,8 @@
 #include <vector>
 
 #include "Eigen/Dense"
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/block_random_access_sparse_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/canonical_views_clustering.h"
@@ -50,7 +52,6 @@
 #include "ceres/schur_eliminator.h"
 #include "ceres/single_linkage_clustering.h"
 #include "ceres/visibility.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

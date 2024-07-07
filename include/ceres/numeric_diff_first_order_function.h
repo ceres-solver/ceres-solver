@@ -36,6 +36,7 @@
 #include <type_traits>
 #include <utility>
 
+#include "absl/log/check.h"
 #include "ceres/first_order_function.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/fixed_array.h"
@@ -44,7 +45,6 @@
 #include "ceres/internal/variadic_evaluate.h"
 #include "ceres/numeric_diff_options.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 
 namespace ceres {
 

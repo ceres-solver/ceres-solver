@@ -48,7 +48,6 @@
 #include "ceres/schur_eliminator.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -64,7 +63,7 @@ class IterativeSchurComplementSolverTest : public ::testing::Test {
     std::unique_ptr<LinearLeastSquaresProblem> problem =
         CreateLinearLeastSquaresProblemFromId(problem_id);
 
-    CHECK(problem != nullptr);
+    ASSERT_TRUE(problem != nullptr);
     A_.reset(down_cast<BlockSparseMatrix*>(problem->A.release()));
     b_ = std::move(problem->b);
     D_ = std::move(problem->D);

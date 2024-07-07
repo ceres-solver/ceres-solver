@@ -44,7 +44,6 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/triplet_sparse_matrix.h"
-#include "glog/logging.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
@@ -74,7 +73,7 @@ class CompressedRowSparseMatrixTest : public ::testing::Test {
   void SetUp() final {
     auto problem = CreateLinearLeastSquaresProblemFromId(1);
 
-    CHECK(problem != nullptr);
+    ASSERT_TRUE(problem != nullptr);
 
     tsm.reset(down_cast<TripletSparseMatrix*>(problem->A.release()));
     crsm = CompressedRowSparseMatrix::FromTripletSparseMatrix(*tsm);

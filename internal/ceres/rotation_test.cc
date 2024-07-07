@@ -38,6 +38,7 @@
 #include <string>
 #include <utility>
 
+#include "absl/log/log.h"
 #include "ceres/constants.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/euler_angles.h"
@@ -46,7 +47,6 @@
 #include "ceres/jet.h"
 #include "ceres/stringprintf.h"
 #include "ceres/test_util.h"
-#include "glog/logging.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
@@ -648,7 +648,7 @@ TEST(EulerAnglesToRotationMatrix, OnAxis) {
       }
     }
   }
-  CHECK_EQ(7, n_tests);
+  ASSERT_EQ(7, n_tests);
 }
 
 // Test that a random rotation produces an orthonormal rotation
