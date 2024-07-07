@@ -37,6 +37,8 @@
 #include <cstddef>
 #include <limits>
 
+#include "absl/log/check.h"
+
 namespace ceres {
 
 LossFunction::~LossFunction() = default;

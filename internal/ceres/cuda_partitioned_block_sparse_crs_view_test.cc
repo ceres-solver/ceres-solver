@@ -30,8 +30,8 @@
 
 #include "ceres/cuda_partitioned_block_sparse_crs_view.h"
 
-#include <glog/logging.h>
-#include <gtest/gtest.h>
+#include "absl/log/check.h"
+#include "gtest/gtest.h"
 
 #ifndef CERES_NO_CUDA
 

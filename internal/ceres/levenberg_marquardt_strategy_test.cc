@@ -32,10 +32,10 @@
 
 #include <memory>
 
+#include "absl/log/check.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
 #include "ceres/trust_region_strategy.h"
-#include "glog/logging.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 

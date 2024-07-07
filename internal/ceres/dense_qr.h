@@ -45,7 +45,6 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/linear_solver.h"
-#include "glog/logging.h"
 
 #ifndef CERES_NO_CUDA
 #include "ceres/context_impl.h"

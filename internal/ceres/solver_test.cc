@@ -36,6 +36,7 @@
 #include <string>
 #include <vector>
 
+#include "absl/log/log.h"
 #include "ceres/autodiff_cost_function.h"
 #include "ceres/evaluation_callback.h"
 #include "ceres/manifold.h"
