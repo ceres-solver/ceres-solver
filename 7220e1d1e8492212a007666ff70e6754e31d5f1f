@@ -16,6 +16,23 @@
       "message": "Updating CUDA fixes the Windows build: https://github.com/sergiud/ceres-solver/actions/runs/9827155398/job/27129532165.",
       "revId": "7220e1d1e8492212a007666ff70e6754e31d5f1f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1b62053_68cb0899",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-07T16:08:50Z",
+      "side": 1,
+      "message": "thank you!",
+      "revId": "7220e1d1e8492212a007666ff70e6754e31d5f1f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
