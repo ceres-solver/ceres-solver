@@ -34,6 +34,24 @@
       "parentUuid": "70c03b6d_81a4b615",
       "revId": "540b1f2f7a9f6e30791954ca555870662dc36422",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1591ba61_9f81e9d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-07-07T21:56:24Z",
+      "side": 1,
+      "message": "Yep, it indeed fails during linking.",
+      "parentUuid": "fe07ddda_a3d8649c",
+      "revId": "540b1f2f7a9f6e30791954ca555870662dc36422",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
