@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70c03b6d_81a4b615",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-07-07T21:46:46Z",
+      "side": 1,
+      "message": "Thanks Mark! This is what I roughly have as well. However, I\u0027m seeing linker errors on Windows in my case. Do Windows jobs successfully complete with your changes?",
+      "revId": "540b1f2f7a9f6e30791954ca555870662dc36422",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
