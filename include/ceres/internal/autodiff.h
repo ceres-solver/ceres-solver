@@ -144,6 +144,7 @@
 #include <cstddef>
 #include <utility>
 
+#include "absl/log/check.h"
 #include "ceres/internal/array_selector.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/fixed_array.h"
@@ -151,7 +152,6 @@
 #include "ceres/internal/variadic_evaluate.h"
 #include "ceres/jet.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 
 // If the number of parameters exceeds this values, the corresponding jets are
 // placed on the heap. This will reduce performance by a factor of 2-5 on

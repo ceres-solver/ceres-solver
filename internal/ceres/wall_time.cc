@@ -32,6 +32,7 @@
 
 #include <ctime>
 
+#include "absl/log/log.h"
 #include "ceres/internal/config.h"
 
 #ifdef _WIN32
@@ -39,6 +40,8 @@
 #else
 #include <sys/time.h>
 #endif
+
+#include "ceres/stringprintf.h"
 
 namespace ceres::internal {
 

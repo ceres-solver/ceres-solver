@@ -32,8 +32,8 @@
 #define CERES_PUBLIC_CUBIC_INTERPOLATION_H_
 
 #include "Eigen/Core"
+#include "absl/log/check.h"
 #include "ceres/internal/export.h"
-#include "glog/logging.h"
 
 namespace ceres {
 

@@ -36,7 +36,7 @@
 #include <queue>
 #include <thread>
 
-#include "glog/logging.h"
+#include "absl/log/check.h"
 
 namespace ceres::internal {
 

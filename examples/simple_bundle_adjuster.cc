@@ -39,6 +39,7 @@
 #include <cstdio>
 #include <iostream>
 
+#include "absl/log/log.h"
 #include "ceres/ceres.h"
 #include "ceres/rotation.h"
 
@@ -173,7 +174,6 @@ struct SnavelyReprojectionError {
 };
 
 int main(int argc, char** argv) {
-  google::InitGoogleLogging(argv[0]);
   if (argc != 2) {
     std::cerr << "usage: simple_bundle_adjuster <bal_problem>\n";
     return 1;

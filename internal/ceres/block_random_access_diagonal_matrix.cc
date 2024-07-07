@@ -37,13 +37,13 @@
 #include <vector>
 
 #include "Eigen/Dense"
+#include "absl/log/check.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/internal/export.h"
 #include "ceres/parallel_for.h"
 #include "ceres/parallel_vector_ops.h"
 #include "ceres/stl_util.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 
