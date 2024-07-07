@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e918c2fa_1d84680f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-07T20:01:06Z",
+      "side": 1,
+      "message": "Gentlemen, here is my current take on using abseil in the code base. This is just log and flags for now. More will follow.",
+      "revId": "8e75e4de225ac35521fa3f349cbd712d85c3cf49",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
