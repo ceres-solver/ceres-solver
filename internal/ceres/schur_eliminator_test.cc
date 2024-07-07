@@ -47,7 +47,6 @@
 #include "ceres/test_util.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 #include "gtest/gtest.h"
 
 // TODO(sameeragarwal): Reduce the size of these tests and redo the
@@ -59,7 +58,7 @@ class SchurEliminatorTest : public ::testing::Test {
  protected:
   void SetUpFromId(int id) {
     auto problem = CreateLinearLeastSquaresProblemFromId(id);
-    CHECK(problem != nullptr);
+    ASSERT_TRUE(problem != nullptr);
     SetupHelper(problem.get());
   }
 

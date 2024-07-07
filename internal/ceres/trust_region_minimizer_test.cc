@@ -38,6 +38,8 @@
 #include <cmath>
 #include <memory>
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/autodiff_cost_function.h"
 #include "ceres/cost_function.h"
 #include "ceres/dense_qr_solver.h"

@@ -3,9 +3,9 @@
 #include <algorithm>
 #include <cmath>
 
+#include "absl/log/check.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/fixed_array.h"
-#include "glog/logging.h"
 
 namespace ceres {
 namespace {

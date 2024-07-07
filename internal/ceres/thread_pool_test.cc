@@ -35,8 +35,8 @@
 #include <mutex>
 #include <thread>
 
+#include "absl/log/log.h"
 #include "ceres/internal/config.h"
-#include "glog/logging.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 

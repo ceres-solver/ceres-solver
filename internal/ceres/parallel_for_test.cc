@@ -40,10 +40,10 @@
 #include <tuple>
 #include <vector>
 
+#include "absl/log/log.h"
 #include "ceres/context_impl.h"
 #include "ceres/internal/config.h"
 #include "ceres/parallel_vector_ops.h"
-#include "glog/logging.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
@@ -489,7 +489,7 @@ TEST(ParallelAssign, SetZero) {
     Vector x = Vector::Random(kVectorSize);
     ParallelSetZero(&context, num_threads, x);
 
-    CHECK_EQ(x.squaredNorm(), 0.);
+    ASSERT_EQ(x.squaredNorm(), 0.);
   }
 }
 
