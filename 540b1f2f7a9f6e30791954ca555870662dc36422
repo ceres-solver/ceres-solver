@@ -16,6 +16,24 @@
       "message": "Thanks Mark! This is what I roughly have as well. However, I\u0027m seeing linker errors on Windows in my case. Do Windows jobs successfully complete with your changes?",
       "revId": "540b1f2f7a9f6e30791954ca555870662dc36422",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe07ddda_a3d8649c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-07-07T21:55:18Z",
+      "side": 1,
+      "message": "I\u0027ve actually only checked that it would successfully pass through configuration stage. I believe that this run https://github.com/S-o-T/ceres-solver/actions/runs/9830417254/job/27136578809 will be the first to either fail or to finish successfully.",
+      "parentUuid": "70c03b6d_81a4b615",
+      "revId": "540b1f2f7a9f6e30791954ca555870662dc36422",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
