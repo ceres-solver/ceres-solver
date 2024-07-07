@@ -16,6 +16,23 @@
       "message": "Gentlemen, here is my current take on using abseil in the code base. This is just log and flags for now. More will follow.",
       "revId": "8e75e4de225ac35521fa3f349cbd712d85c3cf49",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35754581_5224914a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-07T20:11:02Z",
+      "side": 1,
+      "message": "something seems broken with testing::SrcDir and bazel, because the directory that googletest is reporting simply does not exist.",
+      "revId": "8e75e4de225ac35521fa3f349cbd712d85c3cf49",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
