@@ -39,6 +39,7 @@
 #include <string>
 #include <vector>
 
+#include "absl/log/log.h"
 #include "ceres/is_close.h"
 #include "ceres/stringprintf.h"
 #include "ceres/types.h"

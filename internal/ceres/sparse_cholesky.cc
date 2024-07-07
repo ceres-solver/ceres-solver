@@ -33,6 +33,7 @@
 #include <memory>
 #include <utility>
 
+#include "absl/log/log.h"
 #include "ceres/accelerate_sparse.h"
 #include "ceres/eigensparse.h"
 #include "ceres/float_suitesparse.h"

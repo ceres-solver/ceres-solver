@@ -36,11 +36,11 @@
 #include <numeric>
 #include <vector>
 
+#include "absl/log/check.h"
 #include "ceres/dynamic_cost_function.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
 #include "ceres/internal/fixed_array.h"
-#include "glog/logging.h"
 
 namespace ceres {
 

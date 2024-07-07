@@ -45,10 +45,6 @@
 #define CERES_DEPRECATED_WITH_MSG(message) [[deprecated(message)]]
 #endif
 
-#ifndef CERES_GET_FLAG
-#define CERES_GET_FLAG(X) X
-#endif
-
 // Indicates whether C++20 is currently active
 #ifndef CERES_HAS_CPP20
 #if __cplusplus >= 202002L || (defined(_MSVC_LANG) && _MSVC_LANG >= 202002L)

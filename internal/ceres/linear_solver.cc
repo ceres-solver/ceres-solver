@@ -32,6 +32,8 @@
 
 #include <memory>
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/cgnr_solver.h"
 #include "ceres/dense_normal_cholesky_solver.h"
 #include "ceres/dense_qr_solver.h"
@@ -41,7 +43,6 @@
 #include "ceres/schur_complement_solver.h"
 #include "ceres/sparse_normal_cholesky_solver.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

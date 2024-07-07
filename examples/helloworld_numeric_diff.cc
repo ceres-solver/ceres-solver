@@ -32,7 +32,6 @@
 // numeric differentiation.
 
 #include "ceres/ceres.h"
-#include "glog/logging.h"
 
 // A cost functor that implements the residual r = 10 - x.
 struct CostFunctor {
@@ -43,8 +42,6 @@ struct CostFunctor {
 };
 
 int main(int argc, char** argv) {
-  google::InitGoogleLogging(argv[0]);
-
   // The variable to solve for with its initial value. It will be
   // mutated in place by the solver.
   double x = 0.5;

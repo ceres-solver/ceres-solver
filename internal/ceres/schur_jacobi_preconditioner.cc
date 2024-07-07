@@ -34,11 +34,11 @@
 #include <utility>
 #include <vector>
 
+#include "absl/log/check.h"
 #include "ceres/block_random_access_diagonal_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/linear_solver.h"
 #include "ceres/schur_eliminator.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 
