@@ -35,8 +35,8 @@
 #include <utility>
 #include <vector>
 
+#include "absl/log/check.h"
 #include "ceres/ceres.h"
-#include "glog/logging.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {

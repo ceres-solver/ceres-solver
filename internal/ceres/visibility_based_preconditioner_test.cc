@@ -44,7 +44,6 @@
 #include "ceres/stringprintf.h"
 #include "ceres/test_util.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
@@ -73,7 +72,7 @@ namespace ceres::internal {
 //     D_.reset(problem->D.release());
 
 //     const CompressedRowBlockStructure* bs =
-//         CHECK_NOTNULL(A_->block_structure());
+//         ASSERT_TRUE(A_->block_structure()!=nullptr);
 //     const int num_col_blocks = bs->cols.size();
 
 //     num_cols_ = A_->num_cols();

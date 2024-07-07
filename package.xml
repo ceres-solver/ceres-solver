@@ -44,8 +44,6 @@
   <build_depend>gfortran</build_depend>
   <build_depend>suitesparse</build_depend>
   <depend>eigen</depend>
-  <depend>libgflags-dev</depend>
-  <depend>libgoogle-glog-dev</depend>
 
   <export>
     <build_type>cmake</build_type>

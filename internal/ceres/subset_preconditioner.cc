@@ -34,6 +34,7 @@
 #include <string>
 #include <utility>
 
+#include "absl/log/log.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/inner_product_computer.h"
 #include "ceres/linear_solver.h"

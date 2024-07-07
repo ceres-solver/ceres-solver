@@ -30,7 +30,6 @@
 #
 # These are Bazel rules to build Ceres. It's currently in Alpha state, and does
 # not support parameterization around threading choice or sparse backends.
-
 load("//:bazel/ceres.bzl", "ceres_library")
 
 ceres_library(
@@ -44,20 +43,10 @@ cc_library(
         "evaluator_test_utils.cc",
         "numeric_diff_test_utils.cc",
         "test_util.cc",
-        "gmock_gtest_all.cc",
-        "gmock_main.cc",
-        "gmock/gmock.h",
-        "gmock/mock-log.h",
-        "gtest/gtest.h",
     ]],
-    hdrs = [
-        "internal/ceres/gmock/gmock.h",
-        "internal/ceres/gmock/mock-log.h",
-        "internal/ceres/gtest/gtest.h",
-    ],
     copts = [
         "-Wno-sign-compare",
-        "-DCERES_TEST_SRCDIR_SUFFIX=\\\"data/\\\"",
+        "-DCERES_TEST_SRCDIR_SUFFIX=\\\"_main/data/\\\"",
     ],
     includes = [
         "internal",
@@ -65,7 +54,8 @@ cc_library(
     ],
     deps = [
         "//:ceres",
-        "@com_github_gflags_gflags//:gflags",
+        "@googletest//:gtest_main",
+
     ],
 )
 
@@ -171,7 +161,6 @@ TEST_DEPS = [
     "//:ceres",
     "//:test_util",
     "@com_gitlab_libeigen_eigen//:eigen",
-    "@com_github_gflags_gflags//:gflags",
 ]
 
 # Instantiate all the tests with a template.

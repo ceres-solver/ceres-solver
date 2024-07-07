@@ -34,6 +34,8 @@
 #include <cmath>
 
 #include "Eigen/Dense"
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/array_utils.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
@@ -42,7 +44,6 @@
 #include "ceres/sparse_matrix.h"
 #include "ceres/trust_region_strategy.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 namespace {
