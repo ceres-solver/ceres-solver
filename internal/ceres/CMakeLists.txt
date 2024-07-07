@@ -398,8 +398,12 @@ if (BUILD_TESTING)
               test_util.cc)
 
   target_include_directories(test_util PUBLIC ${Ceres_SOURCE_DIR}/internal)
-  target_link_libraries (test_util PUBLIC GTest::gmock ceres_static)
+  target_link_libraries (test_util PRIVATE GTest::gmock PUBLIC GTest::gtest ceres_static)
   target_compile_definitions(test_util PRIVATE CERES_TEST_SRCDIR_SUFFIX="../../data")
+
+  if (BUILD_SHARED_LIBS)
+    target_compile_definitions(test_util PUBLIC GTEST_LINKED_AS_SHARED_LIBRARY=1)
+  endif (BUILD_SHARED_LIBS)
 
   macro (CERES_TEST NAME)
     add_executable(${NAME}_test ${NAME}_test.cc)
@@ -425,8 +429,8 @@ if (BUILD_TESTING)
       target_link_libraries (${NAME}_test PRIVATE SuiteSparse::SPQR)
     endif (TARGET SuiteSparse::SPQR)
 
-    add_test(NAME ${NAME}_test
-             COMMAND ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${NAME}_test)
+    add_test(NAME ${NAME}_test COMMAND ${NAME}_test)
+    set_tests_properties(${NAME}_test PROPERTIES ENVIRONMENT TEST_SRCDIR=${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
   endmacro (CERES_TEST)
 
   ceres_test(array_utils)
