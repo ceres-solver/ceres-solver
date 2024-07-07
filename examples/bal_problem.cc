@@ -39,8 +39,9 @@
 #include <vector>
 
 #include "Eigen/Core"
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/rotation.h"
-#include "glog/logging.h"
 
 namespace ceres::examples {
 namespace {

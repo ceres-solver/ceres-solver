@@ -34,6 +34,8 @@
 #include <memory>
 #include <string>
 
+#include "absl/log/log.h"
+
 #ifndef CERES_NO_CUDA
 #include "ceres/context_impl.h"
 #include "cublas_v2.h"

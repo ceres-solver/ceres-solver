@@ -32,12 +32,10 @@
 
 #ifndef CERES_NO_CUDA
 
-#include <glog/logging.h>
-#include <gtest/gtest.h>
-
 #include <numeric>
 
 #include "ceres/cuda_streamed_buffer.h"
+#include "gtest/gtest.h"
 
 namespace ceres::internal {
 
@@ -48,7 +46,7 @@ TEST(CudaStreamedBufferTest, IntegerCopy) {
   const int kInputSize = kMaxTemporaryArraySize * 7 + 3;
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
+  ASSERT_TRUE(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
 
   std::vector<int> inputs(kInputSize);
   std::vector<int> outputs(kInputSize, -1);
@@ -62,7 +60,7 @@ TEST(CudaStreamedBufferTest, IntegerCopy) {
                                                  int offset,
                                                  cudaStream_t stream) {
                               batches.emplace_back(offset, size);
-                              CHECK_EQ(cudaSuccess,
+                              ASSERT_EQ(cudaSuccess,
                                        cudaMemcpyAsync(outputs.data() + offset,
                                                        device_pointer,
                                                        sizeof(int) * size,
@@ -72,12 +70,12 @@ TEST(CudaStreamedBufferTest, IntegerCopy) {
   // All operations in all streams should be completed when CopyToGpu returns
   // control to the callee
   for (int i = 0; i < ContextImpl::kNumCudaStreams; ++i) {
-    CHECK_EQ(cudaSuccess, cudaStreamQuery(context.streams_[i]));
+    ASSERT_EQ(cudaSuccess, cudaStreamQuery(context.streams_[i]));
   }
 
   // Check if every element was visited
   for (int i = 0; i < kInputSize; ++i) {
-    CHECK_EQ(outputs[i], i);
+    ASSERT_EQ(outputs[i], i);
   }
 
   // Check if there is no overlap between batches
@@ -86,14 +84,14 @@ TEST(CudaStreamedBufferTest, IntegerCopy) {
   for (int i = 0; i < num_batches; ++i) {
     const auto [begin, size] = batches[i];
     const int end = begin + size;
-    CHECK_GE(begin, 0);
-    CHECK_LT(begin, kInputSize);
+    ASSERT_GE(begin, 0);
+    ASSERT_LT(begin, kInputSize);
 
-    CHECK_GT(size, 0);
-    CHECK_LE(end, kInputSize);
+    ASSERT_GT(size, 0);
+    ASSERT_LE(end, kInputSize);
 
     if (i + 1 == num_batches) continue;
-    CHECK_EQ(end, batches[i + 1].first);
+    ASSERT_EQ(end, batches[i + 1].first);
   }
 }
 
@@ -104,14 +102,14 @@ TEST(CudaStreamedBufferTest, IntegerNoCopy) {
   const int kInputSize = kMaxTemporaryArraySize * 7 + 3;
   ContextImpl context;
   std::string message;
-  CHECK(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
+  ASSERT_TRUE(context.InitCuda(&message)) << "InitCuda() failed because: " << message;
 
   int* inputs;
   int* outputs;
-  CHECK_EQ(cudaSuccess,
+  ASSERT_EQ(cudaSuccess,
            cudaHostAlloc(
                &inputs, sizeof(int) * kInputSize, cudaHostAllocWriteCombined));
-  CHECK_EQ(
+  ASSERT_EQ(
       cudaSuccess,
       cudaHostAlloc(&outputs, sizeof(int) * kInputSize, cudaHostAllocDefault));
 
@@ -126,7 +124,7 @@ TEST(CudaStreamedBufferTest, IntegerNoCopy) {
                                                 int offset,
                                                 cudaStream_t stream) {
                               batches.emplace_back(offset, size);
-                              CHECK_EQ(cudaSuccess,
+                              ASSERT_EQ(cudaSuccess,
                                        cudaMemcpyAsync(outputs + offset,
                                                        device_pointer,
                                                        sizeof(int) * size,
@@ -136,12 +134,12 @@ TEST(CudaStreamedBufferTest, IntegerNoCopy) {
   // All operations in all streams should be completed when CopyToGpu returns
   // control to the callee
   for (int i = 0; i < ContextImpl::kNumCudaStreams; ++i) {
-    CHECK_EQ(cudaSuccess, cudaStreamQuery(context.streams_[i]));
+    ASSERT_EQ(cudaSuccess, cudaStreamQuery(context.streams_[i]));
   }
 
   // Check if every element was visited
   for (int i = 0; i < kInputSize; ++i) {
-    CHECK_EQ(outputs[i], i);
+    ASSERT_EQ(outputs[i], i);
   }
 
   // Check if there is no overlap between batches
@@ -150,18 +148,18 @@ TEST(CudaStreamedBufferTest, IntegerNoCopy) {
   for (int i = 0; i < num_batches; ++i) {
     const auto [begin, size] = batches[i];
     const int end = begin + size;
-    CHECK_GE(begin, 0);
-    CHECK_LT(begin, kInputSize);
+    ASSERT_GE(begin, 0);
+    ASSERT_LT(begin, kInputSize);
 
-    CHECK_GT(size, 0);
-    CHECK_LE(end, kInputSize);
+    ASSERT_GT(size, 0);
+    ASSERT_LE(end, kInputSize);
 
     if (i + 1 == num_batches) continue;
-    CHECK_EQ(end, batches[i + 1].first);
+    ASSERT_EQ(end, batches[i + 1].first);
   }
 
-  CHECK_EQ(cudaSuccess, cudaFreeHost(inputs));
-  CHECK_EQ(cudaSuccess, cudaFreeHost(outputs));
+  ASSERT_EQ(cudaSuccess, cudaFreeHost(inputs));
+  ASSERT_EQ(cudaSuccess, cudaFreeHost(outputs));
 }
 
 }  // namespace ceres::internal

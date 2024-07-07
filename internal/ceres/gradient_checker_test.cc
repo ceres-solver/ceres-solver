@@ -37,11 +37,11 @@
 #include <utility>
 #include <vector>
 
+#include "absl/log/log.h"
 #include "ceres/cost_function.h"
 #include "ceres/problem.h"
 #include "ceres/solver.h"
 #include "ceres/test_util.h"
-#include "glog/logging.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
@@ -176,7 +176,7 @@ static void CheckDimensions(const GradientChecker::ProbeResults& results,
                             const std::vector<int>& parameter_sizes,
                             const std::vector<int>& local_parameter_sizes,
                             int residual_size) {
-  CHECK_EQ(parameter_sizes.size(), local_parameter_sizes.size());
+  ASSERT_EQ(parameter_sizes.size(), local_parameter_sizes.size());
   int num_parameters = parameter_sizes.size();
   ASSERT_EQ(residual_size, results.residuals.size());
   ASSERT_EQ(num_parameters, results.local_jacobians.size());
@@ -329,7 +329,7 @@ class LinearCostFunction : public CostFunction {
   }
 
   void AddParameter(const Matrix& residual_J_param) {
-    CHECK_EQ(num_residuals(), residual_J_param.rows());
+    ASSERT_EQ(num_residuals(), residual_J_param.rows());
     residual_J_params_.push_back(residual_J_param);
     mutable_parameter_block_sizes()->push_back(residual_J_param.cols());
   }
@@ -337,9 +337,9 @@ class LinearCostFunction : public CostFunction {
   /// Add offset to the given Jacobian before returning it from Evaluate(),
   /// thus introducing an error in the computation.
   void SetJacobianOffset(size_t index, Matrix offset) {
-    CHECK_LT(index, residual_J_params_.size());
-    CHECK_EQ(residual_J_params_[index].rows(), offset.rows());
-    CHECK_EQ(residual_J_params_[index].cols(), offset.cols());
+    ASSERT_LT(index, residual_J_params_.size());
+    ASSERT_EQ(residual_J_params_[index].rows(), offset.rows());
+    ASSERT_EQ(residual_J_params_[index].cols(), offset.cols());
     jacobian_offsets_[index] = offset;
   }
 

@@ -36,6 +36,8 @@
 #include <random>
 #include <vector>
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/cost_function.h"
 #include "ceres/loss_function.h"
 #include "ceres/manifold.h"
@@ -45,7 +47,6 @@
 #include "ceres/residual_block.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
@@ -328,8 +329,8 @@ class TernaryCostFunction : public CostFunction {
 // array and have the same Manifold objects.
 static void ParameterBlocksAreEquivalent(const ParameterBlock* left,
                                          const ParameterBlock* right) {
-  CHECK(left != nullptr);
-  CHECK(right != nullptr);
+  ASSERT_TRUE(left != nullptr);
+  ASSERT_TRUE(right != nullptr);
   EXPECT_EQ(left->user_state(), right->user_state());
   EXPECT_EQ(left->Size(), right->Size());
   EXPECT_EQ(left->Size(), right->Size());

@@ -33,8 +33,8 @@
 // Minimize 0.5 (10 - x)^2 using jacobian matrix computed using
 // automatic differentiation.
 
+#include "absl/log/initialize.h"
 #include "ceres/ceres.h"
-#include "glog/logging.h"
 
 // A templated cost functor that implements the residual r = 10 -
 // x. The method operator() is templated so that we can then use an
@@ -49,7 +49,7 @@ struct CostFunctor {
 };
 
 int main(int argc, char** argv) {
-  google::InitGoogleLogging(argv[0]);
+  absl::InitializeLog();
 
   // The variable to solve for with its initial value. It will be
   // mutated in place by the solver.

@@ -38,11 +38,12 @@
 #include <string>
 #include <vector>
 
+#include "absl/log/check.h"
 #include "ceres/accelerate_sparse.h"
 #include "ceres/compressed_col_sparse_matrix_utils.h"
 #include "ceres/compressed_row_sparse_matrix.h"
+#include "ceres/stringprintf.h"
 #include "ceres/triplet_sparse_matrix.h"
-#include "glog/logging.h"
 
 #define CASESTR(x) \
   case x:          \

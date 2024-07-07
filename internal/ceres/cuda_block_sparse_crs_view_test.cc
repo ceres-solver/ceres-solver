@@ -30,10 +30,9 @@
 
 #include "ceres/cuda_block_sparse_crs_view.h"
 
-#include <glog/logging.h>
-#include <gtest/gtest.h>
-
 #include <numeric>
+
+#include "gtest/gtest.h"
 
 #ifndef CERES_NO_CUDA
 
@@ -42,7 +41,7 @@ class CudaBlockSparseCRSViewTest : public ::testing::Test {
  protected:
   void SetUp() final {
     std::string message;
-    CHECK(context_.InitCuda(&message))
+    ASSERT_TRUE(context_.InitCuda(&message))
         << "InitCuda() failed because: " << message;
 
     BlockSparseMatrix::RandomMatrixOptions options;
