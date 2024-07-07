@@ -23,6 +23,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        submodules: recursive
 
     - name: Setup Dependencies
       uses: msys2/setup-msys2@v2
@@ -117,6 +119,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Download and install CUDA toolkit
         if: matrix.gpu == 'cuda'

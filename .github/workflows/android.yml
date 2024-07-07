@@ -32,14 +32,17 @@ jobs:
           - '28'
 
     steps:
-      - uses: actions/checkout@v4
-
       - name: Setup Dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y \
+            git \
             ccache \
             ninja-build
+
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       # Ensure the declared NDK version is always installed even if it's removed
       # from the virtual environment.

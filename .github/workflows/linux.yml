@@ -30,12 +30,11 @@ jobs:
           - no-cuda
 
     steps:
-      - uses: actions/checkout@v4
-
       - name: Setup Dependencies
         run: |
           apt-get update
           apt-get install -y \
+            git \
             build-essential \
             ccache \
             cmake \
@@ -49,6 +48,10 @@ jobs:
             libsuitesparse-dev \
             ninja-build \
             wget
+
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       # nvidia cuda toolkit + gcc combo shipped with 22.04LTS is broken
       # and is not able to compile code that uses thrust
