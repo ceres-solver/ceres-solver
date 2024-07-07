@@ -71,6 +71,24 @@
       "parentUuid": "1ce33794_6c810678",
       "revId": "1784301a4a8ce35a474c86778094db0608b3448f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "997dce5c_5e1d0dbe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-07-07T21:32:46Z",
+      "side": 1,
+      "message": "I have not found any API method specific to resetting such error state. The cost of creating said context is negligible (i\u0027ve measured it to be about 20us on my laptop) compared to the cost of additional analyze stage computation, which is required because results of analyze stage are getting lost during such context resetting.\n\nI believe that we have two options here:\n\n1) Continue with currently implemented approach to reset such context and to pay additional analyze stage in case of factorization failure due to bad numerics. Obviously, such doubling of analyze cost is only relevant in \"try to factorize a matrix with bad numerics\" -\u003e \"rescale\" -\u003e \"try again\" scenario.\n\n2) Wait for new cuDSS release which either will add an explicit API call to reset a state associated with a value returned by cudssDataGet(CUDSS_DATA_INFO), or will change the logic behind cudssDataGet(CUDSS_DATA_INFO) to do such reset automatically.",
+      "parentUuid": "8fc2ee39_c87c03b0",
+      "revId": "1784301a4a8ce35a474c86778094db0608b3448f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }

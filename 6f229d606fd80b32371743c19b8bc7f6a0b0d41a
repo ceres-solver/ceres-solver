@@ -44,6 +44,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5948f42e_08a63f93",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-07-07T21:32:46Z",
+      "side": 1,
+      "message": "I\u0027ve decoupled the analyze and factorize results to make condition that is checked here to be more clear and i\u0027ve added an explicit note regarding the cudss 0.3.0 issue that is overcome by such additional analyze call in case if factorization failed due to bad numerics.",
+      "parentUuid": "2342eadb_9fe954b9",
+      "range": {
+        "startLine": 195,
+        "startChar": 10,
+        "endLine": 195,
+        "endChar": 17
+      },
+      "revId": "6f229d606fd80b32371743c19b8bc7f6a0b0d41a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9d973775_a0655f23",
         "filename": "internal/ceres/cuda_sparse_cholesky.cc",
         "patchSetId": 12
@@ -55,6 +79,30 @@
       "writtenOn": "2024-07-06T22:00:05Z",
       "side": 1,
       "message": "this is still an issue?",
+      "range": {
+        "startLine": 278,
+        "startChar": 42,
+        "endLine": 278,
+        "endChar": 54
+      },
+      "revId": "6f229d606fd80b32371743c19b8bc7f6a0b0d41a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3054853c_9b8a693f",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-07-07T21:32:46Z",
+      "side": 1,
+      "message": "Yes, as i mentioned here https://ceres-solver-review.googlesource.com/c/ceres-solver/+/25800/comments/ffcf9b20_443ff5ae . As an example. here is a log acquired during execution of ba_iterschur_cudasparse_clusttri_auto_test with following change:\n```\n    CUDSS_STATUS_OK_OR_RETURN_CUDSS_STATUS(\n        cudssDataGet(context_-\u003ecudss_handle_,\n                     cudss_context_-\u003esolver_data_,\n                     CUDSS_DATA_INFO,\n                     \u0026cudss_data_info,\n                     sizeof(cudss_data_info),\n                     \u0026size_written));\n    printf(\"sizeof(cudss_data_info): %lu size_written: %lu\\n\",\n           sizeof(cudss_data_info),\n           size_written);\n    // TODO: enable following check after cudssDataGet will be fixed\n    // CHECK_EQ(size_written, sizeof(cudss_data_info));\n```\n\n```\nsizeof(cudss_data_info): 4 size_written: 99979889478176\nsizeof(cudss_data_info): 4 size_written: 99979889478176\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\n```",
+      "parentUuid": "9d973775_a0655f23",
       "range": {
         "startLine": 278,
         "startChar": 42,
@@ -82,6 +130,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "84bf4019_cc437077",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-07-07T21:32:46Z",
+      "side": 1,
+      "message": "I\u0027ve added an explicit commentary describing why we have it here, a TODO to move it into ctor when cudss will fix an issue with error state resetting, and explicit checks for cudss_context_ to not be a nullptr when it is used.",
+      "parentUuid": "ec962c3b_d6080eda",
+      "revId": "6f229d606fd80b32371743c19b8bc7f6a0b0d41a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f95bb913_d9df23e3",
@@ -95,6 +161,30 @@
       "writtenOn": "2024-07-06T22:00:05Z",
       "side": 1,
       "message": "its odd to have this struct defined inside this class, I think it should stand on its own.",
+      "range": {
+        "startLine": 383,
+        "startChar": 2,
+        "endLine": 383,
+        "endChar": 8
+      },
+      "revId": "6f229d606fd80b32371743c19b8bc7f6a0b0d41a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4aa72366_38ccf9ad",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-07-07T21:32:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f95bb913_d9df23e3",
       "range": {
         "startLine": 383,
         "startChar": 2,
@@ -152,6 +242,30 @@
           ]
         }
       ],
+      "revId": "6f229d606fd80b32371743c19b8bc7f6a0b0d41a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61ab4437_ab3b8191",
+        "filename": "internal/ceres/visibility_based_preconditioner.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-07-07T21:32:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09aefe83_49c3a22b",
+      "range": {
+        "startLine": 355,
+        "startChar": 13,
+        "endLine": 355,
+        "endChar": 46
+      },
       "revId": "6f229d606fd80b32371743c19b8bc7f6a0b0d41a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
