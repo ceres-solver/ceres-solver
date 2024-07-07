@@ -311,6 +311,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4114c4c_ee39734b",
+        "filename": "cmake/CeresCompileOptionsToComponents.cmake",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-07T22:44:14Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "81697815_4750654e",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 24
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7924bd28_23a857e8",
@@ -348,6 +372,30 @@
       "side": 1,
       "message": "I believe we should leave it as it is due to CERES_NO_SPARSE controlling, in multiple places, if SPARSE_SCHUR/SPARSE_NORMAL_CHOLESKY linear solver should be used, and it definitely shouldn\u0027t in case if CERES_USE_CUDSS is not defined while CUDA_SPARSE being selected as sparse backend.",
       "parentUuid": "7924bd28_23a857e8",
+      "range": {
+        "startLine": 97,
+        "startChar": 12,
+        "endLine": 97,
+        "endChar": 27
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69092c39_505e4e01",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-07T22:44:14Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a1ab047a_57873dd6",
       "range": {
         "startLine": 97,
         "startChar": 12,
@@ -1182,6 +1230,30 @@
       "side": 1,
       "message": "Kirill/Di, could you please elaborate on the topic of cuDSS ordering knobs?",
       "parentUuid": "7edcd31e_d2bc1adc",
+      "range": {
+        "startLine": 52,
+        "startChar": 24,
+        "endLine": 52,
+        "endChar": 51
+      },
+      "revId": "bb334914e72ca6e2896a29b62fc7bd8671b3b75e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eba06a9a_fb76c39c",
+        "filename": "internal/ceres/cuda_sparse_cholesky.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-07T22:44:14Z",
+      "side": 1,
+      "message": "I think this is in the works. we can come back and deal with this.\nFor now perhaps add a todo or a github issue to track cudss and its explicit support for amd vs nested dissection.",
+      "parentUuid": "aa836a3b_d1418067",
       "range": {
         "startLine": 52,
         "startChar": 24,

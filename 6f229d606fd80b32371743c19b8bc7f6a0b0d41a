@@ -66,6 +66,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6fb6d0e_58f9db84",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-07T22:44:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5948f42e_08a63f93",
+      "range": {
+        "startLine": 195,
+        "startChar": 10,
+        "endLine": 195,
+        "endChar": 17
+      },
+      "revId": "6f229d606fd80b32371743c19b8bc7f6a0b0d41a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9d973775_a0655f23",
@@ -103,6 +127,30 @@
       "side": 1,
       "message": "Yes, as i mentioned here https://ceres-solver-review.googlesource.com/c/ceres-solver/+/25800/comments/ffcf9b20_443ff5ae . As an example. here is a log acquired during execution of ba_iterschur_cudasparse_clusttri_auto_test with following change:\n```\n    CUDSS_STATUS_OK_OR_RETURN_CUDSS_STATUS(\n        cudssDataGet(context_-\u003ecudss_handle_,\n                     cudss_context_-\u003esolver_data_,\n                     CUDSS_DATA_INFO,\n                     \u0026cudss_data_info,\n                     sizeof(cudss_data_info),\n                     \u0026size_written));\n    printf(\"sizeof(cudss_data_info): %lu size_written: %lu\\n\",\n           sizeof(cudss_data_info),\n           size_written);\n    // TODO: enable following check after cudssDataGet will be fixed\n    // CHECK_EQ(size_written, sizeof(cudss_data_info));\n```\n\n```\nsizeof(cudss_data_info): 4 size_written: 99979889478176\nsizeof(cudss_data_info): 4 size_written: 99979889478176\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\nsizeof(cudss_data_info): 4 size_written: 0\n```",
       "parentUuid": "9d973775_a0655f23",
+      "range": {
+        "startLine": 278,
+        "startChar": 42,
+        "endLine": 278,
+        "endChar": 54
+      },
+      "revId": "6f229d606fd80b32371743c19b8bc7f6a0b0d41a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28bbf0e8_fb26e95f",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-07T22:44:14Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "3054853c_9b8a693f",
       "range": {
         "startLine": 278,
         "startChar": 42,
