@@ -86,6 +86,24 @@
       "parentUuid": "da37f4fc_7107ad0d",
       "revId": "7f9cc571b03632f1df93ea35725a1f5dfffe2c72",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b294a0c4_59188ac9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-07-07T13:38:27Z",
+      "side": 1,
+      "message": "Yes, we need a newer CUDA toolset: https://ceres-solver-review.googlesource.com/c/ceres-solver/+/26020.",
+      "parentUuid": "922ab108_fa922cc0",
+      "revId": "7f9cc571b03632f1df93ea35725a1f5dfffe2c72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
