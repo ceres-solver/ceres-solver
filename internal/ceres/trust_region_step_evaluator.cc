@@ -33,8 +33,6 @@
 #include <algorithm>
 #include <limits>
 
-#include "glog/logging.h"
-
 namespace ceres::internal {
 
 TrustRegionStepEvaluator::TrustRegionStepEvaluator(

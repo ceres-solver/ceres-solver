@@ -33,10 +33,10 @@
 #include <algorithm>
 #include <utility>
 
+#include "absl/log/check.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/triplet_sparse_matrix.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

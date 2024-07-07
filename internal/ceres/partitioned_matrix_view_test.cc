@@ -36,12 +36,12 @@
 #include <string>
 #include <vector>
 
+#include "absl/log/check.h"
 #include "ceres/block_structure.h"
 #include "ceres/casts.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/sparse_matrix.h"
-#include "glog/logging.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -65,7 +65,7 @@ class PartitionedMatrixViewTest : public ::testing::TestWithParam<Param> {
     const int problem_id = ::testing::get<0>(GetParam());
     const int num_threads = ::testing::get<1>(GetParam());
     auto problem = CreateLinearLeastSquaresProblemFromId(problem_id);
-    CHECK(problem != nullptr);
+    ASSERT_TRUE(problem != nullptr);
     A_ = std::move(problem->A);
     auto block_sparse = down_cast<BlockSparseMatrix*>(A_.get());
 
@@ -173,8 +173,8 @@ TEST_P(PartitionedMatrixViewTest, BlockDiagonalFtF) {
   const int num_col_blocks_f = pmv_->num_col_blocks_f();
   const int num_col_blocks_e = pmv_->num_col_blocks_e();
 
-  CHECK_EQ(block_diagonal_ff->num_rows(), num_cols_f);
-  CHECK_EQ(block_diagonal_ff->num_cols(), num_cols_f);
+  ASSERT_EQ(block_diagonal_ff->num_rows(), num_cols_f);
+  ASSERT_EQ(block_diagonal_ff->num_cols(), num_cols_f);
 
   EXPECT_EQ(bs_diagonal->cols.size(), num_col_blocks_f);
   EXPECT_EQ(bs_diagonal->rows.size(), num_col_blocks_f);
@@ -212,8 +212,8 @@ TEST_P(PartitionedMatrixViewTest, BlockDiagonalEtE) {
   const int num_cols_e = pmv_->num_cols_e();
   const int num_col_blocks_e = pmv_->num_col_blocks_e();
 
-  CHECK_EQ(block_diagonal_ee->num_rows(), num_cols_e);
-  CHECK_EQ(block_diagonal_ee->num_cols(), num_cols_e);
+  ASSERT_EQ(block_diagonal_ee->num_rows(), num_cols_e);
+  ASSERT_EQ(block_diagonal_ee->num_cols(), num_cols_e);
 
   EXPECT_EQ(bs->cols.size(), num_col_blocks_e);
   EXPECT_EQ(bs->rows.size(), num_col_blocks_e);

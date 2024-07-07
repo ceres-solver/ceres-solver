@@ -44,7 +44,6 @@
 #include "ceres/schur_eliminator.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
@@ -58,7 +57,7 @@ class ImplicitSchurComplementTest : public ::testing::Test {
   void SetUp() final {
     auto problem = CreateLinearLeastSquaresProblemFromId(2);
 
-    CHECK(problem != nullptr);
+    ASSERT_TRUE(problem != nullptr);
     A_.reset(down_cast<BlockSparseMatrix*>(problem->A.release()));
     b_ = std::move(problem->b);
     D_ = std::move(problem->D);
@@ -86,7 +85,7 @@ class ImplicitSchurComplementTest : public ::testing::Test {
 
     std::unique_ptr<SchurEliminatorBase> eliminator =
         SchurEliminatorBase::Create(options);
-    CHECK(eliminator != nullptr);
+    ASSERT_TRUE(eliminator != nullptr);
     const bool kFullRankETE = true;
     eliminator->Init(num_eliminate_blocks_, kFullRankETE, bs);
 

@@ -215,6 +215,7 @@ def ceres_library(name,
         visibility = ["//visibility:public"],
         deps = [
             "@com_gitlab_libeigen_eigen//:eigen",
-            "@com_github_google_glog//:glog",
+	    "@abseil-cpp//absl/log",
+	    "@abseil-cpp//absl/log:check",
         ],
     )
