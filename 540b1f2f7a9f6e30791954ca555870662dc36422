@@ -70,6 +70,23 @@
       "parentUuid": "1591ba61_9f81e9d8",
       "revId": "540b1f2f7a9f6e30791954ca555870662dc36422",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a48a5a2_95944596",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-07T22:42:01Z",
+      "side": 1,
+      "message": "Thanks Mark \u0026 Sergiu.",
+      "revId": "540b1f2f7a9f6e30791954ca555870662dc36422",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
