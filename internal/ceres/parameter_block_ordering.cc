@@ -36,6 +36,7 @@
 #include <unordered_set>
 #include <vector>
 
+#include "absl/log/check.h"
 #include "ceres/graph.h"
 #include "ceres/graph_algorithms.h"
 #include "ceres/map_util.h"
@@ -43,7 +44,6 @@
 #include "ceres/program.h"
 #include "ceres/residual_block.h"
 #include "ceres/wall_time.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

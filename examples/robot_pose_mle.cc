@@ -131,27 +131,34 @@
 #include <random>
 #include <vector>
 
+#include "absl/flags/flag.h"
+#include "absl/flags/parse.h"
+#include "absl/log/check.h"
+#include "absl/log/initialize.h"
+#include "absl/log/log.h"
 #include "ceres/ceres.h"
 #include "ceres/dynamic_autodiff_cost_function.h"
-#include "gflags/gflags.h"
-#include "glog/logging.h"
 
-DEFINE_double(corridor_length,
-              30.0,
-              "Length of the corridor that the robot is travelling down.");
+ABSL_FLAG(double,
+          corridor_length,
+          30.0,
+          "Length of the corridor that the robot is travelling down.");
 
-DEFINE_double(pose_separation,
-              0.5,
-              "The distance that the robot traverses between successive "
-              "odometry updates.");
+ABSL_FLAG(double,
+          pose_separation,
+          0.5,
+          "The distance that the robot traverses between successive "
+          "odometry updates.");
 
-DEFINE_double(odometry_stddev,
-              0.1,
-              "The standard deviation of odometry error of the robot.");
+ABSL_FLAG(double,
+          odometry_stddev,
+          0.1,
+          "The standard deviation of odometry error of the robot.");
 
-DEFINE_double(range_stddev,
-              0.01,
-              "The standard deviation of range readings of the robot.");
+ABSL_FLAG(double,
+          range_stddev,
+          0.01,
+          "The standard deviation of range readings of the robot.");
 
 // The stride length of the dynamic_autodiff_cost_function evaluator.
 static constexpr int kStride = 10;
@@ -171,7 +178,7 @@ struct OdometryConstraint {
 
   static OdometryCostFunction* Create(const double odometry_value) {
     return new OdometryCostFunction(new OdometryConstraint(
-        odometry_value, CERES_GET_FLAG(FLAGS_odometry_stddev)));
+        odometry_value, absl::GetFlag(FLAGS_odometry_stddev)));
   }
 
   const double odometry_mean;
@@ -211,8 +218,8 @@ struct RangeConstraint {
     auto* constraint =
         new RangeConstraint(pose_index,
                             range_reading,
-                            CERES_GET_FLAG(FLAGS_range_stddev),
-                            CERES_GET_FLAG(FLAGS_corridor_length));
+                            absl::GetFlag(FLAGS_range_stddev),
+                            absl::GetFlag(FLAGS_corridor_length));
     auto* cost_function = new RangeCostFunction(constraint);
     // Add all the parameter blocks that affect this constraint.
     parameter_blocks->clear();
@@ -235,23 +242,23 @@ namespace {
 void SimulateRobot(std::vector<double>* odometry_values,
                    std::vector<double>* range_readings) {
   const int num_steps =
-      static_cast<int>(ceil(CERES_GET_FLAG(FLAGS_corridor_length) /
-                            CERES_GET_FLAG(FLAGS_pose_separation)));
+      static_cast<int>(ceil(absl::GetFlag(FLAGS_corridor_length) /
+                            absl::GetFlag(FLAGS_pose_separation)));
   std::mt19937 prng;
   std::normal_distribution<double> odometry_noise(
-      0.0, CERES_GET_FLAG(FLAGS_odometry_stddev));
+      0.0, absl::GetFlag(FLAGS_odometry_stddev));
   std::normal_distribution<double> range_noise(
-      0.0, CERES_GET_FLAG(FLAGS_range_stddev));
+      0.0, absl::GetFlag(FLAGS_range_stddev));
 
   // The robot starts out at the origin.
   double robot_location = 0.0;
   for (int i = 0; i < num_steps; ++i) {
     const double actual_odometry_value =
-        std::min(CERES_GET_FLAG(FLAGS_pose_separation),
-                 CERES_GET_FLAG(FLAGS_corridor_length) - robot_location);
+        std::min(absl::GetFlag(FLAGS_pose_separation),
+                 absl::GetFlag(FLAGS_corridor_length) - robot_location);
     robot_location += actual_odometry_value;
     const double actual_range =
-        CERES_GET_FLAG(FLAGS_corridor_length) - robot_location;
+        absl::GetFlag(FLAGS_corridor_length) - robot_location;
     const double observed_odometry =
         actual_odometry_value + odometry_noise(prng);
     const double observed_range = actual_range + range_noise(prng);
@@ -268,9 +275,9 @@ void PrintState(const std::vector<double>& odometry_readings,
   for (int i = 0; i < odometry_readings.size(); ++i) {
     robot_location += odometry_readings[i];
     const double range_error = robot_location + range_readings[i] -
-                               CERES_GET_FLAG(FLAGS_corridor_length);
+                               absl::GetFlag(FLAGS_corridor_length);
     const double odometry_error =
-        CERES_GET_FLAG(FLAGS_pose_separation) - odometry_readings[i];
+        absl::GetFlag(FLAGS_pose_separation) - odometry_readings[i];
     printf("%4d: %8.3f %8.3f %8.3f %8.3f %8.3f\n",
            static_cast<int>(i),
            robot_location,
@@ -284,13 +291,13 @@ void PrintState(const std::vector<double>& odometry_readings,
 }  // namespace
 
 int main(int argc, char** argv) {
-  google::InitGoogleLogging(argv[0]);
-  GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
+  absl::InitializeLog();
+  absl::ParseCommandLine(argc, argv);
   // Make sure that the arguments parsed are all positive.
-  CHECK_GT(CERES_GET_FLAG(FLAGS_corridor_length), 0.0);
-  CHECK_GT(CERES_GET_FLAG(FLAGS_pose_separation), 0.0);
-  CHECK_GT(CERES_GET_FLAG(FLAGS_odometry_stddev), 0.0);
-  CHECK_GT(CERES_GET_FLAG(FLAGS_range_stddev), 0.0);
+  CHECK_GT(absl::GetFlag(FLAGS_corridor_length), 0.0);
+  CHECK_GT(absl::GetFlag(FLAGS_pose_separation), 0.0);
+  CHECK_GT(absl::GetFlag(FLAGS_odometry_stddev), 0.0);
+  CHECK_GT(absl::GetFlag(FLAGS_range_stddev), 0.0);
 
   std::vector<double> odometry_values;
   std::vector<double> range_readings;

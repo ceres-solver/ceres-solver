@@ -19,7 +19,7 @@
 # IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
 # ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
 # LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# CONSEQUENTIAblockL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
 # SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
 # INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
 # CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
@@ -36,6 +36,9 @@ find_package(Threads REQUIRED)
 list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES Threads::Threads)
 # Make dependency visible to the parent CMakeLists.txt
 set(Threads_DEPENDENCY "find_dependency (Threads)" PARENT_SCOPE)
+
+list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES absl::log)
+list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES absl::check)
 
 # Source files that contain public symbols and live in the ceres namespaces.
 # Such symbols are expected to be marked with CERES_EXPORT and the files below
@@ -54,14 +57,6 @@ set(CERES_EXPORTED_SRCS
 
 # Also depend on the header files so that they appear in IDEs.
 file(GLOB CERES_INTERNAL_HDRS *.h)
-if (MINIGLOG)
-  file(GLOB MINIGLOG_HDRS miniglog/glog/*.h)
-  list(APPEND CERES_INTERNAL_HDRS ${MINIGLOG_HDRS})
-  if (ANDROID)
-    list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES log)
-  endif()
-endif()
-
 # Depend also on public headers so they appear in IDEs.
 file(GLOB CERES_PUBLIC_HDRS ${Ceres_SOURCE_DIR}/include/ceres/*.h)
 file(GLOB CERES_PUBLIC_INTERNAL_HDRS ${Ceres_SOURCE_DIR}/include/ceres/internal/*.h)
@@ -84,18 +79,6 @@ endif (SCHUR_SPECIALIZATIONS)
 # so the gains from a unity build would be marginal.
 set_source_files_properties(${CERES_INTERNAL_SCHUR_FILES} PROPERTIES
   SKIP_UNITY_BUILD_INCLUSION ON)
-
-if (NOT MINIGLOG AND GLOG_FOUND)
-  list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES ${GLOG_LIBRARIES})
-  if (gflags_FOUND)
-    # If glog & gflags are both found, we assume that glog was built with
-    # gflags, as it is awkward to perform a try_compile() to verify this
-    # when gflags is an imported target (as it is in newer versions).
-    # As glog #includes gflags/gflags.h in glog/logging.h if compiled with
-    # gflags, it is thus a public dependency for Ceres in this case.
-    list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES gflags)
-  endif()
-endif (NOT MINIGLOG AND GLOG_FOUND)
 
 if (SUITESPARSE AND SuiteSparse_FOUND)
   # Define version information for use in Solver::FullReport.
@@ -253,11 +236,6 @@ set(CERES_LIBRARY_SOURCE
     ${CERES_PUBLIC_HDRS}
     ${CERES_PUBLIC_INTERNAL_HDRS})
 
-# Primarily for Android, but optionally for others, compile the minimal
-# glog implementation into Ceres.
-if (MINIGLOG)
-  list(APPEND CERES_LIBRARY_SOURCE miniglog/glog/logging.cc)
-endif (MINIGLOG)
 
 # Ceres C++ compiler flags can be too strict for an external library code
 # which we do not maintain.
@@ -340,30 +318,12 @@ target_link_libraries(ceres PUBLIC Eigen3::Eigen)
 # dependencies to be added to the Ceres target.
 set(CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS "")
 set(CERES_LIBRARY_PUBLIC_DEPENDENCIES_INCLUDE_DIRS "")
-if (MINIGLOG)
-  # Force the miniglog headers to the front of the public include directories
-  # to protect against the case when the user has glog installed in a standard
-  # location (specifically the same as the Ceres install location) but compiled
-  # Ceres with MINIGLOG anyway.  Otherwise: "glog/logging.h" in the public Ceres
-  # headers used in client code would match the installed version of glog, not
-  # the miniglog headers, and the client application would fail to link.
-  #
-  # Note that this is an imperfect fix, as we cannot control the include
-  # directories in client projects, and they could easily invert this ordering
-  # themselves (intentionally or otherwise) and so break their build.
-  target_include_directories(ceres BEFORE PUBLIC
-    $<BUILD_INTERFACE:${Ceres_SOURCE_DIR}/internal/ceres/miniglog>
-    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/ceres/internal/miniglog>)
-elseif (NOT FOUND_INSTALLED_GLOG_CMAKE_CONFIGURATION)
-  # Only append glog include directories if the glog found was not a CMake
-  # exported target that already includes them.
-  list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES_INCLUDE_DIRS
-    ${GLOG_INCLUDE_DIRS})
-endif()
+
 if (ACCELERATESPARSE)
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS
     ${AccelerateSparse_INCLUDE_DIRS})
 endif()
+
 # Add include locations for optional dependencies to the Ceres target without
 # duplication.
 list(REMOVE_DUPLICATES CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS)
@@ -391,6 +351,16 @@ install(TARGETS ceres
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 if (BUILD_TESTING)
+  # Now that we have absl as a dependency, it would make sense to tell
+  # googletest to use absl also, but doing so seems to be problematic
+  # for now, since if there is a version of absl and re2 installed in
+  # the system then we start getting errors because we maybe using the
+  # absl from our submodule, but the re2 installed on the system only
+  # sees the absl installed on the system. It is possible that we will
+  # need to include re2 as a submodule also, for the following to
+  # work.
+
+  # set(GTEST_HAS_ABSL ON CACHE BOOL "Use ABSL when building gtest")
   add_subdirectory(${Ceres_SOURCE_DIR}/third_party/googletest ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/googletest)
 
   add_library(test_util STATIC

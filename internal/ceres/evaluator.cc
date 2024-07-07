@@ -33,6 +33,7 @@
 #include <memory>
 #include <vector>
 
+#include "absl/log/check.h"
 #include "ceres/block_evaluate_preparer.h"
 #include "ceres/block_jacobian_writer.h"
 #include "ceres/compressed_row_jacobian_writer.h"
@@ -44,7 +45,6 @@
 #include "ceres/internal/export.h"
 #include "ceres/program_evaluator.h"
 #include "ceres/scratch_evaluate_preparer.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 
@@ -65,8 +65,8 @@ std::unique_ptr<Evaluator> Evaluator::Create(const Evaluator::Options& options,
     case SPARSE_SCHUR:
     case ITERATIVE_SCHUR: {
       return std::make_unique<
-            ProgramEvaluator<BlockEvaluatePreparer, BlockJacobianWriter>>(
-            options, program);
+          ProgramEvaluator<BlockEvaluatePreparer, BlockJacobianWriter>>(
+          options, program);
     }
     case CGNR: {
       if (options.sparse_linear_algebra_library_type == CUDA_SPARSE) {

@@ -71,7 +71,7 @@ class CERES_NO_EXPORT DynamicSparseNormalCholeskySolver
                                             double* rhs_and_solution);
 
   LinearSolver::Summary SolveImplUsingCuda(CompressedRowSparseMatrix* A,
-                                            double* rhs_and_solution);
+                                           double* rhs_and_solution);
 
   const LinearSolver::Options options_;
 };

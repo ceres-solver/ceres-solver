@@ -40,13 +40,13 @@
 #include <type_traits>
 #include <vector>
 
+#include "absl/log/check.h"
 #include "ceres/dynamic_cost_function.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/numeric_diff.h"
 #include "ceres/internal/parameter_dims.h"
 #include "ceres/numeric_diff_options.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 
 namespace ceres {
 

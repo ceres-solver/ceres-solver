@@ -34,9 +34,9 @@
 #include <utility>
 #include <vector>
 
+#include "absl/log/check.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 
 namespace ceres {
 

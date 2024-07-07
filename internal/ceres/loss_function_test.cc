@@ -32,7 +32,6 @@
 
 #include <cstddef>
 
-#include "glog/logging.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -45,7 +44,7 @@ namespace {
 // callback with estimates obtained by symmetric finite differencing
 // of rho(s).
 void AssertLossFunctionIsValid(const LossFunction& loss, double s) {
-  CHECK_GT(s, 0);
+  ASSERT_GT(s, 0);
 
   // Evaluate rho(s), rho'(s) and rho''(s).
   double rho[3];

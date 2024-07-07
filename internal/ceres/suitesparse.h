@@ -49,7 +49,6 @@
 #include "ceres/linear_solver.h"
 #include "ceres/sparse_cholesky.h"
 #include "cholmod.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

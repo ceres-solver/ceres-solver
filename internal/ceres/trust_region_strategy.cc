@@ -34,6 +34,7 @@
 
 #include <memory>
 
+#include "absl/log/log.h"
 #include "ceres/dogleg_strategy.h"
 #include "ceres/levenberg_marquardt_strategy.h"
 

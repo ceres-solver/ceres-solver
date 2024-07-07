@@ -32,13 +32,11 @@
 
 #ifndef CERES_NO_CUDA
 
-#include <glog/logging.h>
-#include <gtest/gtest.h>
-
 #include <numeric>
 
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/cuda_block_structure.h"
+#include "gtest/gtest.h"
 
 namespace ceres::internal {
 
@@ -46,7 +44,7 @@ class CudaBlockStructureTest : public ::testing::Test {
  protected:
   void SetUp() final {
     std::string message;
-    CHECK(context_.InitCuda(&message))
+    ASSERT_TRUE(context_.InitCuda(&message))
         << "InitCuda() failed because: " << message;
 
     BlockSparseMatrix::RandomMatrixOptions options;

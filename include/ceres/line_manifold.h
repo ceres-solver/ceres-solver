@@ -38,13 +38,13 @@
 #include <memory>
 #include <vector>
 
+#include "absl/log/check.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
 #include "ceres/internal/householder_vector.h"
 #include "ceres/internal/sphere_manifold_functions.h"
 #include "ceres/manifold.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 
 namespace ceres {
 // This provides a manifold for lines, where the line is
