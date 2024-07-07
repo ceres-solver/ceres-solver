@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "22e0d9b7_5aa1ade5",
+        "filename": ".gitmodules",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-07-07T12:06:14Z",
+      "side": 1,
+      "message": "I think the logical submodule name should be either\n```suggestion\n[submodule \"googletest\"]\n```\nor\n```suggestion\n[submodule \"third_party/googletest\"]\n```\nto be consistent with the path.",
+      "revId": "7165fd4577d5a061f9bda053d8e6eef6609d81d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "43015af8_5318225c",
@@ -14,6 +31,23 @@
       "writtenOn": "2024-07-02T19:37:52Z",
       "side": 1,
       "message": "PTAL",
+      "revId": "7165fd4577d5a061f9bda053d8e6eef6609d81d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90682502_754795db",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-07-07T12:06:14Z",
+      "side": 1,
+      "message": "Sameer, I have only one remark. Otherwise LGTM.",
       "revId": "7165fd4577d5a061f9bda053d8e6eef6609d81d3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
