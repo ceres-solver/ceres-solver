@@ -36,11 +36,11 @@
 #include <unordered_set>
 #include <utility>
 
+#include "absl/log/check.h"
 #include "ceres/internal/export.h"
 #include "ceres/map_util.h"
 #include "ceres/pair_hash.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 
 namespace ceres::internal {
 

@@ -35,6 +35,7 @@
 #include <string>
 #include <vector>
 
+#include "absl/log/check.h"
 #include "ceres/autodiff_cost_function.h"
 #include "ceres/casts.h"
 #include "ceres/cost_function.h"
@@ -324,7 +325,7 @@ TEST(Problem, ReusedCostFunctionsAreOnlyDeletedOnce) {
   }
 
   // Check that the destructor was called only once.
-  CHECK_EQ(num_destructions, 1);
+  ASSERT_EQ(num_destructions, 1);
 }
 
 TEST(Problem, GetCostFunctionForResidualBlock) {
@@ -369,13 +370,13 @@ TEST(Problem, CostFunctionsAreDeletedEvenWithRemovals) {
     EXPECT_EQ(2, problem.NumResidualBlocks());
 
     problem.RemoveResidualBlock(r_yz);
-    CHECK_EQ(num_destructions, 1);
+    ASSERT_EQ(num_destructions, 1);
     problem.RemoveResidualBlock(r_wz);
-    CHECK_EQ(num_destructions, 2);
+    ASSERT_EQ(num_destructions, 2);
 
     EXPECT_EQ(0, problem.NumResidualBlocks());
   }
-  CHECK_EQ(num_destructions, 2);
+  ASSERT_EQ(num_destructions, 2);
 }
 
 // Make the dynamic problem tests (e.g. for removing residual blocks)
@@ -1162,7 +1163,7 @@ class QuadraticCostFunction : public CostFunction {
 
 // Convert a CRSMatrix to a dense Eigen matrix.
 static void CRSToDenseMatrix(const CRSMatrix& input, Matrix* output) {
-  CHECK(output != nullptr);
+  ASSERT_TRUE(output != nullptr);
   Matrix& m = *output;
   m.resize(input.num_rows, input.num_cols);
   m.setZero();

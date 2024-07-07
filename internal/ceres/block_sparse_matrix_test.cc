@@ -41,7 +41,6 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/triplet_sparse_matrix.h"
-#include "glog/logging.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -158,16 +157,16 @@ class BlockSparseMatrixTest : public ::testing::Test {
   void SetUp() final {
     std::unique_ptr<LinearLeastSquaresProblem> problem =
         CreateLinearLeastSquaresProblemFromId(2);
-    CHECK(problem != nullptr);
+    ASSERT_TRUE(problem != nullptr);
     a_.reset(down_cast<BlockSparseMatrix*>(problem->A.release()));
 
     problem = CreateLinearLeastSquaresProblemFromId(1);
-    CHECK(problem != nullptr);
+    ASSERT_TRUE(problem != nullptr);
     b_.reset(down_cast<TripletSparseMatrix*>(problem->A.release()));
 
-    CHECK_EQ(a_->num_rows(), b_->num_rows());
-    CHECK_EQ(a_->num_cols(), b_->num_cols());
-    CHECK_EQ(a_->num_nonzeros(), b_->num_nonzeros());
+    ASSERT_EQ(a_->num_rows(), b_->num_rows());
+    ASSERT_EQ(a_->num_cols(), b_->num_cols());
+    ASSERT_EQ(a_->num_nonzeros(), b_->num_nonzeros());
     context_.EnsureMinimumThreads(kNumThreads);
 
     BlockSparseMatrix::RandomMatrixOptions options;
@@ -350,7 +349,7 @@ TEST_F(BlockSparseMatrixTest, AppendDeleteRowsTransposedStructure) {
     if (t == -1) {
       a_->AppendRows(*m);
     } else if (t > 0) {
-      CHECK_GE(block_structure->rows.size(), t);
+      ASSERT_GE(block_structure->rows.size(), t);
       a_->DeleteRowBlocks(t);
     }
 

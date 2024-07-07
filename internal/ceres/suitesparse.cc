@@ -37,9 +37,11 @@
 #include <string>
 #include <vector>
 
+#include "absl/log/log.h"
 #include "ceres/compressed_col_sparse_matrix_utils.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/linear_solver.h"
+#include "ceres/stringprintf.h"
 #include "ceres/suitesparse.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "cholmod.h"

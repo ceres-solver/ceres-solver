@@ -79,80 +79,112 @@
 #include <vector>
 
 #include "Eigen/Core"
+#include "absl/flags/flag.h"
+#include "absl/flags/parse.h"
+#include "absl/log/check.h"
+#include "absl/log/initialize.h"
+#include "absl/log/log.h"
 #include "ceres/ceres.h"
 #include "ceres/tiny_solver.h"
 #include "ceres/tiny_solver_cost_function_adapter.h"
-#include "gflags/gflags.h"
-#include "glog/logging.h"
 
-DEFINE_bool(use_tiny_solver, false, "Use TinySolver instead of Ceres::Solver");
-DEFINE_string(nist_data_dir,
-              "",
-              "Directory containing the NIST non-linear regression examples");
-DEFINE_string(minimizer,
-              "trust_region",
-              "Minimizer type to use, choices are: line_search & trust_region");
-DEFINE_string(trust_region_strategy,
-              "levenberg_marquardt",
-              "Options are: levenberg_marquardt, dogleg");
-DEFINE_string(dogleg,
-              "traditional_dogleg",
-              "Options are: traditional_dogleg, subspace_dogleg");
-DEFINE_string(linear_solver,
-              "dense_qr",
-              "Options are: sparse_cholesky, dense_qr, dense_normal_cholesky "
-              "and cgnr");
-DEFINE_string(dense_linear_algebra_library,
-              "eigen",
-              "Options are: eigen, lapack, and cuda.");
-DEFINE_string(preconditioner, "jacobi", "Options are: identity, jacobi");
-DEFINE_string(line_search,
-              "wolfe",
-              "Line search algorithm to use, choices are: armijo and wolfe.");
-DEFINE_string(line_search_direction,
-              "lbfgs",
-              "Line search direction algorithm to use, choices: lbfgs, bfgs");
-DEFINE_int32(max_line_search_iterations,
-             20,
-             "Maximum number of iterations for each line search.");
-DEFINE_int32(max_line_search_restarts,
-             10,
-             "Maximum number of restarts of line search direction algorithm.");
-DEFINE_string(line_search_interpolation,
-              "cubic",
-              "Degree of polynomial approximation in line search, choices are: "
-              "bisection, quadratic & cubic.");
-DEFINE_int32(lbfgs_rank,
-             20,
-             "Rank of L-BFGS inverse Hessian approximation in line search.");
-DEFINE_bool(approximate_eigenvalue_bfgs_scaling,
-            false,
-            "Use approximate eigenvalue scaling in (L)BFGS line search.");
-DEFINE_double(sufficient_decrease,
-              1.0e-4,
-              "Line search Armijo sufficient (function) decrease factor.");
-DEFINE_double(sufficient_curvature_decrease,
-              0.9,
-              "Line search Wolfe sufficient curvature decrease factor.");
-DEFINE_int32(num_iterations, 10000, "Number of iterations");
-DEFINE_bool(nonmonotonic_steps,
-            false,
-            "Trust region algorithm can use nonmonotic steps");
-DEFINE_double(initial_trust_region_radius, 1e4, "Initial trust region radius");
-DEFINE_bool(use_numeric_diff,
-            false,
-            "Use numeric differentiation instead of automatic "
-            "differentiation.");
-DEFINE_string(numeric_diff_method,
-              "ridders",
-              "When using numeric differentiation, selects algorithm. Options "
-              "are: central, forward, ridders.");
-DEFINE_double(ridders_step_size,
-              1e-9,
-              "Initial step size for Ridders numeric differentiation.");
-DEFINE_int32(ridders_extrapolations,
-             3,
-             "Maximal number of Ridders extrapolations.");
+ABSL_FLAG(bool,
+          use_tiny_solver,
+          false,
+          "Use TinySolver instead of Ceres::Solver");
+ABSL_FLAG(std::string,
+          nist_data_dir,
+          "",
+          "Directory containing the NIST non-linear regression examples");
+ABSL_FLAG(std::string,
+          minimizer,
+          "trust_region",
+          "Minimizer type to use, choices are: line_search & trust_region");
+ABSL_FLAG(std::string,
+          trust_region_strategy,
+          "levenberg_marquardt",
+          "Options are: levenberg_marquardt, dogleg");
+ABSL_FLAG(std::string,
+          dogleg,
+          "traditional_dogleg",
+          "Options are: traditional_dogleg, subspace_dogleg");
+ABSL_FLAG(std::string,
+          linear_solver,
+          "dense_qr",
+          "Options are: sparse_cholesky, dense_qr, dense_normal_cholesky "
+          "and cgnr");
+ABSL_FLAG(std::string,
+          dense_linear_algebra_library,
+          "eigen",
+          "Options are: eigen, lapack, and cuda.");
+ABSL_FLAG(std::string,
+          preconditioner,
+          "jacobi",
+          "Options are: identity, jacobi");
+ABSL_FLAG(std::string,
+          line_search,
+          "wolfe",
+          "Line search algorithm to use, choices are: armijo and wolfe.");
+ABSL_FLAG(std::string,
+          line_search_direction,
+          "lbfgs",
+          "Line search direction algorithm to use, choices: lbfgs, bfgs");
+ABSL_FLAG(int32_t,
+          max_line_search_iterations,
+          20,
+          "Maximum number of iterations for each line search.");
+ABSL_FLAG(int32_t,
+          max_line_search_restarts,
+          10,
+          "Maximum number of restarts of line search direction algorithm.");
+ABSL_FLAG(std::string,
+          line_search_interpolation,
+          "cubic",
+          "Degree of polynomial approximation in line search, choices are: "
+          "bisection, quadratic & cubic.");
+ABSL_FLAG(int32_t,
+          lbfgs_rank,
+          20,
+          "Rank of L-BFGS inverse Hessian approximation in line search.");
+ABSL_FLAG(bool,
+          approximate_eigenvalue_bfgs_scaling,
+          false,
+          "Use approximate eigenvalue scaling in (L)BFGS line search.");
+ABSL_FLAG(double,
+          sufficient_decrease,
+          1.0e-4,
+          "Line search Armijo sufficient (function) decrease factor.");
+ABSL_FLAG(double,
+          sufficient_curvature_decrease,
+          0.9,
+          "Line search Wolfe sufficient curvature decrease factor.");
+ABSL_FLAG(int32_t, num_iterations, 10000, "Number of iterations");
+ABSL_FLAG(bool,
+          nonmonotonic_steps,
+          false,
+          "Trust region algorithm can use nonmonotic steps");
+ABSL_FLAG(double,
+          initial_trust_region_radius,
+          1e4,
+          "Initial trust region radius");
+ABSL_FLAG(bool,
+          use_numeric_diff,
+          false,
+          "Use numeric differentiation instead of automatic "
+          "differentiation.");
+ABSL_FLAG(std::string,
+          numeric_diff_method,
+          "ridders",
+          "When using numeric differentiation, selects algorithm. Options "
+          "are: central, forward, ridders.");
+ABSL_FLAG(double,
+          ridders_step_size,
+          1e-9,
+          "Initial step size for Ridders numeric differentiation.");
+ABSL_FLAG(int32_t,
+          ridders_extrapolations,
+          3,
+          "Maximal number of Ridders extrapolations.");
 
 namespace ceres::examples {
 namespace {
@@ -456,50 +488,50 @@ struct Nelson {
 
 static void SetNumericDiffOptions(ceres::NumericDiffOptions* options) {
   options->max_num_ridders_extrapolations =
-      CERES_GET_FLAG(FLAGS_ridders_extrapolations);
+      absl::GetFlag(FLAGS_ridders_extrapolations);
   options->ridders_relative_initial_step_size =
-      CERES_GET_FLAG(FLAGS_ridders_step_size);
+      absl::GetFlag(FLAGS_ridders_step_size);
 }
 
 void SetMinimizerOptions(ceres::Solver::Options* options) {
-  CHECK(ceres::StringToMinimizerType(CERES_GET_FLAG(FLAGS_minimizer),
+  CHECK(ceres::StringToMinimizerType(absl::GetFlag(FLAGS_minimizer),
                                      &options->minimizer_type));
-  CHECK(ceres::StringToLinearSolverType(CERES_GET_FLAG(FLAGS_linear_solver),
+  CHECK(ceres::StringToLinearSolverType(absl::GetFlag(FLAGS_linear_solver),
                                         &options->linear_solver_type));
   CHECK(StringToDenseLinearAlgebraLibraryType(
-      CERES_GET_FLAG(FLAGS_dense_linear_algebra_library),
+      absl::GetFlag(FLAGS_dense_linear_algebra_library),
       &options->dense_linear_algebra_library_type));
-  CHECK(ceres::StringToPreconditionerType(CERES_GET_FLAG(FLAGS_preconditioner),
+  CHECK(ceres::StringToPreconditionerType(absl::GetFlag(FLAGS_preconditioner),
                                           &options->preconditioner_type));
   CHECK(ceres::StringToTrustRegionStrategyType(
-      CERES_GET_FLAG(FLAGS_trust_region_strategy),
+      absl::GetFlag(FLAGS_trust_region_strategy),
       &options->trust_region_strategy_type));
-  CHECK(ceres::StringToDoglegType(CERES_GET_FLAG(FLAGS_dogleg),
+  CHECK(ceres::StringToDoglegType(absl::GetFlag(FLAGS_dogleg),
                                   &options->dogleg_type));
   CHECK(ceres::StringToLineSearchDirectionType(
-      CERES_GET_FLAG(FLAGS_line_search_direction),
+      absl::GetFlag(FLAGS_line_search_direction),
       &options->line_search_direction_type));
-  CHECK(ceres::StringToLineSearchType(CERES_GET_FLAG(FLAGS_line_search),
+  CHECK(ceres::StringToLineSearchType(absl::GetFlag(FLAGS_line_search),
                                       &options->line_search_type));
   CHECK(ceres::StringToLineSearchInterpolationType(
-      CERES_GET_FLAG(FLAGS_line_search_interpolation),
+      absl::GetFlag(FLAGS_line_search_interpolation),
       &options->line_search_interpolation_type));
 
-  options->max_num_iterations = CERES_GET_FLAG(FLAGS_num_iterations);
-  options->use_nonmonotonic_steps = CERES_GET_FLAG(FLAGS_nonmonotonic_steps);
+  options->max_num_iterations = absl::GetFlag(FLAGS_num_iterations);
+  options->use_nonmonotonic_steps = absl::GetFlag(FLAGS_nonmonotonic_steps);
   options->initial_trust_region_radius =
-      CERES_GET_FLAG(FLAGS_initial_trust_region_radius);
-  options->max_lbfgs_rank = CERES_GET_FLAG(FLAGS_lbfgs_rank);
+      absl::GetFlag(FLAGS_initial_trust_region_radius);
+  options->max_lbfgs_rank = absl::GetFlag(FLAGS_lbfgs_rank);
   options->line_search_sufficient_function_decrease =
-      CERES_GET_FLAG(FLAGS_sufficient_decrease);
+      absl::GetFlag(FLAGS_sufficient_decrease);
   options->line_search_sufficient_curvature_decrease =
-      CERES_GET_FLAG(FLAGS_sufficient_curvature_decrease);
+      absl::GetFlag(FLAGS_sufficient_curvature_decrease);
   options->max_num_line_search_step_size_iterations =
-      CERES_GET_FLAG(FLAGS_max_line_search_iterations);
+      absl::GetFlag(FLAGS_max_line_search_iterations);
   options->max_num_line_search_direction_restarts =
-      CERES_GET_FLAG(FLAGS_max_line_search_restarts);
+      absl::GetFlag(FLAGS_max_line_search_restarts);
   options->use_approximate_eigenvalue_bfgs_scaling =
-      CERES_GET_FLAG(FLAGS_approximate_eigenvalue_bfgs_scaling);
+      absl::GetFlag(FLAGS_approximate_eigenvalue_bfgs_scaling);
   options->function_tolerance = std::numeric_limits<double>::epsilon();
   options->gradient_tolerance = std::numeric_limits<double>::epsilon();
   options->parameter_tolerance = std::numeric_limits<double>::epsilon();
@@ -527,22 +559,22 @@ CostFunction* CreateCostFunction(const Matrix& predictor,
                                  const int num_observations) {
   auto* model = new Model(predictor.data(), response.data(), num_observations);
   ceres::CostFunction* cost_function = nullptr;
-  if (CERES_GET_FLAG(FLAGS_use_numeric_diff)) {
+  if (absl::GetFlag(FLAGS_use_numeric_diff)) {
     ceres::NumericDiffOptions options;
     SetNumericDiffOptions(&options);
-    if (CERES_GET_FLAG(FLAGS_numeric_diff_method) == "central") {
+    if (absl::GetFlag(FLAGS_numeric_diff_method) == "central") {
       cost_function = new NumericDiffCostFunction<Model,
                                                   ceres::CENTRAL,
                                                   ceres::DYNAMIC,
                                                   num_parameters>(
           model, ceres::TAKE_OWNERSHIP, num_observations, options);
-    } else if (CERES_GET_FLAG(FLAGS_numeric_diff_method) == "forward") {
+    } else if (absl::GetFlag(FLAGS_numeric_diff_method) == "forward") {
       cost_function = new NumericDiffCostFunction<Model,
                                                   ceres::FORWARD,
                                                   ceres::DYNAMIC,
                                                   num_parameters>(
           model, ceres::TAKE_OWNERSHIP, num_observations, options);
-    } else if (CERES_GET_FLAG(FLAGS_numeric_diff_method) == "ridders") {
+    } else if (absl::GetFlag(FLAGS_numeric_diff_method) == "ridders") {
       cost_function = new NumericDiffCostFunction<Model,
                                                   ceres::RIDDERS,
                                                   ceres::DYNAMIC,
@@ -583,7 +615,7 @@ double ComputeLRE(const Matrix& expected, const Matrix& actual) {
 template <typename Model, int num_parameters>
 int RegressionDriver(const std::string& filename) {
   NISTProblem nist_problem(
-      JoinPath(CERES_GET_FLAG(FLAGS_nist_data_dir), filename));
+      JoinPath(absl::GetFlag(FLAGS_nist_data_dir), filename));
   CHECK_EQ(num_parameters, nist_problem.num_parameters());
 
   Matrix predictor = nist_problem.predictor();
@@ -604,7 +636,7 @@ int RegressionDriver(const std::string& filename) {
     double initial_cost;
     double final_cost;
 
-    if (!CERES_GET_FLAG(FLAGS_use_tiny_solver)) {
+    if (!absl::GetFlag(FLAGS_use_tiny_solver)) {
       ceres::Problem problem;
       problem.AddResidualBlock(
           cost_function, nullptr, initial_parameters.data());
@@ -620,7 +652,7 @@ int RegressionDriver(const std::string& filename) {
       using Solver = ceres::TinySolver<
           ceres::TinySolverCostFunctionAdapter<Eigen::Dynamic, num_parameters>>;
       Solver solver;
-      solver.options.max_num_iterations = CERES_GET_FLAG(FLAGS_num_iterations);
+      solver.options.max_num_iterations = absl::GetFlag(FLAGS_num_iterations);
       solver.options.gradient_tolerance =
           std::numeric_limits<double>::epsilon();
       solver.options.parameter_tolerance =
@@ -657,7 +689,7 @@ int RegressionDriver(const std::string& filename) {
 }
 
 void SolveNISTProblems() {
-  if (CERES_GET_FLAG(FLAGS_nist_data_dir).empty()) {
+  if (absl::GetFlag(FLAGS_nist_data_dir).empty()) {
     LOG(FATAL) << "Must specify the directory containing the NIST problems";
   }
 
@@ -709,8 +741,8 @@ void SolveNISTProblems() {
 }  // namespace ceres::examples
 
 int main(int argc, char** argv) {
-  GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
-  google::InitGoogleLogging(argv[0]);
+  absl::InitializeLog();
+  absl::ParseCommandLine(argc, argv);
   ceres::examples::SolveNISTProblems();
   return 0;
 }

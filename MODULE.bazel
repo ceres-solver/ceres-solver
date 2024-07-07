@@ -1,0 +1,6 @@
+# MODULE.bazel
+
+bazel_dep(name = "abseil-cpp", version = "20240116.2")
+bazel_dep(name = "googletest", version = "1.14.0")
+bazel_dep(name = "eigen", version = "3.4.0")
+bazel_dep(name = "google_benchmark", version = "1.8.4")
