@@ -32,6 +32,8 @@
 
 #include <memory>
 
+#include "absl/log/log.h"
+
 #if !defined(CERES_NO_SUITESPARSE)
 
 namespace ceres::internal {

@@ -40,10 +40,11 @@
 #include <tuple>
 #include <vector>
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/context_impl.h"
 #include "ceres/internal/config.h"
 #include "ceres/parallel_vector_ops.h"
-#include "glog/logging.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 

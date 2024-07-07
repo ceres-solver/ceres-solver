@@ -34,10 +34,10 @@
 
 #include <cstddef>
 
+#include "absl/log/check.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/stl_util.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 
 namespace ceres {
 
