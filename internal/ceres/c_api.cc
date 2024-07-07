@@ -44,16 +44,10 @@
 #include "ceres/problem.h"
 #include "ceres/solver.h"
 #include "ceres/types.h"  // for std
-#include "glog/logging.h"
 
 using ceres::Problem;
 
-void ceres_init() {
-  // This is not ideal, but it's not clear what to do if there is no gflags and
-  // no access to command line arguments.
-  char message[] = "<unknown>";
-  google::InitGoogleLogging(message);
-}
+void ceres_init() {}
 
 ceres_problem_t* ceres_create_problem() {
   return reinterpret_cast<ceres_problem_t*>(new Problem);

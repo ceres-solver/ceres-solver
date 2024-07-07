@@ -36,8 +36,10 @@
 #include <utility>
 #include <vector>
 
+#include "absl/log/log.h"
 #include "ceres/internal/config.h"
 #include "ceres/iterative_refiner.h"
+#include "ceres/stringprintf.h"
 
 #ifndef CERES_NO_CUDA
 #include "ceres/context_impl.h"

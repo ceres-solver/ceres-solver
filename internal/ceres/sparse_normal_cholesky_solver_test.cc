@@ -31,6 +31,7 @@
 #include <memory>
 
 #include "Eigen/Cholesky"
+#include "absl/log/check.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/casts.h"
 #include "ceres/context_impl.h"
@@ -38,7 +39,6 @@
 #include "ceres/linear_solver.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {

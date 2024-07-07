@@ -40,7 +40,6 @@
 #include "ceres/internal/export.h"
 #include "ceres/sparse_matrix.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 
 namespace ceres {
 

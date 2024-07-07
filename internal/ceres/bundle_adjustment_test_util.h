@@ -37,6 +37,7 @@
 #include <cstdlib>
 #include <string>
 
+#include "absl/log/log.h"
 #include "ceres/autodiff_cost_function.h"
 #include "ceres/internal/export.h"
 #include "ceres/ordered_groups.h"
@@ -46,7 +47,6 @@
 #include "ceres/stringprintf.h"
 #include "ceres/test_util.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {

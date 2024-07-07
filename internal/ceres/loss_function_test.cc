@@ -32,7 +32,7 @@
 
 #include <cstddef>
 
-#include "glog/logging.h"
+#include "absl/log/check.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
