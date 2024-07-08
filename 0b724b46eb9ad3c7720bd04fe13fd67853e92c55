@@ -16,6 +16,52 @@
       "message": "MSVC builds are here: https://github.com/sergiud/ceres-solver/actions/runs/9846020044",
       "revId": "0b724b46eb9ad3c7720bd04fe13fd67853e92c55",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a8c33a8_d21a8327",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-08T21:32:00Z",
+      "side": 1,
+      "message": "I am a bit perplexed by this. why do we need both? gmock brings in gtest no? also why one public and one private?\n\nCould you add a comment explaining this please.",
+      "range": {
+        "startLine": 401,
+        "startChar": 50,
+        "endLine": 401,
+        "endChar": 55
+      },
+      "revId": "0b724b46eb9ad3c7720bd04fe13fd67853e92c55",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f7b92a7_99cc493a",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-08T21:32:00Z",
+      "side": 1,
+      "message": "This is a bit odd, why do we need to set this explicitly? is this what gets reported as testing::SrcDir() ?",
+      "range": {
+        "startLine": 433,
+        "startChar": 61,
+        "endLine": 433,
+        "endChar": 72
+      },
+      "revId": "0b724b46eb9ad3c7720bd04fe13fd67853e92c55",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
