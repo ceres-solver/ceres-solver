@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2423bc9_cea88623",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-07-08T21:22:22Z",
+      "side": 1,
+      "message": "MSVC builds are here: https://github.com/sergiud/ceres-solver/actions/runs/9846020044",
+      "revId": "0b724b46eb9ad3c7720bd04fe13fd67853e92c55",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
