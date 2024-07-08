@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1fce556_9cd3a158",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-08T23:53:16Z",
+      "side": 1,
+      "message": "only come comment, because I was not using my head :/. Please rebase and lets get this in!",
+      "revId": "a7db23d577957c96c7caf335879af5bbb6571ec0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "771941d7_ab261b48",
+        "filename": "internal/ceres/dynamic_sparsity_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-08T23:53:16Z",
+      "side": 1,
+      "message": "sorry I screwed up, ACCELERATE_SPARSE is not supported :/. I should never have made that suggestion.",
+      "range": {
+        "startLine": 440,
+        "startChar": 13,
+        "endLine": 440,
+        "endChar": 30
+      },
+      "revId": "a7db23d577957c96c7caf335879af5bbb6571ec0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

@@ -215,6 +215,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "078a06df_b1fc71d3",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-08T23:53:16Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "d42f7180_fb32451e",
+      "range": {
+        "startLine": 209,
+        "startChar": 6,
+        "endLine": 209,
+        "endChar": 14
+      },
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8852daba_ad14a2ee",
@@ -299,6 +323,30 @@
       "side": 1,
       "message": "I believe that indeed there are cases when user might want to, given such error condition, to try again with another linear solver backend. So i would prefer not to handle such errors as a hard crash.\n\nStill, i dont really see how we can do it in RAII fashion. We could explicitly add a flag field to CudaSparseCholeskyImpl to manually track if solver_data_ was initialized and to conditionally deinitialize such objects in dtor of CudaSparseCholeskyImpl, but that leaves errors during deinitialization to be unhandled.",
       "parentUuid": "7f6be693_61b7e895",
+      "range": {
+        "startLine": 166,
+        "startChar": 4,
+        "endLine": 166,
+        "endChar": 22
+      },
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c60cd1fe_29a4dc47",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-08T23:53:16Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a6c08db9_239e6235",
       "range": {
         "startLine": 166,
         "startChar": 4,
@@ -626,6 +674,30 @@
       "side": 1,
       "message": "Given that we do not check for validity of size_written, checks for return value of cudssDataGet are indeed duplicated and this one could be removed in favor for external ones. But if, in future versions of cudss, the value that is returned into size_written would actually become reasonable to check for, then, before such check, we still would need to check the return value of cudssDataGet. So i would suggest that we leave it as it is now.",
       "parentUuid": "a8e13e38_0a4a6449",
+      "range": {
+        "startLine": 303,
+        "startChar": 8,
+        "endLine": 303,
+        "endChar": 20
+      },
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51e14f59_2f561d05",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-08T23:53:16Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "9e86174a_ea66615d",
       "range": {
         "startLine": 303,
         "startChar": 8,
