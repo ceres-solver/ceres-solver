@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "baaf8ce6_b300a673",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-07-08T21:48:54Z",
+      "side": 1,
+      "message": "Looks like `GTest::gtest` is not needed after all. However, this feels unintuitive since the corresponding sources include `gtest/gtest.h` for which I would expect `GTest::gtest` as dependency not `GTest::gmock`. `PRIVATE` might have been an editing artifact that is not needed.",
+      "parentUuid": "5a8c33a8_d21a8327",
+      "range": {
+        "startLine": 401,
+        "startChar": 50,
+        "endLine": 401,
+        "endChar": 55
+      },
+      "revId": "0b724b46eb9ad3c7720bd04fe13fd67853e92c55",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2f7b92a7_99cc493a",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 1
@@ -54,6 +78,30 @@
       "writtenOn": "2024-07-08T21:32:00Z",
       "side": 1,
       "message": "This is a bit odd, why do we need to set this explicitly? is this what gets reported as testing::SrcDir() ?",
+      "range": {
+        "startLine": 433,
+        "startChar": 61,
+        "endLine": 433,
+        "endChar": 72
+      },
+      "revId": "0b724b46eb9ad3c7720bd04fe13fd67853e92c55",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31282600_d5d970ad",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-07-08T21:48:54Z",
+      "side": 1,
+      "message": "Yes, `TEST_SRCDIR` allows to override `testing::SrcDir`. We need this because MSVC uses additional subdirectories under `bin` to support multi-configuration builds. Thus we have three subdirectories from the project root instead of two.",
+      "parentUuid": "2f7b92a7_99cc493a",
       "range": {
         "startLine": 433,
         "startChar": 61,
