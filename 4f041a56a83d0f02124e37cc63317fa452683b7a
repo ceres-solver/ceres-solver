@@ -20,6 +20,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "375dae20_8d401672",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-08T04:40:44Z",
+      "side": 1,
+      "message": "Hi Mark,\nAs promised a detailed look at the patch. Despite the number of comments, they are all fairly small nit picky comments. And once they are resolved this patch is ready to go in.\n\nA couple of my comments are about error handling and hard crashes. Not all of them need to be addressed in this CL, but generally speaking fewer hard crashes the better. \n\nThanks for your continuing patience with this patch!",
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "a36bd749_de3bdfd5",
         "filename": "CMakeLists.txt",
         "patchSetId": 13
@@ -37,6 +54,454 @@
         "endLine": 288,
         "endChar": 48
       },
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c85b449_a75ab39c",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 13
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-08T04:40:44Z",
+      "side": 1,
+      "message": "If defined, Ceres was compiled without cuDSS.",
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "616a2604_089dee4c",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-08T04:40:44Z",
+      "side": 1,
+      "message": "should these be hard crashes? or should this be a failure that calling code should handle?",
+      "range": {
+        "startLine": 195,
+        "startChar": 6,
+        "endLine": 195,
+        "endChar": 14
+      },
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18dee855_b8be926b",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-08T04:40:44Z",
+      "side": 1,
+      "message": "same question here about hard failures here.",
+      "range": {
+        "startLine": 209,
+        "startChar": 6,
+        "endLine": 209,
+        "endChar": 14
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "990513de_62834be9",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/cuda_buffer.h",
+              "range": {
+                "startLine": 195,
+                "startChar": 0,
+                "endLine": 198,
+                "endChar": 0
+              },
+              "replacement": "      if (cudaMallocHost(\u0026data_, size * sizeof(T)) !\u003d cudaSuccess) {\n        LOG(ERROR) \u003c\u003c \"Failed to allocate \" \u003c\u003c size * sizeof(T)\n                   \u003c\u003c \" bytes of pinned host memory\";\n        return;\n      }\n"
+            },
+            {
+              "path": "internal/ceres/cuda_buffer.h",
+              "range": {
+                "startLine": 209,
+                "startChar": 0,
+                "endLine": 210,
+                "endChar": 0
+              },
+              "replacement": "      if (cudaFreeHost(data_) !\u003d cudaSuccess) {\n        LOG(ERROR) \u003c\u003c \"Failed to free pinned host memory\";\n        return;\n      }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8852daba_ad14a2ee",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-08T04:40:44Z",
+      "side": 1,
+      "message": "CUDSS_STATUS_OK_OR_RETURN_FATAL_ERROR",
+      "range": {
+        "startLine": 75,
+        "startChar": 8,
+        "endLine": 75,
+        "endChar": 46
+      },
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f6be693_61b7e895",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-08T04:40:44Z",
+      "side": 1,
+      "message": "Question: Should this and the destructor failures be hard crashes?",
+      "range": {
+        "startLine": 166,
+        "startChar": 4,
+        "endLine": 166,
+        "endChar": 22
+      },
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8969b33f_259239d8",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-08T04:40:44Z",
+      "side": 1,
+      "message": "if these checks fail, its a ceres solver bug no?",
+      "range": {
+        "startLine": 210,
+        "startChar": 4,
+        "endLine": 210,
+        "endChar": 12
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "ebbd3f5b_59de46bd",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/cuda_sparse_cholesky.cc",
+              "range": {
+                "startLine": 210,
+                "startChar": 0,
+                "endLine": 212,
+                "endChar": 0
+              },
+              "replacement": "    if (lhs-\u003enum_rows() !\u003d lhs-\u003enum_cols()) {\n      *message \u003d \"lhs matrix must be square\";\n      return factorize_result_ \u003d LinearSolverTerminationType::FATAL_ERROR;\n    }\n\n    if (lhs-\u003estorage_type() !\u003d StorageType()) {\n      *message \u003d \"lhs matrix must be lower triangular\";\n      return factorize_result_ \u003d LinearSolverTerminationType::FATAL_ERROR;\n    }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92cce17a_d68487a3",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-08T04:40:44Z",
+      "side": 1,
+      "message": "shouldn\u0027t we check this the first thing in the method? and if it is actually null, then its a programming error on our part no?",
+      "range": {
+        "startLine": 268,
+        "startChar": 13,
+        "endLine": 268,
+        "endChar": 27
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "14b4029a_50a77301",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/cuda_sparse_cholesky.cc",
+              "range": {
+                "startLine": 261,
+                "startChar": 0,
+                "endLine": 261,
+                "endChar": 0
+              },
+              "replacement": "    CHECK_NE(cudss_context_.get(), nullptr);\n"
+            },
+            {
+              "path": "internal/ceres/cuda_sparse_cholesky.cc",
+              "range": {
+                "startLine": 268,
+                "startChar": 0,
+                "endLine": 269,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b358e4c_3debf538",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-08T04:40:44Z",
+      "side": 1,
+      "message": "should this be a function along the lines of convertandcopytodevice",
+      "range": {
+        "startLine": 279,
+        "startChar": 21,
+        "endLine": 279,
+        "endChar": 22
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "b8e6bb8c_c069213b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/cuda_sparse_cholesky.cc",
+              "range": {
+                "startLine": 279,
+                "startChar": 0,
+                "endLine": 285,
+                "endChar": 0
+              },
+              "replacement": "    ConvertAndCopyToHost(x_d_, solution);\n"
+            },
+            {
+              "path": "internal/ceres/cuda_sparse_cholesky.cc",
+              "range": {
+                "startLine": 419,
+                "startChar": 0,
+                "endLine": 419,
+                "endChar": 0
+              },
+              "replacement": "\n  void ConvertAndCopyToHost(const CudaBuffer\u003cScalar\u003e\u0026 source,\n                            Scalar* destination) {\n    if constexpr (std::is_same_v\u003cScalar, double\u003e) {\n      source.CopyToCpu(destination, source.size());\n    } else {\n      source.CopyToCpu(x_h_.data(), source.size());\n      Convert(x_h_.data(), destination, x_h_.size());\n    }\n  }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99db551e_1e548125",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-08T04:40:44Z",
+      "side": 1,
+      "message": "compare to CUDSS_STATUS_SUCCESS for consistency with Factorize?",
+      "range": {
+        "startLine": 291,
+        "startChar": 28,
+        "endLine": 291,
+        "endChar": 29
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "e8aaacb8_8595e830",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/cuda_sparse_cholesky.cc",
+              "range": {
+                "startLine": 291,
+                "startChar": 0,
+                "endLine": 292,
+                "endChar": 0
+              },
+              "replacement": "    if (cudss_data_info !\u003d CUDSS_STATUS_SUCCESS) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8e13e38_0a4a6449",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-08T04:40:44Z",
+      "side": 1,
+      "message": "shoudn\u0027t this just be return cudssDataGet(...) instead of the macro and the return followed by it\u003e",
+      "range": {
+        "startLine": 303,
+        "startChar": 8,
+        "endLine": 303,
+        "endChar": 20
+      },
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0dc40841_cd48fcf8",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-08T04:40:44Z",
+      "side": 1,
+      "message": "I think this method is confusingly named. It is doing more than resizing.\nI think perhaps it is better named as SetupCudssMatrices() since I had to go digging to figure out where cudss_lhs_ was getting its data from  in Analyze.\n\nAlso worth adding a bit of documentation to this method.",
+      "range": {
+        "startLine": 346,
+        "startChar": 30,
+        "endLine": 346,
+        "endChar": 43
+      },
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e493471_6fc5ebcf",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-08T04:40:44Z",
+      "side": 1,
+      "message": "doesn\u0027t this also indicate a programming error on our (ceres developers) part. Because control should never reach here no?",
+      "range": {
+        "startLine": 452,
+        "startChar": 8,
+        "endLine": 452,
+        "endChar": 15
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "fc939632_bed4e1fc",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/cuda_sparse_cholesky.cc",
+              "range": {
+                "startLine": 452,
+                "startChar": 0,
+                "endLine": 453,
+                "endChar": 0
+              },
+              "replacement": "    LOG(FATAL)\n"
+            }
+          ]
+        }
+      ],
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81f6287d_b2ee805d",
+        "filename": "internal/ceres/cuda_sparse_cholesky.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-08T04:40:44Z",
+      "side": 1,
+      "message": "Add class documentation.\n\nIts a bit odd that the only reason this class exists is because of these two static functions, and all other class methods are un-implemented.",
+      "range": {
+        "startLine": 49,
+        "startChar": 10,
+        "endLine": 49,
+        "endChar": 18
+      },
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8be7521_1e290505",
+        "filename": "internal/ceres/dynamic_sparsity_test.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-08T04:40:44Z",
+      "side": 1,
+      "message": "While you are at it, could you also add ACCELERATE_SPARSE?",
       "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
