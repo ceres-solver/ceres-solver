@@ -33,6 +33,24 @@
       "message": "something seems broken with testing::SrcDir and bazel, because the directory that googletest is reporting simply does not exist.",
       "revId": "8e75e4de225ac35521fa3f349cbd712d85c3cf49",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c8964fe_3c7ceb17",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-08T16:29:48Z",
+      "side": 1,
+      "message": "okay tests are working in bazel now too. there is a \"_main\" that needs to be added to the path. I am not entirely sure why though.",
+      "parentUuid": "35754581_5224914a",
+      "revId": "8e75e4de225ac35521fa3f349cbd712d85c3cf49",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
