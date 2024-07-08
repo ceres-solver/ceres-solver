@@ -65,6 +65,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b2eefb2_3b30faae",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-08T23:48:16Z",
+      "side": 1,
+      "message": "gmock brings in gtest, so thats okay.",
+      "parentUuid": "baaf8ce6_b300a673",
+      "range": {
+        "startLine": 401,
+        "startChar": 50,
+        "endLine": 401,
+        "endChar": 55
+      },
+      "revId": "0b724b46eb9ad3c7720bd04fe13fd67853e92c55",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2f7b92a7_99cc493a",
@@ -102,6 +126,30 @@
       "side": 1,
       "message": "Yes, `TEST_SRCDIR` allows to override `testing::SrcDir`. We need this because MSVC uses additional subdirectories under `bin` to support multi-configuration builds. Thus we have three subdirectories from the project root instead of two.",
       "parentUuid": "2f7b92a7_99cc493a",
+      "range": {
+        "startLine": 433,
+        "startChar": 61,
+        "endLine": 433,
+        "endChar": 72
+      },
+      "revId": "0b724b46eb9ad3c7720bd04fe13fd67853e92c55",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af0f8111_7ce7cfbd",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-08T23:48:16Z",
+      "side": 1,
+      "message": "every day I learn something new.",
+      "parentUuid": "31282600_d5d970ad",
       "range": {
         "startLine": 433,
         "startChar": 61,
