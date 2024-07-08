@@ -75,6 +75,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6fa035f3_896168ae",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 13
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-07-08T21:41:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c85b449_a75ab39c",
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "616a2604_089dee4c",
@@ -88,6 +106,30 @@
       "writtenOn": "2024-07-08T04:40:44Z",
       "side": 1,
       "message": "should these be hard crashes? or should this be a failure that calling code should handle?",
+      "range": {
+        "startLine": 195,
+        "startChar": 6,
+        "endLine": 195,
+        "endChar": 14
+      },
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ec061bd_cdca408f",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-07-08T21:41:26Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "616a2604_089dee4c",
       "range": {
         "startLine": 195,
         "startChar": 6,
@@ -151,6 +193,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d42f7180_fb32451e",
+        "filename": "internal/ceres/cuda_buffer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-07-08T21:41:26Z",
+      "side": 1,
+      "message": "I opted into being consistent with implementation of CudaBuffer that do perform such hard-checks.\n\nI believe that, generally speaking, there are two approaches to this problem:\n\n1) To add a \"status\" plane to result that is produced by a call to \"allocation\" API and to give no guarantee that such status would not indicate that allocation is failed (e.g. malloc() returning null pointer or cudaMalloc() returning not cudaSuccess).\n\n2) To treat a failure to perform an allocation as a hard-error and force some kind of an error (e.g. throw an exception, terminate).\n\nGiven that CudaPinnedHostBuffer and CudaBuffer are not designed to tell a caller that allocation if failed, so a caller would not continue with false assumption, i would suggest that we keep such check to trigger a hard failure.",
+      "parentUuid": "18dee855_b8be926b",
+      "range": {
+        "startLine": 209,
+        "startChar": 6,
+        "endLine": 209,
+        "endChar": 14
+      },
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8852daba_ad14a2ee",
         "filename": "internal/ceres/cuda_sparse_cholesky.cc",
         "patchSetId": 13
@@ -162,6 +228,30 @@
       "writtenOn": "2024-07-08T04:40:44Z",
       "side": 1,
       "message": "CUDSS_STATUS_OK_OR_RETURN_FATAL_ERROR",
+      "range": {
+        "startLine": 75,
+        "startChar": 8,
+        "endLine": 75,
+        "endChar": 46
+      },
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e88457c7_04f9cefe",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-07-08T21:41:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8852daba_ad14a2ee",
       "range": {
         "startLine": 75,
         "startChar": 8,
@@ -185,6 +275,30 @@
       "writtenOn": "2024-07-08T04:40:44Z",
       "side": 1,
       "message": "Question: Should this and the destructor failures be hard crashes?",
+      "range": {
+        "startLine": 166,
+        "startChar": 4,
+        "endLine": 166,
+        "endChar": 22
+      },
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6c08db9_239e6235",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-07-08T21:41:26Z",
+      "side": 1,
+      "message": "I believe that indeed there are cases when user might want to, given such error condition, to try again with another linear solver backend. So i would prefer not to handle such errors as a hard crash.\n\nStill, i dont really see how we can do it in RAII fashion. We could explicitly add a flag field to CudaSparseCholeskyImpl to manually track if solver_data_ was initialized and to conditionally deinitialize such objects in dtor of CudaSparseCholeskyImpl, but that leaves errors during deinitialization to be unhandled.",
+      "parentUuid": "7f6be693_61b7e895",
       "range": {
         "startLine": 166,
         "startChar": 4,
@@ -232,6 +346,30 @@
           ]
         }
       ],
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a21b44a9_eea93f07",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-07-08T21:41:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8969b33f_259239d8",
+      "range": {
+        "startLine": 210,
+        "startChar": 4,
+        "endLine": 210,
+        "endChar": 12
+      },
       "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -287,6 +425,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "163e4955_51128881",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-07-08T21:41:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92cce17a_d68487a3",
+      "range": {
+        "startLine": 268,
+        "startChar": 13,
+        "endLine": 268,
+        "endChar": 27
+      },
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3b358e4c_3debf538",
@@ -338,6 +500,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec976556_488fda13",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-07-08T21:41:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b358e4c_3debf538",
+      "range": {
+        "startLine": 279,
+        "startChar": 21,
+        "endLine": 279,
+        "endChar": 22
+      },
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "99db551e_1e548125",
@@ -379,6 +565,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "daf7aca3_eb7e4065",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-07-08T21:41:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99db551e_1e548125",
+      "range": {
+        "startLine": 291,
+        "startChar": 28,
+        "endLine": 291,
+        "endChar": 29
+      },
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a8e13e38_0a4a6449",
@@ -404,6 +614,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9e86174a_ea66615d",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-07-08T21:41:26Z",
+      "side": 1,
+      "message": "Given that we do not check for validity of size_written, checks for return value of cudssDataGet are indeed duplicated and this one could be removed in favor for external ones. But if, in future versions of cudss, the value that is returned into size_written would actually become reasonable to check for, then, before such check, we still would need to check the return value of cudssDataGet. So i would suggest that we leave it as it is now.",
+      "parentUuid": "a8e13e38_0a4a6449",
+      "range": {
+        "startLine": 303,
+        "startChar": 8,
+        "endLine": 303,
+        "endChar": 20
+      },
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0dc40841_cd48fcf8",
         "filename": "internal/ceres/cuda_sparse_cholesky.cc",
         "patchSetId": 13
@@ -415,6 +649,30 @@
       "writtenOn": "2024-07-08T04:40:44Z",
       "side": 1,
       "message": "I think this method is confusingly named. It is doing more than resizing.\nI think perhaps it is better named as SetupCudssMatrices() since I had to go digging to figure out where cudss_lhs_ was getting its data from  in Analyze.\n\nAlso worth adding a bit of documentation to this method.",
+      "range": {
+        "startLine": 346,
+        "startChar": 30,
+        "endLine": 346,
+        "endChar": 43
+      },
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f90d7df8_17d8c571",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-07-08T21:41:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dc40841_cd48fcf8",
       "range": {
         "startLine": 346,
         "startChar": 30,
@@ -466,6 +724,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca8dc657_a9ce3ab3",
+        "filename": "internal/ceres/cuda_sparse_cholesky.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-07-08T21:41:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e493471_6fc5ebcf",
+      "range": {
+        "startLine": 452,
+        "startChar": 8,
+        "endLine": 452,
+        "endChar": 15
+      },
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "81f6287d_b2ee805d",
@@ -489,6 +771,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9025a7a9_0ca2ea98",
+        "filename": "internal/ceres/cuda_sparse_cholesky.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-07-08T21:41:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81f6287d_b2ee805d",
+      "range": {
+        "startLine": 49,
+        "startChar": 10,
+        "endLine": 49,
+        "endChar": 18
+      },
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a8be7521_1e290505",
@@ -502,6 +808,24 @@
       "writtenOn": "2024-07-08T04:40:44Z",
       "side": 1,
       "message": "While you are at it, could you also add ACCELERATE_SPARSE?",
+      "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "744b3314_f898ca04",
+        "filename": "internal/ceres/dynamic_sparsity_test.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-07-08T21:41:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8be7521_1e290505",
       "revId": "4f041a56a83d0f02124e37cc63317fa452683b7a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
