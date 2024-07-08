@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c427429c_4a4c3680",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-08T16:35:57Z",
+      "side": 1,
+      "message": "we need to deal with \nhttps://github.com/abseil/abseil-cpp/issues/1656",
+      "revId": "7e2022cd15f9d9c935d76b514e281d390c019142",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
