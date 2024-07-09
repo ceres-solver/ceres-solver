@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33bd4ec1_dc69fbe3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-07-09T22:44:18Z",
+      "side": 1,
+      "message": "The `ctest` parameter is indeed called `--build-config` not `--config`. Until a recent CMake update this worked probably because `ctest` did not check for unknown parameters.\n\nThe test runs should hopefully complete: https://github.com/sergiud/ceres-solver/actions/runs/9864958711/job/27240966560",
+      "revId": "8ef35d02452d1a91fac77464ba732db4fc27d2e0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
