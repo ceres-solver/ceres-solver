@@ -52,6 +52,24 @@
       "parentUuid": "86f15d01_a5e15a19",
       "revId": "7e2022cd15f9d9c935d76b514e281d390c019142",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22616fbd_b54b31c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-07-09T20:27:38Z",
+      "side": 1,
+      "message": "Sounds a bit like an echo from https://github.com/google/glog/issues/125 tbh",
+      "parentUuid": "c427429c_4a4c3680",
+      "revId": "7e2022cd15f9d9c935d76b514e281d390c019142",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
