@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca2291b6_ae95fb75",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6457
+      },
+      "writtenOn": "2024-07-09T01:43:24Z",
+      "side": 1,
+      "message": "Nice!",
+      "revId": "90a63fe70c8c37dbe628f75d35349020a86ae499",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e1436e9_02d9d95e",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 6457
+      },
+      "writtenOn": "2024-07-09T01:43:24Z",
+      "side": 1,
+      "message": "Do you actually need 17 now, or just 14?  IIRC, absl only requires 14.",
+      "range": {
+        "startLine": 34,
+        "startChar": 23,
+        "endLine": 34,
+        "endChar": 25
+      },
+      "revId": "90a63fe70c8c37dbe628f75d35349020a86ae499",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03ade166_a7cee32b",
+        "filename": "bazel/ceres.bzl",
+        "patchSetId": 8
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 6457
+      },
+      "writtenOn": "2024-07-09T01:43:24Z",
+      "side": 1,
+      "message": "Buildifier is probably going to complain about the tabs.",
+      "revId": "90a63fe70c8c37dbe628f75d35349020a86ae499",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f03f4326_ac22aac4",
+        "filename": "examples/bicubic_interpolation.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 6457
+      },
+      "writtenOn": "2024-07-09T01:43:24Z",
+      "side": 1,
+      "message": "Since this calls into Ceres code, which uses flags + logging, I think it would be less confusing to initialize flags and logging here (and in all the other examples too)",
+      "revId": "90a63fe70c8c37dbe628f75d35349020a86ae499",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e70adf3_96b2f027",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 6457
+      },
+      "writtenOn": "2024-07-09T01:43:24Z",
+      "side": 1,
+      "message": "This file looks like it is in need of a clang-format.",
+      "revId": "90a63fe70c8c37dbe628f75d35349020a86ae499",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed65ea60_fdfa630a",
+        "filename": "internal/ceres/visibility_based_preconditioner_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 6457
+      },
+      "writtenOn": "2024-07-09T01:43:24Z",
+      "side": 1,
+      "message": "I don\u0027t think this actually compiles.  For the code base I\u0027m in the middle of updating, we ended up converting this to:\n```\nconst Foo* foo \u003d ...;\nCHECK(foo !\u003d nullptr)\n```\n\nfor cases like this.",
+      "revId": "90a63fe70c8c37dbe628f75d35349020a86ae499",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

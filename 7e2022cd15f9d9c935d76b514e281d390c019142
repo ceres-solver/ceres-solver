@@ -16,6 +16,24 @@
       "message": "we need to deal with \nhttps://github.com/abseil/abseil-cpp/issues/1656",
       "revId": "7e2022cd15f9d9c935d76b514e281d390c019142",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86f15d01_a5e15a19",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6457
+      },
+      "writtenOn": "2024-07-09T01:43:24Z",
+      "side": 1,
+      "message": "Technically, we could do:\n\n```\nif (!absl::log_internal::IsInitialized()) {\n   absl::InitializeLog();\n}\n```\n\nthough reaching into internal namespaces is always a bit dangerous.  Feels worth posting on that bug, at least asking for the official guidance for libraries.",
+      "parentUuid": "c427429c_4a4c3680",
+      "revId": "7e2022cd15f9d9c935d76b514e281d390c019142",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
