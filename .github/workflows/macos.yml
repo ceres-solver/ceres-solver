@@ -99,7 +99,7 @@ jobs:
         if: matrix.target == 'host'
         run: |
           ctest --test-dir build_${{matrix.build_type}} \
-                --config ${{matrix.build_type}} \
+                --build-config ${{matrix.build_type}} \
                 --output-on-failure \
                 -j$(sysctl -n hw.ncpu)
 

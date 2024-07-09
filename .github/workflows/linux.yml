@@ -121,7 +121,7 @@ jobs:
         if: matrix.gpu == 'no-cuda'
         run: |
           cd build_${{matrix.build_type}}/
-          ctest --config ${{matrix.build_type}} \
+          ctest --build-config ${{matrix.build_type}} \
                 --output-on-failure \
                 -j$(nproc)
 
