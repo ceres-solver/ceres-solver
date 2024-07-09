@@ -39,6 +39,30 @@
       },
       "revId": "a7db23d577957c96c7caf335879af5bbb6571ec0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "749cccb2_b5ccbcbb",
+        "filename": "internal/ceres/dynamic_sparsity_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-07-09T20:26:49Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "771941d7_ab261b48",
+      "range": {
+        "startLine": 440,
+        "startChar": 13,
+        "endLine": 440,
+        "endChar": 30
+      },
+      "revId": "a7db23d577957c96c7caf335879af5bbb6571ec0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
