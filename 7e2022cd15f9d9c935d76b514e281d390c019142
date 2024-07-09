@@ -34,6 +34,24 @@
       "parentUuid": "c427429c_4a4c3680",
       "revId": "7e2022cd15f9d9c935d76b514e281d390c019142",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6eb06faa_d6efdcb2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-09T04:39:14Z",
+      "side": 1,
+      "message": "I will ask on the bug, it has not been replied to though.",
+      "parentUuid": "86f15d01_a5e15a19",
+      "revId": "7e2022cd15f9d9c935d76b514e281d390c019142",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
