@@ -82,6 +82,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ccbff4f5_a74648d2",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 6457
+      },
+      "writtenOn": "2024-07-10T20:10:56Z",
+      "side": 1,
+      "message": "Perfect.",
+      "parentUuid": "b0f534d9_26e27fc4",
+      "range": {
+        "startLine": 34,
+        "startChar": 23,
+        "endLine": 34,
+        "endChar": 25
+      },
+      "revId": "90a63fe70c8c37dbe628f75d35349020a86ae499",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "03ade166_a7cee32b",
@@ -136,6 +160,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "46ade38b_9a5a314e",
+        "filename": "examples/bicubic_interpolation.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 6457
+      },
+      "writtenOn": "2024-07-10T20:10:56Z",
+      "side": 1,
+      "message": "I also couldn\u0027t find info in the docs, so I went and read the source.  (I\u0027ve had to update our call sites too in our code base, so this is a generally useful activity)\n\n`absl::InitializeLog()` essentially turns on support for messages in local time, and the fancy filtering (backtrace at a line, etc).\n\n\n`absl::ParseCommandLine()` will parse flags and print usage.  Digging in, all the flags that absl/log uses have callbacks registered to update the internal state of absl/log when the command line parameters get parsed or updated through absl::SetFlag.\n\nYou can call them in either order, and it will all work out in the end.  The question is, when you are partially initialized, what behavior do you want?  This could happen if someone LOGs in a flag validator.  I think it is preferable to parse flags first, so --vmodule, and VLOG work earlier in the process.\n\n```\nabsl::ParseCommandLine(argc, argv);\nabsl::InitializeLog();\n```\n\nIn theory, it would be good to error out if someone passes more arguments than are accepted, but this is example code, so that is probably overkill.",
+      "parentUuid": "c926ff38_80f537f5",
+      "revId": "90a63fe70c8c37dbe628f75d35349020a86ae499",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8e70adf3_96b2f027",
         "filename": "examples/bundle_adjuster.cc",
         "patchSetId": 8
@@ -165,6 +207,24 @@
       "side": 1,
       "message": "yeah we have it turned off specifically in this section, because it makes everything not fun to read here, but maybe I should just bite the bullet.",
       "parentUuid": "8e70adf3_96b2f027",
+      "revId": "90a63fe70c8c37dbe628f75d35349020a86ae499",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7705cc7d_9ba5aa00",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 6457
+      },
+      "writtenOn": "2024-07-10T20:10:56Z",
+      "side": 1,
+      "message": "Hand edit is fine, but it looks like it used to line up at the start of the line with the open (, and no longer does.  It now just looks a bit weird.  No strong preference though.",
+      "parentUuid": "f75823fb_5088aa80",
       "revId": "90a63fe70c8c37dbe628f75d35349020a86ae499",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
