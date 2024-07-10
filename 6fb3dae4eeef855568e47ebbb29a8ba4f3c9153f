@@ -1,5 +1,23 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5bdedd1_c13ca438",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6667
+      },
+      "writtenOn": "2024-07-10T08:07:20Z",
+      "side": 1,
+      "message": "All participants, thanks for reviewing that change!",
+      "revId": "6fb3dae4eeef855568e47ebbb29a8ba4f3c9153f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
