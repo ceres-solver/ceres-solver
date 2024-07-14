@@ -34,6 +34,24 @@
       "parentUuid": "ec9c0a0c_5470f797",
       "revId": "dc0bb8508cda125b2682ef6d8e80848cc15f0bc1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "274dc80d_bd3b36a6",
+        "filename": "docs/source/modeling_faqs.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-14T19:44:33Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "587f527c_f68cc034",
+      "revId": "dc0bb8508cda125b2682ef6d8e80848cc15f0bc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
