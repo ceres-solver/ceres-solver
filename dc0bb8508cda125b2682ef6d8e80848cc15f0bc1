@@ -16,6 +16,24 @@
       "message": "Looks like copypasta?",
       "revId": "dc0bb8508cda125b2682ef6d8e80848cc15f0bc1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "587f527c_f68cc034",
+        "filename": "docs/source/modeling_faqs.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-14T19:44:23Z",
+      "side": 1,
+      "message": "oops, lemme fix. thanks for catching.",
+      "parentUuid": "ec9c0a0c_5470f797",
+      "revId": "dc0bb8508cda125b2682ef6d8e80848cc15f0bc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
