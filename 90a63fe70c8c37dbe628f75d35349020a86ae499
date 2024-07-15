@@ -123,6 +123,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "10c643f9_5c2928fa",
+        "filename": "bazel/ceres.bzl",
+        "patchSetId": 8
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-15T21:37:12Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "03ade166_a7cee32b",
+      "revId": "90a63fe70c8c37dbe628f75d35349020a86ae499",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f03f4326_ac22aac4",
@@ -172,6 +190,24 @@
       "side": 1,
       "message": "I also couldn\u0027t find info in the docs, so I went and read the source.  (I\u0027ve had to update our call sites too in our code base, so this is a generally useful activity)\n\n`absl::InitializeLog()` essentially turns on support for messages in local time, and the fancy filtering (backtrace at a line, etc).\n\n\n`absl::ParseCommandLine()` will parse flags and print usage.  Digging in, all the flags that absl/log uses have callbacks registered to update the internal state of absl/log when the command line parameters get parsed or updated through absl::SetFlag.\n\nYou can call them in either order, and it will all work out in the end.  The question is, when you are partially initialized, what behavior do you want?  This could happen if someone LOGs in a flag validator.  I think it is preferable to parse flags first, so --vmodule, and VLOG work earlier in the process.\n\n```\nabsl::ParseCommandLine(argc, argv);\nabsl::InitializeLog();\n```\n\nIn theory, it would be good to error out if someone passes more arguments than are accepted, but this is example code, so that is probably overkill.",
       "parentUuid": "c926ff38_80f537f5",
+      "revId": "90a63fe70c8c37dbe628f75d35349020a86ae499",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e8eff36_f3454773",
+        "filename": "examples/bicubic_interpolation.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-15T21:37:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46ade38b_9a5a314e",
       "revId": "90a63fe70c8c37dbe628f75d35349020a86ae499",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -229,6 +265,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8aa704ca_2380d612",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-15T21:37:12Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "7705cc7d_9ba5aa00",
+      "revId": "90a63fe70c8c37dbe628f75d35349020a86ae499",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ed65ea60_fdfa630a",
@@ -242,6 +296,24 @@
       "writtenOn": "2024-07-09T01:43:24Z",
       "side": 1,
       "message": "I don\u0027t think this actually compiles.  For the code base I\u0027m in the middle of updating, we ended up converting this to:\n```\nconst Foo* foo \u003d ...;\nCHECK(foo !\u003d nullptr)\n```\n\nfor cases like this.",
+      "revId": "90a63fe70c8c37dbe628f75d35349020a86ae499",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6a2e428_51cda724",
+        "filename": "internal/ceres/visibility_based_preconditioner_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-15T21:37:12Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "ed65ea60_fdfa630a",
       "revId": "90a63fe70c8c37dbe628f75d35349020a86ae499",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
