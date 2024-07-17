@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "820bb9c1_13970f33",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-07-17T17:36:43Z",
+      "side": 1,
+      "message": "No, not at all. This essentially prohibits from compiling Ceres using a newer standard either set by the user or determined by the compiler. I believe MSVC is even using the latest standard by default.\n\nA good practice is to communicate the minimum supported C++ standard (which we already do) and let either the toolchain or the user decide whether they want restrict or elevate the language feature set.",
+      "parentUuid": "eca19e28_ee119562",
+      "revId": "9e1cc4fc0d3a70cf80b5710aa8a13c8d97bfbbdf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c78b8ade_84c05ac9",
         "filename": "CMakeLists.txt",
         "patchSetId": 14
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "without this absl warns and says that it will turn this on in the future. \nSo we turn it on unconditionally to be future safe and silence the warning.",
       "parentUuid": "c78b8ade_84c05ac9",
+      "revId": "9e1cc4fc0d3a70cf80b5710aa8a13c8d97bfbbdf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4dc3c55_86fad886",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-07-17T17:36:43Z",
+      "side": 1,
+      "message": "We should probably document this in a brief comment.",
+      "parentUuid": "10cb9457_0c690614",
       "revId": "9e1cc4fc0d3a70cf80b5710aa8a13c8d97bfbbdf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
