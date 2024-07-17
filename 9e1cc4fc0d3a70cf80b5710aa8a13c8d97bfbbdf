@@ -92,6 +92,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "806bdb29_43166ed1",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-17T21:01:56Z",
+      "side": 1,
+      "message": "The problem seems to be basic_string_view, which is only available in c++17, and if we do not ask for that standard, apparently we do not get access to c++17 for some reason? maybe because absl is trying to compile with c++14 in that case?",
+      "parentUuid": "97756602_b9ebbabd",
+      "revId": "9e1cc4fc0d3a70cf80b5710aa8a13c8d97bfbbdf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c78b8ade_84c05ac9",
         "filename": "CMakeLists.txt",
         "patchSetId": 14
