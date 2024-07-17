@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "162cd549_47a162f3",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-07-17T16:52:14Z",
+      "side": 1,
+      "message": "Why do we need these two lines?",
+      "revId": "9e1cc4fc0d3a70cf80b5710aa8a13c8d97bfbbdf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c78b8ade_84c05ac9",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-07-17T16:52:14Z",
+      "side": 1,
+      "message": "Not sure why we need this either. Generally, libraries should be self-contained and responsible for their own compiler options.",
+      "revId": "9e1cc4fc0d3a70cf80b5710aa8a13c8d97bfbbdf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
