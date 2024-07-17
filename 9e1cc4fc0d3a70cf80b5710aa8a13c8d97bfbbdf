@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "eca19e28_ee119562",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-17T17:16:29Z",
+      "side": 1,
+      "message": "isn\u0027t it a good idea to enforce the c++ standard we are using for the project?",
+      "parentUuid": "162cd549_47a162f3",
+      "revId": "9e1cc4fc0d3a70cf80b5710aa8a13c8d97bfbbdf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c78b8ade_84c05ac9",
         "filename": "CMakeLists.txt",
         "patchSetId": 14
@@ -31,6 +49,24 @@
       "writtenOn": "2024-07-17T16:52:14Z",
       "side": 1,
       "message": "Not sure why we need this either. Generally, libraries should be self-contained and responsible for their own compiler options.",
+      "revId": "9e1cc4fc0d3a70cf80b5710aa8a13c8d97bfbbdf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10cb9457_0c690614",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-17T17:16:29Z",
+      "side": 1,
+      "message": "without this absl warns and says that it will turn this on in the future. \nSo we turn it on unconditionally to be future safe and silence the warning.",
+      "parentUuid": "c78b8ade_84c05ac9",
       "revId": "9e1cc4fc0d3a70cf80b5710aa8a13c8d97bfbbdf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
