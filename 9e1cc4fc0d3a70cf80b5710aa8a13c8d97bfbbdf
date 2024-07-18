@@ -110,6 +110,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9849b539_80735029",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-07-18T06:32:12Z",
+      "side": 1,
+      "message": "Looks like it. Abseil minimum language level of support is C++14 and we need to explicitly request C++17. However, we still do not need to set `CMAKE_CXX_STANDARD_REQUIRED` since setting this variable to `ON` will enforce the exact language level given by `CMAKE_CXX_STANDARD`.",
+      "parentUuid": "806bdb29_43166ed1",
+      "revId": "9e1cc4fc0d3a70cf80b5710aa8a13c8d97bfbbdf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c78b8ade_84c05ac9",
         "filename": "CMakeLists.txt",
         "patchSetId": 14
