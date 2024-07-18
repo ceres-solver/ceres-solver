@@ -47,8 +47,6 @@ jobs:
           brew install \
             ccache \
             eigen \
-            gflags \
-            glog \
             google-benchmark \
             metis \
             ninja \
