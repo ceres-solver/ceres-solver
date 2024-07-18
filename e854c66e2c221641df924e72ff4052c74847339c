@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "615ba395_93034c2d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 15
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-07-18T07:19:54Z",
+      "side": 1,
+      "message": "Nit: mention that we only need this for Abseil. Otherwise LGTM.",
+      "revId": "e854c66e2c221641df924e72ff4052c74847339c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
