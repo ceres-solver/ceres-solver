@@ -39,6 +39,7 @@
 #include <string>
 #include <vector>
 
+#include "absl/log/check.h"
 #include "ceres/evaluator.h"
 #include "ceres/linear_solver.h"
 #include "ceres/minimizer.h"

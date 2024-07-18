@@ -30,6 +30,8 @@
 
 #include "ceres/thread_token_provider.h"
 
+#include "absl/log/check.h"
+
 namespace ceres::internal {
 
 ThreadTokenProvider::ThreadTokenProvider(int num_threads) {

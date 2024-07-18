@@ -33,6 +33,7 @@
 #include <numeric>
 #include <string>
 
+#include "absl/log/check.h"
 #include "ceres/casts.h"
 #include "ceres/context_impl.h"
 #include "ceres/evaluator.h"

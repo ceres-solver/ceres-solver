@@ -32,6 +32,9 @@
 
 #ifndef CERES_NO_CUDA
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
+
 namespace ceres::internal {
 namespace {
 // Dimension of a sorted array of blocks

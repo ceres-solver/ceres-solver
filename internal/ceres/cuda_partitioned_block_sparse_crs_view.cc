@@ -32,6 +32,7 @@
 
 #ifndef CERES_NO_CUDA
 
+#include "absl/log/check.h"
 #include "ceres/cuda_block_structure.h"
 #include "ceres/cuda_kernels_bsm_to_crs.h"
 

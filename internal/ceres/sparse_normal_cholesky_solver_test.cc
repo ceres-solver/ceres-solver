@@ -31,6 +31,7 @@
 #include <memory>
 
 #include "Eigen/Cholesky"
+#include "absl/log/check.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/casts.h"
 #include "ceres/context_impl.h"

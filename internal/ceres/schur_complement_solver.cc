@@ -39,6 +39,7 @@
 
 #include "Eigen/Dense"
 #include "Eigen/SparseCore"
+#include "absl/log/check.h"
 #include "ceres/block_random_access_dense_matrix.h"
 #include "ceres/block_random_access_matrix.h"
 #include "ceres/block_random_access_sparse_matrix.h"

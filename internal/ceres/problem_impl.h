@@ -46,6 +46,7 @@
 #include <unordered_set>
 #include <vector>
 
+#include "absl/log/check.h"
 #include "ceres/context_impl.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"

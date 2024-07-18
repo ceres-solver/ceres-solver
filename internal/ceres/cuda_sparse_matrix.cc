@@ -41,6 +41,7 @@
 
 #include <memory>
 
+#include "absl/log/check.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/context_impl.h"

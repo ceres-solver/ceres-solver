@@ -37,6 +37,7 @@
 
 #include <algorithm>
 
+#include "absl/log/check.h"
 #include "ceres/cuda_buffer.h"
 
 namespace ceres::internal {

@@ -36,6 +36,7 @@
 #include <vector>
 
 #include "Eigen/Dense"
+#include "absl/log/check.h"
 #include "ceres/block_random_access_diagonal_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"

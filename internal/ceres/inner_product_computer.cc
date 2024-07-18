@@ -33,6 +33,7 @@
 #include <algorithm>
 #include <memory>
 
+#include "absl/log/check.h"
 #include "ceres/small_blas.h"
 
 namespace ceres::internal {

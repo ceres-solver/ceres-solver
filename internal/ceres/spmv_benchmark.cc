@@ -33,6 +33,7 @@
 #include <string>
 
 #include "Eigen/Dense"
+#include "absl/log/check.h"
 #include "benchmark/benchmark.h"
 #include "ceres/block_jacobi_preconditioner.h"
 #include "ceres/block_sparse_matrix.h"

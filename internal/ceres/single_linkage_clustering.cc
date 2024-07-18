@@ -33,6 +33,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
+#include "absl/log/check.h"
 #include "ceres/graph.h"
 #include "ceres/graph_algorithms.h"
 

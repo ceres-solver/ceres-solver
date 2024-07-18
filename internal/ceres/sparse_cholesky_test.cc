@@ -37,6 +37,7 @@
 
 #include "Eigen/Dense"
 #include "Eigen/SparseCore"
+#include "absl/log/check.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/cuda_sparse_cholesky.h"

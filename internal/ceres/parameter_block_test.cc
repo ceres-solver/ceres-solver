@@ -30,6 +30,7 @@
 
 #include "ceres/parameter_block.h"
 
+#include "absl/log/log.h"
 #include "ceres/internal/eigen.h"
 #include "gtest/gtest.h"
 

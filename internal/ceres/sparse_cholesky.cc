@@ -33,6 +33,7 @@
 #include <memory>
 #include <utility>
 
+#include "absl/log/check.h"
 #include "absl/log/log.h"
 #include "ceres/accelerate_sparse.h"
 #include "ceres/cuda_sparse_cholesky.h"

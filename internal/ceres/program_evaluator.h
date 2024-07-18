@@ -92,6 +92,7 @@
 #include <string>
 #include <vector>
 
+#include "absl/log/log.h"
 #include "ceres/evaluation_callback.h"
 #include "ceres/execution_summary.h"
 #include "ceres/internal/eigen.h"

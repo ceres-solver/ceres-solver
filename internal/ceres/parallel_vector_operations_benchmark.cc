@@ -28,6 +28,7 @@
 
 #include <algorithm>
 
+#include "absl/log/check.h"
 #include "benchmark/benchmark.h"
 #include "ceres/eigen_vector_ops.h"
 #include "ceres/parallel_for.h"

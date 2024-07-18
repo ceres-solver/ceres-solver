@@ -39,6 +39,8 @@
 #include <type_traits>
 
 #include "Eigen/Core"
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/cuda_buffer.h"
 #include "ceres/linear_solver.h"

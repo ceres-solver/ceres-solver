@@ -37,6 +37,7 @@
 
 #include <math.h>
 
+#include "absl/log/check.h"
 #include "ceres/context_impl.h"
 #include "ceres/internal/export.h"
 #include "ceres/types.h"

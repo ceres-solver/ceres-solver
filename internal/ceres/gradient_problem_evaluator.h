@@ -35,6 +35,7 @@
 #include <memory>
 #include <string>
 
+#include "absl/log/check.h"
 #include "ceres/evaluator.h"
 #include "ceres/execution_summary.h"
 #include "ceres/gradient_problem.h"

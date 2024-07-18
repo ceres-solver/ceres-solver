@@ -34,6 +34,7 @@
 #include <thrust/execution_policy.h>
 #include <thrust/scan.h>
 
+#include "absl/log/log.h"
 #include "ceres/block_structure.h"
 #include "ceres/cuda_kernels_utils.h"
 

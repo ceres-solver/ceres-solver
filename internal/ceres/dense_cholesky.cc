@@ -36,6 +36,7 @@
 #include <utility>
 #include <vector>
 
+#include "absl/log/check.h"
 #include "absl/log/log.h"
 #include "ceres/internal/config.h"
 #include "ceres/iterative_refiner.h"
