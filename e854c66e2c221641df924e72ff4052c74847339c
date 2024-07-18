@@ -16,6 +16,24 @@
       "message": "Nit: mention that we only need this for Abseil. Otherwise LGTM.",
       "revId": "e854c66e2c221641df924e72ff4052c74847339c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b375c140_87c82e27",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 15
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-18T07:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "615ba395_93034c2d",
+      "revId": "e854c66e2c221641df924e72ff4052c74847339c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
