@@ -32,6 +32,8 @@
 
 #include <string>
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "ceres/internal/config.h"
 #include "ceres/stringprintf.h"
 #include "ceres/wall_time.h"
