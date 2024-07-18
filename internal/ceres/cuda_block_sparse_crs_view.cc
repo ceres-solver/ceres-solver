@@ -33,7 +33,7 @@
 #ifndef CERES_NO_CUDA
 
 #include "absl/log/check.h"
-#include "absl/log/logging.h"
+#include "absl/log/log.h"
 #include "ceres/cuda_kernels_bsm_to_crs.h"
 
 namespace ceres::internal {
