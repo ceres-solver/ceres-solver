@@ -30,6 +30,7 @@
 
 #include "ceres/cuda_partitioned_block_sparse_crs_view.h"
 
+#include "absl/log/check.h"
 #include "gtest/gtest.h"
 
 #ifndef CERES_NO_CUDA
@@ -121,13 +122,13 @@ std::unique_ptr<BlockSparseMatrix> CreateRandomPartitionedMatrix(
   // Fill positions in E sub-matrix
   int num_nonzeros = 0;
   for (int i = 0; i < options.num_row_blocks_e; ++i) {
-    ASSERT_GE(block_structure->rows[i].cells.size(), 1);
+    CHECK_GE(block_structure->rows[i].cells.size(), 1);
     block_structure->rows[i].cells[0].position = num_nonzeros;
     const int col_block_size =
         block_structure->cols[block_structure->rows[i].cells[0].block_id].size;
     const int row_block_size = block_structure->rows[i].block.size;
     num_nonzeros += row_block_size * col_block_size;
-    ASSERT_GE(num_nonzeros, 0);
+    CHECK_GE(num_nonzeros, 0);
   }
   // Fill positions in F sub-matrix
   for (int i = 0; i < options.num_row_blocks_f; ++i) {
@@ -137,7 +138,7 @@ std::unique_ptr<BlockSparseMatrix> CreateRandomPartitionedMatrix(
       cell.position = num_nonzeros;
       const int col_block_size = block_structure->cols[cell.block_id].size;
       num_nonzeros += row_block_size * col_block_size;
-      ASSERT_GE(num_nonzeros, 0);
+      CHECK_GE(num_nonzeros, 0);
     }
   }
   // Populate values
