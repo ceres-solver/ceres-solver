@@ -1,5 +1,5 @@
 # Ceres Solver - A fast non-linear least squares minimizer
-# Copyright 2022 Google Inc. All rights reserved.
+# Copyright 2024 Google Inc. All rights reserved.
 # http://ceres-solver.org/
 #
 # Redistribution and use in source and binary forms, with or without
@@ -359,10 +359,6 @@ if (BUILD_TESTING)
   # sees the absl installed on the system. It is possible that we will
   # need to include re2 as a submodule also, for the following to
   # work.
-
-  # set(GTEST_HAS_ABSL ON CACHE BOOL "Use ABSL when building gtest")
-  add_subdirectory(${Ceres_SOURCE_DIR}/third_party/googletest ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/googletest)
-
   add_library(test_util STATIC
               evaluator_test_utils.cc
               numeric_diff_test_utils.cc
