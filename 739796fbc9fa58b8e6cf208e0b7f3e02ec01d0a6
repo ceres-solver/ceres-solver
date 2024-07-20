@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e3957a6_aa4c5007",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-20T14:44:33Z",
+      "side": 1,
+      "message": "Thanks Sergiu. Just one comment about documenting the symbol visibility and then this is good to go. This should also fix the CI build as it stands IMO.",
+      "revId": "739796fbc9fa58b8e6cf208e0b7f3e02ec01d0a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fc2a7c7_ea633ff0",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-20T14:44:33Z",
+      "side": 1,
+      "message": "can you add a comment about this line too please. It is subtle and that why we need to enable it for abseil.",
+      "revId": "739796fbc9fa58b8e6cf208e0b7f3e02ec01d0a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
