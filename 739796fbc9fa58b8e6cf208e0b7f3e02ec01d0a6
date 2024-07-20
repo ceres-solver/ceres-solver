@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a740373_853c0a17",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-07-20T20:06:52Z",
+      "side": 1,
+      "message": "Yes, it does: https://github.com/sergiud/ceres-solver/actions. I\u0027ve updated the commit message.",
+      "parentUuid": "7e3957a6_aa4c5007",
+      "revId": "739796fbc9fa58b8e6cf208e0b7f3e02ec01d0a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7fc2a7c7_ea633ff0",
@@ -31,6 +49,24 @@
       "writtenOn": "2024-07-20T14:44:33Z",
       "side": 1,
       "message": "can you add a comment about this line too please. It is subtle and that why we need to enable it for abseil.",
+      "revId": "739796fbc9fa58b8e6cf208e0b7f3e02ec01d0a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a941a840_9a6a7e8c",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-07-20T20:06:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fc2a7c7_ea633ff0",
       "revId": "739796fbc9fa58b8e6cf208e0b7f3e02ec01d0a6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
