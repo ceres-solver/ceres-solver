@@ -165,9 +165,8 @@ struct PhotometricError {
       if (!Project(uv, Eigen::Matrix<T, 3, 1>(p_target_scaled.col(i)))) {
         // If any point of the patch is outside the domain of the projection
         // function, the residual cannot be evaluated. For the benchmark we want
-        // to avoid this case and thus throw an exception to indicate
-        // immediately if it does actually happen after possible future changes.
-        throw std::runtime_error("Benchmark data leads to invalid projection.");
+        // to avoid this case and thus return false;
+        return false;
       }
 
       // Mind the order of u and v: Evaluate takes (row, column), but u is

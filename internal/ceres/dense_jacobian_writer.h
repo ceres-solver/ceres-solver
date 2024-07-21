@@ -37,6 +37,7 @@
 
 #include "ceres/casts.h"
 #include "ceres/dense_sparse_matrix.h"
+#include "ceres/evaluator.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"

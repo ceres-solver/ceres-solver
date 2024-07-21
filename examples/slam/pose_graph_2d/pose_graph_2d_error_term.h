@@ -35,6 +35,7 @@
 
 #include "Eigen/Core"
 #include "ceres/autodiff_cost_function.h"
+#include "normalize_angle.h"
 
 namespace ceres::examples {
 

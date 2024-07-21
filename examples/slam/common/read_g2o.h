@@ -34,6 +34,7 @@
 #define EXAMPLES_CERES_READ_G2O_H_
 
 #include <fstream>
+#include <map>
 #include <string>
 
 #include "absl/log/check.h"

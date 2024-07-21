@@ -102,6 +102,7 @@
 #include "ceres/program.h"
 #include "ceres/residual_block.h"
 #include "ceres/small_blas.h"
+#include "ceres/sparse_matrix.h"
 
 namespace ceres {
 namespace internal {
