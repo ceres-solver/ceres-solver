@@ -40,6 +40,7 @@
 #include <type_traits>
 
 #include "absl/log/check.h"
+#include "ceres/context_impl.h"
 
 namespace ceres::internal {
 
