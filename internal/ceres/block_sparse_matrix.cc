@@ -328,7 +328,7 @@ void BlockSparseMatrix::LeftMultiplyAndAccumulate(const double* x,
   CHECK(x != nullptr);
   CHECK(y != nullptr);
   // Single-threaded left products are always computed using a non-transpose
-  // block structure, because it has linear acess pattern to matrix elements
+  // block structure, because it has linear access pattern to matrix elements
   for (int i = 0; i < block_structure_->rows.size(); ++i) {
     int row_block_pos = block_structure_->rows[i].block.position;
     int row_block_size = block_structure_->rows[i].block.size;

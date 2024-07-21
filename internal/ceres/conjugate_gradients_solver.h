@@ -96,8 +96,8 @@ struct ConjugateGradientsSolverOptions {
 //
 // This implementation is templated over DenseVectorType and then in turn on
 // ConjugateGradientsLinearOperator, which allows us to write an abstract
-// implementaion of the Conjugate Gradients algorithm without worrying about how
-// these objects are implemented or where they are stored. In particular it
+// implementation of the Conjugate Gradients algorithm without worrying about
+// how these objects are implemented or where they are stored. In particular it
 // allows us to have a single implementation that works on CPU and GPU based
 // matrices and vectors.
 //

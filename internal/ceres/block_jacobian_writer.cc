@@ -93,7 +93,7 @@ bool BuildJacobianLayout(const Program& program,
       }
     }
     if (num_jacobian_blocks > std::numeric_limits<int>::max()) {
-      LOG(ERROR) << "Overlow error. Too many blocks in the jacobian matrix : "
+      LOG(ERROR) << "Overflow error. Too many blocks in the jacobian matrix : "
                  << num_jacobian_blocks;
       return false;
     }
@@ -156,7 +156,7 @@ bool BuildJacobianLayout(const Program& program,
         f_block_pos += jacobian_block_size;
         if (f_block_pos > std::numeric_limits<int>::max()) {
           LOG(ERROR)
-              << "Overlow error. Too many entries in the Jacobian matrix.";
+              << "Overflow error. Too many entries in the Jacobian matrix.";
           return false;
         }
       }

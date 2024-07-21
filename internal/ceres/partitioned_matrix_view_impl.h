@@ -439,7 +439,7 @@ PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
 }
 
 // Similar to the code in RightMultiplyAndAccumulateE, except instead of the
-// matrix vector multiply its an outer product.
+// matrix vector multiply it's an outer product.
 //
 //    block_diagonal = block_diagonal(E'E)
 //
@@ -523,7 +523,7 @@ void PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
 }
 
 // Similar to the code in RightMultiplyAndAccumulateF, except instead of the
-// matrix vector multiply its an outer product.
+// matrix vector multiply it's an outer product.
 //
 //   block_diagonal = block_diagonal(F'F)
 //

@@ -151,7 +151,7 @@ struct WigglyBowlCostFunctionAndEvaluationCallback : SizedCostFunction<2, 2>,
       EXPECT_EQ(evaluate_last_parameter_hash, incoming_parameter_hash);
     }
 
-    // Check: Parameter matches value in in parameter blocks during prepare.
+    // Check: Parameter matches value in parameter blocks during prepare.
     EXPECT_EQ(prepare_parameter_hash, incoming_parameter_hash);
 
     // Check: jacobians are requested if they were in PrepareForEvaluation().

@@ -461,7 +461,7 @@ bool ReorderProgramForSchurTypeLinearSolver(
   }
 
   if (parameter_block_ordering->NumGroups() == 1) {
-    // If the user supplied an parameter_block_ordering with just one
+    // If the user supplied a parameter_block_ordering with just one
     // group, it is equivalent to the user supplying nullptr as an
     // parameter_block_ordering. Ceres is completely free to choose the
     // parameter block ordering as it sees fit. For Schur type solvers,

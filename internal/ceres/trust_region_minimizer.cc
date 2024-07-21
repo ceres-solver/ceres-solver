@@ -547,7 +547,7 @@ void TrustRegionMinimizer::DoInnerIterationsIfNeeded() {
   // region step so this ratio is a good measure of the quality of
   // the trust region radius. However, when inner iterations are
   // being used, cost_change includes the contribution of the
-  // inner iterations and its not fair to credit it all to the
+  // inner iterations and it's not fair to credit it all to the
   // trust region algorithm. So we change the ratio to be
   //
   //                              cost_change

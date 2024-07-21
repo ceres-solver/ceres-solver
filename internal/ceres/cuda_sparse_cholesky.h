@@ -49,7 +49,7 @@ namespace ceres::internal {
 // This class is a factory for implementation of sparse cholesky that uses cuDSS
 // on CUDA capable GPU's to solve sparse linear systems. Scalar controls the
 // precision used during computations, currently float and double are supported.
-// Details of implementation are incapsulated into cuda_sparse_cholesky.cc
+// Details of implementation are encapsulated into cuda_sparse_cholesky.cc
 template <typename Scalar = double>
 class CERES_NO_EXPORT CudaSparseCholesky : public SparseCholesky {
  public:

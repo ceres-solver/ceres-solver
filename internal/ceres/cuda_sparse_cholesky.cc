@@ -186,7 +186,7 @@ template <typename Scalar>
 class CERES_NO_EXPORT CudaSparseCholeskyImpl final : public SparseCholesky {
  public:
   static_assert(std::is_same_v<Scalar, float> || std::is_same_v<Scalar, double>,
-                "Scalar type is unsuported by cuDSS");
+                "Scalar type is unsupported by cuDSS");
   static constexpr cudaDataType_t kCuDSSScalar =
       std::is_same_v<Scalar, float> ? CUDA_R_32F : CUDA_R_64F;
 

@@ -165,7 +165,7 @@ class CERES_NO_EXPORT CudaStreamedBuffer {
   //
   // b. Copying from regular memory
   // In this case a copy from regular memory to page-locked memory is required
-  // in order to get asynchrnonous operation. Because pinned memory on host-side
+  // in order to get asynchronous operation. Because pinned memory on host-side
   // is reused, additional synchronization is required. On each iteration method
   // the following actions are performed:
   //  - Wait till previous copy operation in stream is completed

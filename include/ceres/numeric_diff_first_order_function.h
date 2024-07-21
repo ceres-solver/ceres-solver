@@ -187,7 +187,7 @@ class NumericDiffFirstOrderFunction final : public FirstOrderFunction {
   bool Evaluate(const double* const parameters,
                 double* cost,
                 double* gradient) const override {
-    // Get the function value (cost) at the the point to evaluate.
+    // Get the function value (cost) at the point to evaluate.
     if (!(*functor_)(parameters, cost)) {
       return false;
     }

@@ -55,7 +55,7 @@ inline decltype(auto) MakeConditionalLock(const int num_threads,
 // num_threads. It will execute all the work on the calling thread if
 // num_threads or (end - start) is equal to 1.
 // Depending on function signature, it will be supplied with either loop index
-// or a range of loop indicies; function can also be supplied with thread_id.
+// or a range of loop indices; function can also be supplied with thread_id.
 // The following function signatures are supported:
 //  - Functions accepting a single loop index:
 //     - [](int index) { ... }

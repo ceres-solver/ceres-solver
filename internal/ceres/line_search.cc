@@ -634,7 +634,7 @@ bool WolfeLineSearch::BracketingPhase(const FunctionSample& initial_position,
     // bracketing phase: step_size_{k+1} \in [step_size_k, step_size_k *
     // factor]. However this does not account for the function returning invalid
     // values which we support, in which case we need to contract the step size
-    // whilst ensuring that we do not invert the bracket, i.e, we require that:
+    // whilst ensuring that we do not invert the bracket, i.e., we require that:
     // step_size_{k-1} <= step_size_{k+1} < step_size_k.
     const double min_step_size =
         current.value_is_valid ? current.x : previous.x;

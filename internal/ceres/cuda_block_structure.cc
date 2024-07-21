@@ -98,7 +98,7 @@ CudaBlockSparseStructure::CudaBlockSparseStructure(
     }
     num_row_blocks_e_ = row_block_id + 1;
     // In E sub-matrix there is exactly a single E cell in the row
-    // since E cells are stored separately from F cells, crs-compatiblity of
+    // since E cells are stored separately from F cells, crs-compatibility of
     // F sub-matrix only breaks if there are more than 2 cells in row (that
     // is, more than 1 cell in F sub-matrix)
     if (num_cells > 2 && row_block_size > 1) {

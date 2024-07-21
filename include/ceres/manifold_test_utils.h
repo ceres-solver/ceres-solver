@@ -55,7 +55,7 @@ namespace ceres {
 //
 // To verify these general requirements for a custom Manifold, use the
 // EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD() macro from within a gtest test. Note
-// that additional domain-specific tests may also be prudent, e.g to verify the
+// that additional domain-specific tests may also be prudent, e.g. to verify the
 // behaviour of a Quaternion Manifold about pi.
 //
 // [1] "Integrating Generic Sensor Fusion Algorithms with Sound State

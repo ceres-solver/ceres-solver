@@ -106,7 +106,7 @@ class CERES_NO_EXPORT ContextImpl final : public Context {
   //  and leave no running computations on exit.
   //  This slightly penalizes multi-stream workloads, but makes it easier to
   //  avoid race conditions when  multiple-stream workload depends on results of
-  //  any preceeding gpu computations.
+  //  any preceding gpu computations.
 
   // Initializes cuBLAS, cuSOLVER, and cuSPARSE contexts, creates an
   // asynchronous CUDA stream, and associates the stream with the contexts.

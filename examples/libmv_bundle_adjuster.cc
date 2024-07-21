@@ -289,7 +289,7 @@ class EndianAwareFileReader {
     if (file_descriptor_ < 0) {
       return false;
     }
-    // Get an endian tpye of data in the file.
+    // Get an endian type of data in the file.
     auto file_endian_type_flag = Read<unsigned char>();
     if (file_endian_type_flag == 'V') {
       file_endian_type_ = kBigEndian;
@@ -709,7 +709,7 @@ void EuclideanBundleCommonIntrinsics(const std::vector<Marker>& all_markers,
     }
 
     // Rotation of camera denoted in angle axis followed with
-    // camera translaiton.
+    // camera translation.
     double* current_camera_R_t = &all_cameras_R_t[camera->image](0);
 
     errors.emplace_back(marker.x, marker.y);

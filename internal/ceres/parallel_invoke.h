@@ -236,8 +236,8 @@ void ParallelInvoke(ContextImpl* context,
       // num_work_blocks - num_base_p1_sized_blocks of size base_block_size
       //
       // Then, start index of the block #block_id is given by a total
-      // length of preceeding blocks:
-      //  * Total length of preceeding blocks of size base_block_size + 1:
+      // length of preceding blocks:
+      //  * Total length of preceding blocks of size base_block_size + 1:
       //     min(block_id, num_base_p1_sized_blocks) * (base_block_size + 1)
       //
       //  * Total length of preceeding blocks of size base_block_size:

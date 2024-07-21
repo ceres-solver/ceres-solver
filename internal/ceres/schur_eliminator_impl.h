@@ -505,7 +505,7 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::
 }
 
 // Compute the outer product F'E(E'E)^{-1}E'F and subtract it from the
-// Schur complement matrix, i.e
+// Schur complement matrix, i.e.
 //
 //  S -= F'E(E'E)^{-1}E'F.
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>

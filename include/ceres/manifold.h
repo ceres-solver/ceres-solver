@@ -211,7 +211,7 @@ class CERES_EXPORT Manifold {
                      const double* x,
                      double* y_minus_x) const = 0;
 
-  // Compute the derivative of Minus(y, x) w.r.t y at y = x, i.e
+  // Compute the derivative of Minus(y, x) w.r.t y at y = x, i.e.
   //
   //   (D_1 Minus) (x, x)
   //

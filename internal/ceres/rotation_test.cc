@@ -81,7 +81,7 @@ MATCHER(IsNormalizedQuaternion, "") {
 // double actual_quaternion[4];
 // EXPECT_THAT(actual_quaternion, IsNearQuaternion(expected_quaternion));
 MATCHER_P(IsNearQuaternion, expected, "") {
-  // Quaternions are equivalent upto a sign change. So we will compare
+  // Quaternions are equivalent up to a sign change. So we will compare
   // both signs before declaring failure.
   bool is_near = true;
   // NOTE: near (and far) can be defined as macros on the Windows platform (for

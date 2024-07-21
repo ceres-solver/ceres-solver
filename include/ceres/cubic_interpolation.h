@@ -171,7 +171,7 @@ class CubicInterpolator {
 //
 // The function being provided can be vector valued, in which case
 // kDataDimension > 1. The dimensional slices of the function maybe
-// interleaved, or they maybe stacked, i.e, if the function has
+// interleaved, or they maybe stacked, i.e., if the function has
 // kDataDimension = 2, if kInterleaved = true, then it is stored as
 //
 //   f01, f02, f11, f12 ....
@@ -349,7 +349,7 @@ class BiCubicInterpolator {
 
 // An object that implements an infinite two dimensional grid needed
 // by the BiCubicInterpolator where the source of the function values
-// is an grid of type T on the grid
+// is a grid of type T on the grid
 //
 //   [(row_start,   col_start), ..., (row_start,   col_end - 1)]
 //   [                          ...                            ]
@@ -362,7 +362,7 @@ class BiCubicInterpolator {
 // The function being provided can be vector valued, in which case
 // kDataDimension > 1. The data maybe stored in row or column major
 // format and the various dimensional slices of the function maybe
-// interleaved, or they maybe stacked, i.e, if the function has
+// interleaved, or they maybe stacked, i.e., if the function has
 // kDataDimension = 2, is stored in row-major format and if
 // kInterleaved = true, then it is stored as
 //

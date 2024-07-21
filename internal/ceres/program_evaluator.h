@@ -170,7 +170,7 @@ class ProgramEvaluator final : public Evaluator {
       jacobian->SetZero(options_.context, options_.num_threads);
     }
 
-    // Each thread gets it's own cost and evaluate scratch space.
+    // Each thread gets its own cost and evaluate scratch space.
     for (int i = 0; i < options_.num_threads; ++i) {
       evaluate_scratch_[i].cost = 0.0;
       if (gradient != nullptr) {

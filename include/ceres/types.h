@@ -189,7 +189,7 @@ enum SparseLinearAlgebraLibraryType {
 // of the method. e.g., when doing sparse Cholesky factorization,
 // there are matrices for which a good ordering will give a
 // Cholesky factor with O(n) storage, where as a bad ordering will
-// result in an completely dense factor.
+// result in a completely dense factor.
 //
 // So sparse direct solvers like SPARSE_NORMAL_CHOLESKY and
 // SPARSE_SCHUR and preconditioners like SUBSET, CLUSTER_JACOBI &

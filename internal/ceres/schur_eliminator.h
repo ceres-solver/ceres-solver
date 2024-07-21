@@ -84,7 +84,7 @@ namespace ceres::internal {
 //
 // The rows of A are ordered so that for every variable block in y,
 // all the rows containing that variable block occur as a vertically
-// contiguous block. i.e the matrix A looks like
+// contiguous block. i.e. the matrix A looks like
 //
 //              E                 F                   chunk
 //  A = [ y1   0   0   0 |  z1    0    0   0    z5]     1
@@ -136,7 +136,7 @@ namespace ceres::internal {
 //  1. E'E is a block diagonal matrix.
 //
 //  2. When E'F is computed, only the terms within a single chunk
-//  interact, i.e for y1 column blocks when transposed and multiplied
+//  interact, i.e. for y1 column blocks when transposed and multiplied
 //  with F, the only non-zero contribution comes from the blocks in
 //  chunk1.
 //
