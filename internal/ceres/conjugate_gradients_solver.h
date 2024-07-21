@@ -64,7 +64,7 @@ class LinearOperatorAdapter : public ConjugateGradientsLinearOperator<Vector> {
  public:
   LinearOperatorAdapter(LinearOperator& linear_operator)
       : linear_operator_(linear_operator) {}
-  ~LinearOperatorAdapter = default;
+  ~LinearOperatorAdapter() override = default;
   void RightMultiplyAndAccumulate(const Vector& x, Vector& y) final {
     linear_operator_.RightMultiplyAndAccumulate(x, y);
   }
