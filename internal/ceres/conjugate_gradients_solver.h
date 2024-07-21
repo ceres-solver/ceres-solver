@@ -53,7 +53,7 @@ namespace ceres::internal {
 template <typename DenseVectorType>
 class ConjugateGradientsLinearOperator {
  public:
-  ~ConjugateGradientsLinearOperator() = default;
+  virtual ~ConjugateGradientsLinearOperator() = default;
   virtual void RightMultiplyAndAccumulate(const DenseVectorType& x,
                                           DenseVectorType& y) = 0;
 };
@@ -64,7 +64,7 @@ class LinearOperatorAdapter : public ConjugateGradientsLinearOperator<Vector> {
  public:
   LinearOperatorAdapter(LinearOperator& linear_operator)
       : linear_operator_(linear_operator) {}
-
+  ~LinearOperatorAdapter() override = default;
   void RightMultiplyAndAccumulate(const Vector& x, Vector& y) final {
     linear_operator_.RightMultiplyAndAccumulate(x, y);
   }
