@@ -32,10 +32,11 @@
 
 #include "ceres/dynamic_autodiff_cost_function.h"
 
-#include <cstddef>
 #include <memory>
+#include <utility>
 #include <vector>
 
+#include "ceres/cost_function.h"
 #include "ceres/types.h"
 #include "gtest/gtest.h"
 

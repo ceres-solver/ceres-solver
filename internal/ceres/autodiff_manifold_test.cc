@@ -31,11 +31,13 @@
 #include "ceres/autodiff_manifold.h"
 
 #include <cmath>
+#include <limits>
 
 #include "ceres/constants.h"
-#include "ceres/manifold.h"
+#include "ceres/internal/eigen.h"
 #include "ceres/manifold_test_utils.h"
 #include "ceres/rotation.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {

@@ -31,13 +31,13 @@
 #include "ceres/block_sparse_matrix.h"
 
 #include <algorithm>
+#include <limits>
 #include <memory>
 #include <random>
-#include <string>
 #include <vector>
 
+#include "ceres/block_structure.h"
 #include "ceres/casts.h"
-#include "ceres/crs_matrix.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/triplet_sparse_matrix.h"

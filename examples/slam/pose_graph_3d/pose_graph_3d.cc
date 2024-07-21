@@ -32,6 +32,7 @@
 #include <iostream>
 #include <string>
 
+#include "Eigen/Core"
 #include "absl/flags/flag.h"
 #include "absl/flags/parse.h"
 #include "absl/log/check.h"

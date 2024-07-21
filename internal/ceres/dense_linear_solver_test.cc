@@ -28,11 +28,16 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
+#include <limits>
 #include <memory>
+#include <sstream>
+#include <string>
 
 #include "ceres/casts.h"
 #include "ceres/context_impl.h"
+#include "ceres/dense_sparse_matrix.h"
 #include "ceres/internal/config.h"
+#include "ceres/internal/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/linear_solver.h"
 #include "ceres/triplet_sparse_matrix.h"

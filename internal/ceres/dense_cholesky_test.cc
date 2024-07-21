@@ -30,18 +30,19 @@
 
 #include "ceres/dense_cholesky.h"
 
+#include <limits>
 #include <memory>
-#include <numeric>
 #include <sstream>
 #include <string>
 #include <utility>
-#include <vector>
 
 #include "Eigen/Dense"
+#include "ceres/context_impl.h"
 #include "ceres/internal/config.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/iterative_refiner.h"
 #include "ceres/linear_solver.h"
+#include "ceres/types.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 

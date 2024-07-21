@@ -31,6 +31,12 @@
 
 #include "ceres/internal/array_selector.h"
 
+#include <array>
+#include <type_traits>
+#include <vector>
+
+#include "ceres/internal/fixed_array.h"
+#include "ceres/types.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {

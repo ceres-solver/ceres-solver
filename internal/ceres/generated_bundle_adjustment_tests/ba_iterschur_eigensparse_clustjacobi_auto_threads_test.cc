@@ -37,7 +37,11 @@
 
 #include "ceres/bundle_adjustment_test_util.h"
 #include "ceres/internal/config.h"
+#include "ceres/problem.h"
+#include "ceres/solver.h"
+#include "ceres/types.h"
 #include "gtest/gtest.h"
+
 
 #ifdef CERES_USE_EIGEN_SPARSE
 

@@ -29,12 +29,14 @@
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
 #include <memory>
+#include <utility>
 
 #include "Eigen/Cholesky"
 #include "ceres/casts.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/context_impl.h"
 #include "ceres/internal/config.h"
+#include "ceres/internal/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/linear_solver.h"
 #include "ceres/triplet_sparse_matrix.h"

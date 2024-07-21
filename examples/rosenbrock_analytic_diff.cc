@@ -32,6 +32,8 @@
 // (https://en.wikipedia.org/wiki/Rosenbrock_function) using
 // GradientProblemSolver using analytic derivatives.
 
+#include <iostream>
+
 #include "absl/log/initialize.h"
 #include "ceres/ceres.h"
 

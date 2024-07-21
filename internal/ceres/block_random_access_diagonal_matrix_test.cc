@@ -30,11 +30,14 @@
 
 #include "ceres/block_random_access_diagonal_matrix.h"
 
-#include <limits>
+#include <cmath>
 #include <memory>
 #include <vector>
 
 #include "Eigen/Cholesky"
+#include "ceres/block_random_access_matrix.h"
+#include "ceres/block_structure.h"
+#include "ceres/context_impl.h"
 #include "ceres/internal/eigen.h"
 #include "gtest/gtest.h"
 
@@ -133,10 +136,10 @@ TEST_F(BlockRandomAccessDiagonalMatrixTest, MatrixContents) {
               kTolerance);
 
   // There is nothing else in the matrix besides these four blocks.
-  EXPECT_NEAR(
-      dense.norm(),
-      sqrt(6 * 1.0 + 3 * 4.0 + 12 * 16.0 + 4 * 25.0 + 20 * 81.0 + 5 * 100.0),
-      kTolerance);
+  EXPECT_NEAR(dense.norm(),
+              std::sqrt(6 * 1.0 + 3 * 4.0 + 12 * 16.0 + 4 * 25.0 + 20 * 81.0 +
+                        5 * 100.0),
+              kTolerance);
 }
 
 TEST_F(BlockRandomAccessDiagonalMatrixTest, RightMultiplyAndAccumulate) {

@@ -30,10 +30,10 @@
 
 #include "ceres/cuda_vector.h"
 
-#include <string>
-
+#include "ceres/context_impl.h"
 #include "ceres/internal/config.h"
 #include "ceres/internal/eigen.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres {

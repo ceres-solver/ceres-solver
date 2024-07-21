@@ -50,14 +50,14 @@
 //
 //   [1] http://www.mathworks.com/matlabcentral/fileexchange/5557-circle-fit/content/circfit.m  // NOLINT
 
+#include <cmath>
 #include <cstdio>
+#include <iostream>
 #include <vector>
 
 #include "absl/flags/flag.h"
 #include "absl/flags/parse.h"
-#include "absl/log/check.h"
 #include "absl/log/initialize.h"
-#include "absl/log/log.h"
 #include "ceres/ceres.h"
 
 ABSL_FLAG(double,
@@ -122,7 +122,7 @@ int main(int argc, char** argv) {
   double initial_r = r;
 
   // Parameterize r as m^2 so that it can't be negative.
-  double m = sqrt(r);
+  double m = std::sqrt(r);
 
   ceres::Problem problem;
 
