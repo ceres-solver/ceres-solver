@@ -28,8 +28,8 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#include <cmath>
 #include <cstdlib>
+#include <limits>
 
 #include "ceres/ceres.h"
 #include "gtest/gtest.h"

@@ -36,6 +36,7 @@
 #include <string>
 #include <utility>
 
+#include "Eigen/Core"
 #include "Eigen/Dense"
 #include "ceres/context_impl.h"
 #include "ceres/internal/config.h"

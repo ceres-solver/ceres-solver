@@ -31,10 +31,9 @@
 
 #include "ceres/tiny_solver_autodiff_function.h"
 
-#include <algorithm>
-#include <cmath>
 #include <limits>
 
+#include "Eigen/Core"
 #include "ceres/tiny_solver.h"
 #include "ceres/tiny_solver_test_util.h"
 #include "gtest/gtest.h"

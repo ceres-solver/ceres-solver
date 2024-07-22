@@ -319,10 +319,10 @@ class CERES_NO_EXPORT CudaStreamedBuffer {
     // This class only supports cpu memory as a source
     CHECK_NE(attributes.type, cudaMemoryTypeDevice);
     // If host memory was allocated (or registered) with CUDA API, or is a
-    // managed memory, then call to cudaMemcpyAsync will be asynchrnous. In case
-    // of managed memory it might be slightly better to perform a single call of
-    // user-provided call-back (and hope that page migration will provide a
-    // similar throughput with zero efforts from our side).
+    // managed memory, then call to cudaMemcpyAsync will be asynchronous. In
+    // case of managed memory it might be slightly better to perform a single
+    // call of user-provided call-back (and hope that page migration will
+    // provide a similar throughput with zero efforts from our side).
     return attributes.type == cudaMemoryTypeUnregistered;
   }
 

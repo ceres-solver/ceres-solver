@@ -32,9 +32,8 @@
 // the generated bundle adjustment test binaries. The reason to split the
 // bundle tests into separate binaries is so the tests can get parallelized.
 
-#include <cmath>
 #include <cstdio>
-#include <cstdlib>
+#include <memory>
 #include <string>
 
 #include "absl/log/log.h"
@@ -44,7 +43,6 @@
 #include "ceres/problem.h"
 #include "ceres/rotation.h"
 #include "ceres/solver.h"
-#include "ceres/stringprintf.h"
 #include "ceres/test_util.h"
 #include "ceres/types.h"
 
@@ -60,7 +58,7 @@ const bool kUserOrdering = false;
 // problem is hard coded in the constructor.
 class BundleAdjustmentProblem {
  public:
-  BundleAdjustmentProblem(const std::string input_file) {
+  explicit BundleAdjustmentProblem(const std::string input_file) {
     ReadData(input_file);
     BuildProblem();
   }
@@ -93,7 +91,7 @@ class BundleAdjustmentProblem {
   const Solver::Options& options() const { return options_; }
   // clang-format on
 
-  static double kResidualTolerance;
+  static constexpr double kResidualTolerance = 1e-4;
 
  private:
   void ReadData(const std::string& filename) {
@@ -242,7 +240,6 @@ class BundleAdjustmentProblem {
   double* parameters_;
 };
 
-double BundleAdjustmentProblem::kResidualTolerance = 1e-4;
 using BundleAdjustmentTest = SystemTest<BundleAdjustmentProblem>;
 
 }  // namespace internal

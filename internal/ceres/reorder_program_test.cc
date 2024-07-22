@@ -30,15 +30,22 @@
 
 #include "ceres/reorder_program.h"
 
+#include <algorithm>
+#include <memory>
 #include <random>
+#include <string>
+#include <unordered_set>
 #include <vector>
 
 #include "ceres/internal/config.h"
+#include "ceres/ordered_groups.h"
 #include "ceres/parameter_block.h"
+#include "ceres/problem.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/solver.h"
+#include "ceres/types.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 

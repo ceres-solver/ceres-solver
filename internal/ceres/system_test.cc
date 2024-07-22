@@ -31,11 +31,9 @@
 //
 // End-to-end tests for Ceres using Powell's function.
 
-#include <cmath>
-#include <cstdlib>
-
 #include "ceres/autodiff_cost_function.h"
 #include "ceres/internal/config.h"
+#include "ceres/jet.h"
 #include "ceres/problem.h"
 #include "ceres/solver.h"
 #include "ceres/test_util.h"
@@ -86,7 +84,7 @@ class PowellsFunction {
   Problem* mutable_problem() { return &problem_; }
   Solver::Options* mutable_solver_options() { return &options_; }
 
-  static double kResidualTolerance;
+  static constexpr double kResidualTolerance = 1e-8;
 
  private:
   // Templated functions used for automatically differentiated cost
@@ -135,8 +133,6 @@ class PowellsFunction {
   Problem problem_;
   Solver::Options options_;
 };
-
-double PowellsFunction::kResidualTolerance = 1e-8;
 
 using PowellTest = SystemTest<PowellsFunction>;
 

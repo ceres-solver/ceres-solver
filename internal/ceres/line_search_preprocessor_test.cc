@@ -30,11 +30,13 @@
 
 #include "ceres/line_search_preprocessor.h"
 
-#include <map>
+#include <limits>
 
+#include "ceres/preprocessor.h"
 #include "ceres/problem_impl.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/solver.h"
+#include "ceres/types.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {

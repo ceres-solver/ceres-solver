@@ -35,14 +35,13 @@
 #include <memory>
 #include <utility>
 
+#include "Eigen/Core"
 #include "Eigen/Geometry"
 #include "ceres/constants.h"
-#include "ceres/dynamic_numeric_diff_cost_function.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/port.h"
 #include "ceres/line_manifold.h"
 #include "ceres/manifold_test_utils.h"
-#include "ceres/numeric_diff_options.h"
 #include "ceres/product_manifold.h"
 #include "ceres/rotation.h"
 #include "ceres/sphere_manifold.h"

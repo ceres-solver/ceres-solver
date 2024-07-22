@@ -34,8 +34,11 @@
 #define EXAMPLES_CERES_READ_G2O_H_
 
 #include <fstream>
+#include <functional>
+#include <istream>
 #include <map>
 #include <string>
+#include <vector>
 
 #include "absl/log/check.h"
 #include "absl/log/log.h"

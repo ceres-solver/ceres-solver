@@ -141,14 +141,11 @@
 #define CERES_PUBLIC_INTERNAL_AUTODIFF_H_
 
 #include <array>
-#include <cstddef>
 #include <utility>
 
+#include "Eigen/Core"
 #include "absl/log/check.h"
 #include "ceres/internal/array_selector.h"
-#include "ceres/internal/eigen.h"
-#include "ceres/internal/fixed_array.h"
-#include "ceres/internal/parameter_dims.h"
 #include "ceres/internal/variadic_evaluate.h"
 #include "ceres/jet.h"
 #include "ceres/types.h"

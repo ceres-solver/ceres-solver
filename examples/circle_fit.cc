@@ -53,7 +53,6 @@
 #include <cmath>
 #include <cstdio>
 #include <iostream>
-#include <vector>
 
 #include "absl/flags/flag.h"
 #include "absl/flags/parse.h"

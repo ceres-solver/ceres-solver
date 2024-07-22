@@ -240,7 +240,7 @@ void ParallelInvoke(ContextImpl* context,
       //  * Total length of preceding blocks of size base_block_size + 1:
       //     min(block_id, num_base_p1_sized_blocks) * (base_block_size + 1)
       //
-      //  * Total length of preceeding blocks of size base_block_size:
+      //  * Total length of preceding blocks of size base_block_size:
       //     (block_id - min(block_id, num_base_p1_sized_blocks)) *
       //     base_block_size
       //

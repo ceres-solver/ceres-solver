@@ -43,7 +43,6 @@
 #include "ceres/fake_bundle_adjustment_jacobian.h"
 #include "ceres/internal/config.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/linear_solver.h"
 
 #ifndef CERES_NO_CUDA
 #include "cuda_runtime.h"

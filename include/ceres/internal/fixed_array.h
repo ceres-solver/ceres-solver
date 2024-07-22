@@ -32,8 +32,10 @@
 
 #include <Eigen/Core>  // For Eigen::aligned_allocator
 #include <algorithm>
-#include <array>
 #include <cstddef>
+#include <initializer_list>
+#include <iterator>
+#include <limits>
 #include <memory>
 #include <tuple>
 #include <type_traits>

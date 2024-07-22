@@ -32,6 +32,7 @@
 
 #include <algorithm>
 #include <cstdint>
+#include <limits>
 #include <map>
 #include <memory>
 #include <utility>
@@ -47,6 +48,7 @@
 #include "ceres/manifold.h"
 #include "ceres/map_util.h"
 #include "ceres/problem_impl.h"
+#include "ceres/types.h"
 #include "gtest/gtest.h"
 
 namespace ceres {

@@ -30,13 +30,16 @@
 
 #include "ceres/sparse_cholesky.h"
 
+#include <limits>
 #include <memory>
-#include <numeric>
 #include <random>
+#include <sstream>
+#include <utility>
 #include <vector>
 
+#include "Eigen/Cholesky"
+#include "Eigen/Core"
 #include "Eigen/Dense"
-#include "Eigen/SparseCore"
 #include "absl/log/check.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/compressed_row_sparse_matrix.h"
@@ -45,6 +48,8 @@
 #include "ceres/internal/config.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/iterative_refiner.h"
+#include "ceres/linear_solver.h"
+#include "ceres/types.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 

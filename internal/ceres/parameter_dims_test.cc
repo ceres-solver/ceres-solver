@@ -24,6 +24,7 @@
 
 #include "ceres/internal/parameter_dims.h"
 
+#include <array>
 #include <type_traits>
 #include <utility>
 

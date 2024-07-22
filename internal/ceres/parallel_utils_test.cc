@@ -30,6 +30,9 @@
 
 #include "ceres/parallel_utils.h"
 
+#include <set>
+#include <utility>
+
 #include "ceres/internal/config.h"
 #include "gtest/gtest.h"
 

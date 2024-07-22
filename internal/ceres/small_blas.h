@@ -35,6 +35,7 @@
 #ifndef CERES_INTERNAL_SMALL_BLAS_H_
 #define CERES_INTERNAL_SMALL_BLAS_H_
 
+#include "Eigen/Core"
 #include "absl/log/check.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
