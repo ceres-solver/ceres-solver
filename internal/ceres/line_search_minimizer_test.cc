@@ -28,7 +28,6 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#include <cstdlib>
 #include <limits>
 
 #include "ceres/ceres.h"
