@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "751d8903_c44bdd10",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-23T19:15:12Z",
+      "side": 1,
+      "message": "PTAL when you have a moment, this should be a pretty simple migration to absl.",
+      "revId": "09a5cb7fa1f34b5369f0d0d6ba37b76e60a90229",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
