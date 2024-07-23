@@ -42,8 +42,8 @@
 #include <type_traits>
 #include <utility>
 
+#include "absl/container/fixed_array.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/fixed_array.h"
 #include "ceres/internal/port.h"
 #include "ceres/manifold.h"
 
@@ -117,7 +117,7 @@ class ProductManifold final : public Manifold {
   bool PlusJacobian(const double* x, double* jacobian_ptr) const override {
     MatrixRef jacobian(jacobian_ptr, AmbientSize(), TangentSize());
     jacobian.setZero();
-    internal::FixedArray<double> buffer(buffer_size_);
+    absl::FixedArray<double> buffer(buffer_size_);
 
     return PlusJacobianImpl(
         x, jacobian, buffer, std::make_index_sequence<kNumManifolds>{});
@@ -126,7 +126,7 @@ class ProductManifold final : public Manifold {
   bool MinusJacobian(const double* x, double* jacobian_ptr) const override {
     MatrixRef jacobian(jacobian_ptr, TangentSize(), AmbientSize());
     jacobian.setZero();
-    internal::FixedArray<double> buffer(buffer_size_);
+    absl::FixedArray<double> buffer(buffer_size_);
 
     return MinusJacobianImpl(
         x, jacobian, buffer, std::make_index_sequence<kNumManifolds>{});
@@ -199,7 +199,7 @@ class ProductManifold final : public Manifold {
   template <std::size_t Index0, std::size_t... Indices>
   bool PlusJacobianImpl(const double* x,
                         MatrixRef& jacobian,
-                        internal::FixedArray<double>& buffer,
+                        absl::FixedArray<double>& buffer,
                         std::index_sequence<Index0, Indices...>) const {
     if (!Dereference(std::get<Index0>(manifolds_))
              .PlusJacobian(x + ambient_offsets_[Index0], buffer.data())) {
@@ -217,18 +217,17 @@ class ProductManifold final : public Manifold {
         x, jacobian, buffer, std::index_sequence<Indices...>{});
   }
 
-  static constexpr bool PlusJacobianImpl(
-      const double* /*x*/,
-      MatrixRef& /*jacobian*/,
-      internal::FixedArray<double>& /*buffer*/,
-      std::index_sequence<>) noexcept {
+  static constexpr bool PlusJacobianImpl(const double* /*x*/,
+                                         MatrixRef& /*jacobian*/,
+                                         absl::FixedArray<double>& /*buffer*/,
+                                         std::index_sequence<>) noexcept {
     return true;
   }
 
   template <std::size_t Index0, std::size_t... Indices>
   bool MinusJacobianImpl(const double* x,
                          MatrixRef& jacobian,
-                         internal::FixedArray<double>& buffer,
+                         absl::FixedArray<double>& buffer,
                          std::index_sequence<Index0, Indices...>) const {
     if (!Dereference(std::get<Index0>(manifolds_))
              .MinusJacobian(x + ambient_offsets_[Index0], buffer.data())) {
@@ -246,11 +245,10 @@ class ProductManifold final : public Manifold {
         x, jacobian, buffer, std::index_sequence<Indices...>{});
   }
 
-  static constexpr bool MinusJacobianImpl(
-      const double* /*x*/,
-      MatrixRef& /*jacobian*/,
-      internal::FixedArray<double>& /*buffer*/,
-      std::index_sequence<>) noexcept {
+  static constexpr bool MinusJacobianImpl(const double* /*x*/,
+                                          MatrixRef& /*jacobian*/,
+                                          absl::FixedArray<double>& /*buffer*/,
+                                          std::index_sequence<>) noexcept {
     return true;
   }
 

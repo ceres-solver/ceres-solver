@@ -34,9 +34,9 @@
 #include <memory>
 #include <type_traits>
 
+#include "absl/container/fixed_array.h"
 #include "ceres/first_order_function.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/fixed_array.h"
 #include "ceres/jet.h"
 #include "ceres/types.h"
 
@@ -131,7 +131,7 @@ class AutoDiffFirstOrderFunction final : public FirstOrderFunction {
     }
 
     using JetT = Jet<double, kNumParameters>;
-    internal::FixedArray<JetT, (256 * 7) / sizeof(JetT)> x(kNumParameters);
+    absl::FixedArray<JetT, (256 * 7) / sizeof(JetT)> x(kNumParameters);
     for (int i = 0; i < kNumParameters; ++i) {
       x[i].a = parameters[i];
       x[i].v.setZero();

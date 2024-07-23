@@ -37,6 +37,7 @@
 #include <utility>
 #include <vector>
 
+#include "absl/container/fixed_array.h"
 #include "absl/log/check.h"
 #include "absl/log/log.h"
 #include "ceres/cost_function.h"
@@ -206,7 +207,7 @@ TEST(GradientChecker, SmokeTest) {
   parameter_sizes[2] = 4;
 
   // Make a random set of blocks.
-  FixedArray<double*> parameters(num_parameters);
+  absl::FixedArray<double*> parameters(num_parameters);
   std::mt19937 prng;
   std::uniform_real_distribution<double> distribution(-1.0, 1.0);
   auto randu = [&prng, &distribution] { return distribution(prng); };
