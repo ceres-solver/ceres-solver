@@ -36,11 +36,11 @@
 #include <numeric>
 #include <vector>
 
+#include "absl/container/fixed_array.h"
 #include "absl/log/check.h"
 #include "ceres/dynamic_cost_function.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
-#include "ceres/internal/fixed_array.h"
 
 namespace ceres {
 
@@ -130,11 +130,11 @@ class CERES_EXPORT DynamicCostFunctionToFunctor {
     const int num_parameters = std::accumulate(
         parameter_block_sizes.begin(), parameter_block_sizes.end(), 0);
 
-    internal::FixedArray<double> parameters(num_parameters);
-    internal::FixedArray<double*> parameter_blocks(num_parameter_blocks);
-    internal::FixedArray<double> jacobians(num_residuals * num_parameters);
-    internal::FixedArray<double*> jacobian_blocks(num_parameter_blocks);
-    internal::FixedArray<double> residuals(num_residuals);
+    absl::FixedArray<double> parameters(num_parameters);
+    absl::FixedArray<double*> parameter_blocks(num_parameter_blocks);
+    absl::FixedArray<double> jacobians(num_residuals * num_parameters);
+    absl::FixedArray<double*> jacobian_blocks(num_parameter_blocks);
+    absl::FixedArray<double> residuals(num_residuals);
 
     // Build a set of arrays to get the residuals and jacobians from
     // the CostFunction wrapped by this functor.

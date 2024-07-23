@@ -40,9 +40,9 @@
 
 #include "Eigen/Dense"
 #include "Eigen/StdVector"
+#include "absl/container/fixed_array.h"
 #include "absl/log/check.h"
 #include "ceres/cost_function.h"
-#include "ceres/internal/fixed_array.h"
 #include "ceres/internal/variadic_evaluate.h"
 #include "ceres/numeric_diff_options.h"
 #include "ceres/types.h"
@@ -125,8 +125,8 @@ struct NumericDiff {
 
     // For each parameter in the parameter block, use finite differences to
     // compute the derivative for that parameter.
-    FixedArray<double> temp_residual_array(num_residuals_internal);
-    FixedArray<double> residual_array(num_residuals_internal);
+    absl::FixedArray<double> temp_residual_array(num_residuals_internal);
+    absl::FixedArray<double> residual_array(num_residuals_internal);
     Map<ResidualVector> residuals(residual_array.data(),
                                   num_residuals_internal);
 

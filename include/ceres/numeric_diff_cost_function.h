@@ -228,7 +228,7 @@ class NumericDiffCostFunction final
   bool Evaluate(double const* const* parameters,
                 double* residuals,
                 double** jacobians) const override {
-    using internal::FixedArray;
+    using absl::FixedArray;
     using internal::NumericDiff;
 
     using ParameterDims =

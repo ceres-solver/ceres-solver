@@ -38,9 +38,9 @@
 #include <type_traits>
 #include <vector>
 
+#include "absl/container/fixed_array.h"
 #include "absl/log/check.h"
 #include "ceres/dynamic_cost_function.h"
-#include "ceres/internal/fixed_array.h"
 #include "ceres/jet.h"
 #include "ceres/types.h"
 
@@ -149,14 +149,13 @@ class DynamicAutoDiffCostFunction final : public DynamicCostFunction {
 
     // Allocate scratch space for the strided evaluation.
     using JetT = Jet<double, Stride>;
-    internal::FixedArray<JetT, (256 * 7) / sizeof(JetT)> input_jets(
-        num_parameters);
-    internal::FixedArray<JetT, (256 * 7) / sizeof(JetT)> output_jets(
+    absl::FixedArray<JetT, (256 * 7) / sizeof(JetT)> input_jets(num_parameters);
+    absl::FixedArray<JetT, (256 * 7) / sizeof(JetT)> output_jets(
         num_residuals());
 
     // Make the parameter pack that is sent to the functor (reused).
-    internal::FixedArray<Jet<double, Stride>*> jet_parameters(
-        num_parameter_blocks, nullptr);
+    absl::FixedArray<Jet<double, Stride>*> jet_parameters(num_parameter_blocks,
+                                                          nullptr);
     int num_active_parameters = 0;
 
     // To handle constant parameters between non-constant parameter blocks, the

@@ -5,7 +5,6 @@
 
 #include "absl/log/check.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/fixed_array.h"
 
 namespace ceres {
 namespace {

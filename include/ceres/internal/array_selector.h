@@ -35,7 +35,8 @@
 #include <array>
 #include <vector>
 
-#include "ceres/internal/fixed_array.h"
+#include "absl/container/fixed_array.h"
+#include "absl/log/check.h"
 #include "ceres/types.h"
 
 namespace ceres::internal {
@@ -47,7 +48,7 @@ namespace ceres::internal {
 // Three different containers are selected in different scenarios:
 //
 //   num_elements == DYNAMIC:
-//      -> ceres::internal::FixedArray<T, max_stack_size>(size)
+//      -> absl::FixedArray<T, max_stack_size>(size)
 
 //   num_elements != DYNAMIC  &&  num_elements <= max_stack_size
 //      -> std::array<T,num_elements>
@@ -71,9 +72,9 @@ struct ArraySelector<T,
                      max_num_elements_on_stack,
                      true,
                      fits_on_stack>
-    : ceres::internal::FixedArray<T, max_num_elements_on_stack> {
+    : absl::FixedArray<T, max_num_elements_on_stack> {
   explicit ArraySelector(int s)
-      : ceres::internal::FixedArray<T, max_num_elements_on_stack>(s) {}
+      : absl::FixedArray<T, max_num_elements_on_stack>(s) {}
 };
 
 template <typename T, int num_elements, int max_num_elements_on_stack>

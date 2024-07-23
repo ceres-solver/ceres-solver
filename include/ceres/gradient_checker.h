@@ -43,7 +43,6 @@
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
-#include "ceres/internal/fixed_array.h"
 #include "ceres/manifold.h"
 
 namespace ceres {
