@@ -16,6 +16,40 @@
       "message": "PTAL when you have a moment, this should be a pretty simple migration to absl.",
       "revId": "09a5cb7fa1f34b5369f0d0d6ba37b76e60a90229",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "edd6bab2_73af3224",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-07-23T20:12:56Z",
+      "side": 1,
+      "message": "Sameer, I have just one minor remark. Other than that, LGTM.",
+      "revId": "09a5cb7fa1f34b5369f0d0d6ba37b76e60a90229",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b363dbc4_8be7fe63",
+        "filename": "include/ceres/internal/array_selector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-07-23T20:12:56Z",
+      "side": 1,
+      "message": "```suggestion\n//      -\u003e absl::FixedArray\u003cT, max_stack_size\u003e(size)\n```",
+      "revId": "09a5cb7fa1f34b5369f0d0d6ba37b76e60a90229",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
