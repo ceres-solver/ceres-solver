@@ -50,6 +50,24 @@
       "message": "```suggestion\n//      -\u003e absl::FixedArray\u003cT, max_stack_size\u003e(size)\n```",
       "revId": "09a5cb7fa1f34b5369f0d0d6ba37b76e60a90229",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "344ef71c_7af63d0e",
+        "filename": "include/ceres/internal/array_selector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-07-23T20:45:55Z",
+      "side": 1,
+      "message": "thanks for catching that!",
+      "parentUuid": "b363dbc4_8be7fe63",
+      "revId": "09a5cb7fa1f34b5369f0d0d6ba37b76e60a90229",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
