@@ -35,12 +35,12 @@
 #include <cstddef>
 #include <vector>
 
+#include "absl/container/fixed_array.h"
 #include "absl/log/check.h"
 #include "absl/log/log.h"
 #include "ceres/corrector.h"
 #include "ceres/cost_function.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/fixed_array.h"
 #include "ceres/loss_function.h"
 #include "ceres/manifold.h"
 #include "ceres/parameter_block.h"
@@ -77,13 +77,13 @@ bool ResidualBlock::Evaluate(const bool apply_loss_function,
 
   // Collect the parameters from their blocks. This will rarely allocate, since
   // residuals taking more than 8 parameter block arguments are rare.
-  FixedArray<const double*, 8> parameters(num_parameter_blocks);
+  absl::FixedArray<const double*> parameters(num_parameter_blocks);
   for (int i = 0; i < num_parameter_blocks; ++i) {
     parameters[i] = parameter_blocks_[i]->state();
   }
 
   // Put pointers into the scratch space into global_jacobians as appropriate.
-  FixedArray<double*, 8> global_jacobians(num_parameter_blocks);
+  absl::FixedArray<double*> global_jacobians(num_parameter_blocks);
   if (jacobians != nullptr) {
     for (int i = 0; i < num_parameter_blocks; ++i) {
       const ParameterBlock* parameter_block = parameter_blocks_[i];

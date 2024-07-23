@@ -41,6 +41,7 @@
 #include <utility>
 #include <vector>
 
+#include "absl/container/fixed_array.h"
 #include "absl/log/check.h"
 #include "absl/log/log.h"
 #include "ceres/casts.h"
@@ -52,7 +53,6 @@
 #include "ceres/evaluation_callback.h"
 #include "ceres/evaluator.h"
 #include "ceres/internal/export.h"
-#include "ceres/internal/fixed_array.h"
 #include "ceres/loss_function.h"
 #include "ceres/manifold.h"
 #include "ceres/map_util.h"
@@ -776,7 +776,7 @@ bool ProblemImpl::EvaluateResidualBlock(ResidualBlock* residual_block,
   }
 
   double dummy_cost = 0.0;
-  FixedArray<double, 32> scratch(
+  absl::FixedArray<double> scratch(
       residual_block->NumScratchDoublesForEvaluate());
   return residual_block->Evaluate(apply_loss_function,
                                   cost ? cost : &dummy_cost,

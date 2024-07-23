@@ -34,6 +34,7 @@
 #include <iterator>
 #include <random>
 
+#include "absl/container/fixed_array.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
@@ -666,7 +667,7 @@ TEST(AutoDiff, AlignedAllocationTest) {
   y += 1;
 
   using JetT = Jet<double, 2>;
-  FixedArray<JetT, (256 * 7) / sizeof(JetT)> x(3);
+  absl::FixedArray<JetT, (256 * 7) / sizeof(JetT)> x(3);
 
   // Need this to makes sure that x does not get optimized out.
   x[0] = x[0] + JetT(1.0);

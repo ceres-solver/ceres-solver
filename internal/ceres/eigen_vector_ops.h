@@ -33,8 +33,8 @@
 
 #include <numeric>
 
+#include "absl/container/fixed_array.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/fixed_array.h"
 #include "ceres/parallel_for.h"
 #include "ceres/parallel_vector_ops.h"
 
@@ -47,7 +47,7 @@ template <typename Derived>
 inline double Norm(const Eigen::DenseBase<Derived>& x,
                    ContextImpl* context,
                    int num_threads) {
-  FixedArray<double> norms(num_threads, 0.);
+  absl::FixedArray<double> norms(num_threads, 0.);
   ParallelFor(
       context,
       0,
@@ -77,7 +77,7 @@ inline double Dot(const VectorLikeX& x,
                   const VectorLikeY& y,
                   ContextImpl* context,
                   int num_threads) {
-  FixedArray<double> dots(num_threads, 0.);
+  absl::FixedArray<double> dots(num_threads, 0.);
   ParallelFor(
       context,
       0,

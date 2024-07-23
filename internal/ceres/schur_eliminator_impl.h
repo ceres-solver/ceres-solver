@@ -54,12 +54,12 @@
 #include <map>
 
 #include "Eigen/Dense"
+#include "absl/container/fixed_array.h"
 #include "absl/log/check.h"
 #include "ceres/block_random_access_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/internal/fixed_array.h"
 #include "ceres/invert_psd_matrix.h"
 #include "ceres/map_util.h"
 #include "ceres/parallel_for.h"
@@ -249,7 +249,7 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::Eliminate(
           ete.setZero();
         }
 
-        FixedArray<double, 8> g(e_block_size);
+        absl::FixedArray<double> g(e_block_size);
         typename EigenTypes<kEBlockSize>::VectorRef gref(g.data(),
                                                          e_block_size);
         gref.setZero();
@@ -283,7 +283,7 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::Eliminate(
         //   rhs = F'b - F'E(E'E)^(-1) E'b
 
         if (rhs) {
-          FixedArray<double, 8> inverse_ete_g(e_block_size);
+          absl::FixedArray<double> inverse_ete_g(e_block_size);
           MatrixVectorMultiply<kEBlockSize, kEBlockSize, 0>(
               inverse_ete.data(),
               e_block_size,
@@ -336,7 +336,7 @@ void SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::BackSubstitute(
       const Cell& e_cell = row.cells.front();
       DCHECK_EQ(e_block_id, e_cell.block_id);
 
-      FixedArray<double, 8> sj(row.block.size);
+      absl::FixedArray<double> sj(row.block.size);
 
       typename EigenTypes<kRowBlockSize>::VectorRef(sj.data(), row.block.size) =
           typename EigenTypes<kRowBlockSize>::ConstVectorRef(

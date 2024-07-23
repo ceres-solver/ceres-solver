@@ -39,6 +39,7 @@ set(Threads_DEPENDENCY "find_dependency (Threads)" PARENT_SCOPE)
 
 list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES absl::log)
 list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES absl::check)
+list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES absl::fixed_array)
 
 # Source files that contain public symbols and live in the ceres namespaces.
 # Such symbols are expected to be marked with CERES_EXPORT and the files below
@@ -450,7 +451,6 @@ if (BUILD_TESTING)
   ceres_test(dynamic_sparsity)
   ceres_test(evaluation_callback)
   ceres_test(evaluator)
-  ceres_test(fixed_array)
   ceres_test(gradient_checker)
   ceres_test(gradient_checking_cost_function)
   ceres_test(gradient_problem)
