@@ -37,9 +37,9 @@
 
 #include "absl/log/check.h"
 #include "absl/log/log.h"
+#include "absl/strings/str_format.h"
 #include "ceres/file.h"
 #include "ceres/internal/port.h"
-#include "ceres/stringprintf.h"
 #include "ceres/types.h"
 #include "gtest/gtest.h"
 
@@ -71,11 +71,11 @@ bool ExpectClose(double x, double y, double max_abs_relative_difference) {
     relative_difference = absolute_difference;
   }
   if (relative_difference > max_abs_relative_difference) {
-    VLOG(1) << StringPrintf("x=%17g y=%17g abs=%17g rel=%17g",
-                            x,
-                            y,
-                            absolute_difference,
-                            relative_difference);
+    VLOG(1) << absl::StrFormat("x=%17g y=%17g abs=%17g rel=%17g",
+                               x,
+                               y,
+                               absolute_difference,
+                               relative_difference);
   }
 
   EXPECT_NEAR(relative_difference, 0.0, max_abs_relative_difference);
@@ -137,13 +137,14 @@ std::string TestFileAbsolutePath(const std::string& filename) {
 }
 
 std::string ToString(const Solver::Options& options) {
-  return StringPrintf("(%s, %s, %s, %s, %d)",
-                      LinearSolverTypeToString(options.linear_solver_type),
-                      SparseLinearAlgebraLibraryTypeToString(
-                          options.sparse_linear_algebra_library_type),
-                      options.linear_solver_ordering ? "USER" : "AUTOMATIC",
-                      PreconditionerTypeToString(options.preconditioner_type),
-                      options.num_threads);
+  return absl::StrFormat(
+      "(%s, %s, %s, %s, %d)",
+      LinearSolverTypeToString(options.linear_solver_type),
+      SparseLinearAlgebraLibraryTypeToString(
+          options.sparse_linear_algebra_library_type),
+      options.linear_solver_ordering ? "USER" : "AUTOMATIC",
+      PreconditionerTypeToString(options.preconditioner_type),
+      options.num_threads);
 }
 
 }  // namespace internal

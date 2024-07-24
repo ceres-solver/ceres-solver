@@ -36,6 +36,8 @@
 
 #include "absl/log/check.h"
 #include "absl/log/log.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_format.h"
 #include "ceres/callbacks.h"
 #include "ceres/gradient_problem.h"
 #include "ceres/gradient_problem_evaluator.h"
@@ -45,14 +47,10 @@
 #include "ceres/minimizer.h"
 #include "ceres/solver.h"
 #include "ceres/solver_utils.h"
-#include "ceres/stringprintf.h"
 #include "ceres/types.h"
 #include "ceres/wall_time.h"
 
 namespace ceres {
-using internal::StringAppendF;
-using internal::StringPrintf;
-
 namespace {
 
 Solver::Options GradientProblemSolverOptionsToSolverOptions(
@@ -207,7 +205,7 @@ bool GradientProblemSolver::Summary::IsSolutionUsable() const {
 }
 
 std::string GradientProblemSolver::Summary::BriefReport() const {
-  return StringPrintf(
+  return absl::StrFormat(
       "Ceres GradientProblemSolver Report: "
       "Iterations: %d, "
       "Initial cost: %e, "
@@ -224,17 +222,19 @@ std::string GradientProblemSolver::Summary::FullReport() const {
 
   // NOTE operator+ is not usable for concatenating a string and a string_view.
   std::string report =
-      std::string{"\nSolver Summary (v "}.append(VersionString()) + ")\n\n";
-
-  StringAppendF(&report, "Parameters          % 25d\n", num_parameters);
+      absl::StrCat("\nSolver Summary (v ", VersionString(), ")\n\n");
+  absl::StrAppend(
+      &report, absl::StrFormat("Parameters          % 25d\n", num_parameters));
   if (num_tangent_parameters != num_parameters) {
-    StringAppendF(
-        &report, "Tangent parameters   % 25d\n", num_tangent_parameters);
+    absl::StrAppend(&report,
+                    absl::StrFormat("Tangent parameters   % 25d\n",
+                                    num_tangent_parameters));
   }
 
   std::string line_search_direction_string;
   if (line_search_direction_type == LBFGS) {
-    line_search_direction_string = StringPrintf("LBFGS (%d)", max_lbfgs_rank);
+    line_search_direction_string =
+        absl::StrFormat("LBFGS (%d)", max_lbfgs_rank);
   } else if (line_search_direction_type == NONLINEAR_CONJUGATE_GRADIENT) {
     line_search_direction_string = NonlinearConjugateGradientTypeToString(
         nonlinear_conjugate_gradient_type);
@@ -243,49 +243,54 @@ std::string GradientProblemSolver::Summary::FullReport() const {
         LineSearchDirectionTypeToString(line_search_direction_type);
   }
 
-  StringAppendF(&report,
-                "Line search direction     %19s\n",
-                line_search_direction_string.c_str());
+  absl::StrAppend(&report,
+                  absl::StrFormat("Line search direction     %19s\n",
+                                  line_search_direction_string));
 
-  const std::string line_search_type_string = StringPrintf(
+  const std::string line_search_type_string = absl::StrFormat(
       "%s %s",
       LineSearchInterpolationTypeToString(line_search_interpolation_type),
       LineSearchTypeToString(line_search_type));
-  StringAppendF(&report,
-                "Line search type          %19s\n",
-                line_search_type_string.c_str());
-  StringAppendF(&report, "\n");
+  absl::StrAppend(&report,
+                  absl::StrFormat("Line search type          %19s\n\n",
+                                  line_search_type_string));
 
-  StringAppendF(&report, "\nCost:\n");
-  StringAppendF(&report, "Initial        % 30e\n", initial_cost);
+  absl::StrAppend(&report, "\nCost:\n");
+  absl::StrAppend(&report,
+                  absl::StrFormat("Initial        % 30e\n", initial_cost));
   if (termination_type != FAILURE && termination_type != USER_FAILURE) {
-    StringAppendF(&report, "Final          % 30e\n", final_cost);
-    StringAppendF(&report, "Change         % 30e\n", initial_cost - final_cost);
+    absl::StrAppend(&report,
+                    absl::StrFormat("Final          % 30e\n", final_cost));
+    absl::StrAppend(
+        &report,
+        absl::StrFormat("Change         % 30e\n", initial_cost - final_cost));
   }
 
-  StringAppendF(&report,
-                "\nMinimizer iterations         % 16d\n",
-                static_cast<int>(iterations.size()));
+  absl::StrAppend(&report,
+                  absl::StrFormat("\nMinimizer iterations         % 16d\n",
+                                  static_cast<int>(iterations.size())));
 
-  StringAppendF(&report, "\nTime (in seconds):\n");
-  StringAppendF(&report,
-                "\n  Cost evaluation     %23.6f (%d)\n",
-                cost_evaluation_time_in_seconds,
-                num_cost_evaluations);
-  StringAppendF(&report,
-                "  Gradient & cost evaluation %16.6f (%d)\n",
-                gradient_evaluation_time_in_seconds,
-                num_gradient_evaluations);
-  StringAppendF(&report,
-                "  Polynomial minimization   %17.6f\n",
-                line_search_polynomial_minimization_time_in_seconds);
-  StringAppendF(
-      &report, "Total               %25.6f\n\n", total_time_in_seconds);
+  absl::StrAppend(&report, "\nTime (in seconds):\n");
+  absl::StrAppend(&report,
+                  absl::StrFormat("\n  Cost evaluation     %23.6f (%d)\n",
+                                  cost_evaluation_time_in_seconds,
+                                  num_cost_evaluations));
+  absl::StrAppend(&report,
+                  absl::StrFormat("  Gradient & cost evaluation %16.6f (%d)\n",
+                                  gradient_evaluation_time_in_seconds,
+                                  num_gradient_evaluations));
+  absl::StrAppend(
+      &report,
+      absl::StrFormat("  Polynomial minimization   %17.6f\n",
+                      line_search_polynomial_minimization_time_in_seconds));
+  absl::StrAppend(
+      &report,
+      absl::StrFormat("Total               %25.6f\n\n", total_time_in_seconds));
 
-  StringAppendF(&report,
-                "Termination:        %25s (%s)\n",
-                TerminationTypeToString(termination_type),
-                message.c_str());
+  absl::StrAppend(&report,
+                  absl::StrFormat("Termination:        %25s (%s)\n",
+                                  TerminationTypeToString(termination_type),
+                                  message));
   return report;
 }
 

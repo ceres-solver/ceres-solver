@@ -36,7 +36,8 @@
 #include <string>
 #include <vector>
 
-#include "ceres/stringprintf.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_format.h"
 #include "ceres/types.h"
 
 namespace ceres::internal {
@@ -79,12 +80,12 @@ void AppendArrayToString(const int64_t size,
                          std::string* result) {
   for (int64_t i = 0; i < size; ++i) {
     if (x == nullptr) {
-      StringAppendF(result, "Not Computed  ");
+      absl::StrAppend(result, "Not Computed  ");
     } else {
       if (x[i] == kImpossibleValue) {
-        StringAppendF(result, "Uninitialized ");
+        absl::StrAppend(result, "Uninitialized ");
       } else {
-        StringAppendF(result, "%12g ", x[i]);
+        absl::StrAppend(result, absl::StrFormat("%12g ", x[i]));
       }
     }
   }

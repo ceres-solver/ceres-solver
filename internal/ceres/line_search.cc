@@ -41,12 +41,13 @@
 
 #include "absl/log/check.h"
 #include "absl/log/log.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_format.h"
 #include "ceres/evaluator.h"
 #include "ceres/function_sample.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/map_util.h"
 #include "ceres/polynomial.h"
-#include "ceres/stringprintf.h"
 #include "ceres/wall_time.h"
 
 namespace ceres::internal {
@@ -79,9 +80,9 @@ std::unique_ptr<LineSearch> LineSearch::Create(
     case ceres::WOLFE:
       return std::make_unique<WolfeLineSearch>(options);
     default:
-      *error = std::string("Invalid line search algorithm type: ") +
-               LineSearchTypeToString(line_search_type) +
-               std::string(", unable to create line search.");
+      *error = absl::StrCat("Invalid line search algorithm type: ",
+                            LineSearchTypeToString(line_search_type),
+                            ", unable to create line search.");
   }
   return nullptr;
 }
@@ -317,7 +318,7 @@ void ArmijoLineSearch::DoSearch(const double step_size_estimate,
     // point is not large enough to satisfy the sufficient decrease condition.
     ++summary->num_iterations;
     if (summary->num_iterations >= options().max_num_iterations) {
-      summary->error = StringPrintf(
+      summary->error = absl::StrFormat(
           "Line search failed: Armijo failed to find a point "
           "satisfying the sufficient decrease condition within "
           "specified max_num_iterations: %d.",
@@ -340,7 +341,7 @@ void ArmijoLineSearch::DoSearch(const double step_size_estimate,
         (WallTimeInSeconds() - polynomial_minimization_start_time);
 
     if (step_size * descent_direction_max_norm < options().min_step_size) {
-      summary->error = StringPrintf(
+      summary->error = absl::StrFormat(
           "Line search failed: step_size too small: %.5e "
           "with descent_direction_max_norm: %.5e.",
           step_size,
@@ -604,7 +605,7 @@ bool WolfeLineSearch::BracketingPhase(const FunctionSample& initial_position,
       // Check num iterations bound here so that we always evaluate the
       // max_num_iterations-th iteration against all conditions, and
       // then perform no additional (unused) evaluations.
-      summary->error = StringPrintf(
+      summary->error = absl::StrFormat(
           "Line search failed: Wolfe bracketing phase failed to "
           "find a point satisfying strong Wolfe conditions, or a "
           "bracket containing such a point within specified "
@@ -660,7 +661,7 @@ bool WolfeLineSearch::BracketingPhase(const FunctionSample& initial_position,
     summary->polynomial_minimization_time_in_seconds +=
         (WallTimeInSeconds() - polynomial_minimization_start_time);
     if (step_size * descent_direction_max_norm < options().min_step_size) {
-      summary->error = StringPrintf(
+      summary->error = absl::StrFormat(
           "Line search failed: step_size too small: %.5e "
           "with descent_direction_max_norm: %.5e",
           step_size,
@@ -736,7 +737,7 @@ bool WolfeLineSearch::ZoomPhase(const FunctionSample& initial_position,
     // returns inconsistent gradient values relative to the function values,
     // we do not CHECK_LT(), but we do stop processing and return an invalid
     // value.
-    summary->error = StringPrintf(
+    summary->error = absl::StrFormat(
         "Line search failed: Wolfe zoom phase passed a bracket "
         "which does not satisfy: bracket_low.gradient * "
         "(bracket_high.x - bracket_low.x) < 0 [%.8e !< 0] "
@@ -744,9 +745,9 @@ bool WolfeLineSearch::ZoomPhase(const FunctionSample& initial_position,
         " %s, the most likely cause of which is the cost function "
         "returning inconsistent gradient & function values.",
         bracket_low.gradient * (bracket_high.x - bracket_low.x),
-        initial_position.ToDebugString().c_str(),
-        bracket_low.ToDebugString().c_str(),
-        bracket_high.ToDebugString().c_str());
+        initial_position.ToDebugString(),
+        bracket_low.ToDebugString(),
+        bracket_high.ToDebugString());
     if (!options().is_silent) {
       LOG(WARNING) << summary->error;
     }
@@ -763,7 +764,7 @@ bool WolfeLineSearch::ZoomPhase(const FunctionSample& initial_position,
     // not satisfy the Wolfe condition.
     *solution = bracket_low;
     if (summary->num_iterations >= options().max_num_iterations) {
-      summary->error = StringPrintf(
+      summary->error = absl::StrFormat(
           "Line search failed: Wolfe zoom phase failed to "
           "find a point satisfying strong Wolfe conditions "
           "within specified max_num_iterations: %d, "
@@ -779,7 +780,7 @@ bool WolfeLineSearch::ZoomPhase(const FunctionSample& initial_position,
         options().min_step_size) {
       // Bracket width has been reduced below tolerance, and no point satisfying
       // the strong Wolfe conditions has been found.
-      summary->error = StringPrintf(
+      summary->error = absl::StrFormat(
           "Line search failed: Wolfe zoom bracket width: %.5e "
           "too small with descent_direction_max_norm: %.5e.",
           fabs(bracket_high.x - bracket_low.x),
@@ -830,7 +831,7 @@ bool WolfeLineSearch::ZoomPhase(const FunctionSample& initial_position,
     const bool kEvaluateGradient = true;
     function->Evaluate(step_size, kEvaluateGradient, solution);
     if (!solution->value_is_valid || !solution->gradient_is_valid) {
-      summary->error = StringPrintf(
+      summary->error = absl::StrFormat(
           "Line search failed: Wolfe Zoom phase found "
           "step_size: %.5e, for which function is invalid, "
           "between low_step: %.5e and high_step: %.5e "

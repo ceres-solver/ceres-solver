@@ -36,6 +36,7 @@
 
 #include "absl/log/check.h"
 #include "absl/log/log.h"
+#include "absl/strings/str_format.h"
 #include "ceres/callbacks.h"
 #include "ceres/context_impl.h"
 #include "ceres/evaluator.h"
@@ -91,17 +92,17 @@ void AlternateLinearSolverAndPreconditionerForSchurTypeLinearSolver(
     options->preconditioner_type =
         Preconditioner::PreconditionerForZeroEBlocks(preconditioner_type_given);
 
-    message =
-        StringPrintf("No E blocks. Switching from %s(%s) to %s(%s).",
-                     LinearSolverTypeToString(linear_solver_type_given),
-                     PreconditionerTypeToString(preconditioner_type_given),
-                     LinearSolverTypeToString(options->linear_solver_type),
-                     PreconditionerTypeToString(options->preconditioner_type));
+    message = absl::StrFormat(
+        "No E blocks. Switching from %s(%s) to %s(%s).",
+        LinearSolverTypeToString(linear_solver_type_given),
+        PreconditionerTypeToString(preconditioner_type_given),
+        LinearSolverTypeToString(options->linear_solver_type),
+        PreconditionerTypeToString(options->preconditioner_type));
   } else {
     message =
-        StringPrintf("No E blocks. Switching from %s to %s.",
-                     LinearSolverTypeToString(linear_solver_type_given),
-                     LinearSolverTypeToString(options->linear_solver_type));
+        absl::StrFormat("No E blocks. Switching from %s to %s.",
+                        LinearSolverTypeToString(linear_solver_type_given),
+                        LinearSolverTypeToString(options->linear_solver_type));
   }
   if (options->logging_type != SILENT) {
     VLOG(1) << message;

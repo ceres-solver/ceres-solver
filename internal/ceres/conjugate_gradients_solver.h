@@ -38,13 +38,13 @@
 #include <cstddef>
 #include <utility>
 
+#include "absl/strings/str_format.h"
 #include "ceres/eigen_vector_ops.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/linear_operator.h"
 #include "ceres/linear_solver.h"
-#include "ceres/stringprintf.h"
 #include "ceres/types.h"
 
 namespace ceres::internal {
@@ -146,7 +146,7 @@ LinearSolver::Summary ConjugateGradientsSolver(
   if (options.min_num_iterations == 0 && norm_r <= tol_r) {
     summary.termination_type = LinearSolverTerminationType::SUCCESS;
     summary.message =
-        StringPrintf("Convergence. |r| = %e <= %e.", norm_r, tol_r);
+        absl::StrFormat("Convergence. |r| = %e <= %e.", norm_r, tol_r);
     return summary;
   }
 
@@ -166,7 +166,8 @@ LinearSolver::Summary ConjugateGradientsSolver(
     rho = Dot(r, z, options.context, options.num_threads);
     if (IsZeroOrInfinity(rho)) {
       summary.termination_type = LinearSolverTerminationType::FAILURE;
-      summary.message = StringPrintf("Numerical failure. rho = r'z = %e.", rho);
+      summary.message =
+          absl::StrFormat("Numerical failure. rho = r'z = %e.", rho);
       break;
     }
 
@@ -176,7 +177,7 @@ LinearSolver::Summary ConjugateGradientsSolver(
       const double beta = rho / last_rho;
       if (IsZeroOrInfinity(beta)) {
         summary.termination_type = LinearSolverTerminationType::FAILURE;
-        summary.message = StringPrintf(
+        summary.message = absl::StrFormat(
             "Numerical failure. beta = rho_n / rho_{n-1} = %e, "
             "rho_n = %e, rho_{n-1} = %e",
             beta,
@@ -194,7 +195,7 @@ LinearSolver::Summary ConjugateGradientsSolver(
     const double pq = Dot(p, q, options.context, options.num_threads);
     if ((pq <= 0) || std::isinf(pq)) {
       summary.termination_type = LinearSolverTerminationType::NO_CONVERGENCE;
-      summary.message = StringPrintf(
+      summary.message = absl::StrFormat(
           "Matrix is indefinite, no more progress can be made. "
           "p'q = %e. |p| = %e, |q| = %e",
           pq,
@@ -206,7 +207,7 @@ LinearSolver::Summary ConjugateGradientsSolver(
     const double alpha = rho / pq;
     if (std::isinf(alpha)) {
       summary.termination_type = LinearSolverTerminationType::FAILURE;
-      summary.message = StringPrintf(
+      summary.message = absl::StrFormat(
           "Numerical failure. alpha = rho / pq = %e, rho = %e, pq = %e.",
           alpha,
           rho,
@@ -273,11 +274,11 @@ LinearSolver::Summary ConjugateGradientsSolver(
         summary.num_iterations >= options.min_num_iterations) {
       summary.termination_type = LinearSolverTerminationType::SUCCESS;
       summary.message =
-          StringPrintf("Iteration: %d Convergence: zeta = %e < %e. |r| = %e",
-                       summary.num_iterations,
-                       zeta,
-                       options.q_tolerance,
-                       Norm(r, options.context, options.num_threads));
+          absl::StrFormat("Iteration: %d Convergence: zeta = %e < %e. |r| = %e",
+                          summary.num_iterations,
+                          zeta,
+                          options.q_tolerance,
+                          Norm(r, options.context, options.num_threads));
       break;
     }
     Q0 = Q1;
@@ -288,10 +289,10 @@ LinearSolver::Summary ConjugateGradientsSolver(
         summary.num_iterations >= options.min_num_iterations) {
       summary.termination_type = LinearSolverTerminationType::SUCCESS;
       summary.message =
-          StringPrintf("Iteration: %d Convergence. |r| = %e <= %e.",
-                       summary.num_iterations,
-                       norm_r,
-                       tol_r);
+          absl::StrFormat("Iteration: %d Convergence. |r| = %e <= %e.",
+                          summary.num_iterations,
+                          norm_r,
+                          tol_r);
       break;
     }
 

@@ -37,11 +37,12 @@
 
 #include "absl/log/check.h"
 #include "absl/log/log.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_format.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
 #include "ceres/casts.h"
 #include "ceres/file.h"
-#include "ceres/stringprintf.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
 
@@ -973,11 +974,11 @@ bool DumpLinearLeastSquaresProblemToTextFile(const std::string& filename_base,
   CHECK(A != nullptr);
   LOG(INFO) << "writing to: " << filename_base << "*";
 
-  std::string matlab_script;
-  StringAppendF(&matlab_script,
-                "function lsqp = load_trust_region_problem()\n");
-  StringAppendF(&matlab_script, "lsqp.num_rows = %d;\n", A->num_rows());
-  StringAppendF(&matlab_script, "lsqp.num_cols = %d;\n", A->num_cols());
+  std::string matlab_script = "function lsqp = load_trust_region_problem()\n";
+  absl::StrAppend(&matlab_script,
+                  absl::StrFormat("lsqp.num_rows = %d;\n", A->num_rows()));
+  absl::StrAppend(&matlab_script,
+                  absl::StrFormat("lsqp.num_cols = %d;\n", A->num_cols()));
 
   {
     std::string filename = filename_base + "_A.txt";
@@ -985,34 +986,37 @@ bool DumpLinearLeastSquaresProblemToTextFile(const std::string& filename_base,
     CHECK(fptr != nullptr);
     A->ToTextFile(fptr);
     fclose(fptr);
-    StringAppendF(
-        &matlab_script, "tmp = load('%s', '-ascii');\n", filename.c_str());
-    StringAppendF(
-        &matlab_script,
-        "lsqp.A = sparse(tmp(:, 1) + 1, tmp(:, 2) + 1, tmp(:, 3), %d, %d);\n",
-        A->num_rows(),
-        A->num_cols());
+    absl::StrAppend(&matlab_script,
+                    absl::StrFormat("tmp = load('%s', '-ascii');\n", filename));
+    absl::StrAppend(&matlab_script,
+                    absl::StrFormat("lsqp.A = sparse(tmp(:, 1) + 1, tmp(:, 2) "
+                                    "+ 1, tmp(:, 3), %d, %d);\n",
+                                    A->num_rows(),
+                                    A->num_cols()));
   }
 
   if (D != nullptr) {
     std::string filename = filename_base + "_D.txt";
     WriteArrayToFileOrDie(filename, D, A->num_cols());
-    StringAppendF(
-        &matlab_script, "lsqp.D = load('%s', '-ascii');\n", filename.c_str());
+    absl::StrAppend(
+        &matlab_script,
+        absl::StrFormat("lsqp.D = load('%s', '-ascii');\n", filename));
   }
 
   if (b != nullptr) {
     std::string filename = filename_base + "_b.txt";
     WriteArrayToFileOrDie(filename, b, A->num_rows());
-    StringAppendF(
-        &matlab_script, "lsqp.b = load('%s', '-ascii');\n", filename.c_str());
+    absl::StrAppend(
+        &matlab_script,
+        absl::StrFormat("lsqp.b = load('%s', '-ascii');\n", filename));
   }
 
   if (x != nullptr) {
     std::string filename = filename_base + "_x.txt";
     WriteArrayToFileOrDie(filename, x, A->num_cols());
-    StringAppendF(
-        &matlab_script, "lsqp.x = load('%s', '-ascii');\n", filename.c_str());
+    absl::StrAppend(
+        &matlab_script,
+        absl::StrFormat("lsqp.x = load('%s', '-ascii');\n", filename));
   }
 
   std::string matlab_filename = filename_base + ".m";

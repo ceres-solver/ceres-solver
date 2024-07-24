@@ -38,6 +38,8 @@
 #include <vector>
 
 #include "absl/log/log.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_format.h"
 #include "ceres/casts.h"
 #include "ceres/cost_function.h"
 #include "ceres/crs_matrix.h"
@@ -48,7 +50,6 @@
 #include "ceres/program.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/sparse_matrix.h"
-#include "ceres/stringprintf.h"
 #include "ceres/types.h"
 #include "gtest/gtest.h"
 
@@ -123,16 +124,17 @@ struct EvaluatorTest : public ::testing::TestWithParam<EvaluatorTestOptions> {
 
     if (VLOG_IS_ON(1)) {
       std::string report;
-      StringAppendF(&report,
-                    "Creating evaluator with type: %d",
-                    GetParam().linear_solver_type);
+      absl::StrAppend(&report,
+                      absl::StrFormat("Creating evaluator with type: %d",
+                                      GetParam().linear_solver_type));
       if (GetParam().linear_solver_type == SPARSE_NORMAL_CHOLESKY) {
-        StringAppendF(
-            &report, ", dynamic_sparsity: %d", GetParam().dynamic_sparsity);
+        absl::StrAppend(&report,
+                        absl::StrFormat(", dynamic_sparsity: %d",
+                                        GetParam().dynamic_sparsity));
       }
-      StringAppendF(&report,
-                    " and num_eliminate_blocks: %d",
-                    GetParam().num_eliminate_blocks);
+      absl::StrAppend(&report,
+                      absl::StrFormat(" and num_eliminate_blocks: %d",
+                                      GetParam().num_eliminate_blocks));
       VLOG(1) << report;
     }
     Evaluator::Options options;
