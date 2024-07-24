@@ -41,15 +41,14 @@
 
 #include "absl/log/check.h"
 #include "absl/log/log.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_format.h"
 #include "ceres/is_close.h"
-#include "ceres/stringprintf.h"
 #include "ceres/types.h"
 
 namespace ceres {
 
 using internal::IsClose;
-using internal::StringAppendF;
-using internal::StringPrintf;
 
 namespace {
 // Evaluate the cost function and transform the returned Jacobians to
@@ -187,9 +186,9 @@ bool GradientChecker::Probe(double const* const* parameters,
                             &finite_diff_residuals,
                             &numeric_jacobians,
                             &local_numeric_jacobians)) {
-    results->error_log +=
-        "\nFunction evaluation with numerical "
-        "differentiation failed.";
+    absl::StrAppend(&results->error_log,
+                    "\nFunction evaluation with numerical "
+                    "differentiation failed.");
     results->return_value = false;
   }
 
@@ -221,17 +220,18 @@ bool GradientChecker::Probe(double const* const* parameters,
   // output if there are no bad jacobian components.
   std::string error_log;
   for (int k = 0; k < function_->parameter_block_sizes().size(); k++) {
-    StringAppendF(&error_log,
-                  "========== "
-                  "Jacobian for block %d: (%ld by %ld)) "
-                  "==========\n",
-                  k,
-                  static_cast<long>(local_jacobians[k].rows()),
-                  static_cast<long>(local_jacobians[k].cols()));
+    absl::StrAppendFormat(&error_log,
+                          "========== "
+                          "Jacobian for block %d: (%ld by %ld)) "
+                          "==========\n",
+                          k,
+                          static_cast<long>(local_jacobians[k].rows()),
+                          static_cast<long>(local_jacobians[k].cols()));
     // The funny spacing creates appropriately aligned column headers.
-    error_log +=
+    absl::StrAppend(
+        &error_log,
         " block  row  col        user dx/dy    num diff dx/dy         "
-        "abs error    relative error         parameter          residual\n";
+        "abs error    relative error         parameter          residual\n");
 
     for (int i = 0; i < local_jacobians[k].rows(); i++) {
       for (int j = 0; j < local_jacobians[k].cols(); j++) {
@@ -245,40 +245,42 @@ bool GradientChecker::Probe(double const* const* parameters,
                                            &absolute_error);
         worst_relative_error = std::max(worst_relative_error, relative_error);
 
-        StringAppendF(&error_log,
-                      "%6d %4d %4d %17g %17g %17g %17g %17g %17g",
-                      k,
-                      i,
-                      j,
-                      term_jacobian,
-                      finite_jacobian,
-                      absolute_error,
-                      relative_error,
-                      parameters[k][j],
-                      results->residuals[i]);
+        absl::StrAppendFormat(&error_log,
+                              "%6d %4d %4d %17g %17g %17g %17g %17g %17g",
+                              k,
+                              i,
+                              j,
+                              term_jacobian,
+                              finite_jacobian,
+                              absolute_error,
+                              relative_error,
+                              parameters[k][j],
+                              results->residuals[i]);
 
         if (bad_jacobian_entry) {
           num_bad_jacobian_components++;
-          StringAppendF(&error_log,
-                        " ------ (%d,%d,%d) Relative error worse than %g",
-                        k,
-                        i,
-                        j,
-                        relative_precision);
+          absl::StrAppendFormat(
+              &error_log,
+              " ------ (%d,%d,%d) Relative error worse than %g",
+              k,
+              i,
+              j,
+              relative_precision);
         }
-        error_log += "\n";
+        absl::StrAppend(&error_log, "\n");
       }
     }
   }
 
   // Since there were some bad errors, dump comprehensive debug info.
   if (num_bad_jacobian_components) {
-    std::string header = StringPrintf(
+    std::string header = absl::StrFormat(
         "\nDetected %d bad Jacobian component(s). "
         "Worst relative error was %g.\n",
         num_bad_jacobian_components,
         worst_relative_error);
-    results->error_log = header + "\n" + error_log;
+
+    results->error_log = absl::StrCat(header, "\n", error_log);
     return false;
   }
   return true;

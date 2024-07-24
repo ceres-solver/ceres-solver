@@ -40,6 +40,8 @@
 
 #include "absl/log/check.h"
 #include "absl/log/log.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_format.h"
 #include "ceres/casts.h"
 #include "ceres/context.h"
 #include "ceres/context_impl.h"
@@ -55,16 +57,12 @@
 #include "ceres/program.h"
 #include "ceres/schur_templates.h"
 #include "ceres/solver_utils.h"
-#include "ceres/stringprintf.h"
 #include "ceres/suitesparse.h"
 #include "ceres/types.h"
 #include "ceres/wall_time.h"
 
 namespace ceres {
 namespace {
-
-using internal::StringAppendF;
-using internal::StringPrintf;
 
 #define OPTION_OP(x, y, OP)                                               \
   if (!(options.x OP y)) {                                                \
@@ -140,7 +138,7 @@ bool OptionsAreValidForDenseSolver(const Solver::Options& options,
 
   if (!IsDenseLinearAlgebraLibraryTypeAvailable(
           options.dense_linear_algebra_library_type)) {
-    *error = StringPrintf(kFormat, solver_name, library_name);
+    *error = absl::StrFormat(kFormat, solver_name, library_name);
     return false;
   }
   return true;
@@ -172,7 +170,7 @@ bool OptionsAreValidForSparseCholeskyBasedSolver(const Solver::Options& options,
       "sparse_linear_algebra_library_type = %s";
 
   if (options.sparse_linear_algebra_library_type == NO_SPARSE) {
-    *error = StringPrintf(kNoSparseFormat, solver_name, library_name);
+    *error = absl::StrFormat(kNoSparseFormat, solver_name, library_name);
     return false;
   }
 
@@ -180,31 +178,31 @@ bool OptionsAreValidForSparseCholeskyBasedSolver(const Solver::Options& options,
           options.sparse_linear_algebra_library_type)) {
     if (options.sparse_linear_algebra_library_type == CUDA_SPARSE) {
 #if defined(CERES_NO_CUDSS)
-      *error = StringPrintf(kNoLibraryFormat, solver_name, library_name);
+      *error = absl::StrFormat(kNoLibraryFormat, solver_name, library_name);
       return false;
 #endif
     }
   } else {
-    *error = StringPrintf(kNoLibraryFormat, solver_name, library_name);
+    *error = absl::StrFormat(kNoLibraryFormat, solver_name, library_name);
     return false;
   }
 
   if (options.linear_solver_ordering_type == ceres::NESDIS &&
       !IsNestedDissectionAvailable(
           options.sparse_linear_algebra_library_type)) {
-    *error = StringPrintf(kNoNesdisFormat, library_name);
+    *error = absl::StrFormat(kNoNesdisFormat, library_name);
     return false;
   }
 
   if (options.use_mixed_precision_solves &&
       options.sparse_linear_algebra_library_type == SUITE_SPARSE) {
-    *error = StringPrintf(kMixedFormat, solver_name, library_name);
+    *error = absl::StrFormat(kMixedFormat, solver_name, library_name);
     return false;
   }
 
   if (options.dynamic_sparsity &&
       options.sparse_linear_algebra_library_type == ACCELERATE_SPARSE) {
-    *error = StringPrintf(kDynamicSparsityFormat, library_name);
+    *error = absl::StrFormat(kDynamicSparsityFormat, library_name);
     return false;
   }
 
@@ -326,9 +324,9 @@ bool OptionsAreValidForCgnr(const Solver::Options& options,
   if (options.preconditioner_type != IDENTITY &&
       options.preconditioner_type != JACOBI &&
       options.preconditioner_type != SUBSET) {
-    *error =
-        StringPrintf("Can't use CGNR with preconditioner_type = %s.",
-                     PreconditionerTypeToString(options.preconditioner_type));
+    *error = absl::StrFormat(
+        "Can't use CGNR with preconditioner_type = %s.",
+        PreconditionerTypeToString(options.preconditioner_type));
     return false;
   }
 
@@ -510,14 +508,14 @@ bool LineSearchOptionsAreValid(const Solver::Options& options,
 
 void StringifyOrdering(const std::vector<int>& ordering, std::string* report) {
   if (ordering.empty()) {
-    internal::StringAppendF(report, "AUTOMATIC");
+    absl::StrAppendFormat(report, "AUTOMATIC");
     return;
   }
 
   for (int i = 0; i < ordering.size() - 1; ++i) {
-    internal::StringAppendF(report, "%d,", ordering[i]);
+    absl::StrAppendFormat(report, "%d,", ordering[i]);
   }
-  internal::StringAppendF(report, "%d", ordering.back());
+  absl::StrAppendFormat(report, "%d", ordering.back());
 }
 
 void SummarizeGivenProgram(const internal::Program& program,
@@ -673,17 +671,17 @@ std::string SchurStructureToString(const int row_block_size,
                                    const int f_block_size) {
   const std::string row = (row_block_size == Eigen::Dynamic)
                               ? "d"
-                              : internal::StringPrintf("%d", row_block_size);
+                              : absl::StrFormat("%d", row_block_size);
 
   const std::string e = (e_block_size == Eigen::Dynamic)
                             ? "d"
-                            : internal::StringPrintf("%d", e_block_size);
+                            : absl::StrFormat("%d", e_block_size);
 
   const std::string f = (f_block_size == Eigen::Dynamic)
                             ? "d"
-                            : internal::StringPrintf("%d", f_block_size);
+                            : absl::StrFormat("%d", f_block_size);
 
-  return internal::StringPrintf("%s,%s,%s", row.c_str(), e.c_str(), f.c_str());
+  return absl::StrFormat("%s,%s,%s", row.c_str(), e.c_str(), f.c_str());
 }
 
 #ifndef CERES_NO_CUDA
@@ -857,7 +855,7 @@ void Solve(const Solver::Options& options,
 }
 
 std::string Solver::Summary::BriefReport() const {
-  return StringPrintf(
+  return absl::StrFormat(
       "Ceres Solver Report: "
       "Iterations: %d, "
       "Initial cost: %e, "
@@ -874,35 +872,35 @@ std::string Solver::Summary::FullReport() const {
 
   // NOTE operator+ is not usable for concatenating a string and a string_view.
   std::string report =
-      std::string{"\nSolver Summary (v "}.append(VersionString()) + ")\n\n";
+      absl::StrCat("\nSolver Summary (v ", VersionString(), ")\n\n");
 
-  StringAppendF(&report, "%45s    %21s\n", "Original", "Reduced");
-  StringAppendF(&report,
-                "Parameter blocks    % 25d% 25d\n",
-                num_parameter_blocks,
-                num_parameter_blocks_reduced);
-  StringAppendF(&report,
-                "Parameters          % 25d% 25d\n",
-                num_parameters,
-                num_parameters_reduced);
+  absl::StrAppendFormat(&report, "%45s    %21s\n", "Original", "Reduced");
+  absl::StrAppendFormat(&report,
+                        "Parameter blocks    % 25d% 25d\n",
+                        num_parameter_blocks,
+                        num_parameter_blocks_reduced);
+  absl::StrAppendFormat(&report,
+                        "Parameters          % 25d% 25d\n",
+                        num_parameters,
+                        num_parameters_reduced);
   if (num_effective_parameters_reduced != num_parameters_reduced) {
-    StringAppendF(&report,
-                  "Effective parameters% 25d% 25d\n",
-                  num_effective_parameters,
-                  num_effective_parameters_reduced);
+    absl::StrAppendFormat(&report,
+                          "Effective parameters% 25d% 25d\n",
+                          num_effective_parameters,
+                          num_effective_parameters_reduced);
   }
-  StringAppendF(&report,
-                "Residual blocks     % 25d% 25d\n",
-                num_residual_blocks,
-                num_residual_blocks_reduced);
-  StringAppendF(&report,
-                "Residuals           % 25d% 25d\n",
-                num_residuals,
-                num_residuals_reduced);
+  absl::StrAppendFormat(&report,
+                        "Residual blocks     % 25d% 25d\n",
+                        num_residual_blocks,
+                        num_residual_blocks_reduced);
+  absl::StrAppendFormat(&report,
+                        "Residuals           % 25d% 25d\n",
+                        num_residuals,
+                        num_residuals_reduced);
 
   if (minimizer_type == TRUST_REGION) {
     // TRUST_SEARCH HEADER
-    StringAppendF(
+    absl::StrAppendFormat(
         &report, "\nMinimizer                 %19s\n", "TRUST_REGION");
 
     if (linear_solver_type_used == DENSE_NORMAL_CHOLESKY ||
@@ -910,21 +908,22 @@ std::string Solver::Summary::FullReport() const {
         linear_solver_type_used == DENSE_QR) {
       const char* mixed_precision_suffix =
           (mixed_precision_solves_used ? "(Mixed Precision)" : "");
-      StringAppendF(&report,
-                    "\nDense linear algebra library  %15s %s\n",
-                    DenseLinearAlgebraLibraryTypeToString(
-                        dense_linear_algebra_library_type),
-                    mixed_precision_suffix);
+      absl::StrAppendFormat(&report,
+                            "\nDense linear algebra library  %15s %s\n",
+                            DenseLinearAlgebraLibraryTypeToString(
+                                dense_linear_algebra_library_type),
+                            mixed_precision_suffix);
     }
 
-    StringAppendF(&report,
-                  "Trust region strategy     %19s",
-                  TrustRegionStrategyTypeToString(trust_region_strategy_type));
+    absl::StrAppendFormat(
+        &report,
+        "Trust region strategy     %19s",
+        TrustRegionStrategyTypeToString(trust_region_strategy_type));
     if (trust_region_strategy_type == DOGLEG) {
       if (dogleg_type == TRADITIONAL_DOGLEG) {
-        StringAppendF(&report, " (TRADITIONAL)");
+        absl::StrAppendFormat(&report, " (TRADITIONAL)");
       } else {
-        StringAppendF(&report, " (SUBSPACE)");
+        absl::StrAppendFormat(&report, " (SUBSPACE)");
       }
     }
 
@@ -947,7 +946,7 @@ std::string Solver::Summary::FullReport() const {
       const char* mixed_precision_suffix =
           (mixed_precision_solves_used ? "(Mixed Precision)" : "");
       if (linear_solver_ordering_required) {
-        StringAppendF(
+        absl::StrAppendFormat(
             &report,
             "\nSparse linear algebra library %15s + %s %s\n",
             SparseLinearAlgebraLibraryTypeToString(
@@ -955,61 +954,62 @@ std::string Solver::Summary::FullReport() const {
             LinearSolverOrderingTypeToString(linear_solver_ordering_type),
             mixed_precision_suffix);
       } else {
-        StringAppendF(&report,
-                      "\nSparse linear algebra library %15s %s\n",
-                      SparseLinearAlgebraLibraryTypeToString(
-                          sparse_linear_algebra_library_type),
-                      mixed_precision_suffix);
+        absl::StrAppendFormat(&report,
+                              "\nSparse linear algebra library %15s %s\n",
+                              SparseLinearAlgebraLibraryTypeToString(
+                                  sparse_linear_algebra_library_type),
+                              mixed_precision_suffix);
       }
     }
 
-    StringAppendF(&report, "\n");
-    StringAppendF(&report, "%45s    %21s\n", "Given", "Used");
-    StringAppendF(&report,
-                  "Linear solver       %25s%25s\n",
-                  LinearSolverTypeToString(linear_solver_type_given),
-                  LinearSolverTypeToString(linear_solver_type_used));
+    absl::StrAppendFormat(&report, "\n");
+    absl::StrAppendFormat(&report, "%45s    %21s\n", "Given", "Used");
+    absl::StrAppendFormat(&report,
+                          "Linear solver       %25s%25s\n",
+                          LinearSolverTypeToString(linear_solver_type_given),
+                          LinearSolverTypeToString(linear_solver_type_used));
 
     if (IsIterativeSolver(linear_solver_type_given)) {
-      StringAppendF(&report,
-                    "Preconditioner      %25s%25s\n",
-                    PreconditionerTypeToString(preconditioner_type_given),
-                    PreconditionerTypeToString(preconditioner_type_used));
+      absl::StrAppendFormat(
+          &report,
+          "Preconditioner      %25s%25s\n",
+          PreconditionerTypeToString(preconditioner_type_given),
+          PreconditionerTypeToString(preconditioner_type_used));
     }
 
     if (preconditioner_type_used == CLUSTER_JACOBI ||
         preconditioner_type_used == CLUSTER_TRIDIAGONAL) {
-      StringAppendF(
+      absl::StrAppendFormat(
           &report,
           "Visibility clustering%24s%25s\n",
           VisibilityClusteringTypeToString(visibility_clustering_type),
           VisibilityClusteringTypeToString(visibility_clustering_type));
     }
-    StringAppendF(&report,
-                  "Threads             % 25d% 25d\n",
-                  num_threads_given,
-                  num_threads_used);
+    absl::StrAppendFormat(&report,
+                          "Threads             % 25d% 25d\n",
+                          num_threads_given,
+                          num_threads_used);
 
     std::string given;
     StringifyOrdering(linear_solver_ordering_given, &given);
     std::string used;
     StringifyOrdering(linear_solver_ordering_used, &used);
-    StringAppendF(&report,
-                  "Linear solver ordering %22s %24s\n",
-                  given.c_str(),
-                  used.c_str());
+    absl::StrAppendFormat(&report,
+                          "Linear solver ordering %22s %24s\n",
+                          given.c_str(),
+                          used.c_str());
     if (IsSchurType(linear_solver_type_used)) {
-      StringAppendF(&report,
-                    "Schur structure        %22s %24s\n",
-                    schur_structure_given.c_str(),
-                    schur_structure_used.c_str());
+      absl::StrAppendFormat(&report,
+                            "Schur structure        %22s %24s\n",
+                            schur_structure_given.c_str(),
+                            schur_structure_used.c_str());
     }
 
     if (inner_iterations_given) {
-      StringAppendF(&report,
-                    "Use inner iterations     %20s     %20s\n",
-                    inner_iterations_given ? "True" : "False",
-                    inner_iterations_used ? "True" : "False");
+      absl::StrAppendFormat(&report,
+                            "Use inner iterations     %20s     %20s\n",
+                            inner_iterations_given ? "True" : "False",
+                            inner_iterations_used ? "True" : "False");
     }
 
     if (inner_iterations_used) {
@@ -1017,18 +1017,20 @@ std::string Solver::Summary::FullReport() const {
       StringifyOrdering(inner_iteration_ordering_given, &given);
       std::string used;
       StringifyOrdering(inner_iteration_ordering_used, &used);
-      StringAppendF(&report,
-                    "Inner iteration ordering %20s %24s\n",
-                    given.c_str(),
-                    used.c_str());
+      absl::StrAppendFormat(&report,
+                            "Inner iteration ordering %20s %24s\n",
+                            given.c_str(),
+                            used.c_str());
     }
   } else {
     // LINE_SEARCH HEADER
-    StringAppendF(&report, "\nMinimizer                 %19s\n", "LINE_SEARCH");
+    absl::StrAppendFormat(
+        &report, "\nMinimizer                 %19s\n", "LINE_SEARCH");
 
     std::string line_search_direction_string;
     if (line_search_direction_type == LBFGS) {
-      line_search_direction_string = StringPrintf("LBFGS (%d)", max_lbfgs_rank);
+      line_search_direction_string =
+          absl::StrFormat("LBFGS (%d)", max_lbfgs_rank);
     } else if (line_search_direction_type == NONLINEAR_CONJUGATE_GRADIENT) {
       line_search_direction_string = NonlinearConjugateGradientTypeToString(
           nonlinear_conjugate_gradient_type);
@@ -1037,52 +1039,53 @@ std::string Solver::Summary::FullReport() const {
           LineSearchDirectionTypeToString(line_search_direction_type);
     }
 
-    StringAppendF(&report,
-                  "Line search direction     %19s\n",
-                  line_search_direction_string.c_str());
+    absl::StrAppendFormat(&report,
+                          "Line search direction     %19s\n",
+                          line_search_direction_string.c_str());
 
-    const std::string line_search_type_string = StringPrintf(
+    const std::string line_search_type_string = absl::StrFormat(
         "%s %s",
         LineSearchInterpolationTypeToString(line_search_interpolation_type),
         LineSearchTypeToString(line_search_type));
-    StringAppendF(&report,
-                  "Line search type          %19s\n",
-                  line_search_type_string.c_str());
-    StringAppendF(&report, "\n");
+    absl::StrAppendFormat(&report,
+                          "Line search type          %19s\n",
+                          line_search_type_string.c_str());
+    absl::StrAppendFormat(&report, "\n");
 
-    StringAppendF(&report, "%45s    %21s\n", "Given", "Used");
-    StringAppendF(&report,
-                  "Threads             % 25d% 25d\n",
-                  num_threads_given,
-                  num_threads_used);
+    absl::StrAppendFormat(&report, "%45s    %21s\n", "Given", "Used");
+    absl::StrAppendFormat(&report,
+                          "Threads             % 25d% 25d\n",
+                          num_threads_given,
+                          num_threads_used);
   }
 
-  StringAppendF(&report, "\nCost:\n");
-  StringAppendF(&report, "Initial        % 30e\n", initial_cost);
+  absl::StrAppendFormat(&report, "\nCost:\n");
+  absl::StrAppendFormat(&report, "Initial        % 30e\n", initial_cost);
   if (termination_type != FAILURE && termination_type != USER_FAILURE) {
-    StringAppendF(&report, "Final          % 30e\n", final_cost);
-    StringAppendF(&report, "Change         % 30e\n", initial_cost - final_cost);
+    absl::StrAppendFormat(&report, "Final          % 30e\n", final_cost);
+    absl::StrAppendFormat(
+        &report, "Change         % 30e\n", initial_cost - final_cost);
   }
 
-  StringAppendF(&report,
-                "\nMinimizer iterations         % 16d\n",
-                num_successful_steps + num_unsuccessful_steps);
+  absl::StrAppendFormat(&report,
+                        "\nMinimizer iterations         % 16d\n",
+                        num_successful_steps + num_unsuccessful_steps);
 
   // Successful/Unsuccessful steps only matter in the case of the
   // trust region solver. Line search terminates when it encounters
   // the first unsuccessful step.
   if (minimizer_type == TRUST_REGION) {
-    StringAppendF(&report,
-                  "Successful steps               % 14d\n",
-                  num_successful_steps);
-    StringAppendF(&report,
-                  "Unsuccessful steps             % 14d\n",
-                  num_unsuccessful_steps);
+    absl::StrAppendFormat(&report,
+                          "Successful steps               % 14d\n",
+                          num_successful_steps);
+    absl::StrAppendFormat(&report,
+                          "Unsuccessful steps             % 14d\n",
+                          num_unsuccessful_steps);
   }
   if (inner_iterations_used) {
-    StringAppendF(&report,
-                  "Steps with inner iterations    % 14d\n",
-                  num_inner_iteration_steps);
+    absl::StrAppendFormat(&report,
+                          "Steps with inner iterations    % 14d\n",
+                          num_inner_iteration_steps);
   }
 
   const bool line_search_used =
@@ -1090,66 +1093,66 @@ std::string Solver::Summary::FullReport() const {
        (minimizer_type == TRUST_REGION && is_constrained));
 
   if (line_search_used) {
-    StringAppendF(&report,
-                  "Line search steps              % 14d\n",
-                  num_line_search_steps);
+    absl::StrAppendFormat(&report,
+                          "Line search steps              % 14d\n",
+                          num_line_search_steps);
   }
 
-  StringAppendF(&report, "\nTime (in seconds):\n");
-  StringAppendF(
+  absl::StrAppendFormat(&report, "\nTime (in seconds):\n");
+  absl::StrAppendFormat(
       &report, "Preprocessor        %25.6f\n", preprocessor_time_in_seconds);
 
-  StringAppendF(&report,
-                "\n  Residual only evaluation %18.6f (%d)\n",
-                residual_evaluation_time_in_seconds,
-                num_residual_evaluations);
+  absl::StrAppendFormat(&report,
+                        "\n  Residual only evaluation %18.6f (%d)\n",
+                        residual_evaluation_time_in_seconds,
+                        num_residual_evaluations);
   if (line_search_used) {
-    StringAppendF(&report,
-                  "    Line search cost evaluation    %10.6f\n",
-                  line_search_cost_evaluation_time_in_seconds);
+    absl::StrAppendFormat(&report,
+                          "    Line search cost evaluation    %10.6f\n",
+                          line_search_cost_evaluation_time_in_seconds);
   }
-  StringAppendF(&report,
-                "  Jacobian & residual evaluation %12.6f (%d)\n",
-                jacobian_evaluation_time_in_seconds,
-                num_jacobian_evaluations);
+  absl::StrAppendFormat(&report,
+                        "  Jacobian & residual evaluation %12.6f (%d)\n",
+                        jacobian_evaluation_time_in_seconds,
+                        num_jacobian_evaluations);
   if (line_search_used) {
-    StringAppendF(&report,
-                  "    Line search gradient evaluation   %6.6f\n",
-                  line_search_gradient_evaluation_time_in_seconds);
+    absl::StrAppendFormat(&report,
+                          "    Line search gradient evaluation   %6.6f\n",
+                          line_search_gradient_evaluation_time_in_seconds);
   }
 
   if (minimizer_type == TRUST_REGION) {
-    StringAppendF(&report,
-                  "  Linear solver       %23.6f (%d)\n",
-                  linear_solver_time_in_seconds,
-                  num_linear_solves);
+    absl::StrAppendFormat(&report,
+                          "  Linear solver       %23.6f (%d)\n",
+                          linear_solver_time_in_seconds,
+                          num_linear_solves);
   }
 
   if (inner_iterations_used) {
-    StringAppendF(&report,
-                  "  Inner iterations    %23.6f\n",
-                  inner_iteration_time_in_seconds);
+    absl::StrAppendFormat(&report,
+                          "  Inner iterations    %23.6f\n",
+                          inner_iteration_time_in_seconds);
   }
 
   if (line_search_used) {
-    StringAppendF(&report,
-                  "  Line search polynomial minimization  %.6f\n",
-                  line_search_polynomial_minimization_time_in_seconds);
+    absl::StrAppendFormat(&report,
+                          "  Line search polynomial minimization  %.6f\n",
+                          line_search_polynomial_minimization_time_in_seconds);
   }
 
-  StringAppendF(
+  absl::StrAppendFormat(
       &report, "Minimizer           %25.6f\n\n", minimizer_time_in_seconds);
 
-  StringAppendF(
+  absl::StrAppendFormat(
       &report, "Postprocessor        %24.6f\n", postprocessor_time_in_seconds);
 
-  StringAppendF(
+  absl::StrAppendFormat(
       &report, "Total               %25.6f\n\n", total_time_in_seconds);
 
-  StringAppendF(&report,
-                "Termination:        %25s (%s)\n",
-                TerminationTypeToString(termination_type),
-                message.c_str());
+  absl::StrAppendFormat(&report,
+                        "Termination:        %25s (%s)\n",
+                        TerminationTypeToString(termination_type),
+                        message.c_str());
   return report;
 }
 

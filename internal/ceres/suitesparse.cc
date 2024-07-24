@@ -39,10 +39,10 @@
 
 #include "absl/log/check.h"
 #include "absl/log/log.h"
+#include "absl/strings/str_format.h"
 #include "ceres/compressed_col_sparse_matrix_utils.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/linear_solver.h"
-#include "ceres/stringprintf.h"
 #include "ceres/suitesparse.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "cholmod.h"
@@ -179,7 +179,7 @@ cholmod_factor* SuiteSparse::AnalyzeCholesky(cholmod_sparse* A,
 
   if (cc_.status != CHOLMOD_OK) {
     *message =
-        StringPrintf("cholmod_analyze failed. error code: %d", cc_.status);
+        absl::StrFormat("cholmod_analyze failed. error code: %d", cc_.status);
     return nullptr;
   }
 
@@ -202,7 +202,7 @@ cholmod_factor* SuiteSparse::AnalyzeCholeskyWithGivenOrdering(
 
   if (cc_.status != CHOLMOD_OK) {
     *message =
-        StringPrintf("cholmod_analyze failed. error code: %d", cc_.status);
+        absl::StrFormat("cholmod_analyze failed. error code: %d", cc_.status);
     return nullptr;
   }
 
@@ -326,7 +326,7 @@ LinearSolverTerminationType SuiteSparse::Cholesky(cholmod_sparse* A,
           "Please report this to ceres-solver@googlegroups.com.";
       return LinearSolverTerminationType::FATAL_ERROR;
     default:
-      *message = StringPrintf(
+      *message = absl::StrFormat(
           "Unknown cholmod return code: %d. "
           "Please report this to ceres-solver@googlegroups.com.",
           cc_.status);
