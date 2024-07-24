@@ -40,6 +40,7 @@ set(Threads_DEPENDENCY "find_dependency (Threads)" PARENT_SCOPE)
 list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES absl::log)
 list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES absl::check)
 list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES absl::fixed_array)
+list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES absl::strings)
 
 # Source files that contain public symbols and live in the ceres namespaces.
 # Such symbols are expected to be marked with CERES_EXPORT and the files below
@@ -216,7 +217,6 @@ add_library(ceres_internal OBJECT
     sparse_cholesky.cc
     sparse_matrix.cc
     sparse_normal_cholesky_solver.cc
-    stringprintf.cc
     subset_preconditioner.cc
     suitesparse.cc
     thread_pool.cc

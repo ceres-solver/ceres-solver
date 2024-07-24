@@ -169,16 +169,16 @@ struct CERES_EXPORT IterationSummary {
 //       const char* kReportRowFormat =
 //           "% 4d: f:% 8e d:% 3.2e g:% 3.2e h:% 3.2e "
 //           "rho:% 3.2e mu:% 3.2e eta:% 3.2e li:% 3d";
-//       string output = StringPrintf(kReportRowFormat,
-//                                    summary.iteration,
-//                                    summary.cost,
-//                                    summary.cost_change,
-//                                    summary.gradient_max_norm,
-//                                    summary.step_norm,
-//                                    summary.relative_decrease,
-//                                    summary.trust_region_radius,
-//                                    summary.eta,
-//                                    summary.linear_solver_iterations);
+//       string output = absl::StrFormat(kReportRowFormat,
+//                                       summary.iteration,
+//                                       summary.cost,
+//                                       summary.cost_change,
+//                                       summary.gradient_max_norm,
+//                                       summary.step_norm,
+//                                       summary.relative_decrease,
+//                                       summary.trust_region_radius,
+//                                       summary.eta,
+//                                       summary.linear_solver_iterations);
 //       if (log_to_stdout_) {
 //         cout << output << endl;
 //       } else {
