@@ -40,6 +40,7 @@
 #include <vector>
 
 #include "absl/log/check.h"
+#include "absl/strings/str_format.h"
 #include "ceres/evaluator.h"
 #include "ceres/linear_solver.h"
 #include "ceres/minimizer.h"
@@ -249,7 +250,7 @@ bool CoordinateDescentMinimizer::IsOrderingValid(
   // Verify that each group is an independent set
   for (const auto& g_t_e : group_to_elements) {
     if (!program.IsParameterBlockSetIndependent(g_t_e.second)) {
-      *message = StringPrintf(
+      *message = absl::StrFormat(
           "The user-provided parameter_blocks_for_inner_iterations does not "
           "form an independent set. Group Id: %d",
           g_t_e.first);

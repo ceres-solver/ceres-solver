@@ -35,8 +35,8 @@
 #include <string>
 
 #include "absl/log/log.h"
+#include "absl/strings/str_format.h"
 #include "ceres/program.h"
-#include "ceres/stringprintf.h"
 
 namespace ceres::internal {
 
@@ -83,7 +83,7 @@ CallbackReturnType LoggingCallback::operator()(
     const IterationSummary& summary) {
   std::string output;
   if (minimizer_type == LINE_SEARCH) {
-    output = StringPrintf(
+    output = absl::StrFormat(
         "% 4d: f:% 8e d:% 3.2e g:% 3.2e h:% 3.2e s:% 3.2e e:% 3d it:% 3.2e "
         "tt:% 3.2e",
         summary.iteration,
@@ -100,19 +100,19 @@ CallbackReturnType LoggingCallback::operator()(
     if (summary.iteration == 0) {
       output = "iter      cost      cost_change  |gradient|   |step|    tr_ratio  tr_radius  ls_iter  iter_time  total_time\n";  // NOLINT
     }
-    output += StringPrintf(
+    absl::StrAppendFormat(&output,
         "% 4d % 8e   % 3.2e   % 3.2e  % 3.2e  % 3.2e % 3.2e     % 4d   % 3.2e   % 3.2e",  // NOLINT
-        // clang-format on
-        summary.iteration,
-        summary.cost,
-        summary.cost_change,
-        summary.gradient_max_norm,
-        summary.step_norm,
-        summary.relative_decrease,
-        summary.trust_region_radius,
-        summary.linear_solver_iterations,
-        summary.iteration_time_in_seconds,
-        summary.cumulative_time_in_seconds);
+                          // clang-format on
+                          summary.iteration,
+                          summary.cost,
+                          summary.cost_change,
+                          summary.gradient_max_norm,
+                          summary.step_norm,
+                          summary.relative_decrease,
+                          summary.trust_region_radius,
+                          summary.linear_solver_iterations,
+                          summary.iteration_time_in_seconds,
+                          summary.cumulative_time_in_seconds);
   } else {
     LOG(FATAL) << "Unknown minimizer type.";
   }

@@ -39,10 +39,10 @@
 #include <vector>
 
 #include "absl/log/check.h"
+#include "absl/strings/str_format.h"
 #include "ceres/accelerate_sparse.h"
 #include "ceres/compressed_col_sparse_matrix_utils.h"
 #include "ceres/compressed_row_sparse_matrix.h"
-#include "ceres/stringprintf.h"
 #include "ceres/triplet_sparse_matrix.h"
 
 #define CASESTR(x) \
@@ -226,7 +226,7 @@ LinearSolverTerminationType AppleAccelerateCholesky<Scalar>::Factorize(
         as_.AnalyzeCholesky(ordering_type_, &as_lhs));
 
     if (symbolic_factor_->status != SparseStatusOK) {
-      *message = StringPrintf(
+      *message = absl::StrFormat(
           "Apple Accelerate Failure : Symbolic factorisation failed: %s",
           SparseStatusToString(symbolic_factor_->status));
       FreeSymbolicFactorization();
@@ -243,7 +243,7 @@ LinearSolverTerminationType AppleAccelerateCholesky<Scalar>::Factorize(
     as_.Cholesky(&as_lhs, numeric_factor_.get());
   }
   if (numeric_factor_->status != SparseStatusOK) {
-    *message = StringPrintf(
+    *message = absl::StrFormat(
         "Apple Accelerate Failure : Numeric factorisation failed: %s",
         SparseStatusToString(numeric_factor_->status));
     FreeNumericFactorization();
