@@ -116,17 +116,17 @@ bool ResidualBlock::Evaluate(const bool apply_loss_function,
   }
 
   if (!IsEvaluationValid(*this, parameters.data(), residuals, eval_jacobians)) {
-    // clang-format off
-    std::string message =
-        "\n\n"
-        "Error in evaluating the ResidualBlock.\n\n"
-        "There are two possible reasons. Either the CostFunction did not evaluate and fill all    \n"  // NOLINT
-        "residual and jacobians that were requested or there was a non-finite value (nan/infinite)\n"  // NOLINT
-        "generated during the or jacobian computation. \n\n" +
-        EvaluationToString(
-            *this, parameters.data(), cost, residuals, eval_jacobians);
-    // clang-format on
-    LOG(WARNING) << message;
+    LOG(WARNING)
+        << "\n\n"
+           "Error in evaluating the ResidualBlock.\n\n"
+           "There are two possible reasons. Either the CostFunction did not "
+           "evaluate and fill all    \n"  // NOLINT
+           "residual and jacobians that were requested or there was a "
+           "non-finite "
+           "value (nan/infinite)\n"  // NOLINT
+           "generated during the or jacobian computation. \n\n"
+        << EvaluationToString(
+               *this, parameters.data(), cost, residuals, eval_jacobians);
     return false;
   }
 

@@ -33,6 +33,7 @@
 #include <ctime>
 
 #include "absl/log/log.h"
+#include "absl/strings/str_format.h"
 #include "ceres/internal/config.h"
 
 #ifdef _WIN32
@@ -40,8 +41,6 @@
 #else
 #include <sys/time.h>
 #endif
-
-#include "ceres/stringprintf.h"
 
 namespace ceres::internal {
 
@@ -67,7 +66,7 @@ EventLogger::EventLogger(const std::string& logger_name) {
 
   start_time_ = WallTimeInSeconds();
   last_event_time_ = start_time_;
-  events_ = StringPrintf(
+  events_ = absl::StrFormat(
       "\n%s\n                                        Delta   Cumulative\n",
       logger_name.c_str());
 }
@@ -90,11 +89,11 @@ void EventLogger::AddEvent(const std::string& event_name) {
   const double absolute_time_delta = current_time - start_time_;
   last_event_time_ = current_time;
 
-  StringAppendF(&events_,
-                "  %30s : %10.5f   %10.5f\n",
-                event_name.c_str(),
-                relative_time_delta,
-                absolute_time_delta);
+  absl::StrAppendFormat(&events_,
+                        "  %30s : %10.5f   %10.5f\n",
+                        event_name,
+                        relative_time_delta,
+                        absolute_time_delta);
 }
 
 }  // namespace ceres::internal

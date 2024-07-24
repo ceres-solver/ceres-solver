@@ -36,6 +36,7 @@
 
 #include "absl/log/check.h"
 #include "absl/log/log.h"
+#include "absl/strings/str_format.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/crs_matrix.h"
 #include "ceres/internal/eigen.h"
@@ -281,7 +282,7 @@ TripletSparseMatrix::CreateSparseDiagonalMatrix(const double* values,
 void TripletSparseMatrix::ToTextFile(FILE* file) const {
   CHECK(file != nullptr);
   for (int i = 0; i < num_nonzeros_; ++i) {
-    fprintf(file, "% 10d % 10d %17f\n", rows_[i], cols_[i], values_[i]);
+    absl::FPrintF(file, "% 10d % 10d %17f\n", rows_[i], cols_[i], values_[i]);
   }
 }
 

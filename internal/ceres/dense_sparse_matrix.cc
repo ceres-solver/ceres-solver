@@ -34,6 +34,7 @@
 #include <utility>
 
 #include "absl/log/check.h"
+#include "absl/strings/str_format.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/triplet_sparse_matrix.h"
@@ -108,7 +109,7 @@ void DenseSparseMatrix::ToTextFile(FILE* file) const {
   CHECK(file != nullptr);
   for (int r = 0; r < m_.rows(); ++r) {
     for (int c = 0; c < m_.cols(); ++c) {
-      fprintf(file, "% 10d % 10d %17f\n", r, c, m_(r, c));
+      absl::FPrintF(file, "% 10d % 10d %17f\n", r, c, m_(r, c));
     }
   }
 }

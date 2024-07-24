@@ -50,13 +50,13 @@
 #include "Eigen/Dense"
 #include "absl/log/check.h"
 #include "absl/log/log.h"
+#include "absl/strings/str_format.h"
 #include "ceres/array_utils.h"
 #include "ceres/evaluator.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/line_search.h"
 #include "ceres/line_search_direction.h"
-#include "ceres/stringprintf.h"
 #include "ceres/types.h"
 #include "ceres/wall_time.h"
 
@@ -146,10 +146,10 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
   iteration_summary.gradient_norm = sqrt(current_state.gradient_squared_norm);
   iteration_summary.gradient_max_norm = current_state.gradient_max_norm;
   if (iteration_summary.gradient_max_norm <= options.gradient_tolerance) {
-    summary->message =
-        StringPrintf("Gradient tolerance reached. Gradient max norm: %e <= %e",
-                     iteration_summary.gradient_max_norm,
-                     options.gradient_tolerance);
+    summary->message = absl::StrFormat(
+        "Gradient tolerance reached. Gradient max norm: %e <= %e",
+        iteration_summary.gradient_max_norm,
+        options.gradient_tolerance);
     summary->termination_type = CONVERGENCE;
     if (is_not_silent) {
       VLOG(1) << "Terminating: " << summary->message;
@@ -253,7 +253,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
       // Line search direction failed to generate a new direction, and we
       // have already reached our specified maximum number of restarts,
       // terminate optimization.
-      summary->message = StringPrintf(
+      summary->message = absl::StrFormat(
           "Line search direction failure: specified "
           "max_num_line_search_direction_restarts: %d reached.",
           options.max_num_line_search_direction_restarts);
@@ -305,7 +305,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
     // direction in a line search, most likely cause for this being violated
     // would be a numerical failure in the line search direction calculation.
     if (initial_step_size < 0.0) {
-      summary->message = StringPrintf(
+      summary->message = absl::StrFormat(
           "Numerical failure in line search, initial_step_size is "
           "negative: %.5e, directional_derivative: %.5e, "
           "(current_cost - previous_cost): %.5e",
@@ -324,7 +324,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
                         current_state.directional_derivative,
                         &line_search_summary);
     if (!line_search_summary.success) {
-      summary->message = StringPrintf(
+      summary->message = absl::StrFormat(
           "Numerical failure in line search, failed to find "
           "a valid step size, (did not run out of iterations) "
           "using initial_step_size: %.5e, initial_cost: %.5e, "
@@ -429,7 +429,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
     const double step_size_tolerance =
         options.parameter_tolerance * (x_norm + options.parameter_tolerance);
     if (iteration_summary.step_norm <= step_size_tolerance) {
-      summary->message = StringPrintf(
+      summary->message = absl::StrFormat(
           "Parameter tolerance reached. "
           "Relative step_norm: %e <= %e.",
           (iteration_summary.step_norm /
@@ -443,7 +443,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
     }
 
     if (iteration_summary.gradient_max_norm <= options.gradient_tolerance) {
-      summary->message = StringPrintf(
+      summary->message = absl::StrFormat(
           "Gradient tolerance reached. "
           "Gradient max norm: %e <= %e",
           iteration_summary.gradient_max_norm,
@@ -459,7 +459,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
         options.function_tolerance * std::abs(previous_state.cost);
     if (std::abs(iteration_summary.cost_change) <=
         absolute_function_tolerance) {
-      summary->message = StringPrintf(
+      summary->message = absl::StrFormat(
           "Function tolerance reached. "
           "|cost_change|/cost: %e <= %e",
           std::abs(iteration_summary.cost_change) / previous_state.cost,

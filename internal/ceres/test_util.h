@@ -38,7 +38,6 @@
 #include "ceres/internal/export.h"
 #include "ceres/problem.h"
 #include "ceres/solver.h"
-#include "ceres/stringprintf.h"
 #include "gtest/gtest.h"
 
 namespace ceres {

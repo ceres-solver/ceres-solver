@@ -41,7 +41,6 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/schur_eliminator.h"
-#include "ceres/stringprintf.h"
 #include "ceres/test_util.h"
 #include "ceres/types.h"
 #include "gtest/gtest.h"

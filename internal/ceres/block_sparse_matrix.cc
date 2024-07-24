@@ -39,6 +39,7 @@
 
 #include "absl/log/check.h"
 #include "absl/log/log.h"
+#include "absl/strings/str_format.h"
 #include "ceres/block_structure.h"
 #include "ceres/crs_matrix.h"
 #include "ceres/internal/eigen.h"
@@ -567,11 +568,11 @@ void BlockSparseMatrix::ToTextFile(FILE* file) const {
       int jac_pos = cell.position;
       for (int r = 0; r < row_block_size; ++r) {
         for (int c = 0; c < col_block_size; ++c) {
-          fprintf(file,
-                  "% 10d % 10d %17f\n",
-                  row_block_pos + r,
-                  col_block_pos + c,
-                  values_[jac_pos++]);
+          absl::FPrintF(file,
+                        "% 10d % 10d %17f\n",
+                        row_block_pos + r,
+                        col_block_pos + c,
+                        values_[jac_pos++]);
         }
       }
     }
