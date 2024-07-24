@@ -44,6 +44,7 @@
 #include "absl/container/fixed_array.h"
 #include "absl/log/check.h"
 #include "absl/log/log.h"
+#include "absl/strings/str_format.h"
 #include "ceres/casts.h"
 #include "ceres/compressed_row_jacobian_writer.h"
 #include "ceres/compressed_row_sparse_matrix.h"
@@ -62,7 +63,6 @@
 #include "ceres/residual_block.h"
 #include "ceres/scratch_evaluate_preparer.h"
 #include "ceres/stl_util.h"
-#include "ceres/stringprintf.h"
 
 namespace ceres::internal {
 namespace {
@@ -293,7 +293,7 @@ ResidualBlockId ProblemImpl::AddResidualBlock(
     if (has_duplicate_items) {
       std::string blocks;
       for (int i = 0; i < num_parameter_blocks; ++i) {
-        blocks += StringPrintf(" %p ", parameter_blocks[i]);
+        absl::StrAppendFormat(&blocks, " %p ", parameter_blocks[i]);
       }
 
       LOG(FATAL) << "Duplicate parameter blocks in a residual parameter "
@@ -407,7 +407,7 @@ void ProblemImpl::RemoveResidualBlock(ResidualBlock* residual_block) {
   CHECK(residual_block != nullptr);
 
   // Verify that residual_block identifies a residual in the current problem.
-  const std::string residual_not_found_message = StringPrintf(
+  const std::string residual_not_found_message = absl::StrFormat(
       "Residual block to remove: %p not found. This usually means "
       "one of three things have happened:\n"
       " 1) residual_block is uninitialised and points to a random "

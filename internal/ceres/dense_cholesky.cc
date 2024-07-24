@@ -38,9 +38,9 @@
 
 #include "absl/log/check.h"
 #include "absl/log/log.h"
+#include "absl/strings/str_format.h"
 #include "ceres/internal/config.h"
 #include "ceres/iterative_refiner.h"
-#include "ceres/stringprintf.h"
 
 #ifndef CERES_NO_CUDA
 #include "ceres/context_impl.h"
@@ -223,7 +223,7 @@ LinearSolverTerminationType LAPACKDenseCholesky::Factorize(
                << "Argument: " << -info << " is invalid.";
   } else if (info > 0) {
     termination_type_ = LinearSolverTerminationType::FAILURE;
-    *message = StringPrintf(
+    *message = absl::StrFormat(
         "LAPACK::dpotrf numerical failure. "
         "The leading minor of order %d is not positive definite.",
         info);
@@ -276,7 +276,7 @@ LinearSolverTerminationType FloatLAPACKDenseCholesky::Factorize(
                << "Argument: " << -info << " is invalid.";
   } else if (info > 0) {
     termination_type_ = LinearSolverTerminationType::FAILURE;
-    *message = StringPrintf(
+    *message = absl::StrFormat(
         "LAPACK::spotrf numerical failure. "
         "The leading minor of order %d is not positive definite.",
         info);
@@ -398,7 +398,7 @@ LinearSolverTerminationType CUDADenseCholesky::Factorize(int num_cols,
     // pedantic, since the compiler does not know that.
     return LinearSolverTerminationType::FATAL_ERROR;
   } else if (error > 0) {
-    *message = StringPrintf(
+    *message = absl::StrFormat(
         "cuSolverDN::cusolverDnDpotrf numerical failure. "
         "The leading minor of order %d is not positive definite.",
         error);
@@ -502,7 +502,7 @@ CUDADenseCholeskyMixedPrecision::CudaCholeskyFactorize(std::string* message) {
     return LinearSolverTerminationType::FATAL_ERROR;
   }
   if (error > 0) {
-    *message = StringPrintf(
+    *message = absl::StrFormat(
         "cuSolverDN::cusolverDnSpotrf numerical failure. "
         "The leading minor of order %d is not positive definite.",
         error);

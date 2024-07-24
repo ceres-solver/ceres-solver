@@ -35,7 +35,7 @@ list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES Threads::Threads)
 # Make dependency visible to the parent CMakeLists.txt
 set(Threads_DEPENDENCY "find_dependency (Threads)" PARENT_SCOPE)
 list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES  $<LINK_LIBRARY:WHOLE_ARCHIVE,absl::log_flags>)
-
+list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES absl::strings)
 
 list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES absl::log)
 list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES absl::check)
@@ -216,7 +216,6 @@ add_library(ceres_internal OBJECT
     sparse_cholesky.cc
     sparse_matrix.cc
     sparse_normal_cholesky_solver.cc
-    stringprintf.cc
     subset_preconditioner.cc
     suitesparse.cc
     thread_pool.cc

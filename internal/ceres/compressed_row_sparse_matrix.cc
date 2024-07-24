@@ -39,6 +39,7 @@
 
 #include "absl/log/check.h"
 #include "absl/log/log.h"
+#include "absl/strings/str_format.h"
 #include "ceres/context_impl.h"
 #include "ceres/crs_matrix.h"
 #include "ceres/internal/export.h"
@@ -532,7 +533,7 @@ void CompressedRowSparseMatrix::ToTextFile(FILE* file) const {
   CHECK(file != nullptr);
   for (int r = 0; r < num_rows_; ++r) {
     for (int idx = rows_[r]; idx < rows_[r + 1]; ++idx) {
-      fprintf(file, "% 10d % 10d %17f\n", r, cols_[idx], values_[idx]);
+      absl::FPrintF(file, "% 10d % 10d %17f\n", r, cols_[idx], values_[idx]);
     }
   }
 }

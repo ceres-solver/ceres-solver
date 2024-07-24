@@ -7,7 +7,7 @@
 //
 // * Redistributions of source code must retain the above copyright notice,
 //   this list of conditions and the following disclaimer.
-// * Redistributions in binary form must reproduce the above copyright notice,
+// * Redistributions in binary form must reproduce the ab%ove copyright notice,
 //   this list of conditions and the following disclaimer in the documentation
 //   and/or other materials provided with the distribution.
 // * Neither the name of Google Inc. nor the names of its contributors may be
@@ -42,6 +42,7 @@
 #include "Eigen/Core"
 #include "absl/log/check.h"
 #include "absl/log/log.h"
+#include "absl/strings/str_format.h"
 #include "ceres/array_utils.h"
 #include "ceres/coordinate_descent_minimizer.h"
 #include "ceres/eigen_vector_ops.h"
@@ -49,7 +50,6 @@
 #include "ceres/file.h"
 #include "ceres/line_search.h"
 #include "ceres/parallel_for.h"
-#include "ceres/stringprintf.h"
 #include "ceres/types.h"
 #include "ceres/wall_time.h"
 
@@ -389,8 +389,8 @@ bool TrustRegionMinimizer::ComputeTrustRegionStep() {
         options_.trust_region_problem_dump_format_type;
     per_solve_options.dump_filename_base =
         JoinPath(options_.trust_region_problem_dump_directory,
-                 StringPrintf("ceres_solver_iteration_%03d",
-                              iteration_summary_.iteration));
+                 absl::StrFormat("ceres_solver_iteration_%03d",
+                                 iteration_summary_.iteration));
   }
 
   TrustRegionStrategy::Summary strategy_summary =
@@ -470,7 +470,7 @@ bool TrustRegionMinimizer::HandleInvalidStep() {
   // just slightly negative.
   if (++num_consecutive_invalid_steps_ >=
       options_.max_num_consecutive_invalid_steps) {
-    solver_summary_->message = StringPrintf(
+    solver_summary_->message = absl::StrFormat(
         "Number of consecutive invalid steps more "
         "than Solver::Options::max_num_consecutive_invalid_steps: %d",
         options_.max_num_consecutive_invalid_steps);
@@ -643,7 +643,7 @@ bool TrustRegionMinimizer::MaxSolverTimeReached() {
     return false;
   }
 
-  solver_summary_->message = StringPrintf(
+  solver_summary_->message = absl::StrFormat(
       "Maximum solver time reached. "
       "Total solver time: %e >= %e.",
       total_solver_time,
@@ -663,7 +663,7 @@ bool TrustRegionMinimizer::MaxSolverIterationsReached() {
     return false;
   }
 
-  solver_summary_->message = StringPrintf(
+  solver_summary_->message = absl::StrFormat(
       "Maximum number of iterations reached. "
       "Number of iterations: %d.",
       iteration_summary_.iteration);
@@ -683,7 +683,7 @@ bool TrustRegionMinimizer::GradientToleranceReached() {
     return false;
   }
 
-  solver_summary_->message = StringPrintf(
+  solver_summary_->message = absl::StrFormat(
       "Gradient tolerance reached. "
       "Gradient max norm: %e <= %e",
       iteration_summary_.gradient_max_norm,
@@ -702,7 +702,7 @@ bool TrustRegionMinimizer::MinTrustRegionRadiusReached() {
     return false;
   }
 
-  solver_summary_->message = StringPrintf(
+  solver_summary_->message = absl::StrFormat(
       "Minimum trust region radius reached. "
       "Trust region radius: %e <= %e",
       iteration_summary_.trust_region_radius,
@@ -727,7 +727,7 @@ bool TrustRegionMinimizer::ParameterToleranceReached() {
     return false;
   }
 
-  solver_summary_->message = StringPrintf(
+  solver_summary_->message = absl::StrFormat(
       "Parameter tolerance reached. "
       "Relative step_norm: %e <= %e.",
       (iteration_summary_.step_norm / (x_norm + options_.parameter_tolerance)),
@@ -749,7 +749,7 @@ bool TrustRegionMinimizer::FunctionToleranceReached() {
     return false;
   }
 
-  solver_summary_->message = StringPrintf(
+  solver_summary_->message = absl::StrFormat(
       "Function tolerance reached. "
       "|cost_change|/cost: %e <= %e",
       fabs(iteration_summary_.cost_change) / x_cost_,

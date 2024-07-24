@@ -42,6 +42,8 @@
 
 #include "absl/log/check.h"
 #include "absl/log/log.h"
+#include "absl/strings/str_cat.h"
+#include "absl/strings/str_format.h"
 #include "ceres/dynamic_numeric_diff_cost_function.h"
 #include "ceres/gradient_checker.h"
 #include "ceres/internal/eigen.h"
@@ -50,7 +52,6 @@
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
 #include "ceres/residual_block.h"
-#include "ceres/stringprintf.h"
 #include "ceres/types.h"
 
 namespace ceres::internal {
@@ -111,9 +112,11 @@ class GradientCheckingCostFunction final : public CostFunction {
     }
 
     if (!okay) {
-      std::string error_log =
-          "Gradient Error detected!\nExtra info for this residual: " +
-          extra_info_ + "\n" + results.error_log;
+      std::string error_log = absl::StrCat(
+          "Gradient Error detected!\nExtra info for this residual: ",
+          extra_info_,
+          "\n",
+          results.error_log);
       callback_->SetGradientErrorDetected(error_log);
     }
     return true;
@@ -145,7 +148,7 @@ void GradientCheckingIterationCallback::SetGradientErrorDetected(
     std::string& error_log) {
   std::lock_guard<std::mutex> l(mutex_);
   gradient_error_detected_ = true;
-  error_log_ += "\n" + error_log;
+  absl::StrAppend(&error_log_, "\n", error_log);
 }
 
 std::unique_ptr<CostFunction> CreateGradientCheckingCostFunction(
@@ -231,7 +234,7 @@ std::unique_ptr<ProblemImpl> CreateGradientCheckingProblemImpl(
     // ResidualBlock. This is used by the GradientCheckingCostFunction
     // when logging debugging information.
     std::string extra_info =
-        StringPrintf("Residual block id %d; depends on parameters [", i);
+        absl::StrFormat("Residual block id %d; depends on parameters [", i);
     std::vector<double*> parameter_blocks;
     std::vector<const Manifold*> manifolds;
     parameter_blocks.reserve(residual_block->NumParameterBlocks());
@@ -239,8 +242,11 @@ std::unique_ptr<ProblemImpl> CreateGradientCheckingProblemImpl(
     for (int j = 0; j < residual_block->NumParameterBlocks(); ++j) {
       ParameterBlock* parameter_block = residual_block->parameter_blocks()[j];
       parameter_blocks.push_back(parameter_block->mutable_user_state());
-      StringAppendF(&extra_info, "%p", parameter_block->mutable_user_state());
-      extra_info += (j < residual_block->NumParameterBlocks() - 1) ? ", " : "]";
+      absl::StrAppendFormat(
+          &extra_info, "%p", parameter_block->mutable_user_state());
+      absl::StrAppend(
+          &extra_info,
+          (j < residual_block->NumParameterBlocks() - 1) ? ", " : "]");
       manifolds.push_back(
           problem_impl->GetManifold(parameter_block->mutable_user_state()));
     }

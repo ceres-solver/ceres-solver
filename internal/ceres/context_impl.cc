@@ -34,8 +34,8 @@
 
 #include "absl/log/check.h"
 #include "absl/log/log.h"
+#include "absl/strings/str_format.h"
 #include "ceres/internal/config.h"
-#include "ceres/stringprintf.h"
 #include "ceres/wall_time.h"
 
 #ifndef CERES_NO_CUDA
@@ -78,7 +78,7 @@ void ContextImpl::TearDown() {
 }
 
 std::string ContextImpl::CudaConfigAsString() const {
-  return ceres::internal::StringPrintf(
+  return absl::StrFormat(
       "======================= CUDA Device Properties ======================\n"
       "Cuda version              : %d.%d\n"
       "Device ID                 : %d\n"
