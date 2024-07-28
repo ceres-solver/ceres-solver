@@ -37,13 +37,13 @@
 #include <vector>
 
 #include "absl/log/check.h"
+#include "ceres/event_logger.h"
 #include "ceres/graph.h"
 #include "ceres/graph_algorithms.h"
 #include "ceres/map_util.h"
 #include "ceres/parameter_block.h"
 #include "ceres/program.h"
 #include "ceres/residual_block.h"
-#include "ceres/wall_time.h"
 
 namespace ceres::internal {
 

@@ -42,7 +42,6 @@
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
 #include "ceres/sparse_matrix.h"
-#include "ceres/wall_time.h"
 
 namespace ceres::internal {
 

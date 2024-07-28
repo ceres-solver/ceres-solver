@@ -43,7 +43,6 @@
 #include "absl/log/check.h"
 #include "ceres/graph.h"
 #include "ceres/internal/export.h"
-#include "ceres/wall_time.h"
 
 namespace ceres::internal {
 

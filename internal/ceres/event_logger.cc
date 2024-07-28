@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2024 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -28,59 +28,48 @@
 //
 // Author: strandmark@google.com (Petter Strandmark)
 
-#ifndef CERES_INTERNAL_WALL_TIME_H_
-#define CERES_INTERNAL_WALL_TIME_H_
+#include "ceres/event_logger.h"
 
-#include <map>
-#include <string>
-
-#include "ceres/internal/disable_warnings.h"
-#include "ceres/internal/export.h"
+#include "absl/log/log.h"
+#include "absl/strings/str_format.h"
+#include "absl/time/clock.h"
+#include "absl/time/time.h"
+#include "ceres/internal/config.h"
 
 namespace ceres::internal {
 
-// Returns time, in seconds, from some arbitrary starting point. On unixes,
-// gettimeofday is used. The granularity is microseconds.
-CERES_NO_EXPORT double WallTimeInSeconds();
+EventLogger::EventLogger(const std::string& logger_name)
+    : start_time_(absl::Now()) {
+  if (!VLOG_IS_ON(3)) {
+    return;
+  }
 
-// Log a series of events, recording for each event the time elapsed
-// since the last event and since the creation of the object.
-//
-// The information is output to VLOG(3) upon destruction. A
-// name::Total event is added as the final event right before
-// destruction.
-//
-// Example usage:
-//
-//  void Foo() {
-//    EventLogger event_logger("Foo");
-//    Bar1();
-//    event_logger.AddEvent("Bar1")
-//    Bar2();
-//    event_logger.AddEvent("Bar2")
-//    Bar3();
-//  }
-//
-// Will produce output that looks like
-//
-//  Foo
-//      Bar1:  time1  time1
-//      Bar2:  time2  time1 + time2;
-//     Total:  time3  time1 + time2 + time3;
-class CERES_NO_EXPORT EventLogger {
- public:
-  explicit EventLogger(const std::string& logger_name);
-  ~EventLogger();
-  void AddEvent(const std::string& event_name);
+  last_event_time_ = start_time_;
+  events_ = absl::StrFormat(
+      "\n%s\n                                        Delta   Cumulative\n",
+      logger_name);
+}
 
- private:
-  double start_time_;
-  double last_event_time_;
-  std::string events_;
-};
+EventLogger::~EventLogger() {
+  if (!VLOG_IS_ON(3)) {
+    return;
+  }
+  AddEvent("Total");
+  VLOG(3) << "\n" << events_ << "\n";
+}
+
+void EventLogger::AddEvent(const std::string& event_name) {
+  if (!VLOG_IS_ON(3)) {
+    return;
+  }
+
+  const absl::Time now = absl::Now();
+  absl::StrAppendFormat(&events_,
+                        "  %30s : %10.5f   %10.5f\n",
+                        event_name,
+                        absl::ToDoubleSeconds(now - last_event_time_),
+                        absl::ToDoubleSeconds(now - start_time_));
+  last_event_time_ = now;
+}
 
 }  // namespace ceres::internal
-
-#include "ceres/internal/reenable_warnings.h"
-
-#endif  // CERES_INTERNAL_WALL_TIME_H_
