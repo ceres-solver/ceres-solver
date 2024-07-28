@@ -36,6 +36,7 @@
 #include <memory>
 
 #include "ceres/block_sparse_matrix.h"
+#include "ceres/event_logger.h"
 #include "ceres/inner_product_computer.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/iterative_refiner.h"
@@ -43,7 +44,6 @@
 #include "ceres/sparse_cholesky.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
-#include "ceres/wall_time.h"
 
 namespace ceres::internal {
 

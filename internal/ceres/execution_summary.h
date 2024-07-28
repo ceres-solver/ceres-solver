@@ -36,14 +36,15 @@
 #include <string>
 #include <utility>
 
+#include "absl/time/clock.h"
+#include "absl/time/time.h"
 #include "ceres/internal/export.h"
-#include "ceres/wall_time.h"
 
 namespace ceres::internal {
 
 struct CallStatistics {
   CallStatistics() = default;
-  double time{0.};
+  absl::Duration time = absl::ZeroDuration();
   int calls{0};
 };
 
@@ -51,10 +52,10 @@ struct CallStatistics {
 // execution.
 class ExecutionSummary {
  public:
-  void IncrementTimeBy(const std::string& name, const double value) {
+  void IncrementTimeBy(const std::string& name, absl::Duration delta) {
     std::lock_guard<std::mutex> l(mutex_);
     CallStatistics& call_stats = statistics_[name];
-    call_stats.time += value;
+    call_stats.time += delta;
     ++call_stats.calls;
   }
 
@@ -70,16 +71,14 @@ class ExecutionSummary {
 class ScopedExecutionTimer {
  public:
   ScopedExecutionTimer(std::string name, ExecutionSummary* summary)
-      : start_time_(WallTimeInSeconds()),
-        name_(std::move(name)),
-        summary_(summary) {}
+      : start_time_(absl::Now()), name_(std::move(name)), summary_(summary) {}
 
   ~ScopedExecutionTimer() {
-    summary_->IncrementTimeBy(name_, WallTimeInSeconds() - start_time_);
+    summary_->IncrementTimeBy(name_, absl::Now() - start_time_);
   }
 
  private:
-  const double start_time_;
+  absl::Time start_time_;
   const std::string name_;
   ExecutionSummary* summary_;
 };

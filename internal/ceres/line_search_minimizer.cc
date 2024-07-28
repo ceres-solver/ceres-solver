@@ -58,7 +58,6 @@
 #include "ceres/line_search.h"
 #include "ceres/line_search_direction.h"
 #include "ceres/types.h"
-#include "ceres/wall_time.h"
 
 namespace ceres::internal {
 namespace {
@@ -87,8 +86,8 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
                                    double* parameters,
                                    Solver::Summary* summary) {
   const bool is_not_silent = !options.is_silent;
-  double start_time = WallTimeInSeconds();
-  double iteration_start_time = start_time;
+  const absl::Time start_time = absl::Now();
+  absl::Time iteration_start_time = start_time;
 
   CHECK(options.evaluator != nullptr);
   Evaluator* evaluator = options.evaluator.get();
@@ -157,10 +156,12 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
     return;
   }
 
+  absl::Time now = absl::Now();
   iteration_summary.iteration_time_in_seconds =
-      WallTimeInSeconds() - iteration_start_time;
+      absl::ToDoubleSeconds(now - iteration_start_time);
   iteration_summary.cumulative_time_in_seconds =
-      WallTimeInSeconds() - start_time + summary->preprocessor_time_in_seconds;
+      absl::ToDoubleSeconds(now - start_time) +
+      summary->preprocessor_time_in_seconds;
   summary->iterations.push_back(iteration_summary);
 
   LineSearchDirection::Options line_search_direction_options;
@@ -213,7 +214,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
       break;
     }
 
-    iteration_start_time = WallTimeInSeconds();
+    iteration_start_time = absl::Now();
     if (iteration_summary.iteration >= options.max_num_iterations) {
       summary->message = "Maximum number of iterations reached.";
       summary->termination_type = NO_CONVERGENCE;
@@ -223,8 +224,9 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
       break;
     }
 
-    const double total_solver_time = iteration_start_time - start_time +
-                                     summary->preprocessor_time_in_seconds;
+    const double total_solver_time =
+        absl::ToDoubleSeconds(iteration_start_time - start_time) +
+        summary->preprocessor_time_in_seconds;
     if (total_solver_time >= options.max_solver_time_in_seconds) {
       summary->message = "Maximum solver time reached.";
       summary->termination_type = NO_CONVERGENCE;
@@ -345,7 +347,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
     current_state.step_size = optimal_point.x;
     previous_state = current_state;
     iteration_summary.step_solver_time_in_seconds =
-        WallTimeInSeconds() - iteration_start_time;
+        absl::ToDoubleSeconds(absl::Now() - iteration_start_time);
 
     if (optimal_point.vector_gradient_is_valid) {
       current_state.cost = optimal_point.value;
@@ -402,10 +404,11 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
         line_search_summary.num_gradient_evaluations;
     iteration_summary.line_search_iterations =
         line_search_summary.num_iterations;
+    const absl::Time now = absl::Now();
     iteration_summary.iteration_time_in_seconds =
-        WallTimeInSeconds() - iteration_start_time;
+        absl::ToDoubleSeconds(now - iteration_start_time);
     iteration_summary.cumulative_time_in_seconds =
-        WallTimeInSeconds() - start_time +
+        absl::ToDoubleSeconds(now - start_time) +
         summary->preprocessor_time_in_seconds;
     summary->iterations.push_back(iteration_summary);
 
@@ -417,13 +420,13 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
     // minimization.
     summary->num_line_search_steps += line_search_summary.num_iterations;
     summary->line_search_cost_evaluation_time_in_seconds +=
-        line_search_summary.cost_evaluation_time_in_seconds;
+        absl::ToDoubleSeconds(line_search_summary.cost_evaluation_time);
     summary->line_search_gradient_evaluation_time_in_seconds +=
-        line_search_summary.gradient_evaluation_time_in_seconds;
+        absl::ToDoubleSeconds(line_search_summary.gradient_evaluation_time);
     summary->line_search_polynomial_minimization_time_in_seconds +=
-        line_search_summary.polynomial_minimization_time_in_seconds;
+        absl::ToDoubleSeconds(line_search_summary.polynomial_minimization_time);
     summary->line_search_total_time_in_seconds +=
-        line_search_summary.total_time_in_seconds;
+        absl::ToDoubleSeconds(line_search_summary.total_time);
     ++summary->num_successful_steps;
 
     const double step_size_tolerance =

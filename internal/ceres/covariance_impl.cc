@@ -48,6 +48,7 @@
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/covariance.h"
 #include "ceres/crs_matrix.h"
+#include "ceres/event_logger.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/map_util.h"
 #include "ceres/parallel_for.h"
@@ -56,7 +57,6 @@
 #include "ceres/problem_impl.h"
 #include "ceres/residual_block.h"
 #include "ceres/suitesparse.h"
-#include "ceres/wall_time.h"
 
 namespace ceres::internal {
 

@@ -51,7 +51,6 @@
 #include "ceres/line_search.h"
 #include "ceres/parallel_for.h"
 #include "ceres/types.h"
-#include "ceres/wall_time.h"
 
 // Helper macro to simplify some of the control flow.
 #define RETURN_IF_ERROR_AND_LOG(expr)                            \
@@ -67,8 +66,8 @@ namespace ceres::internal {
 void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
                                     double* parameters,
                                     Solver::Summary* solver_summary) {
-  start_time_in_secs_ = WallTimeInSeconds();
-  iteration_start_time_in_secs_ = start_time_in_secs_;
+  start_time_ = absl::Now();
+  iteration_start_time_ = start_time_;
   Init(options, parameters, solver_summary);
   RETURN_IF_ERROR_AND_LOG(IterationZero());
 
@@ -83,7 +82,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
 
   bool atleast_one_successful_step = false;
   while (FinalizeIterationAndCheckIfMinimizerCanContinue()) {
-    iteration_start_time_in_secs_ = WallTimeInSeconds();
+    iteration_start_time_ = absl::Now();
 
     const double previous_gradient_norm = iteration_summary_.gradient_norm;
     const double previous_gradient_max_norm =
@@ -327,10 +326,11 @@ bool TrustRegionMinimizer::FinalizeIterationAndCheckIfMinimizerCanContinue() {
   }
 
   iteration_summary_.trust_region_radius = strategy_->Radius();
+  const absl::Time now = absl::Now();
   iteration_summary_.iteration_time_in_seconds =
-      WallTimeInSeconds() - iteration_start_time_in_secs_;
+      absl::ToDoubleSeconds(now - iteration_start_time_);
   iteration_summary_.cumulative_time_in_seconds =
-      WallTimeInSeconds() - start_time_in_secs_ +
+      absl::ToDoubleSeconds(now - start_time_) +
       solver_summary_->preprocessor_time_in_seconds;
 
   solver_summary_->iterations.push_back(iteration_summary_);
@@ -377,7 +377,7 @@ bool TrustRegionMinimizer::FinalizeIterationAndCheckIfMinimizerCanContinue() {
 // negative. In which case again, we set
 // iteration_summary_.step_is_valid to false.
 bool TrustRegionMinimizer::ComputeTrustRegionStep() {
-  const double strategy_start_time = WallTimeInSeconds();
+  const absl::Time strategy_start_time = absl::Now();
   iteration_summary_.step_is_valid = false;
   TrustRegionStrategy::PerSolveOptions per_solve_options;
   per_solve_options.eta = options_.eta;
@@ -409,7 +409,7 @@ bool TrustRegionMinimizer::ComputeTrustRegionStep() {
   }
 
   iteration_summary_.step_solver_time_in_seconds =
-      WallTimeInSeconds() - strategy_start_time;
+      absl::ToDoubleSeconds(absl::Now() - strategy_start_time);
   iteration_summary_.linear_solver_iterations = strategy_summary.num_iterations;
 
   if (strategy_summary.termination_type ==
@@ -511,7 +511,7 @@ void TrustRegionMinimizer::DoInnerIterationsIfNeeded() {
     return;
   }
 
-  double inner_iteration_start_time = WallTimeInSeconds();
+  const absl::Time inner_iteration_start_time = absl::Now();
   ++solver_summary_->num_inner_iteration_steps;
   inner_iteration_x_ = candidate_x_;
   Solver::Summary inner_iteration_summary;
@@ -575,7 +575,7 @@ void TrustRegionMinimizer::DoInnerIterationsIfNeeded() {
   candidate_cost_ = inner_iteration_cost;
 
   solver_summary_->inner_iteration_time_in_seconds +=
-      WallTimeInSeconds() - inner_iteration_start_time;
+      absl::ToDoubleSeconds(absl::Now() - inner_iteration_start_time);
 }
 
 // Perform a projected line search to improve the objective function
@@ -619,13 +619,13 @@ void TrustRegionMinimizer::DoLineSearch(const Vector& x,
 
   solver_summary_->num_line_search_steps += line_search_summary.num_iterations;
   solver_summary_->line_search_cost_evaluation_time_in_seconds +=
-      line_search_summary.cost_evaluation_time_in_seconds;
+      absl::ToDoubleSeconds(line_search_summary.cost_evaluation_time);
   solver_summary_->line_search_gradient_evaluation_time_in_seconds +=
-      line_search_summary.gradient_evaluation_time_in_seconds;
+      absl::ToDoubleSeconds(line_search_summary.gradient_evaluation_time);
   solver_summary_->line_search_polynomial_minimization_time_in_seconds +=
-      line_search_summary.polynomial_minimization_time_in_seconds;
+      absl::ToDoubleSeconds(line_search_summary.polynomial_minimization_time);
   solver_summary_->line_search_total_time_in_seconds +=
-      line_search_summary.total_time_in_seconds;
+      absl::ToDoubleSeconds(line_search_summary.total_time);
 
   if (line_search_summary.success) {
     *delta *= line_search_summary.optimal_point.x;
@@ -637,7 +637,7 @@ void TrustRegionMinimizer::DoLineSearch(const Vector& x,
 // Solver::Summary::message.
 bool TrustRegionMinimizer::MaxSolverTimeReached() {
   const double total_solver_time =
-      WallTimeInSeconds() - start_time_in_secs_ +
+      absl::ToDoubleSeconds(absl::Now() - start_time_) +
       solver_summary_->preprocessor_time_in_seconds;
   if (total_solver_time < options_.max_solver_time_in_seconds) {
     return false;

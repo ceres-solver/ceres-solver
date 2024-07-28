@@ -50,7 +50,6 @@
 #include "ceres/reorder_program.h"
 #include "ceres/suitesparse.h"
 #include "ceres/trust_region_strategy.h"
-#include "ceres/wall_time.h"
 
 namespace ceres::internal {
 

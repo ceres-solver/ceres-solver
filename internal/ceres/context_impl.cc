@@ -35,8 +35,8 @@
 #include "absl/log/check.h"
 #include "absl/log/log.h"
 #include "absl/strings/str_format.h"
+#include "ceres/event_logger.h"
 #include "ceres/internal/config.h"
-#include "ceres/wall_time.h"
 
 #ifndef CERES_NO_CUDA
 #include "cublas_v2.h"

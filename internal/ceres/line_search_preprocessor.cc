@@ -40,7 +40,6 @@
 #include "ceres/minimizer.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
-#include "ceres/wall_time.h"
 
 namespace ceres::internal {
 namespace {
