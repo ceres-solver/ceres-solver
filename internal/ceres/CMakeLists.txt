@@ -40,6 +40,11 @@ list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES absl::strings)
 list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES absl::log)
 list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES absl::check)
 list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES absl::fixed_array)
+<<<<<<< PATCH SET (254eba Use absl::time)
+list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES absl::strings)
+list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES absl::time)
+=======
+>>>>>>> BASE      (03caee ceres/stringprintf -> absl::strings)
 
 # Source files that contain public symbols and live in the ceres namespaces.
 # Such symbols are expected to be marked with CERES_EXPORT and the files below
@@ -169,6 +174,7 @@ add_library(ceres_internal OBJECT
     eigensparse.cc
     evaluation_callback.cc
     evaluator.cc
+    event_logger.cc
     fake_bundle_adjustment_jacobian.cc
     file.cc
     first_order_function.cc
@@ -227,7 +233,6 @@ add_library(ceres_internal OBJECT
     trust_region_strategy.cc
     visibility.cc
     visibility_based_preconditioner.cc
-    wall_time.cc
 )
 
 set(CERES_LIBRARY_SOURCE

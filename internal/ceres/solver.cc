@@ -42,6 +42,8 @@
 #include "absl/log/log.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_format.h"
+#include "absl/time/clock.h"
+#include "absl/time/time.h"
 #include "ceres/casts.h"
 #include "ceres/context.h"
 #include "ceres/context_impl.h"
@@ -59,7 +61,6 @@
 #include "ceres/solver_utils.h"
 #include "ceres/suitesparse.h"
 #include "ceres/types.h"
-#include "ceres/wall_time.h"
 
 namespace ceres {
 namespace {
@@ -612,14 +613,16 @@ void PostSolveSummarize(const internal::PreprocessedProblem& pp,
       const CallStatistics& call_stats = FindWithDefault(
           evaluator_statistics, "Evaluator::Residual", CallStatistics());
 
-      summary->residual_evaluation_time_in_seconds = call_stats.time;
+      summary->residual_evaluation_time_in_seconds =
+          absl::ToDoubleSeconds(call_stats.time);
       summary->num_residual_evaluations = call_stats.calls;
     }
     {
       const CallStatistics& call_stats = FindWithDefault(
           evaluator_statistics, "Evaluator::Jacobian", CallStatistics());
 
-      summary->jacobian_evaluation_time_in_seconds = call_stats.time;
+      summary->jacobian_evaluation_time_in_seconds =
+          absl::ToDoubleSeconds(call_stats.time);
       summary->num_jacobian_evaluations = call_stats.calls;
     }
   }
@@ -633,7 +636,8 @@ void PostSolveSummarize(const internal::PreprocessedProblem& pp,
     const CallStatistics& call_stats = FindWithDefault(
         linear_solver_statistics, "LinearSolver::Solve", CallStatistics());
     summary->num_linear_solves = call_stats.calls;
-    summary->linear_solver_time_in_seconds = call_stats.time;
+    summary->linear_solver_time_in_seconds =
+        absl::ToDoubleSeconds(call_stats.time);
   }
 }
 
@@ -732,12 +736,11 @@ void Solver::Solve(const Solver::Options& options,
   using internal::Preprocessor;
   using internal::ProblemImpl;
   using internal::Program;
-  using internal::WallTimeInSeconds;
 
   CHECK(problem != nullptr);
   CHECK(summary != nullptr);
 
-  double start_time = WallTimeInSeconds();
+  const absl::Time start_time = absl::Now();
   *summary = Summary();
   if (!options.IsValid(&summary->message)) {
     LOG(ERROR) << "Terminating: " << summary->message;
@@ -814,18 +817,19 @@ void Solver::Solve(const Solver::Options& options,
   }
 
   summary->fixed_cost = pp.fixed_cost;
-  summary->preprocessor_time_in_seconds = WallTimeInSeconds() - start_time;
+  summary->preprocessor_time_in_seconds =
+      absl::ToDoubleSeconds(absl::Now() - start_time);
 
   if (status) {
-    const double minimizer_start_time = WallTimeInSeconds();
+    const absl::Time minimizer_start_time = absl::Now();
     Minimize(&pp, summary);
     summary->minimizer_time_in_seconds =
-        WallTimeInSeconds() - minimizer_start_time;
+        absl::ToDoubleSeconds(absl::Now() - minimizer_start_time);
   } else {
     summary->message = pp.error;
   }
 
-  const double postprocessor_start_time = WallTimeInSeconds();
+  const absl::Time postprocessor_start_time = absl::Now();
   problem_impl = problem->mutable_impl();
   program = problem_impl->mutable_program();
   // On exit, ensure that the parameter blocks again point at the user
@@ -835,7 +839,7 @@ void Solver::Solve(const Solver::Options& options,
   program->SetParameterOffsetsAndIndex();
   PostSolveSummarize(pp, summary);
   summary->postprocessor_time_in_seconds =
-      WallTimeInSeconds() - postprocessor_start_time;
+      absl::ToDoubleSeconds(absl::Now() - postprocessor_start_time);
 
   // If the gradient checker reported an error, we want to report FAILURE
   // instead of USER_FAILURE and provide the error log.
@@ -844,7 +848,8 @@ void Solver::Solve(const Solver::Options& options,
     summary->message = gradient_checking_callback.error_log();
   }
 
-  summary->total_time_in_seconds = WallTimeInSeconds() - start_time;
+  summary->total_time_in_seconds =
+      absl::ToDoubleSeconds(absl::Now() - start_time);
 }
 
 void Solve(const Solver::Options& options,

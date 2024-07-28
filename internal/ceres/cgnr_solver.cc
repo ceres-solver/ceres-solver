@@ -39,10 +39,10 @@
 #include "ceres/conjugate_gradients_solver.h"
 #include "ceres/cuda_sparse_matrix.h"
 #include "ceres/cuda_vector.h"
+#include "ceres/event_logger.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
 #include "ceres/subset_preconditioner.h"
-#include "ceres/wall_time.h"
 
 namespace ceres::internal {
 

@@ -40,13 +40,13 @@
 #include "Eigen/SparseCore"
 #include "absl/log/log.h"
 #include "ceres/compressed_row_sparse_matrix.h"
+#include "ceres/event_logger.h"
 #include "ceres/internal/config.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
 #include "ceres/suitesparse.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
-#include "ceres/wall_time.h"
 #include "cuda_sparse_cholesky.h"
 
 #ifdef CERES_USE_EIGEN_SPARSE

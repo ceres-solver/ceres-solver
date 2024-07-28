@@ -48,7 +48,6 @@
 #include "ceres/crs_matrix.h"
 #include "ceres/internal/export.h"
 #include "ceres/types.h"
-#include "ceres/wall_time.h"
 
 #ifndef CERES_NO_CUDA
 

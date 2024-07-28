@@ -48,7 +48,6 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/map_util.h"
 #include "ceres/polynomial.h"
-#include "ceres/wall_time.h"
 
 namespace ceres::internal {
 
@@ -91,9 +90,7 @@ LineSearchFunction::LineSearchFunction(Evaluator* evaluator)
     : evaluator_(evaluator),
       position_(evaluator->NumParameters()),
       direction_(evaluator->NumEffectiveParameters()),
-      scaled_direction_(evaluator->NumEffectiveParameters()),
-      initial_evaluator_residual_time_in_seconds(0.0),
-      initial_evaluator_jacobian_time_in_seconds(0.0) {}
+      scaled_direction_(evaluator->NumEffectiveParameters()) {}
 
 void LineSearchFunction::Init(const Vector& position, const Vector& direction) {
   position_ = position;
@@ -152,57 +149,56 @@ void LineSearchFunction::ResetTimeStatistics() {
   const std::map<std::string, CallStatistics> evaluator_statistics =
       evaluator_->Statistics();
 
-  initial_evaluator_residual_time_in_seconds =
+  initial_evaluator_residual_time =
       FindWithDefault(
           evaluator_statistics, "Evaluator::Residual", CallStatistics())
           .time;
-  initial_evaluator_jacobian_time_in_seconds =
+  initial_evaluator_jacobian_time =
       FindWithDefault(
           evaluator_statistics, "Evaluator::Jacobian", CallStatistics())
           .time;
 }
 
 void LineSearchFunction::TimeStatistics(
-    double* cost_evaluation_time_in_seconds,
-    double* gradient_evaluation_time_in_seconds) const {
+    absl::Duration* cost_evaluation_time,
+    absl::Duration* gradient_evaluation_time) const {
   const std::map<std::string, CallStatistics> evaluator_time_statistics =
       evaluator_->Statistics();
-  *cost_evaluation_time_in_seconds =
+  *cost_evaluation_time =
       FindWithDefault(
           evaluator_time_statistics, "Evaluator::Residual", CallStatistics())
           .time -
-      initial_evaluator_residual_time_in_seconds;
+      initial_evaluator_residual_time;
   // Strictly speaking this will slightly underestimate the time spent
   // evaluating the gradient of the line search univariate cost function as it
   // does not count the time spent performing the dot product with the direction
   // vector.  However, this will typically be small by comparison, and also
   // allows direct subtraction of the timing information from the totals for
   // the evaluator returned in the solver summary.
-  *gradient_evaluation_time_in_seconds =
+  *gradient_evaluation_time =
       FindWithDefault(
           evaluator_time_statistics, "Evaluator::Jacobian", CallStatistics())
           .time -
-      initial_evaluator_jacobian_time_in_seconds;
+      initial_evaluator_jacobian_time;
 }
 
 void LineSearch::Search(double step_size_estimate,
                         double initial_cost,
                         double initial_gradient,
                         Summary* summary) const {
-  const double start_time = WallTimeInSeconds();
+  const absl::Time start_time = absl::Now();
   CHECK(summary != nullptr);
   *summary = LineSearch::Summary();
 
-  summary->cost_evaluation_time_in_seconds = 0.0;
-  summary->gradient_evaluation_time_in_seconds = 0.0;
-  summary->polynomial_minimization_time_in_seconds = 0.0;
+  summary->cost_evaluation_time = absl::ZeroDuration();
+  summary->gradient_evaluation_time = absl::ZeroDuration();
+  summary->polynomial_minimization_time = absl::ZeroDuration();
   options().function->ResetTimeStatistics();
   this->DoSearch(step_size_estimate, initial_cost, initial_gradient, summary);
-  options().function->TimeStatistics(
-      &summary->cost_evaluation_time_in_seconds,
-      &summary->gradient_evaluation_time_in_seconds);
+  options().function->TimeStatistics(&summary->cost_evaluation_time,
+                                     &summary->gradient_evaluation_time);
 
-  summary->total_time_in_seconds = WallTimeInSeconds() - start_time;
+  summary->total_time = absl::Now() - start_time;
 }
 
 // Returns step_size \in [min_step_size, max_step_size] which minimizes the
@@ -329,7 +325,7 @@ void ArmijoLineSearch::DoSearch(const double step_size_estimate,
       return;
     }
 
-    const double polynomial_minimization_start_time = WallTimeInSeconds();
+    const absl::Time polynomial_minimization_start_time = absl::Now();
     const double step_size = this->InterpolatingPolynomialMinimizingStepSize(
         options().interpolation_type,
         initial_position,
@@ -337,8 +333,8 @@ void ArmijoLineSearch::DoSearch(const double step_size_estimate,
         current,
         (options().max_step_contraction * current.x),
         (options().min_step_contraction * current.x));
-    summary->polynomial_minimization_time_in_seconds +=
-        (WallTimeInSeconds() - polynomial_minimization_start_time);
+    summary->polynomial_minimization_time +=
+        (absl::Now() - polynomial_minimization_start_time);
 
     if (step_size * descent_direction_max_norm < options().min_step_size) {
       summary->error = absl::StrFormat(
@@ -650,7 +646,7 @@ bool WolfeLineSearch::BracketingPhase(const FunctionSample& initial_position,
     const FunctionSample unused_previous;
     DCHECK(!unused_previous.value_is_valid);
     // Contracts step size if f(current) is not valid.
-    const double polynomial_minimization_start_time = WallTimeInSeconds();
+    const absl::Time polynomial_minimization_start_time = absl::Now();
     const double step_size = this->InterpolatingPolynomialMinimizingStepSize(
         options().interpolation_type,
         previous,
@@ -658,8 +654,8 @@ bool WolfeLineSearch::BracketingPhase(const FunctionSample& initial_position,
         current,
         min_step_size,
         max_step_size);
-    summary->polynomial_minimization_time_in_seconds +=
-        (WallTimeInSeconds() - polynomial_minimization_start_time);
+    summary->polynomial_minimization_time +=
+        (absl::Now() - polynomial_minimization_start_time);
     if (step_size * descent_direction_max_norm < options().min_step_size) {
       summary->error = absl::StrFormat(
           "Line search failed: step_size too small: %.5e "
@@ -804,7 +800,7 @@ bool WolfeLineSearch::ZoomPhase(const FunctionSample& initial_position,
     // value that will therefore be ignored.
     const FunctionSample unused_previous;
     DCHECK(!unused_previous.value_is_valid);
-    const double polynomial_minimization_start_time = WallTimeInSeconds();
+    const absl::Time polynomial_minimization_start_time = absl::Now();
     const double step_size = this->InterpolatingPolynomialMinimizingStepSize(
         options().interpolation_type,
         lower_bound_step,
@@ -812,8 +808,8 @@ bool WolfeLineSearch::ZoomPhase(const FunctionSample& initial_position,
         upper_bound_step,
         lower_bound_step.x,
         upper_bound_step.x);
-    summary->polynomial_minimization_time_in_seconds +=
-        (WallTimeInSeconds() - polynomial_minimization_start_time);
+    summary->polynomial_minimization_time +=
+        (absl::Now() - polynomial_minimization_start_time);
     // No check on magnitude of step size being too small here as it is
     // lower-bounded by the initial bracket start point, which was valid.
     //
