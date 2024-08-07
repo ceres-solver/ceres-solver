@@ -30,12 +30,12 @@
 
 # Build the list of dependencies for Ceres based on the current configuration.
 
-# Avoid 'xxx.cc has no symbols' warnings from source files which are 'empty'
-# when their enclosing #ifdefs are disabled.
 find_package(Threads REQUIRED)
 list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES Threads::Threads)
 # Make dependency visible to the parent CMakeLists.txt
 set(Threads_DEPENDENCY "find_dependency (Threads)" PARENT_SCOPE)
+list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES  $<LINK_LIBRARY:WHOLE_ARCHIVE,absl::log_flags>)
+
 
 list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES absl::log)
 list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES absl::check)
