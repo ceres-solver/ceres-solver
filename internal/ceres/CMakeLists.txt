@@ -39,6 +39,15 @@ set(Threads_DEPENDENCY "find_dependency (Threads)" PARENT_SCOPE)
 
 list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES absl::log)
 list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES absl::check)
+
+# This may need some finessing, absl/log/CMakeList.txt say:
+#
+# Warning: Many linkers will strip the contents of this library because its
+# symbols are only used in a global constructor. A workaround is for clients
+# to link this using $<LINK_LIBRARY:WHOLE_ARCHIVE,absl::log_flags> instead of
+# the plain absl::log_flags.
+list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES absl::log_flags)
+
 list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES absl::fixed_array)
 
 # Source files that contain public symbols and live in the ceres namespaces.
