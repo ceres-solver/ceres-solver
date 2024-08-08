@@ -16,6 +16,29 @@
       "message": "gentle ping",
       "revId": "e374d10865c91c51267f6fd30a9acc67df8bfd0c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6409e37b_f15f58ab",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-08-08T12:13:39Z",
+      "side": 1,
+      "message": "Changes do not affect the public interface. Therefore the dependency should be private. Otherwise LGTM.",
+      "range": {
+        "startLine": 43,
+        "startChar": 26,
+        "endLine": 43,
+        "endChar": 33
+      },
+      "revId": "e374d10865c91c51267f6fd30a9acc67df8bfd0c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
