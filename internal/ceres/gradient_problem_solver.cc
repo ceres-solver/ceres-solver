@@ -38,6 +38,7 @@
 #include "absl/log/log.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_format.h"
+#include "absl/time/time.h"
 #include "ceres/callbacks.h"
 #include "ceres/gradient_problem.h"
 #include "ceres/gradient_problem_evaluator.h"
@@ -48,7 +49,6 @@
 #include "ceres/solver.h"
 #include "ceres/solver_utils.h"
 #include "ceres/types.h"
-#include "ceres/wall_time.h"
 
 namespace ceres {
 namespace {
@@ -105,9 +105,8 @@ void GradientProblemSolver::Solve(const GradientProblemSolver::Options& options,
   using internal::LoggingCallback;
   using internal::Minimizer;
   using internal::SetSummaryFinalCost;
-  using internal::WallTimeInSeconds;
 
-  double start_time = WallTimeInSeconds();
+  const absl::Time start_time = absl::Now();
 
   CHECK(summary != nullptr);
   *summary = Summary();
@@ -186,18 +185,21 @@ void GradientProblemSolver::Solve(const GradientProblemSolver::Options& options,
   {
     const CallStatistics& call_stats = FindWithDefault(
         evaluator_statistics, "Evaluator::Residual", CallStatistics());
-    summary->cost_evaluation_time_in_seconds = call_stats.time;
+    summary->cost_evaluation_time_in_seconds =
+        absl::ToDoubleSeconds(call_stats.time);
     summary->num_cost_evaluations = call_stats.calls;
   }
 
   {
     const CallStatistics& call_stats = FindWithDefault(
         evaluator_statistics, "Evaluator::Jacobian", CallStatistics());
-    summary->gradient_evaluation_time_in_seconds = call_stats.time;
+    summary->gradient_evaluation_time_in_seconds =
+        absl::ToDoubleSeconds(call_stats.time);
     summary->num_gradient_evaluations = call_stats.calls;
   }
 
-  summary->total_time_in_seconds = WallTimeInSeconds() - start_time;
+  summary->total_time_in_seconds =
+      absl::ToDoubleSeconds(absl::Now() - start_time);
 }
 
 bool GradientProblemSolver::Summary::IsSolutionUsable() const {

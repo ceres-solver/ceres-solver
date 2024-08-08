@@ -47,12 +47,12 @@
 #include "ceres/block_structure.h"
 #include "ceres/conjugate_gradients_solver.h"
 #include "ceres/detect_structure.h"
+#include "ceres/event_logger.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
 #include "ceres/sparse_cholesky.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
-#include "ceres/wall_time.h"
 
 namespace ceres::internal {
 namespace {

@@ -37,6 +37,7 @@
 #include <string>
 #include <vector>
 
+#include "absl/time/time.h"
 #include "ceres/function_sample.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
@@ -149,14 +150,14 @@ class CERES_NO_EXPORT LineSearch {
     int num_iterations = 0;
     // Cumulative time spent evaluating the value of the cost function across
     // all iterations.
-    double cost_evaluation_time_in_seconds = 0.0;
+    absl::Duration cost_evaluation_time = absl::ZeroDuration();
     // Cumulative time spent evaluating the gradient of the cost function across
     // all iterations.
-    double gradient_evaluation_time_in_seconds = 0.0;
+    absl::Duration gradient_evaluation_time = absl::ZeroDuration();
     // Cumulative time spent minimizing the interpolating polynomial to compute
     // the next candidate step size across all iterations.
-    double polynomial_minimization_time_in_seconds = 0.0;
-    double total_time_in_seconds = 0.0;
+    absl::Duration polynomial_minimization_time = absl::ZeroDuration();
+    absl::Duration total_time = absl::ZeroDuration();
     std::string error;
   };
 
@@ -232,8 +233,8 @@ class CERES_NO_EXPORT LineSearchFunction {
 
   // Resets to now, the start point for the results from TimeStatistics().
   void ResetTimeStatistics();
-  void TimeStatistics(double* cost_evaluation_time_in_seconds,
-                      double* gradient_evaluation_time_in_seconds) const;
+  void TimeStatistics(absl::Duration* cost_evaluation_time,
+                      absl::Duration* gradient_evaluation_time) const;
   const Vector& position() const { return position_; }
   const Vector& direction() const { return direction_; }
 
@@ -249,8 +250,8 @@ class CERES_NO_EXPORT LineSearchFunction {
   // minimizer), hence we need to save the initial evaluation durations for the
   // value & gradient to accurately determine the duration of the evaluations
   // we invoked.  These are reset by a call to ResetTimeStatistics().
-  double initial_evaluator_residual_time_in_seconds;
-  double initial_evaluator_jacobian_time_in_seconds;
+  absl::Duration initial_evaluator_residual_time = absl::ZeroDuration();
+  absl::Duration initial_evaluator_jacobian_time = absl::ZeroDuration();
 };
 
 // Backtracking and interpolation based Armijo line search. This

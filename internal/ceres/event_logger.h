@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2024 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -28,72 +28,55 @@
 //
 // Author: strandmark@google.com (Petter Strandmark)
 
-#include "ceres/wall_time.h"
+#ifndef CERES_INTERNAL_EVENT_LOGGER_H_
+#define CERES_INTERNAL_EVENT_LOGGER_H_
 
-#include <ctime>
+#include <string>
 
-#include "absl/log/log.h"
-#include "absl/strings/str_format.h"
-#include "ceres/internal/config.h"
-
-#ifdef _WIN32
-#include <windows.h>
-#else
-#include <sys/time.h>
-#endif
+#include "absl/time/time.h"
+#include "ceres/internal/disable_warnings.h"
+#include "ceres/internal/export.h"
 
 namespace ceres::internal {
 
-double WallTimeInSeconds() {
-#ifdef _WIN32
-  LARGE_INTEGER count;
-  LARGE_INTEGER frequency;
-  QueryPerformanceCounter(&count);
-  QueryPerformanceFrequency(&frequency);
-  return static_cast<double>(count.QuadPart) /
-         static_cast<double>(frequency.QuadPart);
-#else
-  timeval time_val;
-  gettimeofday(&time_val, nullptr);
-  return (time_val.tv_sec + time_val.tv_usec * 1e-6);
-#endif
-}
+// Log a series of events, recording for each event the time elapsed
+// since the last event and since the creation of the object.
+//
+// The information is output to VLOG(3) upon destruction. A
+// name::Total event is added as the final event right before
+// destruction.
+//
+// Example usage:
+//
+//  void Foo() {
+//    EventLogger event_logger("Foo");
+//    Bar1();
+//    event_logger.AddEvent("Bar1")
+//    Bar2();
+//    event_logger.AddEvent("Bar2")
+//    Bar3();
+//  }
+//
+// Will produce output that looks like
+//
+//  Foo
+//      Bar1:  time1  time1
+//      Bar2:  time2  time1 + time2;
+//     Total:  time3  time1 + time2 + time3;
+class CERES_NO_EXPORT EventLogger {
+ public:
+  explicit EventLogger(const std::string& logger_name);
+  ~EventLogger();
+  void AddEvent(const std::string& event_name);
 
-EventLogger::EventLogger(const std::string& logger_name) {
-  if (!VLOG_IS_ON(3)) {
-    return;
-  }
-
-  start_time_ = WallTimeInSeconds();
-  last_event_time_ = start_time_;
-  events_ = absl::StrFormat(
-      "\n%s\n                                        Delta   Cumulative\n",
-      logger_name);
-}
-
-EventLogger::~EventLogger() {
-  if (!VLOG_IS_ON(3)) {
-    return;
-  }
-  AddEvent("Total");
-  VLOG(3) << "\n" << events_ << "\n";
-}
-
-void EventLogger::AddEvent(const std::string& event_name) {
-  if (!VLOG_IS_ON(3)) {
-    return;
-  }
-
-  const double current_time = WallTimeInSeconds();
-  const double relative_time_delta = current_time - last_event_time_;
-  const double absolute_time_delta = current_time - start_time_;
-  last_event_time_ = current_time;
-
-  absl::StrAppendFormat(&events_,
-                        "  %30s : %10.5f   %10.5f\n",
-                        event_name,
-                        relative_time_delta,
-                        absolute_time_delta);
-}
+ private:
+  const absl::Time start_time_;
+  absl::Time last_event_time_;
+  std::string events_;
+};
 
 }  // namespace ceres::internal
+
+#include "ceres/internal/reenable_warnings.h"
+
+#endif  // CERES_INTERNAL_EVENT_LOGGER_H_
