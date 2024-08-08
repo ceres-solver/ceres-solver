@@ -16,6 +16,29 @@
       "message": "gentle ping",
       "revId": "254ebab7ed2c43bde8242a6310f4f5e64c064045",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "412b1fa1_9b8f5ee5",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-08-08T12:10:11Z",
+      "side": 1,
+      "message": "This should be a private dependency since all the changes are in the internal part of the library. Otherwise LGTM.",
+      "range": {
+        "startLine": 44,
+        "startChar": 26,
+        "endLine": 44,
+        "endChar": 32
+      },
+      "revId": "254ebab7ed2c43bde8242a6310f4f5e64c064045",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
