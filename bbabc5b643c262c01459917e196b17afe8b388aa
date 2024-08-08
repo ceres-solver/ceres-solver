@@ -33,6 +33,24 @@
       "message": "Sameer, is there a good reason not to follow this advice? My guess is that this does not have to be a public dependency either. A private one is possibly sufficient.",
       "revId": "bbabc5b643c262c01459917e196b17afe8b388aa",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0148b705_39efaa4f",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-08-08T14:00:39Z",
+      "side": 1,
+      "message": "Thanks Sergiu, for some reason when I tried this earlier it barfed. But it works now. So fixing and submitting.",
+      "parentUuid": "f9747465_41a0dc60",
+      "revId": "bbabc5b643c262c01459917e196b17afe8b388aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
