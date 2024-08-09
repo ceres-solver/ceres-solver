@@ -39,6 +39,7 @@
 
 #include "Eigen/SparseCore"
 #include "absl/log/log.h"
+#include "absl/log/vlog_is_on.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/event_logger.h"
 #include "ceres/internal/config.h"

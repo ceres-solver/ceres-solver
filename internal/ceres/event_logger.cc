@@ -31,6 +31,7 @@
 #include "ceres/event_logger.h"
 
 #include "absl/log/log.h"
+#include "absl/log/vlog_is_on.h"
 #include "absl/strings/str_format.h"
 #include "absl/time/clock.h"
 #include "absl/time/time.h"

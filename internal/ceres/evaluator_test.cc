@@ -38,6 +38,7 @@
 #include <vector>
 
 #include "absl/log/log.h"
+#include "absl/log/vlog_is_on.h"
 #include "absl/strings/str_format.h"
 #include "ceres/casts.h"
 #include "ceres/cost_function.h"

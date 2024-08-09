@@ -46,6 +46,7 @@
 #include "Eigen/SparseCore"
 #include "absl/log/check.h"
 #include "absl/log/log.h"
+#include "absl/log/vlog_is_on.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/linear_solver.h"
 

@@ -34,6 +34,7 @@
 
 #include "absl/log/check.h"
 #include "absl/log/log.h"
+#include "absl/log/vlog_is_on.h"
 
 namespace ceres::internal {
 namespace {
