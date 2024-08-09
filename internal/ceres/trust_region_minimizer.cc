@@ -43,6 +43,7 @@
 #include "absl/log/check.h"
 #include "absl/log/log.h"
 #include "absl/strings/str_format.h"
+#include "absl/time/clock.h"
 #include "absl/time/time.h"
 #include "ceres/array_utils.h"
 #include "ceres/coordinate_descent_minimizer.h"

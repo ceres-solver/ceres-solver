@@ -43,6 +43,7 @@
 #include "absl/log/log.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_format.h"
+#include "absl/time/clock.h"
 #include "absl/time/time.h"
 #include "ceres/evaluator.h"
 #include "ceres/function_sample.h"
