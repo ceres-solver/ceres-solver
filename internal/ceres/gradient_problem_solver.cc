@@ -38,6 +38,7 @@
 #include "absl/log/log.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_format.h"
+#include "absl/time/clock.h"
 #include "absl/time/time.h"
 #include "ceres/callbacks.h"
 #include "ceres/gradient_problem.h"

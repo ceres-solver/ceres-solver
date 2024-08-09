@@ -30,12 +30,13 @@
 
 #include "ceres/event_logger.h"
 
+#include <string>
+
 #include "absl/log/log.h"
 #include "absl/log/vlog_is_on.h"
 #include "absl/strings/str_format.h"
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
-#include "ceres/internal/config.h"
 
 namespace ceres::internal {
 

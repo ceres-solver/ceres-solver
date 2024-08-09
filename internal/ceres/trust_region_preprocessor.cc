@@ -50,6 +50,7 @@
 #include "ceres/reorder_program.h"
 #include "ceres/suitesparse.h"
 #include "ceres/trust_region_strategy.h"
+#include "ceres/types.h"
 
 namespace ceres::internal {
 
