@@ -32,7 +32,7 @@
 #define CERES_INTERNAL_SOLVER_UTILS_H_
 
 #include <algorithm>
-#include <string_view>
+#include <string>
 
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
@@ -59,8 +59,7 @@ void SetSummaryFinalCost(SummaryType* summary) {
   }
 }
 
-CERES_NO_EXPORT
-std::string_view VersionString() noexcept;
+CERES_NO_EXPORT std::string VersionString();
 
 }  // namespace ceres::internal
 

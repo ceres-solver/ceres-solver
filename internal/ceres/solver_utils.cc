@@ -91,6 +91,6 @@ constexpr char kVersion[] =
   ;
 // clang-format on
 
-std::string_view VersionString() noexcept { return kVersion; }
+std::string VersionString() { return kVersion; }
 
 }  // namespace ceres::internal
