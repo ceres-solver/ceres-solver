@@ -22,6 +22,30 @@
       },
       "revId": "7bbcd1cb211985c858d08e7d9eb1f7774a53ce96",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38b84c95_f45df4e5",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-08-12T14:06:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c590d587_7e6fcb6b",
+      "range": {
+        "startLine": 42,
+        "startChar": 31,
+        "endLine": 42,
+        "endChar": 37
+      },
+      "revId": "7bbcd1cb211985c858d08e7d9eb1f7774a53ce96",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
