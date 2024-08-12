@@ -34,7 +34,17 @@ find_package(Threads REQUIRED)
 list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES Threads::Threads)
 # Make dependency visible to the parent CMakeLists.txt
 set(Threads_DEPENDENCY "find_dependency (Threads)" PARENT_SCOPE)
-list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES  $<LINK_LIBRARY:WHOLE_ARCHIVE,absl::log_flags>)
+
+# Generator expressions were introduced in CMake version 3.24. Without
+# them including absl::log_flags as an internal dependency causes
+# linking problems on some platforms. So for platforms with an older
+# CMake version we make absl::log_flags a public dependency.
+if(CMAKE_VERSION VERSION_LESS "3.24.0")
+  list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES  absl::log_flags)
+else()
+  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES  $<LINK_LIBRARY:WHOLE_ARCHIVE,absl::log_flags>)
+endif()
+
 list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES absl::strings)
 list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES absl::time)
 
