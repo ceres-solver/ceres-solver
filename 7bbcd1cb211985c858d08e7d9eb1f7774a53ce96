@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c590d587_7e6fcb6b",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-08-12T13:59:19Z",
+      "side": 1,
+      "message": "```suggestion\nif(CMAKE_VERSION VERSION_LESS \"3.24.0\")\n```",
+      "range": {
+        "startLine": 42,
+        "startChar": 31,
+        "endLine": 42,
+        "endChar": 37
+      },
+      "revId": "7bbcd1cb211985c858d08e7d9eb1f7774a53ce96",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
