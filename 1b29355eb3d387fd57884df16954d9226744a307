@@ -16,6 +16,23 @@
       "message": "This is ready to be reviewed. Once some version of this goes in, we should update the docs as well have GitHub CI configurations to make sure that this version of things works.",
       "revId": "1b29355eb3d387fd57884df16954d9226744a307",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4f9441c_71149c43",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-08-14T18:18:00Z",
+      "side": 1,
+      "message": "Sameer, I\u0027d rather fallback silently to system packages without requiring to use an option. Once a submodule has been checked out, it will be used instead. The user would also have the choice of using submodules selectively.",
+      "revId": "1b29355eb3d387fd57884df16954d9226744a307",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
