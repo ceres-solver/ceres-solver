@@ -362,18 +362,6 @@ install(TARGETS ceres
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 if (BUILD_TESTING)
-  # Now that we have absl as a dependency, it would make sense to tell
-  # googletest to use absl also, but doing so seems to be problematic
-  # for now, since if there is a version of absl and re2 installed in
-  # the system then we start getting errors because we maybe using the
-  # absl from our submodule, but the re2 installed on the system only
-  # sees the absl installed on the system. It is possible that we will
-  # need to include re2 as a submodule also, for the following to
-  # work.
-
-  # set(GTEST_HAS_ABSL ON CACHE BOOL "Use ABSL when building gtest")
-  add_subdirectory(${Ceres_SOURCE_DIR}/third_party/googletest ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/googletest)
-
   add_library(test_util STATIC
               evaluator_test_utils.cc
               numeric_diff_test_utils.cc
