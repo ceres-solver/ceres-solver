@@ -53,9 +53,9 @@ class QuadraticCostFunctor {
 };
 
 TEST(AutoDiffFirstOrderFunction, BilinearDifferentiationTest) {
-  std::unique_ptr<FirstOrderFunction> function(
-      new AutoDiffFirstOrderFunction<QuadraticCostFunctor, 4>(
-          new QuadraticCostFunctor(1.0)));
+  std::unique_ptr<FirstOrderFunction> function =
+      std::make_unique<AutoDiffFirstOrderFunction<QuadraticCostFunctor, 4>>(
+          1.0);
 
   double parameters[4] = {1.0, 2.0, 3.0, 4.0};
   double gradient[4];
