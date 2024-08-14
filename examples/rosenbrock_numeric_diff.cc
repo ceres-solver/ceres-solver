@@ -47,12 +47,13 @@ struct Rosenbrock {
     return true;
   }
 
-  static ceres::FirstOrderFunction* Create() {
+  static std::unique_ptr<ceres::FirstOrderFunction> Create() {
     constexpr int kNumParameters = 2;
-    return new ceres::NumericDiffFirstOrderFunction<Rosenbrock,
-                                                    ceres::CENTRAL,
-                                                    kNumParameters>(
-        new Rosenbrock);
+    return std::make_unique<
+        ceres::NumericDiffFirstOrderFunction<Rosenbrock,
+                                             ceres::CENTRAL,
+                                             kNumParameters>>(
+        std::make_unique<Rosenbrock>());
   }
 };
 

@@ -91,7 +91,7 @@ namespace ceres {
 //
 //    FirstOrderFunction* function =
 //      new AutoDiffFirstOrderFunction<QuadraticCostFunctor, 4>(
-//          new QuadraticCostFunctor(1.0)));
+//          std::make_unique<QuadraticCostFunctor>(1.0)));
 //
 // In the instantiation above, the template parameters following
 // "QuadraticCostFunctor", "4", describe the functor as computing a
@@ -105,11 +105,6 @@ namespace ceres {
 template <typename FirstOrderFunctor, int kNumParameters>
 class AutoDiffFirstOrderFunction final : public FirstOrderFunction {
  public:
-  // Takes ownership of functor.
-  explicit AutoDiffFirstOrderFunction(FirstOrderFunctor* functor)
-      : AutoDiffFirstOrderFunction{
-            std::unique_ptr<FirstOrderFunctor>{functor}} {}
-
   explicit AutoDiffFirstOrderFunction(
       std::unique_ptr<FirstOrderFunctor> functor)
       : functor_(std::move(functor)) {
