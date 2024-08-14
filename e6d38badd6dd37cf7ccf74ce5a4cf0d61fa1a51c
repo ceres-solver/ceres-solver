@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1481c067_d3f6e22d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-08-14T15:22:47Z",
+      "side": 1,
+      "message": "Sergiu, this is a draft CL of what I have in mind. \nI am curious what you think about the logic and how it can be improved.\nOne thing missing is absl version checking, which I will add shortly.",
+      "revId": "e6d38badd6dd37cf7ccf74ce5a4cf0d61fa1a51c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
