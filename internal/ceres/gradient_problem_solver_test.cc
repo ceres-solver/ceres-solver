@@ -61,7 +61,7 @@ TEST(GradientProblemSolver, SolvesRosenbrockWithDefaultOptions) {
 
   ceres::GradientProblemSolver::Options options;
   ceres::GradientProblemSolver::Summary summary;
-  ceres::GradientProblem problem(new Rosenbrock());
+  ceres::GradientProblem problem(std::make_unique<Rosenbrock>());
   ceres::Solve(options, problem, parameters, &summary);
 
   EXPECT_EQ(CONVERGENCE, summary.termination_type);
@@ -99,7 +99,7 @@ TEST(Solver, UpdateStateEveryIterationOption) {
   double x = 50.0;
   const double original_x = x;
 
-  ceres::GradientProblem problem(new QuadraticFunction);
+  ceres::GradientProblem problem(std::make_unique<QuadraticFunction>());
   ceres::GradientProblemSolver::Options options;
   RememberingCallback callback(&x);
   options.callbacks.push_back(&callback);

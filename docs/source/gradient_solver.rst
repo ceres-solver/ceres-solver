@@ -54,9 +54,9 @@ Modeling
 
   class GradientProblem {
    public:
-    explicit GradientProblem(FirstOrderFunction* function);
-    GradientProblem(FirstOrderFunction* function,
-                    Manifold* manifold);
+    explicit GradientProblem(std::unique_ptr<FirstOrderFunction> function);
+    GradientProblem(std::unique_ptr<FirstOrderFunction function,
+                    std::unique_ptr<Manifold> manifold);
     int NumParameters() const;
     int NumTangentParameters() const;
     bool Evaluate(const double* parameters, double* cost, double* gradient) const;

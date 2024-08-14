@@ -45,9 +45,10 @@ in Ceres.
       return true;
     }
 
-    static ceres::FirstOrderFunction* Create() {
+    static std::unique_ptr<ceres::FirstOrderFunction> Create() {
       constexpr int kNumParameters = 2;
-      return new ceres::AutoDiffFirstOrderFunction<Rosenbrock, kNumParameters>();
+      return std::make_unique<
+          ceres::AutoDiffFirstOrderFunction<Rosenbrock, kNumParameters>>();
     }
   };
 
@@ -156,11 +157,12 @@ follows [#f2]_.
       return true;
     }
 
-    static ceres::FirstOrderFunction* Create() {
+    static std::unique_ptr<ceres::FirstOrderFunction> Create() {
       constexpr int kNumParameters = 2;
-      return new ceres::NumericDiffFirstOrderFunction<Rosenbrock,
-                                                      ceres::CENTRAL,
-                                                      kNumParameters>();
+      return std::make_unique<
+          ceres::NumericDiffFirstOrderFunction<Rosenbrock,
+                                               ceres::CENTRAL,
+                                               kNumParameters>>();
     }
   };
 
