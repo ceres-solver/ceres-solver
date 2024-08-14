@@ -52,8 +52,7 @@ class QuadraticCostFunctor {
 
 TEST(NumericDiffFirstOrderFunction, BilinearDifferentiationTestStatic) {
   auto function = std::make_unique<
-      NumericDiffFirstOrderFunction<QuadraticCostFunctor, CENTRAL, 4>>(
-      new QuadraticCostFunctor(1.0));
+      NumericDiffFirstOrderFunction<QuadraticCostFunctor, CENTRAL, 4>>(1.0);
 
   double parameters[4] = {1.0, 2.0, 3.0, 4.0};
   double gradient[4];
@@ -77,7 +76,7 @@ TEST(NumericDiffFirstOrderFunction, BilinearDifferentiationTestStatic) {
 TEST(NumericDiffFirstOrderFunction, BilinearDifferentiationTestDynamic) {
   auto function = std::make_unique<
       NumericDiffFirstOrderFunction<QuadraticCostFunctor, CENTRAL>>(
-      new QuadraticCostFunctor(1.0), 4);
+      std::make_unique<QuadraticCostFunctor>(1.0), 4);
 
   double parameters[4] = {1.0, 2.0, 3.0, 4.0};
   double gradient[4];

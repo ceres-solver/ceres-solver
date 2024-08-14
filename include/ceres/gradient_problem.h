@@ -88,14 +88,12 @@ class FirstOrderFunction;
 //   virtual int NumParameters() const { return 2; };
 // };
 //
-// ceres::GradientProblem problem(new Rosenbrock());
+// ceres::GradientProblem problem(std::make_unique<Rosenbrock>());
 class CERES_EXPORT GradientProblem {
  public:
-  // Takes ownership of the function.
-  explicit GradientProblem(FirstOrderFunction* function);
-
-  // Takes ownership of the function and the manifold.
-  GradientProblem(FirstOrderFunction* function, Manifold* manifold);
+  explicit GradientProblem(std::unique_ptr<FirstOrderFunction> function);
+  GradientProblem(std::unique_ptr<FirstOrderFunction> function,
+                  std::unique_ptr<Manifold> manifold);
 
   int NumParameters() const;
 
