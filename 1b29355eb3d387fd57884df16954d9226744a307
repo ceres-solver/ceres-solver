@@ -33,6 +33,24 @@
       "message": "Sameer, I\u0027d rather fallback silently to system packages without requiring to use an option. Once a submodule has been checked out, it will be used instead. The user would also have the choice of using submodules selectively.",
       "revId": "1b29355eb3d387fd57884df16954d9226744a307",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54397b10_bc4c55cb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-08-15T04:18:26Z",
+      "side": 1,
+      "message": "I should have added a bit more context about my thinking.\n\nWe may have version mismatch of the sort that googletest can today be built with an older version of absl, so there will be a system installed version of absl but the version we need will be newer.\n\nI think it is better to offer explicit control to package managers like brew about whether all the dependencies are installed or not. \n\nI worry that silent fallback will create more trouble, but I can certainly try that out as a first attempt and see how it does. Fewer flags that way too.",
+      "parentUuid": "e4f9441c_71149c43",
+      "revId": "1b29355eb3d387fd57884df16954d9226744a307",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
