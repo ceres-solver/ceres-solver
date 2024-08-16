@@ -87,6 +87,24 @@
       "parentUuid": "c10fedb4_1eeced9f",
       "revId": "1b29355eb3d387fd57884df16954d9226744a307",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe0b8450_942db7e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-08-16T17:16:05Z",
+      "side": 1,
+      "message": "Ah, sorry. I clearly did not look at the latest patch. 😊",
+      "parentUuid": "cc163768_b789348a",
+      "revId": "1b29355eb3d387fd57884df16954d9226744a307",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
