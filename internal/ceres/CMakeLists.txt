@@ -374,6 +374,8 @@ if (BUILD_TESTING)
   # set(GTEST_HAS_ABSL ON CACHE BOOL "Use ABSL when building gtest")
   add_subdirectory(${Ceres_SOURCE_DIR}/third_party/googletest ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/googletest)
 
+  set(GTest_DEPENDENCY "find_dependency(GTest ${GOOGLETEST_VERSION})" PARENT_SCOPE)
+
   add_library(test_util STATIC
               evaluator_test_utils.cc
               numeric_diff_test_utils.cc

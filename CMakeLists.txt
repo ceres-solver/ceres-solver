@@ -58,6 +58,7 @@ option(ABSL_PROPAGATE_CXX_STD "Use CMake C++ standard meta features
 (e.g. cxx_std_14) that propagate to targets that link to Abseil" ON)
 option(ABSL_ENABLE_INSTALL "Enable install rules" ON)
 add_subdirectory(third_party/abseil-cpp)
+set(absl_DEPENDENCY "find_dependency(absl ${absl_VERSION})")
 unset(CMAKE_CXX_STANDARD)
 unset(CMAKE_CXX_VISIBILITY_PRESET)
 

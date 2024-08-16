@@ -182,6 +182,8 @@ include(CMakeFindDependencyMacro)
 @CUDAToolkit_DEPENDENCY@
 @cudss_DEPENDENCY@
 @Threads_DEPENDENCY@
+@GTest_DEPENDENCY@
+@absl_DEPENDENCY@
 
 # As imported CMake targets are not re-exported when a dependent target is
 # exported, we must invoke find_package(XXX) here to reload the definition
