@@ -16,6 +16,86 @@
       "message": "Thanks Johannes. Two things.\n\n1. I would like Sergiu to also look at this CL.\n2. I have https://ceres-solver-review.git.corp.google.com/c/ceres-solver/+/26521 in flight. I think it would be better for your change to go after this one goes in.",
       "revId": "ac4604a79fe5874eb0b34599837f42e69eac52d9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e0cf03d_eae74f5f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-08-16T15:53:37Z",
+      "side": 1,
+      "message": "Thanks Johannes! A few remarks.",
+      "revId": "ac4604a79fe5874eb0b34599837f42e69eac52d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bcb2d0f5_08c19e4b",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-08-16T15:53:37Z",
+      "side": 1,
+      "message": "We unconditionally rely on Abseil. This can go straight to the package config template file. The approach used here is intended for optional/conditional dependencies only.\n\nAlso, where is `absl_VERSION` actually defined? This looks like a typical package config style variable definition. However, we use Abseil as a submodule here and this variable is likely undefined. You therefore might need to specify the version explicitly.",
+      "range": {
+        "startLine": 61,
+        "startChar": 21,
+        "endLine": 61,
+        "endChar": 58
+      },
+      "revId": "ac4604a79fe5874eb0b34599837f42e69eac52d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9ab51b0_219542f5",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-08-16T15:53:37Z",
+      "side": 1,
+      "message": "GTest is a private dependency and should not be necessary to consume Ceres. Any particular reason why we nevertheless need to export it?",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 18
+      },
+      "revId": "ac4604a79fe5874eb0b34599837f42e69eac52d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbeec5ee_c642c194",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-08-16T15:53:37Z",
+      "side": 1,
+      "message": "As above, should not be necessary.",
+      "revId": "ac4604a79fe5874eb0b34599837f42e69eac52d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
