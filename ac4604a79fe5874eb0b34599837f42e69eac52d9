@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9bd754b2_c796fe35",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-08-16T12:35:52Z",
+      "side": 1,
+      "message": "Thanks Johannes. Two things.\n\n1. I would like Sergiu to also look at this CL.\n2. I have https://ceres-solver-review.git.corp.google.com/c/ceres-solver/+/26521 in flight. I think it would be better for your change to go after this one goes in.",
+      "revId": "ac4604a79fe5874eb0b34599837f42e69eac52d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
