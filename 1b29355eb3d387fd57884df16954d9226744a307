@@ -51,6 +51,24 @@
       "parentUuid": "e4f9441c_71149c43",
       "revId": "1b29355eb3d387fd57884df16954d9226744a307",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c10fedb4_1eeced9f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-08-16T16:00:54Z",
+      "side": 1,
+      "message": "I had this patch in preparation that worked well: https://github.com/ceres-solver/ceres-solver/compare/master...sergiud:ceres-solver:ci-fix-build#diff-1e7de1ae2d059d21e1dd75d5812d5a34b0222cef273b7c3a2af62eb747f9d20aR35-R55\n\nWhile the fallback is silent one still has full control over the behavior by initializing/deinitializing the submodules.\n\nDo you see any specific issues here?",
+      "parentUuid": "54397b10_bc4c55cb",
+      "revId": "1b29355eb3d387fd57884df16954d9226744a307",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
