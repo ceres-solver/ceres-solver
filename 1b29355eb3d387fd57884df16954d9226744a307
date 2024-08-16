@@ -69,6 +69,24 @@
       "parentUuid": "54397b10_bc4c55cb",
       "revId": "1b29355eb3d387fd57884df16954d9226744a307",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc163768_b789348a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-08-16T17:04:44Z",
+      "side": 1,
+      "message": "I tested all four configs, and found no issues, so if you are good with it, I am good to go.\n\nalso my patch was inspired by your patch, so no surprise that there are similarities there :)",
+      "parentUuid": "c10fedb4_1eeced9f",
+      "revId": "1b29355eb3d387fd57884df16954d9226744a307",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
