@@ -4,18 +4,6 @@
 Installation
 ============
 
-Getting the source code
-=======================
-.. _section-source:
-
-You can start with the `latest stable release
-<http://ceres-solver.org/ceres-solver-2.2.0.tar.gz>`_ . Or if you want
-the latest version, you can clone the git repository
-
-.. code-block:: bash
-
-       git clone https://ceres-solver.googlesource.com/ceres-solver
-
 .. _section-dependencies:
 
 Dependencies
@@ -23,16 +11,17 @@ Dependencies
 
  .. note ::
 
-    Ceres Solver 2.2 requires a **fully C++17-compliant** compiler.
+    Starting with version 2.2, Ceres Solver requires a **fully
+    C++17-compliant** compiler.
 
 Ceres relies on a number of open source libraries, some of which are
 optional. For details on customizing the build process, see
 :ref:`section-customizing` .
 
-- `CMake <http://www.cmake.org>`_ 3.16 or later **required**.
+- `CMake <http://www.cmake.org>`_ (**required**) 3.16 or later.
 
 - `Eigen <http://eigen.tuxfamily.org/index.php?title=Main_Page>`_
-  3.3 or later **required**.
+  (**Required**) 3.3 or later.
 
   .. NOTE ::
 
@@ -40,37 +29,14 @@ optional. For details on customizing the build process, see
     library. Please see the documentation for ``EIGENSPARSE`` for
     more details.
 
-- `glog <https://github.com/google/glog>`_ 0.3.5 or
-  later. **Recommended**
+- `Abseil <https://abseil.io/>`_ (**Required**) 20240116 or later.
 
-  ``glog`` is used extensively throughout Ceres for logging detailed
-  information about memory allocations and time consumed in various
-  parts of the solve, internal error conditions etc. The Ceres
-  developers use it extensively to observe and analyze Ceres's
-  performance. `glog <https://github.com/google/glog>`_ allows you to
-  control its behaviour from the command line. Starting with
-  ``-logtostderr`` you can add ``-v=N`` for increasing values of ``N``
-  to get more and more verbose and detailed information about Ceres
-  internals.
-
-  Ceres also ships with a minimal replacement of ``glog`` called
-  ``miniglog`` that can be enabled with the ``MINIGLOG`` build option.
-  ``miniglog`` is supplied for platforms which do not support the full
-  version of ``glog``.
-
-  In an attempt to reduce dependencies, it may be tempting to use
-  ``miniglog`` on platforms which already support ``glog``. While
-  there is nothing preventing the user from doing so, we strongly
-  recommend against it. ``miniglog`` has worse performance than
-  ``glog`` and is much harder to control and use.
-
-- `gflags <https://github.com/gflags/gflags>`_. Needed to build
-  examples and tests and usually a dependency for glog.
+- `GoogleTest <https://github.com/google/googletest>`_ (**Optional**;
+  Required if you wish to build and run tests) 1.14.0 or later.
 
 - `SuiteSparse <http://faculty.cse.tamu.edu/davis/suitesparse.html>`_
-  4.5.6 or later. Needed for solving large sparse linear
-  systems. **Optional; strongly recommended for large scale bundle
-  adjustment**
+  (**Optional; strongly recommended for large problems**) 4.5.6 or
+  later. Needed for solving large sparse linear systems.
 
   .. NOTE ::
 
@@ -80,17 +46,15 @@ optional. For details on customizing the build process, see
      found TBB version. You can customize the searched TBB location
      with the ``TBB_ROOT`` variable.
 
-  A CMake native version of SuiteSparse that can be compiled on a variety of
-  platforms (e.g., using Visual Studio, Xcode, MinGW, etc.) is maintained by the
-  `CMake support for SuiteSparse <https://github.com/sergiud/SuiteSparse>`_
-  project.
+- `Apple's Accelerate sparse solvers
+  <https://developer.apple.com/documentation/accelerate/sparse_solvers>`_. (**Optional**)
 
-- `Apple's Accelerate sparse solvers <https://developer.apple.com/documentation/accelerate/sparse_solvers>`_.
   As of Xcode 9.0, Apple's Accelerate framework includes support for
-  solving sparse linear systems across macOS, iOS et al. **Optional**
+  solving sparse linear systems across macOS, iOS et al.
 
 - `BLAS <http://www.netlib.org/blas/>`_ and `LAPACK
-  <http://www.netlib.org/lapack/>`_ routines are needed by
+  <http://www.netlib.org/lapack/>`_ (**Optional but required for**
+  ``SuiteSparse``) ``LAPACK`` and ``BLAS`` routines are needed by
   ``SuiteSparse``, and optionally used by Ceres directly for some
   operations.
 
@@ -112,18 +76,50 @@ optional. For details on customizing the build process, see
 
   For Windows things are much more complicated. `LAPACK For
   Windows <http://icl.cs.utk.edu/lapack-for-windows/lapack/>`_
-  has detailed instructions..
+  has detailed instructions.
 
-  **Optional but required for** ``SuiteSparse``.
 
-- `CUDA <https://developer.nvidia.com/cuda-toolkit>`_ If you have an
-  NVIDIA GPU then Ceres Solver can use it accelerate the solution of
-  the Gauss-Newton linear systems using the CMake flag ``USE_CUDA``.
-  Currently this support is limited to using the dense linear solvers that ship
-  with ``CUDA``. As a result GPU acceleration can be used to speed up
-  ``DENSE_QR``, ``DENSE_NORMAL_CHOLESKY`` and
-  ``DENSE_SCHUR``. This also enables ``CUDA`` mixed precision solves
-  for ``DENSE_NORMAL_CHOLESKY`` and ``DENSE_SCHUR``.  **Optional**.
+- `CUDA <https://developer.nvidia.com/cuda-toolkit>`_ and `cuDSS
+  <https://developer.nvidia.com/cudss>`_ (**Optional**)
+
+  If you have an NVIDIA GPU then Ceres Solver can use it accelerate
+  the solution of the Gauss-Newton linear systems using the CMake flag
+  ``USE_CUDA``.
+
+  This support depends on two libraries from NVIDIA `CUDA` and `cuDSS`.
+
+  If ``CUDA`` is available, Ceres Solver is able to use
+  GPU acceleration to speed up ``DENSE_QR``, ``DENSE_NORMAL_CHOLESKY``
+  and ``DENSE_SCHUR`` and ``CGNR``.  This also enables ``CUDA`` based
+  mixed precision solves for ``DENSE_NORMAL_CHOLESKY`` and
+  ``DENSE_SCHUR``.
+
+  Additionally if ``cuDSS`` is also available then GPU acceleration can
+  be used for ``SPARSE_NORMAL_CHOLESKY`` and ``SPARSE_SCHUR``.
+
+.. _section-source:
+
+Getting the source code
+=======================
+
+
+You can start with the `latest stable release
+<http://ceres-solver.org/ceres-solver-2.2.0.tar.gz>`_ . Or if you want
+the latest version, you can clone the git repository
+
+.. code-block:: bash
+
+   git clone https://ceres-solver.googlesource.com/ceres-solver
+
+If your system does not have recent enough versions of `Abseil
+<https://abseil.io/>`_ and/or `GoogleTest
+<https://github.com/google/googletest>`_, then you can use the
+versions included with Ceres Solver as submodules by using the command
+
+.. code-block:: bash
+
+   git clone --recurse-submodules https://github.com/ceres-solver/ceres-solver
+
 
 .. _section-linux:
 
@@ -136,7 +132,7 @@ distribution.
 .. NOTE::
 
    Ceres Solver always supports the previous and current Ubuntu LTS
-   releases, currently 18.04 and 20.04, using the default Ubuntu
+   releases, currently 22.04 and 24.04 using the default Ubuntu
    repositories and compiler toolchain. Support for earlier versions
    is not guaranteed or maintained.
 
