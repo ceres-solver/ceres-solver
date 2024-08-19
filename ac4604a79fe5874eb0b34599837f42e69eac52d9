@@ -102,6 +102,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fbc1eb47_bbf56fc9",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-08-19T10:54:32Z",
+      "side": 1,
+      "message": "Ceres at head is able to use system packages of Abseil which means that we have two cases to handle:\n1. Abseil compiled as a submodule which does not provide any version version in CMake directly.\n2. Abseil consumed through a `find_package` call providing version information by means of `absl_VERSION` definition.\n\nIn 2. (CMakeLists.txt:160) we are comparing the minimum version of Abseil manually. We could take this minimum version information and define in a variable (e.g., `Ceres_absl_VERSION`) and eventually use it for 1. For consistency, `absl_VERSION` would need to be aliased to `Ceres_absl_VERSION` as well.",
+      "parentUuid": "60eb07df_81c1cbf9",
+      "range": {
+        "startLine": 61,
+        "startChar": 21,
+        "endLine": 61,
+        "endChar": 58
+      },
+      "revId": "ac4604a79fe5874eb0b34599837f42e69eac52d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c9ab51b0_219542f5",
         "filename": "cmake/CeresConfig.cmake.in",
         "patchSetId": 1
@@ -137,6 +161,30 @@
       "side": 1,
       "message": "Gtest is a dependency of absl. If I don\u0027t require it as a dependency, then I get the following error when finding ceres:\n\n```\nCMake Error at /usr/local/share/cmake-3.30/Modules/CMakeFindDependencyMacro.cmake:76 (find_package):\n  Found package configuration file:\n\n    /usr/local/lib/cmake/absl/abslConfig.cmake\n\n  but it set absl_FOUND to FALSE so package \"absl\" is considered to be NOT\n  FOUND.  Reason given by package:\n\n  The following imported targets are referenced, but are missing:\n  GTest::gmock\n\nCall Stack (most recent call first):\n  /usr/local/lib/cmake/Ceres/CeresConfig.cmake:186 (find_dependency)\n  cmake/FindDependencies.cmake:38 (find_package)\n  CMakeLists.txt:105 (include)\n```\nand upon inspection of the abslTargets.cmake file, we find that the following absl target depends on gmock:\n```\nadd_library(absl::test_allocator INTERFACE IMPORTED)\n\nset_target_properties(absl::test_allocator PROPERTIES\n  INTERFACE_COMPILE_FEATURES \"cxx_std_17\"\n  INTERFACE_INCLUDE_DIRECTORIES \"${_IMPORT_PREFIX}/include\"\n  INTERFACE_LINK_LIBRARIES \"absl::config;GTest::gmock\"\n)\n```",
       "parentUuid": "c9ab51b0_219542f5",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 18
+      },
+      "revId": "ac4604a79fe5874eb0b34599837f42e69eac52d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e4b092c_06aa29c8",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-08-19T10:54:32Z",
+      "side": 1,
+      "message": "It is likely that your version of Abseil has been compiled with GTest as a direct dependency. However, this dependency is not relevant for Ceres as it is not used in Ceres\u0027 public interface. Abseil would be responsible for pulling GTest in its package configuration because transitive dependencies generally cannot (and should not) know how Abseil was compiled in the first place.\n\nMy guess is that there\u0027s an issue in Abseil which is missing a call to `find_dependency (GTest)` in its own package configuration. I\u0027d still would avoid any workarounds in Ceres and rather use a version of Abseil that does not depend on GTest. Particularly, our submodule version of Abseil should not depend on GTest (yet).",
+      "parentUuid": "eb6e1ecc_7efe9647",
       "range": {
         "startLine": 185,
         "startChar": 0,
