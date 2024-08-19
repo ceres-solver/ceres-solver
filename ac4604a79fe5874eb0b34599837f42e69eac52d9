@@ -35,6 +35,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ca0e0ff_cc628ec0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5205
+      },
+      "writtenOn": "2024-08-19T08:08:18Z",
+      "side": 1,
+      "message": "Thanks for your feedback. See my answers below.",
+      "parentUuid": "8e0cf03d_eae74f5f",
+      "revId": "ac4604a79fe5874eb0b34599837f42e69eac52d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bcb2d0f5_08c19e4b",
@@ -48,6 +66,30 @@
       "writtenOn": "2024-08-16T15:53:37Z",
       "side": 1,
       "message": "We unconditionally rely on Abseil. This can go straight to the package config template file. The approach used here is intended for optional/conditional dependencies only.\n\nAlso, where is `absl_VERSION` actually defined? This looks like a typical package config style variable definition. However, we use Abseil as a submodule here and this variable is likely undefined. You therefore might need to specify the version explicitly.",
+      "range": {
+        "startLine": 61,
+        "startChar": 21,
+        "endLine": 61,
+        "endChar": 58
+      },
+      "revId": "ac4604a79fe5874eb0b34599837f42e69eac52d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60eb07df_81c1cbf9",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5205
+      },
+      "writtenOn": "2024-08-19T08:08:18Z",
+      "side": 1,
+      "message": "You are right. This value is undefined at this point. I saw it being defined in the main absl-cpp/CMakeLists.txt but it is not being set using the PARENT_SCOPE attribute. I\u0027ll move it to the config and manually define it. It may be hard to keep the absl version in the config and the submodule git hash in sync. Any suggestion for best approach in the current setup to minimize this risk?",
+      "parentUuid": "bcb2d0f5_08c19e4b",
       "range": {
         "startLine": 61,
         "startChar": 21,
@@ -83,6 +125,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "eb6e1ecc_7efe9647",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 5205
+      },
+      "writtenOn": "2024-08-19T08:08:18Z",
+      "side": 1,
+      "message": "Gtest is a dependency of absl. If I don\u0027t require it as a dependency, then I get the following error when finding ceres:\n\n```\nCMake Error at /usr/local/share/cmake-3.30/Modules/CMakeFindDependencyMacro.cmake:76 (find_package):\n  Found package configuration file:\n\n    /usr/local/lib/cmake/absl/abslConfig.cmake\n\n  but it set absl_FOUND to FALSE so package \"absl\" is considered to be NOT\n  FOUND.  Reason given by package:\n\n  The following imported targets are referenced, but are missing:\n  GTest::gmock\n\nCall Stack (most recent call first):\n  /usr/local/lib/cmake/Ceres/CeresConfig.cmake:186 (find_dependency)\n  cmake/FindDependencies.cmake:38 (find_package)\n  CMakeLists.txt:105 (include)\n```\nand upon inspection of the abslTargets.cmake file, we find that the following absl target depends on gmock:\n```\nadd_library(absl::test_allocator INTERFACE IMPORTED)\n\nset_target_properties(absl::test_allocator PROPERTIES\n  INTERFACE_COMPILE_FEATURES \"cxx_std_17\"\n  INTERFACE_INCLUDE_DIRECTORIES \"${_IMPORT_PREFIX}/include\"\n  INTERFACE_LINK_LIBRARIES \"absl::config;GTest::gmock\"\n)\n```",
+      "parentUuid": "c9ab51b0_219542f5",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 18
+      },
+      "revId": "ac4604a79fe5874eb0b34599837f42e69eac52d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dbeec5ee_c642c194",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 1
@@ -94,6 +160,24 @@
       "writtenOn": "2024-08-16T15:53:37Z",
       "side": 1,
       "message": "As above, should not be necessary.",
+      "revId": "ac4604a79fe5874eb0b34599837f42e69eac52d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38ce8b48_3271bed9",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 5205
+      },
+      "writtenOn": "2024-08-19T08:08:18Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "dbeec5ee_c642c194",
       "revId": "ac4604a79fe5874eb0b34599837f42e69eac52d9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
