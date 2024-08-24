@@ -16,6 +16,24 @@
       "message": "Sameer, there\u0027s also a 2.2 reference in https://github.com/ceres-solver/ceres-solver/blob/9186dcc49cbaa49cba874d3a467f90ae9fe36d7f/docs/source/conf.py#L51-L53 and https://github.com/ceres-solver/ceres-solver/blob/9186dcc49cbaa49cba874d3a467f90ae9fe36d7f/package.xml#L33.",
       "revId": "dd9c59678106feeb25c83d9598429a6fbcf58a93",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d728838_a86ff5dc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-08-24T16:30:40Z",
+      "side": 1,
+      "message": "I usually only update them when cutting a new release, but may as well update them now.",
+      "parentUuid": "693f7bca_ecbfa515",
+      "revId": "dd9c59678106feeb25c83d9598429a6fbcf58a93",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
