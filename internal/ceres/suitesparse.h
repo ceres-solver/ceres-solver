@@ -264,7 +264,30 @@ class CERES_NO_EXPORT SuiteSparseCholesky final : public SparseCholesky {
 
   const OrderingType ordering_type_;
   SuiteSparse ss_;
-  cholmod_factor* factor_;
+  cholmod_factor* factor_ = nullptr;
+};
+
+class CERES_NO_EXPORT FloatSuiteSparseCholesky final : public SparseCholesky {
+ public:
+  static std::unique_ptr<SparseCholesky> Create(OrderingType ordering_type);
+
+  // SparseCholesky interface.
+  ~FloatSuiteSparseCholesky() override;
+  CompressedRowSparseMatrix::StorageType StorageType() const final;
+  LinearSolverTerminationType Factorize(CompressedRowSparseMatrix* lhs,
+                                        std::string* message) final;
+  LinearSolverTerminationType Solve(const double* rhs,
+                                    double* solution,
+                                    std::string* message) final;
+
+ private:
+  explicit FloatSuiteSparseCholesky(const OrderingType ordering_type);
+
+  const OrderingType ordering_type_;
+  SuiteSparse ss_;
+  cholmod_factor* factor_ = nullptr;
+  Eigen::VectorXf float_lhs_values_;
+  Eigen::VectorXf float_rhs_;
 };
 
 }  // namespace ceres::internal

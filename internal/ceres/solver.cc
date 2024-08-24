@@ -195,11 +195,16 @@ bool OptionsAreValidForSparseCholeskyBasedSolver(const Solver::Options& options,
     return false;
   }
 
+#ifdef CERES_NO_CHOLMOD_FLOAT
   if (options.use_mixed_precision_solves &&
       options.sparse_linear_algebra_library_type == SUITE_SPARSE) {
-    *error = absl::StrFormat(kMixedFormat, solver_name, library_name);
+    *error =
+        "This version of SuiteSparse does not support single precision "
+        "Cholesky factorization. So use_mixed_precision_solves is not "
+        "supported with SUITE_SPARSE";
     return false;
   }
+#endif
 
   if (options.dynamic_sparsity &&
       options.sparse_linear_algebra_library_type == ACCELERATE_SPARSE) {
