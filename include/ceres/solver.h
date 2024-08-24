@@ -569,23 +569,24 @@ class CERES_EXPORT Solver {
     // This settings only affects the SPARSE_NORMAL_CHOLESKY solver.
     bool dynamic_sparsity = false;
 
-    // If use_mixed_precision_solves is true, the Gauss-Newton matrix
-    // is computed in double precision, but its factorization is
-    // computed in single precision. This can result in significant
-    // time and memory savings at the cost of some accuracy in the
-    // Gauss-Newton step. Iterative refinement is used to recover some
-    // of this accuracy back.
+    // If use_mixed_precision_solves is true, the Gauss-Newton matrix is
+    // computed in double precision, but its factorization is computed in single
+    // precision. This can result in significant time and memory savings at the
+    // cost of some accuracy in the Gauss-Newton step. Iterative refinement is
+    // used to recover some of this accuracy back.
     //
     // If use_mixed_precision_solves is true, we recommend setting
-    // max_num_refinement_iterations to 2-3.
+    // max_num_refinement_iterations to 1-3, depending on your problem. If
+    // max_num_refinement_iterations = 0, then the Gauss-Newton step is computed
+    // in single precision.
     //
     // This options is available when linear solver uses sparse or dense
-    // cholesky factorization, except when sparse_linear_algebra_library_type =
-    // SUITE_SPARSE.
+    // cholesky factorization.
     bool use_mixed_precision_solves = false;
 
-    // Number steps of the iterative refinement process to run when
-    // computing the Gauss-Newton step.
+    // Number steps of the iterative refinement process to run when computing
+    // the Gauss-Newton step. This is most useful when used in conjunction with
+    // use_mixed_precision = true.
     int max_num_refinement_iterations = 0;
 
     // Minimum number of iterations for which the linear solver should

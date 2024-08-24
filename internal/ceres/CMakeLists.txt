@@ -184,7 +184,6 @@ add_library(ceres_internal OBJECT
     fake_bundle_adjustment_jacobian.cc
     file.cc
     first_order_function.cc
-    float_suitesparse.cc
     function_sample.cc
     gradient_checking_cost_function.cc
     gradient_problem_solver.cc

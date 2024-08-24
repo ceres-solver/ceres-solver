@@ -374,6 +374,11 @@ if (SUITESPARSE)
     message("-- Found SuiteSparse ${SuiteSparse_VERSION}, "
             "building with SuiteSparse.")
 
+    if (SuiteSparse_VERSION VERSION_LESS 7.4.0)
+      list(APPEND CERES_COMPILE_OPTIONS CERES_NO_CHOLMOD_FLOAT)
+    else()
+      message("-- CHOLMOD supports single precision factorization")
+    endif()
     if (SuiteSparse_NO_CMAKE OR NOT SuiteSparse_DIR)
       install(FILES ${Ceres_SOURCE_DIR}/cmake/FindSuiteSparse.cmake
                     ${Ceres_SOURCE_DIR}/cmake/FindMETIS.cmake

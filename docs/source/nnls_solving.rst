@@ -905,20 +905,12 @@ iterations of iterative refinement are controlled by
 :member:`Solver::Options::max_num_refinement_iterations`. The default
 value of this parameter is zero, which means if
 :member:`Solver::Options::use_mixed_precision_solves` is ``true``,
-then no iterative refinement is performed. Usually 2-3 refinement
-iterations are enough.
+then no iterative refinement is performed. Usually 1-3 refinement
+iterations are enough, depending upon the conditioning of your
+problem.
 
-Mixed precision solves are available in the following linear solver
-configurations:
-
-1. ``DENSE_NORMAL_CHOLESKY`` + ``EIGEN``/ ``LAPACK`` / ``CUDA``.
-2. ``DENSE_SCHUR`` + ``EIGEN``/ ``LAPACK`` / ``CUDA``.
-3. ``SPARSE_NORMAL_CHOLESKY`` + ``EIGEN_SPARSE`` / ``ACCELERATE_SPARSE``
-4. ``SPARSE_SCHUR`` + ``EIGEN_SPARSE`` / ``ACCELERATE_SPARSE``
-
-Mixed precision solves area not available when using ``SUITE_SPARSE``
-as the sparse linear algebra backend because SuiteSparse/CHOLMOD does
-not support single precision solves.
+If :member:`Solver::Options::max_num_refinement_iterations = 0`, then
+the Gauss-Newton step is computed in single precision.
 
 .. _section-preconditioner:
 
