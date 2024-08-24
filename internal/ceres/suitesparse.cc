@@ -250,9 +250,9 @@ bool SuiteSparse::BlockOrdering(const cholmod_sparse* A,
   block_matrix.i = reinterpret_cast<void*>(block_rows.data());
   block_matrix.x = nullptr;
   block_matrix.stype = A->stype;
-  block_matrix.itype = CHOLMOD_INT;
+  block_matrix.itype = A->itype;
   block_matrix.xtype = CHOLMOD_PATTERN;
-  block_matrix.dtype = CHOLMOD_DOUBLE;
+  block_matrix.dtype = A->dtype;
   block_matrix.sorted = 1;
   block_matrix.packed = 1;
 
@@ -465,6 +465,154 @@ LinearSolverTerminationType SuiteSparseCholesky::Solve(const double* rhs,
   ss_.Free(cholmod_dense_solution);
   return LinearSolverTerminationType::SUCCESS;
 }
+
+#ifndef CERES_NO_CHOLMOD_FLOAT
+
+std::unique_ptr<SparseCholesky> FloatSuiteSparseCholesky::Create(
+    const OrderingType ordering_type) {
+  return std::unique_ptr<SparseCholesky>(
+      new FloatSuiteSparseCholesky(ordering_type));
+}
+
+FloatSuiteSparseCholesky::FloatSuiteSparseCholesky(
+    const OrderingType ordering_type)
+    : ordering_type_(ordering_type), factor_(nullptr) {}
+
+FloatSuiteSparseCholesky::~FloatSuiteSparseCholesky() {
+  if (factor_ != nullptr) {
+    ss_.Free(factor_);
+  }
+}
+
+LinearSolverTerminationType FloatSuiteSparseCholesky::Factorize(
+    CompressedRowSparseMatrix* lhs, std::string* message) {
+  if (lhs == nullptr) {
+    *message = "Failure: Input lhs is nullptr.";
+    return LinearSolverTerminationType::FATAL_ERROR;
+  }
+
+  cholmod_sparse cholmod_lhs = ss_.CreateSparseMatrixTransposeView(lhs);
+  float_lhs_values_ =
+      ConstVectorRef(lhs->values(), lhs->num_nonzeros()).cast<float>();
+  cholmod_lhs.dtype = CHOLMOD_SINGLE;
+  cholmod_lhs.x = reinterpret_cast<void*>(float_lhs_values_.data());
+
+  // If a factorization does not exist, compute the symbolic
+  // factorization first.
+  //
+  // If the ordering type is NATURAL, then there is no fill reducing
+  // ordering to be computed, regardless of block structure, so we can
+  // just call the scalar version of symbolic factorization. For
+  // SuiteSparse this is the common case since we have already
+  // pre-ordered the columns of the Jacobian.
+  //
+  // Similarly regardless of ordering type, if there is no block
+  // structure in the matrix we call the scalar version of symbolic
+  // factorization.
+  if (factor_ == nullptr) {
+    if (ordering_type_ == OrderingType::NATURAL ||
+        (lhs->col_blocks().empty() || lhs->row_blocks().empty())) {
+      factor_ = ss_.AnalyzeCholesky(&cholmod_lhs, ordering_type_, message);
+    } else {
+      factor_ = ss_.BlockAnalyzeCholesky(&cholmod_lhs,
+                                         ordering_type_,
+                                         lhs->col_blocks(),
+                                         lhs->row_blocks(),
+                                         message);
+    }
+  }
+
+  if (factor_ == nullptr) {
+    return LinearSolverTerminationType::FATAL_ERROR;
+  }
+
+  // Compute and return the numeric factorization.
+  return ss_.Cholesky(&cholmod_lhs, factor_, message);
+}
+
+CompressedRowSparseMatrix::StorageType FloatSuiteSparseCholesky::StorageType()
+    const {
+  return ((ordering_type_ == OrderingType::NATURAL)
+              ? CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR
+              : CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR);
+}
+
+LinearSolverTerminationType FloatSuiteSparseCholesky::Solve(
+    const double* rhs, double* solution, std::string* message) {
+  // Error checking
+  if (factor_ == nullptr) {
+    *message = "Solve called without a call to Factorize first.";
+    return LinearSolverTerminationType::FATAL_ERROR;
+  }
+
+  const int num_cols = factor_->n;
+  cholmod_dense cholmod_rhs = ss_.CreateDenseVectorView(rhs, num_cols);
+
+  float_rhs_ = ConstVectorRef(rhs, num_cols).cast<float>();
+  cholmod_rhs.dtype = CHOLMOD_SINGLE;
+  cholmod_rhs.x = reinterpret_cast<void*>(float_rhs_.data());
+
+  cholmod_dense* cholmod_dense_solution =
+      ss_.Solve(factor_, &cholmod_rhs, message);
+
+  if (cholmod_dense_solution == nullptr) {
+    return LinearSolverTerminationType::FAILURE;
+  }
+
+  CHECK_EQ(cholmod_dense_solution->dtype, CHOLMOD_SINGLE);
+  VectorRef(solution, num_cols) =
+      Eigen::Map<Eigen::VectorXf>(
+          reinterpret_cast<float*>(cholmod_dense_solution->x), num_cols)
+          .cast<double>();
+  ss_.Free(cholmod_dense_solution);
+  return LinearSolverTerminationType::SUCCESS;
+}
+
+#else
+
+std::unique_ptr<SparseCholesky> FloatSuiteSparseCholesky::Create(
+    const OrderingType ordering_type) {
+  return nullptr;
+}
+
+FloatSuiteSparseCholesky::FloatSuiteSparseCholesky(
+    const OrderingType ordering_type)
+    : ordering_type_(ordering_type), factor_(nullptr) {}
+
+FloatSuiteSparseCholesky::~FloatSuiteSparseCholesky() {
+  if (factor_ != nullptr) {
+    ss_.Free(factor_);
+  }
+}
+
+LinearSolverTerminationType FloatSuiteSparseCholesky::Factorize(
+    CompressedRowSparseMatrix* lhs, std::string* message) {
+  *message =
+      "Single precision Cholesky factorization is not supported. If "
+      "you are seeing this failure, then you have discovered a Ceres "
+      "Solver bug. Please get in touch with the Ceres Solver team at "
+      "ceres-solver@googlegroups.com";
+  return LinearSolverTerminationType::FATAL_ERROR;
+}
+
+CompressedRowSparseMatrix::StorageType FloatSuiteSparseCholesky::StorageType()
+    const {
+  return ((ordering_type_ == OrderingType::NATURAL)
+              ? CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR
+              : CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR);
+}
+
+LinearSolverTerminationType FloatSuiteSparseCholesky::Solve(
+    const double* rhs, double* solution, std::string* message) {
+  *message =
+      "Single precision Cholesky factorization is not supported. If "
+      "you are seeing this failure, then you have discovered a Ceres "
+      "Solver bug. Please get in touch with the Ceres Solver team at "
+      "ceres-solver@googlegroups.com";
+  return LinearSolverTerminationType::FATAL_ERROR;
+}
+
+#endif  // CERES_NO_CHOLMOD_FLOAT
 
 }  // namespace ceres::internal
 

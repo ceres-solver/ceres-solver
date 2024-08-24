@@ -511,7 +511,11 @@ TEST(Solver, SparseNormalCholeskyOptionsSuiteSparse) {
           options.sparse_linear_algebra_library_type)) {
     options.use_mixed_precision_solves = true;
     options.dynamic_sparsity = false;
+#ifdef CERES_NO_CHOLMOD_FLOAT
     EXPECT_FALSE(options.IsValid(&message));
+#else
+    EXPECT_TRUE(options.IsValid(&message));
+#endif
 
     options.use_mixed_precision_solves = false;
     options.dynamic_sparsity = true;
@@ -519,7 +523,11 @@ TEST(Solver, SparseNormalCholeskyOptionsSuiteSparse) {
 
     options.use_mixed_precision_solves = true;
     options.dynamic_sparsity = true;
+#ifdef CERES_NO_CHOLMOD_FLOAT
     EXPECT_FALSE(options.IsValid(&message));
+#else
+    EXPECT_TRUE(options.IsValid(&message));
+#endif
   }
 
 #ifndef CERES_NO_CHOLMOD_PARTITION
@@ -532,7 +540,11 @@ TEST(Solver, SparseNormalCholeskyOptionsSuiteSparse) {
 
     options.use_mixed_precision_solves = true;
     options.dynamic_sparsity = false;
+#ifdef CERES_NO_CHOLMOD_FLOAT
     EXPECT_FALSE(options.IsValid(&message));
+#else
+    EXPECT_TRUE(options.IsValid(&message));
+#endif
 
     options.use_mixed_precision_solves = false;
     options.dynamic_sparsity = true;
@@ -540,7 +552,11 @@ TEST(Solver, SparseNormalCholeskyOptionsSuiteSparse) {
 
     options.use_mixed_precision_solves = true;
     options.dynamic_sparsity = true;
+#ifdef CERES_NO_CHOLMOD_FLOAT
     EXPECT_FALSE(options.IsValid(&message));
+#else
+    EXPECT_TRUE(options.IsValid(&message));
+#endif
   }
 #else
   options.linear_solver_ordering_type = NESDIS;
@@ -729,7 +745,11 @@ TEST(Solver, SparseSchurOptionsSuiteSparse) {
           options.sparse_linear_algebra_library_type)) {
     options.use_mixed_precision_solves = true;
     options.dynamic_sparsity = false;
+#ifdef CERES_NO_CHOLMOD_FLOAT
     EXPECT_FALSE(options.IsValid(&message));
+#else
+    EXPECT_TRUE(options.IsValid(&message));
+#endif
 
     options.use_mixed_precision_solves = false;
     options.dynamic_sparsity = true;
@@ -750,7 +770,11 @@ TEST(Solver, SparseSchurOptionsSuiteSparse) {
 
     options.use_mixed_precision_solves = true;
     options.dynamic_sparsity = false;
+#ifdef CERES_NO_CHOLMOD_FLOAT
     EXPECT_FALSE(options.IsValid(&message));
+#else
+    EXPECT_TRUE(options.IsValid(&message));
+#endif
 
     options.use_mixed_precision_solves = false;
     options.dynamic_sparsity = true;

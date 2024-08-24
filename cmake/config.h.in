@@ -77,6 +77,11 @@
 // If defined, Ceres was compiled with a version of SuiteSparse/CHOLMOD without
 // the Partition module (requires METIS).
 @CERES_NO_CHOLMOD_PARTITION@
+
+// If defined Ceres was compiled with a version of SuiteSparse that does not
+// support single precision solves in CHOLMOD.
+@CERES_NO_CHOLMOD_FLOAT@
+
 // If defined Ceres was compiled without support for METIS via Eigen.
 @CERES_NO_EIGEN_METIS@
 
