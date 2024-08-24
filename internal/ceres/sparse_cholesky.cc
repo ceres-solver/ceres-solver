@@ -38,7 +38,6 @@
 #include "ceres/accelerate_sparse.h"
 #include "ceres/cuda_sparse_cholesky.h"
 #include "ceres/eigensparse.h"
-#include "ceres/float_suitesparse.h"
 #include "ceres/iterative_refiner.h"
 #include "ceres/suitesparse.h"
 
