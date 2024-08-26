@@ -163,9 +163,6 @@ bool OptionsAreValidForSparseCholeskyBasedSolver(const Solver::Options& options,
       "was not enabled when Ceres Solver was built.";
   constexpr char kNoNesdisFormat[] =
       "NESDIS is not available with sparse_linear_algebra_library_type = %s.";
-  constexpr char kMixedFormat[] =
-      "use_mixed_precision_solves with %s is not supported with "
-      "sparse_linear_algebra_library_type = %s";
   constexpr char kDynamicSparsityFormat[] =
       "dynamic sparsity is not supported with "
       "sparse_linear_algebra_library_type = %s";
