@@ -121,6 +121,7 @@ void SparseCholeskySolverUnitTest(
     const int max_block_size,
     const double block_density,
     std::mt19937& prng) {
+  LinearSolver::Options sparse_cholesky_options;
 #ifndef CERES_NO_CUDSS
   ContextImpl context;
   sparse_cholesky_options.context = &context;
@@ -128,7 +129,6 @@ void SparseCholeskySolverUnitTest(
   CHECK(context.InitCuda(&error)) << error;
 #endif  // CERES_NO_CUDSS
 
-  LinearSolver::Options sparse_cholesky_options;
   sparse_cholesky_options.sparse_linear_algebra_library_type =
       sparse_linear_algebra_library_type;
   sparse_cholesky_options.ordering_type = ordering_type;
