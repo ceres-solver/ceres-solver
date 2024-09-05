@@ -11,8 +11,7 @@ Users
   * Estimate satellite image sensor characteristics.
   * Stitch `panoramas`_ on Android and iOS.
   * Apply `Lens Blur`_ on Android.
-  * Solve `bundle adjustment`_ and `SLAM`_ problems in `Project
-    Tango`_.
+  * Solve `bundle adjustment`_ and `SLAM`_ problems in `ARCore`_.
 
 * `Willow Garage`_ uses Ceres to solve `SLAM`_ problems.
 * `Southwest Research Institute <http://www.swri.org/>`_ uses Ceres for
@@ -65,7 +64,7 @@ Users
 .. _Street View: http://youtu.be/z00ORu4bU-A
 .. _PhotoTours: http://google-latlong.blogspot.com/2012/04/visit-global-landmarks-with-photo-tours.html
 .. _panoramas: http://www.google.com/maps/about/contribute/photosphere/
-.. _Project Tango: https://www.google.com/atap/projecttango/
+.. _ARCore: https://developers.google.com/ar
 .. _planar tracking: http://mango.blender.org/development/planar-tracking-preview/
 .. _Willow Garage: https://www.willowgarage.com/blog/2013/08/09/enabling-robots-see-better-through-improved-camera-calibration
 .. _Lens Blur: http://googleresearch.blogspot.com/2014/04/lens-blur-in-new-google-camera-app.html
