@@ -157,8 +157,8 @@ else()
   # For some reason unknown to me having the version number in the
   # find_package call fails. So we check for he minimum version
   # manually.
-  if (absl_VERSION VERSION_LESS 20240116.2)
-    message(FATAL_ERROR "The version of abseil installed on the system is " ${absl_VERSION} " need at least 20240116.2")
+  if (absl_VERSION VERSION_LESS 20240116)
+    message(FATAL_ERROR "The version of abseil installed on the system is " ${absl_VERSION} " need at least 20240116")
   endif()
 endif()
 
