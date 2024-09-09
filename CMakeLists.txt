@@ -124,7 +124,22 @@ endif()
 
 # Abseil
 if (EXISTS "${Ceres_SOURCE_DIR}/third_party/abseil-cpp/CMakeLists.txt")
-  message("-- Using the version of abseil in ceres-solver/third_party/abseil-cpp")
+  # extract submodule absl_VERSION
+  file(STRINGS "${Ceres_SOURCE_DIR}/third_party/abseil-cpp/CMakeLists.txt" project_calls REGEX "[ \t]*project\\([ \t]*absl")
+  foreach(project_call ${project_calls})
+    string(REGEX MATCH "VERSION[ ]+([^ )]+)" version_param "${project_call}")
+      if (version_param)
+        set(absl_VERSION "${CMAKE_MATCH_1}")
+        message("-- Using the version of abseil in ceres-solver/third_party/abseil-cpp with version ${absl_VERSION}")
+      endif()
+  endforeach()
+  unset(project_calls)
+  unset(project_call)
+  unset(version_param)
+  if (NOT absl_VERSION)
+    message("-- Using the version of abseil in ceres-solver/third_party/abseil-cpp")
+  endif()
+
   # In the normal course of things, we would not need the following constraint.
   # However, if we do not set the standard, then std::basic_string_view is not
   # available, which absl depends on and linking the test fails.
@@ -150,6 +165,8 @@ if (EXISTS "${Ceres_SOURCE_DIR}/third_party/abseil-cpp/CMakeLists.txt")
   set(CMAKE_C_VISIBILITY_PRESET hidden)
   set(CMAKE_CXX_VISIBILITY_PRESET hidden)
   set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
+
+  set(CERES_USE_SYSTEM_ABSL NO)
 else()
   message("-- ceres-solver/third_party/abseil-cpp is empty, so falling back to system installed abseil")
   find_package(absl REQUIRED 20240116)
@@ -162,6 +179,7 @@ else()
       message(FATAL_ERROR "The version of abseil installed on the system provides no version info and is missing TARGET 'absl::absl_vlog_is_on', need at least 20240116")
     endif()
   endif()
+  set(CERES_USE_SYSTEM_ABSL YES)
 endif()
 
 # Google Test
