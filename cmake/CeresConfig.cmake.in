@@ -190,6 +190,29 @@ include(CMakeFindDependencyMacro)
 # defined, and so CMake will assume that they refer to a library name and
 # fail to link correctly.
 
+# Abseil
+set(_CERES_ABSL_VERSION @absl_VERSION@)
+set(_CERES_USE_SYSTEM_ABSL @CERES_USE_SYSTEM_ABSL@)
+if (_CERES_USE_SYSTEM_ABSL)
+  find_dependency(absl ${_CERES_ABSL_VERSION})
+  if (NOT absl_VERSION)
+    if (NOT TARGET absl::absl_vlog_is_on)
+      ceres_report_not_found("The version of abseil installed on the system "
+        "provides no version info and is missing TARGET 'absl::absl_vlog_is_on'")
+    endif ()
+  endif ()
+else ()
+  # absl from submodule, configs installed with ceres-solver
+  get_filename_component(_ABSL_IMPORT_PREFIX "${CMAKE_CURRENT_LIST_FILE}" PATH)
+  get_filename_component(_ABSL_IMPORT_PREFIX "${_ABSL_IMPORT_PREFIX}" PATH)
+  set(_ABSL_IMPORT_PREFIX "${_ABSL_IMPORT_PREFIX}/absl")
+  find_dependency(absl ${_CERES_ABSL_VERSION} HINTS "${_ABSL_IMPORT_PREFIX}")
+endif ()
+ceres_message(STATUS "Found required Ceres dependency: "
+  "absl version ${_CERES_ABSL_VERSION} in ${absl_DIR}")
+unset(_CERES_ABSL_VERSION)
+unset(_CERES_USE_SYSTEM_ABSL)
+
 # Eigen.
 # Flag set during configuration and build of Ceres.
 set(CERES_EIGEN_VERSION @Eigen3_VERSION@)
