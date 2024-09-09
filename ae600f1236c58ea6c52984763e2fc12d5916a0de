@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6cbba24_94ecaf51",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-09-09T15:38:24Z",
+      "side": 1,
+      "message": "I am going to update the version requirements in a quick CL, and then this one can be entirely about what to do when absl does not report the version.",
+      "revId": "ae600f1236c58ea6c52984763e2fc12d5916a0de",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "56b99bdf_4ec088e7",
