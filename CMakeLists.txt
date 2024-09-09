@@ -150,6 +150,8 @@ if (EXISTS "${Ceres_SOURCE_DIR}/third_party/abseil-cpp/CMakeLists.txt")
   set(CMAKE_C_VISIBILITY_PRESET hidden)
   set(CMAKE_CXX_VISIBILITY_PRESET hidden)
   set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
+
+  set(CERES_USE_SYSTEM_ABSL NO)
 else()
   message("-- ceres-solver/third_party/abseil-cpp is empty, so falling back to system installed abseil")
   find_package(absl REQUIRED 20240116)
@@ -162,6 +164,7 @@ else()
       message(FATAL_ERROR "The version of abseil installed on the system provides no version info and is missing TARGET 'absl::absl_vlog_is_on', need at least 20240116")
     endif()
   endif()
+  set(CERES_USE_SYSTEM_ABSL YES)
 endif()
 
 # Google Test
