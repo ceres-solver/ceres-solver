@@ -190,6 +190,27 @@ include(CMakeFindDependencyMacro)
 # defined, and so CMake will assume that they refer to a library name and
 # fail to link correctly.
 
+# Abseil
+set(CERES_absl_VERSION @absl_VERSION@)
+set(CERES_absl_SYSTEM @CERES_absl_SYSTEM@)
+if (CERES_absl_SYSTEM)
+  find_package(absl QUIET)
+  if (absl_FOUND)
+    if (NOT absl_VERSION VERSION_EQUAL CERES_absl_VERSION)
+      ceres_report_not_found("Found absl dependency, but the version of absl "
+        "found (${absl_VERSION}) does not exactly match the version of absl "
+        "Ceres was compiled with (${CERES_absl_VERSION}). This can cause subtle "
+        "bugs by triggering violations of the One Definition Rule. See the "
+        "Wikipedia article http://en.wikipedia.org/wiki/One_Definition_Rule "
+        "for more details")
+    endif ()
+  else ()
+    ceres_report_not_found("Missing required Ceres "
+      "dependency: absl version ${CERES_absl_VERSION}, please set "
+      "absl_DIR.")
+  endif ()
+endif ()
+
 # Eigen.
 # Flag set during configuration and build of Ceres.
 set(CERES_EIGEN_VERSION @Eigen3_VERSION@)
