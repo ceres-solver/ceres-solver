@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ad9c54bf_3057b28f",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 6149
+      },
+      "writtenOn": "2024-09-09T14:56:17Z",
+      "side": 1,
+      "message": "Any blockers to use CERES_ABSL_SYSTEM to match the cmake-config used CERES_ABSL_VERSION variable naming style?",
+      "parentUuid": "11f297d7_a882c4f0",
+      "range": {
+        "startLine": 154,
+        "startChar": 6,
+        "endLine": 154,
+        "endChar": 23
+      },
+      "revId": "2e559364820a2dfcf4e48cd0d85032b332d560f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "56975b5b_6fd265de",
         "filename": "CMakeLists.txt",
         "patchSetId": 2
@@ -54,6 +78,30 @@
       "writtenOn": "2024-09-09T14:20:20Z",
       "side": 1,
       "message": "why do we need to replicate absl_VERSION, why not just use absl_VERSION directly?",
+      "range": {
+        "startLine": 165,
+        "startChar": 6,
+        "endLine": 165,
+        "endChar": 24
+      },
+      "revId": "2e559364820a2dfcf4e48cd0d85032b332d560f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4861b0cb_d4c350a8",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 6149
+      },
+      "writtenOn": "2024-09-09T14:56:17Z",
+      "side": 1,
+      "message": "we don\u0027t need it. I\u0027ll update the change request",
+      "parentUuid": "56975b5b_6fd265de",
       "range": {
         "startLine": 165,
         "startChar": 6,

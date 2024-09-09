@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84ebc1c4_cb9a92e2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6149
+      },
+      "writtenOn": "2024-09-09T14:56:17Z",
+      "side": 1,
+      "message": "removed not needed variable, updated variable to all capital, and one open question about variable naming",
+      "revId": "605ae5eb8475ee482489274e5a16781199789340",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
