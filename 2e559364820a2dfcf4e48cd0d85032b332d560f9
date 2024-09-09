@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3cd548d_451d8e9a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-09-09T14:20:20Z",
+      "side": 1,
+      "message": "I do not really understand ho CeresConfig.cmake.in works, so I will let Sergiu review this.",
+      "revId": "2e559364820a2dfcf4e48cd0d85032b332d560f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11f297d7_a882c4f0",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-09-09T14:20:20Z",
+      "side": 1,
+      "message": "I think it is better not to use mixed case variables in our cmake files. This variable is better named CERES_SYSTEM_ABSL",
+      "range": {
+        "startLine": 154,
+        "startChar": 6,
+        "endLine": 154,
+        "endChar": 23
+      },
+      "revId": "2e559364820a2dfcf4e48cd0d85032b332d560f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56975b5b_6fd265de",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-09-09T14:20:20Z",
+      "side": 1,
+      "message": "why do we need to replicate absl_VERSION, why not just use absl_VERSION directly?",
+      "range": {
+        "startLine": 165,
+        "startChar": 6,
+        "endLine": 165,
+        "endChar": 24
+      },
+      "revId": "2e559364820a2dfcf4e48cd0d85032b332d560f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
