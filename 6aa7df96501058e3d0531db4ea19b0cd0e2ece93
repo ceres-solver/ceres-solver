@@ -16,6 +16,41 @@
       "message": "NeroBurner FYI",
       "revId": "6aa7df96501058e3d0531db4ea19b0cd0e2ece93",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c807ce44_77aa71ce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6149
+      },
+      "writtenOn": "2024-09-10T06:13:33Z",
+      "side": 1,
+      "message": "Looking good from CMake side. Bazel defines the minimum viable version in the module file, so this seems fine from my limited bazel knowledge",
+      "revId": "6aa7df96501058e3d0531db4ea19b0cd0e2ece93",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92dd7f43_30e189c8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6149
+      },
+      "writtenOn": "2024-09-10T06:13:33Z",
+      "side": 1,
+      "message": "thanks for splitting out this minimal change. Looking good",
+      "parentUuid": "5afab2c0_2946c37b",
+      "revId": "6aa7df96501058e3d0531db4ea19b0cd0e2ece93",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
