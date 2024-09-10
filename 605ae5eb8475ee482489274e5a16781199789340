@@ -33,6 +33,24 @@
       "message": "Johannes FYI",
       "revId": "605ae5eb8475ee482489274e5a16781199789340",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "457ae178_bfdbbef9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5205
+      },
+      "writtenOn": "2024-09-10T07:29:01Z",
+      "side": 1,
+      "message": "Thanks Sameer for the ping. The changeset here looks like a more principled fix to my problem. Apologies, I had no time to follow up on my half-baked fix.",
+      "parentUuid": "ded1300b_48446e61",
+      "revId": "605ae5eb8475ee482489274e5a16781199789340",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
