@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7da51f18_3c56adb0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-09-10T13:38:35Z",
+      "side": 1,
+      "message": "https://ceres-solver-review.git.corp.google.com/c/ceres-solver/+/26740",
+      "parentUuid": "d6cbba24_94ecaf51",
+      "revId": "ae600f1236c58ea6c52984763e2fc12d5916a0de",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "56b99bdf_4ec088e7",
@@ -31,6 +49,30 @@
       "writtenOn": "2024-09-09T14:14:24Z",
       "side": 1,
       "message": "these are two changes, one is a policy change regarding lack of a version the other is the minimum version required. The latter also requires changing the MODULE.bazel file.\n\nI am okay with these changes. I am curious what Sergiu thinks.",
+      "range": {
+        "startLine": 160,
+        "startChar": 5,
+        "endLine": 160,
+        "endChar": 6
+      },
+      "revId": "ae600f1236c58ea6c52984763e2fc12d5916a0de",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c762d2d_47f481c4",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-09-10T13:38:35Z",
+      "side": 1,
+      "message": "I have an idea for the case where there is no version.\nIn that case, you could check for the presence of the VLOG_IS_ON macro. If that is available then we are good to go.",
+      "parentUuid": "56b99bdf_4ec088e7",
       "range": {
         "startLine": 160,
         "startChar": 5,
