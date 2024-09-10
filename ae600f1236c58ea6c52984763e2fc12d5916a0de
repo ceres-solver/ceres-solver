@@ -81,6 +81,30 @@
       },
       "revId": "ae600f1236c58ea6c52984763e2fc12d5916a0de",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a447f83_02026b77",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 6149
+      },
+      "writtenOn": "2024-09-10T14:52:09Z",
+      "side": 1,
+      "message": "Starting with 20240116.0 there is the CMake target \u0027absl::absl_vlog_is_on\u0027 which we could check against. The target is available in the current master branch as well",
+      "parentUuid": "5c762d2d_47f481c4",
+      "range": {
+        "startLine": 160,
+        "startChar": 5,
+        "endLine": 160,
+        "endChar": 6
+      },
+      "revId": "ae600f1236c58ea6c52984763e2fc12d5916a0de",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }

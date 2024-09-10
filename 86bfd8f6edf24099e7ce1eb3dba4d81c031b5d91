@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9bf29876_6185cd32",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6149
+      },
+      "writtenOn": "2024-09-10T14:52:09Z",
+      "side": 1,
+      "message": "in case of \u0027master\u0027 branch with no version info check for CMake target `absl::absl_vlog_is_on`",
+      "revId": "86bfd8f6edf24099e7ce1eb3dba4d81c031b5d91",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
