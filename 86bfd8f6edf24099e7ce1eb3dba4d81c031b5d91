@@ -18,6 +18,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "453eed48_901a71cd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-09-10T17:35:46Z",
+      "side": 1,
+      "message": "please rebase, and this is ready to go in.",
+      "revId": "86bfd8f6edf24099e7ce1eb3dba4d81c031b5d91",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ef840ad7_d58b5007",
@@ -31,6 +48,30 @@
       "writtenOn": "2024-09-10T15:24:16Z",
       "side": 1,
       "message": "Just to be sure, this subtarget only became available in 20240116? because I remember that later they made the vlog_is_on a public header in 20240115.2. I hope the two are not correlated.",
+      "range": {
+        "startLine": 161,
+        "startChar": 25,
+        "endLine": 161,
+        "endChar": 40
+      },
+      "revId": "86bfd8f6edf24099e7ce1eb3dba4d81c031b5d91",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22463de6_251e0a4f",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-09-10T17:35:46Z",
+      "side": 1,
+      "message": "I checked it is in \nhttps://github.com/abseil/abseil-cpp/commit/7b6c17e378224844d8663a410da2da5353b205b9#diff-9059b7310b7daa3a803ca0cd8b0a88f6d41305e3bf1089f7d5bc716fd62c324c\n\nwhich is before 20240116.0",
+      "parentUuid": "ef840ad7_d58b5007",
       "range": {
         "startLine": 161,
         "startChar": 25,
