@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af6fe18e_4bd0dbd1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-09-11T14:09:38Z",
+      "side": 1,
+      "message": "Minor comment, but I am going to wait on Sergiu to review this as I am completely unfamiliar with this part of cmake.",
+      "revId": "bb1c835ab82cea7a094b1ab00108796749f91e49",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db351cc1_6ba52a88",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-09-11T14:09:38Z",
+      "side": 1,
+      "message": "in this case don\u0027t we want the logic to be a bit more sophisticated. I am specifically concerned about the case where the system installed version does not report a version and CERES_ABSL_VERSION is also empty.\n\nIn that case we will say the versions match, but we don\u0027t really know.",
+      "range": {
+        "startLine": 197,
+        "startChar": 15,
+        "endLine": 197,
+        "endChar": 19
+      },
+      "revId": "bb1c835ab82cea7a094b1ab00108796749f91e49",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
