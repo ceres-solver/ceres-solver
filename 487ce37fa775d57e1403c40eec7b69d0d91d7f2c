@@ -33,6 +33,24 @@
       "message": "FYI I changed the message part with the version such that the absl_VERSION is encapsulated with \u0027\u0027 instead of nothing. The error message now looks as follows\n\nThe version of abseil installed on the system is \u002720230125\u0027 need at least 20240116",
       "revId": "487ce37fa775d57e1403c40eec7b69d0d91d7f2c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7320deae_239182fb",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-09-11T14:00:17Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "88948708_23f290c5",
+      "revId": "487ce37fa775d57e1403c40eec7b69d0d91d7f2c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
