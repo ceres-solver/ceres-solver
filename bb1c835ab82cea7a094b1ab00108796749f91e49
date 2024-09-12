@@ -18,6 +18,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "00fbfa0a_5cd8c018",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6149
+      },
+      "writtenOn": "2024-09-12T07:07:09Z",
+      "side": 1,
+      "message": "rebased on current master after the \u0027allow system/local Abseil master\u0027 commit was merged.\n\nAnd now checking for `absl::absl_vlog_is_on` in case of master Abseil version detected, just like we do in CMakeLists.txt",
+      "revId": "bb1c835ab82cea7a094b1ab00108796749f91e49",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "db351cc1_6ba52a88",
@@ -31,6 +48,30 @@
       "writtenOn": "2024-09-11T14:09:38Z",
       "side": 1,
       "message": "in this case don\u0027t we want the logic to be a bit more sophisticated. I am specifically concerned about the case where the system installed version does not report a version and CERES_ABSL_VERSION is also empty.\n\nIn that case we will say the versions match, but we don\u0027t really know.",
+      "range": {
+        "startLine": 197,
+        "startChar": 15,
+        "endLine": 197,
+        "endChar": 19
+      },
+      "revId": "bb1c835ab82cea7a094b1ab00108796749f91e49",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "268dac4d_561845b1",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 6149
+      },
+      "writtenOn": "2024-09-12T07:07:09Z",
+      "side": 1,
+      "message": "The only thing we could (reasonably) do is to check if the `absl::absl_vlog_is_on` target exists, just like we now do in `CMakeLists.txt` when we have an empty `absl_VERSION`. other than that I don\u0027t think we can do anything without propper version info",
+      "parentUuid": "db351cc1_6ba52a88",
       "range": {
         "startLine": 197,
         "startChar": 15,
