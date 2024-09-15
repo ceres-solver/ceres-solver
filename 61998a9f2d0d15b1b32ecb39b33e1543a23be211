@@ -77,6 +77,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "aef5e91f_dbcf6e6d",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-09-15T22:10:56Z",
+      "side": 1,
+      "message": "I think this is a remanent of the way I was checking versions in the main cmake file.\n\nI have fixed it as https://ceres-solver-review.git.corp.google.com/c/ceres-solver/+/26760\n\nwe should be able to simplify things here also as a result.",
+      "parentUuid": "455d0d6f_35ab5398",
+      "revId": "61998a9f2d0d15b1b32ecb39b33e1543a23be211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "499595e7_e5f62a47",
         "filename": "cmake/CeresConfig.cmake.in",
         "patchSetId": 5
