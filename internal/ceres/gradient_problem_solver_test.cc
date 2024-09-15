@@ -30,6 +30,8 @@
 
 #include "ceres/gradient_problem_solver.h"
 
+#include <memory>
+
 #include "ceres/gradient_problem.h"
 #include "gtest/gtest.h"
 

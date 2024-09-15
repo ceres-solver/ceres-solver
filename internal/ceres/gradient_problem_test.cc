@@ -30,6 +30,9 @@
 
 #include "ceres/gradient_problem.h"
 
+#include <memory>
+
+#include "ceres/manifold.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {

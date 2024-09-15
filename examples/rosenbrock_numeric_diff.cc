@@ -34,6 +34,7 @@
 // differentiation.
 
 #include <iostream>
+#include <memory>
 
 #include "absl/log/initialize.h"
 #include "ceres/ceres.h"
