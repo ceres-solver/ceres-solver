@@ -152,17 +152,15 @@ if (EXISTS "${Ceres_SOURCE_DIR}/third_party/abseil-cpp/CMakeLists.txt")
   set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
 else()
   message("-- ceres-solver/third_party/abseil-cpp is empty, so falling back to system installed abseil")
-  find_package(absl REQUIRED)
+  find_package(absl REQUIRED 20240116)
   message("-- Found abseil version ${absl_VERSION}: ${absl_DIR}")
-  # For some reason unknown to me having the version number in the
-  # find_package call fails. So we check for he minimum version
-  # manually.
-  if ("${absl_VERSION}" STREQUAL "")
+  if (NOT absl_VERSION)
+    # In some installs, abseil will not export the version number, in
+    # which case we check for vlog_is_on, which is a feature we need
+    # before being able to use abseil.
     if (NOT TARGET absl::absl_vlog_is_on)
-      message(FATAL_ERROR "The version of abseil installed on the system provides no version info and is missing TARGET 'absl::absl_vlog_is_on', need at least 20240116.0")
+      message(FATAL_ERROR "The version of abseil installed on the system provides no version info and is missing TARGET 'absl::absl_vlog_is_on', need at least 20240116")
     endif()
-  elseif (absl_VERSION VERSION_LESS 20240116)
-    message(FATAL_ERROR "The version of abseil installed on the system is '${absl_VERSION}' need at least 20240116")
   endif()
 endif()
 
