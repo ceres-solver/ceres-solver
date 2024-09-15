@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9c8e4ee_79bba672",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-09-15T20:19:57Z",
+      "side": 1,
+      "message": "Thanks for your patience guys and sorry for the delay.\n\nReinhold, your changes are going in the right direction. However, I have a couple of comments that we should sort out.",
+      "revId": "61998a9f2d0d15b1b32ecb39b33e1543a23be211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3609908_7997f919",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-09-15T20:19:57Z",
+      "side": 1,
+      "message": "```suggestion\n  set(CERES_USE_SYSTEM_ABSL NO)\n```\nto better reflect that this is a boolean variable.",
+      "range": {
+        "startLine": 154,
+        "startChar": 6,
+        "endLine": 154,
+        "endChar": 23
+      },
+      "revId": "61998a9f2d0d15b1b32ecb39b33e1543a23be211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5e4af1a_deaf5162",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-09-15T20:19:57Z",
+      "side": 1,
+      "message": "```suggestion\n  set(CERES_USE_SYSTEM_ABSL YES)\n```",
+      "revId": "61998a9f2d0d15b1b32ecb39b33e1543a23be211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "455d0d6f_35ab5398",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-09-15T20:19:57Z",
+      "side": 1,
+      "message": "It is not clear to me why we need all the manual version checks here instead of simply using `find_dependency` with the minimum version of Abseil we expect.\n\nWe should use version compatibility checks as provided by Abseil particularly because the underlying rules may be more complicated than we can (and should) maintain.",
+      "revId": "61998a9f2d0d15b1b32ecb39b33e1543a23be211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "499595e7_e5f62a47",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 5
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-09-15T20:19:57Z",
+      "side": 1,
+      "message": "```suggestion\n    if (NOT absl_VERSION)\n```",
+      "revId": "61998a9f2d0d15b1b32ecb39b33e1543a23be211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b26a1b2c_cf3b10d9",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 5
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-09-15T20:19:57Z",
+      "side": 1,
+      "message": "Can\u0027t we request this component as part of the `find_package`/`find_dependency` call?",
+      "revId": "61998a9f2d0d15b1b32ecb39b33e1543a23be211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7846d5a6_7e76e439",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-09-15T20:19:57Z",
+      "side": 1,
+      "message": "This `find_dependency` invocation should request the Abseil version from the submodule to avoid any possible side effects. For instance, a different dependency might locate another incompatible version of the Abseil first or the user could override the Abseil location altogether.",
+      "revId": "61998a9f2d0d15b1b32ecb39b33e1543a23be211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5af6e322_2ea0c261",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-09-15T20:19:57Z",
+      "side": 1,
+      "message": "Unset both help variables `CERES_ABSL_VERSION` and `CERES_USE_SYSTEM_ABSL` here to avoid leaking them into user projects. These variables should have no use for users anyway.\n\nMaybe even prefix variable names by an underscore to indicate that those are intended for private use.",
+      "revId": "61998a9f2d0d15b1b32ecb39b33e1543a23be211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
