@@ -33,7 +33,6 @@
 #include <map>
 #include <memory>
 #include <set>
-#include <unordered_set>
 #include <vector>
 
 #include "absl/log/check.h"
@@ -57,7 +56,7 @@ int ComputeStableSchurOrdering(const Program& program,
 
   const std::vector<ParameterBlock*>& parameter_blocks =
       program.parameter_blocks();
-  const std::unordered_set<ParameterBlock*>& vertices = graph->vertices();
+  const auto& vertices = graph->vertices();
   for (auto* parameter_block : parameter_blocks) {
     if (vertices.count(parameter_block) > 0) {
       ordering->push_back(parameter_block);

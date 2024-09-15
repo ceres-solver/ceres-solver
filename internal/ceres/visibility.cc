@@ -35,7 +35,6 @@
 #include <ctime>
 #include <memory>
 #include <set>
-#include <unordered_map>
 #include <utility>
 #include <vector>
 
@@ -43,7 +42,6 @@
 #include "absl/log/log.h"
 #include "ceres/block_structure.h"
 #include "ceres/graph.h"
-#include "ceres/pair_hash.h"
 
 namespace ceres::internal {
 
@@ -102,7 +100,7 @@ std::unique_ptr<WeightedGraph<int>> CreateSchurComplementGraph(
 
   // Map from camera pairs to number of points visible to both cameras
   // in the pair.
-  std::unordered_map<std::pair<int, int>, int, pair_hash> camera_pairs;
+  absl::flat_hash_map<std::pair<int, int>, int> camera_pairs;
 
   // Count the number of points visible to each camera/f_block pair.
   for (const auto& inverse_visibility_set : inverse_visibility) {

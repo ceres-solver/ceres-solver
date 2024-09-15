@@ -41,9 +41,9 @@
 #ifndef CERES_INTERNAL_CANONICAL_VIEWS_CLUSTERING_H_
 #define CERES_INTERNAL_CANONICAL_VIEWS_CLUSTERING_H_
 
-#include <unordered_map>
 #include <vector>
 
+#include "absl/container/flat_hash_map.h"
 #include "ceres/graph.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
@@ -99,7 +99,7 @@ CERES_NO_EXPORT void ComputeCanonicalViewsClustering(
     const CanonicalViewsClusteringOptions& options,
     const WeightedGraph<int>& graph,
     std::vector<int>* centers,
-    std::unordered_map<int, int>* membership);
+    absl::flat_hash_map<int, int>* membership);
 
 struct CERES_NO_EXPORT CanonicalViewsClusteringOptions {
   // The minimum number of canonical views to compute.

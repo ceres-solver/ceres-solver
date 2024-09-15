@@ -30,8 +30,7 @@
 
 #include "ceres/single_linkage_clustering.h"
 
-#include <unordered_map>
-
+#include "absl/container/flat_hash_map.h"
 #include "ceres/graph.h"
 #include "gtest/gtest.h"
 
@@ -52,7 +51,7 @@ TEST(SingleLinkageClustering, GraphHasTwoComponents) {
   graph.AddEdge(4, 5, 1.0);
 
   SingleLinkageClusteringOptions options;
-  std::unordered_map<int, int> membership;
+  absl::flat_hash_map<int, int> membership;
   ComputeSingleLinkageClustering(options, graph, &membership);
   EXPECT_EQ(membership.size(), kNumVertices);
 
@@ -81,7 +80,7 @@ TEST(SingleLinkageClustering, ComponentWithWeakLink) {
   graph.AddEdge(4, 5, 0.5);
 
   SingleLinkageClusteringOptions options;
-  std::unordered_map<int, int> membership;
+  absl::flat_hash_map<int, int> membership;
   ComputeSingleLinkageClustering(options, graph, &membership);
   EXPECT_EQ(membership.size(), kNumVertices);
 
@@ -111,7 +110,7 @@ TEST(SingleLinkageClustering, ComponentWithWeakLinkAndStrongLink) {
   graph.AddEdge(4, 5, 1.0);
 
   SingleLinkageClusteringOptions options;
-  std::unordered_map<int, int> membership;
+  absl::flat_hash_map<int, int> membership;
   ComputeSingleLinkageClustering(options, graph, &membership);
   EXPECT_EQ(membership.size(), kNumVertices);
 
