@@ -31,10 +31,10 @@
 
 #include "ceres/canonical_views_clustering.h"
 
-#include <unordered_map>
-#include <unordered_set>
 #include <vector>
 
+#include "absl/container/flat_hash_map.h"
+#include "absl/container/flat_hash_set.h"
 #include "absl/log/check.h"
 #include "absl/log/log.h"
 #include "ceres/graph.h"
@@ -43,8 +43,8 @@
 
 namespace ceres::internal {
 
-using IntMap = std::unordered_map<int, int>;
-using IntSet = std::unordered_set<int>;
+using IntMap = absl::flat_hash_map<int, int>;
+using IntSet = absl::flat_hash_set<int>;
 
 class CERES_NO_EXPORT CanonicalViewsClustering {
  public:
@@ -75,7 +75,7 @@ class CERES_NO_EXPORT CanonicalViewsClustering {
   // center).
   IntMap view_to_canonical_view_;
   // Maps a view to its similarity to its current cluster center.
-  std::unordered_map<int, double> view_to_canonical_view_similarity_;
+  absl::flat_hash_map<int, double> view_to_canonical_view_similarity_;
 };
 
 void ComputeCanonicalViewsClustering(

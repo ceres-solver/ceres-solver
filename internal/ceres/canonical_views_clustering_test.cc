@@ -31,8 +31,7 @@
 
 #include "ceres/canonical_views_clustering.h"
 
-#include <unordered_map>
-
+#include "absl/container/flat_hash_map.h"
 #include "ceres/graph.h"
 #include "gtest/gtest.h"
 
@@ -74,7 +73,7 @@ class CanonicalViewsTest : public ::testing::Test {
 
   CanonicalViewsClusteringOptions options_;
   std::vector<int> centers_;
-  std::unordered_map<int, int> membership_;
+  absl::flat_hash_map<int, int> membership_;
 };
 
 TEST_F(CanonicalViewsTest, ComputeCanonicalViewsTest) {
