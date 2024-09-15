@@ -35,11 +35,11 @@
 
 #include <algorithm>
 #include <memory>
-#include <unordered_map>
-#include <unordered_set>
 #include <utility>
 #include <vector>
 
+#include "absl/container/flat_hash_map.h"
+#include "absl/container/flat_hash_set.h"
 #include "absl/log/check.h"
 #include "ceres/graph.h"
 #include "ceres/internal/export.h"
@@ -96,7 +96,7 @@ class VertexDegreeLessThan {
 template <typename Vertex>
 int IndependentSetOrdering(const Graph<Vertex>& graph,
                            std::vector<Vertex>* ordering) {
-  const std::unordered_set<Vertex>& vertices = graph.vertices();
+  const absl::flat_hash_set<Vertex>& vertices = graph.vertices();
   const int num_vertices = vertices.size();
 
   CHECK(ordering != nullptr);
@@ -109,7 +109,7 @@ int IndependentSetOrdering(const Graph<Vertex>& graph,
   const char kBlack = 2;
 
   // Mark all vertices white.
-  std::unordered_map<Vertex, char> vertex_color;
+  absl::flat_hash_map<Vertex, char> vertex_color;
   std::vector<Vertex> vertex_queue;
   for (const Vertex& vertex : vertices) {
     vertex_color[vertex] = kWhite;
@@ -129,7 +129,7 @@ int IndependentSetOrdering(const Graph<Vertex>& graph,
 
     ordering->push_back(vertex);
     vertex_color[vertex] = kBlack;
-    const std::unordered_set<Vertex>& neighbors = graph.Neighbors(vertex);
+    const absl::flat_hash_set<Vertex>& neighbors = graph.Neighbors(vertex);
     for (const Vertex& neighbor : neighbors) {
       vertex_color[neighbor] = kGrey;
     }
@@ -165,7 +165,7 @@ template <typename Vertex>
 int StableIndependentSetOrdering(const Graph<Vertex>& graph,
                                  std::vector<Vertex>* ordering) {
   CHECK(ordering != nullptr);
-  const std::unordered_set<Vertex>& vertices = graph.vertices();
+  const absl::flat_hash_set<Vertex>& vertices = graph.vertices();
   const int num_vertices = vertices.size();
   CHECK_EQ(vertices.size(), ordering->size());
 
@@ -181,7 +181,7 @@ int StableIndependentSetOrdering(const Graph<Vertex>& graph,
                    VertexDegreeLessThan<Vertex>(graph));
 
   // Mark all vertices white.
-  std::unordered_map<Vertex, char> vertex_color;
+  absl::flat_hash_map<Vertex, char> vertex_color;
   for (const Vertex& vertex : vertices) {
     vertex_color[vertex] = kWhite;
   }
@@ -198,7 +198,7 @@ int StableIndependentSetOrdering(const Graph<Vertex>& graph,
 
     ordering->push_back(vertex);
     vertex_color[vertex] = kBlack;
-    const std::unordered_set<Vertex>& neighbors = graph.Neighbors(vertex);
+    const absl::flat_hash_set<Vertex>& neighbors = graph.Neighbors(vertex);
     for (const Vertex& neighbor : neighbors) {
       vertex_color[neighbor] = kGrey;
     }
@@ -228,7 +228,7 @@ int StableIndependentSetOrdering(const Graph<Vertex>& graph,
 // is what gives this data structure its efficiency.
 template <typename Vertex>
 Vertex FindConnectedComponent(const Vertex& vertex,
-                              std::unordered_map<Vertex, Vertex>* union_find) {
+                              absl::flat_hash_map<Vertex, Vertex>* union_find) {
   auto it = union_find->find(vertex);
   DCHECK(it != union_find->end());
   if (it->second != vertex) {
@@ -265,18 +265,18 @@ std::unique_ptr<WeightedGraph<Vertex>> Degree2MaximumSpanningForest(
 
   // Disjoint-set to keep track of the connected components in the
   // maximum spanning tree.
-  std::unordered_map<Vertex, Vertex> disjoint_set;
+  absl::flat_hash_map<Vertex, Vertex> disjoint_set;
 
   // Sort of the edges in the graph in decreasing order of their
   // weight. Also add the vertices of the graph to the Maximum
   // Spanning Tree graph and set each vertex to be its own connected
   // component in the disjoint_set structure.
-  const std::unordered_set<Vertex>& vertices = graph.vertices();
+  const absl::flat_hash_set<Vertex>& vertices = graph.vertices();
   for (const Vertex& vertex1 : vertices) {
     forest->AddVertex(vertex1, graph.VertexWeight(vertex1));
     disjoint_set[vertex1] = vertex1;
 
-    const std::unordered_set<Vertex>& neighbors = graph.Neighbors(vertex1);
+    const absl::flat_hash_set<Vertex>& neighbors = graph.Neighbors(vertex1);
     for (const Vertex& vertex2 : neighbors) {
       if (vertex1 >= vertex2) {
         continue;

@@ -31,8 +31,7 @@
 #ifndef CERES_INTERNAL_SINGLE_LINKAGE_CLUSTERING_H_
 #define CERES_INTERNAL_SINGLE_LINKAGE_CLUSTERING_H_
 
-#include <unordered_map>
-
+#include "absl/container/flat_hash_map.h"
 #include "ceres/graph.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
@@ -58,7 +57,7 @@ struct SingleLinkageClusteringOptions {
 CERES_NO_EXPORT int ComputeSingleLinkageClustering(
     const SingleLinkageClusteringOptions& options,
     const WeightedGraph<int>& graph,
-    std::unordered_map<int, int>* membership);
+    absl::flat_hash_map<int, int>* membership);
 
 }  // namespace ceres::internal
 

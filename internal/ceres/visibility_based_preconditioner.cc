@@ -36,11 +36,12 @@
 #include <memory>
 #include <set>
 #include <string>
-#include <unordered_set>
 #include <utility>
 #include <vector>
 
 #include "Eigen/Dense"
+#include "absl/container/flat_hash_map.h"
+#include "absl/container/flat_hash_set.h"
 #include "absl/log/check.h"
 #include "absl/log/log.h"
 #include "ceres/block_random_access_sparse_matrix.h"
@@ -175,7 +176,7 @@ void VisibilityBasedPreconditioner::ClusterCameras(
   auto schur_complement_graph = CreateSchurComplementGraph(visibility);
   CHECK(schur_complement_graph != nullptr);
 
-  std::unordered_map<int, int> membership;
+  absl::flat_hash_map<int, int> membership;
 
   if (options_.visibility_clustering_type == CANONICAL_VIEWS) {
     std::vector<int> centers;
@@ -457,17 +458,17 @@ bool VisibilityBasedPreconditioner::IsBlockPairOffDiagonal(
 // each vertex.
 void VisibilityBasedPreconditioner::ForestToClusterPairs(
     const WeightedGraph<int>& forest,
-    std::unordered_set<std::pair<int, int>, pair_hash>* cluster_pairs) const {
+    absl::flat_hash_set<std::pair<int, int>>* cluster_pairs) const {
   CHECK(cluster_pairs != nullptr);
   cluster_pairs->clear();
-  const std::unordered_set<int>& vertices = forest.vertices();
+  const absl::flat_hash_set<int>& vertices = forest.vertices();
   CHECK_EQ(vertices.size(), num_clusters_);
 
   // Add all the cluster pairs corresponding to the edges in the
   // forest.
   for (const int cluster1 : vertices) {
     cluster_pairs->insert(std::make_pair(cluster1, cluster1));
-    const std::unordered_set<int>& neighbors = forest.Neighbors(cluster1);
+    const absl::flat_hash_set<int>& neighbors = forest.Neighbors(cluster1);
     for (const int cluster2 : neighbors) {
       if (cluster1 < cluster2) {
         cluster_pairs->insert(std::make_pair(cluster1, cluster2));
@@ -528,7 +529,7 @@ VisibilityBasedPreconditioner::CreateClusterGraph(
   return cluster_graph;
 }
 
-// Canonical views clustering returns a std::unordered_map from vertices to
+// Canonical views clustering returns a absl::flat_hash_set from vertices to
 // cluster ids. Convert this into a flat array for quick lookup. It is
 // possible that some of the vertices may not be associated with any
 // cluster. In that case, randomly assign them to one of the clusters.
@@ -537,13 +538,13 @@ VisibilityBasedPreconditioner::CreateClusterGraph(
 // the membership_map, we also map the cluster ids to a contiguous set
 // of integers so that the cluster ids are in [0, num_clusters_).
 void VisibilityBasedPreconditioner::FlattenMembershipMap(
-    const std::unordered_map<int, int>& membership_map,
+    const absl::flat_hash_map<int, int>& membership_map,
     std::vector<int>* membership_vector) const {
   CHECK(membership_vector != nullptr);
   membership_vector->resize(0);
   membership_vector->resize(num_blocks_, -1);
 
-  std::unordered_map<int, int> cluster_id_to_index;
+  absl::flat_hash_map<int, int> cluster_id_to_index;
   // Iterate over the cluster membership map and update the
   // cluster_membership_ vector assigning arbitrary cluster ids to
   // the few cameras that have not been clustered.
