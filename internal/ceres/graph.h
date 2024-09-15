@@ -32,14 +32,13 @@
 #define CERES_INTERNAL_GRAPH_H_
 
 #include <limits>
-#include <unordered_map>
-#include <unordered_set>
 #include <utility>
 
+#include "absl/container/flat_hash_map.h"
+#include "absl/container/flat_hash_set.h"
 #include "absl/log/check.h"
 #include "ceres/internal/export.h"
 #include "ceres/map_util.h"
-#include "ceres/pair_hash.h"
 #include "ceres/types.h"
 
 namespace ceres::internal {
@@ -52,7 +51,7 @@ class CERES_NO_EXPORT Graph {
   // Add a vertex.
   void AddVertex(const Vertex& vertex) {
     if (vertices_.insert(vertex).second) {
-      edges_[vertex] = std::unordered_set<Vertex>();
+      edges_[vertex] = absl::flat_hash_set<Vertex>();
     }
   }
 
@@ -62,7 +61,7 @@ class CERES_NO_EXPORT Graph {
     }
 
     vertices_.erase(vertex);
-    const std::unordered_set<Vertex>& sinks = edges_[vertex];
+    const absl::flat_hash_set<Vertex>& sinks = edges_[vertex];
     for (const Vertex& s : sinks) {
       edges_[s].erase(vertex);
     }
@@ -88,15 +87,15 @@ class CERES_NO_EXPORT Graph {
 
   // Calling Neighbors on a vertex not in the graph will result in
   // undefined behaviour.
-  const std::unordered_set<Vertex>& Neighbors(const Vertex& vertex) const {
+  const absl::flat_hash_set<Vertex>& Neighbors(const Vertex& vertex) const {
     return FindOrDie(edges_, vertex);
   }
 
-  const std::unordered_set<Vertex>& vertices() const { return vertices_; }
+  const absl::flat_hash_set<Vertex>& vertices() const { return vertices_; }
 
  private:
-  std::unordered_set<Vertex> vertices_;
-  std::unordered_map<Vertex, std::unordered_set<Vertex>> edges_;
+  absl::flat_hash_set<Vertex> vertices_;
+  absl::flat_hash_map<Vertex, absl::flat_hash_set<Vertex>> edges_;
 };
 
 // A weighted undirected graph templated over the vertex ids. Vertex
@@ -109,7 +108,7 @@ class WeightedGraph {
   void AddVertex(const Vertex& vertex, double weight) {
     if (vertices_.find(vertex) == vertices_.end()) {
       vertices_.insert(vertex);
-      edges_[vertex] = std::unordered_set<Vertex>();
+      edges_[vertex] = absl::flat_hash_set<Vertex>();
     }
     vertex_weights_[vertex] = weight;
   }
@@ -125,7 +124,7 @@ class WeightedGraph {
 
     vertices_.erase(vertex);
     vertex_weights_.erase(vertex);
-    const std::unordered_set<Vertex>& sinks = edges_[vertex];
+    const absl::flat_hash_set<Vertex>& sinks = edges_[vertex];
     for (const Vertex& s : sinks) {
       if (vertex < s) {
         edge_weights_.erase(std::make_pair(vertex, s));
@@ -187,22 +186,21 @@ class WeightedGraph {
 
   // Calling Neighbors on a vertex not in the graph will result in
   // undefined behaviour.
-  const std::unordered_set<Vertex>& Neighbors(const Vertex& vertex) const {
+  const absl::flat_hash_set<Vertex>& Neighbors(const Vertex& vertex) const {
     return FindOrDie(edges_, vertex);
   }
 
-  const std::unordered_set<Vertex>& vertices() const { return vertices_; }
+  const absl::flat_hash_set<Vertex>& vertices() const { return vertices_; }
 
   static double InvalidWeight() {
     return std::numeric_limits<double>::quiet_NaN();
   }
 
  private:
-  std::unordered_set<Vertex> vertices_;
-  std::unordered_map<Vertex, double> vertex_weights_;
-  std::unordered_map<Vertex, std::unordered_set<Vertex>> edges_;
-  std::unordered_map<std::pair<Vertex, Vertex>, double, pair_hash>
-      edge_weights_;
+  absl::flat_hash_set<Vertex> vertices_;
+  absl::flat_hash_map<Vertex, double> vertex_weights_;
+  absl::flat_hash_map<Vertex, absl::flat_hash_set<Vertex>> edges_;
+  absl::flat_hash_map<std::pair<Vertex, Vertex>, double> edge_weights_;
 };
 
 }  // namespace ceres::internal

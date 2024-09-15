@@ -47,10 +47,13 @@ endif()
 
 list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES absl::strings)
 list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES absl::time)
+list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES absl::flat_hash_map)
+list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES absl::flat_hash_set)
 
 list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES absl::log)
 list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES absl::check)
 list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES absl::fixed_array)
+
 
 # Source files that contain public symbols and live in the ceres namespaces.
 # Such symbols are expected to be marked with CERES_EXPORT and the files below
