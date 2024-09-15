@@ -33,6 +33,7 @@
 // GradientProblemSolver using analytic derivatives.
 
 #include <iostream>
+#include <memory>
 
 #include "absl/log/initialize.h"
 #include "ceres/ceres.h"

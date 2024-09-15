@@ -31,8 +31,10 @@
 #include "ceres/gradient_problem.h"
 
 #include <memory>
+#include <utility>
 
 #include "absl/log/check.h"
+#include "ceres/manifold.h"
 
 namespace ceres {
 
