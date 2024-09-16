@@ -34,6 +34,24 @@
       "parentUuid": "18c6c702_05c95136",
       "revId": "793efde013c9fcd172372b772b5ed5a5fa71d371",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e8e0f7d_c2ae3c45",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-09-16T15:48:53Z",
+      "side": 1,
+      "message": "Looking at this specific Abseil release (20230802), there\u0027s already an [exact version check in place](https://github.com/abseil/abseil-cpp/blob/29bf8085f3bf17b84d30e34b3d7ff8248fda404e/CMakeLists.txt#L201-L213) that is supposed to discard any other Abseil version. I\u0027m wondering why the check does not work.\n\nIs maybe `abslConfigVersion.cmake` not present or broken?",
+      "parentUuid": "35ced388_0fa0cec0",
+      "revId": "793efde013c9fcd172372b772b5ed5a5fa71d371",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
