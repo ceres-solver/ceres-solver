@@ -33,6 +33,7 @@
 #include <memory>
 
 #include "ceres/array_utils.h"
+#inlcude "ceres/types.h"
 #include "ceres/first_order_function.h"
 #include "gtest/gtest.h"
 

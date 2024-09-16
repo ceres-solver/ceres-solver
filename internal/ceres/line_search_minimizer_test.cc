@@ -32,7 +32,6 @@
 #include <memory>
 
 #include "ceres/ceres.h"
-#include "ceres/types.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
