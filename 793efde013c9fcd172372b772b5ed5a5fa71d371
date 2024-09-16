@@ -16,6 +16,24 @@
       "message": "`find_package(absl REQUIRED 20240116)` happily accepts an older version.\n\n```\n-- Found abseil version 20230802: /home/nero/repos/external/abseil-cpp/_install_24.04_noble_amd64/lib/cmake/absl\n```\n\nOnly at build time the missing VLOG macro results in build errors",
       "revId": "793efde013c9fcd172372b772b5ed5a5fa71d371",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35ced388_0fa0cec0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-09-16T14:59:21Z",
+      "side": 1,
+      "message": "ugh, do you have a suggestion for what the right way to deal with this is?",
+      "parentUuid": "18c6c702_05c95136",
+      "revId": "793efde013c9fcd172372b772b5ed5a5fa71d371",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
