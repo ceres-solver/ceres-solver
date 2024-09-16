@@ -224,25 +224,25 @@ TEST_P(SparseCholeskyTest, FactorAndSolve) {
 namespace {
 
 #ifndef CERES_NO_SUITESPARSE
-INSTANTIATE_TEST_SUITE_P(
-    SuiteSparseCholesky,
-    SparseCholeskyTest,
-    ::testing::Combine(::testing::Values(SUITE_SPARSE),
+const auto SuiteSparseCholeskyParameters = ::testing::Combine(
+    ::testing::Values(SUITE_SPARSE),
 #if defined(CERES_NO_CHOLMOD_FLOAT)
-                       ::testing::Values(false),
+    ::testing::Values(false),
 #else
-                       ::testing::Values(false, true),
+    ::testing::Values(false, true),
 #endif  // defined(CERES_NO_CHOLMOD_FLOAT)
 #if defined(CERES_NO_CHOLMOD_PARTITION)
-                       ::testing::Values(OrderingType::AMD,
-                                         OrderingType::NATURAL),
+    ::testing::Values(OrderingType::AMD, OrderingType::NATURAL),
 #else
-                       ::testing::Values(OrderingType::AMD,
-                                         OrderingType::NESDIS,
-                                         OrderingType::NATURAL),
+    ::testing::Values(
+        OrderingType::AMD, OrderingType::NESDIS, OrderingType::NATURAL),
 #endif  // defined(CERES_NO_CHOLMOD_PARTITION)
-                       ::testing::Values(true, false)),
-    ParamInfoToString);
+    ::testing::Values(true, false));
+
+INSTANTIATE_TEST_SUITE_P(SuiteSparseCholesky,
+                         SparseCholeskyTest,
+                         SuiteSparseCholeskyParameters,
+                         ParamInfoToString);
 #endif  // !defined(CERES_NO_SUITESPARSE)
 
 #ifndef CERES_NO_ACCELERATE_SPARSE
@@ -259,7 +259,7 @@ INSTANTIATE_TEST_SUITE_P(
 #endif
 
 #ifdef CERES_USE_EIGEN_SPARSE
-const auto Parameters = ::testing::Combine(
+const auto EigenSparseCholeskyParameters = ::testing::Combine(
     ::testing::Values(EIGEN_SPARSE),
     ::testing::Values(false, true),
 #if defined(CERES_NO_EIGEN_METIS)
@@ -272,7 +272,7 @@ const auto Parameters = ::testing::Combine(
 
 INSTANTIATE_TEST_SUITE_P(EigenSparseCholesky,
                          SparseCholeskyTest,
-                         Parameters,
+                         EigenSparseCholeskyParameters,
                          ParamInfoToString);
 #endif  // CERES_USE_EIGEN_SPARSE
 
