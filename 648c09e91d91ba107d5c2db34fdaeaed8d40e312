@@ -39,6 +39,30 @@
       },
       "revId": "648c09e91d91ba107d5c2db34fdaeaed8d40e312",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "738c842d_e5c09d14",
+        "filename": "internal/ceres/sparse_cholesky_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-09-16T21:16:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "827486fe_a78daf4d",
+      "range": {
+        "startLine": 262,
+        "startChar": 11,
+        "endLine": 262,
+        "endChar": 20
+      },
+      "revId": "648c09e91d91ba107d5c2db34fdaeaed8d40e312",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
