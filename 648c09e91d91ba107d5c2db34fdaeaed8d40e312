@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eeebb64b_fc26902e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-09-16T21:13:33Z",
+      "side": 1,
+      "message": "Thanks Sergiu, just a naming suggestion.",
+      "revId": "648c09e91d91ba107d5c2db34fdaeaed8d40e312",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "827486fe_a78daf4d",
+        "filename": "internal/ceres/sparse_cholesky_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-09-16T21:13:33Z",
+      "side": 1,
+      "message": "I think this should be called Parameters not Orderings.",
+      "range": {
+        "startLine": 262,
+        "startChar": 11,
+        "endLine": 262,
+        "endChar": 20
+      },
+      "revId": "648c09e91d91ba107d5c2db34fdaeaed8d40e312",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
