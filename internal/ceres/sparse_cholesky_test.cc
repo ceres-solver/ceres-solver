@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2024 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -259,21 +259,21 @@ INSTANTIATE_TEST_SUITE_P(
 #endif
 
 #ifdef CERES_USE_EIGEN_SPARSE
-INSTANTIATE_TEST_SUITE_P(
-    EigenSparseCholesky,
-    SparseCholeskyTest,
-    ::testing::Combine(::testing::Values(EIGEN_SPARSE),
-                       ::testing::Values(false, true),
+const auto Parameters = ::testing::Combine(
+    ::testing::Values(EIGEN_SPARSE),
+    ::testing::Values(false, true),
 #if defined(CERES_NO_EIGEN_METIS)
-                       ::testing::Values(OrderingType::AMD,
-                                         OrderingType::NATURAL),
+    ::testing::Values(OrderingType::AMD, OrderingType::NATURAL),
 #else
-                       ::testing::Values(OrderingType::AMD,
-                                         OrderingType::NATURAL,
-                                         OrderingType::NESDIS),
+    ::testing::Values(
+        OrderingType::AMD, OrderingType::NATURAL, OrderingType::NESDIS),
 #endif  // defined(CERES_NO_EIGEN_METIS)
-                       ::testing::Values(true, false)),
-    ParamInfoToString);
+    ::testing::Values(true, false));
+
+INSTANTIATE_TEST_SUITE_P(EigenSparseCholesky,
+                         SparseCholeskyTest,
+                         Parameters,
+                         ParamInfoToString);
 #endif  // CERES_USE_EIGEN_SPARSE
 
 #ifndef CERES_NO_CUDSS
