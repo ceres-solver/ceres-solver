@@ -277,6 +277,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "80bb9479_ee882377",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-09-16T19:40:49Z",
+      "side": 1,
+      "message": "I would specify the version manually then. We would simply need to ensure that the version here is kept in sync with each submodule update. This is not something we must necessarily automate.",
+      "parentUuid": "81772e30_9b4e7498",
+      "revId": "61998a9f2d0d15b1b32ecb39b33e1543a23be211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5af6e322_2ea0c261",
         "filename": "cmake/CeresConfig.cmake.in",
         "patchSetId": 5
@@ -306,6 +324,24 @@
       "side": 1,
       "message": "done. Should then also be done for `CERES_EIGEN_VERSION` as I took that variable as inspiration",
       "parentUuid": "5af6e322_2ea0c261",
+      "revId": "61998a9f2d0d15b1b32ecb39b33e1543a23be211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ec74527_670b4f39",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-09-16T19:40:49Z",
+      "side": 1,
+      "message": "`CERES_EIGEN_VERSION` is legacy code that we should not touch until completely removed.",
+      "parentUuid": "cc3fb8eb_947434c9",
       "revId": "61998a9f2d0d15b1b32ecb39b33e1543a23be211",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
