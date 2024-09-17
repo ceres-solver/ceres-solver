@@ -16,6 +16,69 @@
       "message": "rebased, `absl_VERSION` extracted from submodule. I think we\u0027re ready to go",
       "revId": "5536e272d53fd8338a70d165c4f0597530a30d29",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ad6f229_53d26c5d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-09-17T19:49:25Z",
+      "side": 1,
+      "message": "Almost there.",
+      "revId": "5536e272d53fd8338a70d165c4f0597530a30d29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b34d9c4a_ff663a46",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-09-17T19:49:25Z",
+      "side": 1,
+      "message": "```suggestion\n  foreach(project_call IN LISTS project_calls)\n```",
+      "range": {
+        "startLine": 129,
+        "startChar": 2,
+        "endLine": 129,
+        "endChar": 40
+      },
+      "revId": "5536e272d53fd8338a70d165c4f0597530a30d29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "508da6d2_bac8504b",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-09-17T19:49:25Z",
+      "side": 1,
+      "message": "I\u0027m not convinced that constraining the version to any character other than a space or a closing paren is sufficient.\n\nLooking at the Abseil tags `git tag | sort -V` gives\n```\n20180600\n20181200\n20181200.1\n20190808\n20190808.1\n20200225\n20200225.1\n20200225.2\n20200225.3\n20200923\n20200923.1\n20200923.2\n20200923.3\n20210324.rc1\n20210324.0\n20210324.1\n20210324.2\n20211102.rc2\n20211102.0\n20220623.rc1\n20220623.0\n20220623.1\n20220623.2\n20230125.rc3\n20230125.0\n20230125.1\n20230125.2\n20230125.3\n20230125.4\n20230802.rc1\n20230802.rc2\n20230802.0\n20230802.1\n20230802.2\n20240116.rc1\n20240116.rc2\n20240116.0\n20240116.1\n20240116.2\n20240722.rc1\n20240722.rc2\n20240722.0\n```\nmeaning the version format can be further constrained. I suggest the following regular expression:\n```suggestion\n    string(REGEX MATCH \"VERSION[ ]+([0-9]+(\\.(rc)?[0-9]+)?)\" version_param \"${project_call}\")\n```\nHowever, it does not look like the suffixes are actually used in `project` invocations I\u0027ve seen so far and the corresponding regular subexpression can potentially be dropped. Alternatively, we could use the commit tag for the exact version. For reference, the version identified at the Abseil tag `20230125.4` is just `20230125`.",
+      "range": {
+        "startLine": 130,
+        "startChar": 35,
+        "endLine": 130,
+        "endChar": 43
+      },
+      "revId": "5536e272d53fd8338a70d165c4f0597530a30d29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
