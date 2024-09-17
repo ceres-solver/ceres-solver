@@ -102,6 +102,23 @@
       },
       "revId": "5536e272d53fd8338a70d165c4f0597530a30d29",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b192d60d_1c16cb4e",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-09-17T20:37:41Z",
+      "side": 1,
+      "message": "In case the above version lookup fails no Abseil version will be available in the package configuration. Therefore, we still need some sort of fallback, e.g., by manually specifying the Abseil version.",
+      "revId": "5536e272d53fd8338a70d165c4f0597530a30d29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
