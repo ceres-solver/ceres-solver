@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "04a086b6_848b4308",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-09-17T19:14:48Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "877c647b1ce2542107526c148d59fa3d15a32190",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82278d34_5ddcd1b5",
+        "filename": "examples/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-09-17T19:14:48Z",
+      "side": 1,
+      "message": "Nit:\n```suggestion\ntarget_link_libraries(simple_bundle_adjuster PRIVATE absl::log_initialize absl::time Ceres::ceres)\n```",
+      "revId": "877c647b1ce2542107526c148d59fa3d15a32190",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
