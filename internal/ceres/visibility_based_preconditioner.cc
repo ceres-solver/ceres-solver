@@ -34,12 +34,12 @@
 #include <functional>
 #include <iterator>
 #include <memory>
-#include <set>
 #include <string>
 #include <utility>
 #include <vector>
 
 #include "Eigen/Dense"
+#include "absl/container/btree_set.h"
 #include "absl/container/flat_hash_map.h"
 #include "absl/container/flat_hash_set.h"
 #include "absl/log/check.h"
@@ -121,7 +121,7 @@ VisibilityBasedPreconditioner::~VisibilityBasedPreconditioner() = default;
 // preconditioner matrix.
 void VisibilityBasedPreconditioner::ComputeClusterJacobiSparsity(
     const CompressedRowBlockStructure& bs) {
-  std::vector<std::set<int>> visibility;
+  std::vector<absl::btree_set<int>> visibility;
   ComputeVisibility(bs, options_.elimination_groups[0], &visibility);
   CHECK_EQ(num_blocks_, visibility.size());
   ClusterCameras(visibility);
@@ -139,7 +139,7 @@ void VisibilityBasedPreconditioner::ComputeClusterJacobiSparsity(
 // of edges in this forest are the cluster pairs.
 void VisibilityBasedPreconditioner::ComputeClusterTridiagonalSparsity(
     const CompressedRowBlockStructure& bs) {
-  std::vector<std::set<int>> visibility;
+  std::vector<absl::btree_set<int>> visibility;
   ComputeVisibility(bs, options_.elimination_groups[0], &visibility);
   CHECK_EQ(num_blocks_, visibility.size());
   ClusterCameras(visibility);
@@ -148,7 +148,7 @@ void VisibilityBasedPreconditioner::ComputeClusterTridiagonalSparsity(
   // edges are the number of 3D points/e_blocks visible in both the
   // clusters at the ends of the edge. Return an approximate degree-2
   // maximum spanning forest of this graph.
-  std::vector<std::set<int>> cluster_visibility;
+  std::vector<absl::btree_set<int>> cluster_visibility;
   ComputeClusterVisibility(visibility, &cluster_visibility);
   auto cluster_graph = CreateClusterGraph(cluster_visibility);
   CHECK(cluster_graph != nullptr);
@@ -172,7 +172,7 @@ void VisibilityBasedPreconditioner::InitStorage(
 // The cluster_membership_ vector is updated to indicate cluster
 // memberships for each camera block.
 void VisibilityBasedPreconditioner::ClusterCameras(
-    const std::vector<std::set<int>>& visibility) {
+    const std::vector<absl::btree_set<int>>& visibility) {
   auto schur_complement_graph = CreateSchurComplementGraph(visibility);
   CHECK(schur_complement_graph != nullptr);
 
@@ -253,7 +253,7 @@ void VisibilityBasedPreconditioner::ComputeBlockPairsInPreconditioner(
       break;
     }
 
-    std::set<int> f_blocks;
+    absl::btree_set<int> f_blocks;
     for (; r < num_row_blocks; ++r) {
       const CompressedRow& row = bs.rows[r];
       if (row.cells.front().block_id != e_block_id) {
@@ -481,8 +481,8 @@ void VisibilityBasedPreconditioner::ForestToClusterPairs(
 // of all its cameras. In other words, the set of points visible to
 // any camera in the cluster.
 void VisibilityBasedPreconditioner::ComputeClusterVisibility(
-    const std::vector<std::set<int>>& visibility,
-    std::vector<std::set<int>>* cluster_visibility) const {
+    const std::vector<absl::btree_set<int>>& visibility,
+    std::vector<absl::btree_set<int>>* cluster_visibility) const {
   CHECK(cluster_visibility != nullptr);
   cluster_visibility->resize(0);
   cluster_visibility->resize(num_clusters_);
@@ -498,7 +498,7 @@ void VisibilityBasedPreconditioner::ComputeClusterVisibility(
 // vertices.
 std::unique_ptr<WeightedGraph<int>>
 VisibilityBasedPreconditioner::CreateClusterGraph(
-    const std::vector<std::set<int>>& cluster_visibility) const {
+    const std::vector<absl::btree_set<int>>& cluster_visibility) const {
   auto cluster_graph = std::make_unique<WeightedGraph<int>>();
 
   for (int i = 0; i < num_clusters_; ++i) {
@@ -506,10 +506,10 @@ VisibilityBasedPreconditioner::CreateClusterGraph(
   }
 
   for (int i = 0; i < num_clusters_; ++i) {
-    const std::set<int>& cluster_i = cluster_visibility[i];
+    const absl::btree_set<int>& cluster_i = cluster_visibility[i];
     for (int j = i + 1; j < num_clusters_; ++j) {
       std::vector<int> intersection;
-      const std::set<int>& cluster_j = cluster_visibility[j];
+      const absl::btree_set<int>& cluster_j = cluster_visibility[j];
       std::set_intersection(cluster_i.begin(),
                             cluster_i.end(),
                             cluster_j.begin(),

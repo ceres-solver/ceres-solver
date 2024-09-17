@@ -65,6 +65,7 @@
 #include "absl/log/check.h"
 #include "absl/log/initialize.h"
 #include "absl/log/log.h"
+#include "absl/time/time.h"
 #include "bal_problem.h"
 #include "ceres/ceres.h"
 #include "snavely_reprojection_error.h"
@@ -304,6 +305,7 @@ void SetSolverOptionsFromFlags(BALProblem* bal_problem,
 }
 
 void BuildProblem(BALProblem* bal_problem, Problem* problem) {
+  const absl::Time start_time = absl::Now();
   const int point_block_size = bal_problem->point_block_size();
   const int camera_block_size = bal_problem->camera_block_size();
   double* points = bal_problem->mutable_points();
@@ -344,6 +346,7 @@ void BuildProblem(BALProblem* bal_problem, Problem* problem) {
       problem->SetManifold(cameras + camera_block_size * i, camera_manifold);
     }
   }
+  LOG(INFO) << "Time to build problem: " << absl::Now() - start_time;
 }
 
 void SolveProblem(const char* filename) {

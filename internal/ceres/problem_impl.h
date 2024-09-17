@@ -44,6 +44,7 @@
 #include <memory>
 #include <vector>
 
+#include "absl/container/btree_map.h"
 #include "absl/container/flat_hash_set.h"
 #include "absl/log/check.h"
 #include "ceres/context_impl.h"
@@ -68,10 +69,10 @@ class ResidualBlock;
 
 class CERES_NO_EXPORT ProblemImpl {
  public:
-  using ParameterMap = std::map<double*, ParameterBlock*>;
+  using ParameterMap = absl::btree_map<double*, ParameterBlock*>;
   using ResidualBlockSet = absl::flat_hash_set<ResidualBlock*>;
-  using CostFunctionRefCount = std::map<CostFunction*, int>;
-  using LossFunctionRefCount = std::map<LossFunction*, int>;
+  using CostFunctionRefCount = absl::btree_map<CostFunction*, int>;
+  using LossFunctionRefCount = absl::btree_map<LossFunction*, int>;
 
   ProblemImpl();
   explicit ProblemImpl(const Problem::Options& options);

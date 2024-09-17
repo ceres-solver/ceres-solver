@@ -33,11 +33,11 @@
 
 #include <cstdint>
 #include <memory>
-#include <set>
 #include <unordered_map>
 #include <utility>
 #include <vector>
 
+#include "absl/container/btree_set.h"
 #include "ceres/block_random_access_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
@@ -61,7 +61,7 @@ class CERES_NO_EXPORT BlockRandomAccessSparseMatrix
   // of this matrix.
   BlockRandomAccessSparseMatrix(
       const std::vector<Block>& blocks,
-      const std::set<std::pair<int, int>>& block_pairs,
+      const absl::btree_set<std::pair<int, int>>& block_pairs,
       ContextImpl* context,
       int num_threads);
 

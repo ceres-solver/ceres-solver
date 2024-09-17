@@ -49,10 +49,10 @@
 #define CERES_INTERNAL_VISIBILITY_BASED_PRECONDITIONER_H_
 
 #include <memory>
-#include <set>
 #include <utility>
 #include <vector>
 
+#include "absl/container/btree_set.h"
 #include "absl/container/flat_hash_map.h"
 #include "absl/container/flat_hash_set.h"
 #include "ceres/block_structure.h"
@@ -154,14 +154,14 @@ class CERES_NO_EXPORT VisibilityBasedPreconditioner
   LinearSolverTerminationType Factorize();
   void ScaleOffDiagonalCells();
 
-  void ClusterCameras(const std::vector<std::set<int>>& visibility);
+  void ClusterCameras(const std::vector<absl::btree_set<int>>& visibility);
   void FlattenMembershipMap(const absl::flat_hash_map<int, int>& membership_map,
                             std::vector<int>* membership_vector) const;
   void ComputeClusterVisibility(
-      const std::vector<std::set<int>>& visibility,
-      std::vector<std::set<int>>* cluster_visibility) const;
+      const std::vector<absl::btree_set<int>>& visibility,
+      std::vector<absl::btree_set<int>>* cluster_visibility) const;
   std::unique_ptr<WeightedGraph<int>> CreateClusterGraph(
-      const std::vector<std::set<int>>& visibility) const;
+      const std::vector<absl::btree_set<int>>& visibility) const;
   void ForestToClusterPairs(
       const WeightedGraph<int>& forest,
       absl::flat_hash_set<std::pair<int, int>>* cluster_pairs) const;
@@ -184,7 +184,7 @@ class CERES_NO_EXPORT VisibilityBasedPreconditioner
   // Non-zero camera pairs from the schur complement matrix that are
   // present in the preconditioner, sorted by row (first element of
   // each pair), then column (second).
-  std::set<std::pair<int, int>> block_pairs_;
+  absl::btree_set<std::pair<int, int>> block_pairs_;
 
   // Set of cluster pairs (including self pairs (i,i)) in the
   // preconditioner.

@@ -32,10 +32,10 @@
 
 #include <algorithm>
 #include <memory>
-#include <set>
 #include <utility>
 #include <vector>
 
+#include "absl/container/btree_set.h"
 #include "absl/log/check.h"
 #include "absl/log/log.h"
 #include "ceres/internal/export.h"
@@ -47,7 +47,7 @@ namespace ceres::internal {
 
 BlockRandomAccessSparseMatrix::BlockRandomAccessSparseMatrix(
     const std::vector<Block>& blocks,
-    const std::set<std::pair<int, int>>& block_pairs,
+    const absl::btree_set<std::pair<int, int>>& block_pairs,
     ContextImpl* context,
     int num_threads)
     : blocks_(blocks), context_(context), num_threads_(num_threads) {

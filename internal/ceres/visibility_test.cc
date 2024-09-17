@@ -32,9 +32,9 @@
 #include "ceres/visibility.h"
 
 #include <memory>
-#include <set>
 #include <vector>
 
+#include "absl/container/btree_set.h"
 #include "ceres/block_structure.h"
 #include "ceres/graph.h"
 #include "gtest/gtest.h"
@@ -94,7 +94,7 @@ TEST(VisibilityTest, SimpleMatrix) {
   }
   bs.cols.resize(num_cols);
 
-  std::vector<std::set<int>> visibility;
+  std::vector<absl::btree_set<int>> visibility;
   ComputeVisibility(bs, num_eliminate_blocks, &visibility);
   ASSERT_EQ(visibility.size(), num_cols - num_eliminate_blocks);
   for (const auto& visible : visibility) {
@@ -169,7 +169,7 @@ TEST(VisibilityTest, NoEBlocks) {
   }
   bs.cols.resize(num_cols);
 
-  std::vector<std::set<int>> visibility;
+  std::vector<absl::btree_set<int>> visibility;
   ComputeVisibility(bs, num_eliminate_blocks, &visibility);
   ASSERT_EQ(visibility.size(), num_cols - num_eliminate_blocks);
   for (const auto& visible : visibility) {
