@@ -79,6 +79,29 @@
       },
       "revId": "5536e272d53fd8338a70d165c4f0597530a30d29",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0446d284_ef6d274e",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-09-17T20:01:30Z",
+      "side": 1,
+      "message": "```suggestion\n        message(\"-- Using the version of abseil in ceres-solver/third_party/abseil-cpp with version ${absl_VERSION}\")\n        break ()\n```\nto avoid outputting the version multiple times.",
+      "range": {
+        "startLine": 133,
+        "startChar": 8,
+        "endLine": 133,
+        "endChar": 117
+      },
+      "revId": "5536e272d53fd8338a70d165c4f0597530a30d29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
