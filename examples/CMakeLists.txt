@@ -67,7 +67,7 @@ add_executable(robust_curve_fitting robust_curve_fitting.cc)
 target_link_libraries(robust_curve_fitting PRIVATE absl::log_initialize Ceres::ceres)
 
 add_executable(simple_bundle_adjuster simple_bundle_adjuster.cc)
-target_link_libraries(simple_bundle_adjuster PRIVATE absl::log_initialize Ceres::ceres )
+target_link_libraries(simple_bundle_adjuster PRIVATE absl::log_initialize absl::time Ceres::ceres)
 
 add_executable(bicubic_interpolation bicubic_interpolation.cc)
 target_link_libraries(bicubic_interpolation PRIVATE absl::log_initialize Ceres::ceres)
