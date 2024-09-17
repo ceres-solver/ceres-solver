@@ -32,10 +32,10 @@
 
 #include <limits>
 #include <memory>
-#include <set>
 #include <utility>
 #include <vector>
 
+#include "absl/container/btree_set.h"
 #include "ceres/internal/eigen.h"
 #include "gtest/gtest.h"
 
@@ -50,7 +50,7 @@ TEST(BlockRandomAccessSparseMatrix, GetCell) {
   blocks.emplace_back(5, 7);
   constexpr int num_rows = 3 + 4 + 5;
 
-  std::set<std::pair<int, int>> block_pairs;
+  absl::btree_set<std::pair<int, int>> block_pairs;
   int num_nonzeros = 0;
   block_pairs.emplace(0, 0);
   num_nonzeros += blocks[0].size * blocks[0].size;
@@ -136,7 +136,7 @@ class BlockRandomAccessSparseMatrixTest : public ::testing::Test {
   void SetUp() final {
     std::vector<Block> blocks;
     blocks.emplace_back(1, 0);
-    std::set<std::pair<int, int>> block_pairs;
+    absl::btree_set<std::pair<int, int>> block_pairs;
     block_pairs.emplace(0, 0);
     m_ = std::make_unique<BlockRandomAccessSparseMatrix>(
         blocks, block_pairs, &context_, 1);

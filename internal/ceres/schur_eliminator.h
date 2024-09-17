@@ -31,12 +31,12 @@
 #ifndef CERES_INTERNAL_SCHUR_ELIMINATOR_H_
 #define CERES_INTERNAL_SCHUR_ELIMINATOR_H_
 
-#include <map>
 #include <memory>
 #include <mutex>
 #include <vector>
 
 #include "Eigen/Dense"
+#include "absl/container/btree_map.h"
 #include "absl/log/check.h"
 #include "ceres/block_random_access_matrix.h"
 #include "ceres/block_sparse_matrix.h"
@@ -274,7 +274,7 @@ class CERES_NO_EXPORT SchurEliminator final : public SchurEliminatorBase {
   // buffer_layout[z1] = 0
   // buffer_layout[z5] = y1 * z1
   // buffer_layout[z2] = y1 * z1 + y1 * z5
-  using BufferLayoutType = std::map<int, int>;
+  using BufferLayoutType = absl::btree_map<int, int>;
   struct Chunk {
     explicit Chunk(int start) : size(0), start(start) {}
     int size;
