@@ -33,12 +33,12 @@
 #include <algorithm>
 #include <ctime>
 #include <memory>
-#include <set>
 #include <utility>
 #include <vector>
 
 #include "Eigen/Dense"
 #include "Eigen/SparseCore"
+#include "absl/container/btree_set.h"
 #include "absl/log/check.h"
 #include "ceres/block_random_access_dense_matrix.h"
 #include "ceres/block_random_access_matrix.h"
@@ -229,7 +229,7 @@ void SparseSchurComplementSolver::InitStorage(
 
   blocks_ = Tail(bs->cols, num_col_blocks - num_eliminate_blocks);
 
-  std::set<std::pair<int, int>> block_pairs;
+  absl::btree_set<std::pair<int, int>> block_pairs;
   for (int i = 0; i < blocks_.size(); ++i) {
     block_pairs.emplace(i, i);
   }

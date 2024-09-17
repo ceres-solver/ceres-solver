@@ -36,9 +36,9 @@
 #define CERES_INTERNAL_VISIBILITY_H_
 
 #include <memory>
-#include <set>
 #include <vector>
 
+#include "absl/container/btree_set.h"
 #include "ceres/graph.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
@@ -58,7 +58,7 @@ struct CompressedRowBlockStructure;
 CERES_NO_EXPORT void ComputeVisibility(
     const CompressedRowBlockStructure& block_structure,
     int num_eliminate_blocks,
-    std::vector<std::set<int>>* visibility);
+    std::vector<absl::btree_set<int>>* visibility);
 
 // Given f_block visibility as computed by the ComputeVisibility
 // function above, construct and return a graph whose vertices are
@@ -74,7 +74,7 @@ CERES_NO_EXPORT void ComputeVisibility(
 // Caller acquires ownership of the returned WeightedGraph pointer
 // (heap-allocated).
 CERES_NO_EXPORT std::unique_ptr<WeightedGraph<int>> CreateSchurComplementGraph(
-    const std::vector<std::set<int>>& visibility);
+    const std::vector<absl::btree_set<int>>& visibility);
 
 }  // namespace ceres::internal
 
