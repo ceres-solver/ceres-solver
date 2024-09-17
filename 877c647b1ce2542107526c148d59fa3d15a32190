@@ -33,6 +33,24 @@
       "message": "Nit:\n```suggestion\ntarget_link_libraries(simple_bundle_adjuster PRIVATE absl::log_initialize absl::time Ceres::ceres)\n```",
       "revId": "877c647b1ce2542107526c148d59fa3d15a32190",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4571198a_92b239ee",
+        "filename": "examples/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-09-17T19:17:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82278d34_5ddcd1b5",
+      "revId": "877c647b1ce2542107526c148d59fa3d15a32190",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
