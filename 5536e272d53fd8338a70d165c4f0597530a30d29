@@ -58,6 +58,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "42e2d2b5_b2e55425",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 6149
+      },
+      "writtenOn": "2024-09-18T06:36:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b34d9c4a_ff663a46",
+      "range": {
+        "startLine": 129,
+        "startChar": 2,
+        "endLine": 129,
+        "endChar": 40
+      },
+      "revId": "5536e272d53fd8338a70d165c4f0597530a30d29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "508da6d2_bac8504b",
@@ -71,6 +95,30 @@
       "writtenOn": "2024-09-17T19:49:25Z",
       "side": 1,
       "message": "I\u0027m not convinced that constraining the version to any character other than a space or a closing paren is sufficient.\n\nLooking at the Abseil tags `git tag | sort -V` gives\n```\n20180600\n20181200\n20181200.1\n20190808\n20190808.1\n20200225\n20200225.1\n20200225.2\n20200225.3\n20200923\n20200923.1\n20200923.2\n20200923.3\n20210324.rc1\n20210324.0\n20210324.1\n20210324.2\n20211102.rc2\n20211102.0\n20220623.rc1\n20220623.0\n20220623.1\n20220623.2\n20230125.rc3\n20230125.0\n20230125.1\n20230125.2\n20230125.3\n20230125.4\n20230802.rc1\n20230802.rc2\n20230802.0\n20230802.1\n20230802.2\n20240116.rc1\n20240116.rc2\n20240116.0\n20240116.1\n20240116.2\n20240722.rc1\n20240722.rc2\n20240722.0\n```\nmeaning the version format can be further constrained. I suggest the following regular expression:\n```suggestion\n    string(REGEX MATCH \"VERSION[ ]+([0-9]+(\\.(rc)?[0-9]+)?)\" version_param \"${project_call}\")\n```\nHowever, it does not look like the suffixes are actually used in `project` invocations I\u0027ve seen so far and the corresponding regular subexpression can potentially be dropped. Alternatively, we could use the commit tag for the exact version. For reference, the version identified at the Abseil tag `20230125.4` is just `20230125`.",
+      "range": {
+        "startLine": 130,
+        "startChar": 35,
+        "endLine": 130,
+        "endChar": 43
+      },
+      "revId": "5536e272d53fd8338a70d165c4f0597530a30d29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "821579d9_d94b222e",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 6149
+      },
+      "writtenOn": "2024-09-18T06:36:40Z",
+      "side": 1,
+      "message": "updated the regex. We can parse a version like `20240116.2`. The absl-config.cmake file only compares the `20240116` part exactly and drops the `.2` part.\n\nIt currently doesn\u0027t matter as you\u0027ve noticed the CMake-embedded version is always just the main-version like `20240116`. But it doesn\u0027t hurt to be able to parse a `20240116.2` version if `abseil-cpp` ever update the CMake-embedded version in the future",
+      "parentUuid": "508da6d2_bac8504b",
       "range": {
         "startLine": 130,
         "startChar": 35,
@@ -104,6 +152,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "88db95fc_6a616f49",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 6149
+      },
+      "writtenOn": "2024-09-18T06:36:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0446d284_ef6d274e",
+      "range": {
+        "startLine": 133,
+        "startChar": 8,
+        "endLine": 133,
+        "endChar": 117
+      },
+      "revId": "5536e272d53fd8338a70d165c4f0597530a30d29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b192d60d_1c16cb4e",
@@ -117,6 +189,24 @@
       "writtenOn": "2024-09-17T20:37:41Z",
       "side": 1,
       "message": "In case the above version lookup fails no Abseil version will be available in the package configuration. Therefore, we still need some sort of fallback, e.g., by manually specifying the Abseil version.",
+      "revId": "5536e272d53fd8338a70d165c4f0597530a30d29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "789eb253_82cd1b43",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 6149
+      },
+      "writtenOn": "2024-09-18T06:36:40Z",
+      "side": 1,
+      "message": "using the `master` branch of `abseil-cpp` results in no version info. If we hardcode a fallback then the usecase of using `master` branch will be broken.\n\nNo version info is a \"normal\" occurence when working with `abseil-cpp`\u0027s `master` branch",
+      "parentUuid": "b192d60d_1c16cb4e",
       "revId": "5536e272d53fd8338a70d165c4f0597530a30d29",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
