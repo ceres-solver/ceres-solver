@@ -40,6 +40,7 @@
 #include "ceres/callbacks.h"
 #include "ceres/context_impl.h"
 #include "ceres/evaluator.h"
+#include "ceres/event_logger.h"
 #include "ceres/linear_solver.h"
 #include "ceres/minimizer.h"
 #include "ceres/parameter_block.h"
@@ -377,19 +378,22 @@ bool SetupMinimizerOptions(PreprocessedProblem* pp) {
 bool TrustRegionPreprocessor::Preprocess(const Solver::Options& options,
                                          ProblemImpl* problem,
                                          PreprocessedProblem* pp) {
+  EventLogger event_logger("TrustRegionPreprocessor::Preprocess");
   CHECK(pp != nullptr);
   pp->options = options;
   ChangeNumThreadsIfNeeded(&pp->options);
 
   pp->problem = problem;
   Program* program = problem->mutable_program();
-  if (!IsProgramValid(*program, &pp->error)) {
+  bool status = IsProgramValid(*program, &pp->error);
+  event_logger.AddEvent("IsProgramValid");
+  if (!status) {
     return false;
   }
 
   pp->reduced_program = program->CreateReducedProgram(
       &pp->removed_parameter_blocks, &pp->fixed_cost, &pp->error);
-
+  event_logger.AddEvent("CreateReducedProgram");
   if (pp->reduced_program.get() == nullptr) {
     return false;
   }
@@ -400,12 +404,27 @@ bool TrustRegionPreprocessor::Preprocess(const Solver::Options& options,
     return true;
   }
 
-  if (!SetupLinearSolver(pp) || !SetupEvaluator(pp) ||
-      !SetupInnerIterationMinimizer(pp)) {
+  status = SetupLinearSolver(pp);
+  event_logger.AddEvent("SetupLinearSolver");
+  if (!status) {
     return false;
   }
 
-  return SetupMinimizerOptions(pp);
+  status = SetupEvaluator(pp);
+  event_logger.AddEvent("SetupEvaluator");
+  if (!status) {
+    return false;
+  }
+
+  status = SetupInnerIterationMinimizer(pp);
+  event_logger.AddEvent("SetupInnerIterations");
+  if (!status) {
+    return false;
+  }
+
+  status = SetupMinimizerOptions(pp);
+  event_logger.AddEvent("SetupMinimizerOptions");
+  return status;
 }
 
 }  // namespace ceres::internal
