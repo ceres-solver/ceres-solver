@@ -209,6 +209,24 @@
       "parentUuid": "b192d60d_1c16cb4e",
       "revId": "5536e272d53fd8338a70d165c4f0597530a30d29",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b5c931e_eca4aba8",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-09-22T19:00:09Z",
+      "side": 1,
+      "message": "My point is that the generated Ceres package config will not contain any useful version information. Such a package config will pick any Abseil version even though it might not be compatible. There could also be reasons other than working with Abseil\u0027s `master` why the version cannot be determined.\n\nAs such, I see two possible solutions here:\n1. Prevent Ceres from generating a package config.\n2. Use `git describe --tags --abbrev\u003d0` to obtain the most recent Abseil tag and use it instead.",
+      "parentUuid": "789eb253_82cd1b43",
+      "revId": "5536e272d53fd8338a70d165c4f0597530a30d29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
