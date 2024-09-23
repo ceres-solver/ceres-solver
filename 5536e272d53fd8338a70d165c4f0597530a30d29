@@ -245,6 +245,24 @@
       "parentUuid": "1b5c931e_eca4aba8",
       "revId": "5536e272d53fd8338a70d165c4f0597530a30d29",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5a69394_dac02ca7",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-09-23T12:13:38Z",
+      "side": 1,
+      "message": "Error handling does not equate artificial limitation. We certainly want to avoid unnecessary issue submissions due to silly mistakes where a user checked out an incorrect Abseil commit.",
+      "parentUuid": "d37f7a57_7dc82156",
+      "revId": "5536e272d53fd8338a70d165c4f0597530a30d29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
