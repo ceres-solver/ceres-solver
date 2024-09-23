@@ -263,6 +263,24 @@
       "parentUuid": "d37f7a57_7dc82156",
       "revId": "5536e272d53fd8338a70d165c4f0597530a30d29",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77dfe8a2_76632a72",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 6149
+      },
+      "writtenOn": "2024-09-23T17:03:24Z",
+      "side": 1,
+      "message": "OK. As we don\u0027t get version information from abseil-master I currently can only think of two resolutions to the problem:\n\n1. don\u0027t generate a CeresConfig.cmake at all. This prevents users to test their projects against abseil-master versions as they won\u0027t be able to use `find_package(Ceres)` anymore\n2. generate CeresConfig.cmake, but don\u0027t look for abseil at all if we have no absl_VERSION info. Issue a warning in `CeresConfig.cmake` instead of calling `find_dependency()`. Then the user can experiment by issuing `find_package(absl)` in their downstream projects.\n\nWould it be OK for you if I implement solution 2 for the submodule absl\u003d\u003dmaster case?",
+      "parentUuid": "c5a69394_dac02ca7",
+      "revId": "5536e272d53fd8338a70d165c4f0597530a30d29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
