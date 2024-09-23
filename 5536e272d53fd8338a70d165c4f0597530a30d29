@@ -227,6 +227,24 @@
       "parentUuid": "789eb253_82cd1b43",
       "revId": "5536e272d53fd8338a70d165c4f0597530a30d29",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d37f7a57_7dc82156",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 6149
+      },
+      "writtenOn": "2024-09-23T11:57:09Z",
+      "side": 1,
+      "message": "1. why artificially limit the user. We could issue a warning or such, that the user is responsible for linking the right abseil version as we can\u0027t make sure.\n2. not possible as the tags are split off the master branch and afterwards the versioning info is added to the CMakeLists.txt file and then git tag is created. So no tag info is in the direct history of the master branch",
+      "parentUuid": "1b5c931e_eca4aba8",
+      "revId": "5536e272d53fd8338a70d165c4f0597530a30d29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
