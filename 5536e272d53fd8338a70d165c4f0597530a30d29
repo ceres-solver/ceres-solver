@@ -317,6 +317,24 @@
       "parentUuid": "d185d934_6a07290e",
       "revId": "5536e272d53fd8338a70d165c4f0597530a30d29",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "995ba2a6_a1a8756b",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-09-24T09:31:42Z",
+      "side": 1,
+      "message": "Unless `absl_VERSION` is set:\n1. Issue an error message (similar to the one below) during configuration if `EXPORT_BUILD_DIR` is enabled.\n2. Issue an error message during `install` by delaying it to the install step as follows:\n```cmake\ninstall (CODE [\u003d[message (FATAL_ERROR \"Cannot generate CeresConfig.cmake due to missing Abseil version. Using resulting package configuration will likely result in integration errors. Set absl_VERSION manually to disable this error message.\")]\u003d])\n```",
+      "parentUuid": "862093ca_8129046c",
+      "revId": "5536e272d53fd8338a70d165c4f0597530a30d29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
