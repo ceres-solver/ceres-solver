@@ -299,6 +299,24 @@
       "parentUuid": "77dfe8a2_76632a72",
       "revId": "5536e272d53fd8338a70d165c4f0597530a30d29",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "862093ca_8129046c",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 6149
+      },
+      "writtenOn": "2024-09-24T09:02:45Z",
+      "side": 1,
+      "message": "sorry I can\u0027t follow where the checks/modifications need to be made",
+      "parentUuid": "d185d934_6a07290e",
+      "revId": "5536e272d53fd8338a70d165c4f0597530a30d29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
