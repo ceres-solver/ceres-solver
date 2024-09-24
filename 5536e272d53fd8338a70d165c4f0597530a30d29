@@ -281,6 +281,24 @@
       "parentUuid": "c5a69394_dac02ca7",
       "revId": "5536e272d53fd8338a70d165c4f0597530a30d29",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d185d934_6a07290e",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-09-24T07:08:22Z",
+      "side": 1,
+      "message": "I\u0027d rather issue an error in the indeterminate case then. If the user chooses to ignore the problem he can still set `absl_VERSION` explicitly. This can be mentioned as a hint in the error message.",
+      "parentUuid": "77dfe8a2_76632a72",
+      "revId": "5536e272d53fd8338a70d165c4f0597530a30d29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
