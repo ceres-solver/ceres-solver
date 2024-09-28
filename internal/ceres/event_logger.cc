@@ -31,6 +31,7 @@
 #include "ceres/event_logger.h"
 
 #include <string>
+#include <string_view>
 
 #include "absl/log/log.h"
 #include "absl/log/vlog_is_on.h"
@@ -40,7 +41,7 @@
 
 namespace ceres::internal {
 
-EventLogger::EventLogger(const std::string& logger_name)
+EventLogger::EventLogger(std::string_view logger_name)
     : start_time_(absl::Now()) {
   if (!VLOG_IS_ON(3)) {
     return;
@@ -60,7 +61,7 @@ EventLogger::~EventLogger() {
   VLOG(3) << "\n" << events_ << "\n";
 }
 
-void EventLogger::AddEvent(const std::string& event_name) {
+void EventLogger::AddEvent(std::string_view event_name) {
   if (!VLOG_IS_ON(3)) {
     return;
   }

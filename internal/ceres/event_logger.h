@@ -32,6 +32,7 @@
 #define CERES_INTERNAL_EVENT_LOGGER_H_
 
 #include <string>
+#include <string_view>
 
 #include "absl/time/time.h"
 #include "ceres/internal/disable_warnings.h"
@@ -65,9 +66,9 @@ namespace ceres::internal {
 //     Total:  time3  time1 + time2 + time3;
 class CERES_NO_EXPORT EventLogger {
  public:
-  explicit EventLogger(const std::string& logger_name);
+  explicit EventLogger(std::string_view logger_name);
   ~EventLogger();
-  void AddEvent(const std::string& event_name);
+  void AddEvent(std::string_view event_name);
 
  private:
   const absl::Time start_time_;
