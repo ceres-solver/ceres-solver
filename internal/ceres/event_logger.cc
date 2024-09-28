@@ -40,7 +40,7 @@
 
 namespace ceres::internal {
 
-EventLogger::EventLogger(const std::string& logger_name)
+EventLogger::EventLogger(absl::string_view logger_name)
     : start_time_(absl::Now()) {
   if (!VLOG_IS_ON(3)) {
     return;
@@ -60,7 +60,7 @@ EventLogger::~EventLogger() {
   VLOG(3) << "\n" << events_ << "\n";
 }
 
-void EventLogger::AddEvent(const std::string& event_name) {
+void EventLogger::AddEvent(absl::string_view event_name) {
   if (!VLOG_IS_ON(3)) {
     return;
   }
