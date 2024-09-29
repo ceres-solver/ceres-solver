@@ -16,6 +16,24 @@
       "message": "LGTM.\n\nBtw, what\u0027s the reason for using `absl::string_view` instead of `std::string_view`?",
       "revId": "7897f97f690210471f605c9622b7d405ed7e01cf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f06ed2ff_7ed6603f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2024-09-29T16:44:12Z",
+      "side": 1,
+      "message": "because I am a dum dum :) and forgot that c++17 has string_view! Thanks for catching this.",
+      "parentUuid": "e188cecc_f1406d70",
+      "revId": "7897f97f690210471f605c9622b7d405ed7e01cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
