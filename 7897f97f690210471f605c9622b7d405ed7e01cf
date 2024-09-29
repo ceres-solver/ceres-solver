@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e188cecc_f1406d70",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2024-09-29T09:46:52Z",
+      "side": 1,
+      "message": "LGTM.\n\nBtw, what\u0027s the reason for using `absl::string_view` instead of `std::string_view`?",
+      "revId": "7897f97f690210471f605c9622b7d405ed7e01cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
