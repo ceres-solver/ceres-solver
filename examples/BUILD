@@ -28,17 +28,17 @@
 #
 # Author: mierle@gmail.com (Keir Mierle)
 
-EXAMPLE_COPTS = [
-    # Needed to silence GFlags complaints.
-    "-Wno-sign-compare",
-    # Needed to put fscanf in a function.
-    "-Wno-format-nonliteral",
-]
+
 
 EXAMPLE_DEPS = [
     "//:ceres",
-    "@com_gitlab_libeigen_eigen//:eigen",
-    "@com_github_gflags_gflags//:gflags",
+    "@eigen//:eigen",
+    "@abseil-cpp//absl/log",
+    "@abseil-cpp//absl/flags:parse",
+    "@abseil-cpp//absl/flags:flag",
+    "@abseil-cpp//absl/time",
+    "@abseil-cpp//absl/log:check",
+    "@abseil-cpp//absl/log:initialize",
 ]
 
 cc_binary(
@@ -49,7 +49,6 @@ cc_binary(
         "bundle_adjuster.cc",
         "snavely_reprojection_error.h",
     ],
-    copts = EXAMPLE_COPTS,
     deps = EXAMPLE_DEPS,
 )
 
@@ -61,7 +60,6 @@ cc_binary(
         "fields_of_experts.h",
         "pgm_image.h",
     ],
-    copts = EXAMPLE_COPTS,
     deps = EXAMPLE_DEPS,
 )
 
@@ -70,7 +68,6 @@ cc_binary(
     srcs = [
         "robot_pose_mle.cc",
     ],
-    copts = EXAMPLE_COPTS,
     deps = EXAMPLE_DEPS,
 )
 
@@ -84,7 +81,6 @@ cc_binary(
         "slam/pose_graph_2d/pose_graph_2d_error_term.h",
         "slam/pose_graph_2d/types.h",
     ],
-    copts = EXAMPLE_COPTS,
     includes = ["slam"],
     deps = EXAMPLE_DEPS,
 )
@@ -97,7 +93,6 @@ cc_binary(
         "slam/pose_graph_3d/pose_graph_3d_error_term.h",
         "slam/pose_graph_3d/types.h",
     ],
-    copts = EXAMPLE_COPTS,
     includes = ["slam"],
     deps = EXAMPLE_DEPS,
 )
@@ -105,7 +100,6 @@ cc_binary(
 [cc_binary(
     name = example,
     srcs = [example + ".cc"],
-    copts = EXAMPLE_COPTS,
     deps = EXAMPLE_DEPS,
 ) for example in [
     "circle_fit",

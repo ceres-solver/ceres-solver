@@ -213,6 +213,12 @@ def ceres_library(
         deps = [
             "@eigen//:eigen",
             "@abseil-cpp//absl/log",
+            "@abseil-cpp//absl/container:fixed_array",
+            "@abseil-cpp//absl/container:flat_hash_map",
+            "@abseil-cpp//absl/container:flat_hash_set",
+            "@abseil-cpp//absl/strings",
+            "@abseil-cpp//absl/time",
+            "@abseil-cpp//absl/container:btree",
             "@abseil-cpp//absl/log:check",
         ],
     )
