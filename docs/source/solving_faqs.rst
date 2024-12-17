@@ -61,7 +61,7 @@ Solving
    the first place to start is by looking at the output of
    ``Solver::Summary::FullReport``. Here is an example
 
-   .. code-block:: bash
+   .. code-block:: console
 
      ./bin/bundle_adjuster --input ../data/problem-16-22106-pre.txt
 
@@ -118,7 +118,7 @@ Solving
   are
 
 
-   .. code-block:: bash
+   .. code-block:: console
 
      Time (in seconds):
      Preprocessor                            0.283
@@ -139,7 +139,7 @@ Solving
   The preprocessing seems particularly expensive. Looking back at the
   report, we observe
 
-   .. code-block:: bash
+   .. code-block:: console
 
      Linear solver ordering              AUTOMATIC                22106, 16
 
@@ -150,7 +150,7 @@ Solving
   ``-ordering=user``. Doing so and looking at the timing block of the
   full report gives us
 
-   .. code-block:: bash
+   .. code-block:: console
 
      Time (in seconds):
      Preprocessor                            0.051
