@@ -5,7 +5,7 @@
 .. cpp:namespace:: ceres
 
 ===================
-FAQS, Tips & Tricks
+FAQs, Tips & Tricks
 ===================
 
 Answers to frequently asked questions, tricks of the trade and general
