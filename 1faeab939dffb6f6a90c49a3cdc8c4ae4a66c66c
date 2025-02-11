@@ -24,6 +24,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "559ef5a0_b9cbdf65",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 3884096
+      },
+      "writtenOn": "2025-02-11T21:09:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa8b0251_48757ce2",
+      "range": {
+        "startLine": 292,
+        "startChar": 18,
+        "endLine": 292,
+        "endChar": 26
+      },
+      "revId": "1faeab939dffb6f6a90c49a3cdc8c4ae4a66c66c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9d4bd211_71a106ff",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-02-11T20:31:53Z",
       "side": 1,
       "message": "Drop the Get prefix.",
+      "range": {
+        "startLine": 337,
+        "startChar": 55,
+        "endLine": 337,
+        "endChar": 66
+      },
+      "revId": "1faeab939dffb6f6a90c49a3cdc8c4ae4a66c66c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33ca0312_8fc9e631",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 3884096
+      },
+      "writtenOn": "2025-02-11T21:09:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d4bd211_71a106ff",
       "range": {
         "startLine": 337,
         "startChar": 55,
