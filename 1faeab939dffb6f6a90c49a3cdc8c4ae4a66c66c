@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa8b0251_48757ce2",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-02-11T20:31:53Z",
+      "side": 1,
+      "message": "you do not need this anymore, since Update already takes care of updating the cost.",
+      "range": {
+        "startLine": 292,
+        "startChar": 18,
+        "endLine": 292,
+        "endChar": 26
+      },
+      "revId": "1faeab939dffb6f6a90c49a3cdc8c4ae4a66c66c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d4bd211_71a106ff",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-02-11T20:31:53Z",
+      "side": 1,
+      "message": "Drop the Get prefix.",
+      "range": {
+        "startLine": 337,
+        "startChar": 55,
+        "endLine": 337,
+        "endChar": 66
+      },
+      "revId": "1faeab939dffb6f6a90c49a3cdc8c4ae4a66c66c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
