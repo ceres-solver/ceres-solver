@@ -286,14 +286,14 @@ class TinySolver {
         // model fits well.
         x = x_new_;
 
+        // TODO(sameeragarwal): Deal with failure.
+        Update(function, x);
         if (std::abs(cost_change) < options.function_tolerance) {
           cost_ = f_x_new_.squaredNorm() / 2;
           summary.status = COST_CHANGE_TOO_SMALL;
           break;
         }
 
-        // TODO(sameeragarwal): Deal with failure.
-        Update(function, x);
         if (summary.gradient_max_norm < options.gradient_tolerance) {
           summary.status = GRADIENT_TOO_SMALL;
           break;
@@ -327,6 +327,16 @@ class TinySolver {
 
     summary.final_cost = cost_;
     return summary;
+  }
+
+  Eigen::Matrix<Scalar, NUM_RESIDUALS, 1> GetResiduals() const {
+    // Residual updates are stored with the opposite sign.
+    return -residuals_;
+  }
+
+  Eigen::Matrix<Scalar, NUM_RESIDUALS, NUM_PARAMETERS> GetJacobian() const {
+    // Undo the scaling applied to the jacobian matrix during Update().
+    return jacobian_ * jacobi_scaling_.cwiseInverse().asDiagonal();
   }
 
   Options options;

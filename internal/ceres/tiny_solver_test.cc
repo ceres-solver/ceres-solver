@@ -121,6 +121,14 @@ void TestHelper(const Function& f, const Vector& x0) {
   TinySolver<Function> solver;
   solver.Solve(f, &x);
   EXPECT_NEAR(0.0, solver.summary.final_cost, 1e-10);
+
+  // Getter methods for residuals and jacobian should match the corresponding
+  // values evaluated at the converged parameter value.
+  Vec2 expected_residuals;
+  Eigen::Matrix<double, 2, 3> expected_jacobian;
+  f(x.data(), expected_residuals.data(), expected_jacobian.data());
+  EXPECT_TRUE(expected_residuals.isApprox(solver.GetResiduals()));
+  EXPECT_TRUE(expected_jacobian.isApprox(solver.GetJacobian()));
 }
 
 // A test case for when the cost function is statically sized.
