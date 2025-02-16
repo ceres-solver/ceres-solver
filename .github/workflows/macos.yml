@@ -16,9 +16,9 @@ jobs:
       fail-fast: true
       matrix:
         os:
-          - macos-12
           - macos-13
           - macos-14
+          - macos-15
         build_type:
           - Release
         lib:
