@@ -909,8 +909,8 @@ then no iterative refinement is performed. Usually 1-3 refinement
 iterations are enough, depending upon the conditioning of your
 problem.
 
-If :member:`Solver::Options::max_num_refinement_iterations = 0`, then
-the Gauss-Newton step is computed in single precision.
+If :member:`Solver::Options::max_num_refinement_iterations` is 0, then the
+Gauss-Newton step is computed in single precision.
 
 .. _section-preconditioner:
 
