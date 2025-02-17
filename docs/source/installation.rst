@@ -21,7 +21,7 @@ optional. For details on customizing the build process, see
 - `CMake <http://www.cmake.org>`_ (**required**) 3.16 or later.
 
 - `Eigen <http://eigen.tuxfamily.org/index.php?title=Main_Page>`_
-  (**Required**) 3.3 or later.
+  (**Required**) 3.3.4 or later.
 
   .. NOTE ::
 
@@ -361,7 +361,7 @@ Studio 2019 and newer.
 #. Get dependencies; unpack them as subdirectories in ``ceres/``
    (``ceres/eigen``, ``ceres/glog``, etc.)
 
-   #. ``Eigen`` 3.3 . Configure and optionally install Eigen. It should be
+   #. ``Eigen`` 3.3.4 . Configure and optionally install Eigen. It should be
       exported into the CMake package registry by default as part of the
       configure stage so installation should not be necessary.
 
