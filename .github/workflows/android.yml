@@ -48,7 +48,7 @@ jobs:
       # from the virtual environment.
       - name: Setup NDK
         env:
-          ANDROID_NDK_VERSION: 23.2.8568313
+          ANDROID_NDK_VERSION: 27.2.12479018
           ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
         run: |
           echo 'y' | ${{env.ANDROID_SDK_ROOT}}/cmdline-tools/latest/bin/sdkmanager --install 'ndk;${{env.ANDROID_NDK_VERSION}}'
