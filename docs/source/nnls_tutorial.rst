@@ -443,11 +443,6 @@ It is easy to see that the optimal solution to this problem is at
 :math:`0`. In 10 iterations, Ceres finds a solution with an objective
 function value of :math:`4\times 10^{-12}`.
 
-.. rubric:: Footnotes
-
-.. [#f5] `examples/powell.cc
-   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/powell.cc>`_.
-
 
 .. _section-fitting:
 
