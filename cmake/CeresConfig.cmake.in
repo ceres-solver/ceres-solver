@@ -310,4 +310,10 @@ if (NOT TARGET ceres)
   # true ALIAS library in CMake terms as they cannot point to imported targets.
   add_library(ceres INTERFACE IMPORTED)
   set_target_properties(ceres PROPERTIES INTERFACE_LINK_LIBRARIES Ceres::ceres)
+
+  if (CMAKE_VERSION VERSION_GREATER_EQUAL 3.17)
+    set_target_properties(ceres PROPERTIES DEPRECATION
+"The unscoped import target `ceres' is deprecated and will be removed in a \
+future Ceres Solver release. Please use the Ceres::ceres import target instead.")
+  endif (CMAKE_VERSION VERSION_GREATER_EQUAL 3.17)
 endif()
