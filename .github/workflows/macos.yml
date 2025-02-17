@@ -63,7 +63,7 @@ jobs:
       - name: Setup Environment
         if: matrix.build_type == 'Release'
         run: |
-          echo 'CXXFLAGS=-flto' >> $GITHUB_ENV
+          echo 'CXXFLAGS=-flto=auto' >> $GITHUB_ENV
 
       - name: Configure (iOS)
         if: matrix.target == 'ios'
