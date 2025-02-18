@@ -16,6 +16,24 @@
       "message": "why not raise it to 3.4.0 ?",
       "revId": "0c76335ae5b8418d07084f9ec179e61a8a4ea1ca",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8d190e7_733d66c8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2025-02-18T12:06:38Z",
+      "side": 1,
+      "message": "No specific reason. Since we do not use any 3.4.0 new features, raising to 3.4.0 seems to be unnecessary.",
+      "parentUuid": "72fdec05_2e51df1c",
+      "revId": "0c76335ae5b8418d07084f9ec179e61a8a4ea1ca",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
