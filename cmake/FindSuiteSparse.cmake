@@ -332,7 +332,7 @@ if (TARGET SuiteSparse::SPQR)
   find_package(TBB QUIET NO_MODULE)
   if (TBB_FOUND)
     message(STATUS "Found Intel Thread Building Blocks (TBB) library "
-      "(${TBB_VERSION_MAJOR}.${TBB_VERSION_MINOR} / ${TBB_INTERFACE_VERSION}). "
+      "(${TBB_VERSION}). "
       "Assuming SuiteSparseQR was compiled with TBB.")
     # Add the TBB libraries to the SuiteSparseQR libraries (the only
     # libraries to optionally depend on TBB).
