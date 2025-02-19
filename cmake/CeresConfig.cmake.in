@@ -1,5 +1,5 @@
 # Ceres Solver - A fast non-linear least squares minimizer
-# Copyright 2022 Google Inc. All rights reserved.
+# Copyright 2025 Google Inc. All rights reserved.
 # http://ceres-solver.org/
 #
 # Redistribution and use in source and binary forms, with or without
@@ -76,18 +76,8 @@ macro(CERES_REPORT_NOT_FOUND REASON_MSG)
 
   # Reset the CMake module path to its state when this script was called.
   set(CMAKE_MODULE_PATH ${CALLERS_CMAKE_MODULE_PATH})
-
-  # Note <package>_FIND_[REQUIRED/QUIETLY] variables defined by
-  # FindPackage() use the camelcase library name, not uppercase.
-  if (Ceres_FIND_QUIETLY)
-    message(STATUS "Failed to find Ceres - " ${REASON_MSG} ${ARGN})
-  elseif (Ceres_FIND_REQUIRED)
-    message(FATAL_ERROR "Failed to find Ceres - " ${REASON_MSG} ${ARGN})
-  else()
-    # Neither QUIETLY nor REQUIRED, use SEND_ERROR which emits an error
-    # that prevents generation, but continues configuration.
-    message(SEND_ERROR "Failed to find Ceres - " ${REASON_MSG} ${ARGN})
-  endif ()
+  # Concatenate REASON_MSG and ARGN with each element separated by a space
+  string(JOIN " " ${CMAKE_FIND_PACKAGE_NAME}_NOT_FOUND_MESSAGE "${REASON_MSG}" ${ARGN})
   return()
 endmacro(CERES_REPORT_NOT_FOUND)
 
