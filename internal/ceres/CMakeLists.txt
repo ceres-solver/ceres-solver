@@ -42,7 +42,10 @@ set(Threads_DEPENDENCY "find_dependency (Threads)" PARENT_SCOPE)
 if(CMAKE_VERSION VERSION_LESS "3.24.0")
   list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES  absl::log_flags)
 else()
-  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES  $<LINK_LIBRARY:WHOLE_ARCHIVE,absl::log_flags>)
+  # Apply $<LINK_LIBRARY:...> generator expression only if the corresponding
+  # target is a static library. Otherwise link only to the target.
+  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES
+    $<IF:$<STREQUAL:$<TARGET_PROPERTY:absl::log_flags,TYPE>,STATIC_LIBRARY>,$<LINK_LIBRARY:WHOLE_ARCHIVE,absl::log_flags>,absl::log_flags>)
 endif()
 
 list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES absl::strings)
