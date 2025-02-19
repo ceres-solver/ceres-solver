@@ -1,5 +1,5 @@
 # Ceres Solver - A fast non-linear least squares minimizer
-# Copyright 2022 Google Inc. All rights reserved.
+# Copyright 2025 Google Inc. All rights reserved.
 # http://ceres-solver.org/
 #
 # Redistribution and use in source and binary forms, with or without
@@ -130,11 +130,11 @@ get_filename_component(CERES_CURRENT_CONFIG_DIR
   "${CMAKE_CURRENT_LIST_FILE}" PATH)
 
 if (CERES_WAS_INSTALLED)
-  # Reset CMake module path to the installation directory of this
-  # script, thus we will use the FindPackage() scripts shipped with
-  # Ceres to find Ceres' dependencies, even if the user has equivalently
-  # named FindPackage() scripts in their project.
-  set(CMAKE_MODULE_PATH ${CERES_CURRENT_CONFIG_DIR})
+  # Update the CMake module path to include the installation directory of this
+  # script, thus we will use the FindPackage() scripts shipped with Ceres to
+  # find Ceres' dependencies, even if the user has equivalently named
+  # FindPackage() scripts in their project.
+  list(PREPEND CMAKE_MODULE_PATH ${CERES_CURRENT_CONFIG_DIR})
 
   # Build the absolute root install directory as a relative path
   # (determined when Ceres was configured & built) from the current
@@ -165,11 +165,11 @@ else(CERES_WAS_INSTALLED)
       "directory: ${CERES_EXPORTED_BUILD_DIR} does not exist.")
   endif()
 
-  # Reset CMake module path to the cmake directory in the Ceres source
-  # tree which was exported, thus we will use the FindPackage() scripts shipped
-  # with Ceres to find Ceres' dependencies, even if the user has equivalently
-  # named FindPackage() scripts in their project.
-  set(CMAKE_MODULE_PATH ${CERES_EXPORTED_SOURCE_DIR}/cmake)
+  # Update the CMake module path to include the cmake directory in the Ceres
+  # source tree which was exported, thus we will use the FindPackage() scripts
+  # shipped with Ceres to find Ceres' dependencies, even if the user has
+  # equivalently named FindPackage() scripts in their project.
+  list(PREPEND CMAKE_MODULE_PATH ${CERES_EXPORTED_SOURCE_DIR}/cmake)
 endif(CERES_WAS_INSTALLED)
 
 # Set the version.
