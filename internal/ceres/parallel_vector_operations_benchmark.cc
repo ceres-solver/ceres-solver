@@ -34,6 +34,10 @@
 #include "ceres/parallel_for.h"
 
 namespace ceres::internal {
+// Wrap everything into an anonymous namespace to guide deduction of possibly
+// polymorphic functions that define benchmark and which could be defined in the
+// ceres namespace.
+namespace {
 // Older versions of benchmark library (for example, one shipped with
 // ubuntu 20.04) do not support range generation and range products
 #define VECTOR_SIZES(num_threads)    \
@@ -321,7 +325,7 @@ static void AxpbyParallel(benchmark::State& state) {
   CHECK_GT(z.squaredNorm(), 0.);
 }
 BENCHMARK(AxpbyParallel)->VECTOR_SIZE_THREADS;
-
+}  // namespace
 }  // namespace ceres::internal
 
 BENCHMARK_MAIN();
