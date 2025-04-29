@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2025 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -41,18 +41,19 @@ bool IsClose(double x,
              double* absolute_error) {
   double local_absolute_error;
   double local_relative_error;
-  if (!absolute_error) {
+  if (absolute_error == nullptr) {
     absolute_error = &local_absolute_error;
   }
-  if (!relative_error) {
+  if (relative_error == nullptr) {
     relative_error = &local_relative_error;
   }
   *absolute_error = std::fabs(x - y);
-  *relative_error = *absolute_error / std::max(std::fabs(x), std::fabs(y));
-  if (x == 0 || y == 0) {
+  if (std::fpclassify(x) == FP_ZERO || std::fpclassify(y) == FP_ZERO) {
     // If x or y is exactly zero, then relative difference doesn't have any
     // meaning. Take the absolute difference instead.
     *relative_error = *absolute_error;
+  } else {
+    *relative_error = *absolute_error / std::max(std::fabs(x), std::fabs(y));
   }
   return *relative_error < std::fabs(relative_precision);
 }

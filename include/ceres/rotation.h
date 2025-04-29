@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2025 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -318,27 +318,28 @@ inline void AngleAxisToQuaternion(const T* angle_axis, T* quaternion) {
   const T& a0 = angle_axis[0];
   const T& a1 = angle_axis[1];
   const T& a2 = angle_axis[2];
-  const T theta = hypot(a0, a1, a2);
+
+  T k;
 
   // For points not at the origin, the full conversion is numerically stable.
-  if (fpclassify(theta) != FP_ZERO) {
+  if (fpclassify(a0) != FP_ZERO || fpclassify(a1) != FP_ZERO ||
+      fpclassify(a2) != FP_ZERO) {
+    const T theta = hypot(a0, a1, a2);
     const T half_theta = theta * T(0.5);
-    const T k = sin(half_theta) / theta;
+    k = sin(half_theta) / theta;
     quaternion[0] = cos(half_theta);
-    quaternion[1] = a0 * k;
-    quaternion[2] = a1 * k;
-    quaternion[3] = a2 * k;
   } else {
     // At the origin, sqrt() will produce NaN in the derivative since
     // the argument is zero.  By approximating with a Taylor series,
     // and truncating at one term, the value and first derivatives will be
     // computed correctly when Jets are used.
-    const T k(0.5);
+    k = T(0.5);
     quaternion[0] = T(1.0);
-    quaternion[1] = a0 * k;
-    quaternion[2] = a1 * k;
-    quaternion[3] = a2 * k;
   }
+
+  quaternion[1] = a0 * k;
+  quaternion[2] = a1 * k;
+  quaternion[3] = a2 * k;
 }
 
 template <typename T>
@@ -348,11 +349,14 @@ inline void QuaternionToAngleAxis(const T* quaternion, T* angle_axis) {
   const T& q1 = quaternion[1];
   const T& q2 = quaternion[2];
   const T& q3 = quaternion[3];
-  const T sin_theta = hypot(q1, q2, q3);
+
+  T k;
 
   // For quaternions representing non-zero rotation, the conversion
   // is numerically stable.
-  if (fpclassify(sin_theta) != FP_ZERO) {
+  if (fpclassify(q1) != FP_ZERO || fpclassify(q2) != FP_ZERO ||
+      fpclassify(q3) != FP_ZERO) {
+    const T sin_theta = hypot(q1, q2, q3);
     const T& cos_theta = quaternion[0];
 
     // If cos_theta is negative, theta is greater than pi/2, which
@@ -368,23 +372,20 @@ inline void QuaternionToAngleAxis(const T* quaternion, T* angle_axis) {
     //   theta - pi = atan(sin(theta - pi), cos(theta - pi))
     //              = atan(-sin(theta), -cos(theta))
     //
-    const T two_theta =
-        T(2.0) * ((cos_theta < T(0.0)) ? atan2(-sin_theta, -cos_theta)
-                                       : atan2(sin_theta, cos_theta));
-    const T k = two_theta / sin_theta;
-    angle_axis[0] = q1 * k;
-    angle_axis[1] = q2 * k;
-    angle_axis[2] = q3 * k;
+    const T sign = copysign(T(1), cos_theta);
+    const T two_theta = T(2.0) * atan2(sign * sin_theta, sign * cos_theta);
+    k = two_theta / sin_theta;
   } else {
     // For zero rotation, sqrt() will produce NaN in the derivative since
     // the argument is zero.  By approximating with a Taylor series,
     // and truncating at one term, the value and first derivatives will be
     // computed correctly when Jets are used.
-    const T k(2.0);
-    angle_axis[0] = q1 * k;
-    angle_axis[1] = q2 * k;
-    angle_axis[2] = q3 * k;
+    k = T(2.0);
   }
+
+  angle_axis[0] = q1 * k;
+  angle_axis[1] = q2 * k;
+  angle_axis[2] = q3 * k;
 }
 
 template <typename T>

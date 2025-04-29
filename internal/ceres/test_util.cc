@@ -64,11 +64,14 @@ bool ExpectClose(double x, double y, double max_abs_relative_difference) {
   }
 
   double absolute_difference = fabs(x - y);
-  double relative_difference = absolute_difference / std::max(fabs(x), fabs(y));
-  if (x == 0 || y == 0) {
+  double relative_difference;
+  if (std::fpclassify(x) == FP_ZERO || std::fpclassify(y) == FP_ZERO) {
     // If x or y is exactly zero, then relative difference doesn't have any
     // meaning. Take the absolute difference instead.
     relative_difference = absolute_difference;
+  } else {
+    relative_difference =
+        absolute_difference / std::max(std::fabs(x), std::fabs(y));
   }
   if (relative_difference > max_abs_relative_difference) {
     VLOG(1) << absl::StrFormat("x=%17g y=%17g abs=%17g rel=%17g",
