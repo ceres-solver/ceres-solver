@@ -103,13 +103,15 @@ bool AreAlmostEqual(double x, double y, double max_abs_relative_difference) {
 
   Fenv env;  // Do not leak floating-point exceptions to the caller
   double absolute_difference = std::abs(x - y);
-  double relative_difference =
-      absolute_difference / std::max(std::abs(x), std::abs(y));
+  double relative_difference;
 
   if (std::fpclassify(x) == FP_ZERO || std::fpclassify(y) == FP_ZERO) {
     // If x or y is exactly zero, then relative difference doesn't have any
     // meaning. Take the absolute difference instead.
     relative_difference = absolute_difference;
+  } else {
+    relative_difference =
+        absolute_difference / std::max(std::abs(x), std::abs(y));
   }
   return std::islessequal(relative_difference, max_abs_relative_difference);
 }
