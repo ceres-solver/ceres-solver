@@ -16,6 +16,24 @@
       "message": "Thanks for this, Sameer. This wouldn\u0027t still work without a version field as far as I understand. \n\nI\u0027d like this change to be tested by doing a [`git_override`](https://bazel.build/rules/lib/globals/module#git_override) in a fresh Bazel module to include this from a feature branch to avoid back and forth.",
       "revId": "3001be8d5bd788bdcf600e4039773a542f204045",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd27c8f4_94e7f052",
+        "filename": "MODULE.bazel",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-05-07T14:21:10Z",
+      "side": 1,
+      "message": "my understanding is from reading \nhttps://bazel.build/rules/lib/globals/module#module\nis that the version field is set to the empty string by default.",
+      "parentUuid": "296388ba_f5c9843a",
+      "revId": "3001be8d5bd788bdcf600e4039773a542f204045",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
