@@ -52,6 +52,24 @@
       "parentUuid": "fd27c8f4_94e7f052",
       "revId": "3001be8d5bd788bdcf600e4039773a542f204045",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a79b9e82_d6ec436e",
+        "filename": "MODULE.bazel",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-05-07T14:36:05Z",
+      "side": 1,
+      "message": "I am confused. In your email you had suggested setting\n\nmodule(\n    name \u003d \"ceres-solver\",\n    version \u003d \"\",\n)\n\nno?\n\nwhich IIUC is the same as \n\nmodule(name \u003d \"ceres-solver\") \n\nor am I missing something here?",
+      "parentUuid": "e32a9015_76a2942a",
+      "revId": "3001be8d5bd788bdcf600e4039773a542f204045",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
