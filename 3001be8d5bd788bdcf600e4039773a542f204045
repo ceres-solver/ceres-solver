@@ -88,6 +88,24 @@
       "parentUuid": "a79b9e82_d6ec436e",
       "revId": "3001be8d5bd788bdcf600e4039773a542f204045",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb2900ed_e431a8bb",
+        "filename": "MODULE.bazel",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-05-07T14:42:18Z",
+      "side": 1,
+      "message": "how about module(name\u003d\"ceres-solver\", version\u003d\"head\") ?",
+      "parentUuid": "f737988b_d273d3ee",
+      "revId": "3001be8d5bd788bdcf600e4039773a542f204045",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
