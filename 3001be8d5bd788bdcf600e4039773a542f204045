@@ -106,6 +106,24 @@
       "parentUuid": "f737988b_d273d3ee",
       "revId": "3001be8d5bd788bdcf600e4039773a542f204045",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "686ff89e_34ece490",
+        "filename": "MODULE.bazel",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4062191
+      },
+      "writtenOn": "2025-05-07T14:43:51Z",
+      "side": 1,
+      "message": "Yeah, that sounds fair, similar to [what abseil-cpp has](https://github.com/abseil/abseil-cpp/blob/master/MODULE.bazel#L19)",
+      "parentUuid": "bb2900ed_e431a8bb",
+      "revId": "3001be8d5bd788bdcf600e4039773a542f204045",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
