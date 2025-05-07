@@ -29,6 +29,7 @@
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 //         dgossow@google.com (David Gossow)
 
+#include "ceres/cost_function.h"
 #include "ceres/dynamic_cost_function_to_functor.h"
 
 #include <memory>
