@@ -34,6 +34,24 @@
       "parentUuid": "296388ba_f5c9843a",
       "revId": "3001be8d5bd788bdcf600e4039773a542f204045",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e32a9015_76a2942a",
+        "filename": "MODULE.bazel",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4062191
+      },
+      "writtenOn": "2025-05-07T14:30:19Z",
+      "side": 1,
+      "message": "```\nversion\tstring; default is \u0027\u0027\n\nThe version of the module. Can be omitted only if this module is the root module (as in, if it\u0027s not going to be depended on by another module). The version must be in a relaxed SemVer format; see the documentation for more details.\n```\n\nTherefore, if someone else (like me) have to use this repository, it needs to have a non-empty version field. The version can be omitted only if this module is the root module which it wouldn\u0027t be if someone else is depending on it.",
+      "parentUuid": "fd27c8f4_94e7f052",
+      "revId": "3001be8d5bd788bdcf600e4039773a542f204045",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
