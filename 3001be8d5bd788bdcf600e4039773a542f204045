@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "296388ba_f5c9843a",
+        "filename": "MODULE.bazel",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4062191
+      },
+      "writtenOn": "2025-05-07T13:52:21Z",
+      "side": 1,
+      "message": "Thanks for this, Sameer. This wouldn\u0027t still work without a version field as far as I understand. \n\nI\u0027d like this change to be tested by doing a [`git_override`](https://bazel.build/rules/lib/globals/module#git_override) in a fresh Bazel module to include this from a feature branch to avoid back and forth.",
+      "revId": "3001be8d5bd788bdcf600e4039773a542f204045",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
