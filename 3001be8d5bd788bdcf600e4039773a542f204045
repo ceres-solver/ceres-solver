@@ -70,6 +70,24 @@
       "parentUuid": "e32a9015_76a2942a",
       "revId": "3001be8d5bd788bdcf600e4039773a542f204045",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f737988b_d273d3ee",
+        "filename": "MODULE.bazel",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4062191
+      },
+      "writtenOn": "2025-05-07T14:39:08Z",
+      "side": 1,
+      "message": "Yeah, sorry I was wrong earlier. My apologies \n```\nmodule(\nname \u003d \"ceres-solver\",\nversion \u003d \"\u003cit should be something here\u003e\", # maybe \"0.0.0+head\"\n)\n```\n\nshould be the way it is.",
+      "parentUuid": "a79b9e82_d6ec436e",
+      "revId": "3001be8d5bd788bdcf600e4039773a542f204045",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
