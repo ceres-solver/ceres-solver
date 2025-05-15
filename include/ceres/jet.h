@@ -1433,6 +1433,14 @@ struct NumTraits<ceres::Jet<T, N>> {
     return Real(std::numeric_limits<T>::epsilon());
   }
 
+  static inline Real quiet_NaN() {
+    return Real(std::numeric_limits<T>::quiet_NaN());
+  }
+
+  static inline Real infinity() {
+    return Real(std::numeric_limits<T>::infinity());
+  }
+
   static inline int digits10() { return NumTraits<T>::digits10(); }
   static inline int max_digits10() { return NumTraits<T>::max_digits10(); }
 
