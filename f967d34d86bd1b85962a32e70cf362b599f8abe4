@@ -1,0 +1,126 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfdb540c_5eb1360d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-05-17T14:44:40Z",
+      "side": 1,
+      "message": "Hi Sergiu,\nI realized that I was typing the same comment over and over again, so I figured I would just ask here, why use fp_classify when testing for zero? why not just check equality against zero?",
+      "revId": "f967d34d86bd1b85962a32e70cf362b599f8abe4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd942ed8_bf213662",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-05-17T14:44:40Z",
+      "side": 1,
+      "message": "now that I look at it, same question as elsewhere, why not compare to zero directly?",
+      "range": {
+        "startLine": 108,
+        "startChar": 25,
+        "endLine": 108,
+        "endChar": 26
+      },
+      "revId": "f967d34d86bd1b85962a32e70cf362b599f8abe4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85953c63_4ba376ab",
+        "filename": "internal/ceres/polynomial.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-05-17T14:44:40Z",
+      "side": 1,
+      "message": "why not a straight comparison to zero? why do we need a library call here?",
+      "range": {
+        "startLine": 76,
+        "startChar": 15,
+        "endLine": 76,
+        "endChar": 25
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "486a6712_ba9f32a9",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/polynomial.cc",
+              "range": {
+                "startLine": 76,
+                "startChar": 0,
+                "endLine": 77,
+                "endChar": 0
+              },
+              "replacement": "      if (col_norm !\u003d 0.0) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "f967d34d86bd1b85962a32e70cf362b599f8abe4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad478bff_768a7b93",
+        "filename": "internal/ceres/test_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-05-17T14:44:40Z",
+      "side": 1,
+      "message": "The existing code already checks equality against zero, why would we change this a function call to fpclassify?",
+      "range": {
+        "startLine": 68,
+        "startChar": 21,
+        "endLine": 68,
+        "endChar": 22
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "7e7a3a73_eb7a2c40",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/test_util.cc",
+              "range": {
+                "startLine": 68,
+                "startChar": 0,
+                "endLine": 69,
+                "endChar": 0
+              },
+              "replacement": "  if (x \u003d\u003d 0.0 || y \u003d\u003d 0.0) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "f967d34d86bd1b85962a32e70cf362b599f8abe4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
