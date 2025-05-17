@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5534f881_84faeb98",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2025-05-17T17:05:31Z",
+      "side": 1,
+      "message": "Hi Sameer,\n\nThe reason I prefer using `std::fpclassify` over usal comparison is that compilers issue warnings ([Godbolt example](https://godbolt.org/z/M9cnznef6)) when comparing floating point values for equality even when the intention is to examine the exact representation of a floating point value. In the end, this will allow use compiling Ceres with more stricter checks by reducing the number bogus warnings.",
+      "parentUuid": "dfdb540c_5eb1360d",
+      "revId": "f967d34d86bd1b85962a32e70cf362b599f8abe4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fd942ed8_bf213662",
         "filename": "internal/ceres/jet_test.cc",
         "patchSetId": 1
