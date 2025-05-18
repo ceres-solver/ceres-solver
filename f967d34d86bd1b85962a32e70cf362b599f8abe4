@@ -72,6 +72,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5cc77d4_57eefc1a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-05-18T17:02:20Z",
+      "side": 1,
+      "message": "SGTM",
+      "revId": "f967d34d86bd1b85962a32e70cf362b599f8abe4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fd942ed8_bf213662",
@@ -85,6 +102,30 @@
       "writtenOn": "2025-05-17T14:44:40Z",
       "side": 1,
       "message": "now that I look at it, same question as elsewhere, why not compare to zero directly?",
+      "range": {
+        "startLine": 108,
+        "startChar": 25,
+        "endLine": 108,
+        "endChar": 26
+      },
+      "revId": "f967d34d86bd1b85962a32e70cf362b599f8abe4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6aad6a9_66f98f1d",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-05-18T17:02:20Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "fd942ed8_bf213662",
       "range": {
         "startLine": 108,
         "startChar": 25,
@@ -136,6 +177,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "464f6ad5_a9e298cd",
+        "filename": "internal/ceres/polynomial.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-05-18T17:02:20Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "85953c63_4ba376ab",
+      "range": {
+        "startLine": 76,
+        "startChar": 15,
+        "endLine": 76,
+        "endChar": 25
+      },
+      "revId": "f967d34d86bd1b85962a32e70cf362b599f8abe4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ad478bff_768a7b93",
@@ -173,6 +238,30 @@
           ]
         }
       ],
+      "revId": "f967d34d86bd1b85962a32e70cf362b599f8abe4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de31c744_9bcfc376",
+        "filename": "internal/ceres/test_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-05-18T17:02:20Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "ad478bff_768a7b93",
+      "range": {
+        "startLine": 68,
+        "startChar": 21,
+        "endLine": 68,
+        "endChar": 22
+      },
       "revId": "f967d34d86bd1b85962a32e70cf362b599f8abe4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
