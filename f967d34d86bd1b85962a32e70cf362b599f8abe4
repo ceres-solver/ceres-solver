@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5673677b_404d1325",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-05-18T15:24:02Z",
+      "side": 1,
+      "message": "I looked at the documentation for this warning\n\nhttps://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wfloat-equal\n\nI think this is a misguided feature, because the thing it is asking for (comparisons based on perturbation analysis) is hard to do for most non-trivial computations. \n\nFurther for our cases, the specific case we are comparing is not the result of a computation per se, but rather we are trying to actually avoid a division by zero because the formulae we are using break down.\n\nI do not think we should enable this warning for our code base. Further the fpclassify turns what is a simple equality comparison into a library call, which does not sound right to me.",
+      "parentUuid": "5534f881_84faeb98",
+      "revId": "f967d34d86bd1b85962a32e70cf362b599f8abe4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fd942ed8_bf213662",
         "filename": "internal/ceres/jet_test.cc",
         "patchSetId": 1
