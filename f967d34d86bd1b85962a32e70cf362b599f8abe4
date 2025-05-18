@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6f57c74f_50a6ad0e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2025-05-18T16:09:30Z",
+      "side": 1,
+      "message": "The library call is inlined both by GCC and Clang ([example](https://godbolt.org/z/Tc8cT5vT1)). The machine code generated for equality comparison and `std::fpclassify` versions is even exactly the same. Aside from that, invoking a library function should not matter anyway because we are calling library functions all over the place. I doubt there are significant performance ramifications due to an additional call.\n\nI don\u0027t mind reverting the check and using the equality comparison. However, I believe it makes sense preemptively avoiding bogus warnings (if we don\u0027t turn the warning on, someone else will) by using existing functionality. Clearly, there\u0027s a reason why the functionality exists in the first place.",
+      "parentUuid": "5673677b_404d1325",
+      "revId": "f967d34d86bd1b85962a32e70cf362b599f8abe4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fd942ed8_bf213662",
         "filename": "internal/ceres/jet_test.cc",
         "patchSetId": 1
