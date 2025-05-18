@@ -1,5 +1,23 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2aa553ab_1d8bbb63",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2025-05-18T18:26:17Z",
+      "side": 1,
+      "message": "Sameer, some tests on macOS 15 are failing now. I\u0027m looking into the issue.",
+      "revId": "c15da00398ff4e265033c56f6ae46883770dfb5a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
