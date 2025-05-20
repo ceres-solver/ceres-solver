@@ -320,11 +320,10 @@ inline void AngleAxisToQuaternion(const T* angle_axis, T* quaternion) {
   const T& a2 = angle_axis[2];
 
   T k;
+  const T theta = hypot(a0, a1, a2);
 
   // For points not at the origin, the full conversion is numerically stable.
-  if (fpclassify(a0) != FP_ZERO || fpclassify(a1) != FP_ZERO ||
-      fpclassify(a2) != FP_ZERO) {
-    const T theta = hypot(a0, a1, a2);
+  if (fpclassify(theta) != FP_ZERO) {
     const T half_theta = theta * T(0.5);
     k = sin(half_theta) / theta;
     quaternion[0] = cos(half_theta);
@@ -351,12 +350,11 @@ inline void QuaternionToAngleAxis(const T* quaternion, T* angle_axis) {
   const T& q3 = quaternion[3];
 
   T k;
+  const T sin_theta = hypot(q1, q2, q3);
 
   // For quaternions representing non-zero rotation, the conversion
   // is numerically stable.
-  if (fpclassify(q1) != FP_ZERO || fpclassify(q2) != FP_ZERO ||
-      fpclassify(q3) != FP_ZERO) {
-    const T sin_theta = hypot(q1, q2, q3);
+  if (fpclassify(sin_theta) != FP_ZERO) {
     const T& cos_theta = quaternion[0];
 
     // If cos_theta is negative, theta is greater than pi/2, which

@@ -143,9 +143,8 @@ struct QuaternionFunctor {
   template <typename T>
   bool Plus(const T* x, const T* delta, T* x_plus_delta) const {
     T q_delta[4];
-    if (fpclassify(delta[0]) != FP_ZERO || fpclassify(delta[1]) != FP_ZERO ||
-        fpclassify(delta[2]) != FP_ZERO) {
-      T norm_delta = hypot(delta[0], delta[1], delta[2]);
+    T norm_delta = hypot(delta[0], delta[1], delta[2]);
+    if (fpclassify(norm_delta) != FP_ZERO) {
       const T sin_delta_by_delta = sin(norm_delta) / norm_delta;
       q_delta[0] = cos(norm_delta);
       q_delta[1] = sin_delta_by_delta * delta[0];
@@ -171,11 +170,9 @@ struct QuaternionFunctor {
     T minus_x[4] = {x[0], -x[1], -x[2], -x[3]};
     T ambient_y_minus_x[4];
     QuaternionProduct(y, minus_x, ambient_y_minus_x);
-    if (fpclassify(ambient_y_minus_x[1]) != FP_ZERO ||
-        fpclassify(ambient_y_minus_x[2]) != FP_ZERO ||
-        fpclassify(ambient_y_minus_x[3]) != FP_ZERO) {
-      T u_norm = hypot(
-          ambient_y_minus_x[1], ambient_y_minus_x[2], ambient_y_minus_x[3]);
+    T u_norm =
+        hypot(ambient_y_minus_x[1], ambient_y_minus_x[2], ambient_y_minus_x[3]);
+    if (fpclassify(u_norm) != FP_ZERO) {
       T theta = atan2(u_norm, ambient_y_minus_x[0]);
       y_minus_x[0] = theta * ambient_y_minus_x[1] / u_norm;
       y_minus_x[1] = theta * ambient_y_minus_x[2] / u_norm;
