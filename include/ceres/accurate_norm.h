@@ -29,26 +29,32 @@
 // Author: sergiu.deitsch@gmail.com (Sergiu Deitsch)
 //
 // This header implements functions for accurately computing the Euclidean norm
-// of two or more arguments while avoiding underflow and overflow.
+// of two or more arguments and its reciprocal while avoiding underflow and
+// overflow.
 //
-// The functions accumulate the squares of the arguments as an unevaluated sum
+// Both functions accumulate the squares of the arguments as an unevaluated sum
 // of the rounded sum and its rounding error, and correct the square root of
-// the rounded sum by a single Newton step that accounts for the rounding
-// errors. They share the same implementation for any number of arguments: the
-// result is computed without rescaling if the largest magnitude is within a
-// range where rescaling cannot change the result, and otherwise after
-// rescaling all arguments by a fixed radix power.
+// the rounded sum, or its reciprocal, by a single Newton step that accounts for
+// the rounding errors. They share the same implementation for any number of
+// arguments: the result is computed without rescaling if the largest magnitude
+// is within a range where rescaling cannot change the result, and otherwise
+// after rescaling all arguments by a fixed radix power.
 //
 // Unlike the 2-argument algorithm in [1], the functions do not return the
 // larger argument if the smaller one is negligible. Neglecting arguments does
 // not generalize to more arguments since the errors of several neglected
-// squares accumulate.
+// squares accumulate, and the reciprocal of the larger argument can differ from
+// the correctly rounded reciprocal norm.
 //
-// The implementation is derived from the following paper:
+// The implementation is derived from the following two papers:
 //
 // [1] Borges, C. F. (2021). Algorithm 1014: An Improved Algorithm for
 //     hypot(x,y). ACM Transactions on Mathematical Software, 47(1), 1–12.
 //     https://doi.org/10.1145/3428446
+//
+// [2] Borges, C. F. (2021). Fast Compensated Algorithms for the Reciprocal
+//     Square Root, the Reciprocal Hypotenuse, and Givens Rotations.
+//     http://arxiv.org/abs/2103.08694
 
 #ifndef CERES_PUBLIC_ACCURATE_NORM_H_
 #define CERES_PUBLIC_ACCURATE_NORM_H_
@@ -166,6 +172,14 @@ struct AccurateNormTraits {
     return (std::numeric_limits<T>::min_exponent - 1) / 2 -
            std::numeric_limits<T>::digits + 1;
   }
+
+  // Largest maximum magnitude of count arguments that allows the reciprocal
+  // norm to be computed without rescaling. The reciprocal norm then is at least
+  // Tiny() which keeps the rounding error of its square exact. The norm is at
+  // most the maximum magnitude times 𝛽^⌈⌈log₂(count)⌉/2⌉ ≥ √count.
+  static constexpr T ReciprocalUnscaledMaximum(int count) noexcept {
+    return T{1} / (Tiny() * PowerOfTwo<T>((CeilLog2(count) + 1) / 2));
+  }
 };
 
 // Determines the largest magnitude of the arguments. An infinite argument
@@ -249,6 +263,41 @@ inline auto UnscaledAccurateNorm(T x, T y, Args... args)
   //
   // The update h − δ_h adds its negation, (σ − h²) / (2⋅h).
   return fma(tau / h, T(0.5), h);
+}
+
+// Computes 1 / sqrt(x^2 + y^2 + ...) without checking the arguments. In
+// addition to the requirements of UnscaledAccurateNorm, the reciprocal norm
+// must be at least Tiny() to keep the rounding error of its square exact. Not
+// intended to be invoked by users.
+template <typename T, typename... Args>
+inline auto UnscaledAccurateRNorm(T x, T y, Args... args)
+    -> std::enable_if_t<std::is_floating_point_v<T>, T> {
+  using std::fma;
+  using std::sqrt;
+
+  const auto [sigma, sigma_e] =
+      UnscaledAccurateSquareNormWithError(x, y, args...);
+  const T r = T(1) / sigma;
+  // Rounding error of the reciprocal, 1 − r⋅(σ + σ_e)
+  const T residual = fma(-r, sigma_e, fma(-r, sigma, T(1)));
+  const T rho = sqrt(r);
+  // Rounding error of the square root, r − ρ²
+  const T tau = fma(-rho, rho, r);
+  // To solve 1/ρ² = σ, Newton's correction term g/dg is
+  //
+  //           ρ⋅(ρ²⋅σ − 1)
+  //     δ_ρ = ──────────── .
+  //                 2
+  //
+  // The update ρ − δ_ρ adds its negation, ρ⋅(1 − ρ²⋅σ) / 2, through the final
+  // fused multiply-add. Both rounding errors contribute to
+  //
+  //     1 − ρ²⋅σ = (1 − r⋅σ) + σ⋅(r − ρ²).
+  //
+  // The update combines both terms as in the compensated reciprocal square
+  // root of [2], here applied to the sum of squares.
+  const T nu = fma(sigma, tau, residual) / T(2);
+  return fma(rho, nu, rho);
 }
 
 }  // namespace internal
@@ -340,6 +389,110 @@ template <typename T, typename U, typename... Args>
 inline internal::Promote_t<T, U, Args...> AccurateNorm(T a, U b, Args... args) {
   using PromotedType = internal::Promote_t<T, U, Args...>;
   return AccurateNorm(PromotedType(a), PromotedType(b), PromotedType(args)...);
+}
+
+namespace internal {
+
+// Computes the reciprocal of the Euclidean norm of two or more values of the
+// same type for all overloads of AccurateRNorm.
+template <typename T, typename... Args>
+inline Promote_t<T> AccurateRNormImpl(T a, T b, Args... args) {
+  using std::fpclassify;
+  using std::isinf;
+  using std::isnan;
+
+  using PromotedType = internal::Promote_t<T>;
+
+  const PromotedType maximum = internal::MaximumMagnitude(
+      PromotedType(a), PromotedType(b), PromotedType(args)...);
+
+  if (isinf(maximum)) {
+    return PromotedType(0);
+  }
+
+  if (isnan(maximum)) {
+    return maximum;
+  }
+
+  if (fpclassify(maximum) == FP_ZERO) {
+    return std::numeric_limits<PromotedType>::quiet_NaN();
+  }
+
+  using internal::AccurateNormTraits;
+  using internal::PowerOfTwo;
+  using internal::UnscaledAccurateRNorm;
+
+  constexpr int count = 2 + sizeof...(Args);
+  // Multiplying by a radix power rounds exactly as std::scalbn does.
+  constexpr int exponent = AccurateNormTraits<PromotedType>::ScaleExponent();
+  constexpr PromotedType down = PowerOfTwo<PromotedType>(exponent);
+  constexpr PromotedType up = PowerOfTwo<PromotedType>(-exponent);
+
+  // Rescale as in AccurateNorm, but apply the scale to the reciprocal instead
+  // of its inverse. The reciprocal of the rescaled arguments cannot overflow or
+  // underflow because the rescaled largest magnitude is bounded.
+  if (maximum >
+      AccurateNormTraits<PromotedType>::ReciprocalUnscaledMaximum(count)) {
+    return UnscaledAccurateRNorm(PromotedType(a) * down,
+                                 PromotedType(b) * down,
+                                 PromotedType(args) * down...) *
+           down;
+  }
+
+  if (maximum < AccurateNormTraits<PromotedType>::UnscaledMinimum()) {
+    // Only a largest magnitude below Tiny() requires the larger power to make
+    // the rounding errors of the squares of subnormal arguments exact. Scaling
+    // a larger magnitude by that power could exceed
+    // ReciprocalUnscaledMaximum(). Scaling by 𝛽^p instead suffices to reach
+    // UnscaledMinimum().
+    const PromotedType scale =
+        maximum < AccurateNormTraits<PromotedType>::Tiny()
+            ? up
+            : PowerOfTwo<PromotedType>(
+                  std::numeric_limits<PromotedType>::digits);
+    return UnscaledAccurateRNorm(PromotedType(a) * scale,
+                                 PromotedType(b) * scale,
+                                 PromotedType(args) * scale...) *
+           scale;
+  }
+
+  return UnscaledAccurateRNorm(
+      PromotedType(a), PromotedType(b), PromotedType(args)...);
+}
+
+}  // namespace internal
+
+// Computes the reciprocal of the Euclidean norm of two values while avoiding
+// intermediate underflow and overflow. An infinite argument produces zero,
+// even if the other argument is NaN. Otherwise, a NaN argument produces a NaN
+// with its payload preserved. When both arguments are zero, the result is NaN.
+template <typename T>
+inline auto AccurateRNorm(T a, T b)
+    -> std::enable_if_t<std::is_floating_point_v<T>, T> {
+  return internal::AccurateRNormImpl(a, b);
+}
+
+// Computes the reciprocal of the Euclidean norm of three or more values of the
+// same type while avoiding intermediate underflow and overflow. An infinite
+// argument produces zero, even if another argument is NaN. Otherwise, a NaN
+// argument produces a NaN with its payload preserved. When all arguments are
+// zero, the result is NaN.
+template <typename T, typename... Args>
+inline auto AccurateRNorm(T a, T b, Args... args)
+    -> std::enable_if_t<(sizeof...(Args) > 0 &&
+                         (std::is_same_v<T, Args> && ...)),
+                        internal::Promote_t<T>> {
+  return internal::AccurateRNormImpl(a, b, args...);
+}
+
+// Computes the reciprocal of the Euclidean norm of two or more arithmetic
+// values after promoting all arguments to a common floating-point type.
+template <typename T, typename U, typename... Args>
+inline internal::Promote_t<T, U, Args...> AccurateRNorm(T a,
+                                                        U b,
+                                                        Args... args) {
+  using PromotedType = internal::Promote_t<T, U, Args...>;
+  return AccurateRNorm(PromotedType(a), PromotedType(b), PromotedType(args)...);
 }
 
 }  // namespace ceres
