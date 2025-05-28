@@ -559,6 +559,41 @@ inline auto AccurateNorm(const Jet<T, N>& x,
       ((x.a / tmp * x.v + y.a / tmp * y.v) + ... + (args.a / tmp * args.v)));
 }
 
+// AccurateRNorm(x, y, ...) computes the reciprocal of the Euclidean norm of its
+// arguments while avoiding underflow and overflow. Therefore, the function can
+// be formally defined as
+//
+//   AccurateRNorm(x, y, ...) = 1 / sqrt(x^2 + y^2 + ...)
+//
+// where
+//
+//   d/dx 1 / sqrt(x^2 + y^2 + ...) =
+//       -x / (x^2 + y^2 + ...)^3/2
+//   d/dy 1 / sqrt(x^2 + y^2 + ...) =
+//       -y / (x^2 + y^2 + ...)^3/2
+//   ...
+//
+// with the dual representation given by
+//
+//   AccurateRNorm(x + dx, y + dy, ...) ~=
+//       1 / sqrt(x^2 + y^2 + ...) -
+//       (x dx + y dy + ...) / (x^2 + y^2 + ...)^3/2
+//
+// The derivatives are undefined when all arguments are zero.
+template <typename T, int N, typename... Args>
+inline auto AccurateRNorm(const Jet<T, N>& x,
+                          const Jet<T, N>& y,
+                          const Args&... args)
+    -> std::enable_if_t<(std::is_same_v<Args, Jet<T, N>> && ...), Jet<T, N>> {
+  const T tmp = AccurateRNorm(x.a, y.a, args.a...);
+  // Multiplying the argument first avoids overflowing the cube of a large
+  // reciprocal norm.
+  return Jet<T, N>(
+      tmp,
+      ((-(x.a * tmp * tmp * tmp) * x.v - y.a * tmp * tmp * tmp * y.v) - ... -
+       (args.a * tmp * tmp * tmp * args.v)));
+}
+
 // copysign(a, b) composes a float with the magnitude of a and the sign of b.
 // Therefore, the function can be formally defined as
 //
