@@ -23,10 +23,10 @@ New Features
 #. Mixed precision solves + iterative refinement when using ``SUITE_SPARSE``
    as the sparse linear algebra library (requires SuiteSparse 7.4.0 or later
    for single-precision ``CHOLMOD``). (Sameer Agarwal)
-#. Added ``AccurateNorm`` for overflow and underflow safe variadic norms
-   accurate to nearly full working precision. Its Jet derivatives are defined
-   wherever the norm is nonzero, unlike those of nested two-argument norms.
-   (Sergiu Deitsch)
+#. Added ``AccurateNorm`` and ``AccurateRNorm`` for overflow and underflow safe
+   variadic norms accurate to nearly full working precision. Their Jet
+   derivatives are defined wherever the norm is nonzero, unlike those of nested
+   two-argument norms. (Sergiu Deitsch)
 #. Simplify instantiation of cost functions and their functors by forwarding
    functor constructor arguments directly, and add ``std::unique_ptr`` and
    :enum:`Ownership` constructors across cost and first-order functions.

@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2024 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -714,6 +714,49 @@ static_assert(!IsAccurateNormCallable<void, J, J, double>::value,
               "AccurateNorm must not accept mixed Jet and scalar arguments");
 static_assert(!IsAccurateNormCallable<void, J, J, Jet<double, 3>>::value,
               "AccurateNorm must not accept Jets of different sizes");
+
+TEST(Jet, AccurateRNorm) {
+  // The arguments form Pythagorean quadruples to obtain exact norms.
+  const J a = MakeJet(3.0, 1.0, 0.0);
+  const J b = MakeJet(4.0, 0.0, 1.0);
+  const J c = MakeJet(12.0, 2.0, -1.0);
+  const J d = MakeJet(84.0, -1.0, 3.0);
+
+  // d/dx_i 1 / sqrt(x_1^2 + ... + x_n^2) = -x_i / (x_1^2 + ... + x_n^2)^(3/2)
+  EXPECT_THAT(AccurateRNorm(a, b),
+              IsAlmostEqualTo(MakeJet(1.0 / 5.0, -3.0 / 125.0, -4.0 / 125.0)));
+  EXPECT_THAT(
+      AccurateRNorm(a, b, c),
+      IsAlmostEqualTo(MakeJet(1.0 / 13.0, -27.0 / 2197.0, 8.0 / 2197.0)));
+  EXPECT_THAT(
+      AccurateRNorm(a, b, c, d),
+      IsAlmostEqualTo(MakeJet(1.0 / 85.0, 57.0 / 614125.0, -244.0 / 614125.0)));
+
+  // Arguments that are zero do not contribute to the derivative.
+  const J zero = MakeJet(0.0, 2.0, 3.14);
+  EXPECT_THAT(AccurateRNorm(a, zero), IsAlmostEqualTo(1.0 / a));
+  EXPECT_THAT(AccurateRNorm(zero, b, zero), IsAlmostEqualTo(1.0 / b));
+  EXPECT_THAT(AccurateRNorm(zero, zero, zero, d), IsAlmostEqualTo(1.0 / d));
+  EXPECT_THAT(AccurateRNorm(-a, zero, zero), IsAlmostEqualTo(1.0 / a));
+
+  EXPECT_THAT(AccurateRNorm(x, y), IsAlmostEqualTo(1.0 / hypot(x, y)));
+  EXPECT_THAT(AccurateRNorm(x, y, z), IsAlmostEqualTo(1.0 / hypot(x, y, z)));
+}
+
+template <typename AlwaysVoid, typename... Args>
+struct IsAccurateRNormCallable : std::false_type {};
+
+template <typename... Args>
+struct IsAccurateRNormCallable<
+    std::void_t<decltype(AccurateRNorm(std::declval<Args>()...))>,
+    Args...> : std::true_type {};
+
+static_assert(IsAccurateRNormCallable<void, J, J>::value);
+static_assert(IsAccurateRNormCallable<void, J, J, const J&, J&>::value);
+static_assert(!IsAccurateRNormCallable<void, J, J, double>::value,
+              "AccurateRNorm must not accept mixed Jet and scalar arguments");
+static_assert(!IsAccurateRNormCallable<void, J, J, Jet<double, 3>>::value,
+              "AccurateRNorm must not accept Jets of different sizes");
 
 #ifdef CERES_HAS_CPP20
 
