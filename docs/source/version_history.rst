@@ -28,6 +28,13 @@ Backward Incompatible API Changes
    resulting Ceres build GPL licensed unless you hold a commercial
    SuiteSparse license.
 
+New Features
+------------
+
+#. Added ``AccurateNorm`` for overflow and underflow safe variadic norm
+   computations with valid Jet derivatives, avoiding errors caused by composing
+   two-argument operations in automatic differentiation code.
+
 2.2.0
 =====
 
