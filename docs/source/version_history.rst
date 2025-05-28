@@ -37,9 +37,10 @@ Backward Incompatible API Changes
 New Features
 ------------
 
-#. Added ``AccurateNorm`` for overflow and underflow safe variadic norms
-   accurate to nearly full working precision. Its Jet derivatives are defined
-   wherever the norm is nonzero, unlike those of nested two-argument norms.
+#. Added ``AccurateNorm`` and ``AccurateRNorm`` for overflow and underflow safe
+   variadic norms accurate to nearly full working precision. Their Jet
+   derivatives are defined wherever the norm is nonzero, unlike those of nested
+   two-argument norms.
 
 2.2.0
 =====
