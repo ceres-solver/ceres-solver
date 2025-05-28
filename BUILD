@@ -60,6 +60,7 @@ cc_library(
 )
 
 CERES_TESTS = [
+    "accurate_norm",
     "array_utils",
     "autodiff_cost_function",
     "autodiff_manifold",

@@ -674,6 +674,47 @@ TEST(Jet, Hypot3) {
 #endif
 }
 
+TEST(Jet, AccurateNorm) {
+  // The arguments form Pythagorean quadruples to obtain exact norms.
+  const J a = MakeJet(3.0, 1.0, 0.0);
+  const J b = MakeJet(4.0, 0.0, 1.0);
+  const J c = MakeJet(12.0, 2.0, -1.0);
+  const J d = MakeJet(84.0, -1.0, 3.0);
+
+  // d/dx_i sqrt(x_1^2 + ... + x_n^2) = x_i / sqrt(x_1^2 + ... + x_n^2)
+  EXPECT_THAT(AccurateNorm(a, b),
+              IsAlmostEqualTo(MakeJet(5.0, 3.0 / 5.0, 4.0 / 5.0)));
+  EXPECT_THAT(AccurateNorm(a, b, c),
+              IsAlmostEqualTo(MakeJet(13.0, 27.0 / 13.0, -8.0 / 13.0)));
+  EXPECT_THAT(AccurateNorm(a, b, c, d),
+              IsAlmostEqualTo(MakeJet(85.0, -57.0 / 85.0, 244.0 / 85.0)));
+
+  // Arguments that are zero do not contribute to the derivative.
+  const J zero = MakeJet(0.0, 2.0, 3.14);
+  EXPECT_THAT(AccurateNorm(a, zero), IsAlmostEqualTo(a));
+  EXPECT_THAT(AccurateNorm(zero, b, zero), IsAlmostEqualTo(b));
+  EXPECT_THAT(AccurateNorm(zero, zero, zero, d), IsAlmostEqualTo(d));
+  EXPECT_THAT(AccurateNorm(-a, zero, zero), IsAlmostEqualTo(a));
+
+  EXPECT_THAT(AccurateNorm(x, y), IsAlmostEqualTo(hypot(x, y)));
+  EXPECT_THAT(AccurateNorm(x, y, z), IsAlmostEqualTo(hypot(x, y, z)));
+}
+
+template <typename AlwaysVoid, typename... Args>
+struct IsAccurateNormCallable : std::false_type {};
+
+template <typename... Args>
+struct IsAccurateNormCallable<
+    std::void_t<decltype(AccurateNorm(std::declval<Args>()...))>,
+    Args...> : std::true_type {};
+
+static_assert(IsAccurateNormCallable<void, J, J>::value);
+static_assert(IsAccurateNormCallable<void, J, J, const J&, J&>::value);
+static_assert(!IsAccurateNormCallable<void, J, J, double>::value,
+              "AccurateNorm must not accept mixed Jet and scalar arguments");
+static_assert(!IsAccurateNormCallable<void, J, J, Jet<double, 3>>::value,
+              "AccurateNorm must not accept Jets of different sizes");
+
 #ifdef CERES_HAS_CPP20
 
 TEST(Jet, Lerp) {
