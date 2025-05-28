@@ -193,6 +193,39 @@ constexpr auto UnscaledAccurateNorm(T x, T y, Args... args)
   return fma(tau / h, T(0.5), h);
 }
 
+// Computes the reciprocal of sqrt(x^2 + y^2) and its round-off error without
+// checking the arguments and ensuring invariants. Not intended to be invoked
+// by users.
+template <typename T>
+constexpr auto UnscaledAccurateRNorm(T x, T y)
+    -> std::enable_if_t<std::is_floating_point_v<T>, T> {
+  using std::fma;
+  using std::sqrt;
+
+  auto [sigma, sigma_e] = UnscaledAccurateSquareNormWithError(x, y);
+  const T r = T(1) / sigma;
+  sigma = fma(-r, sigma_e, fma(-r, sigma, T(1)));
+  const T rho = sqrt(r);
+  const T tau = fma(-rho, rho, r);
+  const T nu = fma(sigma, tau / r, sigma) / 2;
+  return fma(rho, nu, rho);
+}
+
+template <typename T, typename... Args>
+constexpr auto UnscaledAccurateRNorm(T x, T y, Args... args)
+    -> std::enable_if_t<std::is_floating_point_v<T>, T> {
+  using std::fma;
+  using std::sqrt;
+
+  auto [sigma, sigma_e] = UnscaledAccurateSquareNormWithError(x, y, args...);
+  const T r = T(1) / sigma;
+  sigma = fma(-r, sigma_e, fma(-r, sigma, T(1)));
+  const T rho = sqrt(r);
+  const T tau = fma(-rho, rho, r);
+  const T nu = fma(sigma, tau / r, sigma) / 2;
+  return fma(rho, nu, rho);
+}
+
 }  // namespace internal
 
 // Computes the Euclidean norm of two values while avoiding intermediate
@@ -336,6 +369,164 @@ constexpr internal::Promote_t<T, U, Args...> AccurateNorm(T a,
                                                           Args&&... args) {
   using Type = internal::Promote_t<T, U, Args...>;
   return AccurateNorm(Type(a), Type(b), Type(std::forward<Args>(args))...);
+}
+
+// Computes the reciprocal of the Euclidean norm of two values while avoiding
+// intermediate underflow and overflow.
+template <typename T>
+constexpr auto AccurateRNorm(T a, T b)
+    -> std::enable_if_t<std::is_floating_point_v<T>, T> {
+  using std::fabs;
+  using std::fpclassify;
+  using std::isinf;
+  using std::isnan;
+  using std::minmax;
+  using std::scalbn;
+
+  a = fabs(a);
+  b = fabs(b);
+
+  if (isinf(a) || isinf(b)) {
+    return T(0);
+  }
+
+  // Preserve NaN inputs after giving infinities precedence.
+  if (isnan(a)) {
+    return a;
+  }
+
+  if (isnan(b)) {
+    return b;
+  }
+
+  // Ensure |x| ≥ |y|. NaNs were handled above, so ordering cannot raise an
+  // exception.
+  const auto [y, x] = std::minmax(a, b);
+
+  const int cls = fpclassify(x);
+
+  if (cls == FP_INFINITE) {
+    return T(0);  // +/-oo, y
+  }
+
+  if (cls == FP_ZERO) {
+    return std::numeric_limits<T>::quiet_NaN();
+  }
+
+  using internal::AccurateNormTraits;
+
+  if (y <= x * AccurateNormTraits<T>::CutoffRatio()) {
+    return T(1) / x;
+  }
+
+  using internal::UnscaledAccurateRNorm;
+
+  constexpr int scale_exponent = AccurateNormTraits<T>::ScaleExponent();
+
+  // The rescaling differs from the one used in AccurateNorm because scaling the
+  // arguments x and y of a reciprocal hypotenuse yields
+  //
+  //     1/sqrt(x'^2+y'^2)
+  // <=> 1/sqrt((x*s)^2+(y*s)^2)
+  // <=> 1/(s*sqrt(x^2+y^2))
+  //
+  // i.e., to cancel the scale, we need reapply it to the result.
+
+  if (x > AccurateNormTraits<T>::Huge()) {
+    // Scale x to prevent an overflow
+    return scalbn(UnscaledAccurateRNorm(scalbn(x, scale_exponent),
+                                        scalbn(y, scale_exponent)),
+                  scale_exponent);
+  }
+
+  if (y < AccurateNormTraits<T>::Tiny()) {
+    // Scale y to prevent an underflow
+    return scalbn(UnscaledAccurateRNorm(scalbn(x, -scale_exponent),
+                                        scalbn(y, -scale_exponent)),
+                  -scale_exponent);
+  }
+
+  // Avoid rounding errors due to unnecessary scaling
+  return UnscaledAccurateRNorm(x, y);
+}
+
+// Computes the reciprocal of the Euclidean norm of three or more values of the
+// same type while avoiding intermediate underflow and overflow.
+template <typename T, typename... Args>
+constexpr auto AccurateRNorm(T a, T b, Args&&... args)
+    -> std::enable_if_t<(sizeof...(Args) > 0 &&
+                         (std::is_same_v<T, std::decay_t<Args>> && ...)),
+                        internal::Promote_t<T>> {
+  using Type = internal::Promote_t<T>;
+  using std::fabs;
+  using std::fmax;
+  using std::fpclassify;
+  using std::ilogb;
+  using std::isinf;
+  using std::isnan;
+  using std::scalbn;
+
+  const Type first = Type(a);
+  const Type second = Type(b);
+  const std::initializer_list<Type> values = {
+      first, second, Type(std::forward<Args>(args))...};
+
+  const auto infinity = std::find_if(
+      values.begin(), values.end(), [](Type value) { return isinf(value); });
+
+  if (infinity != values.end()) {
+    return Type(0);
+  }
+
+  // Preserve NaN inputs after giving infinities precedence.
+  const auto nan = std::find_if(
+      values.begin(), values.end(), [](Type value) { return isnan(value); });
+
+  if (nan != values.end()) {
+    return std::numeric_limits<Type>::quiet_NaN();
+  }
+
+  const Type first_magnitude = fabs(first);
+  const Type second_magnitude = fabs(second);
+  const std::initializer_list<Type> magnitudes = {
+      first_magnitude,
+      second_magnitude,
+      fabs(Type(std::forward<Args>(args)))...};
+
+  const Type maximum = std::accumulate(
+      magnitudes.begin(), magnitudes.end(), Type(0), [](Type lhs, Type rhs) {
+        return fmax(lhs, rhs);
+      });
+
+  if (fpclassify(maximum) == FP_ZERO) {
+    return std::numeric_limits<Type>::quiet_NaN();
+  }
+
+  const int exponent = ilogb(maximum);
+  // Scale by a radix power to avoid rounding by an arbitrary maximum.
+
+  // Normalize by a radix power near the largest magnitude before accumulating
+  // the compensated reciprocal squares. Apply the scale after taking the
+  // reciprocal to avoid intermediate overflow.
+  using internal::UnscaledAccurateRNorm;
+
+  const Type normalized_first = scalbn(first_magnitude, -exponent);
+  const Type normalized_second = scalbn(second_magnitude, -exponent);
+  const auto [y, x] = std::minmax(normalized_first, normalized_second);
+  const Type normalized_rnorm = UnscaledAccurateRNorm(
+      x, y, (scalbn(Type(std::forward<Args>(args)), -exponent))...);
+
+  return scalbn(normalized_rnorm, -exponent);
+}
+
+// Computes the reciprocal of the Euclidean norm of two or more arithmetic
+// values after promoting all arguments to a common floating-point type.
+template <typename T, typename U, typename... Args>
+constexpr internal::Promote_t<T, U, Args...> AccurateRNorm(T a,
+                                                           U b,
+                                                           Args&&... args) {
+  using Type = internal::Promote_t<T, U, Args...>;
+  return AccurateRNorm(Type(a), Type(b), Type(std::forward<Args>(args))...);
 }
 
 }  // namespace ceres

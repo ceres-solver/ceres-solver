@@ -816,8 +816,7 @@ inline void QuaternionRotatePoint(const T q[4], const T pt[3], T result[3]) {
 
   // 'scale' is 1 / norm(q).
   const T scale =
-      T(1) / sqrt(q[Order::kW] * q[Order::kW] + q[Order::kX] * q[Order::kX] +
-                  q[Order::kY] * q[Order::kY] + q[Order::kZ] * q[Order::kZ]);
+      AccurateRNorm(q[Order::kW], q[Order::kX], q[Order::kY], q[Order::kZ]);
 
   // Make unit-norm version of q.
   const std::array<T, 4> unit = MakeQuaternion<Order>(scale * q[Order::kW],

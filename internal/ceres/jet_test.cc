@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2024 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -1389,6 +1389,29 @@ TYPED_TEST(JetTest, Nested3XComparison) {
   EXPECT_LE(Scalar{3}, J0<J0<J0d>>{J0<J0d>{J0d{3.0}}});
   EXPECT_LT(Scalar{2}, J0<J0<J0d>>{J0<J0d>{J0d{3.0}}});
   EXPECT_NE(Scalar{2}, J0<J0<J0d>>{J0<J0d>{J0d{1.0}}});
+}
+
+TEST(AccurateNorm, ReciprocalNormJetDerivatives) {
+  constexpr double kNorm = 5.0;
+  const J x = MakeJet(3.0, 1.0, 0.0);
+  const J y = MakeJet(4.0, 0.0, 1.0);
+  const J result = AccurateRNorm(x, y);
+
+  EXPECT_DOUBLE_EQ(result.a, 1 / kNorm);
+  EXPECT_DOUBLE_EQ(result.v[0], -3.0 / (kNorm * kNorm * kNorm));
+  EXPECT_DOUBLE_EQ(result.v[1], -4.0 / (kNorm * kNorm * kNorm));
+
+  constexpr double kThreeArgumentNorm = 13.0;
+  const J z = MakeJet(12.0, 0.0, 0.0);
+  const J three_argument_result = AccurateRNorm(x, y, z);
+
+  EXPECT_DOUBLE_EQ(three_argument_result.a, 1 / kThreeArgumentNorm);
+  EXPECT_DOUBLE_EQ(
+      three_argument_result.v[0],
+      -3.0 / (kThreeArgumentNorm * kThreeArgumentNorm * kThreeArgumentNorm));
+  EXPECT_DOUBLE_EQ(
+      three_argument_result.v[1],
+      -4.0 / (kThreeArgumentNorm * kThreeArgumentNorm * kThreeArgumentNorm));
 }
 
 #endif  // GTEST_HAS_TYPED_TEST
