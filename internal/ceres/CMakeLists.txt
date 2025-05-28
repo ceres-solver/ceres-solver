@@ -385,6 +385,7 @@ if (BUILD_TESTING)
     set_tests_properties(${NAME}_test PROPERTIES ENVIRONMENT TEST_SRCDIR=${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
   endmacro (CERES_TEST)
 
+  ceres_test(accurate_norm)
   ceres_test(array_utils)
   ceres_test(array_selector)
   ceres_test(autodiff)

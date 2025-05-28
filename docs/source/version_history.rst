@@ -34,6 +34,13 @@ Backward Incompatible API Changes
    are removed in favor of standard CMake variables. CMake 3.22 or later is
    now required. See :ref:`options-controlling-ceres-configuration`.
 
+New Features
+------------
+
+#. Added ``AccurateNorm`` for overflow and underflow safe variadic norm
+   computations with valid Jet derivatives, avoiding errors caused by composing
+   two-argument operations in automatic differentiation code.
+
 2.2.0
 =====
 
