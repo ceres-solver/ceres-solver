@@ -371,6 +371,73 @@ TYPED_TEST(AccurateNormTest, Norm) {
       ceres::AccurateNorm(0, std::numeric_limits<Scalar>::quiet_NaN())));
 }
 
+TYPED_TEST(AccurateNormTest, RNorm) {
+  using Scalar = TypeParam;
+
+  EXPECT_THAT(ceres::AccurateRNorm(this->kTiny, Scalar{0}),
+              MaxNumUlp(1 / this->kTiny, 0));
+  EXPECT_THAT(ceres::AccurateRNorm(this->kTiny, Scalar{0}, Scalar{0}),
+              MaxNumUlp(1 / this->kTiny, 0));
+  EXPECT_THAT(ceres::AccurateRNorm(Scalar{0}, this->kTiny),
+              MaxNumUlp(1 / this->kTiny, 0));
+  EXPECT_THAT(ceres::AccurateRNorm(Scalar{0}, Scalar{0}, this->kTiny),
+              MaxNumUlp(1 / this->kTiny, 0));
+
+  EXPECT_THAT(ceres::AccurateRNorm(this->kTiny, this->kTiny),
+              MaxNumUlp(1 / (std::sqrt(Scalar{2}) * this->kTiny), 1));
+
+  const auto tiny3 = std::sqrt(this->kTiny) / Scalar{3};
+  EXPECT_THAT(
+      ceres::AccurateRNorm(tiny3, tiny3, tiny3),
+      MaxNumUlp(ceres::constants::sqrt_3_v<Scalar> / std::sqrt(this->kTiny),
+                1));
+
+  const auto tiny4 = std::sqrt(this->kTiny) / Scalar{4};
+  EXPECT_THAT(ceres::AccurateRNorm(tiny4, tiny4, tiny4, tiny4),
+              MaxNumUlp(Scalar{2} / std::sqrt(this->kTiny), 1));
+
+  EXPECT_THAT(ceres::AccurateRNorm(this->kHuge, Scalar{0}),
+              MaxNumUlp(1 / this->kHuge, 0));
+  EXPECT_THAT(ceres::AccurateRNorm(this->kHuge, Scalar{0}, Scalar{0}),
+              MaxNumUlp(1 / this->kHuge, 0));
+  EXPECT_THAT(ceres::AccurateRNorm(Scalar{0}, this->kHuge),
+              MaxNumUlp(1 / this->kHuge, 0));
+  EXPECT_THAT(ceres::AccurateRNorm(Scalar{0}, Scalar{0}, this->kHuge),
+              MaxNumUlp(1 / this->kHuge, 0));
+
+  EXPECT_TRUE(std::isnan(ceres::AccurateRNorm(0, 0)));
+
+  const auto large = std::sqrt(this->kHuge / 2);
+  EXPECT_THAT(ceres::AccurateRNorm(large, large),
+              MaxNumUlp(1 / std::sqrt(this->kHuge), 1));
+
+  EXPECT_EQ(ceres::AccurateRNorm(+std::numeric_limits<Scalar>::infinity(), 0),
+            0);
+  EXPECT_EQ(ceres::AccurateRNorm(-std::numeric_limits<Scalar>::infinity(), 0),
+            0);
+
+  EXPECT_EQ(ceres::AccurateRNorm(0, +std::numeric_limits<Scalar>::infinity()),
+            0);
+  EXPECT_EQ(ceres::AccurateRNorm(0, -std::numeric_limits<Scalar>::infinity()),
+            0);
+
+  EXPECT_TRUE(std::isnan(
+      ceres::AccurateRNorm(std::numeric_limits<Scalar>::quiet_NaN(), 0)));
+  EXPECT_TRUE(std::isnan(
+      ceres::AccurateRNorm(0, std::numeric_limits<Scalar>::quiet_NaN())));
+}
+
+TEST(AccurateNorm, ReciprocalNormSmallArguments) {
+  constexpr double kArgument = 1e-100;
+  const double expected = 1 / (std::sqrt(2.0) * kArgument);
+  const double expected_three_argument = 1 / (std::sqrt(3.0) * kArgument);
+
+  EXPECT_THAT(ceres::AccurateRNorm(kArgument, kArgument),
+              MaxNumUlp(expected, 1));
+  EXPECT_THAT(ceres::AccurateRNorm(kArgument, kArgument, kArgument),
+              MaxNumUlp(expected_three_argument, 1));
+}
+
 TEST(AccurateNorm, VariadicNormAccuracy) {
   EXPECT_THAT(ceres::AccurateNorm(1.0, 1.0, 1.0),
               MaxNumUlp(ceres::constants::sqrt_3, 0));
@@ -382,6 +449,38 @@ TEST(AccurateNorm, VariadicNormReturnsPositiveInfinity) {
   EXPECT_EQ(ceres::AccurateNorm(-kInfinity, 1.0, 2.0), kInfinity);
 }
 
+TEST(AccurateNorm, ReciprocalNormAvoidsIntermediateOverflow) {
+  constexpr double kArgument = std::numeric_limits<double>::max();
+  const double expected = (1 / kArgument) / ceres::constants::sqrt_3;
+
+  EXPECT_THAT(ceres::AccurateRNorm(kArgument, kArgument, kArgument),
+              MaxNumUlp(expected, 1));
+}
+
+TEST(AccurateNorm, ReciprocalNormPreservesNaN) {
+  constexpr double kFiniteArgument = 2.0;
+  constexpr double kThirdArgument = 3.0;
+  const double nan = std::numeric_limits<double>::quiet_NaN();
+
+  EXPECT_TRUE(std::isnan(ceres::AccurateRNorm(nan, kFiniteArgument)));
+  EXPECT_TRUE(std::isnan(ceres::AccurateRNorm(kFiniteArgument, nan)));
+  EXPECT_TRUE(
+      std::isnan(ceres::AccurateRNorm(kFiniteArgument, nan, kThirdArgument)));
+}
+
+TEST(AccurateNorm, PromotesIntegralVariadicArguments) {
+  constexpr int kFirstArgument = 3;
+  constexpr int kSecondArgument = 4;
+  constexpr int kThirdArgument = 5;
+  const double expected_norm = std::sqrt(50.0);
+
+  EXPECT_THAT(
+      ceres::AccurateNorm(kFirstArgument, kSecondArgument, kThirdArgument),
+      MaxNumUlp(expected_norm, 0));
+  EXPECT_THAT(
+      ceres::AccurateRNorm(kFirstArgument, kSecondArgument, kThirdArgument),
+      MaxNumUlp(1 / expected_norm, 0));
+}
 
 #if !defined(CERES_HAS_CONSTEXPR_FOR_ACCURATENORMTRAITS)
 TEST(AccurateNorm, DoubleTraitsAreCompileTimeConstants) {

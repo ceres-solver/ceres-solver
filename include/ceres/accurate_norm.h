@@ -189,6 +189,21 @@ constexpr auto UnscaledAccurateNorm(T x, T y)
   return fma(tau / h, T(0.5), h);
 }
 
+template <typename T>
+constexpr auto UnscaledAccurateRNorm(T x, T y)
+    -> std::enable_if_t<std::is_floating_point_v<T>, T> {
+  using std::fma;
+  using std::sqrt;
+
+  auto [sigma, sigma_e] = UnscaledAccurateNormWithError(x, y);
+  const T r = T(1) / sigma;
+  sigma = fma(-r, sigma_e, fma(-r, sigma, T(1)));
+  const T rho = sqrt(r);
+  const T tau = fma(-rho, rho, r);
+  const T nu = fma(sigma, tau / r, sigma) / 2;
+  return fma(rho, nu, rho);
+}
+
 }  // namespace internal
 
 template <typename T>
@@ -295,6 +310,131 @@ constexpr internal::Promote_t<T, U, Args...> AccurateNorm(T a,
                                                           Args&&... args) {
   using Type = internal::Promote_t<T, U, Args...>;
   return AccurateNorm(Type(a), Type(b), Type(std::forward<Args>(args))...);
+}
+
+template <typename T>
+constexpr auto AccurateRNorm(T a, T b)
+    -> std::enable_if_t<std::is_floating_point_v<T>, T> {
+  using std::fabs;
+  using std::fpclassify;
+  using std::isnan;
+  using std::minmax;
+
+  a = fabs(a);
+  b = fabs(b);
+
+  if (isnan(a)) {
+    return a;
+  }
+
+  if (isnan(b)) {
+    return b;
+  }
+
+  // Ensure |x| ≥ |y|. NaNs were handled above, so ordering cannot raise an
+  // exception.
+  const auto [y, x] = minmax(a, b);
+
+  const int cls = fpclassify(x);
+
+  if (cls == FP_INFINITE) {
+    return T(0);  // +/-oo, y
+  }
+
+  if (cls == FP_ZERO) {
+    return std::numeric_limits<T>::quiet_NaN();
+  }
+
+  using internal::AccurateNormTraits;
+
+  if (y <= x * AccurateNormTraits<T>::Varying()) {
+    return T(1) / x;
+  }
+
+  using internal::UnscaledAccurateRNorm;
+
+  CERES_ACCURATENORM_CONSTEXPR T scale = AccurateNormTraits<T>::Scale();
+
+  // The rescaling differs from the one used in AccurateNorm because scaling the
+  // arguments x and y of a reciprocal hypotenuse yields
+  //
+  //     1/sqrt(x'^2+y'^2)
+  // <=> 1/sqrt((x*s)^2+(y*s)^2)
+  // <=> 1/(s*sqrt(x^2+y^2))
+  //
+  // i.e., to cancel the scale, we need reapply it to the result.
+
+  if (x > AccurateNormTraits<T>::Huge()) {
+    // Scale x to prevent an overflow
+    return UnscaledAccurateRNorm(x * scale, y * scale) * scale;
+  }
+
+  if (y < AccurateNormTraits<T>::Tiny()) {
+    // Scale y to prevent an underflow
+    return UnscaledAccurateRNorm(x / scale, y / scale) / scale;
+  }
+
+  // Avoid rounding errors due to unnecessary scaling
+  return UnscaledAccurateRNorm(x, y);
+}
+
+template <typename T, typename... Args>
+constexpr auto AccurateRNorm(T a, T b, Args&&... args)
+    -> std::enable_if_t<(sizeof...(Args) > 0 &&
+                         (std::is_same_v<T, std::decay_t<Args>> && ...)),
+                        internal::Promote_t<T>> {
+  using Type = internal::Promote_t<T>;
+  using std::fabs;
+  using std::fmax;
+  using std::fpclassify;
+  using std::isfinite;
+  using std::isnan;
+
+  const Type first = Type(a);
+  const Type second = Type(b);
+
+  if (isnan(first) || isnan(second) ||
+      (isnan(Type(std::forward<Args>(args))) || ...)) {
+    return std::numeric_limits<Type>::quiet_NaN();
+  }
+
+  if (!isfinite(first) || !isfinite(second) ||
+      (!isfinite(Type(std::forward<Args>(args))) || ...)) {
+    return Type(0);
+  }
+
+  Type scale = fmax(fabs(first), fabs(second));
+  ((scale = fmax(scale, fabs(Type(std::forward<Args>(args))))), ...);
+
+  if (fpclassify(scale) == FP_ZERO) {
+    return std::numeric_limits<Type>::quiet_NaN();
+  }
+
+  // Normalize by the largest magnitude before accumulating the squares. Apply
+  // the scale after taking the reciprocal to avoid intermediate overflow.
+  const Type normalized_norm =
+      AccurateNorm(first / scale,
+                   second / scale,
+                   (Type(std::forward<Args>(args)) / scale)...);
+
+  if (scale > Type(1)) {
+    return (Type(1) / normalized_norm) / scale;
+  }
+
+  const Type inverse_scale = Type(1) / scale;
+  if (isfinite(inverse_scale)) {
+    return inverse_scale / normalized_norm;
+  }
+
+  return Type(1) / (scale * normalized_norm);
+}
+
+template <typename T, typename U, typename... Args>
+constexpr internal::Promote_t<T, U, Args...> AccurateRNorm(T a,
+                                                           U b,
+                                                           Args&&... args) {
+  using Type = internal::Promote_t<T, U, Args...>;
+  return AccurateRNorm(Type(a), Type(b), Type(std::forward<Args>(args))...);
 }
 
 }  // namespace ceres

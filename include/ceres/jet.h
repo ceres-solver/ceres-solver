@@ -554,6 +554,29 @@ inline Jet<T, N> AccurateNorm(const Jet<T, N>& x,
                         Eigen::Vector<T, N>::Zero()));
 }
 
+template <typename T, int N, typename... Args>
+inline Jet<T, N> AccurateRNorm(const Jet<T, N>& x,
+                               const Jet<T, N>& y,
+                               Args&&... args) {
+  // d/da 1/sqrt(a) = -0.5 / a^3/2
+  // d/dx x^2 + y^2 + ... = 2x
+  // So by the chain rule:
+  // d/dx 1/sqrt(x^2 + y^2 + ...)
+  //    = -0.5 / (x^2 + y^2 + ...)^3/2 * 2x
+  //    = -x / (x^2 + y^2 + z^2)^3/2
+  // d/dy 1/sqrt(x^2 + y^2 + ...) = -y / (x^2 + y^2 + ...)^3/2
+  // and so on.
+  // The derivatives are undefined when all arguments are zero.
+  const T tmp = AccurateRNorm(x.a, y.a, std::forward<Args>(args).a...);
+  const auto derivative = [tmp](const Jet<T, N>& value) -> Eigen::Vector<T, N> {
+    return value.a * tmp * tmp * tmp * value.v;
+  };
+  return Jet<T, N>(tmp,
+                   -derivative(x) - derivative(y) -
+                       (derivative(std::forward<Args>(args)) + ... +
+                        Eigen::Vector<T, N>::Zero()));
+}
+
 // copysign(a, b) composes a float with the magnitude of a and the sign of b.
 // Therefore, the function can be formally defined as
 //
