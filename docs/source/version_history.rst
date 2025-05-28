@@ -31,9 +31,9 @@ Backward Incompatible API Changes
 New Features
 ------------
 
-#. Added ``AccurateNorm`` for overflow and underflow safe variadic norm
-   computations with valid Jet derivatives, avoiding errors caused by composing
-   two-argument operations in automatic differentiation code.
+#. Added ``AccurateNorm`` and ``AccurateRNorm`` for overflow and underflow safe
+   variadic norm computations with valid Jet derivatives, avoiding errors caused
+   by composing two-argument operations in automatic differentiation code.
 
 2.2.0
 =====
