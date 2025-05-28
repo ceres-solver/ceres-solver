@@ -32,6 +32,7 @@
 
 #include <algorithm>
 #include <array>
+#include <cfenv>
 #include <cmath>
 #include <limits>
 #include <random>
@@ -1497,6 +1498,34 @@ TEST(EulerAngles, RotationMatrixToEulerAnglesAtGimbalLockForJets) {
   expected_quarter_turn[2].v[5] = -1.0;
   EXPECT_THAT(angles,
               testing::Pointwise(JetClose(kTolerance), expected_quarter_turn));
+}
+
+// Differentiating the norm at gimbal lock divides zero by zero, even if the
+// resulting derivative is discarded afterwards.
+TEST(EulerAngles, RotationMatrixToEulerAnglesAtGimbalLockDoesNotDivideByZero) {
+  using J = Jet<double, 9>;
+  constexpr int kNumEntries = 9;
+  constexpr double kIdentity[kNumEntries] = {1, 0, 0, 0, 1, 0, 0, 0, 1};
+  constexpr double kQuarterTurnAboutY[kNumEntries] = {
+      0, 0, 1, 0, 1, 0, -1, 0, 0};
+
+  J identity[kNumEntries];
+  J quarter_turn[kNumEntries];
+
+  for (int entry = 0; entry < kNumEntries; ++entry) {
+    identity[entry] = J(kIdentity[entry], entry);
+    quarter_turn[entry] = J(kQuarterTurnAboutY[entry], entry);
+  }
+
+  J proper_angles[3];
+  J tait_bryan_angles[3];
+
+  std::feclearexcept(FE_INVALID);
+  RotationMatrixToEulerAngles<IntrinsicZXZ>(identity, proper_angles);
+  RotationMatrixToEulerAngles<IntrinsicZYX>(quarter_turn, tait_bryan_angles);
+  const bool invalid = std::fetestexcept(FE_INVALID) != 0;
+
+  EXPECT_FALSE(invalid);
 }
 
 // Test rotation matrix to ZXY/312 Intrinsic Euler Angles conversion using Jets
