@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2025 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -51,6 +51,7 @@
 #include <type_traits>
 
 #include "absl/log/check.h"
+#include "ceres/accurate_norm.h"
 #include "ceres/constants.h"
 #include "ceres/internal/euler_angles.h"
 
@@ -379,16 +380,16 @@ MatrixAdapter<T, 3, 1> RowMajorAdapter3x3(T* pointer) {
 template <typename Order, typename T>
 inline void AngleAxisToQuaternion(const T* angle_axis, T* quaternion) {
   using std::fpclassify;
-  using std::hypot;
   const T& a0 = angle_axis[0];
   const T& a1 = angle_axis[1];
   const T& a2 = angle_axis[2];
 
   T k;
-  const T theta = hypot(a0, a1, a2);
 
   // For points not at the origin, the full conversion is numerically stable.
-  if (fpclassify(theta) != FP_ZERO) {
+  if (fpclassify(a0) != FP_ZERO || fpclassify(a1) != FP_ZERO ||
+      fpclassify(a2) != FP_ZERO) {
+    const T theta = AccurateNorm(a0, a1, a2);
     const T half_theta = theta * T(0.5);
     k = sin(half_theta) / theta;
     quaternion[Order::kW] = cos(half_theta);
@@ -409,17 +410,17 @@ inline void AngleAxisToQuaternion(const T* angle_axis, T* quaternion) {
 template <typename Order, typename T>
 inline void QuaternionToAngleAxis(const T* quaternion, T* angle_axis) {
   using std::fpclassify;
-  using std::hypot;
   const T& q1 = quaternion[Order::kX];
   const T& q2 = quaternion[Order::kY];
   const T& q3 = quaternion[Order::kZ];
 
   T k;
-  const T sin_theta = hypot(q1, q2, q3);
 
   // For quaternions representing non-zero rotation, the conversion
   // is numerically stable.
-  if (fpclassify(sin_theta) != FP_ZERO) {
+  if (fpclassify(q1) != FP_ZERO || fpclassify(q2) != FP_ZERO ||
+      fpclassify(q3) != FP_ZERO) {
+    const T sin_theta = AccurateNorm(q1, q2, q3);
     const T& cos_theta = quaternion[Order::kW];
 
     // If cos_theta is negative, theta is greater than pi/2, which
@@ -518,9 +519,8 @@ template <typename T, int row_stride, int col_stride>
 void AngleAxisToRotationMatrix(
     const T* angle_axis, const MatrixAdapter<T, row_stride, col_stride>& R) {
   using std::fpclassify;
-  using std::hypot;
   static const T kOne = T(1.0);
-  const T theta = hypot(angle_axis[0], angle_axis[1], angle_axis[2]);
+  const T theta = AccurateNorm(angle_axis[0], angle_axis[1], angle_axis[2]);
   if (fpclassify(theta) != FP_ZERO) {
     // We want to be careful to only evaluate the square root if the
     // norm of the angle_axis vector is greater than zero. Otherwise
@@ -628,13 +628,12 @@ void RotationMatrixToEulerAngles(
     const MatrixAdapter<const T, row_stride, col_stride>& R, T* euler) {
   using std::atan2;
   using std::fpclassify;
-  using std::hypot;
 
   const auto [i, j, k] = EulerSystem::kAxes;
 
   T ea[3];
   if constexpr (EulerSystem::kIsProperEuler) {
-    const T sy = hypot(R(i, j), R(i, k));
+    const T sy = AccurateNorm(R(i, j), R(i, k));
     if (fpclassify(sy) != FP_ZERO) {
       ea[0] = atan2(R(i, j), R(i, k));
       ea[1] = atan2(sy, R(i, i));
@@ -645,7 +644,7 @@ void RotationMatrixToEulerAngles(
       ea[2] = T(0.0);
     }
   } else {
-    const T cy = hypot(R(i, i), R(j, i));
+    const T cy = AccurateNorm(R(i, i), R(j, i));
     if (fpclassify(cy) != FP_ZERO) {
       ea[0] = atan2(R(k, j), R(k, k));
       ea[1] = atan2(-R(k, i), cy);
@@ -811,8 +810,7 @@ inline void QuaternionRotatePoint(const T q[4], const T pt[3], T result[3]) {
 
   // 'scale' is 1 / norm(q).
   const T scale =
-      T(1) / sqrt(q[Order::kW] * q[Order::kW] + q[Order::kX] * q[Order::kX] +
-                  q[Order::kY] * q[Order::kY] + q[Order::kZ] * q[Order::kZ]);
+      AccurateRNorm(q[Order::kW], q[Order::kX], q[Order::kY], q[Order::kZ]);
 
   // Make unit-norm version of q.
   const std::array<T, 4> unit = MakeQuaternion<Order>(scale * q[Order::kW],
@@ -866,10 +864,9 @@ inline void AngleAxisRotatePoint(const T angle_axis[3],
                                  T result[3]) {
   using std::cos;
   using std::fpclassify;
-  using std::hypot;
   using std::sin;
 
-  const T theta = hypot(angle_axis[0], angle_axis[1], angle_axis[2]);
+  const T theta = AccurateNorm(angle_axis[0], angle_axis[1], angle_axis[2]);
 
   if (fpclassify(theta) != FP_ZERO) {
     // Away from zero, use the rodriguez formula

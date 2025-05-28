@@ -11,6 +11,16 @@
 Version History
 ===============
 
+Unreleased
+==========
+
+New Features
+------------
+
+#. Added ``AccurateNorm`` and ``AccurateRNorm`` for overflow and underflow safe
+   variadic norm computations with valid Jet derivatives, avoiding errors caused
+   by composing two-argument operations in automatic differentiation code.
+
 2.2.0
 =====
 

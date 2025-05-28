@@ -1,5 +1,5 @@
 # Ceres Solver - A fast non-linear least squares minimizer
-# Copyright 2025 Google Inc. All rights reserved.
+# Copyright 2026 Google Inc. All rights reserved.
 # http://ceres-solver.org/
 #
 # Redistribution and use in source and binary forms, with or without
@@ -412,6 +412,7 @@ if (BUILD_TESTING)
     set_tests_properties(${NAME}_test PROPERTIES ENVIRONMENT TEST_SRCDIR=${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
   endmacro (CERES_TEST)
 
+  ceres_test(accurate_norm)
   ceres_test(array_utils)
   ceres_test(array_selector)
   ceres_test(autodiff)
