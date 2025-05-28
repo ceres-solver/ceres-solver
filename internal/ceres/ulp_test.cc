@@ -26,38 +26,48 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: hellston20a@gmail.com (H S Helson Go)
+// Author: sergiu.deitsch@gmail.com (Sergiu Deitsch)
 
-#ifndef CERES_PUBLIC_CONSTANTS_H_
-#define CERES_PUBLIC_CONSTANTS_H_
+#include "ceres/internal/ulp.h"
 
-// TODO(HSHelson): This header should no longer be necessary once C++20's
-// <numbers> (e.g. std::numbers::pi_v) becomes usable
+#include <cmath>
+#include <limits>
 
-// The constants are computed in Python using mpmath using the following Bash
-// invocation:
-//
-// python - <<EOF
-// print(mp.pi)
-// print(mp.sqrt(mp.mpf(2)))
-// print(mp.sqrt(mp.mpf(3)))
-// EOF
-namespace ceres::constants {
-// π
+#include "gtest/gtest.h"
+
+namespace {
+
 template <typename T>
-inline constexpr T pi_v(
-    3.141592653589793238462643383279502884197169399375105820974944592L);
-inline constexpr double pi = pi_v<double>;
-// √2
-template <typename T>
-inline constexpr T sqrt_2_v(
-    1.414213562373095048801688724209698078569671875376948073176679738L);
-inline constexpr double sqrt_2 = sqrt_2_v<double>;
-// √3
-template <typename T>
-inline constexpr T sqrt_3_v(
-    1.732050807568877293527446341505872366942805253810380628055806979L);
-inline constexpr double sqrt_3 = sqrt_3_v<double>;
-}  // namespace ceres::constants
+class UlpTest : public testing::Test {};
 
-#endif  // CERES_PUBLIC_CONSTANTS_H_
+using Types = testing::Types<float, double, long double>;
+TYPED_TEST_SUITE(UlpTest, Types);
+
+TYPED_TEST(UlpTest, SpecialValues) {
+  using Scalar = TypeParam;
+
+  EXPECT_TRUE(std::isnan(
+      ceres::internal::Ulp(std::numeric_limits<Scalar>::quiet_NaN())));
+  EXPECT_TRUE(std::isinf(
+      ceres::internal::Ulp(+std::numeric_limits<Scalar>::infinity())));
+  EXPECT_TRUE(std::isinf(
+      ceres::internal::Ulp(-std::numeric_limits<Scalar>::infinity())));
+  EXPECT_EQ(ceres::internal::Ulp(Scalar{0}),
+            std::numeric_limits<Scalar>::denorm_min());
+}
+
+TYPED_TEST(UlpTest, NormalAndSubnormalSpacing) {
+  using Scalar = TypeParam;
+  using Limits = std::numeric_limits<Scalar>;
+
+  EXPECT_EQ(ceres::internal::Ulp(Scalar{1}), Limits::epsilon());
+  EXPECT_EQ(ceres::internal::Ulp(Scalar{2}), Scalar{2} * Limits::epsilon());
+
+  if constexpr (Limits::has_denorm != std::denorm_absent) {
+    const Scalar denorm_min = Limits::denorm_min();
+    EXPECT_EQ(ceres::internal::Ulp(denorm_min), denorm_min);
+    EXPECT_EQ(ceres::internal::Ulp(Scalar{2} * denorm_min), denorm_min);
+  }
+}
+
+}  // namespace
