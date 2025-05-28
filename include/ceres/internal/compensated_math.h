@@ -26,38 +26,47 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: hellston20a@gmail.com (H S Helson Go)
+// Author: sergiu.deitsch@gmail.com (Sergiu Deitsch)
 
-#ifndef CERES_PUBLIC_CONSTANTS_H_
-#define CERES_PUBLIC_CONSTANTS_H_
+#ifndef CERES_PUBLIC_INTERNAL_COMPENSATED_MATH_H_
+#define CERES_PUBLIC_INTERNAL_COMPENSATED_MATH_H_
 
-// TODO(HSHelson): This header should no longer be necessary once C++20's
-// <numbers> (e.g. std::numbers::pi_v) becomes usable
+#include <initializer_list>
+#include <tuple>
+#include <type_traits>
+#include <utility>
 
-// The constants are computed in Python using mpmath using the following Bash
-// invocation:
-//
-// python - <<EOF
-// print(mp.pi)
-// print(mp.sqrt(mp.mpf(2)))
-// print(mp.sqrt(mp.mpf(3)))
-// EOF
-namespace ceres::constants {
-// π
+namespace ceres::internal {
+
+// Similar to Fast2Sum, but without requiring ordering or a specific radix.
 template <typename T>
-inline constexpr T pi_v(
-    3.141592653589793238462643383279502884197169399375105820974944592L);
-inline constexpr double pi = pi_v<double>;
-// √2
-template <typename T>
-inline constexpr T sqrt_2_v(
-    1.414213562373095048801688724209698078569671875376948073176679738L);
-inline constexpr double sqrt_2 = sqrt_2_v<double>;
-// √3
-template <typename T>
-inline constexpr T sqrt_3_v(
-    1.732050807568877293527446341505872366942805253810380628055806979L);
-inline constexpr double sqrt_3 = sqrt_3_v<double>;
-}  // namespace ceres::constants
+constexpr auto TwoSum(T a, T b)
+    -> std::enable_if_t<std::is_floating_point_v<T>, std::pair<T, T>> {
+  const T s = a + b;
+  const T a_prime = s - b;
+  const T b_prime = s - a_prime;
+  const T delta_a = a - a_prime;
+  const T delta_b = b - b_prime;
+  const T t = delta_a + delta_b;
+  return std::make_pair(s, t);
+}
 
-#endif  // CERES_PUBLIC_CONSTANTS_H_
+// Computes a compensated sum of values. The returned pair contains the rounded
+// sum and its accumulated correction term. Their sum is a more accurate
+// approximation to the sum of the input values.
+template <typename T>
+constexpr auto KahanBabuskaNeumaierSum(std::initializer_list<T> values)
+    -> std::enable_if_t<std::is_floating_point_v<T>, std::pair<T, T>> {
+  T sum{0};
+  T error{0};
+
+  for (T value : values) {
+    std::tie(sum, error) = TwoSum(sum, value + error);
+  }
+
+  return std::make_pair(sum, error);
+}
+
+}  // namespace ceres::internal
+
+#endif  // CERES_PUBLIC_INTERNAL_COMPENSATED_MATH_H_
