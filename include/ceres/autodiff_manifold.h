@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2025 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -89,26 +89,25 @@ namespace ceres {
 // struct QuaternionFunctor {
 //   template <typename T>
 //   bool Plus(const T* x, const T* delta, T* x_plus_delta) const {
-//     const T squared_norm_delta =
-//         delta[0] * delta[0] + delta[1] * delta[1] + delta[2] * delta[2];
+//     const T norm_delta = hypot(delta[0], delta[1], delta[2]);
 //
 //     T q_delta[4];
-//     if (squared_norm_delta > T(0.0)) {
-//       T norm_delta = sqrt(squared_norm_delta);
-//       const T sin_delta_by_delta = sin(norm_delta) / norm_delta;
-//       q_delta[0] = cos(norm_delta);
-//       q_delta[1] = sin_delta_by_delta * delta[0];
-//       q_delta[2] = sin_delta_by_delta * delta[1];
-//       q_delta[3] = sin_delta_by_delta * delta[2];
+//     if (norm_delta > T(0.0)) {
+//       T half_norm_delta = norm_delta / T(2.0);
+//       const T sin_half_delta_by_delta = sin(half_norm_delta) / norm_delta;
+//       q_delta[0] = cos(half_norm_delta);
+//       q_delta[1] = sin_half_delta_by_delta * delta[0];
+//       q_delta[2] = sin_half_delta_by_delta * delta[1];
+//       q_delta[3] = sin_half_delta_by_delta * delta[2];
 //     } else {
 //       // We do not just use q_delta = [1,0,0,0] here because that is a
 //       // constant and when used for automatic differentiation will
 //       // lead to a zero derivative. Instead we take a first order
 //       // approximation and evaluate it at zero.
 //       q_delta[0] = T(1.0);
-//       q_delta[1] = delta[0];
-//       q_delta[2] = delta[1];
-//       q_delta[3] = delta[2];
+//       q_delta[1] = delta[0] / T(2);
+//       q_delta[2] = delta[1] / T(2);
+//       q_delta[3] = delta[2] / T(2);
 //     }
 //
 //     QuaternionProduct(q_delta, x, x_plus_delta);
@@ -120,20 +119,18 @@ namespace ceres {
 //     T minus_x[4] = {x[0], -x[1], -x[2], -x[3]};
 //     T ambient_y_minus_x[4];
 //     QuaternionProduct(y, minus_x, ambient_y_minus_x);
-//     T u_norm = sqrt(ambient_y_minus_x[1] * ambient_y_minus_x[1] +
-//                     ambient_y_minus_x[2] * ambient_y_minus_x[2] +
-//                     ambient_y_minus_x[3] * ambient_y_minus_x[3]);
+//     T u_norm = hypot(ambient_y_minus_x[1], ambient_y_minus_x[2], ambient_y_minus_x[3]);
 //     if (u_norm > 0.0) {
-//       T theta = atan2(u_norm, ambient_y_minus_x[0]);
+//       T theta = T(2) * atan2(u_norm, ambient_y_minus_x[0]);
 //       y_minus_x[0] = theta * ambient_y_minus_x[1] / u_norm;
 //       y_minus_x[1] = theta * ambient_y_minus_x[2] / u_norm;
 //       y_minus_x[2] = theta * ambient_y_minus_x[3] / u_norm;
 //     } else {
 //       // We do not use [0,0,0] here because even though the value part is
 //       // a constant, the derivative part is not.
-//       y_minus_x[0] = ambient_y_minus_x[1];
-//       y_minus_x[1] = ambient_y_minus_x[2];
-//       y_minus_x[2] = ambient_y_minus_x[3];
+//       y_minus_x[0] = T(2) * ambient_y_minus_x[1];
+//       y_minus_x[1] = T(2) * ambient_y_minus_x[2];
+//       y_minus_x[2] = T(2) * ambient_y_minus_x[3];
 //     }
 //     return true;
 //   }

@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2025 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -497,14 +497,14 @@ TEST(ProductManifold, Pointers) {
   EXPECT_EQ(manifold1.TangentSize(), manifold2.TangentSize());
 }
 
-TEST(QuaternionManifold, PlusPiBy2) {
+TEST(QuaternionManifold, PlusPi) {
   QuaternionManifold manifold;
   Vector x = Vector::Zero(4);
   x[0] = 1.0;
 
   for (int i = 0; i < 3; ++i) {
     Vector delta = Vector::Zero(3);
-    delta[i] = constants::pi / 2;
+    delta[i] = constants::pi;
     Vector x_plus_delta = Vector::Zero(4);
     EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), x_plus_delta.data()));
 
@@ -534,12 +534,8 @@ TEST(QuaternionManifold, PlusPiBy2) {
 // Compute the expected value of QuaternionManifold::Plus via functions in
 // rotation.h and compares it to the one computed by QuaternionManifold::Plus.
 MATCHER_P2(QuaternionManifoldPlusIsCorrectAt, x, delta, "") {
-  // This multiplication by 2 is needed because AngleAxisToQuaternion uses
-  // |delta|/2 as the angle of rotation where as in the implementation of
-  // QuaternionManifold for historical reasons we use |delta|.
-  const Vector two_delta = delta * 2;
   Vector delta_q(4);
-  AngleAxisToQuaternion(two_delta.data(), delta_q.data());
+  AngleAxisToQuaternion(delta.data(), delta_q.data());
 
   Vector expected(4);
   QuaternionProduct(delta_q.data(), x.data(), expected.data());
@@ -607,12 +603,8 @@ TEST(QuaternionManifold, DeltaJustBelowPi) {
 // Compute the expected value of EigenQuaternionManifold::Plus using Eigen and
 // compares it to the one computed by QuaternionManifold::Plus.
 MATCHER_P2(EigenQuaternionManifoldPlusIsCorrectAt, x, delta, "") {
-  // This multiplication by 2 is needed because AngleAxisToQuaternion uses
-  // |delta|/2 as the angle of rotation where as in the implementation of
-  // Quaternion for historical reasons we use |delta|.
-  const Vector two_delta = delta * 2;
   Vector delta_q(4);
-  AngleAxisToQuaternion(two_delta.data(), delta_q.data());
+  AngleAxisToQuaternion(delta.data(), delta_q.data());
   Eigen::Quaterniond delta_eigen_q(
       delta_q[0], delta_q[1], delta_q[2], delta_q[3]);
 
