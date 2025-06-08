@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2025 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -85,6 +85,7 @@
 #include "absl/log/initialize.h"
 #include "absl/log/log.h"
 #include "ceres/ceres.h"
+#include "ceres/constants.h"
 #include "ceres/tiny_solver.h"
 #include "ceres/tiny_solver_cost_function_adapter.h"
 
@@ -423,8 +424,7 @@ NIST_BEGIN(Misra1d)
   b[0] * b[1] * x / (1.0 + b[1] * x)
 NIST_END
 
-const double kPi = 3.141592653589793238462643383279;
-// pi = 3.141592653589793238462643383279E0
+constexpr double kPi = ceres::constants::pi;
 // y =  b1 - b2*x - arctan[b3/(x-b4)]/pi  +  e
 NIST_BEGIN(Roszman1)
   b[0] - b[1] * x - atan2(b[2], (x - b[3])) / kPi

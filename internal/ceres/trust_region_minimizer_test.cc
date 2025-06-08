@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2025 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -41,6 +41,7 @@
 #include "absl/log/check.h"
 #include "absl/log/log.h"
 #include "ceres/autodiff_cost_function.h"
+#include "ceres/constants.h"
 #include "ceres/cost_function.h"
 #include "ceres/dense_qr_solver.h"
 #include "ceres/dense_sparse_matrix.h"
@@ -388,9 +389,8 @@ class CurveCostFunction : public CostFunction {
 TEST(TrustRegionMinimizer, JacobiScalingTest) {
   int N = 6;
   std::vector<double*> y(N);
-  const double pi = 3.1415926535897932384626433;
   for (int i = 0; i < N; i++) {
-    double theta = i * 2. * pi / static_cast<double>(N);
+    double theta = i * 2. * constants::pi / static_cast<double>(N);
     y[i] = new double[2];
     y[i][0] = cos(theta);
     y[i][1] = sin(theta);

@@ -702,7 +702,7 @@ inline void EulerAnglesToRotationMatrix(const T* euler,
 template <typename T, int row_stride, int col_stride>
 void EulerAnglesToRotationMatrix(
     const T* euler, const MatrixAdapter<T, row_stride, col_stride>& R) {
-  const double kPi = 3.14159265358979323846;
+  const double kPi = constants::pi;
   const T degrees_to_radians(kPi / 180.0);
 
   const T pitch(euler[0] * degrees_to_radians);
