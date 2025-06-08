@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2025 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -31,11 +31,13 @@
 #include <cmath>
 #include <limits>
 #include <memory>
+#include <type_traits>
 
 #include "ceres/dynamic_numeric_diff_cost_function.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/manifold.h"
 #include "ceres/numeric_diff_options.h"
+#include "ceres/rotation.h"
 #include "ceres/types.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
@@ -214,16 +216,53 @@ MATCHER_P3(PlusMinusIsIdentityAt, x, y, tolerance, "") {
   Vector actual = Vector::Zero(ambient_size);
   EXPECT_TRUE(arg.Plus(x.data(), y_minus_x.data(), actual.data()));
 
-  const double n = (actual - Vector{y}).norm();
-  const double d = y.norm();
-  const double diffnorm = (d == 0.0) ? n : (n / d);
-  if (diffnorm > tolerance) {
-    *result_listener << "\nx: " << x.transpose()
-                     << "\nexpected: " << y.transpose()
-                     << "\nactual:" << actual.transpose()
-                     << "\ndiff:" << (y - actual).transpose()
-                     << "\ndiffnorm: " << diffnorm;
-    return false;
+  using ManifoldType = std::decay_t<decltype(arg)>;
+
+  constexpr bool kIsCeresQuaternion =
+      std::is_same_v<ManifoldType, ceres::QuaternionManifold>;
+  constexpr bool kIsEigenQuaternion =
+      std::is_same_v<ManifoldType, ceres::EigenQuaternionManifold>;
+
+  if constexpr (!(kIsEigenQuaternion || kIsCeresQuaternion)) {
+    const double n = (actual - Vector{y}).norm();
+    const double d = y.norm();
+    const double diffnorm = (d == 0.0) ? n : (n / d);
+    if (diffnorm > tolerance) {
+      *result_listener << "\nx: " << x.transpose()
+                       << "\nexpected: " << y.transpose()
+                       << "\nactual: " << actual.transpose()
+                       << "\ndiff: " << (y - actual).transpose()
+                       << "\ndiffnorm: " << diffnorm;
+      return false;
+    }
+  } else {
+    // Quaternions are equivalent up to a sign change. Compute the algebraic
+    // distance by taking the minimum of |x+y| and |x-y| where |∘| is the L²
+    // norm. For more details, refer to
+    //
+    //   Hartley, R., Trumpf, J., Dai, Y., & Li, H. (2013). Rotation Averaging.
+    //   International Journal of Computer Vision, 103(3), 267–305.
+    //   https://doi.org/10.1007/s11263-012-0601-0
+    //
+    // The computation here is closely related to the IsNearQuaternion matcher
+    // use in rotation_test.cc. The matcher, however, does not compute the
+    // distance but only compares the coefficients.
+    const Eigen::Vector4d plus = actual + Vector{y};
+    const Eigen::Vector4d minus = actual - Vector{y};
+
+    const double plus_norm = plus.norm();
+    const double minus_norm = minus.norm();
+    const double diffnorm = std::min(plus_norm, minus_norm);
+
+    if (diffnorm > tolerance) {
+      *result_listener << "\nx: " << x.transpose()
+                       << "\nexpected: " << y.transpose()
+                       << "\nactual: " << actual.transpose()
+                       << "\ndiff +: " << plus.transpose()
+                       << "\ndiff -: " << minus.transpose()
+                       << "\ndiffnorm: " << diffnorm;
+      return false;
+    }
   }
   return true;
 }
