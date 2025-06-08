@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2025 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -190,15 +190,16 @@ struct Grid1D {
     CHECK_LT(begin, end);
   }
 
-  EIGEN_STRONG_INLINE void GetValue(const int n, double* f) const {
+  template <typename U>
+  EIGEN_STRONG_INLINE void GetValue(const int n, U* f) const {
     const int idx = (std::min)((std::max)(begin_, n), end_ - 1) - begin_;
     if (kInterleaved) {
       for (int i = 0; i < kDataDimension; ++i) {
-        f[i] = static_cast<double>(data_[kDataDimension * idx + i]);
+        f[i] = static_cast<U>(data_[kDataDimension * idx + i]);
       }
     } else {
       for (int i = 0; i < kDataDimension; ++i) {
-        f[i] = static_cast<double>(data_[i * num_values_ + idx]);
+        f[i] = static_cast<U>(data_[i * num_values_ + idx]);
       }
     }
   }
