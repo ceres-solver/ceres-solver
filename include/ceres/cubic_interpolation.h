@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2025 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -30,6 +30,8 @@
 
 #ifndef CERES_PUBLIC_CUBIC_INTERPOLATION_H_
 #define CERES_PUBLIC_CUBIC_INTERPOLATION_H_
+
+#include <type_traits>
 
 #include "Eigen/Core"
 #include "absl/log/check.h"
@@ -190,15 +192,18 @@ struct Grid1D {
     CHECK_LT(begin, end);
   }
 
-  EIGEN_STRONG_INLINE void GetValue(const int n, double* f) const {
+  template <typename U>
+  EIGEN_STRONG_INLINE void GetValue(const int n, U* f) const {
+    static_assert(std::is_convertible_v<T, U>,
+                  "Grid1D::GetValue output type U must be convertible to T");
     const int idx = (std::min)((std::max)(begin_, n), end_ - 1) - begin_;
     if (kInterleaved) {
       for (int i = 0; i < kDataDimension; ++i) {
-        f[i] = static_cast<double>(data_[kDataDimension * idx + i]);
+        f[i] = static_cast<U>(data_[kDataDimension * idx + i]);
       }
     } else {
       for (int i = 0; i < kDataDimension; ++i) {
-        f[i] = static_cast<double>(data_[i * num_values_ + idx]);
+        f[i] = static_cast<U>(data_[i * num_values_ + idx]);
       }
     }
   }
@@ -400,7 +405,10 @@ struct Grid2D {
     CHECK_LT(col_begin, col_end);
   }
 
-  EIGEN_STRONG_INLINE void GetValue(const int r, const int c, double* f) const {
+  template <typename U>
+  EIGEN_STRONG_INLINE void GetValue(const int r, const int c, U* f) const {
+    static_assert(std::is_convertible_v<T, U>,
+                  "Grid2D::GetValue output type U must be convertible to T");
     const int row_idx =
         (std::min)((std::max)(row_begin_, r), row_end_ - 1) - row_begin_;
     const int col_idx =
@@ -411,11 +419,11 @@ struct Grid2D {
 
     if (kInterleaved) {
       for (int i = 0; i < kDataDimension; ++i) {
-        f[i] = static_cast<double>(data_[kDataDimension * n + i]);
+        f[i] = static_cast<U>(data_[kDataDimension * n + i]);
       }
     } else {
       for (int i = 0; i < kDataDimension; ++i) {
-        f[i] = static_cast<double>(data_[i * num_values_ + n]);
+        f[i] = static_cast<U>(data_[i * num_values_ + n]);
       }
     }
   }
