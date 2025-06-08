@@ -16,6 +16,24 @@
       "message": "Thanks for doing this Sergiu. Does this mean we have a stable build that we can ship and not make people miserable?",
       "revId": "8a545eb46b6aae9c91861bb1104c7cdc530487ee",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "29567244_e5bc4fd7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2025-06-08T14:22:29Z",
+      "side": 1,
+      "message": "Hi Sameer. I believe we\u0027re getting there. I myself have several changes in the pipeline that I want to finish for the first RC. In the meantime, we should wait at least a couple of weeks for possible user reports to see if the changes cause any issues.",
+      "parentUuid": "651a82e9_7aef58c0",
+      "revId": "8a545eb46b6aae9c91861bb1104c7cdc530487ee",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ],
   "submitRequirementResults": [
