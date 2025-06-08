@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2025 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -31,11 +31,13 @@
 #include <cmath>
 #include <limits>
 #include <memory>
+#include <type_traits>
 
 #include "ceres/dynamic_numeric_diff_cost_function.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/manifold.h"
 #include "ceres/numeric_diff_options.h"
+#include "ceres/rotation.h"
 #include "ceres/types.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
@@ -214,16 +216,52 @@ MATCHER_P3(PlusMinusIsIdentityAt, x, y, tolerance, "") {
   Vector actual = Vector::Zero(ambient_size);
   EXPECT_TRUE(arg.Plus(x.data(), y_minus_x.data(), actual.data()));
 
-  const double n = (actual - Vector{y}).norm();
-  const double d = y.norm();
-  const double diffnorm = (d == 0.0) ? n : (n / d);
-  if (diffnorm > tolerance) {
-    *result_listener << "\nx: " << x.transpose()
-                     << "\nexpected: " << y.transpose()
-                     << "\nactual:" << actual.transpose()
-                     << "\ndiff:" << (y - actual).transpose()
-                     << "\ndiffnorm: " << diffnorm;
-    return false;
+  using ManifoldType = std::decay_t<decltype(arg)>;
+
+  constexpr bool kIsCeresQuaternion =
+      std::is_same_v<ManifoldType, ceres::QuaternionManifold>;
+  constexpr bool kIsEigenQuaternion =
+      std::is_same_v<ManifoldType, ceres::EigenQuaternionManifold>;
+
+  if constexpr (!(kIsEigenQuaternion || kIsCeresQuaternion)) {
+    const double n = (actual - Vector{y}).norm();
+    const double d = y.norm();
+    const double diffnorm = (d == 0.0) ? n : (n / d);
+    if (diffnorm > tolerance) {
+      *result_listener << "\nx: " << x.transpose()
+                       << "\nexpected: " << y.transpose()
+                       << "\nactual:" << actual.transpose()
+                       << "\ndiff:" << (y - actual).transpose()
+                       << "\ndiffnorm: " << diffnorm;
+      return false;
+    }
+  } else {
+    // Compute rotation difference in the tangent space at the identity to avoid
+    // special handling of negated quaternions which represent the same
+    // rotation.
+    using Order = std::conditional_t<kIsEigenQuaternion,
+                                     ceres::EigenQuaternionOrder,
+                                     ceres::CeresQuaternionOrder>;
+
+    double actual_y_conj[4];
+    QuaternionConjugate<Order>(actual.data(), actual_y_conj);
+
+    double ambient_y_minus_y[4];
+    QuaternionProduct<Order>(actual_y_conj, y.data(), ambient_y_minus_y);
+
+    double y_minus_y[3];
+    QuaternionToAngleAxis<Order>(ambient_y_minus_y, y_minus_y);
+
+    const double d = std::hypot(y_minus_y[0], y_minus_y[1], y_minus_y[2]);
+
+    if (d > tolerance) {
+      *result_listener
+          << "\nx: " << x.transpose() << "\nexpected: " << y.transpose()
+          << "\nactual:" << actual.transpose() << "\ndiff:"
+          << Eigen::Map<const Eigen::Vector3d>{y_minus_y}.transpose()
+          << "\ndiffnorm: " << d;
+      return false;
+    }
   }
   return true;
 }
