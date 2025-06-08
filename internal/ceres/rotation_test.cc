@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2025 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -201,111 +201,145 @@ MATCHER_P(IsNear3x3Matrix, expected, "") {
   return true;
 }
 
+template <typename T>
+class QuaternionTest : public testing::Test {};
+
+using QuaternionOrderTypes =
+    testing::Types<ceres::CeresQuaternionOrder, ceres::EigenQuaternionOrder>;
+
+TYPED_TEST_SUITE(QuaternionTest, QuaternionOrderTypes);
+
 // Transforms a zero axis/angle to a quaternion.
-TEST(Rotation, ZeroAngleAxisToQuaternion) {
+TYPED_TEST(QuaternionTest, ZeroAngleAxisToQuaternion) {
+  using Order = TypeParam;
   double axis_angle[3] = {0, 0, 0};
   double quaternion[4];
-  double expected[4] = {1, 0, 0, 0};
-  AngleAxisToQuaternion(axis_angle, quaternion);
+  double expected[4] = {0, 0, 0, 0};
+  expected[Order::kW] = 1;
+  AngleAxisToQuaternion<Order>(axis_angle, quaternion);
   EXPECT_THAT(quaternion, IsNormalizedQuaternion());
   EXPECT_THAT(quaternion, IsNearQuaternion(expected));
 }
 
 // Test that exact conversion works for small angles.
-TEST(Rotation, SmallAngleAxisToQuaternion) {
+TYPED_TEST(QuaternionTest, SmallAngleAxisToQuaternion) {
+  using Order = TypeParam;
   // Small, finite value to test.
   double theta = 1.0e-2;
   double axis_angle[3] = {theta, 0, 0};
   double quaternion[4];
-  double expected[4] = {cos(theta / 2), sin(theta / 2.0), 0, 0};
-  AngleAxisToQuaternion(axis_angle, quaternion);
+  double expected[4] = {0, 0, 0, 0};
+  expected[Order::kW] = cos(theta / 2);
+  expected[Order::kX] = sin(theta / 2.0);
+  AngleAxisToQuaternion<Order>(axis_angle, quaternion);
   EXPECT_THAT(quaternion, IsNormalizedQuaternion());
   EXPECT_THAT(quaternion, IsNearQuaternion(expected));
 }
 
 // Test that approximate conversion works for very small angles.
-TEST(Rotation, TinyAngleAxisToQuaternion) {
+TYPED_TEST(QuaternionTest, TinyAngleAxisToQuaternion) {
+  using Order = TypeParam;
   // Very small value that could potentially cause underflow.
   double theta = pow(std::numeric_limits<double>::min(), 0.75);
   double axis_angle[3] = {theta, 0, 0};
   double quaternion[4];
-  double expected[4] = {cos(theta / 2), sin(theta / 2.0), 0, 0};
-  AngleAxisToQuaternion(axis_angle, quaternion);
+  double expected[4] = {0, 0, 0, 0};
+  expected[Order::kW] = cos(theta / 2);
+  expected[Order::kX] = sin(theta / 2.0);
+  AngleAxisToQuaternion<Order>(axis_angle, quaternion);
   EXPECT_THAT(quaternion, IsNormalizedQuaternion());
   EXPECT_THAT(quaternion, IsNearQuaternion(expected));
 }
 
 // Transforms a rotation by pi/2 around X to a quaternion.
-TEST(Rotation, XRotationToQuaternion) {
+TYPED_TEST(QuaternionTest, XRotationToQuaternion) {
+  using Order = TypeParam;
   double axis_angle[3] = {kPi / 2, 0, 0};
   double quaternion[4];
-  double expected[4] = {kHalfSqrt2, kHalfSqrt2, 0, 0};
-  AngleAxisToQuaternion(axis_angle, quaternion);
+  double expected[4] = {0, 0, 0, 0};
+  expected[Order::kW] = kHalfSqrt2;
+  expected[Order::kX] = kHalfSqrt2;
+  AngleAxisToQuaternion<Order>(axis_angle, quaternion);
   EXPECT_THAT(quaternion, IsNormalizedQuaternion());
   EXPECT_THAT(quaternion, IsNearQuaternion(expected));
 }
 
 // Transforms a unit quaternion to an axis angle.
-TEST(Rotation, UnitQuaternionToAngleAxis) {
-  double quaternion[4] = {1, 0, 0, 0};
+TYPED_TEST(QuaternionTest, UnitQuaternionToAngleAxis) {
+  using Order = TypeParam;
+  double quaternion[4] = {0, 0, 0, 0};
+  quaternion[Order::kW] = 1;
+
   double axis_angle[3];
   double expected[3] = {0, 0, 0};
-  QuaternionToAngleAxis(quaternion, axis_angle);
+  QuaternionToAngleAxis<Order>(quaternion, axis_angle);
   EXPECT_THAT(axis_angle, IsNearAngleAxis(expected));
 }
 
 // Transforms a quaternion that rotates by pi about the Y axis to an axis angle.
-TEST(Rotation, YRotationQuaternionToAngleAxis) {
-  double quaternion[4] = {0, 0, 1, 0};
+TYPED_TEST(QuaternionTest, YRotationQuaternionToAngleAxis) {
+  using Order = TypeParam;
+  double quaternion[4] = {0, 0, 0, 0};
+  quaternion[Order::kY] = 1;
   double axis_angle[3];
   double expected[3] = {0, kPi, 0};
-  QuaternionToAngleAxis(quaternion, axis_angle);
+  QuaternionToAngleAxis<Order>(quaternion, axis_angle);
   EXPECT_THAT(axis_angle, IsNearAngleAxis(expected));
 }
 
 // Transforms a quaternion that rotates by pi/3 about the Z axis to an axis
 // angle.
-TEST(Rotation, ZRotationQuaternionToAngleAxis) {
-  double quaternion[4] = {sqrt(3) / 2, 0, 0, 0.5};
+TYPED_TEST(QuaternionTest, ZRotationQuaternionToAngleAxis) {
+  using Order = TypeParam;
+  double quaternion[4] = {0, 0, 0, 0};
+  quaternion[Order::kW] = sqrt(3) / 2;
+  quaternion[Order::kZ] = 0.5;
   double axis_angle[3];
   double expected[3] = {0, 0, kPi / 3};
-  QuaternionToAngleAxis(quaternion, axis_angle);
+  QuaternionToAngleAxis<Order>(quaternion, axis_angle);
   EXPECT_THAT(axis_angle, IsNearAngleAxis(expected));
 }
 
 // Test that exact conversion works for small angles.
-TEST(Rotation, SmallQuaternionToAngleAxis) {
+TYPED_TEST(QuaternionTest, SmallQuaternionToAngleAxis) {
+  using Order = TypeParam;
   // Small, finite value to test.
   double theta = 1.0e-2;
-  double quaternion[4] = {cos(theta / 2), sin(theta / 2.0), 0, 0};
+  double quaternion[4] = {0, 0, 0, 0};
+  quaternion[Order::kW] = cos(theta / 2.0);
+  quaternion[Order::kX] = sin(theta / 2.0);
   double axis_angle[3];
   double expected[3] = {theta, 0, 0};
-  QuaternionToAngleAxis(quaternion, axis_angle);
+  QuaternionToAngleAxis<Order>(quaternion, axis_angle);
   EXPECT_THAT(axis_angle, IsNearAngleAxis(expected));
 }
 
 // Test that approximate conversion works for very small angles.
-TEST(Rotation, TinyQuaternionToAngleAxis) {
+TYPED_TEST(QuaternionTest, TinyQuaternionToAngleAxis) {
+  using Order = TypeParam;
   // Very small value that could potentially cause underflow.
   double theta = pow(std::numeric_limits<double>::min(), 0.75);
-  double quaternion[4] = {cos(theta / 2), sin(theta / 2.0), 0, 0};
+  double quaternion[4] = {0, 0, 0, 0};
+  quaternion[Order::kW] = cos(theta / 2.0);
+  quaternion[Order::kX] = sin(theta / 2.0);
   double axis_angle[3];
   double expected[3] = {theta, 0, 0};
-  QuaternionToAngleAxis(quaternion, axis_angle);
+  QuaternionToAngleAxis<Order>(quaternion, axis_angle);
   EXPECT_THAT(axis_angle, IsNearAngleAxis(expected));
 }
 
-TEST(Rotation, QuaternionToAngleAxisAngleIsLessThanPi) {
+TYPED_TEST(QuaternionTest, QuaternionToAngleAxisAngleIsLessThanPi) {
+  using Order = TypeParam;
   double quaternion[4];
   double angle_axis[3];
 
   const double half_theta = 0.75 * kPi;
 
-  quaternion[0] = cos(half_theta);
-  quaternion[1] = 1.0 * sin(half_theta);
-  quaternion[2] = 0.0;
-  quaternion[3] = 0.0;
-  QuaternionToAngleAxis(quaternion, angle_axis);
+  quaternion[Order::kW] = cos(half_theta);
+  quaternion[Order::kX] = 1.0 * sin(half_theta);
+  quaternion[Order::kY] = 0.0;
+  quaternion[Order::kZ] = 0.0;
+  QuaternionToAngleAxis<Order>(quaternion, angle_axis);
   const double angle = std::hypot(angle_axis[0], angle_axis[1], angle_axis[2]);
   EXPECT_LE(angle, kPi);
 }
@@ -314,7 +348,8 @@ static constexpr int kNumTrials = 10000;
 
 // Takes a bunch of random axis/angle values, converts them to quaternions,
 // and back again.
-TEST(Rotation, AngleAxisToQuaterionAndBack) {
+TYPED_TEST(QuaternionTest, AngleAxisToQuaterionAndBack) {
+  using Order = TypeParam;
   std::mt19937 prng;
   std::uniform_real_distribution<double> uniform_distribution{-1.0, 1.0};
   for (int i = 0; i < kNumTrials; i++) {
@@ -340,16 +375,17 @@ TEST(Rotation, AngleAxisToQuaterionAndBack) {
     // We use ASSERTs here because if there's one failure, there are
     // probably many and spewing a million failures doesn't make anyone's
     // day.
-    AngleAxisToQuaternion(axis_angle, quaternion);
+    AngleAxisToQuaternion<Order>(axis_angle, quaternion);
     ASSERT_THAT(quaternion, IsNormalizedQuaternion());
-    QuaternionToAngleAxis(quaternion, round_trip);
+    QuaternionToAngleAxis<Order>(quaternion, round_trip);
     ASSERT_THAT(round_trip, IsNearAngleAxis(axis_angle));
   }
 }
 
 // Takes a bunch of random quaternions, converts them to axis/angle,
 // and back again.
-TEST(Rotation, QuaterionToAngleAxisAndBack) {
+TYPED_TEST(QuaternionTest, QuaterionToAngleAxisAndBack) {
+  using Order = TypeParam;
   std::mt19937 prng;
   std::uniform_real_distribution<double> uniform_distribution{-1.0, 1.0};
   for (int i = 0; i < kNumTrials; i++) {
@@ -368,8 +404,8 @@ TEST(Rotation, QuaterionToAngleAxisAndBack) {
 
     double axis_angle[3];
     double round_trip[4];
-    QuaternionToAngleAxis(quaternion, axis_angle);
-    AngleAxisToQuaternion(axis_angle, round_trip);
+    QuaternionToAngleAxis<Order>(quaternion, axis_angle);
+    AngleAxisToQuaternion<Order>(axis_angle, round_trip);
     ASSERT_THAT(round_trip, IsNormalizedQuaternion());
     ASSERT_THAT(round_trip, IsNearQuaternion(quaternion));
   }
@@ -1004,26 +1040,27 @@ static const int kTinyZeroLimit =
     static_cast<int>(1 + log(std::numeric_limits<double>::min()) / log(10.0));
 
 // Test that exact conversion works for small angles when jets are used.
-TEST(Rotation, SmallAngleAxisToQuaternionForJets) {
+TYPED_TEST(QuaternionTest, SmallAngleAxisToQuaternionForJets) {
+  using Order = TypeParam;
   // Examine small x rotations that are still large enough
   // to be well within the range represented by doubles.
   for (int i = -2; i >= kSmallTinyCutoff; i--) {
     double theta = pow(10.0, i);
     J3 axis_angle[3] = {J3(theta, 0), J3(0, 1), J3(0, 2)};
     J3 quaternion[4];
-    J3 expected[4] = {
-        MakeJ3(cos(theta / 2), -sin(theta / 2) / 2, 0, 0),
-        MakeJ3(sin(theta / 2), cos(theta / 2) / 2, 0, 0),
-        MakeJ3(0, 0, sin(theta / 2) / theta, 0),
-        MakeJ3(0, 0, 0, sin(theta / 2) / theta),
-    };
-    AngleAxisToQuaternion(axis_angle, quaternion);
+    J3 expected[4];
+    expected[Order::kW] = MakeJ3(cos(theta / 2), -sin(theta / 2) / 2, 0, 0);
+    expected[Order::kX] = MakeJ3(sin(theta / 2), cos(theta / 2) / 2, 0, 0);
+    expected[Order::kY] = MakeJ3(0, 0, sin(theta / 2) / theta, 0);
+    expected[Order::kZ] = MakeJ3(0, 0, 0, sin(theta / 2) / theta);
+    AngleAxisToQuaternion<Order>(axis_angle, quaternion);
     EXPECT_THAT(quaternion, testing::Pointwise(JetClose(kTolerance), expected));
   }
 }
 
 // Test that conversion works for very small angles when jets are used.
-TEST(Rotation, TinyAngleAxisToQuaternionForJets) {
+TYPED_TEST(QuaternionTest, TinyAngleAxisToQuaternionForJets) {
+  using Order = TypeParam;
   // Examine tiny x rotations that extend all the way to where
   // underflow occurs.
   for (int i = kSmallTinyCutoff; i >= kTinyZeroLimit; i--) {
@@ -1033,40 +1070,45 @@ TEST(Rotation, TinyAngleAxisToQuaternionForJets) {
     // To avoid loss of precision in the test itself,
     // a finite expansion is used here, which will
     // be exact up to machine precision for the test values used.
-    J3 expected[4] = {
-        MakeJ3(1.0, 0, 0, 0),
-        MakeJ3(0, 0.5, 0, 0),
-        MakeJ3(0, 0, 0.5, 0),
-        MakeJ3(0, 0, 0, 0.5),
-    };
-    AngleAxisToQuaternion(axis_angle, quaternion);
+    J3 expected[4];
+    expected[Order::kW] = MakeJ3(1.0, 0, 0, 0);
+    expected[Order::kX] = MakeJ3(0, 0.5, 0, 0);
+    expected[Order::kY] = MakeJ3(0, 0, 0.5, 0);
+    expected[Order::kZ] = MakeJ3(0, 0, 0, 0.5);
+    AngleAxisToQuaternion<Order>(axis_angle, quaternion);
     EXPECT_THAT(quaternion, testing::Pointwise(JetClose(kTolerance), expected));
   }
 }
 
 // Test that derivatives are correct for zero rotation.
-TEST(Rotation, ZeroAngleAxisToQuaternionForJets) {
+TYPED_TEST(QuaternionTest, ZeroAngleAxisToQuaternionForJets) {
+  using Order = TypeParam;
   J3 axis_angle[3] = {J3(0, 0), J3(0, 1), J3(0, 2)};
   J3 quaternion[4];
-  J3 expected[4] = {
-      MakeJ3(1.0, 0, 0, 0),
-      MakeJ3(0, 0.5, 0, 0),
-      MakeJ3(0, 0, 0.5, 0),
-      MakeJ3(0, 0, 0, 0.5),
-  };
-  AngleAxisToQuaternion(axis_angle, quaternion);
+  J3 expected[4];
+  expected[Order::kW] = MakeJ3(1.0, 0, 0, 0);
+  expected[Order::kX] = MakeJ3(0, 0.5, 0, 0);
+  expected[Order::kY] = MakeJ3(0, 0, 0.5, 0);
+  expected[Order::kZ] = MakeJ3(0, 0, 0, 0.5);
+  AngleAxisToQuaternion<Order>(axis_angle, quaternion);
   EXPECT_THAT(quaternion, testing::Pointwise(JetClose(kTolerance), expected));
 }
 
 // Test that exact conversion works for small angles.
-TEST(Rotation, SmallQuaternionToAngleAxisForJets) {
+TYPED_TEST(QuaternionTest, SmallQuaternionToAngleAxisForJets) {
+  using Order = TypeParam;
   // Examine small x rotations that are still large enough
   // to be well within the range represented by doubles.
   for (int i = -2; i >= kSmallTinyCutoff; i--) {
     double theta = pow(10.0, i);
     double s = sin(theta);
     double c = cos(theta);
-    J4 quaternion[4] = {J4(c, 0), J4(s, 1), J4(0, 2), J4(0, 3)};
+    J4 quaternion[4];
+    quaternion[Order::kW] = J4(c, 0);
+    ;
+    quaternion[Order::kX] = J4(s, 1);
+    quaternion[Order::kY] = J4(0, 2);
+    quaternion[Order::kZ] = J4(0, 3);
     J4 axis_angle[3];
     // clang-format off
     J4 expected[3] = {
@@ -1075,20 +1117,25 @@ TEST(Rotation, SmallQuaternionToAngleAxisForJets) {
         MakeJ4(0,        0,   0,    0,         2*theta/s),
     };
     // clang-format on
-    QuaternionToAngleAxis(quaternion, axis_angle);
+    QuaternionToAngleAxis<Order>(quaternion, axis_angle);
     EXPECT_THAT(axis_angle, testing::Pointwise(JetClose(kTolerance), expected));
   }
 }
 
 // Test that conversion works for very small angles.
-TEST(Rotation, TinyQuaternionToAngleAxisForJets) {
+TYPED_TEST(QuaternionTest, TinyQuaternionToAngleAxisForJets) {
+  using Order = TypeParam;
   // Examine tiny x rotations that extend all the way to where
   // underflow occurs.
   for (int i = kSmallTinyCutoff; i >= kTinyZeroLimit; i--) {
     double theta = pow(10.0, i);
     double s = sin(theta);
     double c = cos(theta);
-    J4 quaternion[4] = {J4(c, 0), J4(s, 1), J4(0, 2), J4(0, 3)};
+    J4 quaternion[4];
+    quaternion[Order::kW] = J4(c, 0);
+    quaternion[Order::kX] = J4(s, 1);
+    quaternion[Order::kY] = J4(0, 2);
+    quaternion[Order::kZ] = J4(0, 3);
     J4 axis_angle[3];
     // To avoid loss of precision in the test itself,
     // a finite expansion is used here, which will
@@ -1100,21 +1147,26 @@ TEST(Rotation, TinyQuaternionToAngleAxisForJets) {
         MakeJ4(0,        0,   0,   0,   2.0),
     };
     // clang-format on
-    QuaternionToAngleAxis(quaternion, axis_angle);
+    QuaternionToAngleAxis<Order>(quaternion, axis_angle);
     EXPECT_THAT(axis_angle, testing::Pointwise(JetClose(kTolerance), expected));
   }
 }
 
 // Test that conversion works for no rotation.
-TEST(Rotation, ZeroQuaternionToAngleAxisForJets) {
-  J4 quaternion[4] = {J4(1, 0), J4(0, 1), J4(0, 2), J4(0, 3)};
+TYPED_TEST(QuaternionTest, ZeroQuaternionToAngleAxisForJets) {
+  using Order = TypeParam;
+  J4 quaternion[4];
+  quaternion[Order::kW] = J4(1, 0);
+  quaternion[Order::kX] = J4(0, 1);
+  quaternion[Order::kY] = J4(0, 2);
+  quaternion[Order::kZ] = J4(0, 3);
   J4 axis_angle[3];
   J4 expected[3] = {
       MakeJ4(0, 0, 2.0, 0, 0),
       MakeJ4(0, 0, 0, 2.0, 0),
       MakeJ4(0, 0, 0, 0, 2.0),
   };
-  QuaternionToAngleAxis(quaternion, axis_angle);
+  QuaternionToAngleAxis<Order>(quaternion, axis_angle);
   EXPECT_THAT(axis_angle, testing::Pointwise(JetClose(kTolerance), expected));
 }
 
@@ -1619,14 +1671,14 @@ TEST(EulerAngles, RotationMatrixToExtrinsic313EulerSequenceForJets) {
   }
 }
 
-TEST(Quaternion, RotatePointGivesSameAnswerAsRotationByMatrixCanned) {
+TYPED_TEST(QuaternionTest, RotatePointGivesSameAnswerAsRotationByMatrixCanned) {
+  using Order = TypeParam;
   // Canned data generated in octave.
-  double const q[4] = {
-      +0.1956830471754074,
-      -0.0150618562474847,
-      +0.7634572982788086,
-      -0.3019454777240753,
-  };
+  double q[4];
+  q[Order::kW] = +0.1956830471754074;
+  q[Order::kX] = -0.0150618562474847;
+  q[Order::kY] = +0.7634572982788086;
+  q[Order::kZ] = -0.3019454777240753;
   double const Q[3][3] = {
       // Scaled rotation matrix.
       {-0.6355194033477252, +0.0951730541682254, +0.3078870197911186},
@@ -1642,22 +1694,22 @@ TEST(Quaternion, RotatePointGivesSameAnswerAsRotationByMatrixCanned) {
 
   // Compute R from q and compare to known answer.
   double Rq[3][3];
-  QuaternionToScaledRotation<double>(q, Rq[0]);
+  QuaternionToScaledRotation<Order>(q, Rq[0]);
   ExpectArraysClose(9, Q[0], Rq[0], kTolerance);
 
   // Now do the same but compute R with normalization.
-  QuaternionToRotation<double>(q, Rq[0]);
+  QuaternionToRotation<Order>(q, Rq[0]);
   ExpectArraysClose(9, R[0], Rq[0], kTolerance);
 }
 
-TEST(Quaternion, RotatePointGivesSameAnswerAsRotationByMatrix) {
+TYPED_TEST(QuaternionTest, RotatePointGivesSameAnswerAsRotationByMatrix) {
+  using Order = TypeParam;
   // Rotation defined by a unit quaternion.
-  double const q[4] = {
-      +0.2318160216097109,
-      -0.0178430356832060,
-      +0.9044300776717159,
-      -0.3576998641394597,
-  };
+  double q[4];
+  q[Order::kW] = +0.2318160216097109;
+  q[Order::kX] = -0.0178430356832060;
+  q[Order::kY] = +0.9044300776717159;
+  q[Order::kZ] = -0.3576998641394597;
   double const p[3] = {
       +0.11,
       -13.15,
@@ -1665,10 +1717,10 @@ TEST(Quaternion, RotatePointGivesSameAnswerAsRotationByMatrix) {
   };
 
   double R[3 * 3];
-  QuaternionToRotation(q, R);
+  QuaternionToRotation<Order>(q, R);
 
   double result1[3];
-  UnitQuaternionRotatePoint(q, p, result1);
+  UnitQuaternionRotatePoint<Order>(q, p, result1);
 
   double result2[3];
   VectorRef(result2, 3) = ConstMatrixRef(R, 3, 3) * ConstVectorRef(p, 3);
@@ -1676,7 +1728,8 @@ TEST(Quaternion, RotatePointGivesSameAnswerAsRotationByMatrix) {
 }
 
 // Verify that (a * b) * c == a * (b * c).
-TEST(Quaternion, MultiplicationIsAssociative) {
+TYPED_TEST(QuaternionTest, MultiplicationIsAssociative) {
+  using Order = TypeParam;
   std::mt19937 prng;
   std::uniform_real_distribution<double> uniform_distribution{-1.0, 1.0};
   double a[4];
@@ -1690,18 +1743,38 @@ TEST(Quaternion, MultiplicationIsAssociative) {
 
   double ab[4];
   double ab_c[4];
-  QuaternionProduct(a, b, ab);
-  QuaternionProduct(ab, c, ab_c);
+  QuaternionProduct<Order>(a, b, ab);
+  QuaternionProduct<Order>(ab, c, ab_c);
 
   double bc[4];
   double a_bc[4];
-  QuaternionProduct(b, c, bc);
-  QuaternionProduct(a, bc, a_bc);
+  QuaternionProduct<Order>(b, c, bc);
+  QuaternionProduct<Order>(a, bc, a_bc);
 
-  ASSERT_NEAR(ab_c[0], a_bc[0], kTolerance);
-  ASSERT_NEAR(ab_c[1], a_bc[1], kTolerance);
-  ASSERT_NEAR(ab_c[2], a_bc[2], kTolerance);
-  ASSERT_NEAR(ab_c[3], a_bc[3], kTolerance);
+  ASSERT_NEAR(ab_c[Order::kW], a_bc[Order::kW], kTolerance);
+  ASSERT_NEAR(ab_c[Order::kX], a_bc[Order::kX], kTolerance);
+  ASSERT_NEAR(ab_c[Order::kY], a_bc[Order::kY], kTolerance);
+  ASSERT_NEAR(ab_c[Order::kZ], a_bc[Order::kZ], kTolerance);
+}
+
+TYPED_TEST(QuaternionTest, UnitConjugationIdentity) {
+  using Order = TypeParam;
+  std::mt19937 prng;
+  std::uniform_real_distribution<double> uniform_distribution{-1.0, 1.0};
+  double a[4];
+  for (int i = 0; i < 4; ++i) {
+    a[i] = uniform_distribution(prng);
+  }
+  Eigen::Map<Eigen::Vector4d>{a}.normalize();
+  double b[4];
+  QuaternionConjugate<Order>(a, b);
+  double c[4];
+  QuaternionProduct<Order>(a, b, c);
+
+  EXPECT_NEAR(c[Order::kW], 1, kTolerance);
+  EXPECT_NEAR(c[Order::kX], 0, kTolerance);
+  EXPECT_NEAR(c[Order::kY], 0, kTolerance);
+  EXPECT_NEAR(c[Order::kZ], 0, kTolerance);
 }
 
 TEST(AngleAxis, RotatePointGivesSameAnswerAsRotationMatrix) {
@@ -1749,13 +1822,19 @@ TEST(AngleAxis, RotatePointGivesSameAnswerAsRotationMatrix) {
   }
 }
 
-TEST(Quaternion, UnitQuaternion) {
+TYPED_TEST(QuaternionTest, UnitQuaternion) {
+  using Order = TypeParam;
   using Jet = ceres::Jet<double, 4>;
-  std::array<Jet, 4> quaternion = {
-      Jet(1.0, 0), Jet(0.0, 1), Jet(0.0, 2), Jet(0.0, 3)};
+  std::array<Jet, 4> quaternion;
+  quaternion[Order::kW] = Jet(1.0, 0);
+  quaternion[Order::kX] = Jet(0.0, 1);
+  quaternion[Order::kY] = Jet(0.0, 2);
+  quaternion[Order::kZ] = Jet(0.0, 3);
+
   std::array<Jet, 3> point = {Jet(0.0), Jet(0.0), Jet(0.0)};
   std::array<Jet, 3> rotated_point;
-  QuaternionRotatePoint(quaternion.data(), point.data(), rotated_point.data());
+  QuaternionRotatePoint<Order>(
+      quaternion.data(), point.data(), rotated_point.data());
   for (int i = 0; i < 3; ++i) {
     EXPECT_EQ(rotated_point[i], point[i]);
     EXPECT_FALSE(rotated_point[i].v.array().isNaN().any());
