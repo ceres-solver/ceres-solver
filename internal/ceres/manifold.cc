@@ -37,9 +37,10 @@ inline void QuaternionPlusImpl(const double* x,
     return;
   }
 
-  const double sin_delta_by_delta = (std::sin(norm_delta) / norm_delta);
+  const double half_norm_delta = norm_delta / 2;
+  const double sin_delta_by_delta = (std::sin(half_norm_delta) / norm_delta);
   double q_delta[4];
-  q_delta[Order::kW] = std::cos(norm_delta);
+  q_delta[Order::kW] = std::cos(half_norm_delta);
   q_delta[Order::kX] = sin_delta_by_delta * delta[0];
   q_delta[Order::kY] = sin_delta_by_delta * delta[1];
   q_delta[Order::kZ] = sin_delta_by_delta * delta[2];
@@ -75,6 +76,7 @@ inline void QuaternionPlusJacobianImpl(const double* x, double* jacobian_ptr) {
   jacobian(Order::kZ, 0) = x[Order::kY];
   jacobian(Order::kZ, 1) = -x[Order::kX];
   jacobian(Order::kZ, 2) = x[Order::kW];
+  jacobian /= 2;
 }
 
 template <typename Order>
@@ -101,7 +103,7 @@ inline void QuaternionMinusImpl(const double* y,
                                    ambient_y_minus_x[Order::kY],
                                    ambient_y_minus_x[Order::kZ]);
   if (std::fpclassify(u_norm) != FP_ZERO) {
-    const double theta = std::atan2(u_norm, ambient_y_minus_x[Order::kW]);
+    const double theta = 2 * std::atan2(u_norm, ambient_y_minus_x[Order::kW]);
     y_minus_x[0] = theta * ambient_y_minus_x[Order::kX] / u_norm;
     y_minus_x[1] = theta * ambient_y_minus_x[Order::kY] / u_norm;
     y_minus_x[2] = theta * ambient_y_minus_x[Order::kZ] / u_norm;
@@ -127,6 +129,7 @@ inline void QuaternionMinusJacobianImpl(const double* x, double* jacobian_ptr) {
   jacobian(2, Order::kX) = -x[Order::kY];
   jacobian(2, Order::kY) = x[Order::kX];
   jacobian(2, Order::kZ) = x[Order::kW];
+  jacobian *= 2;
 }
 
 }  // namespace
