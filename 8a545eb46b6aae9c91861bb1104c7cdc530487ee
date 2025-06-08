@@ -1,5 +1,23 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "651a82e9_7aef58c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2025-06-08T13:30:41Z",
+      "side": 1,
+      "message": "Thanks for doing this Sergiu. Does this mean we have a stable build that we can ship and not make people miserable?",
+      "revId": "8a545eb46b6aae9c91861bb1104c7cdc530487ee",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
