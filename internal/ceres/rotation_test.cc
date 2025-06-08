@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2025 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -1642,11 +1642,11 @@ TEST(Quaternion, RotatePointGivesSameAnswerAsRotationByMatrixCanned) {
 
   // Compute R from q and compare to known answer.
   double Rq[3][3];
-  QuaternionToScaledRotation<double>(q, Rq[0]);
+  QuaternionToScaledRotation(q, Rq[0]);
   ExpectArraysClose(9, Q[0], Rq[0], kTolerance);
 
   // Now do the same but compute R with normalization.
-  QuaternionToRotation<double>(q, Rq[0]);
+  QuaternionToRotation(q, Rq[0]);
   ExpectArraysClose(9, R[0], Rq[0], kTolerance);
 }
 
@@ -1702,6 +1702,25 @@ TEST(Quaternion, MultiplicationIsAssociative) {
   ASSERT_NEAR(ab_c[1], a_bc[1], kTolerance);
   ASSERT_NEAR(ab_c[2], a_bc[2], kTolerance);
   ASSERT_NEAR(ab_c[3], a_bc[3], kTolerance);
+}
+
+TEST(Quaternion, UnitConjugationIdentity) {
+  std::mt19937 prng;
+  std::uniform_real_distribution<double> uniform_distribution{-1.0, 1.0};
+  double a[4];
+  for (int i = 0; i < 4; ++i) {
+    a[i] = uniform_distribution(prng);
+  }
+  Eigen::Map<Eigen::Vector4d>{a}.normalize();
+  double b[4];
+  QuaternionConjugate(a, b);
+  double c[4];
+  QuaternionProduct(a, b, c);
+
+  EXPECT_NEAR(c[0], 1, kTolerance);
+  EXPECT_EQ(c[1], 0);
+  EXPECT_EQ(c[2], 0);
+  EXPECT_EQ(c[3], 0);
 }
 
 TEST(AngleAxis, RotatePointGivesSameAnswerAsRotationMatrix) {
