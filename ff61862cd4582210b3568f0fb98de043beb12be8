@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "46ed06d4_764842bd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2025-06-09T11:50:52Z",
+      "side": 1,
+      "message": "Good catch! I\u0027ve now updated Grid2D as well.",
+      "parentUuid": "8d804d8c_f486c869",
+      "revId": "ff61862cd4582210b3568f0fb98de043beb12be8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a85ba688_3aef15fb",
@@ -31,6 +49,30 @@
       "writtenOn": "2025-06-09T05:33:18Z",
       "side": 1,
       "message": "what are the restrictions on the type U? do we need tests for this?",
+      "range": {
+        "startLine": 193,
+        "startChar": 12,
+        "endLine": 193,
+        "endChar": 20
+      },
+      "revId": "ff61862cd4582210b3568f0fb98de043beb12be8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76012e49_d9c548ba",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2025-06-09T11:50:52Z",
+      "side": 1,
+      "message": "No restrictions other than convertible from `T` to `U`. I\u0027ve also added tests.",
+      "parentUuid": "a85ba688_3aef15fb",
       "range": {
         "startLine": 193,
         "startChar": 12,
