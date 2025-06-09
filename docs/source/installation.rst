@@ -1081,7 +1081,7 @@ Version 2.0
 -----------
 
 - When using Ceres with CMake, the target name in v2.0 is
-  ``Ceres::ceres`` following modern naming convetions. The legacy
+  ``Ceres::ceres`` following modern naming conventions. The legacy
   target ``ceres`` exists for backwards compatibility, but is
   deprecated. ``CERES_INCLUDE_DIRS`` is not set any more, as the
   exported Ceres CMake target already contains the definitions of its
