@@ -36,7 +36,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Ceres Solver'
-copyright = u'2024 Google Inc'
+copyright = u'2025 Google Inc'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
