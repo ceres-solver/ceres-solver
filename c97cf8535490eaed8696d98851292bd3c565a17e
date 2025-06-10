@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "412cfd77_16f4c0dc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2025-06-10T13:29:55Z",
+      "side": 1,
+      "message": "I see that a related undertaking of generalizing quaternion memory layout was started in I99d0b673c515be1a539e8341839970c5b8460962 but was never merged.\n\nThe main differences of this CL to the above are:\n* Order is a generic type instead of a `bool` which is both more expressive and extendible\n* Specifying coefficients order does not force the caller to specify the floating-point type at the same time due to exactly opposite template argument order\n* No adapters are introduced/needed",
+      "revId": "c97cf8535490eaed8696d98851292bd3c565a17e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
