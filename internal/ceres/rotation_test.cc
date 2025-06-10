@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2025 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -1732,18 +1732,22 @@ TEST(AngleAxis, RotatePointGivesSameAnswerAsRotationMatrix) {
       rotation_matrix_rotated_p[1] = R[1] * p[0] + R[4] * p[1] + R[7] * p[2];
       rotation_matrix_rotated_p[2] = R[2] * p[0] + R[5] * p[1] + R[8] * p[2];
 
-      AngleAxisRotatePoint(angle_axis, p, angle_axis_rotated_p);
-      for (int k = 0; k < 3; ++k) {
-        // clang-format off
-        EXPECT_NEAR(rotation_matrix_rotated_p[k],
-                    angle_axis_rotated_p[k],
-                    kTolerance) << "p: " << p[0]
-                                << " " << p[1]
-                                << " " << p[2]
-                                << " angle_axis: " << angle_axis[0]
-                                << " " << angle_axis[1]
-                                << " " << angle_axis[2];
-        // clang-format on
+      // Rotate point and write the result to a different and the same
+      // destination
+      for (double* const dst : {angle_axis_rotated_p, angle_axis}) {
+        AngleAxisRotatePoint(angle_axis, p, dst);
+        for (int k = 0; k < 3; ++k) {
+          // clang-format off
+          EXPECT_NEAR(rotation_matrix_rotated_p[k],
+                      dst[k],
+                      kTolerance) << "p: " << p[0]
+                                  << " " << p[1]
+                                  << " " << p[2]
+                                  << " angle_axis: " << angle_axis[0]
+                                  << " " << angle_axis[1]
+                                  << " " << angle_axis[2];
+          // clang-format on
+        }
       }
     }
   }
@@ -1790,18 +1794,22 @@ TEST(AngleAxis, NearZeroRotatePointGivesSameAnswerAsRotationMatrix) {
     rotation_matrix_rotated_p[1] = R[1] * p[0] + R[4] * p[1] + R[7] * p[2];
     rotation_matrix_rotated_p[2] = R[2] * p[0] + R[5] * p[1] + R[8] * p[2];
 
-    AngleAxisRotatePoint(angle_axis, p, angle_axis_rotated_p);
-    for (int k = 0; k < 3; ++k) {
-      // clang-format off
-      EXPECT_NEAR(rotation_matrix_rotated_p[k],
-                  angle_axis_rotated_p[k],
-                  kTolerance) << "p: " << p[0]
-                              << " " << p[1]
-                              << " " << p[2]
-                              << " angle_axis: " << angle_axis[0]
-                              << " " << angle_axis[1]
-                              << " " << angle_axis[2];
-      // clang-format on
+    // Rotate point and write the result to a different and the same
+    // destination
+    for (double* const dst : {angle_axis_rotated_p, angle_axis}) {
+      AngleAxisRotatePoint(angle_axis, p, dst);
+      for (int k = 0; k < 3; ++k) {
+        // clang-format off
+        EXPECT_NEAR(rotation_matrix_rotated_p[k],
+                    dst[k],
+                    kTolerance) << "p: " << p[0]
+                                << " " << p[1]
+                                << " " << p[2]
+                                << " angle_axis: " << angle_axis[0]
+                                << " " << angle_axis[1]
+                                << " " << angle_axis[2];
+        // clang-format on
+      }
     }
   }
 }

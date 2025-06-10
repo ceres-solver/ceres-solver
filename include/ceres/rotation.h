@@ -282,8 +282,7 @@ inline T DotProduct(const T x[3], const T y[3]);
 
 // y = R(angle_axis) * x;
 //
-// Inplace rotation is not supported. pt and result must point to different
-// memory locations, otherwise the result will be undefined.
+// Inplace rotation is supported.
 template <typename T>
 inline void AngleAxisRotatePoint(const T angle_axis[3],
                                  const T pt[3],
@@ -791,9 +790,10 @@ template <typename T>
 inline void AngleAxisRotatePoint(const T angle_axis[3],
                                  const T pt[3],
                                  T result[3]) {
-  DCHECK_NE(pt, result) << "Inplace rotation is not supported.";
+  using std::cos;
   using std::fpclassify;
   using std::hypot;
+  using std::sin;
 
   const T theta = hypot(angle_axis[0], angle_axis[1], angle_axis[2]);
 
