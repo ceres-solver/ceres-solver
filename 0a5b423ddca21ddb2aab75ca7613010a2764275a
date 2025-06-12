@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28c7cec5_f7e08213",
+        "filename": "include/ceres/manifold_test_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2025-06-12T19:37:40Z",
+      "side": 1,
+      "message": "Should we possibly use this check consistently instead of the coefficient-wise comparison performed by the `IsNearQuaternion` matcher (or the other way around)?",
+      "range": {
+        "startLine": 239,
+        "startChar": 4,
+        "endLine": 263,
+        "endChar": 19
+      },
+      "revId": "0a5b423ddca21ddb2aab75ca7613010a2764275a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
