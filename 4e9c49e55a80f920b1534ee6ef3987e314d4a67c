@@ -34,6 +34,24 @@
       "tag": "mailMessageId\u003d\u003cCAK0oyEosvTsEZF-e6MzmzUcgX-2jEkhsf4MQGECKYOhS9+CZvg@mail.gmail.com\u003e",
       "revId": "4e9c49e55a80f920b1534ee6ef3987e314d4a67c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08c58fca_fd654e68",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2025-06-12T17:01:37Z",
+      "side": 1,
+      "message": "Thank you!",
+      "parentUuid": "7732db2b_1006e74b",
+      "revId": "4e9c49e55a80f920b1534ee6ef3987e314d4a67c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
