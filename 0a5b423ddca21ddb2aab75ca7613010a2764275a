@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "421866c6_85987c3a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2025-06-13T23:24:28Z",
+      "side": 1,
+      "message": "Let me give this some more thought.\n\nSameer\n\nOn Fri, Jun 13, 2025, 4:13 PM Sergiu Deitsch (Gerrit) \u003cnoreply-gerritcodereview+2IOHGVqgDrG06rZMyMfMjw\u003d\u003d@\u003e wrote: google.com",
+      "revId": "0a5b423ddca21ddb2aab75ca7613010a2764275a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b18b9007_c43247e4",
