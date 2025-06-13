@@ -39,6 +39,30 @@
       },
       "revId": "54237d234e27201714dad165debed911cf0f54e0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c0d06aa_763ecb34",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2025-06-13T23:16:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc39f965_2ca9400b",
+      "range": {
+        "startLine": 41,
+        "startChar": 15,
+        "endLine": 41,
+        "endChar": 33
+      },
+      "revId": "54237d234e27201714dad165debed911cf0f54e0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
