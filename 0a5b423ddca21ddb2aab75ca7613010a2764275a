@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b18b9007_c43247e4",
+        "filename": "include/ceres/manifold_test_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-06-13T22:36:36Z",
+      "side": 1,
+      "message": "I am not fond of this change in this matcher.\n\nPreviously the matcher was type agnostic, but now its looking at the type and doing non-trivial work. This makes the callsite, a bit deceptive. I think it is better to have quaternion specific matcher, which knows that its dealing with quaternions.",
+      "range": {
+        "startLine": 219,
+        "startChar": 20,
+        "endLine": 219,
+        "endChar": 21
+      },
+      "revId": "0a5b423ddca21ddb2aab75ca7613010a2764275a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "28c7cec5_f7e08213",
         "filename": "include/ceres/manifold_test_utils.h",
         "patchSetId": 3
@@ -19,6 +42,394 @@
         "startChar": 4,
         "endLine": 263,
         "endChar": 19
+      },
+      "revId": "0a5b423ddca21ddb2aab75ca7613010a2764275a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f796a80_7ab57612",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-06-13T22:36:36Z",
+      "side": 1,
+      "message": "don\u0027t you want the order of the template parameters to be the reverse? where the required parameter comes first, and the defaulted one comes after?",
+      "range": {
+        "startLine": 104,
+        "startChar": 26,
+        "endLine": 104,
+        "endChar": 27
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "d8b6c0e3_cf6d9116",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "include/ceres/rotation.h",
+              "range": {
+                "startLine": 104,
+                "startChar": 0,
+                "endLine": 105,
+                "endChar": 0
+              },
+              "replacement": "template \u003ctypename T, typename Order \u003d CeresQuaternionOrder\u003e\n"
+            },
+            {
+              "path": "include/ceres/rotation.h",
+              "range": {
+                "startLine": 113,
+                "startChar": 0,
+                "endLine": 114,
+                "endChar": 0
+              },
+              "replacement": "template \u003ctypename T, typename Order \u003d CeresQuaternionOrder\u003e\n"
+            },
+            {
+              "path": "include/ceres/rotation.h",
+              "range": {
+                "startLine": 119,
+                "startChar": 0,
+                "endLine": 120,
+                "endChar": 0
+              },
+              "replacement": "template \u003ctypename T, typename Order \u003d CeresQuaternionOrder\u003e\n"
+            },
+            {
+              "path": "include/ceres/rotation.h",
+              "range": {
+                "startLine": 122,
+                "startChar": 0,
+                "endLine": 124,
+                "endChar": 0
+              },
+              "replacement": "template \u003ctypename T,\n"
+            },
+            {
+              "path": "include/ceres/rotation.h",
+              "range": {
+                "startLine": 125,
+                "startChar": 0,
+                "endLine": 126,
+                "endChar": 0
+              },
+              "replacement": "          int col_stride,\n          typename Order \u003d CeresQuaternionOrder\u003e\n"
+            },
+            {
+              "path": "include/ceres/rotation.h",
+              "range": {
+                "startLine": 243,
+                "startChar": 0,
+                "endLine": 244,
+                "endChar": 0
+              },
+              "replacement": "template \u003ctypename T, typename Order \u003d CeresQuaternionOrder\u003e\n"
+            },
+            {
+              "path": "include/ceres/rotation.h",
+              "range": {
+                "startLine": 246,
+                "startChar": 0,
+                "endLine": 248,
+                "endChar": 0
+              },
+              "replacement": "template \u003ctypename T,\n"
+            },
+            {
+              "path": "include/ceres/rotation.h",
+              "range": {
+                "startLine": 249,
+                "startChar": 0,
+                "endLine": 250,
+                "endChar": 0
+              },
+              "replacement": "          int col_stride,\n          typename Order \u003d CeresQuaternionOrder\u003e\n"
+            },
+            {
+              "path": "include/ceres/rotation.h",
+              "range": {
+                "startLine": 257,
+                "startChar": 0,
+                "endLine": 258,
+                "endChar": 0
+              },
+              "replacement": "template \u003ctypename T, typename Order \u003d CeresQuaternionOrder\u003e\n"
+            },
+            {
+              "path": "include/ceres/rotation.h",
+              "range": {
+                "startLine": 260,
+                "startChar": 0,
+                "endLine": 262,
+                "endChar": 0
+              },
+              "replacement": "template \u003ctypename T,\n"
+            },
+            {
+              "path": "include/ceres/rotation.h",
+              "range": {
+                "startLine": 263,
+                "startChar": 0,
+                "endLine": 264,
+                "endChar": 0
+              },
+              "replacement": "          int col_stride,\n          typename Order \u003d CeresQuaternionOrder\u003e\n"
+            },
+            {
+              "path": "include/ceres/rotation.h",
+              "range": {
+                "startLine": 278,
+                "startChar": 0,
+                "endLine": 279,
+                "endChar": 0
+              },
+              "replacement": "template \u003ctypename T, typename Order \u003d CeresQuaternionOrder\u003e\n"
+            },
+            {
+              "path": "include/ceres/rotation.h",
+              "range": {
+                "startLine": 286,
+                "startChar": 0,
+                "endLine": 287,
+                "endChar": 0
+              },
+              "replacement": "template \u003ctypename T, typename Order \u003d CeresQuaternionOrder\u003e\n"
+            },
+            {
+              "path": "include/ceres/rotation.h",
+              "range": {
+                "startLine": 294,
+                "startChar": 0,
+                "endLine": 295,
+                "endChar": 0
+              },
+              "replacement": "template \u003ctypename T, typename Order \u003d CeresQuaternionOrder\u003e\n"
+            },
+            {
+              "path": "include/ceres/rotation.h",
+              "range": {
+                "startLine": 300,
+                "startChar": 0,
+                "endLine": 301,
+                "endChar": 0
+              },
+              "replacement": "template \u003ctypename T, typename Order \u003d CeresQuaternionOrder\u003e\n"
+            },
+            {
+              "path": "include/ceres/rotation.h",
+              "range": {
+                "startLine": 345,
+                "startChar": 0,
+                "endLine": 346,
+                "endChar": 0
+              },
+              "replacement": "template \u003ctypename T, typename Order\u003e\n"
+            },
+            {
+              "path": "include/ceres/rotation.h",
+              "range": {
+                "startLine": 375,
+                "startChar": 0,
+                "endLine": 376,
+                "endChar": 0
+              },
+              "replacement": "template \u003ctypename T, typename Order\u003e\n"
+            },
+            {
+              "path": "include/ceres/rotation.h",
+              "range": {
+                "startLine": 420,
+                "startChar": 0,
+                "endLine": 421,
+                "endChar": 0
+              },
+              "replacement": "template \u003ctypename T, typename Order\u003e\n"
+            },
+            {
+              "path": "include/ceres/rotation.h",
+              "range": {
+                "startLine": 427,
+                "startChar": 0,
+                "endLine": 428,
+                "endChar": 0
+              },
+              "replacement": "template \u003ctypename T, int row_stride, int col_stride, typename Order\u003e\n"
+            },
+            {
+              "path": "include/ceres/rotation.h",
+              "range": {
+                "startLine": 698,
+                "startChar": 0,
+                "endLine": 699,
+                "endChar": 0
+              },
+              "replacement": "template \u003ctypename T, typename Order\u003e\n"
+            },
+            {
+              "path": "include/ceres/rotation.h",
+              "range": {
+                "startLine": 703,
+                "startChar": 0,
+                "endLine": 704,
+                "endChar": 0
+              },
+              "replacement": "template \u003ctypename T, int row_stride, int col_stride, typename Order\u003e\n"
+            },
+            {
+              "path": "include/ceres/rotation.h",
+              "range": {
+                "startLine": 731,
+                "startChar": 0,
+                "endLine": 732,
+                "endChar": 0
+              },
+              "replacement": "template \u003ctypename T, typename Order\u003e\n"
+            },
+            {
+              "path": "include/ceres/rotation.h",
+              "range": {
+                "startLine": 736,
+                "startChar": 0,
+                "endLine": 737,
+                "endChar": 0
+              },
+              "replacement": "template \u003ctypename T, int row_stride, int col_stride, typename Order\u003e\n"
+            },
+            {
+              "path": "include/ceres/rotation.h",
+              "range": {
+                "startLine": 752,
+                "startChar": 0,
+                "endLine": 753,
+                "endChar": 0
+              },
+              "replacement": "template \u003ctypename T, typename Order\u003e\n"
+            },
+            {
+              "path": "include/ceres/rotation.h",
+              "range": {
+                "startLine": 774,
+                "startChar": 0,
+                "endLine": 775,
+                "endChar": 0
+              },
+              "replacement": "template \u003ctypename T, typename Order\u003e\n"
+            },
+            {
+              "path": "include/ceres/rotation.h",
+              "range": {
+                "startLine": 794,
+                "startChar": 0,
+                "endLine": 795,
+                "endChar": 0
+              },
+              "replacement": "template \u003ctypename T, typename Order\u003e\n"
+            },
+            {
+              "path": "include/ceres/rotation.h",
+              "range": {
+                "startLine": 807,
+                "startChar": 0,
+                "endLine": 808,
+                "endChar": 0
+              },
+              "replacement": "template \u003ctypename T, typename Order\u003e\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0a5b423ddca21ddb2aab75ca7613010a2764275a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96fb1760_7bd87208",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-06-13T22:36:36Z",
+      "side": 1,
+      "message": "even more so here, don\u0027t you want the quarternionorder to be the very last parameter?",
+      "range": {
+        "startLine": 122,
+        "startChar": 10,
+        "endLine": 122,
+        "endChar": 18
+      },
+      "revId": "0a5b423ddca21ddb2aab75ca7613010a2764275a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2935ba7_e06507af",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-06-13T22:36:36Z",
+      "side": 1,
+      "message": "Compute",
+      "range": {
+        "startLine": 297,
+        "startChar": 3,
+        "endLine": 297,
+        "endChar": 11
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "6fabbb55_94f89c33",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "include/ceres/rotation.h",
+              "range": {
+                "startLine": 297,
+                "startChar": 0,
+                "endLine": 298,
+                "endChar": 0
+              },
+              "replacement": "// Compute the conjugate of the quaternion q in store it in z.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0a5b423ddca21ddb2aab75ca7613010a2764275a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31805a48_fc770bad",
+        "filename": "internal/ceres/manifold.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-06-13T22:36:36Z",
+      "side": 1,
+      "message": "this is really nice.",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 21
       },
       "revId": "0a5b423ddca21ddb2aab75ca7613010a2764275a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
