@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "00bb21fe_a1eff937",
+        "filename": "include/ceres/manifold_test_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2025-06-13T23:13:48Z",
+      "side": 1,
+      "message": "The matcher is still type agnostic and only uses a different comparison logic for two specific manifold types. Think of an overload or a specialization.\n\nIntroducing a completely new matcher would result in significant code duplication, which I wanted to avoid. Ideally, we would overload the matcher to better split the code. However, I was not able to find a way to make matchers with the same name type-dependent.",
+      "parentUuid": "b18b9007_c43247e4",
+      "range": {
+        "startLine": 219,
+        "startChar": 20,
+        "endLine": 219,
+        "endChar": 21
+      },
+      "revId": "0a5b423ddca21ddb2aab75ca7613010a2764275a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "28c7cec5_f7e08213",
         "filename": "include/ceres/manifold_test_utils.h",
         "patchSetId": 3
@@ -350,6 +374,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9b1b71a2_95ace5ee",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2025-06-13T23:13:48Z",
+      "side": 1,
+      "message": "This is intentional to avoid redundancy. Placing `Order` first allows `T` to be deduced automatically from the arguments. Reversing the order of template arguments will lead to unnecessarily longer and less readable code whenever the order must be specified.",
+      "parentUuid": "3f796a80_7ab57612",
+      "range": {
+        "startLine": 104,
+        "startChar": 26,
+        "endLine": 104,
+        "endChar": 27
+      },
+      "revId": "0a5b423ddca21ddb2aab75ca7613010a2764275a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "96fb1760_7bd87208",
         "filename": "include/ceres/rotation.h",
         "patchSetId": 3
@@ -361,6 +409,30 @@
       "writtenOn": "2025-06-13T22:36:36Z",
       "side": 1,
       "message": "even more so here, don\u0027t you want the quarternionorder to be the very last parameter?",
+      "range": {
+        "startLine": 122,
+        "startChar": 10,
+        "endLine": 122,
+        "endChar": 18
+      },
+      "revId": "0a5b423ddca21ddb2aab75ca7613010a2764275a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbb4152c_f65956cc",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2025-06-13T23:13:48Z",
+      "side": 1,
+      "message": "The way to think about this is that the `Order` always refers to the quaternion and is not tied to the order of different rotation types in function\u0027s name or their arguments. This ensures consistency in the ordering of template arguments regardless of the conversion direction.",
+      "parentUuid": "96fb1760_7bd87208",
       "range": {
         "startLine": 122,
         "startChar": 10,
@@ -408,6 +480,30 @@
           ]
         }
       ],
+      "revId": "0a5b423ddca21ddb2aab75ca7613010a2764275a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc909c99_0cda67e1",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2025-06-13T23:13:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2935ba7_e06507af",
+      "range": {
+        "startLine": 297,
+        "startChar": 3,
+        "endLine": 297,
+        "endChar": 11
+      },
       "revId": "0a5b423ddca21ddb2aab75ca7613010a2764275a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
