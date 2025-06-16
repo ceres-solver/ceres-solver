@@ -138,6 +138,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "715dbd31_75f34f6c",
+        "filename": "include/ceres/manifold_test_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-06-16T21:27:58Z",
+      "side": 1,
+      "message": "thats a good question, sorry I did not think about this carefully earlier. \nI think IsNearQuaternion is trying to solve the same problem, and the coeffwise comparison is stronger than the delta computation. so perhaps with the same compile time checks we can just call IsNearQuaternion instead here?",
+      "parentUuid": "28c7cec5_f7e08213",
+      "range": {
+        "startLine": 239,
+        "startChar": 4,
+        "endLine": 263,
+        "endChar": 19
+      },
+      "revId": "0a5b423ddca21ddb2aab75ca7613010a2764275a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3f796a80_7ab57612",
         "filename": "include/ceres/rotation.h",
         "patchSetId": 3
