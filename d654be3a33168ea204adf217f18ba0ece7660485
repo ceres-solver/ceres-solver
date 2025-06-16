@@ -52,6 +52,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e2482ae_a7a04ea3",
+        "filename": "include/ceres/manifold_test_utils.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2025-06-16T21:24:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f5364be_5a56c78e",
+      "range": {
+        "startLine": 247,
+        "startChar": 46,
+        "endLine": 247,
+        "endChar": 59
+      },
+      "revId": "d654be3a33168ea204adf217f18ba0ece7660485",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "17c904d0_1b52feff",
@@ -99,6 +123,30 @@
           ]
         }
       ],
+      "revId": "d654be3a33168ea204adf217f18ba0ece7660485",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ee90ee9_22c59dcc",
+        "filename": "include/ceres/manifold_test_utils.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2025-06-16T21:24:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17c904d0_1b52feff",
+      "range": {
+        "startLine": 249,
+        "startChar": 11,
+        "endLine": 249,
+        "endChar": 28
+      },
       "revId": "d654be3a33168ea204adf217f18ba0ece7660485",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -160,6 +208,30 @@
           ]
         }
       ],
+      "revId": "d654be3a33168ea204adf217f18ba0ece7660485",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9b9cfb5_4763d1a4",
+        "filename": "include/ceres/manifold_test_utils.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2025-06-16T21:24:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37ebfc44_fcc14d59",
+      "range": {
+        "startLine": 252,
+        "startChar": 11,
+        "endLine": 252,
+        "endChar": 20
+      },
       "revId": "d654be3a33168ea204adf217f18ba0ece7660485",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
