@@ -1,0 +1,167 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f5364be_5a56c78e",
+        "filename": "include/ceres/manifold_test_utils.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-06-16T12:58:21Z",
+      "side": 1,
+      "message": "shoudn\u0027t this just be actual_conj?",
+      "range": {
+        "startLine": 247,
+        "startChar": 46,
+        "endLine": 247,
+        "endChar": 59
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "97be2c55_c3a6829a",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "include/ceres/manifold_test_utils.h",
+              "range": {
+                "startLine": 246,
+                "startChar": 0,
+                "endLine": 248,
+                "endChar": 0
+              },
+              "replacement": "    double actual_conj[4];\n    QuaternionConjugate\u003cOrder\u003e(actual.data(), actual_conj);\n"
+            },
+            {
+              "path": "include/ceres/manifold_test_utils.h",
+              "range": {
+                "startLine": 250,
+                "startChar": 0,
+                "endLine": 251,
+                "endChar": 0
+              },
+              "replacement": "    QuaternionProduct\u003cOrder\u003e(actual_conj, y.data(), ambient_y_minus_y);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d654be3a33168ea204adf217f18ba0ece7660485",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17c904d0_1b52feff",
+        "filename": "include/ceres/manifold_test_utils.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-06-16T12:58:21Z",
+      "side": 1,
+      "message": "and this actual_minus_y?\n\nambient_y_minus_y doesn\u0027t read right.",
+      "range": {
+        "startLine": 249,
+        "startChar": 11,
+        "endLine": 249,
+        "endChar": 28
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "ff975046_debadc99",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "include/ceres/manifold_test_utils.h",
+              "range": {
+                "startLine": 249,
+                "startChar": 0,
+                "endLine": 251,
+                "endChar": 0
+              },
+              "replacement": "    double actual_minus_y[4];\n    QuaternionProduct\u003cOrder\u003e(actual_y_conj, y.data(), actual_minus_y);\n"
+            },
+            {
+              "path": "include/ceres/manifold_test_utils.h",
+              "range": {
+                "startLine": 253,
+                "startChar": 0,
+                "endLine": 254,
+                "endChar": 0
+              },
+              "replacement": "    QuaternionToAngleAxis\u003cOrder\u003e(actual_minus_y, y_minus_y);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d654be3a33168ea204adf217f18ba0ece7660485",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37ebfc44_fcc14d59",
+        "filename": "include/ceres/manifold_test_utils.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-06-16T12:58:21Z",
+      "side": 1,
+      "message": "call this delta.",
+      "range": {
+        "startLine": 252,
+        "startChar": 11,
+        "endLine": 252,
+        "endChar": 20
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "175c8735_a04b8b2a",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "include/ceres/manifold_test_utils.h",
+              "range": {
+                "startLine": 252,
+                "startChar": 0,
+                "endLine": 254,
+                "endChar": 0
+              },
+              "replacement": "    double delta[3];\n    QuaternionToAngleAxis\u003cOrder\u003e(ambient_y_minus_y, delta);\n"
+            },
+            {
+              "path": "include/ceres/manifold_test_utils.h",
+              "range": {
+                "startLine": 255,
+                "startChar": 0,
+                "endLine": 256,
+                "endChar": 0
+              },
+              "replacement": "    const double d \u003d std::hypot(delta[0], delta[1], delta[2]);\n"
+            },
+            {
+              "path": "include/ceres/manifold_test_utils.h",
+              "range": {
+                "startLine": 261,
+                "startChar": 0,
+                "endLine": 262,
+                "endChar": 0
+              },
+              "replacement": "          \u003c\u003c Eigen::Map\u003cconst Eigen::Vector3d\u003e{delta}.transpose()\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d654be3a33168ea204adf217f18ba0ece7660485",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

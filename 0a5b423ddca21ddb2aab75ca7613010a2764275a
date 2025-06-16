@@ -67,6 +67,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5edd6def_15d16280",
+        "filename": "include/ceres/manifold_test_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-06-16T12:58:21Z",
+      "side": 1,
+      "message": "So the issue as I understand it is that Quaternions are a double covering in that q and -q represent the same object/rotation and thus the need to do this computation in a specialized manner.",
+      "parentUuid": "00bb21fe_a1eff937",
+      "range": {
+        "startLine": 219,
+        "startChar": 20,
+        "endLine": 219,
+        "endChar": 21
+      },
+      "revId": "0a5b423ddca21ddb2aab75ca7613010a2764275a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "28c7cec5_f7e08213",
         "filename": "include/ceres/manifold_test_utils.h",
         "patchSetId": 3
@@ -403,6 +427,30 @@
       "side": 1,
       "message": "This is intentional to avoid redundancy. Placing `Order` first allows `T` to be deduced automatically from the arguments. Reversing the order of template arguments will lead to unnecessarily longer and less readable code whenever the order must be specified.",
       "parentUuid": "3f796a80_7ab57612",
+      "range": {
+        "startLine": 104,
+        "startChar": 26,
+        "endLine": 104,
+        "endChar": 27
+      },
+      "revId": "0a5b423ddca21ddb2aab75ca7613010a2764275a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "67b02d2c_ff9be9cd",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-06-16T12:58:21Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "9b1b71a2_95ace5ee",
       "range": {
         "startLine": 104,
         "startChar": 26,
