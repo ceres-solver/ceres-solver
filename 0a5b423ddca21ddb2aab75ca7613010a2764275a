@@ -162,6 +162,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "092e4790_53f9c5d3",
+        "filename": "include/ceres/manifold_test_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2025-06-16T22:06:46Z",
+      "side": 1,
+      "message": "That would work. However, what would be the output for `diff` and `diffnorm` by the matcher specifically for quaternions? As is, neither would be easily interpretable for a quaternion `q` and a second one `p ~\u003d -q` (almost similar) in case of a failure (because the difference to the negation is numerically slightly above the tolerance threshold).",
+      "parentUuid": "715dbd31_75f34f6c",
+      "range": {
+        "startLine": 239,
+        "startChar": 4,
+        "endLine": 263,
+        "endChar": 19
+      },
+      "revId": "0a5b423ddca21ddb2aab75ca7613010a2764275a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3f796a80_7ab57612",
         "filename": "include/ceres/rotation.h",
         "patchSetId": 3
