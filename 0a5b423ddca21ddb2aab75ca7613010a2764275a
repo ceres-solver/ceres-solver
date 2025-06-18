@@ -234,6 +234,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c478e5e8_e5503d77",
+        "filename": "include/ceres/manifold_test_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-06-18T16:05:03Z",
+      "side": 1,
+      "message": "I believe it is okay to nest matchers, but I am okay not to nest them.\nSince we have a matcher named IsNearQuaternion already, overloading that name does not seem ideal.\n\nIsNearQuaternionImpl or IsNearQuaternionInternal or something is better, since it is just an subroutine not a user visible function. I would also put it in an internal namespace.\n\nI think if you are going to print the diff, then you should print both versions of the diff p + q, p - q. IMO it is odd to unpredictably print a version that was not used for making the actual decision.\n\n\nAs for the distance, if the comparison is being done coeffwise, then it doesn\u0027t make much sense to print a norm. It will again mislead the reader about what the actual metric was used to make the decision. \n\nso really the first question is, do you want to do a coeffwise comparison or distance in rotation based comparison. \n\nThe current IsNearQuaternion is really  IsNearQuaternionCoeffWise \n\nand suppose we had another matcher IsNearQuaternionNormWise (Which is basically what we are doing right now), then we could use that..\n\n\nokay now that I have gone through this rambling journey, how about.\n\n1. Rename the current IsNearQuaternion matcher to IsNearQuaternionCoeffWise.\n2. Introduce another matcher which is IsNearQuaternionNormWise and use that here, since the matcher does norm-wise matching in the euclidean case.",
+      "parentUuid": "43ae25f7_f101843c",
+      "range": {
+        "startLine": 239,
+        "startChar": 4,
+        "endLine": 263,
+        "endChar": 19
+      },
+      "revId": "0a5b423ddca21ddb2aab75ca7613010a2764275a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3f796a80_7ab57612",
         "filename": "include/ceres/rotation.h",
         "patchSetId": 3
