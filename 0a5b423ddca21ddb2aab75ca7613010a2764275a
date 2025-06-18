@@ -186,6 +186,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "57ade98f_05d0b4f0",
+        "filename": "include/ceres/manifold_test_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2025-06-18T01:19:58Z",
+      "side": 1,
+      "message": "IsNearQuaternion already does its own printing. I think its fine to not print diff or diffnorm, since they are not really defined, or have two values. \n\nWDYT?",
+      "parentUuid": "092e4790_53f9c5d3",
+      "range": {
+        "startLine": 239,
+        "startChar": 4,
+        "endLine": 263,
+        "endChar": 19
+      },
+      "revId": "0a5b423ddca21ddb2aab75ca7613010a2764275a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3f796a80_7ab57612",
         "filename": "include/ceres/rotation.h",
         "patchSetId": 3
