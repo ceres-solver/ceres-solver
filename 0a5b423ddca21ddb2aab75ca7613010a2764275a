@@ -258,6 +258,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "aec4bbd5_4350a461",
+        "filename": "include/ceres/manifold_test_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2025-06-18T22:57:26Z",
+      "side": 1,
+      "message": "Turns out, a matcher does not quite fit here. To be consistent with the output for all other manifolds, we also need to output `x` which would not be processed by a quaternion only matcher.",
+      "parentUuid": "c478e5e8_e5503d77",
+      "range": {
+        "startLine": 239,
+        "startChar": 4,
+        "endLine": 263,
+        "endChar": 19
+      },
+      "revId": "0a5b423ddca21ddb2aab75ca7613010a2764275a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3f796a80_7ab57612",
         "filename": "include/ceres/rotation.h",
         "patchSetId": 3
