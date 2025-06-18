@@ -210,6 +210,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "43ae25f7_f101843c",
+        "filename": "include/ceres/manifold_test_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2025-06-18T09:11:38Z",
+      "side": 1,
+      "message": "I\u0027m not sure whether it is a good idea to nest matchers. For this reason, I initially intended to extract the comparison logic from the matcher into a separate function (preliminarily also called `IsNearQuaternion` -- any better names?) to share only that part of the functionality but not the output.\n\nFor `diff` we could at least output the delta on the hypersphere (i.e., the product of actual and the conjugate -- of inverse if not normalized -- of expected). This is still not easy intepretable. But those who are familiar with quaternion representation can spot the issue easier.\n\nSince the quaternion manifolds are in most cases used for rotations, it would also make sense to output a sensible distance metric (e.g., angular) for `diffnorm`. We could use the quartenion distance as proposed by [Hartley et al.](https://users.cecs.anu.edu.au/~hartley/Papers/PDF/Hartley-Trumpf:Rotation-averaging:IJCV.pdf) [1] (see p. 10). Alternatively, this could be the magnitude of the corresponding axis-angle representation, which brings us to the current implementation.\n\n[1] Hartley, R., Trumpf, J., Dai, Y. et al. Rotation Averaging. Int J Comput Vis 103, 267–305 (2013). https://doi.org/10.1007/s11263-012-0601-0",
+      "parentUuid": "57ade98f_05d0b4f0",
+      "range": {
+        "startLine": 239,
+        "startChar": 4,
+        "endLine": 263,
+        "endChar": 19
+      },
+      "revId": "0a5b423ddca21ddb2aab75ca7613010a2764275a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3f796a80_7ab57612",
         "filename": "include/ceres/rotation.h",
         "patchSetId": 3
