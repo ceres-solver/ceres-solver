@@ -39,6 +39,30 @@
       },
       "revId": "4851943bc591a4d79262735f55e9cecbe6be8f32",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "093c3cb7_b3999cfd",
+        "filename": "include/ceres/manifold_test_utils.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2025-06-19T16:16:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf817555_9cf756ef",
+      "range": {
+        "startLine": 242,
+        "startChar": 23,
+        "endLine": 242,
+        "endChar": 30
+      },
+      "revId": "4851943bc591a4d79262735f55e9cecbe6be8f32",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
