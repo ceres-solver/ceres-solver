@@ -113,6 +113,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7665519a_2c8d608c",
+        "filename": "include/ceres/manifold_test_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2025-06-19T15:31:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66cfb319_ec69753c",
+      "range": {
+        "startLine": 219,
+        "startChar": 20,
+        "endLine": 219,
+        "endChar": 21
+      },
+      "revId": "0a5b423ddca21ddb2aab75ca7613010a2764275a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "28c7cec5_f7e08213",
@@ -270,6 +294,30 @@
       "side": 1,
       "message": "Turns out, a matcher does not quite fit here. To be consistent with the output for all other manifolds, we also need to output `x` which would not be processed by a quaternion only matcher.",
       "parentUuid": "c478e5e8_e5503d77",
+      "range": {
+        "startLine": 239,
+        "startChar": 4,
+        "endLine": 263,
+        "endChar": 19
+      },
+      "revId": "0a5b423ddca21ddb2aab75ca7613010a2764275a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1752b70_3bc068ca",
+        "filename": "include/ceres/manifold_test_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2025-06-19T15:31:23Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "aec4bbd5_4350a461",
       "range": {
         "startLine": 239,
         "startChar": 4,
@@ -666,6 +714,30 @@
       "side": 1,
       "message": "The way to think about this is that the `Order` always refers to the quaternion and is not tied to the order of different rotation types in function\u0027s name or their arguments. This ensures consistency in the ordering of template arguments regardless of the conversion direction.",
       "parentUuid": "96fb1760_7bd87208",
+      "range": {
+        "startLine": 122,
+        "startChar": 10,
+        "endLine": 122,
+        "endChar": 18
+      },
+      "revId": "0a5b423ddca21ddb2aab75ca7613010a2764275a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d532d123_07d09ee5",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2025-06-19T15:31:23Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "bbb4152c_f65956cc",
       "range": {
         "startLine": 122,
         "startChar": 10,
