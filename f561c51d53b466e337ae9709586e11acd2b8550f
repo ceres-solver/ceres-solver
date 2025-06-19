@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87843a82_36c162ea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2025-06-19T16:25:47Z",
+      "side": 1,
+      "message": "Since I05dd80f0593672dec656cc785cf06fe5268aee74\n has been merged, this CL can be abandoned.",
+      "revId": "f561c51d53b466e337ae9709586e11acd2b8550f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
