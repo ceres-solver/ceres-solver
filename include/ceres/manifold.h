@@ -335,7 +335,7 @@ class CERES_EXPORT SubsetManifold final : public Manifold {
 
  private:
   const int tangent_size_ = 0;
-  std::vector<bool> constancy_mask_;
+  std::vector<char> constancy_mask_;
 };
 
 // Implements the manifold for a Hamilton quaternion as defined in

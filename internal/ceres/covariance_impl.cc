@@ -34,7 +34,6 @@
 #include <cstdlib>
 #include <memory>
 #include <numeric>
-#include <sstream>
 #include <utility>
 #include <vector>
 
@@ -44,6 +43,8 @@
 #include "absl/container/flat_hash_set.h"
 #include "absl/log/check.h"
 #include "absl/log/log.h"
+#include "absl/strings/cord.h"
+#include "absl/strings/str_cat.h"
 #include "ceres/compressed_col_sparse_matrix_utils.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/covariance.h"
@@ -81,21 +82,21 @@ void CheckForDuplicates(std::vector<T> blocks) {
       blocks_map[blocks[i]].push_back(i);
     }
 
-    std::ostringstream duplicates;
+    absl::Cord duplicates;
     while (it != blocks.end()) {
-      duplicates << "(";
+      duplicates.Append("(");
       for (int i = 0; i < blocks_map[*it].size() - 1; ++i) {
-        duplicates << blocks_map[*it][i] << ", ";
+        duplicates.Append(absl::StrCat(blocks_map[*it][i], ", "));
       }
-      duplicates << blocks_map[*it].back() << ")";
+      duplicates.Append(absl::StrCat(blocks_map[*it].back(), ")"));
       it = std::adjacent_find(it + 1, blocks.end());
       if (it < blocks.end()) {
-        duplicates << " and ";
+        duplicates.Append(" and ");
       }
     }
 
-    LOG(FATAL) << "Covariance::Compute called with duplicate blocks at "
-               << "indices " << duplicates.str();
+    LOG(FATAL) << "Covariance::Compute called with duplicate blocks at indices "
+               << duplicates;
   }
 }
 

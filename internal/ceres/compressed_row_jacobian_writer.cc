@@ -37,6 +37,7 @@
 #include <utility>
 #include <vector>
 
+#include "absl/container/inlined_vector.h"
 #include "absl/log/check.h"
 #include "absl/log/log.h"
 #include "ceres/casts.h"
@@ -50,24 +51,32 @@ namespace ceres::internal {
 void CompressedRowJacobianWriter::PopulateJacobianRowAndColumnBlockVectors(
     const Program* program, CompressedRowSparseMatrix* jacobian) {
   const auto& parameter_blocks = program->parameter_blocks();
-  auto& col_blocks = *(jacobian->mutable_col_blocks());
-  col_blocks.resize(parameter_blocks.size());
+  auto* col_blocks = jacobian->mutable_col_blocks();
+  col_blocks->resize(parameter_blocks.size());
   int col_pos = 0;
-  for (int i = 0; i < parameter_blocks.size(); ++i) {
-    col_blocks[i].size = parameter_blocks[i]->TangentSize();
-    col_blocks[i].position = col_pos;
-    col_pos += col_blocks[i].size;
-  }
+  std::transform(parameter_blocks.begin(),
+                 parameter_blocks.end(),
+                 col_blocks->begin(),
+                 [&col_pos](const ParameterBlock* pb) {
+                   CompressedRowSparseMatrix::Block block = {pb->TangentSize(),
+                                                             col_pos};
+                   col_pos += pb->TangentSize();
+                   return block;
+                 });
 
   const auto& residual_blocks = program->residual_blocks();
-  auto& row_blocks = *(jacobian->mutable_row_blocks());
-  row_blocks.resize(residual_blocks.size());
+  auto* row_blocks = jacobian->mutable_row_blocks();
+  row_blocks->resize(residual_blocks.size());
   int row_pos = 0;
-  for (int i = 0; i < residual_blocks.size(); ++i) {
-    row_blocks[i].size = residual_blocks[i]->NumResiduals();
-    row_blocks[i].position = row_pos;
-    row_pos += row_blocks[i].size;
-  }
+  std::transform(residual_blocks.begin(),
+                 residual_blocks.end(),
+                 row_blocks->begin(),
+                 [&row_pos](const ResidualBlock* rb) {
+                   CompressedRowSparseMatrix::Block block = {rb->NumResiduals(),
+                                                             row_pos};
+                   row_pos += rb->NumResiduals();
+                   return block;
+                 });
 }
 
 void CompressedRowJacobianWriter::GetOrderedParameterBlocks(
@@ -140,7 +149,7 @@ std::unique_ptr<SparseMatrix> CompressedRowJacobianWriter::CreateJacobian()
     // Count the number of derivatives for a row of this residual block and
     // build a list of active parameter block indices.
     int num_derivatives = 0;
-    std::vector<int> parameter_indices;
+    absl::InlinedVector<int, 4> parameter_indices;
     for (int j = 0; j < num_parameter_blocks; ++j) {
       auto parameter_block = residual_block->parameter_blocks()[j];
       if (!parameter_block->IsConstant()) {
