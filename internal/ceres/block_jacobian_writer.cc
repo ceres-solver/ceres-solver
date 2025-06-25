@@ -34,6 +34,7 @@
 #include <memory>
 #include <vector>
 
+#include "absl/container/inlined_vector.h"
 #include "absl/log/check.h"
 #include "absl/log/log.h"
 #include "ceres/block_evaluate_preparer.h"
@@ -109,7 +110,7 @@ bool BuildJacobianLayout(const Program& program,
 
   int e_block_pos = 0;
   int* jacobian_pos = jacobian_layout_storage->data();
-  std::vector<std::pair<int, int>> active_parameter_blocks;
+  absl::InlinedVector<std::pair<int, int>, 4> active_parameter_blocks;
   for (int i = 0; i < residual_blocks.size(); ++i) {
     const ResidualBlock* residual_block = residual_blocks[i];
     const int num_residuals = residual_block->NumResiduals();

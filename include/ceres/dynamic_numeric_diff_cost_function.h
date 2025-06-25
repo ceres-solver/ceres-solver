@@ -40,6 +40,7 @@
 #include <type_traits>
 #include <vector>
 
+#include "absl/container/fixed_array.h"
 #include "absl/log/check.h"
 #include "ceres/dynamic_cost_function.h"
 #include "ceres/internal/eigen.h"
@@ -140,8 +141,8 @@ class DynamicNumericDiffCostFunction final : public DynamicCostFunction {
 
     // Create local space for a copy of the parameters which will get mutated.
     int parameters_size = accumulate(block_sizes.begin(), block_sizes.end(), 0);
-    std::vector<double> parameters_copy(parameters_size);
-    std::vector<double*> parameters_references_copy(block_sizes.size());
+    absl::FixedArray<double> parameters_copy(parameters_size);
+    absl::FixedArray<double*> parameters_references_copy(block_sizes.size());
     parameters_references_copy[0] = parameters_copy.data();
     for (size_t block = 1; block < block_sizes.size(); ++block) {
       parameters_references_copy[block] =
