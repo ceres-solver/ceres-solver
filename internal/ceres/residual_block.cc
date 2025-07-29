@@ -124,7 +124,7 @@ bool ResidualBlock::Evaluate(const bool apply_loss_function,
            "residual and jacobians that were requested or there was a "
            "non-finite "
            "value (nan/infinite)\n"  // NOLINT
-           "generated during the or jacobian computation. \n\n"
+           "generated during the jacobian computation. \n\n"
         << EvaluationToString(
                *this, parameters.data(), cost, residuals, eval_jacobians);
     return false;
