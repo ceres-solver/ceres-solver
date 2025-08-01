@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "821f70d0_71ec2fe5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-08-01T18:33:42Z",
+      "side": 1,
+      "message": "Thanks for the bugfix. This seems like a bad design for EnsureMinimumThreads.",
+      "revId": "c380195d3122d825f0fae4b963bc0e6e44237716",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
