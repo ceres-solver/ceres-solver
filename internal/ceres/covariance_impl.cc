@@ -319,7 +319,7 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
   // Technically the following code is a double nested loop where
   // i = 1:n, j = i:n.
   int iteration_count = (num_parameters * (num_parameters + 1)) / 2;
-  problem_->context()->EnsureMinimumThreads(num_threads);
+  problem_->context()->EnsureMinimumThreads(num_threads - 1);
   ParallelFor(problem_->context(),
               0,
               iteration_count,
@@ -668,7 +668,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
   const int num_threads = options_.num_threads;
   auto workspace = std::make_unique<double[]>(num_threads * num_cols);
 
-  problem_->context()->EnsureMinimumThreads(num_threads);
+  problem_->context()->EnsureMinimumThreads(num_threads - 1);
   ParallelFor(
       problem_->context(), 0, num_cols, num_threads, [&](int thread_id, int r) {
         const int row_begin = rows[r];
@@ -859,7 +859,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
   const int num_threads = options_.num_threads;
   auto workspace = std::make_unique<double[]>(num_threads * num_cols);
 
-  problem_->context()->EnsureMinimumThreads(num_threads);
+  problem_->context()->EnsureMinimumThreads(num_threads - 1);
   ParallelFor(
       problem_->context(), 0, num_cols, num_threads, [&](int thread_id, int r) {
         const int row_begin = rows[r];
