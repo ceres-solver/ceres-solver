@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b451bed_644fa896",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2025-08-07T19:37:58Z",
+      "side": 1,
+      "message": "I\u0027m unfamiliar with this aspect of Ceres configuration. Is the issue that CUDA 13 no longer supports these older architectures, so they need to be removed from the architecture list?",
+      "revId": "f616f61eab1fc22bcb1b604ea66f68dd075f5ac7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
