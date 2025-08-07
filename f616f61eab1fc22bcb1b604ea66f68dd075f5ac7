@@ -16,6 +16,24 @@
       "message": "I\u0027m unfamiliar with this aspect of Ceres configuration. Is the issue that CUDA 13 no longer supports these older architectures, so they need to be removed from the architecture list?",
       "revId": "f616f61eab1fc22bcb1b604ea66f68dd075f5ac7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcbff198_bef081fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4262514
+      },
+      "writtenOn": "2025-08-07T21:33:17Z",
+      "side": 1,
+      "message": "Yes, in CUDA 13 Nvidia drops support for any architecture less than compute 75 (dropping support for Maxwell, Pascal, and Volta GPUs). If you try to build ceres on CUDA 13 without this change, it will give the error `nvcc fatal : Unsupported gpu architecture`.",
+      "parentUuid": "8b451bed_644fa896",
+      "revId": "f616f61eab1fc22bcb1b604ea66f68dd075f5ac7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
