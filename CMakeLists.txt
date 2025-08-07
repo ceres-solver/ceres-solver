@@ -299,17 +299,19 @@ if (USE_CUDA)
         "find_dependency(CUDAToolkit ${CUDAToolkit_VERSION})")
       enable_language(CUDA)
       if (CMAKE_VERSION VERSION_GREATER_EQUAL "3.18")
-        # Support Maxwell GPUs (Default).
-        set(CMAKE_CUDA_ARCHITECTURES "50")
-        # Support other architectures depending on CUDA toolkit version.
-        if (CUDAToolkit_VERSION VERSION_GREATER_EQUAL "8.0")
-          # Support Pascal GPUs.
-          list(APPEND CMAKE_CUDA_ARCHITECTURES "60")
-        endif(CUDAToolkit_VERSION VERSION_GREATER_EQUAL "8.0")
-        if (CUDAToolkit_VERSION VERSION_GREATER_EQUAL "9.0")
-          # Support Volta GPUs.
-          list(APPEND CMAKE_CUDA_ARCHITECTURES "70")
-        endif(CUDAToolkit_VERSION VERSION_GREATER_EQUAL "9.0")
+        set(CMAKE_CUDA_ARCHITECTURES "")
+        if (CUDAToolkit_VERSION VERSION_LESS "13.0")
+          # Support Maxwell GPUs.
+	  list(APPEND CMAKE_CUDA_ARCHITECTURES "50")
+          if (CUDAToolkit_VERSION VERSION_GREATER_EQUAL "8.0")
+            # Support Pascal GPUs.
+            list(APPEND CMAKE_CUDA_ARCHITECTURES "60")
+          endif(CUDAToolkit_VERSION VERSION_GREATER_EQUAL "8.0")
+          if (CUDAToolkit_VERSION VERSION_GREATER_EQUAL "9.0")
+            # Support Volta GPUs.
+            list(APPEND CMAKE_CUDA_ARCHITECTURES "70")
+          endif(CUDAToolkit_VERSION VERSION_GREATER_EQUAL "9.0")
+        endif(CUDAToolkit_VERSION VERSION_LESS "13.0")
         if (CUDAToolkit_VERSION VERSION_GREATER_EQUAL "10.0")
           # Support Turing  GPUs.
           list(APPEND CMAKE_CUDA_ARCHITECTURES "75")
