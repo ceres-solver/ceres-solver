@@ -70,16 +70,16 @@ class CERES_NO_EXPORT ParameterBlock {
   // The size is the size of the parameter block and the index is the position
   // of the parameter block inside a Program (if any).
   ParameterBlock(double* user_state, int size, int index)
-      : user_state_(user_state),
-        size_(size),
+      : size_(size),
         state_(user_state),
-        index_(index) {}
+        index_(index),
+        user_state_(user_state) {}
 
   ParameterBlock(double* user_state, int size, int index, Manifold* manifold)
-      : user_state_(user_state),
-        size_(size),
+      : size_(size),
         state_(user_state),
-        index_(index) {
+        index_(index),
+        user_state_(user_state) {
     if (manifold != nullptr) {
       SetManifold(manifold);
     }
@@ -339,11 +339,8 @@ class CERES_NO_EXPORT ParameterBlock {
     return true;
   }
 
-  double* user_state_ = nullptr;
-  int size_ = -1;
   bool is_set_constant_ = false;
-  Manifold* manifold_ = nullptr;
-
+  int size_ = -1;
   // The "state" of the parameter. These fields are only needed while the
   // solver is running. While at first glance using mutable is a bad idea, this
   // ends up simplifying the internals of Ceres enough to justify the potential
@@ -351,18 +348,16 @@ class CERES_NO_EXPORT ParameterBlock {
   mutable const double* state_ = nullptr;
   mutable std::unique_ptr<double[]> plus_jacobian_;
 
-  // The index of the parameter. This is used by various other parts of Ceres to
-  // permit switching from a ParameterBlock* to an index in another array.
-  int index_ = -1;
-
+  Manifold* manifold_ = nullptr;
   // The offset of this parameter block inside a larger state vector.
   int state_offset_ = -1;
 
   // The offset of this parameter block inside a larger delta vector.
   int delta_offset_ = -1;
 
-  // If non-null, contains the residual blocks this parameter block is in.
-  std::unique_ptr<ResidualBlockSet> residual_blocks_;
+  // The index of the parameter. This is used by various other parts of Ceres to
+  // permit switching from a ParameterBlock* to an index in another array.
+  int index_ = -1;
 
   // Upper and lower bounds for the parameter block.  SetUpperBound
   // and SetLowerBound lazily initialize the upper_bounds_ and
@@ -377,6 +372,10 @@ class CERES_NO_EXPORT ParameterBlock {
   // to the parameter block being unconstrained.
   std::unique_ptr<double[]> upper_bounds_;
   std::unique_ptr<double[]> lower_bounds_;
+
+  // If non-null, contains the residual blocks this parameter block is in.
+  std::unique_ptr<ResidualBlockSet> residual_blocks_;
+  double* user_state_ = nullptr;
 
   // Necessary so ProblemImpl can clean up the manifolds.
   friend class ProblemImpl;
