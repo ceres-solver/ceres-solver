@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   build-mingw:
     name: ${{matrix.sys}}-${{matrix.env}}-${{matrix.build_type}}-${{matrix.lib}}
-    runs-on: windows-latest
+    runs-on: windows-2025
     defaults:
       run:
         shell: msys2 {0}
@@ -98,7 +98,6 @@ jobs:
         build_type:
           - Release
         msvc:
-          - VS-16-2019
           - VS-17-2022
         lib:
           - shared
@@ -106,12 +105,8 @@ jobs:
           - cuda
           - no-cuda
         include:
-          - msvc: VS-16-2019
-            os: windows-2019
-            generator: 'Visual Studio 16 2019'
-            marker: vc16
           - msvc: VS-17-2022
-            os: windows-2022
+            os: windows-2025
             generator: 'Visual Studio 17 2022'
             marker: vc17
 
