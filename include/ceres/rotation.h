@@ -46,7 +46,9 @@
 #define CERES_PUBLIC_ROTATION_H_
 
 #include <algorithm>
+#include <array>
 #include <cmath>
+#include <type_traits>
 
 #include "absl/log/check.h"
 #include "ceres/constants.h"
@@ -94,6 +96,39 @@ struct EigenQuaternionOrder {
   static constexpr int kY = 1;
   static constexpr int kZ = 2;
 };
+
+// Constructs a quaternion with the Ceres coefficient order (w, x, y, z).
+template <typename Order, typename T>
+constexpr auto MakeQuaternion(T w, T x, T y, T z)
+    -> std::enable_if_t<std::is_same_v<Order, CeresQuaternionOrder>,
+                        std::array<T, 4>> {
+  return {w, x, y, z};
+}
+
+// Constructs a quaternion with the Ceres coefficient order (x, y, z, w).
+template <typename Order, typename T>
+constexpr auto MakeQuaternion(T w, T x, T y, T z)
+    -> std::enable_if_t<std::is_same_v<Order, EigenQuaternionOrder>,
+                        std::array<T, 4>> {
+  return {x, y, z, w};
+}
+
+// Changes the quaternion coefficients order. This specialization is used
+// whenever the target and source coefficient order is the same.
+template <typename ToOrder, typename FromOrder, typename T>
+constexpr auto ConvertQuaternion(const std::array<T, 4>& q)
+    -> std::enable_if_t<std::is_same_v<FromOrder, ToOrder>, std::array<T, 4>> {
+  return q;
+}
+
+// Changes the quaternion coefficients order. This specialization is used
+// whenever the target and source coefficient order is different.
+template <typename ToOrder, typename FromOrder, typename T>
+constexpr auto ConvertQuaternion(const std::array<T, 4>& q)
+    -> std::enable_if_t<!std::is_same_v<FromOrder, ToOrder>, std::array<T, 4>> {
+  return MakeQuaternion<ToOrder>(
+      q[FromOrder::kW], q[FromOrder::kX], q[FromOrder::kY], q[FromOrder::kZ]);
+}
 
 // Convert a value in combined axis-angle representation to a quaternion.
 // The value angle_axis is a triple whose norm is an angle in radians,
@@ -780,14 +815,12 @@ inline void QuaternionRotatePoint(const T q[4], const T pt[3], T result[3]) {
                   q[Order::kY] * q[Order::kY] + q[Order::kZ] * q[Order::kZ]);
 
   // Make unit-norm version of q.
-  const T unit[4] = {
-      scale * q[Order::kW],
-      scale * q[Order::kX],
-      scale * q[Order::kY],
-      scale * q[Order::kZ],
-  };
+  const std::array<T, 4> unit = MakeQuaternion<Order>(scale * q[Order::kW],
+                                                      scale * q[Order::kX],
+                                                      scale * q[Order::kY],
+                                                      scale * q[Order::kZ]);
 
-  UnitQuaternionRotatePoint<Order>(unit, pt, result);
+  UnitQuaternionRotatePoint<Order>(unit.data(), pt, result);
 }
 
 template <typename Order, typename T>

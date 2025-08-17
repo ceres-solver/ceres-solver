@@ -36,7 +36,6 @@
 #include <limits>
 #include <random>
 #include <string>
-#include <type_traits>
 #include <utility>
 
 #include "absl/log/log.h"
@@ -200,20 +199,6 @@ MATCHER_P(IsNear3x3Matrix, expected, "") {
   }
 
   return true;
-}
-
-template <typename Order, typename T>
-constexpr auto MakeQuaternion(T w, T x, T y, T z)
-    -> std::enable_if_t<std::is_same_v<Order, CeresQuaternionOrder>,
-                        std::array<T, 4>> {
-  return {w, x, y, z};
-}
-
-template <typename Order, typename T>
-constexpr auto MakeQuaternion(T w, T x, T y, T z)
-    -> std::enable_if_t<std::is_same_v<Order, EigenQuaternionOrder>,
-                        std::array<T, 4>> {
-  return {x, y, z, w};
 }
 
 template <typename T>
@@ -1694,6 +1679,56 @@ TYPED_TEST(QuaternionTest, RotatePointGivesSameAnswerAsRotationByMatrixCanned) {
   // Now do the same but compute R with normalization.
   QuaternionToRotation<Order>(q.data(), Rq[0]);
   ExpectArraysClose(9, R[0], Rq[0], kTolerance);
+}
+
+TEST(Quaternion, RotatePointGivesSameAnswerForDifferentQuaternionOrders) {
+  // Rotation defined by a unit quaternion.
+  const std::array<double, 4> q1 =
+      MakeQuaternion<CeresQuaternionOrder>(+0.2318160216097109,
+                                           -0.0178430356832060,
+                                           +0.9044300776717159,
+                                           -0.3576998641394597);
+  const std::array<double, 4> q2 =
+      ConvertQuaternion<EigenQuaternionOrder, CeresQuaternionOrder>(q1);
+
+  constexpr double p[3] = {
+      +0.11,
+      -13.15,
+      1.17,
+  };
+
+  double result1[3];
+  QuaternionRotatePoint<CeresQuaternionOrder>(q1.data(), p, result1);
+
+  double result2[3];
+  QuaternionRotatePoint<EigenQuaternionOrder>(q2.data(), p, result2);
+
+  ExpectArraysClose(3, result1, result2, kTolerance);
+}
+
+TEST(Quaternion, RotatePointGivesSameAnswerForDifferentUnitQuaternionOrders) {
+  // Rotation defined by a unit quaternion.
+  const std::array<double, 4> q1 =
+      MakeQuaternion<CeresQuaternionOrder>(+0.2318160216097109,
+                                           -0.0178430356832060,
+                                           +0.9044300776717159,
+                                           -0.3576998641394597);
+  const std::array<double, 4> q2 =
+      ConvertQuaternion<EigenQuaternionOrder, CeresQuaternionOrder>(q1);
+
+  constexpr double p[3] = {
+      +0.11,
+      -13.15,
+      1.17,
+  };
+
+  double result1[3];
+  UnitQuaternionRotatePoint<CeresQuaternionOrder>(q1.data(), p, result1);
+
+  double result2[3];
+  UnitQuaternionRotatePoint<EigenQuaternionOrder>(q2.data(), p, result2);
+
+  ExpectArraysClose(3, result1, result2, kTolerance);
 }
 
 TYPED_TEST(QuaternionTest, RotatePointGivesSameAnswerAsRotationByMatrix) {
