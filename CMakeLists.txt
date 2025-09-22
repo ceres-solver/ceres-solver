@@ -234,7 +234,7 @@ unset(CERES_COMPILE_OPTIONS)
 
 # Eigen.
 # Eigen delivers Eigen3Config.cmake since v3.3.3
-find_package(Eigen3 3.3.4 REQUIRED NO_MODULE)
+find_package(Eigen3 REQUIRED CONFIG)
 if (Eigen3_FOUND)
   message("-- Found Eigen version ${Eigen3_VERSION}: ${Eigen3_DIR}")
   if (EIGENSPARSE)
