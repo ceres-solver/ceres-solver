@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "67528b7e_e8d5c5dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-09-28T18:51:37Z",
+      "side": 1,
+      "message": "I am not entirely sure about this patch, let me think about it some.",
+      "revId": "ff06b8481804f475336aead1ed38b09305438a66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
