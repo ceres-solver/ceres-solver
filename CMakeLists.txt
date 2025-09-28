@@ -232,9 +232,31 @@ endif (IOS)
 
 unset(CERES_COMPILE_OPTIONS)
 
+# We call find_package multiple time with different versioning scheme to support
+# both Eigen3 3.x and 5.x. If the first invocation fails and Eigen3_DIR was set
+# to a possible location, e.g., during cross-compilation, failure to locate the
+# package will unset the variable. To avoid losing the path hint, we save it and
+# reuse it in the second find_package call.
+set (_Ceres_Eigen3_DIR)
+
+if (Eigen3_DIR)
+  list (APPEND _Ceres_Eigen3_DIR HINTS ${Eigen3_DIR})
+endif (Eigen3_DIR)
+
 # Eigen.
 # Eigen delivers Eigen3Config.cmake since v3.3.3
-find_package(Eigen3 3.3.4 REQUIRED NO_MODULE)
+find_package(Eigen3 3.3.4...5 NO_MODULE)
+
+if (NOT Eigen3_FOUND)
+  # Eigen3's CMake package config prior to 5.0.0 does not support version ranges
+  # with different major version components. To ensure backward compatibility,
+  # we locate the package using the previous version scheme as a fallback
+  # mechanism.
+  find_package(Eigen3 3.3.4 REQUIRED NO_MODULE ${_Ceres_Eigen3_DIR})
+endif (NOT Eigen3_FOUND)
+
+unset (_Ceres_Eigen3_DIR)
+
 if (Eigen3_FOUND)
   message("-- Found Eigen version ${Eigen3_VERSION}: ${Eigen3_DIR}")
   if (EIGENSPARSE)
