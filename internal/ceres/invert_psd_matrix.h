@@ -67,7 +67,11 @@ typename EigenTypes<kSize, kSize>::Matrix InvertPSDMatrix(
 
   // For a thin SVD the number of columns of the matrix need to be dynamic.
   using SVDMType = typename EigenTypes<kSize, Eigen::Dynamic>::Matrix;
+#if EIGEN_VERSION_AT_LEAST(5, 0, 0)
+  Eigen::JacobiSVD<SVDMType, Eigen::ComputeThinU | Eigen::ComputeThinV> svd(m);
+#else   // !EIGEN_VERSION_AT_LEAST(5, 0, 0)
   Eigen::JacobiSVD<SVDMType> svd(m, Eigen::ComputeThinU | Eigen::ComputeThinV);
+#endif  // EIGEN_VERSION_AT_LEAST(5, 0, 0)
   return svd.solve(MType::Identity(size, size));
 }
 
