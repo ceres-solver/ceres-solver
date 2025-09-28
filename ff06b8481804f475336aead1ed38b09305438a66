@@ -34,6 +34,24 @@
       "parentUuid": "67528b7e_e8d5c5dd",
       "revId": "ff06b8481804f475336aead1ed38b09305438a66",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a5f7ff2_6a7b39a9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-09-28T19:10:21Z",
+      "side": 1,
+      "message": "thanks Sergiu, I will talk to Antonio and make sure I understand the current state and the planned future state around this.",
+      "parentUuid": "e95167e3_2ff90f85",
+      "revId": "ff06b8481804f475336aead1ed38b09305438a66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
