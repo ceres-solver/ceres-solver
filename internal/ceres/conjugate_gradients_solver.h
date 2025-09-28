@@ -60,7 +60,8 @@ class ConjugateGradientsLinearOperator {
 
 // Adapter class that makes LinearOperator appear like an instance of
 // ConjugateGradientsLinearOperator.
-class LinearOperatorAdapter : public ConjugateGradientsLinearOperator<Vector> {
+class CERES_NO_EXPORT LinearOperatorAdapter
+    : public ConjugateGradientsLinearOperator<Vector> {
  public:
   LinearOperatorAdapter(LinearOperator& linear_operator)
       : linear_operator_(linear_operator) {}
@@ -75,7 +76,7 @@ class LinearOperatorAdapter : public ConjugateGradientsLinearOperator<Vector> {
 
 // Options to control the ConjugateGradientsSolver. For detailed documentation
 // for each of these options see linear_solver.h
-struct ConjugateGradientsSolverOptions {
+struct CERES_NO_EXPORT ConjugateGradientsSolverOptions {
   int min_num_iterations = 1;
   int max_num_iterations = 1;
   int residual_reset_period = 10;

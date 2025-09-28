@@ -52,6 +52,8 @@
 
 namespace ceres::internal {
 
+namespace {
+
 template <typename Solver>
 class EigenSparseCholeskyTemplate final : public SparseCholesky {
  public:
@@ -145,6 +147,8 @@ class EigenSparseCholeskyTemplate final : public SparseCholesky {
   bool analyzed_{false};
   Solver solver_;
 };
+
+}  // namespace
 
 std::unique_ptr<SparseCholesky> EigenSparseCholesky::Create(
     const OrderingType ordering_type) {
