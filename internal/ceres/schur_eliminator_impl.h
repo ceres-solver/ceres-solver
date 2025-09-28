@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2025 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -44,6 +44,13 @@
 // regression when we moved from Eigen2 to Eigen3.
 
 #define EIGEN_CACHEFRIENDLY_PRODUCT_THRESHOLD 10
+// EIGEN_CACHEFRIENDLY_PRODUCT_THRESHOLD change is specific only to a subset of
+// Ceres translation units (TUs). Changing the value of this define, however,
+// also changes Eigen's internal definitions and results in One Definition Rule
+// (ODR) violations if TUs with different EIGEN_CACHEFRIENDLY_PRODUCT_THRESHOLD
+// values are intermixed. We avoid ODR violations by renaming the Eigen
+// namespace in TUs that modify the above define.
+#define Eigen EigenForCeres
 
 // This include must come before any #ifndef check on Ceres compile options.
 // clang-format off
