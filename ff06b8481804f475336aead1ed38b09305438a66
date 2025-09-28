@@ -16,6 +16,24 @@
       "message": "I am not entirely sure about this patch, let me think about it some.",
       "revId": "ff06b8481804f475336aead1ed38b09305438a66",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e95167e3_2ff90f85",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2025-09-28T19:08:53Z",
+      "side": 1,
+      "message": "FYI, I reported the issue [to Eigen](https://gitlab.com/libeigen/eigen/-/issues/2975) first and this was the maintainer\u0027s suggestion.",
+      "parentUuid": "67528b7e_e8d5c5dd",
+      "revId": "ff06b8481804f475336aead1ed38b09305438a66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
