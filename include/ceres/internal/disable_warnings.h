@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2025 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -28,10 +28,8 @@
 //
 // This file has the sole purpose to silence warnings when including Ceres.
 
-// This is not your usual header guard. The macro CERES_WARNINGS_DISABLED
-// shows up again in reenable_warnings.h.
-#ifndef CERES_WARNINGS_DISABLED
-#define CERES_WARNINGS_DISABLED
+// NOTE: An include guard is not necessary and in fact counterproductive because
+// #pragma warning(push) will depend on the inclusion order.
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -40,5 +38,3 @@
 // "if you are deriving from a type in the Standard C++ Library"
 #pragma warning(disable : 4251)
 #endif
-
-#endif  // CERES_WARNINGS_DISABLED
