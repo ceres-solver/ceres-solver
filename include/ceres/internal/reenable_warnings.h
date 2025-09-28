@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2025 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -27,12 +27,6 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 
-// This is not your usual header guard. See disable_warnings.h
-#ifdef CERES_WARNINGS_DISABLED
-#undef CERES_WARNINGS_DISABLED
-
 #ifdef _MSC_VER
 #pragma warning(pop)
 #endif
-
-#endif  // CERES_WARNINGS_DISABLED
