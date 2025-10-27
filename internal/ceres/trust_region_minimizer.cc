@@ -562,7 +562,13 @@ void TrustRegionMinimizer::DoInnerIterationsIfNeeded() {
   const double inner_iteration_cost_change =
       candidate_cost_ - inner_iteration_cost;
   model_cost_change_ += inner_iteration_cost_change;
-  inner_iterations_were_useful_ = inner_iteration_cost < x_cost_;
+
+  // Make sure that the inner iteration has improved over both the current
+  // (x_cost_) and the trust region step cost (candidate_cost). In exact
+  // arithmetic we would expect that inner iterations cost can't possibly be
+  // worse than candidate_cost, but in finite precision this can happen due to
+  // round-off error. So, we check that we improve upon the minimum of both.
+  inner_iterations_were_useful_ = inner_iteration_cost < std::min(x_cost_, candidate_cost_);
   const double inner_iteration_relative_progress =
       1.0 - inner_iteration_cost / candidate_cost_;
 
