@@ -28,19 +28,21 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
+#include <algorithm>
 #include <cmath>
 #include <limits>
 #include <memory>
 #include <type_traits>
 
+#include "Eigen/Core"
 #include "ceres/dynamic_numeric_diff_cost_function.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/manifold.h"
 #include "ceres/numeric_diff_options.h"
-#include "ceres/rotation.h"
 #include "ceres/types.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
+
 
 namespace ceres {
 

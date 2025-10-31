@@ -38,7 +38,10 @@
 #include <utility>
 #include <vector>
 
+#include "Eigen/Core"
+#include "Eigen/Dense"
 #include "Eigen/SVD"
+#include "Eigen/Sparse"
 #include "Eigen/SparseCore"
 #include "Eigen/SparseQR"
 #include "absl/container/flat_hash_set.h"

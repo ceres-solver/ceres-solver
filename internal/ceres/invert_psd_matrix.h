@@ -31,7 +31,9 @@
 #ifndef CERES_INTERNAL_INVERT_PSD_MATRIX_H_
 #define CERES_INTERNAL_INVERT_PSD_MATRIX_H_
 
+#include "Eigen/Core"
 #include "Eigen/Dense"
+#include "Eigen/SVD"
 #include "ceres/internal/eigen.h"
 
 namespace ceres::internal {

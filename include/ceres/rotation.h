@@ -837,11 +837,11 @@ inline void QuaternionProduct(const T z[4], const T w[4], T zw[4]) {
 }
 
 template <typename Order, typename T>
-inline void QuaternionConjugate(const T q[4], T w[4]) {
-  w[Order::kW] = q[Order::kW];
-  w[Order::kX] = -q[Order::kX];
-  w[Order::kY] = -q[Order::kY];
-  w[Order::kZ] = -q[Order::kZ];
+inline void QuaternionConjugate(const T q[4], T z[4]) {
+  z[Order::kW] = q[Order::kW];
+  z[Order::kX] = -q[Order::kX];
+  z[Order::kY] = -q[Order::kY];
+  z[Order::kZ] = -q[Order::kZ];
 }
 
 // xy = x cross y;

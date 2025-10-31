@@ -38,6 +38,7 @@
 #include <string>
 #include <utility>
 
+#include "Eigen/Core"
 #include "absl/log/log.h"
 #include "absl/strings/str_format.h"
 #include "ceres/constants.h"
