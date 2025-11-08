@@ -201,6 +201,7 @@ TEST(Corrector, MultidimensionalGaussNewtonApproximation) {
     ASSERT_NEAR((g_jac - jac).norm(), 0.0, 1e-10);
 
     ASSERT_NEAR((g_grad - c_grad).norm(), 0.0, 1e-10);
+    ASSERT_NEAR((g_hess - c_hess).norm(), 0.0, 1e-10);
   }
 }
 
