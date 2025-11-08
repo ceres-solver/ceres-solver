@@ -1987,14 +1987,34 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    * ``TEXTFILE`` Write out the linear least squares problem to the
      directory pointed to by
      :member:`Solver::Options::trust_region_problem_dump_directory` as
-     text files which can be read into ``MATLAB/Octave``. The Jacobian
-     is dumped as a text file containing :math:`(i,j,s)` triplets, the
-     vectors :math:`D`, `x` and `f` are dumped as text files
-     containing a list of their values.
+     text files which can be read into ``MATLAB/Octave``. The
+     following files are created:
+
+     * ``A.txt``: The Jacobian matrix :math:`J` in (i, j, s) triplet format.
+     * ``b.txt``: The residuals vector :math:`f`.
+     * ``D.txt``: The diagonal scaling/regularizer matrix.
+     * ``x.txt``: The computed step vector.
 
      A ``MATLAB/Octave`` script called
      ``ceres_solver_iteration_???.m`` is also output, which can be
      used to parse and load the problem into memory.
+
+     .. NOTE::
+        **Understanding the dumped ``x.txt`` vector:**
+
+        The content of ``x.txt`` depends on the
+        :member:`Solver::Options::trust_region_strategy_type` being
+        used. This is because the dumping occurs *inside* the
+        strategy's implementation to gain access to the :math:`D`
+        matrix:
+
+        * If the strategy is ``LEVENBERG_MARQUARDT``, ``x.txt``
+            contains the **damped trust region step** (the solution
+            to the scaled problem).
+        * If the strategy is ``DOGLEG``, ``x.txt`` contains the
+            **pure, un-damped Gauss-Newton step**. This is *not*
+            necessarily the final step taken by the optimizer, as it
+            has not yet been limited by the trust region radius.
 
 .. member:: bool Solver::Options::check_gradients
 
