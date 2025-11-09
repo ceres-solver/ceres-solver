@@ -16,6 +16,23 @@
       "message": "Issue 363 https://github.com/ceres-solver/ceres-solver/issues/363",
       "revId": "34f04376267265dd6c4ad996494de099cab34e6c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b0fd3e4_9961625f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-11-09T03:16:52Z",
+      "side": 1,
+      "message": "Thanks @brett@bmgvisualtech.com I have lost some context for this bug, I will have to go back and look to see whats going on here. This is ancient code.",
+      "revId": "34f04376267265dd6c4ad996494de099cab34e6c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
