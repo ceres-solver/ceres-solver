@@ -16,6 +16,24 @@
       "message": "Sameer, any updates?",
       "revId": "e59f0273cccc2e1b1056069adaaa9157b2e9f06f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90c51656_4df63aa9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2025-12-22T14:39:54Z",
+      "side": 1,
+      "message": "Hi Sergiu,\n\nSorry for the late reply. This fell through the cracks, but I DID talk to about this, as he is more skilled in the art than I am about ODR violations. He has thoughts on the CL and will follow up with you.\n\nHope you are having a good holiday break!\n\nSameer\n\nOn Fri, Nov 7, 2025 at 12:07 AM Sergiu Deitsch (Gerrit) \u003cnoreply-gerritcodereview+2IOHGVqgDrG06rZMyMfMjw\u003d\u003d@\u003e wrote: google.com",
+      "tag": "mailMessageId\u003d\u003cCABqdRUCU7gQbv99RQWMtt3ny_\u003dAMWE\u003d\u003dF1rQPX0h-X1Z7yLdDg@mail.gmail.com\u003e",
+      "revId": "e59f0273cccc2e1b1056069adaaa9157b2e9f06f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
