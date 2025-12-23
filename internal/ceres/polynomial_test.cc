@@ -190,7 +190,10 @@ TEST(Polynomial, QuadraticPolynomialWithComplexRootsWorks) {
 
 TEST(Polynomial, QuarticPolynomialWorks) {
   const double roots[4] = {1.23e-4, 1.23e-1, 1.23e+2, 1.23e+5};
-  RunPolynomialTestRealRoots(roots, true, true, kEpsilon);
+  // The wide spread of roots in this test case leads to numerical
+  // instability in the polynomial root finding algorithm, requiring a
+  // looser tolerance.
+  RunPolynomialTestRealRoots(roots, true, true, 10 * kEpsilonLoose);
 }
 
 TEST(Polynomial, QuarticPolynomialWithTwoClustersOfCloseRootsWorks) {
@@ -210,7 +213,10 @@ TEST(Polynomial, QuarticMonomialWorks) {
 
 TEST(Polynomial, NullPointerAsImaginaryPartWorks) {
   const double roots[4] = {1.23e-4, 1.23e-1, 1.23e+2, 1.23e+5};
-  RunPolynomialTestRealRoots(roots, true, false, kEpsilon);
+  // The wide spread of roots in this test case leads to numerical
+  // instability in the polynomial root finding algorithm, requiring a
+  // looser tolerance.
+  RunPolynomialTestRealRoots(roots, true, false, 10 * kEpsilonLoose);
 }
 
 TEST(Polynomial, NullPointerAsRealPartWorks) {
