@@ -171,6 +171,73 @@ TEST(_, ApplyOrderingNormal) {
   EXPECT_EQ(parameter_blocks[2]->user_state(), &y);
 }
 
+// Test that ApplyOrdering preserves the original program order within each
+// group. This is essential for deterministic behavior - without preserving
+// the original order, the ordering would depend on pointer addresses which
+// can vary between runs due to ASLR or different memory allocation patterns.
+TEST(_, ApplyOrderingPreservesOrderWithinGroups) {
+  // Use heap-allocated parameter blocks to ensure pointer addresses are
+  // not in any predictable order (simulating what happens in real usage).
+  std::vector<std::unique_ptr<double[]>> params;
+  std::vector<double*> param_ptrs;
+  const int kNumParams = 10;
+
+  for (int i = 0; i < kNumParams; ++i) {
+    params.push_back(std::make_unique<double[]>(3));
+    param_ptrs.push_back(params.back().get());
+  }
+
+  // Shuffle the parameter pointers to generate non-deterministic addresses
+  // in case the allocator happens to allocate them in a specific order.
+  // We add them to the problem in a specific order, which
+  // should be preserved within each group after ApplyOrdering.
+  std::mt19937 rng(42);  // Fixed seed for reproducibility
+  std::shuffle(param_ptrs.begin(), param_ptrs.end(), rng);
+
+  ProblemImpl problem;
+
+  // Add parameter blocks in the order of their index (0, 1, 2, ..., 9)
+  // but use the original param_ptrs which may have any address ordering.
+  for (int i = 0; i < kNumParams; ++i) {
+    problem.AddParameterBlock(param_ptrs[i], 3);
+  }
+
+  // Assign parameters to groups:
+  // Group 0: params 0, 2, 4, 6, 8 (evens)
+  // Group 1: params 1, 3, 5, 7, 9 (odds)
+  ParameterBlockOrdering linear_solver_ordering;
+  for (int i = 0; i < kNumParams; ++i) {
+    linear_solver_ordering.AddElementToGroup(param_ptrs[i], i % 2);
+  }
+
+  Program* program = problem.mutable_program();
+  std::string message;
+
+  EXPECT_TRUE(ApplyOrdering(
+      problem.parameter_map(), linear_solver_ordering, program, &message));
+
+  const std::vector<ParameterBlock*>& parameter_blocks =
+      program->parameter_blocks();
+
+  EXPECT_EQ(parameter_blocks.size(), kNumParams);
+
+  // Check that group 0 elements (evens) come first and
+  // maintain their original relative order.
+  EXPECT_EQ(parameter_blocks[0]->user_state(), param_ptrs[0]);
+  EXPECT_EQ(parameter_blocks[1]->user_state(), param_ptrs[2]);
+  EXPECT_EQ(parameter_blocks[2]->user_state(), param_ptrs[4]);
+  EXPECT_EQ(parameter_blocks[3]->user_state(), param_ptrs[6]);
+  EXPECT_EQ(parameter_blocks[4]->user_state(), param_ptrs[8]);
+
+  // Check that group 1 elements (odds) come second and
+  // maintain their original relative order.
+  EXPECT_EQ(parameter_blocks[5]->user_state(), param_ptrs[1]);
+  EXPECT_EQ(parameter_blocks[6]->user_state(), param_ptrs[3]);
+  EXPECT_EQ(parameter_blocks[7]->user_state(), param_ptrs[5]);
+  EXPECT_EQ(parameter_blocks[8]->user_state(), param_ptrs[7]);
+  EXPECT_EQ(parameter_blocks[9]->user_state(), param_ptrs[9]);
+}
+
 #ifndef CERES_NO_SUITESPARSE
 class ReorderProgramForSparseCholeskyUsingSuiteSparseTest
     : public ::testing::Test {

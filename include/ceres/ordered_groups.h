@@ -182,7 +182,9 @@ class OrderedGroups {
     return group_to_elements_;
   }
 
-  const std::map<T, int>& element_to_group() const { return element_to_group_; }
+  const std::unordered_map<T, int>& element_to_group() const {
+    return element_to_group_;
+  }
 
  private:
   std::map<int, std::set<T>> group_to_elements_;
