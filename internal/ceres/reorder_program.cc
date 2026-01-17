@@ -36,6 +36,7 @@
 #include <numeric>
 #include <set>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 #include "Eigen/SparseCore"
@@ -228,28 +229,49 @@ bool ApplyOrdering(const ProblemImpl::ParameterMap& parameter_map,
     return false;
   }
 
-  std::vector<ParameterBlock*>* parameter_blocks =
-      program->mutable_parameter_blocks();
-  parameter_blocks->clear();
+  const std::unordered_map<double*, int>& element_to_group =
+      ordering.element_to_group();
 
-  // TODO(sameeragarwal): Investigate whether this should be a set or an
-  // unordered_set.
-  const std::map<int, std::set<double*>>& groups = ordering.group_to_elements();
-  for (const auto& p : groups) {
-    const std::set<double*>& group = p.second;
-    for (double* parameter_block_ptr : group) {
-      auto it = parameter_map.find(parameter_block_ptr);
-      if (it == parameter_map.end()) {
-        *error = absl::StrFormat(
-            "User specified ordering contains a pointer "
-            "to a double that is not a parameter block in "
-            "the problem. The invalid double is in group: %d",
-            p.first);
-        return false;
-      }
-      parameter_blocks->push_back(it->second);
+  // Check that all the elements in the ordering are in the problem.
+  for (const auto& p : element_to_group) {
+    auto it = parameter_map.find(p.first);
+    if (it == parameter_map.end()) {
+      *error = absl::StrFormat(
+          "User specified ordering contains a pointer "
+          "to a double that is not a parameter block in "
+          "the problem. The invalid double is in group: %d",
+          p.second);
+      return false;
     }
   }
+
+  // Add the parameter blocks to the new ordering, while maintaining the
+  // original ordering of the parameter blocks within each group.
+  const std::vector<ParameterBlock*> old_parameter_blocks =
+      program->parameter_blocks();
+  std::vector<ParameterBlock*>* parameter_blocks =
+      program->mutable_parameter_blocks();
+  const std::map<int, std::set<double*>>& group_to_elements =
+      ordering.group_to_elements();
+  std::map<int, int> group_to_index;
+  int group_cursor = 0;
+  for (const auto& p : group_to_elements) {
+    group_to_index[p.first] = group_cursor;
+    group_cursor += p.second.size();
+  }
+  for (ParameterBlock* block : old_parameter_blocks) {
+    const auto it = element_to_group.find(block->mutable_user_state());
+    if (it == element_to_group.end()) {
+      *error = absl::StrFormat("No ordering specified for parameter block: %d",
+                               block->index());
+      return false;
+    }
+    const int group = it->second;
+    int& index = group_to_index[group];
+    (*parameter_blocks)[index] = block;
+    index++;
+  }
+
   return true;
 }
 
