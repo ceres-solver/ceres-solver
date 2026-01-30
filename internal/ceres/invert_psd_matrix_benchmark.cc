@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -76,12 +76,11 @@ static void BenchmarkDynamicallyInvertPSDMatrix(benchmark::State& state) {
   }
 }
 
-BENCHMARK(BenchmarkDynamicallyInvertPSDMatrix)
-    ->Apply([](benchmark::internal::Benchmark* benchmark) {
-      for (int i = 1; i < 13; ++i) {
-        benchmark->Args({i});
-      }
-    });
+BENCHMARK(BenchmarkDynamicallyInvertPSDMatrix)->Apply([](auto* benchmark) {
+  for (int i = 1; i < 13; ++i) {
+    benchmark->Args({i});
+  }
+});
 
 }  // namespace ceres::internal
 

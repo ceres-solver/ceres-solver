@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -68,7 +68,7 @@ class MatrixVectorMultiplyData {
 
 // Helper function to generate the various matrix sizes for which we
 // run the benchmark.
-static void MatrixSizeArguments(benchmark::internal::Benchmark* benchmark) {
+const auto MatrixSizeArguments = [](auto* benchmark) {
   std::vector<int> rows = {1, 2, 3, 4, 6, 8};
   std::vector<int> cols = {1, 2, 3, 4, 8, 12, 15};
   for (int r : rows) {
@@ -76,9 +76,10 @@ static void MatrixSizeArguments(benchmark::internal::Benchmark* benchmark) {
       benchmark->Args({r, c});
     }
   }
-}
+};
 
-static void BM_MatrixVectorMultiply(benchmark::State& state) {
+static void
+BM_MatrixVectorMultiply(benchmark::State & state) {
   const int rows = state.range(0);
   const int cols = state.range(1);
   MatrixVectorMultiplyData data(rows, cols);
