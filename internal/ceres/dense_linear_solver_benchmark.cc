@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -64,7 +64,7 @@ static void BM_DenseSolver(benchmark::State& state) {
 }
 
 // Some reasonable matrix sizes. I picked them out of thin air.
-static void MatrixSizes(benchmark::internal::Benchmark* b) {
+const auto MatrixSizes = [](auto* b) {
   // {num_rows, num_cols}
   b->Args({1, 1});
   b->Args({2, 1});
@@ -82,7 +82,7 @@ static void MatrixSizes(benchmark::internal::Benchmark* b) {
   b->Args({400, 20});
   b->Args({600, 22});
   b->Args({800, 25});
-}
+};
 
 BENCHMARK_TEMPLATE2(BM_DenseSolver, ceres::EIGEN, ceres::DENSE_QR)
     ->Apply(MatrixSizes);
