@@ -33,6 +33,24 @@
       "message": "This local fix will cause a fair amount of code bloat due to creating a second copy of all the GEMM related Eigen stuff, and is an off-label use. We should revisit whether it makes sense for us to set the product threshold in Ceres. Arguably, the threshold is project policy and should be set outside of Ceres; Ceres can consume the config.\n\nMy suggested way forward (and we can discuss/debate this) is to\n- Ignore the ODR issue for now unless there are concrete observed problems.\n- Think through the strategy for using user-supplied configs here - e.g. using the Eigen default instead, adding docs to suggest that users should set it and why it needs to be set externally, etc.\n- Do a regression eval to see how much it hurts to not set this config in Ceres.",
       "revId": "d78ca808c73413d2c3cedcb3cdf0990f6e1c4184",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c6e52a4_a646e7cf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-02-02T23:45:46Z",
+      "side": 1,
+      "message": "Thanks for the insights, Keir.\n\nThis change results in a very moderate binary size increase. On Linux, I observe a 1.25% size increase when compiling as a shared library, specifically a change from 8.0 MB to 8.1 MB. Given the original binary size, I consider this acceptable.\n\nIgnoring the ODR issue is the worst option as undefined behavior can manifest itself at any point (e.g., by updating the toolchain).\n\nThe last two points suggest reevaluating the use of the threshold definition. However, this is probably not straightforward and thus outside the scope of this CL. My priority is to address the underlying issue while avoiding any possible performance regressions.",
+      "parentUuid": "a0954768_68ec5b25",
+      "revId": "d78ca808c73413d2c3cedcb3cdf0990f6e1c4184",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
