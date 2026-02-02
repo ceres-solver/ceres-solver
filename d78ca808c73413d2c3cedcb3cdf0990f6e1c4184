@@ -16,6 +16,23 @@
       "message": "Keir had views, but then we lost him, can you take a look at this please?",
       "revId": "d78ca808c73413d2c3cedcb3cdf0990f6e1c4184",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0954768_68ec5b25",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2026-02-02T20:54:59Z",
+      "side": 1,
+      "message": "This local fix will cause a fair amount of code bloat due to creating a second copy of all the GEMM related Eigen stuff, and is an off-label use. We should revisit whether it makes sense for us to set the product threshold in Ceres. Arguably, the threshold is project policy and should be set outside of Ceres; Ceres can consume the config.\n\nMy suggested way forward (and we can discuss/debate this) is to\n- Ignore the ODR issue for now unless there are concrete observed problems.\n- Think through the strategy for using user-supplied configs here - e.g. using the Eigen default instead, adding docs to suggest that users should set it and why it needs to be set externally, etc.\n- Do a regression eval to see how much it hurts to not set this config in Ceres.",
+      "revId": "d78ca808c73413d2c3cedcb3cdf0990f6e1c4184",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
