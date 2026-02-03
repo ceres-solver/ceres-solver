@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97fa2630_1d85d5ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-02-03T09:14:01Z",
+      "side": 1,
+      "message": "Thanks for submitting the changes, Johannes.\n\n\nSameer, could you please take a look at this?",
+      "revId": "6861200bec742279a2c96bbaea5f3eb520d3f14a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
