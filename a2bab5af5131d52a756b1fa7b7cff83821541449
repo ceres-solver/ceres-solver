@@ -1,0 +1,113 @@
+{
+  "comments": [],
+  "submitRequirementResults": [
+    {
+      "submitRequirement": {
+        "name": "BCID-Exit-Gate-Verified",
+        "description": {
+          "value": "BCID Exit Gate verification must be provided by the Exit Gate service."
+        },
+        "applicabilityExpression": {
+          "value": {
+            "expressionString": "is:bcid-exit-gate-applicable_gerrit"
+          }
+        },
+        "submittabilityExpression": {
+          "expressionString": "label:BCID-Exit-Gate-Verified\u003dMAX\u0026user\u003ddevtools-gerritcodereview-exitgate"
+        },
+        "overrideExpression": {},
+        "allowOverrideInChildProjects": false
+      },
+      "applicabilityExpressionResult": {
+        "value": {"expression":{"expressionString":"is:bcid-exit-gate-applicable_gerrit"},"status":"FAIL","errorMessage":{"value":null},"passingAtoms":[],"failingAtoms":["is:bcid-exit-gate-applicable_gerrit"],"atomExplanations":{"value":{"is:bcid-exit-gate-applicable_gerrit":""}}}
+      },
+      "submittabilityExpressionResult": {
+        "value": {"expression":{"expressionString":"label:BCID-Exit-Gate-Verified=MAX&user=devtools-gerritcodereview-exitgate"},"status":"NOT_EVALUATED","errorMessage":{"value":null},"passingAtoms":[],"failingAtoms":[],"atomExplanations":{"value":null}}
+      },
+      "overrideExpressionResult": {},
+      "patchSetCommitId": "a2bab5af5131d52a756b1fa7b7cff83821541449",
+      "legacy": {
+        "value": false
+      },
+      "forced": {},
+      "hidden": {}
+    },
+    {
+      "submitRequirement": {
+        "name": "Code-Review",
+        "description": {},
+        "applicabilityExpression": {},
+        "submittabilityExpression": {
+          "expressionString": "label:Code-Review\u003dMAX AND -label:Code-Review\u003dMIN"
+        },
+        "overrideExpression": {},
+        "allowOverrideInChildProjects": true
+      },
+      "applicabilityExpressionResult": {},
+      "submittabilityExpressionResult": {
+        "value": {"expression":{"expressionString":"label:Code-Review=MAX AND -label:Code-Review=MIN"},"status":"PASS","errorMessage":{"value":null},"passingAtoms":["label:Code-Review=MAX"],"failingAtoms":["label:Code-Review=MIN"],"atomExplanations":{"value":{"label:Code-Review=MAX":"","label:Code-Review=MIN":""}}}
+      },
+      "overrideExpressionResult": {},
+      "patchSetCommitId": "a2bab5af5131d52a756b1fa7b7cff83821541449",
+      "legacy": {
+        "value": false
+      },
+      "forced": {},
+      "hidden": {}
+    },
+    {
+      "submitRequirement": {
+        "name": "Review-Enforcement",
+        "description": {
+          "value": "Two trusted contributors must approve the change. Uploading the change or voting positively on Code-Review count as approval. For Google employees, using a trusted device is required (http://go/gerrit-onboarding#review-enforcement). For non-Google employees,  ReAuth is required (https://chromium.googlesource.com/chromium/src/+/HEAD/docs/gerrit_reauth.md)."
+        },
+        "applicabilityExpression": {
+          "value": {
+            "expressionString": "is:review-enforced_gerrit"
+          }
+        },
+        "submittabilityExpression": {
+          "expressionString": "is:review-enforcement-satisfied_gerrit"
+        },
+        "overrideExpression": {},
+        "allowOverrideInChildProjects": false
+      },
+      "applicabilityExpressionResult": {
+        "value": {"expression":{"expressionString":"is:review-enforced_gerrit"},"status":"FAIL","errorMessage":{"value":null},"passingAtoms":[],"failingAtoms":["is:review-enforced_gerrit"],"atomExplanations":{"value":{"is:review-enforced_gerrit":""}}}
+      },
+      "submittabilityExpressionResult": {
+        "value": {"expression":{"expressionString":"is:review-enforcement-satisfied_gerrit"},"status":"NOT_EVALUATED","errorMessage":{"value":null},"passingAtoms":[],"failingAtoms":[],"atomExplanations":{"value":null}}
+      },
+      "overrideExpressionResult": {},
+      "patchSetCommitId": "a2bab5af5131d52a756b1fa7b7cff83821541449",
+      "legacy": {
+        "value": false
+      },
+      "forced": {},
+      "hidden": {}
+    },
+    {
+      "submitRequirement": {
+        "name": "Verified",
+        "description": {},
+        "applicabilityExpression": {},
+        "submittabilityExpression": {
+          "expressionString": "label:Verified\u003dMAX AND -label:Verified\u003dMIN"
+        },
+        "overrideExpression": {},
+        "allowOverrideInChildProjects": true
+      },
+      "applicabilityExpressionResult": {},
+      "submittabilityExpressionResult": {
+        "value": {"expression":{"expressionString":"label:Verified=MAX AND -label:Verified=MIN"},"status":"PASS","errorMessage":{"value":null},"passingAtoms":["label:Verified=MAX"],"failingAtoms":["label:Verified=MIN"],"atomExplanations":{"value":{"label:Verified=MAX":"","label:Verified=MIN":""}}}
+      },
+      "overrideExpressionResult": {},
+      "patchSetCommitId": "a2bab5af5131d52a756b1fa7b7cff83821541449",
+      "legacy": {
+        "value": false
+      },
+      "forced": {},
+      "hidden": {}
+    }
+  ]
+}
