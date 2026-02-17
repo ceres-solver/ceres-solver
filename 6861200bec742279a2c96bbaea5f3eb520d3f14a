@@ -34,6 +34,181 @@
       "tag": "mailMessageId\u003d\u003cCABqdRUBFM0DomWzEtD8fi7pLB_CFLu+5QwbN2p1\u003ddGGCCw4XwQ@mail.gmail.com\u003e",
       "revId": "6861200bec742279a2c96bbaea5f3eb520d3f14a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fcb0cbb3_6367eee9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-02-17T18:13:49Z",
+      "side": 1,
+      "message": "sorry for the delay in reviewing, I have some code structuring comments, I promise to review this promptly going forward.",
+      "revId": "6861200bec742279a2c96bbaea5f3eb520d3f14a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b164563c_da0a0e23",
+        "filename": "include/ceres/ordered_groups.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-02-17T18:13:49Z",
+      "side": 1,
+      "message": "wow how was this ever working? were we making a temporary and sending out a copy?",
+      "range": {
+        "startLine": 185,
+        "startChar": 13,
+        "endLine": 185,
+        "endChar": 26
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "f9d9d00c_6e840ec5",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "include/ceres/ordered_groups.h",
+              "range": {
+                "startLine": 36,
+                "startChar": 0,
+                "endLine": 37,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "include/ceres/ordered_groups.h",
+              "range": {
+                "startLine": 185,
+                "startChar": 0,
+                "endLine": 186,
+                "endChar": 0
+              },
+              "replacement": "  const std::map\u003cT, int\u003e\u0026 element_to_group() const {\n"
+            },
+            {
+              "path": "include/ceres/ordered_groups.h",
+              "range": {
+                "startLine": 191,
+                "startChar": 0,
+                "endLine": 192,
+                "endChar": 0
+              },
+              "replacement": "  std::map\u003cT, int\u003e element_to_group_;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "6861200bec742279a2c96bbaea5f3eb520d3f14a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0ced0a3_2179dfed",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-02-17T18:13:49Z",
+      "side": 1,
+      "message": "this can be moved closer to where it is used.",
+      "range": {
+        "startLine": 235,
+        "startChar": 15,
+        "endLine": 235,
+        "endChar": 32
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "fca93195_d6d36e98",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/reorder_program.cc",
+              "range": {
+                "startLine": 234,
+                "startChar": 0,
+                "endLine": 236,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "internal/ceres/reorder_program.cc",
+              "range": {
+                "startLine": 258,
+                "startChar": 0,
+                "endLine": 258,
+                "endChar": 0
+              },
+              "replacement": "  const std::map\u003cint, std::set\u003cdouble*\u003e\u003e\u0026 group_to_elements \u003d\n      ordering.group_to_elements();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "6861200bec742279a2c96bbaea5f3eb520d3f14a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe98c98c_502cf82b",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-02-17T18:13:49Z",
+      "side": 1,
+      "message": "given that the loop below is iterating over parameter blocks why not do the same here? the old loop made sense since we were unconditionally adding them to the parameter blocks vector. I think now you can take this loop and the loop below and combine them.",
+      "range": {
+        "startLine": 238,
+        "startChar": 23,
+        "endLine": 238,
+        "endChar": 39
+      },
+      "revId": "6861200bec742279a2c96bbaea5f3eb520d3f14a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33521b3c_b2dfbd7c",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-02-17T18:13:49Z",
+      "side": 1,
+      "message": "we usually name variables of this sort, as foo_cursor.\nin this case, group_cursor or group_index is better.",
+      "range": {
+        "startLine": 257,
+        "startChar": 6,
+        "endLine": 257,
+        "endChar": 15
+      },
+      "revId": "6861200bec742279a2c96bbaea5f3eb520d3f14a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
