@@ -53,6 +53,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "61f1c51c_1ffac89f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5205
+      },
+      "writtenOn": "2026-02-19T06:56:47Z",
+      "side": 1,
+      "message": "Thanks for your review Sameer.",
+      "revId": "6861200bec742279a2c96bbaea5f3eb520d3f14a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b164563c_da0a0e23",
@@ -116,6 +133,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e364c7cf_8392cb05",
+        "filename": "include/ceres/ordered_groups.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 5205
+      },
+      "writtenOn": "2026-02-19T06:56:47Z",
+      "side": 1,
+      "message": "One of the great design decisions of the standard library to implicitly convert these two data structures. I wasn\u0027t aware of this one either until this fix. :-)",
+      "parentUuid": "b164563c_da0a0e23",
+      "range": {
+        "startLine": 185,
+        "startChar": 13,
+        "endLine": 185,
+        "endChar": 26
+      },
+      "revId": "6861200bec742279a2c96bbaea5f3eb520d3f14a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a0ced0a3_2179dfed",
         "filename": "internal/ceres/reorder_program.cc",
         "patchSetId": 2
@@ -165,6 +206,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf55f770_48ebd5fc",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 5205
+      },
+      "writtenOn": "2026-02-19T06:56:47Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a0ced0a3_2179dfed",
+      "range": {
+        "startLine": 235,
+        "startChar": 15,
+        "endLine": 235,
+        "endChar": 32
+      },
+      "revId": "6861200bec742279a2c96bbaea5f3eb520d3f14a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fe98c98c_502cf82b",
@@ -190,6 +255,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "caa16ed5_2df4e1c5",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 5205
+      },
+      "writtenOn": "2026-02-19T06:56:47Z",
+      "side": 1,
+      "message": "The intention was to validate that (1) all parameters added to the ordering are part of the problem and (2) all parameters in the problem are defined in the ordering. Unless I misunderstand how these two inputs are constructed, I think we need two separate loops to achieve this?",
+      "parentUuid": "fe98c98c_502cf82b",
+      "range": {
+        "startLine": 238,
+        "startChar": 23,
+        "endLine": 238,
+        "endChar": 39
+      },
+      "revId": "6861200bec742279a2c96bbaea5f3eb520d3f14a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "33521b3c_b2dfbd7c",
         "filename": "internal/ceres/reorder_program.cc",
         "patchSetId": 2
@@ -201,6 +290,30 @@
       "writtenOn": "2026-02-17T18:13:49Z",
       "side": 1,
       "message": "we usually name variables of this sort, as foo_cursor.\nin this case, group_cursor or group_index is better.",
+      "range": {
+        "startLine": 257,
+        "startChar": 6,
+        "endLine": 257,
+        "endChar": 15
+      },
+      "revId": "6861200bec742279a2c96bbaea5f3eb520d3f14a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35376d90_66815ce9",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 5205
+      },
+      "writtenOn": "2026-02-19T06:56:47Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "33521b3c_b2dfbd7c",
       "range": {
         "startLine": 257,
         "startChar": 6,
