@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3dde109_ed0b2f26",
+        "filename": "internal/ceres/reorder_program_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-02-19T23:54:04Z",
+      "side": 1,
+      "message": "I am confused, this shuffle is not being used anywhere.",
+      "revId": "f795e1f64e2ae90deb3c687d80cec1010925021b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

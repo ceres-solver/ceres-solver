@@ -155,6 +155,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "425a87b5_2a9572ba",
+        "filename": "include/ceres/ordered_groups.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-02-19T23:54:04Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "e364c7cf_8392cb05",
+      "range": {
+        "startLine": 185,
+        "startChar": 13,
+        "endLine": 185,
+        "endChar": 26
+      },
+      "revId": "6861200bec742279a2c96bbaea5f3eb520d3f14a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a0ced0a3_2179dfed",
@@ -267,6 +291,30 @@
       "side": 1,
       "message": "The intention was to validate that (1) all parameters added to the ordering are part of the problem and (2) all parameters in the problem are defined in the ordering. Unless I misunderstand how these two inputs are constructed, I think we need two separate loops to achieve this?",
       "parentUuid": "fe98c98c_502cf82b",
+      "range": {
+        "startLine": 238,
+        "startChar": 23,
+        "endLine": 238,
+        "endChar": 39
+      },
+      "revId": "6861200bec742279a2c96bbaea5f3eb520d3f14a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13d37949_b813c6dd",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-02-19T23:54:04Z",
+      "side": 1,
+      "message": "fair. I was trying to be efficient and maybe a little loosey goosey.",
+      "parentUuid": "caa16ed5_2df4e1c5",
       "range": {
         "startLine": 238,
         "startChar": 23,
