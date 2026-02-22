@@ -16,6 +16,24 @@
       "message": "I am confused, this shuffle is not being used anywhere.",
       "revId": "f795e1f64e2ae90deb3c687d80cec1010925021b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b97c395_92ea8078",
+        "filename": "internal/ceres/reorder_program_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 5205
+      },
+      "writtenOn": "2026-02-22T14:43:18Z",
+      "side": 1,
+      "message": "Good catch, thank you. Fixed.",
+      "parentUuid": "d3dde109_ed0b2f26",
+      "revId": "f795e1f64e2ae90deb3c687d80cec1010925021b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
