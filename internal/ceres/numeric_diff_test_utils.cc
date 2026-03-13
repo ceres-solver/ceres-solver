@@ -29,6 +29,8 @@
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 //         tbennun@gmail.com (Tal Ben-Nun)
 
+#ifdef CERES_HAS_GTEST
+
 #include "ceres/numeric_diff_test_utils.h"
 
 #include <algorithm>
@@ -255,3 +257,5 @@ void RandomizedFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
 }
 
 }  // namespace ceres::internal
+
+#endif  // CERES_HAS_GTEST

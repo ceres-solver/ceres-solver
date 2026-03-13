@@ -28,6 +28,8 @@
 //
 // Author: keir@google.com (Keir Mierle)
 
+#ifdef CERES_HAS_GTEST
+
 #ifndef CERES_INTERNAL_TEST_UTIL_H_
 #define CERES_INTERNAL_TEST_UTIL_H_
 
@@ -74,8 +76,6 @@ CERES_NO_EXPORT void ExpectArraysCloseUptoScale(int n,
 // Construct a fully qualified path for the test file depending on the
 // local build/testing environment.
 CERES_NO_EXPORT std::string TestFileAbsolutePath(const std::string& filename);
-
-CERES_NO_EXPORT std::string ToString(const Solver::Options& options);
 
 // A templated test fixture, that is used for testing Ceres end to end
 // by computing a solution to the problem for a given solver
@@ -126,9 +126,12 @@ class CERES_NO_EXPORT SystemTest : public ::testing::Test {
   std::vector<double> expected_final_residuals_;
 };
 
+
 }  // namespace internal
 }  // namespace ceres
 
 #include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_INTERNAL_TEST_UTIL_H_
+
+#endif // CERES_HAS_GTEST

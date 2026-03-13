@@ -29,6 +29,8 @@
 // Author: keir@google.com (Keir Mierle)
 //         sameeragarwal@google.com (Sameer Agarwal)
 
+#ifdef CERES_HAS_GTEST
+
 #include "ceres/evaluator_test_utils.h"
 
 #include "ceres/internal/eigen.h"
@@ -88,3 +90,5 @@ void CompareEvaluations(int expected_num_rows,
 }
 
 }  // namespace ceres::internal
+
+#endif  // CERES_HAS_GTEST
