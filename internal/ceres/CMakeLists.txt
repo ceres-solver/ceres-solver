@@ -375,6 +375,7 @@ if (BUILD_TESTING)
 
   target_include_directories(test_util PUBLIC ${Ceres_SOURCE_DIR}/internal)
   target_link_libraries (test_util PUBLIC GTest::gmock ceres_static)
+  target_compile_definitions(test_util PUBLIC CERES_HAS_GTEST)
   target_compile_definitions(test_util PRIVATE CERES_TEST_SRCDIR_SUFFIX="../../data")
 
   if (BUILD_SHARED_LIBS)
@@ -526,7 +527,7 @@ macro(add_dependencies_to_benchmark BENCHMARK_TARGET)
   # dependency headers which are not propagated via the ceres targets,
   # so link them explicitly.
   target_link_libraries(${BENCHMARK_TARGET}
-    PRIVATE test_util ceres_static benchmark::benchmark
+    PRIVATE ceres_static benchmark::benchmark
             ${CERES_LIBRARY_PRIVATE_DEPENDENCIES})
 endmacro()
 

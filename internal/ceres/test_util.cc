@@ -30,6 +30,8 @@
 //
 // Utility functions useful for testing.
 
+#ifdef CERES_HAS_GTEST
+
 #include "ceres/test_util.h"
 
 #include <algorithm>
@@ -42,6 +44,7 @@
 #include "ceres/internal/port.h"
 #include "ceres/types.h"
 #include "gtest/gtest.h"
+
 
 // This macro is used to inject additional path information specific
 // to the build system.
@@ -139,16 +142,7 @@ std::string TestFileAbsolutePath(const std::string& filename) {
   return JoinPath(::testing::SrcDir() + CERES_TEST_SRCDIR_SUFFIX, filename);
 }
 
-std::string ToString(const Solver::Options& options) {
-  return absl::StrFormat(
-      "(%s, %s, %s, %s, %d)",
-      LinearSolverTypeToString(options.linear_solver_type),
-      SparseLinearAlgebraLibraryTypeToString(
-          options.sparse_linear_algebra_library_type),
-      options.linear_solver_ordering ? "USER" : "AUTOMATIC",
-      PreconditionerTypeToString(options.preconditioner_type),
-      options.num_threads);
-}
-
 }  // namespace internal
 }  // namespace ceres
+
+#endif  // CERES_HAS_GTEST
