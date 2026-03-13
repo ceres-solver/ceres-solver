@@ -37,6 +37,8 @@
 #include "ceres/cost_function.h"
 #include "ceres/test_util.h"
 #include "ceres/types.h"
+
+#ifdef CERES_HAS_GTEST
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
@@ -255,3 +257,4 @@ void RandomizedFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
 }
 
 }  // namespace ceres::internal
+#endif  // CERES_HAS_GTEST

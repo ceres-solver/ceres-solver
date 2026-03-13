@@ -41,7 +41,10 @@
 #include "ceres/file.h"
 #include "ceres/internal/port.h"
 #include "ceres/types.h"
+
+#ifdef CERES_HAS_GTEST
 #include "gtest/gtest.h"
+#endif
 
 // This macro is used to inject additional path information specific
 // to the build system.
@@ -53,6 +56,7 @@
 namespace ceres {
 namespace internal {
 
+#ifdef CERES_HAS_GTEST
 bool ExpectClose(double x, double y, double max_abs_relative_difference) {
   if (std::isinf(x) && std::isinf(y)) {
     EXPECT_EQ(std::signbit(x), std::signbit(y));
@@ -138,6 +142,7 @@ void ExpectArraysClose(int n, const double* p, const double* q, double tol) {
 std::string TestFileAbsolutePath(const std::string& filename) {
   return JoinPath(::testing::SrcDir() + CERES_TEST_SRCDIR_SUFFIX, filename);
 }
+#endif
 
 std::string ToString(const Solver::Options& options) {
   return absl::StrFormat(

@@ -38,11 +38,17 @@
 #include "ceres/internal/export.h"
 #include "ceres/problem.h"
 #include "ceres/solver.h"
+
+#ifdef CERES_HAS_GTEST
 #include "gtest/gtest.h"
+#endif
 
 namespace ceres {
 namespace internal {
 
+CERES_NO_EXPORT std::string ToString(const Solver::Options& options);
+
+#ifdef CERES_HAS_GTEST
 // Expects that x and y have a relative difference of no more than
 // max_abs_relative_difference. If either x or y is zero, then the relative
 // difference is interpreted as an absolute difference.
@@ -74,8 +80,6 @@ CERES_NO_EXPORT void ExpectArraysCloseUptoScale(int n,
 // Construct a fully qualified path for the test file depending on the
 // local build/testing environment.
 CERES_NO_EXPORT std::string TestFileAbsolutePath(const std::string& filename);
-
-CERES_NO_EXPORT std::string ToString(const Solver::Options& options);
 
 // A templated test fixture, that is used for testing Ceres end to end
 // by computing a solution to the problem for a given solver
@@ -125,6 +129,7 @@ class CERES_NO_EXPORT SystemTest : public ::testing::Test {
 
   std::vector<double> expected_final_residuals_;
 };
+#endif
 
 }  // namespace internal
 }  // namespace ceres

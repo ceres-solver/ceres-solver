@@ -43,8 +43,11 @@
 #include "ceres/problem.h"
 #include "ceres/rotation.h"
 #include "ceres/solver.h"
-#include "ceres/test_util.h"
 #include "ceres/types.h"
+
+#ifdef CERES_HAS_GTEST
+#include "ceres/test_util.h"
+#endif
 
 namespace ceres {
 namespace internal {
@@ -62,12 +65,10 @@ class BundleAdjustmentProblem {
     ReadData(input_file);
     BuildProblem();
   }
-  BundleAdjustmentProblem() {
-    const std::string input_file =
-        TestFileAbsolutePath("problem-16-22106-pre.txt");
-    ReadData(input_file);
-    BuildProblem();
-  }
+
+#ifdef CERES_HAS_GTEST
+  BundleAdjustmentProblem();
+#endif
 
   ~BundleAdjustmentProblem() {
     delete[] point_index_;
@@ -240,7 +241,16 @@ class BundleAdjustmentProblem {
   double* parameters_;
 };
 
+#ifdef CERES_HAS_GTEST
+inline BundleAdjustmentProblem::BundleAdjustmentProblem() {
+  const std::string input_file =
+      TestFileAbsolutePath("problem-16-22106-pre.txt");
+  ReadData(input_file);
+  BuildProblem();
+}
+
 using BundleAdjustmentTest = SystemTest<BundleAdjustmentProblem>;
+#endif
 
 }  // namespace internal
 }  // namespace ceres
