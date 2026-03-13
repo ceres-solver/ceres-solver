@@ -31,6 +31,8 @@
 //
 // Test utils used for evaluation testing.
 
+#ifdef CERES_HAS_GTEST
+
 #include "ceres/internal/export.h"
 
 namespace ceres::internal {
@@ -58,3 +60,5 @@ CERES_NO_EXPORT void CompareEvaluations(int expected_num_rows,
                                         const double* actual_jacobian);
 
 }  // namespace ceres::internal
+
+#endif  // CERES_HAS_GTEST

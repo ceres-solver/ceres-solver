@@ -28,6 +28,8 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
+#ifdef CERES_HAS_GTEST
+
 #ifndef CERES_INTERNAL_NUMERIC_DIFF_TEST_UTILS_H_
 #define CERES_INTERNAL_NUMERIC_DIFF_TEST_UTILS_H_
 
@@ -153,3 +155,5 @@ class CERES_NO_EXPORT RandomizedCostFunction : public SizedCostFunction<1, 1> {
 }  // namespace ceres::internal
 
 #endif  // CERES_INTERNAL_NUMERIC_DIFF_TEST_UTILS_H_
+
+#endif  // CERES_HAS_GTEST
