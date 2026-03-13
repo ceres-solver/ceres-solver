@@ -43,11 +43,13 @@
 #include "ceres/problem.h"
 #include "ceres/rotation.h"
 #include "ceres/solver.h"
-#include "ceres/test_util.h"
 #include "ceres/types.h"
 
-namespace ceres {
-namespace internal {
+#ifdef CERES_HAS_GTEST
+#include "ceres/test_util.h"
+#endif
+
+namespace ceres::internal {
 
 const bool kAutomaticOrdering = true;
 const bool kUserOrdering = false;
@@ -62,12 +64,15 @@ class BundleAdjustmentProblem {
     ReadData(input_file);
     BuildProblem();
   }
+
+#ifdef CERES_HAS_GTEST
   BundleAdjustmentProblem() {
     const std::string input_file =
         TestFileAbsolutePath("problem-16-22106-pre.txt");
     ReadData(input_file);
     BuildProblem();
   }
+#endif
 
   ~BundleAdjustmentProblem() {
     delete[] point_index_;
@@ -240,7 +245,8 @@ class BundleAdjustmentProblem {
   double* parameters_;
 };
 
+#ifdef CERES_HAS_GTEST
 using BundleAdjustmentTest = SystemTest<BundleAdjustmentProblem>;
+#endif
 
-}  // namespace internal
-}  // namespace ceres
+}  // namespace ceres::internal
