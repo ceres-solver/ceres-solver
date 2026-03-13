@@ -32,6 +32,8 @@
 #include "ceres/evaluator_test_utils.h"
 
 #include "ceres/internal/eigen.h"
+
+#ifdef CERES_HAS_GTEST
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
@@ -88,3 +90,4 @@ void CompareEvaluations(int expected_num_rows,
 }
 
 }  // namespace ceres::internal
+#endif  // CERES_HAS_GTEST
