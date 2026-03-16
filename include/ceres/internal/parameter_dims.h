@@ -85,15 +85,8 @@ class ParameterDims {
     return std::array<T*, kNumParameterBlocks>{{ptr + Indices...}};
   }
 
-  static constexpr std::array<int, kNumParameterBlocks> params_{Ns...};
+  static constexpr inline std::array<int, kNumParameterBlocks> params_{Ns...};
 };
-
-// Even static constexpr member variables needs to be defined (not only
-// declared). As the ParameterDims class is tempalted this definition must
-// be in the header file.
-template <bool IsDynamic, int... Ns>
-constexpr std::array<int, ParameterDims<IsDynamic, Ns...>::kNumParameterBlocks>
-    ParameterDims<IsDynamic, Ns...>::params_;
 
 // Using declarations for static and dynamic parameter dims. This makes client
 // code easier to read.
