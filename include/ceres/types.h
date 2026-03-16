@@ -472,7 +472,7 @@ enum CovarianceAlgorithmType {
 // before passing them to user code. If on return an element of the
 // array still contains this value, we will assume that the user code
 // did not write to that memory location.
-const double kImpossibleValue = 1e302;
+inline constexpr double kImpossibleValue = 1e302;
 
 CERES_EXPORT const char* LinearSolverTypeToString(LinearSolverType type);
 CERES_EXPORT bool StringToLinearSolverType(std::string value,
