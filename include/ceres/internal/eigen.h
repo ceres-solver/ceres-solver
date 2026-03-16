@@ -53,16 +53,19 @@ using ColMajorMatrixRef =
 using ConstColMajorMatrixRef =
     Eigen::Map<const ColMajorMatrix, 0, Eigen::Stride<Eigen::Dynamic, 1>>;
 
-// C++ does not support templated typdefs, thus the need for this
-// struct so that we can support statically sized Matrix and Maps.
+// C++11 and C++17 support templated type aliases, thus the EigenTypes struct
+// is no longer necessary. We provide them as template aliases for better
+// readability and usability.
+template <int num_rows = Eigen::Dynamic, int num_cols = Eigen::Dynamic>
+using EigenMatrix = Eigen::Matrix<
+    double,
+    num_rows,
+    num_cols,
+    num_cols == 1 ? Eigen::ColMajor : Eigen::RowMajor>;
+
 template <int num_rows = Eigen::Dynamic, int num_cols = Eigen::Dynamic>
 struct EigenTypes {
-  using Matrix =
-      Eigen::Matrix<double,
-                    num_rows,
-                    num_cols,
-                    num_cols == 1 ? Eigen::ColMajor : Eigen::RowMajor>;
-
+  using Matrix = EigenMatrix<num_rows, num_cols>;
   using MatrixRef = Eigen::Map<Matrix>;
   using ConstMatrixRef = Eigen::Map<const Matrix>;
   using Vector = Eigen::Matrix<double, num_rows, 1>;
