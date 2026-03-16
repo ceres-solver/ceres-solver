@@ -323,11 +323,13 @@ inline bool AutoDifferentiate(const Functor& functor,
       ParameterDims::GetUnpackedParameters(parameters_as_jets.data());
 
   // If the number of residuals is fixed, we use the template argument as the
-  // number of outputs. Otherwise we use the num_outputs parameter. Note: The
-  // ?-operator here is compile-time evaluated, therefore num_outputs is also
-  // a compile-time constant for functors with fixed residuals.
-  const int num_outputs =
-      kNumResiduals == DYNAMIC ? dynamic_num_outputs : kNumResiduals;
+  // number of outputs. Otherwise we use the num_outputs parameter.
+  int num_outputs;
+  if constexpr (kNumResiduals == DYNAMIC) {
+    num_outputs = dynamic_num_outputs;
+  } else {
+    num_outputs = kNumResiduals;
+  }
   DCHECK_GT(num_outputs, 0);
 
   ArraySelector<JetT, kNumResiduals, CERES_AUTODIFF_MAX_RESIDUALS_ON_STACK>
