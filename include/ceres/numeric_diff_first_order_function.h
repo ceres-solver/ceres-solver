@@ -148,9 +148,10 @@ class NumericDiffFirstOrderFunction final : public FirstOrderFunction {
 
   explicit NumericDiffFirstOrderFunction(FirstOrderFunctor* functor,
                                          Ownership ownership = TAKE_OWNERSHIP)
-      : NumericDiffFirstOrderFunction(std::unique_ptr<FirstOrderFunctor>(functor),
-                                   kNumParameters,
-                                   ownership) {
+      : NumericDiffFirstOrderFunction(
+            std::unique_ptr<FirstOrderFunctor>(functor),
+            kNumParameters,
+            ownership) {
     static_assert(kNumParameters != DYNAMIC,
                   "When kNumParameters is DYNAMIC, the number of parameters "
                   "must be provided as a constructor argument.");
@@ -209,14 +210,16 @@ class NumericDiffFirstOrderFunction final : public FirstOrderFunction {
                                                       &parameters_ptr,
                                                       gradient);
     } else {
-      return internal::EvaluateJacobianForParameterBlocks<
-          internal::StaticParameterDims<kNumParameters>>::
-          template Apply<kMethod, 1>(functor_.get(),
-                                     cost,
-                                     options_,
-                                     kNumResiduals,
-                                     &parameters_ptr,
-                                     &gradient);
+      using ParameterDims = internal::StaticParameterDims<kNumParameters>;
+      return internal::EvaluateJacobianForParameterBlocks<kMethod,
+                                                          kNumResiduals,
+                                                          ParameterDims>(
+          functor_.get(),
+          cost,
+          options_,
+          kNumResiduals,
+          &parameters_ptr,
+          &gradient);
     }
   }
 
@@ -225,10 +228,11 @@ class NumericDiffFirstOrderFunction final : public FirstOrderFunction {
   const FirstOrderFunctor& functor() const { return *functor_; }
 
  private:
-  explicit NumericDiffFirstOrderFunction(std::unique_ptr<FirstOrderFunctor> functor,
-                                         Ownership ownership,
-                                         int num_parameters,
-                                         const NumericDiffOptions& options)
+  explicit NumericDiffFirstOrderFunction(
+      std::unique_ptr<FirstOrderFunctor> functor,
+      Ownership ownership,
+      int num_parameters,
+      const NumericDiffOptions& options)
       : functor_(std::move(functor)),
         num_parameters_(num_parameters),
         ownership_(ownership),
