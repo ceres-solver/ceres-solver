@@ -22,6 +22,30 @@
       },
       "revId": "3e6828abb6893afa2ba3cd742b50ca5bc79d945c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "985f1cb6_3cc72d24",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-03-17T19:32:40Z",
+      "side": 1,
+      "message": "you are right, this is not needed, This is gemini doing stupid.\nI am experimenting with using gemini cli to do some automated c++17 modernization and code simplification, and this is one of the crappier CLs. will revert.",
+      "parentUuid": "7dc5afc3_f810f3c1",
+      "range": {
+        "startLine": 195,
+        "startChar": 26,
+        "endLine": 195,
+        "endChar": 31
+      },
+      "revId": "3e6828abb6893afa2ba3cd742b50ca5bc79d945c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
