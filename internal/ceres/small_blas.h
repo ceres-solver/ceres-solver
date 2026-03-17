@@ -77,13 +77,6 @@ namespace ceres::internal {
   const int NUM_ROW_B = (kRowB != Eigen::Dynamic ? kRowB : num_row_b); \
   const int NUM_COL_B = (kColB != Eigen::Dynamic ? kColB : num_col_b);
 
-#define CERES_GEMM_EIGEN_HEADER                                 \
-  const typename EigenTypes<kRowA, kColA>::ConstMatrixRef Aref( \
-      A, num_row_a, num_col_a);                                 \
-  const typename EigenTypes<kRowB, kColB>::ConstMatrixRef Bref( \
-      B, num_row_b, num_col_b);                                 \
-  MatrixRef Cref(C, row_stride_c, col_stride_c);
-
 // clang-format off
 #define CERES_CALL_GEMM(name)                                           \
   name<kRowA, kColA, kRowB, kColB, kOperation>(                         \
@@ -162,16 +155,25 @@ namespace ceres::internal {
 //   ------------
 //
 CERES_GEMM_BEGIN(MatrixMatrixMultiplyEigen) {
-  CERES_GEMM_EIGEN_HEADER
-  Eigen::Block<MatrixRef, kRowA, kColB> block(
-      Cref, start_row_c, start_col_c, num_row_a, num_col_b);
+  Eigen::Map<const Eigen::Matrix<double, kRowA, kColA, Eigen::RowMajor>> Aref(
+      A, num_row_a, num_col_a);
+  Eigen::Map<const Eigen::Matrix<double, kRowB, kColB, Eigen::RowMajor>> Bref(
+      B, num_row_b, num_col_b);
+
+  using MapFixed = Eigen::Map<Eigen::Matrix<double, kRowA, kColB, Eigen::RowMajor>,
+                              0,
+                              Eigen::OuterStride<>>;
+  MapFixed Cmap(C + start_row_c * col_stride_c + start_col_c,
+                num_row_a,
+                num_col_b,
+                Eigen::OuterStride<>(col_stride_c));
 
   if (kOperation > 0) {
-    block.noalias() += Aref * Bref;
+    Cmap.noalias() += Aref * Bref;
   } else if (kOperation < 0) {
-    block.noalias() -= Aref * Bref;
+    Cmap.noalias() -= Aref * Bref;
   } else {
-    block.noalias() = Aref * Bref;
+    Cmap.noalias() = Aref * Bref;
   }
 }
 
@@ -263,18 +265,25 @@ CERES_GEMM_BEGIN(MatrixMatrixMultiply) {
 }
 
 CERES_GEMM_BEGIN(MatrixTransposeMatrixMultiplyEigen) {
-  CERES_GEMM_EIGEN_HEADER
-  // clang-format off
-  Eigen::Block<MatrixRef, kColA, kColB> block(Cref,
-                                              start_row_c, start_col_c,
-                                              num_col_a, num_col_b);
-  // clang-format on
+  Eigen::Map<const Eigen::Matrix<double, kRowA, kColA, Eigen::RowMajor>> Aref(
+      A, num_row_a, num_col_a);
+  Eigen::Map<const Eigen::Matrix<double, kRowB, kColB, Eigen::RowMajor>> Bref(
+      B, num_row_b, num_col_b);
+
+  using MapFixed = Eigen::Map<Eigen::Matrix<double, kColA, kColB, Eigen::RowMajor>,
+                              0,
+                              Eigen::OuterStride<>>;
+  MapFixed Cmap(C + start_row_c * col_stride_c + start_col_c,
+                num_col_a,
+                num_col_b,
+                Eigen::OuterStride<>(col_stride_c));
+
   if (kOperation > 0) {
-    block.noalias() += Aref.transpose() * Bref;
+    Cmap.noalias() += Aref.transpose() * Bref;
   } else if (kOperation < 0) {
-    block.noalias() -= Aref.transpose() * Bref;
+    Cmap.noalias() -= Aref.transpose() * Bref;
   } else {
-    block.noalias() = Aref.transpose() * Bref;
+    Cmap.noalias() = Aref.transpose() * Bref;
   }
 }
 
@@ -389,10 +398,10 @@ inline void MatrixVectorMultiply(const double* A,
                                  const double* b,
                                  double* c) {
 #ifdef CERES_NO_CUSTOM_BLAS
-  const typename EigenTypes<kRowA, kColA>::ConstMatrixRef Aref(
+  Eigen::Map<const Eigen::Matrix<double, kRowA, kColA, Eigen::RowMajor>> Aref(
       A, num_row_a, num_col_a);
-  const typename EigenTypes<kColA>::ConstVectorRef bref(b, num_col_a);
-  typename EigenTypes<kRowA>::VectorRef cref(c, num_row_a);
+  Eigen::Map<const Eigen::Matrix<double, kColA, 1>> bref(b, num_col_a);
+  Eigen::Map<Eigen::Matrix<double, kRowA, 1>> cref(c, num_row_a);
 
   // lazyProduct works better than .noalias() for matrix-vector
   // products.
@@ -475,10 +484,10 @@ inline void MatrixTransposeVectorMultiply(const double* A,
                                           const double* b,
                                           double* c) {
 #ifdef CERES_NO_CUSTOM_BLAS
-  const typename EigenTypes<kRowA, kColA>::ConstMatrixRef Aref(
+  Eigen::Map<const Eigen::Matrix<double, kRowA, kColA, Eigen::RowMajor>> Aref(
       A, num_row_a, num_col_a);
-  const typename EigenTypes<kRowA>::ConstVectorRef bref(b, num_row_a);
-  typename EigenTypes<kColA>::VectorRef cref(c, num_col_a);
+  Eigen::Map<const Eigen::Matrix<double, kRowA, 1>> bref(b, num_row_a);
+  Eigen::Map<Eigen::Matrix<double, kColA, 1>> cref(c, num_col_a);
 
   // lazyProduct works better than .noalias() for matrix-vector
   // products.
@@ -555,7 +564,6 @@ inline void MatrixTransposeVectorMultiply(const double* A,
 }
 
 #undef CERES_GEMM_BEGIN
-#undef CERES_GEMM_EIGEN_HEADER
 #undef CERES_GEMM_NAIVE_HEADER
 #undef CERES_CALL_GEMM
 #undef CERES_GEMM_STORE_SINGLE
