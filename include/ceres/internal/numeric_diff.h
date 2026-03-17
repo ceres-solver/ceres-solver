@@ -434,57 +434,58 @@ struct NumericDiff {
 //     return false;
 //   }
 // }
+// Recursively evaluates the Jacobian for each parameter block.
 template <typename ParameterDims,
-          typename Parameters = typename ParameterDims::Parameters,
-          int ParameterIdx = 0>
-struct EvaluateJacobianForParameterBlocks;
+          typename Seq = typename ParameterDims::Parameters,
+          int ParameterIdx = 0,
+          NumericDiffMethodType method,
+          int kNumResiduals,
+          typename CostFunctor>
+inline bool EvaluateJacobianForParameterBlocks(
+    const CostFunctor* functor,
+    const double* residuals_at_eval_point,
+    const NumericDiffOptions& options,
+    int num_residuals,
+    double** parameters,
+    double** jacobians) {
+  if constexpr (Seq::size() > 0) {
+    using SeqTraits = IntegerSequenceTraits<Seq>;
+    constexpr int kParameterBlockSize = SeqTraits::kHead;
 
-template <typename ParameterDims, int N, int... Ns, int ParameterIdx>
-struct EvaluateJacobianForParameterBlocks<ParameterDims,
-                                          std::integer_sequence<int, N, Ns...>,
-                                          ParameterIdx> {
-  template <NumericDiffMethodType method,
-            int kNumResiduals,
-            typename CostFunctor>
-  static bool Apply(const CostFunctor* functor,
-                    const double* residuals_at_eval_point,
-                    const NumericDiffOptions& options,
-                    int num_residuals,
-                    double** parameters,
-                    double** jacobians) {
     if (jacobians[ParameterIdx] != nullptr) {
       if (!NumericDiff<CostFunctor,
                        method,
                        kNumResiduals,
                        ParameterDims,
                        ParameterIdx,
-                       N>::
+                       kParameterBlockSize>::
               EvaluateJacobianForParameterBlock(functor,
                                                 residuals_at_eval_point,
                                                 options,
                                                 num_residuals,
                                                 ParameterIdx,
-                                                N,
+                                                kParameterBlockSize,
                                                 parameters,
                                                 jacobians[ParameterIdx])) {
         return false;
       }
     }
 
-    if constexpr (sizeof...(Ns) > 0) {
-      return EvaluateJacobianForParameterBlocks<
-          ParameterDims,
-          std::integer_sequence<int, Ns...>,
-          ParameterIdx + 1>::template Apply<method, kNumResiduals>(functor,
-                                                                  residuals_at_eval_point,
-                                                                  options,
-                                                                  num_residuals,
-                                                                  parameters,
-                                                                  jacobians);
-    }
-    return true;
+    return EvaluateJacobianForParameterBlocks<ParameterDims,
+                                              typename SeqTraits::Tail,
+                                              ParameterIdx + 1,
+                                              method,
+                                              kNumResiduals>(
+        functor,
+        residuals_at_eval_point,
+        options,
+        num_residuals,
+        parameters,
+        jacobians);
   }
-};
+  return true;
+}
+
 
 }  // namespace ceres::internal
 

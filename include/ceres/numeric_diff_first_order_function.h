@@ -159,8 +159,6 @@ class NumericDiffFirstOrderFunction final : public FirstOrderFunction {
     }
   }
 
-
-
   ~NumericDiffFirstOrderFunction() override {
     if (ownership_ != TAKE_OWNERSHIP) {
       functor_.release();
@@ -201,14 +199,14 @@ class NumericDiffFirstOrderFunction final : public FirstOrderFunction {
                                                       &parameters_ptr,
                                                       gradient);
     } else {
+      using ParameterDims = internal::StaticParameterDims<kNumParameters>;
       return internal::EvaluateJacobianForParameterBlocks<
-          internal::StaticParameterDims<kNumParameters>>::
-          template Apply<kMethod, 1>(functor_.get(),
-                                     cost,
-                                     options_,
-                                     kNumResiduals,
-                                     &parameters_ptr,
-                                     &gradient);
+          ParameterDims,
+          typename ParameterDims::Parameters,
+          0,
+          kMethod,
+          kNumResiduals>(
+          functor_.get(), cost, options_, kNumResiduals, &parameters_ptr, &gradient);
     }
   }
 

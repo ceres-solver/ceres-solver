@@ -268,14 +268,17 @@ class NumericDiffCostFunction final
              sizeof(double) * ParameterDims::GetDim(block));
     }
 
-    internal::EvaluateJacobianForParameterBlocks<ParameterDims>::
-        template Apply<kMethod, kNumResiduals>(
-            functor_.get(),
-            residuals,
-            options_,
-            this->num_residuals(),
-            parameters_reference_copy.data(),
-            jacobians);
+    internal::EvaluateJacobianForParameterBlocks<ParameterDims,
+                                                 typename ParameterDims::Parameters,
+                                                 0,
+                                                 kMethod,
+                                                 kNumResiduals>(
+        functor_.get(),
+        residuals,
+        options_,
+        this->num_residuals(),
+        parameters_reference_copy.data(),
+        jacobians);
 
     return true;
   }
