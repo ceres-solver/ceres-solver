@@ -245,14 +245,8 @@ class EuclideanManifold final : public Manifold {
   static_assert(ceres::DYNAMIC == Eigen::Dynamic,
                 "ceres::DYNAMIC needs to be the same as Eigen::Dynamic.");
 
-  EuclideanManifold() : size_{Size} {
-    static_assert(
-        Size != ceres::DYNAMIC,
-        "The size is set to dynamic. Please call the constructor with a size.");
-  }
-
-  explicit EuclideanManifold(int size) : size_(size) {
-    if (Size != ceres::DYNAMIC) {
+  explicit EuclideanManifold(int size = Size) : size_(size) {
+    if constexpr (Size != ceres::DYNAMIC) {
       CHECK_EQ(Size, size)
           << "Specified size by template parameter differs from the supplied "
              "one.";
