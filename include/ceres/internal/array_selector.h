@@ -33,6 +33,7 @@
 #define CERES_PUBLIC_INTERNAL_ARRAY_SELECTOR_H_
 
 #include <array>
+#include <type_traits>
 #include <vector>
 
 #include "absl/container/fixed_array.h"
@@ -61,7 +62,7 @@ template <typename T,
           int max_num_elements_on_stack,
           bool dynamic = (num_elements == DYNAMIC),
           bool fits_on_stack = (num_elements <= max_num_elements_on_stack)>
-struct ArraySelector {};
+struct ArraySelector;
 
 template <typename T,
           int num_elements,
@@ -80,14 +81,20 @@ struct ArraySelector<T,
 template <typename T, int num_elements, int max_num_elements_on_stack>
 struct ArraySelector<T, num_elements, max_num_elements_on_stack, false, true>
     : std::array<T, num_elements> {
-  explicit ArraySelector(int s) { CHECK_EQ(s, num_elements); }
+  explicit ArraySelector(int s) {
+    if constexpr (num_elements != DYNAMIC) {
+      CHECK_EQ(s, num_elements);
+    }
+  }
 };
 
 template <typename T, int num_elements, int max_num_elements_on_stack>
 struct ArraySelector<T, num_elements, max_num_elements_on_stack, false, false>
     : std::vector<T> {
   explicit ArraySelector(int s) : std::vector<T>(s) {
-    CHECK_EQ(s, num_elements);
+    if constexpr (num_elements != DYNAMIC) {
+      CHECK_EQ(s, num_elements);
+    }
   }
 };
 
