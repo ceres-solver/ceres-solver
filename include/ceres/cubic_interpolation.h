@@ -31,6 +31,8 @@
 #ifndef CERES_PUBLIC_CUBIC_INTERPOLATION_H_
 #define CERES_PUBLIC_CUBIC_INTERPOLATION_H_
 
+#include <algorithm>
+#include <cmath>
 #include <type_traits>
 
 #include "Eigen/Core"
@@ -196,7 +198,7 @@ struct Grid1D {
   EIGEN_STRONG_INLINE void GetValue(const int n, U* f) const {
     static_assert(std::is_convertible_v<T, U>,
                   "Grid1D::GetValue output type U must be convertible to T");
-    const int idx = (std::min)((std::max)(begin_, n), end_ - 1) - begin_;
+    const int idx = std::clamp(n, begin_, end_ - 1) - begin_;
     if (kInterleaved) {
       for (int i = 0; i < kDataDimension; ++i) {
         f[i] = static_cast<U>(data_[kDataDimension * idx + i]);
@@ -409,10 +411,8 @@ struct Grid2D {
   EIGEN_STRONG_INLINE void GetValue(const int r, const int c, U* f) const {
     static_assert(std::is_convertible_v<T, U>,
                   "Grid2D::GetValue output type U must be convertible to T");
-    const int row_idx =
-        (std::min)((std::max)(row_begin_, r), row_end_ - 1) - row_begin_;
-    const int col_idx =
-        (std::min)((std::max)(col_begin_, c), col_end_ - 1) - col_begin_;
+    const int row_idx = std::clamp(r, row_begin_, row_end_ - 1) - row_begin_;
+    const int col_idx = std::clamp(c, col_begin_, col_end_ - 1) - col_begin_;
 
     const int n = (kRowMajor) ? num_cols_ * row_idx + col_idx
                               : num_rows_ * col_idx + row_idx;
