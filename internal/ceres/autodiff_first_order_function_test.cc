@@ -73,5 +73,20 @@ TEST(AutoDiffFirstOrderFunction, BilinearDifferentiationTest) {
   EXPECT_EQ(gradient[3], parameters[2]);
 }
 
+TEST(AutoDiffFirstOrderFunction, UniquePtrCtor) {
+  auto function =
+      std::make_unique<AutoDiffFirstOrderFunction<QuadraticCostFunctor, 4>>(
+          std::make_unique<QuadraticCostFunctor>(1.0));
+  EXPECT_EQ(function->NumParameters(), 4);
+}
+
+TEST(AutoDiffFirstOrderFunction, OwnershipCtor) {
+  auto* functor = new QuadraticCostFunctor(1.0);
+  auto function =
+      std::make_unique<AutoDiffFirstOrderFunction<QuadraticCostFunctor, 4>>(
+          functor, TAKE_OWNERSHIP);
+  EXPECT_EQ(function->NumParameters(), 4);
+}
+
 }  // namespace internal
 }  // namespace ceres

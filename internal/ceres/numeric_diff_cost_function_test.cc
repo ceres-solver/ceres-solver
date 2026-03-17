@@ -460,4 +460,11 @@ TEST(NumericDiffCostFunction, UniquePtrCtor) {
       NumericDiffCostFunction<EasyFunctor, CENTRAL, 3, 5, 5>>();
 }
 
+TEST(NumericDiffCostFunction, OwnershipCtor) {
+  auto* functor = new EasyFunctor;
+  auto cost_function =
+      std::make_unique<NumericDiffCostFunction<EasyFunctor, CENTRAL, 3, 5, 5>>(
+          functor, TAKE_OWNERSHIP);
+}
+
 }  // namespace ceres::internal

@@ -820,4 +820,9 @@ TEST(DynamicAutoDiffCostFunctionTest, UniquePtr) {
   (void)DynamicAutoDiffCostFunction(std::make_unique<MyCostFunctor>());
 }
 
+TEST(DynamicAutoDiffCostFunctionTest, Ownership) {
+  auto* functor = new MyCostFunctor;
+  (void)DynamicAutoDiffCostFunction<MyCostFunctor>(functor, TAKE_OWNERSHIP);
+}
+
 }  // namespace ceres::internal
