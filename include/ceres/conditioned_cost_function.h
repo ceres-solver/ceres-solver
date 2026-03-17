@@ -82,6 +82,12 @@ class CERES_EXPORT ConditionedCostFunction final : public CostFunction {
   ConditionedCostFunction(CostFunction* wrapped_cost_function,
                           const std::vector<CostFunction*>& conditioners,
                           Ownership ownership);
+
+  // Modern version using unique_ptr. Always takes ownership.
+  ConditionedCostFunction(
+      std::unique_ptr<CostFunction> wrapped_cost_function,
+      std::vector<std::unique_ptr<CostFunction>> conditioners);
+
   ~ConditionedCostFunction() override;
 
   bool Evaluate(double const* const* parameters,
@@ -91,6 +97,7 @@ class CERES_EXPORT ConditionedCostFunction final : public CostFunction {
  private:
   std::unique_ptr<CostFunction> wrapped_cost_function_;
   std::vector<CostFunction*> conditioners_;
+  std::vector<std::unique_ptr<CostFunction>> owned_conditioners_;
   Ownership ownership_;
 };
 

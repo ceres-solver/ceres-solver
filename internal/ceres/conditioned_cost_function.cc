@@ -34,9 +34,10 @@
 
 #include <cstddef>
 
+#include <set>
+
 #include "absl/log/check.h"
 #include "ceres/internal/eigen.h"
-#include "ceres/stl_util.h"
 #include "ceres/types.h"
 
 namespace ceres {
@@ -50,6 +51,14 @@ ConditionedCostFunction::ConditionedCostFunction(
     : wrapped_cost_function_(wrapped_cost_function),
       conditioners_(conditioners),
       ownership_(ownership) {
+  if (ownership == TAKE_OWNERSHIP) {
+    std::set<CostFunction*> unique_conditioners;
+    for (auto* conditioner : conditioners_) {
+      if (conditioner && unique_conditioners.insert(conditioner).second) {
+        owned_conditioners_.emplace_back(conditioner);
+      }
+    }
+  }
   // Set up our dimensions.
   set_num_residuals(wrapped_cost_function_->num_residuals());
   *mutable_parameter_block_sizes() =
@@ -66,14 +75,39 @@ ConditionedCostFunction::ConditionedCostFunction(
   }
 }
 
+ConditionedCostFunction::ConditionedCostFunction(
+    std::unique_ptr<CostFunction> wrapped_cost_function,
+    std::vector<std::unique_ptr<CostFunction>> conditioners)
+    : wrapped_cost_function_(std::move(wrapped_cost_function)),
+      owned_conditioners_(std::move(conditioners)),
+      ownership_(TAKE_OWNERSHIP) {
+  conditioners_.reserve(owned_conditioners_.size());
+  for (const auto& conditioner : owned_conditioners_) {
+    conditioners_.push_back(conditioner.get());
+  }
+
+  // Set up our dimensions.
+  set_num_residuals(wrapped_cost_function_->num_residuals());
+  *mutable_parameter_block_sizes() =
+      wrapped_cost_function_->parameter_block_sizes();
+
+  // Sanity-check the conditioners' dimensions.
+  CHECK_EQ(wrapped_cost_function_->num_residuals(), conditioners_.size());
+  for (int i = 0; i < wrapped_cost_function_->num_residuals(); i++) {
+    if (conditioners_[i]) {
+      CHECK_EQ(1, conditioners_[i]->num_residuals());
+      CHECK_EQ(1, conditioners_[i]->parameter_block_sizes().size());
+      CHECK_EQ(1, conditioners_[i]->parameter_block_sizes()[0]);
+    }
+  }
+}
+
 ConditionedCostFunction::~ConditionedCostFunction() {
-  if (ownership_ == TAKE_OWNERSHIP) {
-    STLDeleteUniqueContainerPointers(conditioners_.begin(),
-                                     conditioners_.end());
-  } else {
+  if (ownership_ == DO_NOT_TAKE_OWNERSHIP) {
     wrapped_cost_function_.release();
   }
 }
+
 
 bool ConditionedCostFunction::Evaluate(double const* const* parameters,
                                        double* residuals,
