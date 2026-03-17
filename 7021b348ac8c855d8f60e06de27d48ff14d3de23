@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b698366b_c5d70f88",
+        "filename": "include/ceres/internal/variadic_evaluate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-03-17T19:28:43Z",
+      "side": 1,
+      "message": "Perhaps use `std::copy_n` for a one-liner?\n```suggestion\n      std::copy_n(input, kNumParameterBlocks, parameter_blocks.begin());\n```",
+      "revId": "7021b348ac8c855d8f60e06de27d48ff14d3de23",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6808ba9_2ca14be8",
+        "filename": "include/ceres/internal/variadic_evaluate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-03-17T19:28:43Z",
+      "side": 1,
+      "message": "For consistency possibly:\n```suggestion\n          [\u0026functor, output](const auto*... blocks) {\n```",
+      "revId": "7021b348ac8c855d8f60e06de27d48ff14d3de23",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
