@@ -51,6 +51,7 @@
 #ifndef CERES_PUBLIC_TINY_SOLVER_H_
 #define CERES_PUBLIC_TINY_SOLVER_H_
 
+#include <algorithm>
 #include <cassert>
 #include <cmath>
 
@@ -250,7 +251,7 @@ class TinySolver {
       const Scalar max_diagonal = 1e32;
       for (int i = 0; i < dx_.rows(); ++i) {
         jtj_regularized_(i, i) +=
-            u * (std::min)((std::max)(jtj_(i, i), min_diagonal), max_diagonal);
+            u * std::clamp(jtj_(i, i), min_diagonal, max_diagonal);
       }
 
       // TODO(sameeragarwal): Check for failure and deal with it.
@@ -351,42 +352,21 @@ class TinySolver {
   Eigen::Matrix<Scalar, NUM_RESIDUALS, NUM_PARAMETERS> jacobian_;
   Eigen::Matrix<Scalar, NUM_PARAMETERS, NUM_PARAMETERS> jtj_, jtj_regularized_;
 
-  // The following definitions are needed for template metaprogramming.
-  template <bool Condition, typename T>
-  struct enable_if;
-
-  template <typename T>
-  struct enable_if<true, T> {
-    using type = T;
-  };
-
-  // The number of parameters and residuals are dynamically sized.
   template <int R, int P>
-  typename enable_if<(R == Eigen::Dynamic && P == Eigen::Dynamic), void>::type
-  Initialize(const Function& function) {
-    Initialize(function.NumResiduals(), function.NumParameters());
+  void Initialize(const Function& function) {
+    if constexpr (R == Eigen::Dynamic && P == Eigen::Dynamic) {
+      Initialize(function.NumResiduals(), function.NumParameters());
+    } else if constexpr (R == Eigen::Dynamic && P != Eigen::Dynamic) {
+      Initialize(function.NumResiduals(), P);
+    } else if constexpr (R != Eigen::Dynamic && P == Eigen::Dynamic) {
+      Initialize(R, function.NumParameters());
+    } else {
+      // Both are static, but we still need to resize in case the solver
+      // is reused for a different problem size (if that's even possible
+      // with the same static type, but let's be safe and consistent).
+      Initialize(R, P);
+    }
   }
-
-  // The number of parameters is dynamically sized and the number of
-  // residuals is statically sized.
-  template <int R, int P>
-  typename enable_if<(R == Eigen::Dynamic && P != Eigen::Dynamic), void>::type
-  Initialize(const Function& function) {
-    Initialize(function.NumResiduals(), P);
-  }
-
-  // The number of parameters is statically sized and the number of
-  // residuals is dynamically sized.
-  template <int R, int P>
-  typename enable_if<(R != Eigen::Dynamic && P == Eigen::Dynamic), void>::type
-  Initialize(const Function& function) {
-    Initialize(R, function.NumParameters());
-  }
-
-  // The number of parameters and residuals are statically sized.
-  template <int R, int P>
-  typename enable_if<(R != Eigen::Dynamic && P != Eigen::Dynamic), void>::type
-  Initialize(const Function& /* function */) {}
 
   void Initialize(int num_residuals, int num_parameters) {
     dx_.resize(num_parameters);
