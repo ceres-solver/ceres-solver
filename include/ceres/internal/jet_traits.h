@@ -85,7 +85,7 @@ struct Rank : std::integral_constant<int, -1> {};
 
 // The rank of a scalar is 0.
 template <typename T>
-struct Rank<T, std::enable_if_t<std::is_scalar<T>::value>>
+struct Rank<T, std::enable_if_t<std::is_scalar_v<T>>>
     : std::integral_constant<int, 0> {};
 
 // The rank of a Jet is given by its dimensionality.
