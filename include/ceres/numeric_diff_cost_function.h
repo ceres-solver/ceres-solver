@@ -263,7 +263,7 @@ class NumericDiffCostFunction final
             functor_.get(),
             residuals,
             options_,
-            SizedCostFunction<kNumResiduals, Ns...>::num_residuals(),
+            this->num_residuals(),
             parameters_reference_copy.data(),
             jacobians);
 
@@ -279,7 +279,7 @@ class NumericDiffCostFunction final
                                    const NumericDiffOptions& options)
       : functor_(std::move(functor)), ownership_(ownership), options_(options) {
     if constexpr (kNumResiduals == DYNAMIC) {
-      SizedCostFunction<kNumResiduals, Ns...>::set_num_residuals(num_residuals);
+      this->set_num_residuals(num_residuals);
     }
   }
 

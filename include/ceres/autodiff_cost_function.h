@@ -232,7 +232,7 @@ class AutoDiffCostFunction final
     return internal::AutoDifferentiate<kNumResiduals, ParameterDims>(
         *functor_,
         parameters,
-        SizedCostFunction<kNumResiduals, Ns...>::num_residuals(),
+        this->num_residuals(),
         residuals,
         jacobians);
   };
@@ -256,7 +256,7 @@ class AutoDiffCostFunction final
                   "residuals is set to ceres::DYNAMIC.");
 
     if constexpr (InitTag::value == DYNAMIC_INIT) {
-      SizedCostFunction<kNumResiduals, Ns...>::set_num_residuals(num_residuals);
+      this->set_num_residuals(num_residuals);
     }
   }
 
