@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7dc5afc3_f810f3c1",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-03-17T19:07:53Z",
+      "side": 1,
+      "message": "Sameer, can you elaborate what issue these changes address? I\u0027m puzzled because the namespace qualifier is unnecessary here given `common_type` is already defined in the `std` namespace.",
+      "range": {
+        "startLine": 195,
+        "startChar": 26,
+        "endLine": 195,
+        "endChar": 31
+      },
+      "revId": "3e6828abb6893afa2ba3cd742b50ca5bc79d945c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
