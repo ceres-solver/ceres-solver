@@ -67,6 +67,12 @@ class ParameterDims {
 
   static constexpr int kNumParameters = (Ns + ... + 0);
 
+  template <int kIndex, int... Ms>
+  static constexpr int Get(std::integer_sequence<int, Ms...>) {
+    constexpr int params[] = {Ms...};
+    return params[kIndex];
+  }
+
   static constexpr int GetDim(int dim) { return params_[dim]; }
 
   // If one has all parameters packed into a single array this function unpacks

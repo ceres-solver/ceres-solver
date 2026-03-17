@@ -133,35 +133,36 @@ struct NumericDiff {
     for (int j = 0; j < parameter_block_size_internal; ++j) {
       const double delta = (std::max)(min_step_size, step_size(j));
 
-      if (kMethod == RIDDERS) {
-        if (!EvaluateRiddersJacobianColumn(functor,
-                                           j,
-                                           delta,
-                                           options,
-                                           num_residuals_internal,
-                                           parameter_block_size_internal,
-                                           x.data(),
-                                           residuals_at_eval_point,
-                                           parameters,
-                                           x_plus_delta.data(),
-                                           temp_residual_array.data(),
-                                           residual_array.data())) {
-          return false;
-        }
+      bool success;
+      if constexpr (kMethod == RIDDERS) {
+        success = EvaluateRiddersJacobianColumn(functor,
+                                                j,
+                                                delta,
+                                                options,
+                                                num_residuals_internal,
+                                                parameter_block_size_internal,
+                                                x.data(),
+                                                residuals_at_eval_point,
+                                                parameters,
+                                                x_plus_delta.data(),
+                                                temp_residual_array.data(),
+                                                residual_array.data());
       } else {
-        if (!EvaluateJacobianColumn(functor,
-                                    j,
-                                    delta,
-                                    num_residuals_internal,
-                                    parameter_block_size_internal,
-                                    x.data(),
-                                    residuals_at_eval_point,
-                                    parameters,
-                                    x_plus_delta.data(),
-                                    temp_residual_array.data(),
-                                    residual_array.data())) {
-          return false;
-        }
+        success = EvaluateJacobianColumn(functor,
+                                         j,
+                                         delta,
+                                         num_residuals_internal,
+                                         parameter_block_size_internal,
+                                         x.data(),
+                                         residuals_at_eval_point,
+                                         parameters,
+                                         x_plus_delta.data(),
+                                         temp_residual_array.data(),
+                                         residual_array.data());
+      }
+
+      if (!success) {
+        return false;
       }
 
       parameter_jacobian.col(j).matrix() = residuals;
@@ -435,14 +436,49 @@ struct NumericDiff {
 //   }
 // }
 template <typename ParameterDims,
-          typename Parameters = typename ParameterDims::Parameters,
-          int ParameterIdx = 0>
+          typename Parameters = typename ParameterDims::Parameters>
 struct EvaluateJacobianForParameterBlocks;
 
-template <typename ParameterDims, int N, int... Ns, int ParameterIdx>
+template <typename ParameterDims, int... Ns>
 struct EvaluateJacobianForParameterBlocks<ParameterDims,
-                                          std::integer_sequence<int, N, Ns...>,
-                                          ParameterIdx> {
+                                          std::integer_sequence<int, Ns...>> {
+  template <NumericDiffMethodType method,
+            int kNumResiduals,
+            typename CostFunctor,
+            std::size_t... Is>
+  static bool ApplyImpl(const CostFunctor* functor,
+                        const double* residuals_at_eval_point,
+                        const NumericDiffOptions& options,
+                        int num_residuals,
+                        double** parameters,
+                        double** jacobians,
+                        std::index_sequence<Is...>) {
+    auto helper = [&](auto index_const) {
+      constexpr int kParameterIdx = decltype(index_const)::value;
+      constexpr int kN = ParameterDims::template Get<kParameterIdx>(
+          std::integer_sequence<int, Ns...>{});
+      if (jacobians[kParameterIdx] != nullptr) {
+        return NumericDiff<CostFunctor,
+                           method,
+                           kNumResiduals,
+                           ParameterDims,
+                           kParameterIdx,
+                           kN>::
+            EvaluateJacobianForParameterBlock(functor,
+                                              residuals_at_eval_point,
+                                              options,
+                                              num_residuals,
+                                              kParameterIdx,
+                                              kN,
+                                              parameters,
+                                              jacobians[kParameterIdx]);
+      }
+      return true;
+    };
+
+    return (helper(std::integral_constant<std::size_t, Is>{}) && ...);
+  }
+
   template <NumericDiffMethodType method,
             int kNumResiduals,
             typename CostFunctor>
@@ -452,52 +488,13 @@ struct EvaluateJacobianForParameterBlocks<ParameterDims,
                     int num_residuals,
                     double** parameters,
                     double** jacobians) {
-    if (jacobians[ParameterIdx] != nullptr) {
-      if (!NumericDiff<
-              CostFunctor,
-              method,
-              kNumResiduals,
-              ParameterDims,
-              ParameterIdx,
-              N>::EvaluateJacobianForParameterBlock(functor,
-                                                    residuals_at_eval_point,
-                                                    options,
-                                                    num_residuals,
-                                                    ParameterIdx,
-                                                    N,
-                                                    parameters,
-                                                    jacobians[ParameterIdx])) {
-        return false;
-      }
-    }
-
-    return EvaluateJacobianForParameterBlocks<ParameterDims,
-                                              std::integer_sequence<int, Ns...>,
-                                              ParameterIdx + 1>::
-        template Apply<method, kNumResiduals>(functor,
-                                              residuals_at_eval_point,
-                                              options,
-                                              num_residuals,
-                                              parameters,
-                                              jacobians);
-  }
-};
-
-// End of 'recursion'. Nothing more to do.
-template <typename ParameterDims, int ParameterIdx>
-struct EvaluateJacobianForParameterBlocks<ParameterDims,
-                                          std::integer_sequence<int>,
-                                          ParameterIdx> {
-  template <NumericDiffMethodType method,
-            int kNumResiduals,
-            typename CostFunctor>
-  static bool Apply(const CostFunctor* /* NOT USED*/,
-                    const double* /* NOT USED*/,
-                    const NumericDiffOptions& /* NOT USED*/,
-                    int /* NOT USED*/,
-                    double** /* NOT USED*/,
-                    double** /* NOT USED*/) {
-    return true;
+    return ApplyImpl<method, kNumResiduals>(functor,
+                                            residuals_at_eval_point,
+                                            options,
+                                            num_residuals,
+                                            parameters,
+                                            jacobians,
+                                            std::make_index_sequence<sizeof...(Ns)>{});
   }
 };
 
