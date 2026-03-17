@@ -184,20 +184,14 @@ class TinySolverAutoDiffFunction {
   // Eigen::Matrix serves as static or dynamic container.
   mutable Eigen::Matrix<JetType, kNumResiduals, 1> jet_residuals_;
 
-  // The number of residuals is dynamically sized and the number of
-  // parameters is statically sized.
   template <int R>
-  typename std::enable_if<(R == Eigen::Dynamic), void>::type Initialize(
-      const CostFunctor& function) {
-    jet_residuals_.resize(function.NumResiduals());
-    num_residuals_ = function.NumResiduals();
-  }
-
-  // The number of parameters and residuals are statically sized.
-  template <int R>
-  typename std::enable_if<(R != Eigen::Dynamic), void>::type Initialize(
-      const CostFunctor& /* function */) {
-    num_residuals_ = kNumResiduals;
+  void Initialize(const CostFunctor& function) {
+    if constexpr (R == Eigen::Dynamic) {
+      jet_residuals_.resize(function.NumResiduals());
+      num_residuals_ = function.NumResiduals();
+    } else {
+      num_residuals_ = kNumResiduals;
+    }
   }
 };
 
