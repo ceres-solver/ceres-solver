@@ -105,6 +105,32 @@ namespace ceres {
 template <typename FirstOrderFunctor, int kNumParameters>
 class AutoDiffFirstOrderFunction final : public FirstOrderFunction {
  public:
+  // Takes ownership of functor by default.
+  explicit AutoDiffFirstOrderFunction(
+      std::unique_ptr<FirstOrderFunctor> functor)
+      : AutoDiffFirstOrderFunction(std::move(functor), TAKE_OWNERSHIP) {
+    static_assert(kNumParameters > 0, "kNumParameters must be positive");
+  }
+
+  // Constructs the FirstOrderFunctor on the heap and takes the ownership.
+  template <typename... Args,
+            typename = std::enable_if_t<
+                std::is_constructible_v<FirstOrderFunctor, Args&&...>>>
+  explicit AutoDiffFirstOrderFunction(Args&&... args)
+      // NOTE We explicitly use direct initialization using parentheses instead
+      // of uniform initialization using braces to avoid narrowing conversion
+      // warnings.
+      : AutoDiffFirstOrderFunction(
+            std::make_unique<FirstOrderFunctor>(std::forward<Args>(args)...),
+            TAKE_OWNERSHIP) {}
+
+  explicit AutoDiffFirstOrderFunction(FirstOrderFunctor* functor,
+                                      Ownership ownership = TAKE_OWNERSHIP)
+      : AutoDiffFirstOrderFunction(std::unique_ptr<FirstOrderFunctor>(functor),
+                                   ownership) {
+    static_assert(kNumParameters > 0, "kNumParameters must be positive");
+  }
+
   AutoDiffFirstOrderFunction(const AutoDiffFirstOrderFunction&) = delete;
   AutoDiffFirstOrderFunction& operator=(const AutoDiffFirstOrderFunction&) =
       delete;
@@ -113,18 +139,11 @@ class AutoDiffFirstOrderFunction final : public FirstOrderFunction {
   AutoDiffFirstOrderFunction& operator=(
       AutoDiffFirstOrderFunction&& other) noexcept = default;
 
-  explicit AutoDiffFirstOrderFunction(
-      std::unique_ptr<FirstOrderFunctor> functor)
-      : functor_(std::move(functor)) {
-    static_assert(kNumParameters > 0, "kNumParameters must be positive");
+  ~AutoDiffFirstOrderFunction() override {
+    if (ownership_ == DO_NOT_TAKE_OWNERSHIP) {
+      functor_.release();
+    }
   }
-
-  template <class... Args,
-            std::enable_if_t<std::is_constructible_v<FirstOrderFunctor,
-                                                     Args&&...>>* = nullptr>
-  explicit AutoDiffFirstOrderFunction(Args&&... args)
-      : AutoDiffFirstOrderFunction{
-            std::make_unique<FirstOrderFunctor>(std::forward<Args>(args)...)} {}
 
   bool Evaluate(const double* const parameters,
                 double* cost,
@@ -159,7 +178,12 @@ class AutoDiffFirstOrderFunction final : public FirstOrderFunction {
   const FirstOrderFunctor& functor() const { return *functor_; }
 
  private:
+  AutoDiffFirstOrderFunction(std::unique_ptr<FirstOrderFunctor> functor,
+                             Ownership ownership)
+      : functor_(std::move(functor)), ownership_(ownership) {}
+
   std::unique_ptr<FirstOrderFunctor> functor_;
+  Ownership ownership_;
 };
 
 }  // namespace ceres

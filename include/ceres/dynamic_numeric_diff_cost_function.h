@@ -79,29 +79,32 @@ namespace ceres {
 template <typename CostFunctor, NumericDiffMethodType kMethod = CENTRAL>
 class DynamicNumericDiffCostFunction final : public DynamicCostFunction {
  public:
-  explicit DynamicNumericDiffCostFunction(
-      const CostFunctor* functor,
-      Ownership ownership = TAKE_OWNERSHIP,
-      const NumericDiffOptions& options = NumericDiffOptions())
-      : DynamicNumericDiffCostFunction{
-            std::unique_ptr<const CostFunctor>{functor}, ownership, options} {}
-
+  // Takes ownership of functor by default.
   explicit DynamicNumericDiffCostFunction(
       std::unique_ptr<const CostFunctor> functor,
       const NumericDiffOptions& options = NumericDiffOptions())
-      : DynamicNumericDiffCostFunction{
-            std::move(functor), TAKE_OWNERSHIP, options} {}
+      : DynamicNumericDiffCostFunction(
+            std::move(functor), TAKE_OWNERSHIP, options) {}
 
   // Constructs the CostFunctor on the heap and takes the ownership.
   template <class... Args,
-            std::enable_if_t<std::is_constructible_v<CostFunctor, Args&&...>>* =
-                nullptr>
+            typename = std::enable_if_t<std::is_constructible_v<CostFunctor,
+                                                               Args&&...>>>
   explicit DynamicNumericDiffCostFunction(Args&&... args)
       // NOTE We explicitly use direct initialization using parentheses instead
       // of uniform initialization using braces to avoid narrowing conversion
       // warnings.
-      : DynamicNumericDiffCostFunction{
-            std::make_unique<CostFunctor>(std::forward<Args>(args)...)} {}
+      : DynamicNumericDiffCostFunction(
+            std::make_unique<const CostFunctor>(std::forward<Args>(args)...),
+            TAKE_OWNERSHIP,
+            NumericDiffOptions()) {}
+
+  explicit DynamicNumericDiffCostFunction(
+      const CostFunctor* functor,
+      Ownership ownership = TAKE_OWNERSHIP,
+      const NumericDiffOptions& options = NumericDiffOptions())
+      : DynamicNumericDiffCostFunction(
+            std::unique_ptr<const CostFunctor>(functor), ownership, options) {}
 
   DynamicNumericDiffCostFunction(const DynamicNumericDiffCostFunction&) =
       delete;
@@ -113,10 +116,11 @@ class DynamicNumericDiffCostFunction final : public DynamicCostFunction {
       DynamicNumericDiffCostFunction&& other) noexcept = default;
 
   ~DynamicNumericDiffCostFunction() override {
-    if (ownership_ != TAKE_OWNERSHIP) {
+    if (ownership_ == DO_NOT_TAKE_OWNERSHIP) {
       functor_.release();
     }
   }
+
 
   bool Evaluate(double const* const* parameters,
                 double* residuals,
@@ -220,4 +224,4 @@ DynamicNumericDiffCostFunction(std::unique_ptr<CostFunctor> functor,
 
 }  // namespace ceres
 
-#endif  // CERES_PUBLIC_DYNAMIC_AUTODIFF_COST_FUNCTION_H_
+#endif  // CERES_PUBLIC_DYNAMIC_NUMERIC_DIFF_COST_FUNCTION_H_
