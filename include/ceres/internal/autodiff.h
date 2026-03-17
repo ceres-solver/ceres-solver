@@ -177,59 +177,38 @@ namespace ceres::internal {
 //
 // is what would get put in dst if N was 3, offset was 3, and the jet type JetT
 // was 8-dimensional.
-template <int j, int N, int Offset, typename T, typename JetT>
-struct Make1stOrderPerturbation {
- public:
-  inline static void Apply(const T* src, JetT* dst) {
-    if (j == 0) {
-      DCHECK(src);
-      DCHECK(dst);
-    }
-    dst[j] = JetT(src[j], j + Offset);
-    Make1stOrderPerturbation<j + 1, N, Offset, T, JetT>::Apply(src, dst);
-  }
-};
-
-template <int N, int Offset, typename T, typename JetT>
-struct Make1stOrderPerturbation<N, N, Offset, T, JetT> {
- public:
-  static void Apply(const T* /* NOT USED */, JetT* /* NOT USED */) {}
-};
-
-// Calls Make1stOrderPerturbation for every parameter block.
 //
-// Example:
-// If one having three parameter blocks with dimensions (3, 2, 4), the call
-// Make1stOrderPerturbations<integer_sequence<3, 2, 4>::Apply(params, x);
-// will result in the following calls to Make1stOrderPerturbation:
-// Make1stOrderPerturbation<0, 3, 0>::Apply(params[0], x + 0);
-// Make1stOrderPerturbation<0, 2, 3>::Apply(params[1], x + 3);
-// Make1stOrderPerturbation<0, 4, 5>::Apply(params[2], x + 5);
-template <typename Seq, int ParameterIdx = 0, int Offset = 0>
-struct Make1stOrderPerturbations;
+// Uses a C++17 fold expression to initialize Jet objects with their
+// corresponding infinitesimal parts in a single unrolled loop.
+template <int N, int Offset, typename T, typename JetT, int... Indices>
+inline void Make1stOrderPerturbation(const T* src,
+                                     JetT* dst,
+                                     std::integer_sequence<int, Indices...>) {
+  DCHECK(src);
+  DCHECK(dst);
+  ((dst[Indices] = JetT(src[Indices], Indices + Offset)), ...);
+}
 
-template <int N, int... Ns, int ParameterIdx, int Offset>
-struct Make1stOrderPerturbations<std::integer_sequence<int, N, Ns...>,
-                                 ParameterIdx,
-                                 Offset> {
-  template <typename T, typename JetT>
-  inline static void Apply(T const* const* parameters, JetT* x) {
-    Make1stOrderPerturbation<0, N, Offset, T, JetT>::Apply(
-        parameters[ParameterIdx], x + Offset);
-    Make1stOrderPerturbations<std::integer_sequence<int, Ns...>,
+// Recursively iterates over parameter blocks (Seq) to initialize the full
+// Jacobian structure. Uses if constexpr to terminate recursion at compile-time.
+template <typename Seq,
+          int ParameterIdx = 0,
+          int Offset = 0,
+          typename T,
+          typename JetT>
+inline void Make1stOrderPerturbations(T const* const* parameters, JetT* x) {
+  if constexpr (Seq::size() > 0) {
+    using SeqTraits = IntegerSequenceTraits<Seq>;
+    Make1stOrderPerturbation<SeqTraits::kHead, Offset>(
+        parameters[ParameterIdx],
+        x + Offset,
+        std::make_integer_sequence<int, SeqTraits::kHead>());
+    Make1stOrderPerturbations<typename SeqTraits::Tail,
                               ParameterIdx + 1,
-                              Offset + N>::Apply(parameters, x);
+                              Offset + SeqTraits::kHead>(parameters, x);
   }
-};
+}
 
-// End of 'recursion'. Nothing more to do.
-template <int ParameterIdx, int Total>
-struct Make1stOrderPerturbations<std::integer_sequence<int>,
-                                 ParameterIdx,
-                                 Total> {
-  template <typename T, typename JetT>
-  static void Apply(T const* const* /* NOT USED */, JetT* /* NOT USED */) {}
-};
 
 // Takes the 0th order part of src, assumed to be a Jet type, and puts it in
 // dst. This is used to pick out the "vector" part of the extended y.
@@ -253,49 +232,26 @@ inline void Take1stOrderPart(const int M, const JetT* src, T* dst) {
   }
 }
 
-// Calls Take1stOrderPart for every parameter block.
-//
-// Example:
-// If one having three parameter blocks with dimensions (3, 2, 4), the call
-// Take1stOrderParts<integer_sequence<3, 2, 4>::Apply(num_outputs,
-//                                                    output,
-//                                                    jacobians);
-// will result in the following calls to Take1stOrderPart:
-// if (jacobians[0]) {
-//   Take1stOrderPart<0, 3>(num_outputs, output, jacobians[0]);
-// }
-// if (jacobians[1]) {
-//   Take1stOrderPart<3, 2>(num_outputs, output, jacobians[1]);
-// }
-// if (jacobians[2]) {
-//   Take1stOrderPart<5, 4>(num_outputs, output, jacobians[2]);
-// }
-template <typename Seq, int ParameterIdx = 0, int Offset = 0>
-struct Take1stOrderParts;
-
-template <int N, int... Ns, int ParameterIdx, int Offset>
-struct Take1stOrderParts<std::integer_sequence<int, N, Ns...>,
-                         ParameterIdx,
-                         Offset> {
-  template <typename JetT, typename T>
-  inline static void Apply(int num_outputs, JetT* output, T** jacobians) {
+// Recursively extracts Jacobian blocks for each parameter block from the
+// residuals_as_jets array.
+template <typename Seq,
+          int ParameterIdx = 0,
+          int Offset = 0,
+          typename JetT,
+          typename T>
+inline void Take1stOrderParts(int num_outputs, JetT* output, T** jacobians) {
+  if constexpr (Seq::size() > 0) {
+    using SeqTraits = IntegerSequenceTraits<Seq>;
     if (jacobians[ParameterIdx]) {
-      Take1stOrderPart<Offset, N>(num_outputs, output, jacobians[ParameterIdx]);
+      Take1stOrderPart<Offset, SeqTraits::kHead>(
+          num_outputs, output, jacobians[ParameterIdx]);
     }
-    Take1stOrderParts<std::integer_sequence<int, Ns...>,
+    Take1stOrderParts<typename SeqTraits::Tail,
                       ParameterIdx + 1,
-                      Offset + N>::Apply(num_outputs, output, jacobians);
+                      Offset + SeqTraits::kHead>(num_outputs, output, jacobians);
   }
-};
+}
 
-// End of 'recursion'. Nothing more to do.
-template <int ParameterIdx, int Offset>
-struct Take1stOrderParts<std::integer_sequence<int>, ParameterIdx, Offset> {
-  template <typename T, typename JetT>
-  static void Apply(int /* NOT USED*/,
-                    JetT* /* NOT USED*/,
-                    T** /* NOT USED */) {}
-};
 
 template <int kNumResiduals,
           typename ParameterDims,
@@ -340,8 +296,7 @@ inline bool AutoDifferentiate(const Functor& functor,
     residuals_as_jets[i].v.setConstant(kImpossibleValue);
   }
 
-  Make1stOrderPerturbations<Parameters>::Apply(parameters,
-                                               parameters_as_jets.data());
+  Make1stOrderPerturbations<Parameters>(parameters, parameters_as_jets.data());
 
   if (!VariadicEvaluate<ParameterDims>(
           functor, unpacked_parameters.data(), residuals_as_jets.data())) {
@@ -349,8 +304,7 @@ inline bool AutoDifferentiate(const Functor& functor,
   }
 
   Take0thOrderPart(num_outputs, residuals_as_jets.data(), function_value);
-  Take1stOrderParts<Parameters>::Apply(
-      num_outputs, residuals_as_jets.data(), jacobians);
+  Take1stOrderParts<Parameters>(num_outputs, residuals_as_jets.data(), jacobians);
 
   return true;
 }
