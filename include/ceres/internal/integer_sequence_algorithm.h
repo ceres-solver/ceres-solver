@@ -169,6 +169,22 @@ struct RemoveValue
 template <typename Sequence, typename Sequence::value_type ValueToRemove>
 using RemoveValue_t = typename RemoveValue<Sequence, ValueToRemove>::type;
 
+// Helper trait to provide a uniform compile-time interface for accessing the
+// head and tail of std::integer_sequence.
+template <typename Seq>
+struct IntegerSequenceTraits;
+
+template <typename T, T N, T... Ns>
+struct IntegerSequenceTraits<std::integer_sequence<T, N, Ns...>> {
+  static constexpr T kHead = N;
+  using Tail = std::integer_sequence<T, Ns...>;
+};
+
+template <typename T>
+struct IntegerSequenceTraits<std::integer_sequence<T>> {
+  // Head and Tail are intentionally not defined for empty sequences.
+};
+
 // Returns true if all elements of Values are equal to HeadValue.
 //
 // Returns true if Values is empty.

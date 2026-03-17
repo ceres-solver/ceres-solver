@@ -209,14 +209,12 @@ class NumericDiffFirstOrderFunction final : public FirstOrderFunction {
                                                       &parameters_ptr,
                                                       gradient);
     } else {
+      using ParameterDims = internal::StaticParameterDims<kNumParameters>;
       return internal::EvaluateJacobianForParameterBlocks<
-          internal::StaticParameterDims<kNumParameters>>::
-          template Apply<kMethod, 1>(functor_.get(),
-                                     cost,
-                                     options_,
-                                     kNumResiduals,
-                                     &parameters_ptr,
-                                     &gradient);
+          kMethod,
+          kNumResiduals,
+          ParameterDims>(
+          functor_.get(), cost, options_, kNumResiduals, &parameters_ptr, &gradient);
     }
   }
 
