@@ -33,7 +33,10 @@
 #ifndef CERES_PUBLIC_INTERNAL_VARIADIC_EVALUATE_H_
 #define CERES_PUBLIC_INTERNAL_VARIADIC_EVALUATE_H_
 
+#include <array>
 #include <cstddef>
+#include <functional>
+#include <tuple>
 #include <type_traits>
 #include <utility>
 
@@ -41,51 +44,6 @@
 #include "ceres/internal/parameter_dims.h"
 
 namespace ceres::internal {
-
-// For fixed size cost functors
-template <typename Functor, typename T, int... Indices>
-inline bool VariadicEvaluateImpl(const Functor& functor,
-                                 T const* const* input,
-                                 T* output,
-                                 std::false_type /*is_dynamic*/,
-                                 std::integer_sequence<int, Indices...>) {
-  static_assert(sizeof...(Indices) > 0,
-                "Invalid number of parameter blocks. At least one parameter "
-                "block must be specified.");
-  return functor(input[Indices]..., output);
-}
-
-// For dynamic sized cost functors
-template <typename Functor, typename T>
-inline bool VariadicEvaluateImpl(const Functor& functor,
-                                 T const* const* input,
-                                 T* output,
-                                 std::true_type /*is_dynamic*/,
-                                 std::integer_sequence<int>) {
-  return functor(input, output);
-}
-
-// For ceres cost functors (not ceres::CostFunction)
-template <typename ParameterDims, typename Functor, typename T>
-inline bool VariadicEvaluateImpl(const Functor& functor,
-                                 T const* const* input,
-                                 T* output,
-                                 const void* /* NOT USED */) {
-  using ParameterBlockIndices =
-      std::make_integer_sequence<int, ParameterDims::kNumParameterBlocks>;
-  using IsDynamic = std::integral_constant<bool, ParameterDims::kIsDynamic>;
-  return VariadicEvaluateImpl(
-      functor, input, output, IsDynamic(), ParameterBlockIndices());
-}
-
-// For ceres::CostFunction
-template <typename ParameterDims, typename Functor, typename T>
-inline bool VariadicEvaluateImpl(const Functor& functor,
-                                 T const* const* input,
-                                 T* output,
-                                 const CostFunction* /* NOT USED */) {
-  return functor.Evaluate(input, output, nullptr);
-}
 
 // Variadic evaluate is a helper function to evaluate ceres cost function or
 // functors using an input, output and the parameter dimensions. There are
@@ -103,7 +61,34 @@ template <typename ParameterDims, typename Functor, typename T>
 inline bool VariadicEvaluate(const Functor& functor,
                              T const* const* input,
                              T* output) {
-  return VariadicEvaluateImpl<ParameterDims>(functor, input, output, &functor);
+  if constexpr (std::is_base_of_v<CostFunction, Functor>) {
+    return functor.Evaluate(input, output, nullptr);
+  } else {
+    if constexpr (ParameterDims::kIsDynamic) {
+      return functor(input, output);
+    } else {
+      constexpr int kNumParameterBlocks = ParameterDims::kNumParameterBlocks;
+      static_assert(kNumParameterBlocks > 0,
+                    "Invalid number of parameter blocks. At least one "
+                    "parameter block must be specified.");
+
+      std::array<const T*, kNumParameterBlocks> parameter_blocks;
+      for (int i = 0; i < kNumParameterBlocks; ++i) {
+        parameter_blocks[i] = input[i];
+      }
+
+      return std::apply(
+          [&](auto const*... blocks) {
+            static_assert(
+                std::is_invocable_v<const Functor&, decltype(blocks)..., T*>,
+                "The provided Functor's operator() signature does not match "
+                "the expected number of parameter blocks defined in "
+                "ParameterDims.");
+            return std::invoke(functor, blocks..., output);
+          },
+          parameter_blocks);
+    }
+  }
 }
 
 // When differentiating dynamically sized CostFunctions, VariadicEvaluate
