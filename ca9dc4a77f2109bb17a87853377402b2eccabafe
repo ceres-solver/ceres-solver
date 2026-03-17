@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ef41ec5_f2d26fd2",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-03-17T19:36:21Z",
+      "side": 1,
+      "message": "Now that the variable is no longer `const`, are we actually gaining anything by using `if constexpr`?",
+      "revId": "ca9dc4a77f2109bb17a87853377402b2eccabafe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
