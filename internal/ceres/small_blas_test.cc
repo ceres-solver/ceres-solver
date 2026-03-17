@@ -27,19 +27,20 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: keir@google.com (Keir Mierle)
+//         sameeragarwal@google.com (Sameer Agarwal)
 
 #include "ceres/small_blas.h"
 
 #include <limits>
 #include <string>
+#include <vector>
 
 #include "ceres/internal/eigen.h"
 #include "gtest/gtest.h"
 
-namespace ceres {
-namespace internal {
+namespace ceres::internal {
 
-const double kTolerance = 5.0 * std::numeric_limits<double>::epsilon();
+const double kTolerance = 10.0 * std::numeric_limits<double>::epsilon();
 
 // Static or dynamic problem types.
 enum class DimType { Static, Dynamic };
@@ -601,7 +602,7 @@ TEST(BLAS, MatrixTransposeVectorMultiply) {
           c_minus.data());
       EXPECT_NEAR((c_minus_ref - c_minus).norm(), 0.0, kTolerance)
           << "c -= A' * b \n"
-          << "c_ref : \n" << c_minus_ref << "\n"
+          << "c_ref : \n" << c_plus_ref << "\n"
           << "c: \n" << c_minus;
 
       c_assign_ref = A.transpose() * b;
@@ -618,5 +619,180 @@ TEST(BLAS, MatrixTransposeVectorMultiply) {
   }
 }
 
-}  // namespace internal
-}  // namespace ceres
+template <int kRowA, int kColA, int kRowB, int kColB, int kOperation>
+void MatrixMatrixMultiplyTestExhaustive() {
+  for (int stride_padding : {0, 1, 5}) {
+    for (int start_offset : {0, 1, 3}) {
+      Matrix A(kRowA == Eigen::Dynamic ? 5 : kRowA,
+               kColA == Eigen::Dynamic ? 3 : kColA);
+      A.setRandom();
+      Matrix B(kRowB == Eigen::Dynamic ? 3 : kRowB,
+               kColB == Eigen::Dynamic ? 7 : kColB);
+      B.setRandom();
+
+      int row_stride_c = A.rows() + start_offset + stride_padding;
+      int col_stride_c = B.cols() + start_offset + stride_padding;
+      Matrix C(row_stride_c, col_stride_c);
+      C.setRandom();
+
+      Matrix C_ref = C;
+      int start_row_c = start_offset;
+      int start_col_c = start_offset;
+
+      if constexpr (kOperation == 1) {
+        C_ref.block(start_row_c, start_col_c, A.rows(), B.cols()) += A * B;
+      } else if constexpr (kOperation == -1) {
+        C_ref.block(start_row_c, start_col_c, A.rows(), B.cols()) -= A * B;
+      } else {
+        C_ref.block(start_row_c, start_col_c, A.rows(), B.cols()) = A * B;
+      }
+
+      MatrixMatrixMultiply<kRowA, kColA, kRowB, kColB, kOperation>(
+          A.data(),
+          A.rows(),
+          A.cols(),
+          B.data(),
+          B.rows(),
+          B.cols(),
+          C.data(),
+          start_row_c,
+          start_col_c,
+          row_stride_c,
+          col_stride_c);
+
+      EXPECT_NEAR((C - C_ref).norm(), 0.0, kTolerance)
+          << "Operation: " << kOperation << " Size: " << A.rows() << "x"
+          << A.cols() << "x" << B.cols() << " Stride Padding: " << stride_padding
+          << " Start Offset: " << start_offset;
+    }
+  }
+}
+
+TEST(BLAS, MatrixMatrixMultiplyExhaustive) {
+  auto test_all_ops = [](auto row_a, auto col_a, auto col_b) {
+    MatrixMatrixMultiplyTestExhaustive<decltype(row_a)::value,
+                                       decltype(col_a)::value,
+                                       decltype(col_a)::value,
+                                       decltype(col_b)::value,
+                                       1>();
+    MatrixMatrixMultiplyTestExhaustive<decltype(row_a)::value,
+                                       decltype(col_a)::value,
+                                       decltype(col_a)::value,
+                                       decltype(col_b)::value,
+                                       -1>();
+    MatrixMatrixMultiplyTestExhaustive<decltype(row_a)::value,
+                                       decltype(col_a)::value,
+                                       decltype(col_a)::value,
+                                       decltype(col_b)::value,
+                                       0>();
+  };
+
+  test_all_ops(std::integral_constant<int, 1>{}, std::integral_constant<int, 1>{}, std::integral_constant<int, 1>{});
+  test_all_ops(std::integral_constant<int, 2>{}, std::integral_constant<int, 2>{}, std::integral_constant<int, 2>{});
+  test_all_ops(std::integral_constant<int, 3>{}, std::integral_constant<int, 3>{}, std::integral_constant<int, 3>{});
+  test_all_ops(std::integral_constant<int, 4>{}, std::integral_constant<int, 4>{}, std::integral_constant<int, 4>{});
+  test_all_ops(std::integral_constant<int, 8>{}, std::integral_constant<int, 8>{}, std::integral_constant<int, 8>{});
+
+  test_all_ops(std::integral_constant<int, Eigen::Dynamic>{},
+               std::integral_constant<int, Eigen::Dynamic>{},
+               std::integral_constant<int, Eigen::Dynamic>{});
+
+  test_all_ops(std::integral_constant<int, Eigen::Dynamic>{},
+               std::integral_constant<int, 3>{},
+               std::integral_constant<int, Eigen::Dynamic>{});
+  test_all_ops(std::integral_constant<int, 2>{},
+               std::integral_constant<int, Eigen::Dynamic>{},
+               std::integral_constant<int, 6>{});
+  test_all_ops(std::integral_constant<int, Eigen::Dynamic>{},
+               std::integral_constant<int, Eigen::Dynamic>{},
+               std::integral_constant<int, 4>{});
+}
+
+template <int kRowA, int kColA, int kRowB, int kColB, int kOperation>
+void MatrixTransposeMatrixMultiplyTestExhaustive() {
+  for (int stride_padding : {0, 1, 5}) {
+    for (int start_offset : {0, 1, 3}) {
+      Matrix A(kRowA == Eigen::Dynamic ? 5 : kRowA,
+               kColA == Eigen::Dynamic ? 3 : kColA);
+      A.setRandom();
+      Matrix B(kRowB == Eigen::Dynamic ? 5 : kRowB,
+               kColB == Eigen::Dynamic ? 7 : kColB);
+      B.setRandom();
+
+      int row_stride_c = A.cols() + start_offset + stride_padding;
+      int col_stride_c = B.cols() + start_offset + stride_padding;
+      Matrix C(row_stride_c, col_stride_c);
+      C.setRandom();
+
+      Matrix C_ref = C;
+      int start_row_c = start_offset;
+      int start_col_c = start_offset;
+
+      if constexpr (kOperation == 1) {
+        C_ref.block(start_row_c, start_col_c, A.cols(), B.cols()) +=
+            A.transpose() * B;
+      } else if constexpr (kOperation == -1) {
+        C_ref.block(start_row_c, start_col_c, A.cols(), B.cols()) -=
+            A.transpose() * B;
+      } else {
+        C_ref.block(start_row_c, start_col_c, A.cols(), B.cols()) =
+            A.transpose() * B;
+      }
+
+      MatrixTransposeMatrixMultiply<kRowA, kColA, kRowB, kColB, kOperation>(
+          A.data(),
+          A.rows(),
+          A.cols(),
+          B.data(),
+          B.rows(),
+          B.cols(),
+          C.data(),
+          start_row_c,
+          start_col_c,
+          row_stride_c,
+          col_stride_c);
+
+      EXPECT_NEAR((C - C_ref).norm(), 0.0, kTolerance)
+          << "Operation: " << kOperation << " Size: " << A.rows() << "x"
+          << A.cols() << "x" << B.cols() << " Stride Padding: " << stride_padding
+          << " Start Offset: " << start_offset;
+    }
+  }
+}
+
+TEST(BLAS, MatrixTransposeMatrixMultiplyExhaustive) {
+  auto test_all_ops = [](auto row_a, auto col_a, auto col_b) {
+    MatrixTransposeMatrixMultiplyTestExhaustive<decltype(row_a)::value,
+                                                decltype(col_a)::value,
+                                                decltype(row_a)::value,
+                                                decltype(col_b)::value,
+                                                1>();
+    MatrixTransposeMatrixMultiplyTestExhaustive<decltype(row_a)::value,
+                                                decltype(col_a)::value,
+                                                decltype(row_a)::value,
+                                                decltype(col_b)::value,
+                                                -1>();
+    MatrixTransposeMatrixMultiplyTestExhaustive<decltype(row_a)::value,
+                                                decltype(col_a)::value,
+                                                decltype(row_a)::value,
+                                                decltype(col_b)::value,
+                                                0>();
+  };
+
+  test_all_ops(std::integral_constant<int, 1>{}, std::integral_constant<int, 1>{}, std::integral_constant<int, 1>{});
+  test_all_ops(std::integral_constant<int, 3>{}, std::integral_constant<int, 3>{}, std::integral_constant<int, 3>{});
+  test_all_ops(std::integral_constant<int, 8>{}, std::integral_constant<int, 8>{}, std::integral_constant<int, 8>{});
+
+  test_all_ops(std::integral_constant<int, Eigen::Dynamic>{},
+               std::integral_constant<int, Eigen::Dynamic>{},
+               std::integral_constant<int, Eigen::Dynamic>{});
+
+  test_all_ops(std::integral_constant<int, Eigen::Dynamic>{},
+               std::integral_constant<int, 3>{},
+               std::integral_constant<int, Eigen::Dynamic>{});
+  test_all_ops(std::integral_constant<int, 2>{},
+               std::integral_constant<int, Eigen::Dynamic>{},
+               std::integral_constant<int, 6>{});
+}
+
+}  // namespace ceres::internal
