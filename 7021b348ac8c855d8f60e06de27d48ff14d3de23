@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ac76ab6_f3a9386c",
+        "filename": "include/ceres/internal/variadic_evaluate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-03-17T21:59:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b698366b_c5d70f88",
+      "revId": "7021b348ac8c855d8f60e06de27d48ff14d3de23",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f6808ba9_2ca14be8",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-03-17T19:28:43Z",
       "side": 1,
       "message": "For consistency possibly:\n```suggestion\n          [\u0026functor, output](const auto*... blocks) {\n```",
+      "revId": "7021b348ac8c855d8f60e06de27d48ff14d3de23",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02f76792_d72a5e5e",
+        "filename": "include/ceres/internal/variadic_evaluate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-03-17T21:59:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6808ba9_2ca14be8",
       "revId": "7021b348ac8c855d8f60e06de27d48ff14d3de23",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
