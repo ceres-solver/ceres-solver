@@ -35,6 +35,7 @@
 #include <random>
 #include <vector>
 
+#include "absl/types/span.h"
 #include "ceres/block_structure.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
@@ -149,17 +150,22 @@ class CERES_NO_EXPORT CompressedRowSparseMatrix : public SparseMatrix {
     storage_type_ = storage_type;
   }
 
-  const std::vector<Block>& row_blocks() const { return row_blocks_; }
+  // Return the row and column block structure.
+  //
+  // \note The returned Spans are views into the underlying vectors. Any
+  // modification to the underlying vectors (e.g. via mutable_row_blocks()) will
+  // invalidate the returned Spans.
+  absl::Span<const Block> row_blocks() const { return row_blocks_; }
   std::vector<Block>* mutable_row_blocks() { return &row_blocks_; }
 
-  const std::vector<Block>& col_blocks() const { return col_blocks_; }
+  absl::Span<const Block> col_blocks() const { return col_blocks_; }
   std::vector<Block>* mutable_col_blocks() { return &col_blocks_; }
 
   // Create a block diagonal CompressedRowSparseMatrix with the given
   // block structure. The individual blocks are assumed to be laid out
   // contiguously in the diagonal array, one block at a time.
   static std::unique_ptr<CompressedRowSparseMatrix> CreateBlockDiagonalMatrix(
-      const double* diagonal, const std::vector<Block>& blocks);
+      const double* diagonal, absl::Span<const Block> blocks);
 
   // Options struct to control the generation of random block sparse
   // matrices in compressed row sparse format.

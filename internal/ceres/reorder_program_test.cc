@@ -94,7 +94,7 @@ TEST(_, ReorderResidualBlockNormalFunction) {
   options.linear_solver_type = DENSE_SCHUR;
   options.linear_solver_ordering = linear_solver_ordering;
 
-  const std::vector<ResidualBlock*>& residual_blocks =
+  absl::Span<ResidualBlock* const> residual_blocks =
       problem.program().residual_blocks();
 
   std::vector<ResidualBlock*> expected_residual_blocks;
@@ -162,7 +162,7 @@ TEST(_, ApplyOrderingNormal) {
 
   EXPECT_TRUE(ApplyOrdering(
       problem.parameter_map(), linear_solver_ordering, program, &message));
-  const std::vector<ParameterBlock*>& parameter_blocks =
+  absl::Span<ParameterBlock* const> parameter_blocks =
       program->parameter_blocks();
 
   EXPECT_EQ(parameter_blocks.size(), 3);
@@ -216,7 +216,7 @@ TEST(_, ApplyOrderingPreservesOrderWithinGroups) {
   EXPECT_TRUE(ApplyOrdering(
       problem.parameter_map(), linear_solver_ordering, program, &message));
 
-  const std::vector<ParameterBlock*>& parameter_blocks =
+  absl::Span<ParameterBlock* const> parameter_blocks =
       program->parameter_blocks();
 
   EXPECT_EQ(parameter_blocks.size(), kNumParams);
@@ -337,7 +337,7 @@ TEST(_, ReorderResidualBlocksbyPartition) {
 
   std::vector<ResidualBlockId> residual_block_ids;
   problem.GetResidualBlocks(&residual_block_ids);
-  std::vector<ResidualBlock*> residual_blocks =
+  absl::Span<ResidualBlock* const> residual_blocks =
       problem.program().residual_blocks();
   auto rng = std::mt19937{};
   for (int i = 1; i < 6; ++i) {
@@ -347,7 +347,7 @@ TEST(_, ReorderResidualBlocksbyPartition) {
                                                residual_block_ids.begin() + i);
     const int start_bottom =
         ReorderResidualBlocksByPartition(bottom, problem.mutable_program());
-    std::vector<ResidualBlock*> actual_residual_blocks =
+    absl::Span<ResidualBlock* const> actual_residual_blocks =
         problem.program().residual_blocks();
     EXPECT_THAT(actual_residual_blocks,
                 testing::UnorderedElementsAreArray(residual_blocks));
