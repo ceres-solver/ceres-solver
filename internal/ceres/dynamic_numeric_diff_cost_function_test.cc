@@ -525,9 +525,19 @@ TEST(DynamicNumericdiffCostFunctionTest, ArgumentForwarding) {
   (void)DynamicNumericDiffCostFunction<MyCostFunctor>();
 }
 
-TEST(DynamicAutoDiffCostFunctionTest, UniquePtr) {
+TEST(DynamicNumericDiffCostFunctionTest, UniquePtr) {
   (void)DynamicNumericDiffCostFunction<MyCostFunctor>(
       std::make_unique<MyCostFunctor>());
+}
+
+TEST(DynamicNumericDiffCostFunctionTest, Ownership) {
+  MyCostFunctor functor;
+  {
+    DynamicNumericDiffCostFunction<MyCostFunctor> cost_function(
+        &functor, DO_NOT_TAKE_OWNERSHIP);
+    cost_function.AddParameterBlock(3);
+    cost_function.SetNumResiduals(3);
+  }
 }
 
 }  // namespace ceres::internal
