@@ -177,6 +177,7 @@ void VisibilityBasedPreconditioner::ClusterCameras(
   CHECK(schur_complement_graph != nullptr);
 
   absl::flat_hash_map<int, int> membership;
+  membership.reserve(schur_complement_graph->num_vertices());
 
   if (options_.visibility_clustering_type == CANONICAL_VIEWS) {
     std::vector<int> centers;
@@ -545,6 +546,7 @@ void VisibilityBasedPreconditioner::FlattenMembershipMap(
   membership_vector->resize(num_blocks_, -1);
 
   absl::flat_hash_map<int, int> cluster_id_to_index;
+  cluster_id_to_index.reserve(num_clusters_);
   // Iterate over the cluster membership map and update the
   // cluster_membership_ vector assigning arbitrary cluster ids to
   // the few cameras that have not been clustered.
