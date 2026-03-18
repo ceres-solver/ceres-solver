@@ -41,6 +41,7 @@
 
 #include "Eigen/SparseCore"
 #include "absl/strings/str_format.h"
+#include "absl/types/span.h"
 #include "ceres/internal/config.h"
 #include "ceres/internal/export.h"
 #include "ceres/ordered_groups.h"
@@ -115,7 +116,7 @@ Eigen::SparseMatrix<int> CreateBlockJacobian(
 void OrderingForSparseNormalCholeskyUsingSuiteSparse(
     const LinearSolverOrderingType linear_solver_ordering_type,
     const TripletSparseMatrix& tsm_block_jacobian_transpose,
-    const std::vector<ParameterBlock*>& parameter_blocks,
+    absl::Span<ParameterBlock* const> parameter_blocks,
     const ParameterBlockOrdering& parameter_block_ordering,
     int* ordering) {
 #ifdef CERES_NO_SUITESPARSE

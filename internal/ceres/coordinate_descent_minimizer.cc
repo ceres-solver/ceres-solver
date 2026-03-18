@@ -77,9 +77,11 @@ bool CoordinateDescentMinimizer::Init(
 
   // TODO(sameeragarwal): Investigate if parameter_block_index should be an
   // ordered or an unordered container.
-  std::map<ParameterBlock*, int> parameter_block_index;
+  absl::flat_hash_map<ParameterBlock*, int> parameter_block_index;
+  parameter_block_index.reserve(parameter_blocks.size());
   std::map<int, std::set<double*>> group_to_elements =
       ordering.group_to_elements();
+
   for (const auto& g_t_e : group_to_elements) {
     const auto& elements = g_t_e.second;
     for (double* parameter_block : elements) {
