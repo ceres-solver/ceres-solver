@@ -44,6 +44,7 @@
 #include "Eigen/Sparse"
 #include "Eigen/SparseCore"
 #include "Eigen/SparseQR"
+#include "absl/container/flat_hash_map.h"
 #include "absl/container/flat_hash_set.h"
 #include "absl/log/check.h"
 #include "absl/log/log.h"
@@ -79,7 +80,8 @@ void CheckForDuplicates(std::vector<T> blocks) {
   auto it = std::adjacent_find(blocks.begin(), blocks.end());
   if (it != blocks.end()) {
     // In case there are duplicates, we search for their location.
-    std::map<T, std::vector<int>> blocks_map;
+    absl::flat_hash_map<T, std::vector<int>> blocks_map;
+    blocks_map.reserve(blocks.size());
     for (int i = 0; i < blocks.size(); ++i) {
       blocks_map[blocks[i]].push_back(i);
     }
@@ -371,6 +373,7 @@ bool CovarianceImpl::ComputeCovarianceSparsity(
   problem->GetParameterBlocks(&all_parameter_blocks);
   const ProblemImpl::ParameterMap& parameter_map = problem->parameter_map();
   absl::flat_hash_set<ParameterBlock*> parameter_blocks_in_use;
+  parameter_blocks_in_use.reserve(all_parameter_blocks.size());
   std::vector<ResidualBlock*> residual_blocks;
   problem->GetResidualBlocks(&residual_blocks);
 

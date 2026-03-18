@@ -32,13 +32,12 @@
 
 #include <algorithm>
 #include <iterator>
-#include <map>
 #include <memory>
 #include <numeric>
-#include <set>
 #include <string>
 #include <vector>
 
+#include "absl/container/flat_hash_map.h"
 #include "absl/log/check.h"
 #include "absl/strings/str_format.h"
 #include "ceres/evaluator.h"
