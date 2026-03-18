@@ -92,6 +92,30 @@ TEST(AutodiffCostFunction, BilinearDifferentiationTest) {
   delete cost_function;
 }
 
+TEST(AutodiffCostFunction, OwnershipTest) {
+  BinaryScalarCost functor(1.0);
+  {
+    AutoDiffCostFunction<BinaryScalarCost, 1, 2, 2> cost_function(
+        &functor, DO_NOT_TAKE_OWNERSHIP);
+    double parameters_data[4] = {1.0, 2.0, 3.0, 4.0};
+    double* parameters[2] = {parameters_data, parameters_data + 2};
+    double residuals;
+    cost_function.Evaluate(parameters, &residuals, nullptr);
+    EXPECT_EQ(residuals, 10.0);
+  }
+}
+
+TEST(AutodiffCostFunction, UniquePtrTest) {
+  auto cost_function =
+      std::make_unique<AutoDiffCostFunction<BinaryScalarCost, 1, 2, 2>>(
+          std::make_unique<BinaryScalarCost>(1.0));
+  double parameters_data[4] = {1.0, 2.0, 3.0, 4.0};
+  double* parameters[2] = {parameters_data, parameters_data + 2};
+  double residuals;
+  cost_function->Evaluate(parameters, &residuals, nullptr);
+  EXPECT_EQ(residuals, 10.0);
+}
+
 struct TenParameterCost {
   template <typename T>
   bool operator()(const T* const x0,

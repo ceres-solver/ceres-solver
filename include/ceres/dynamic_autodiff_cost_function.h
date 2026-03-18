@@ -79,25 +79,31 @@ namespace ceres {
 template <typename CostFunctor, int Stride = 4>
 class DynamicAutoDiffCostFunction final : public DynamicCostFunction {
  public:
+  // Takes ownership of functor by default.
+  explicit DynamicAutoDiffCostFunction(std::unique_ptr<CostFunctor> functor)
+      : DynamicAutoDiffCostFunction(std::move(functor), TAKE_OWNERSHIP) {
+    static_assert(Stride > 0, "Stride must be positive");
+  }
+
   // Constructs the CostFunctor on the heap and takes the ownership.
-  template <class... Args,
-            std::enable_if_t<std::is_constructible_v<CostFunctor, Args&&...>>* =
-                nullptr>
+  template <typename... Args,
+            typename = std::enable_if_t<
+                std::is_constructible_v<CostFunctor, Args&&...>>>
   explicit DynamicAutoDiffCostFunction(Args&&... args)
       // NOTE We explicitly use direct initialization using parentheses instead
       // of uniform initialization using braces to avoid narrowing conversion
       // warnings.
-      : DynamicAutoDiffCostFunction{
-            std::make_unique<CostFunctor>(std::forward<Args>(args)...)} {}
+      : DynamicAutoDiffCostFunction(
+            std::make_unique<CostFunctor>(std::forward<Args>(args)...),
+            TAKE_OWNERSHIP) {}
 
   // Takes ownership by default.
   explicit DynamicAutoDiffCostFunction(CostFunctor* functor,
                                        Ownership ownership = TAKE_OWNERSHIP)
-      : DynamicAutoDiffCostFunction{std::unique_ptr<CostFunctor>{functor},
-                                    ownership} {}
-
-  explicit DynamicAutoDiffCostFunction(std::unique_ptr<CostFunctor> functor)
-      : DynamicAutoDiffCostFunction{std::move(functor), TAKE_OWNERSHIP} {}
+      : DynamicAutoDiffCostFunction(std::unique_ptr<CostFunctor>(functor),
+                                    ownership) {
+    static_assert(Stride > 0, "Stride must be positive");
+  }
 
   DynamicAutoDiffCostFunction(const DynamicAutoDiffCostFunction& other) =
       delete;
