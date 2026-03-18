@@ -69,7 +69,7 @@ CellInfo* BlockRandomAccessDiagonalMatrix::GetCell(int row_block_id,
     return nullptr;
   }
 
-  auto& blocks = m_->row_blocks();
+  absl::Span<const Block> blocks = m_->row_blocks();
   const int stride = blocks[row_block_id].size;
 
   // Each cell is stored contiguously as its own little dense matrix.
@@ -88,7 +88,7 @@ void BlockRandomAccessDiagonalMatrix::SetZero() {
 }
 
 void BlockRandomAccessDiagonalMatrix::Invert() {
-  auto& blocks = m_->row_blocks();
+  absl::Span<const Block> blocks = m_->row_blocks();
   const int num_blocks = blocks.size();
   ParallelFor(context_, 0, num_blocks, num_threads_, [this, blocks](int i) {
     auto& cell_info = layout_[i];
@@ -103,7 +103,7 @@ void BlockRandomAccessDiagonalMatrix::RightMultiplyAndAccumulate(
     const double* x, double* y) const {
   CHECK(x != nullptr);
   CHECK(y != nullptr);
-  auto& blocks = m_->row_blocks();
+  absl::Span<const Block> blocks = m_->row_blocks();
   const int num_blocks = blocks.size();
   ParallelFor(
       context_, 0, num_blocks, num_threads_, [this, blocks, x, y](int i) {

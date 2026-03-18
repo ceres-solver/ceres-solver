@@ -91,6 +91,8 @@ class CompressedRowSparseMatrixTest : public ::testing::Test {
     for (int i = 0; i < col_blocks->size(); ++i) {
       (*col_blocks)[i] = Block(1, i);
     }
+    EXPECT_EQ(crsm->row_blocks().size(), num_rows);
+    EXPECT_EQ(crsm->col_blocks().size(), num_cols);
   }
 
   int num_rows;
@@ -154,30 +156,43 @@ TEST_F(CompressedRowSparseMatrixTest, AppendAndDeleteBlockDiagonalMatrix) {
   row_and_column_blocks.emplace_back(2, 1);
   row_and_column_blocks.emplace_back(2, 3);
 
-  const std::vector<Block> pre_row_blocks = crsm->row_blocks();
-  const std::vector<Block> pre_col_blocks = crsm->col_blocks();
+  const std::vector<Block> pre_row_blocks(crsm->row_blocks().begin(),
+                                          crsm->row_blocks().end());
+  const std::vector<Block> pre_col_blocks(crsm->col_blocks().begin(),
+                                          crsm->col_blocks().end());
 
   auto appendage = CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(
       diagonal.get(), row_and_column_blocks);
 
   crsm->AppendRows(*appendage);
 
-  const std::vector<Block> post_row_blocks = crsm->row_blocks();
-  const std::vector<Block> post_col_blocks = crsm->col_blocks();
-
-  std::vector<Block> expected_row_blocks = pre_row_blocks;
+  std::vector<Block> expected_row_blocks(pre_row_blocks.begin(),
+                                         pre_row_blocks.end());
   expected_row_blocks.insert(expected_row_blocks.end(),
                              row_and_column_blocks.begin(),
                              row_and_column_blocks.end());
 
-  std::vector<Block> expected_col_blocks = pre_col_blocks;
+  std::vector<Block> expected_col_blocks(pre_col_blocks.begin(),
+                                         pre_col_blocks.end());
 
-  EXPECT_EQ(expected_row_blocks, crsm->row_blocks());
-  EXPECT_EQ(expected_col_blocks, crsm->col_blocks());
+  EXPECT_EQ(expected_row_blocks.size(), crsm->row_blocks().size());
+  for (int i = 0; i < expected_row_blocks.size(); ++i) {
+    EXPECT_EQ(expected_row_blocks[i], crsm->row_blocks()[i]);
+  }
+  EXPECT_EQ(expected_col_blocks.size(), crsm->col_blocks().size());
+  for (int i = 0; i < expected_col_blocks.size(); ++i) {
+    EXPECT_EQ(expected_col_blocks[i], crsm->col_blocks()[i]);
+  }
 
   crsm->DeleteRows(num_diagonal_rows);
-  EXPECT_EQ(crsm->row_blocks(), pre_row_blocks);
-  EXPECT_EQ(crsm->col_blocks(), pre_col_blocks);
+  EXPECT_EQ(crsm->row_blocks().size(), pre_row_blocks.size());
+  for (int i = 0; i < pre_row_blocks.size(); ++i) {
+    EXPECT_EQ(crsm->row_blocks()[i], pre_row_blocks[i]);
+  }
+  EXPECT_EQ(crsm->col_blocks().size(), pre_col_blocks.size());
+  for (int i = 0; i < pre_col_blocks.size(); ++i) {
+    EXPECT_EQ(crsm->col_blocks()[i], pre_col_blocks[i]);
+  }
 }
 
 TEST_F(CompressedRowSparseMatrixTest, ToDenseMatrix) {
@@ -226,8 +241,14 @@ TEST(CompressedRowSparseMatrix, CreateBlockDiagonalMatrix) {
   EXPECT_EQ(matrix->num_rows(), 5);
   EXPECT_EQ(matrix->num_cols(), 5);
   EXPECT_EQ(matrix->num_nonzeros(), 9);
-  EXPECT_EQ(blocks, matrix->row_blocks());
-  EXPECT_EQ(blocks, matrix->col_blocks());
+  EXPECT_EQ(blocks.size(), matrix->row_blocks().size());
+  for (int i = 0; i < blocks.size(); ++i) {
+    EXPECT_EQ(blocks[i], matrix->row_blocks()[i]);
+  }
+  EXPECT_EQ(blocks.size(), matrix->col_blocks().size());
+  for (int i = 0; i < blocks.size(); ++i) {
+    EXPECT_EQ(blocks[i], matrix->col_blocks()[i]);
+  }
 
   Vector x(5);
   Vector y(5);

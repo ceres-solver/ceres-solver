@@ -61,7 +61,7 @@ std::shared_ptr<ParameterBlockOrdering> CreateDefaultLinearSolverOrdering(
     const Program& program) {
   std::shared_ptr<ParameterBlockOrdering> ordering =
       std::make_shared<ParameterBlockOrdering>();
-  const std::vector<ParameterBlock*>& parameter_blocks =
+  absl::Span<ParameterBlock* const> parameter_blocks =
       program.parameter_blocks();
   for (auto* parameter_block : parameter_blocks) {
     ordering->AddElementToGroup(
