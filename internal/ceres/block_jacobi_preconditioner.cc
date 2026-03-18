@@ -117,7 +117,7 @@ bool BlockSparseJacobiPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
 BlockCRSJacobiPreconditioner::BlockCRSJacobiPreconditioner(
     Preconditioner::Options options, const CompressedRowSparseMatrix& A)
     : options_(std::move(options)), locks_(A.col_blocks().size()) {
-  auto& col_blocks = A.col_blocks();
+  absl::Span<const Block> col_blocks = A.col_blocks();
 
   // Compute the number of non-zeros in the preconditioner. This is needed so
   // that we can construct the CompressedRowSparseMatrix.
@@ -158,8 +158,8 @@ BlockCRSJacobiPreconditioner::~BlockCRSJacobiPreconditioner() = default;
 
 bool BlockCRSJacobiPreconditioner::UpdateImpl(
     const CompressedRowSparseMatrix& A, const double* D) {
-  const auto& col_blocks = A.col_blocks();
-  const auto& row_blocks = A.row_blocks();
+  absl::Span<const Block> col_blocks = A.col_blocks();
+  absl::Span<const Block> row_blocks = A.row_blocks();
   const int num_col_blocks = col_blocks.size();
   const int num_row_blocks = row_blocks.size();
 

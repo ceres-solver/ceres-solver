@@ -74,7 +74,7 @@ void ComputeVisibility(const CompressedRowBlockStructure& block_structure,
 }
 
 std::unique_ptr<WeightedGraph<int>> CreateSchurComplementGraph(
-    const std::vector<absl::btree_set<int>>& visibility) {
+    absl::Span<const absl::btree_set<int>> visibility) {
   const time_t start_time = time(nullptr);
   // Compute the number of e_blocks/point blocks. Since the visibility
   // set for each e_block/camera contains the set of e_blocks/points

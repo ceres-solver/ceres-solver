@@ -41,6 +41,7 @@
 #include <cstdint>
 #include <vector>
 
+#include "absl/types/span.h"
 #include "ceres/internal/export.h"
 
 // This file is being included into source files that are compiled with nvcc.
@@ -172,26 +173,36 @@ using CompressedColumn = CompressedList;
 //                        ^ rows[0].cells[1].position = 4
 //                                    ^ rows[1].cells[0].position = 8
 struct CERES_NO_EXPORT CompressedRowBlockStructure {
+  // \note The returned Spans are views into the underlying vectors. Any
+  // modification to the underlying vectors will invalidate the returned Spans.
+  absl::Span<const Block> col_blocks() const { return cols; }
+  absl::Span<const CompressedRow> row_blocks() const { return rows; }
+
   std::vector<Block> cols;
   std::vector<CompressedRow> rows;
 };
 
 struct CERES_NO_EXPORT CompressedColumnBlockStructure {
+  // \note The returned Spans are views into the underlying vectors. Any
+  // modification to the underlying vectors will invalidate the returned Spans.
+  absl::Span<const Block> row_blocks() const { return rows; }
+  absl::Span<const CompressedColumn> col_blocks() const { return cols; }
+
   std::vector<Block> rows;
   std::vector<CompressedColumn> cols;
 };
 
-inline int NumScalarEntries(const std::vector<Block>& blocks) {
+inline int NumScalarEntries(absl::Span<const Block> blocks) {
   if (blocks.empty()) {
     return 0;
   }
 
-  auto& block = blocks.back();
+  const auto& block = blocks.back();
   return block.position + block.size;
 }
 
-std::vector<Block> Tail(const std::vector<Block>& blocks, int n);
-int SumSquaredSizes(const std::vector<Block>& blocks);
+std::vector<Block> Tail(absl::Span<const Block> blocks, int n);
+int SumSquaredSizes(absl::Span<const Block> blocks);
 
 }  // namespace internal
 }  // namespace ceres
