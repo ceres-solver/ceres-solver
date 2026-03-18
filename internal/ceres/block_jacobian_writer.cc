@@ -36,6 +36,7 @@
 
 #include "absl/log/check.h"
 #include "absl/log/log.h"
+#include "absl/types/span.h"
 #include "ceres/block_evaluate_preparer.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/internal/eigen.h"
@@ -69,8 +70,7 @@ bool BuildJacobianLayout(const Program& program,
                          int num_eliminate_blocks,
                          std::vector<int*>* jacobian_layout,
                          std::vector<int>* jacobian_layout_storage) {
-  const std::vector<ResidualBlock*>& residual_blocks =
-      program.residual_blocks();
+  absl::Span<ResidualBlock* const> residual_blocks = program.residual_blocks();
 
   // Iterate over all the active residual blocks and determine how many E blocks
   // are there. This will determine where the F blocks start in the jacobian
@@ -123,8 +123,10 @@ bool BuildJacobianLayout(const Program& program,
     // index of corresponding column block id.
     active_parameter_blocks.clear();
     active_parameter_blocks.reserve(num_parameter_blocks);
+    absl::Span<ParameterBlock* const> parameter_blocks =
+        residual_block->parameter_blocks();
     for (int j = 0; j < num_parameter_blocks; ++j) {
-      ParameterBlock* parameter_block = residual_block->parameter_blocks()[j];
+      ParameterBlock* parameter_block = parameter_blocks[j];
       if (parameter_block->IsConstant()) {
         continue;
       }
@@ -133,10 +135,10 @@ bool BuildJacobianLayout(const Program& program,
     }
     std::sort(active_parameter_blocks.begin(),
               active_parameter_blocks.end(),
-              [&residual_block](const std::pair<int, int>& a,
-                                const std::pair<int, int>& b) {
-                return residual_block->parameter_blocks()[a.second]->index() <
-                       residual_block->parameter_blocks()[b.second]->index();
+              [parameter_blocks](const std::pair<int, int>& a,
+                                 const std::pair<int, int>& b) {
+                return parameter_blocks[a.second]->index() <
+                       parameter_blocks[b.second]->index();
               });
     // Cell positions for each active parameter block are filled in the order of
     // active parameter block indices sorted by columnd block index. This
@@ -204,7 +206,7 @@ std::unique_ptr<SparseMatrix> BlockJacobianWriter::CreateJacobian() const {
 
   auto* bs = new CompressedRowBlockStructure;
 
-  const std::vector<ParameterBlock*>& parameter_blocks =
+  absl::Span<ParameterBlock* const> parameter_blocks =
       program_->parameter_blocks();
 
   // Construct the column blocks.
@@ -218,7 +220,7 @@ std::unique_ptr<SparseMatrix> BlockJacobianWriter::CreateJacobian() const {
   }
 
   // Construct the cells in each row.
-  const std::vector<ResidualBlock*>& residual_blocks =
+  absl::Span<ResidualBlock* const> residual_blocks =
       program_->residual_blocks();
   int row_block_position = 0;
   bs->rows.resize(residual_blocks.size());

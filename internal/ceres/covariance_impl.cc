@@ -47,6 +47,7 @@
 #include "absl/container/flat_hash_set.h"
 #include "absl/log/check.h"
 #include "absl/log/log.h"
+#include "absl/types/span.h"
 #include "ceres/compressed_col_sparse_matrix_utils.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/covariance.h"
@@ -375,9 +376,8 @@ bool CovarianceImpl::ComputeCovarianceSparsity(
   problem->GetResidualBlocks(&residual_blocks);
 
   for (auto* residual_block : residual_blocks) {
-    parameter_blocks_in_use.insert(residual_block->parameter_blocks(),
-                                   residual_block->parameter_blocks() +
-                                       residual_block->NumParameterBlocks());
+    parameter_blocks_in_use.insert(residual_block->parameter_blocks().begin(),
+                                   residual_block->parameter_blocks().end());
   }
 
   constant_parameter_blocks_.clear();

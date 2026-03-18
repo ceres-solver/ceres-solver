@@ -41,6 +41,7 @@
 #include <cstdint>
 #include <vector>
 
+#include "absl/types/span.h"
 #include "ceres/internal/export.h"
 
 // This file is being included into source files that are compiled with nvcc.
@@ -181,17 +182,17 @@ struct CERES_NO_EXPORT CompressedColumnBlockStructure {
   std::vector<CompressedColumn> cols;
 };
 
-inline int NumScalarEntries(const std::vector<Block>& blocks) {
+inline int NumScalarEntries(absl::Span<const Block> blocks) {
   if (blocks.empty()) {
     return 0;
   }
 
-  auto& block = blocks.back();
+  const auto& block = blocks.back();
   return block.position + block.size;
 }
 
-std::vector<Block> Tail(const std::vector<Block>& blocks, int n);
-int SumSquaredSizes(const std::vector<Block>& blocks);
+std::vector<Block> Tail(absl::Span<const Block> blocks, int n);
+int SumSquaredSizes(absl::Span<const Block> blocks);
 
 }  // namespace internal
 }  // namespace ceres

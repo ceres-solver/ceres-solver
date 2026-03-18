@@ -58,11 +58,11 @@
 
 namespace ceres::internal {
 
-const std::vector<ParameterBlock*>& Program::parameter_blocks() const {
+absl::Span<ParameterBlock* const> Program::parameter_blocks() const {
   return parameter_blocks_;
 }
 
-const std::vector<ResidualBlock*>& Program::residual_blocks() const {
+absl::Span<ResidualBlock* const> Program::residual_blocks() const {
   return residual_blocks_;
 }
 
@@ -145,8 +145,9 @@ void Program::SetParameterOffsetsAndIndex() {
   // Set positions for all parameters appearing as arguments to residuals to one
   // past the end of the parameter block array.
   for (auto* residual_block : residual_blocks_) {
+    auto parameter_blocks = residual_block->parameter_blocks();
     for (int j = 0; j < residual_block->NumParameterBlocks(); ++j) {
-      residual_block->parameter_blocks()[j]->set_index(-1);
+      parameter_blocks[j]->set_index(-1);
     }
   }
   // For parameters that appear in the program, set their position and offset.
@@ -414,27 +415,6 @@ bool Program::RemoveFixedBlocks(std::vector<double*>* removed_parameter_blocks,
   return true;
 }
 
-bool Program::IsParameterBlockSetIndependent(
-    const std::set<double*>& independent_set) const {
-  // Loop over each residual block and ensure that no two parameter
-  // blocks in the same residual block are part of
-  // parameter_block_ptrs as that would violate the assumption that it
-  // is an independent set in the Hessian matrix.
-  for (const ResidualBlock* residual_block : residual_blocks_) {
-    ParameterBlock* const* parameter_blocks =
-        residual_block->parameter_blocks();
-    const int num_parameter_blocks = residual_block->NumParameterBlocks();
-    int count = 0;
-    for (int i = 0; i < num_parameter_blocks; ++i) {
-      count += independent_set.count(parameter_blocks[i]->mutable_user_state());
-    }
-    if (count > 1) {
-      return false;
-    }
-  }
-  return true;
-}
-
 std::unique_ptr<TripletSparseMatrix>
 Program::CreateJacobianBlockSparsityTranspose(int start_residual_block) const {
   // Matrix to store the block sparsity structure of the Jacobian.
@@ -451,7 +431,7 @@ Program::CreateJacobianBlockSparsityTranspose(int start_residual_block) const {
   for (int c = start_residual_block; c < residual_blocks_.size(); ++c) {
     const ResidualBlock* residual_block = residual_blocks_[c];
     const int num_parameter_blocks = residual_block->NumParameterBlocks();
-    ParameterBlock* const* parameter_blocks =
+    absl::Span<ParameterBlock* const> parameter_blocks =
         residual_block->parameter_blocks();
 
     for (int j = 0; j < num_parameter_blocks; ++j) {

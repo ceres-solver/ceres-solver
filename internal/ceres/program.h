@@ -32,19 +32,20 @@
 #define CERES_INTERNAL_PROGRAM_H_
 
 #include <memory>
-#include <set>
 #include <string>
 #include <vector>
 
+#include "absl/types/span.h"
 #include "ceres/evaluation_callback.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
+#include "ceres/parameter_block.h"
+#include "ceres/residual_block.h"
 
 namespace ceres::internal {
 
 class ParameterBlock;
 class ProblemImpl;
-class ResidualBlock;
 class TripletSparseMatrix;
 class ContextImpl;
 
@@ -61,8 +62,8 @@ class ContextImpl;
 class CERES_NO_EXPORT Program {
  public:
   // The ordered parameter and residual blocks for the program.
-  const std::vector<ParameterBlock*>& parameter_blocks() const;
-  const std::vector<ResidualBlock*>& residual_blocks() const;
+  absl::Span<ParameterBlock* const> parameter_blocks() const;
+  absl::Span<ResidualBlock* const> residual_blocks() const;
   std::vector<ParameterBlock*>* mutable_parameter_blocks();
   std::vector<ResidualBlock*>* mutable_residual_blocks();
   EvaluationCallback* mutable_evaluation_callback();
@@ -124,8 +125,25 @@ class CERES_NO_EXPORT Program {
   // blocks in the same residual block are part of
   // parameter_blocks as that would violate the assumption that it
   // is an independent set in the Hessian matrix.
-  bool IsParameterBlockSetIndependent(
-      const std::set<double*>& independent_set) const;
+  template <typename SetType>
+  bool IsParameterBlockSetIndependent(const SetType& independent_set) const {
+    for (const ResidualBlock* residual_block : residual_blocks_) {
+      absl::Span<ParameterBlock* const> parameter_blocks =
+          residual_block->parameter_blocks();
+      const int num_parameter_blocks = residual_block->NumParameterBlocks();
+      int count = 0;
+      for (int i = 0; i < num_parameter_blocks; ++i) {
+        if (independent_set.find(parameter_blocks[i]->mutable_user_state()) !=
+            independent_set.end()) {
+          ++count;
+        }
+      }
+      if (count > 1) {
+        return false;
+      }
+    }
+    return true;
+  }
 
   // Create a TripletSparseMatrix which contains the zero-one
   // structure corresponding to the block sparsity of the transpose of

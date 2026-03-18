@@ -41,6 +41,7 @@
 
 #include "absl/log/check.h"
 #include "absl/strings/str_format.h"
+#include "absl/types/span.h"
 #include "ceres/evaluator.h"
 #include "ceres/linear_solver.h"
 #include "ceres/minimizer.h"
@@ -77,9 +78,11 @@ bool CoordinateDescentMinimizer::Init(
 
   // TODO(sameeragarwal): Investigate if parameter_block_index should be an
   // ordered or an unordered container.
-  std::map<ParameterBlock*, int> parameter_block_index;
+  absl::flat_hash_map<ParameterBlock*, int> parameter_block_index;
+  parameter_block_index.reserve(ordering.NumElements());
   std::map<int, std::set<double*>> group_to_elements =
       ordering.group_to_elements();
+
   for (const auto& g_t_e : group_to_elements) {
     const auto& elements = g_t_e.second;
     for (double* parameter_block : elements) {
@@ -94,7 +97,7 @@ bool CoordinateDescentMinimizer::Init(
   // The ordering does not have to contain all parameter blocks, so
   // assign zero offsets/empty independent sets to these parameter
   // blocks.
-  const std::vector<ParameterBlock*>& parameter_blocks =
+  absl::Span<ParameterBlock* const> parameter_blocks =
       program.parameter_blocks();
   for (auto* parameter_block : parameter_blocks) {
     if (!ordering.IsMember(parameter_block->mutable_user_state())) {
@@ -106,7 +109,7 @@ bool CoordinateDescentMinimizer::Init(
   // Compute the set of residual blocks that depend on each parameter
   // block.
   residual_blocks_.resize(parameter_block_index.size());
-  const std::vector<ResidualBlock*>& residual_blocks =
+  absl::Span<ResidualBlock* const> residual_blocks =
       program.residual_blocks();
   for (auto* residual_block : residual_blocks) {
     const int num_parameter_blocks = residual_block->NumParameterBlocks();
