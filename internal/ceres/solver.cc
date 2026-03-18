@@ -34,13 +34,14 @@
 #include <algorithm>
 #include <map>
 #include <memory>
-#include <sstream>  // NOLINT
 #include <string>
 #include <vector>
 
 #include "absl/log/check.h"
 #include "absl/log/log.h"
-#include "absl/strings/str_cat.h"
+#include "absl/strings/str_format.h"
+#include "absl/strings/substitute.h"
+
 #include "absl/strings/str_format.h"
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
@@ -65,28 +66,30 @@
 namespace ceres {
 namespace {
 
-#define OPTION_OP(x, y, OP)                                               \
-  if (!(options.x OP y)) {                                                \
-    std::stringstream ss;                                                 \
-    ss << "Invalid configuration. ";                                      \
-    ss << std::string("Solver::Options::" #x " = ") << options.x << ". "; \
-    ss << "Violated constraint: ";                                        \
-    ss << std::string("Solver::Options::" #x " " #OP " " #y);             \
-    *error = ss.str();                                                    \
-    return false;                                                         \
+#define OPTION_OP(x, y, OP)                                              \
+  if (!(options.x OP y)) {                                               \
+    *error = absl::Substitute(                                           \
+        "Invalid configuration. Solver::Options::$0 = $1. "              \
+        "Violated constraint: Solver::Options::$0 $2 $3",                \
+        #x,                                                              \
+        options.x,                                                       \
+        #OP,                                                             \
+        #y);                                                             \
+    return false;                                                        \
   }
 
-#define OPTION_OP_OPTION(x, y, OP)                                        \
-  if (!(options.x OP options.y)) {                                        \
-    std::stringstream ss;                                                 \
-    ss << "Invalid configuration. ";                                      \
-    ss << std::string("Solver::Options::" #x " = ") << options.x << ". "; \
-    ss << std::string("Solver::Options::" #y " = ") << options.y << ". "; \
-    ss << "Violated constraint: ";                                        \
-    ss << std::string("Solver::Options::" #x);                            \
-    ss << std::string(#OP " Solver::Options::" #y ".");                   \
-    *error = ss.str();                                                    \
-    return false;                                                         \
+#define OPTION_OP_OPTION(x, y, OP)                                       \
+  if (!(options.x OP options.y)) {                                       \
+    *error = absl::Substitute(                                           \
+        "Invalid configuration. Solver::Options::$0 = $1. "              \
+        "Solver::Options::$2 = $3. "                                     \
+        "Violated constraint: Solver::Options::$0 $4 Solver::Options::$2.", \
+        #x,                                                              \
+        options.x,                                                       \
+        #y,                                                              \
+        options.y,                                                       \
+        #OP);                                                            \
+    return false;                                                        \
   }
 
 #define OPTION_GE(x, y) OPTION_OP(x, y, >=);
