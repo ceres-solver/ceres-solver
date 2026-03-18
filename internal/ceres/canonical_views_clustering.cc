@@ -103,6 +103,11 @@ void CanonicalViewsClustering::ComputeClustering(
   membership->clear();
   graph_ = &graph;
 
+  const int num_views = graph_->num_vertices();
+  view_to_canonical_view_.reserve(num_views);
+  view_to_canonical_view_similarity_.reserve(num_views);
+  membership->reserve(num_views);
+
   IntSet valid_views;
   FindValidViews(&valid_views);
   while (!valid_views.empty()) {
