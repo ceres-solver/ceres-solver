@@ -41,6 +41,7 @@
 
 #include "Eigen/SparseCore"
 #include "absl/strings/str_format.h"
+#include "absl/types/span.h"
 #include "ceres/internal/config.h"
 #include "ceres/internal/export.h"
 #include "ceres/ordered_groups.h"
@@ -79,8 +80,9 @@ namespace {
 static int MinParameterBlock(const ResidualBlock* residual_block,
                              int size_of_first_elimination_group) {
   int min_parameter_block_position = size_of_first_elimination_group;
+  auto parameter_blocks = residual_block->parameter_blocks();
   for (int i = 0; i < residual_block->NumParameterBlocks(); ++i) {
-    ParameterBlock* parameter_block = residual_block->parameter_blocks()[i];
+    ParameterBlock* parameter_block = parameter_blocks[i];
     if (!parameter_block->IsConstant()) {
       CHECK_NE(parameter_block->index(), -1)
           << "Did you forget to call Program::SetParameterOffsetsAndIndex()? "
@@ -115,7 +117,7 @@ Eigen::SparseMatrix<int> CreateBlockJacobian(
 void OrderingForSparseNormalCholeskyUsingSuiteSparse(
     const LinearSolverOrderingType linear_solver_ordering_type,
     const TripletSparseMatrix& tsm_block_jacobian_transpose,
-    const std::vector<ParameterBlock*>& parameter_blocks,
+    absl::Span<ParameterBlock* const> parameter_blocks,
     const ParameterBlockOrdering& parameter_block_ordering,
     int* ordering) {
 #ifdef CERES_NO_SUITESPARSE
@@ -247,8 +249,11 @@ bool ApplyOrdering(const ProblemImpl::ParameterMap& parameter_map,
 
   // Add the parameter blocks to the new ordering, while maintaining the
   // original ordering of the parameter blocks within each group.
-  const std::vector<ParameterBlock*> old_parameter_blocks =
-      program->parameter_blocks();
+  std::vector<ParameterBlock*> old_parameter_blocks;
+  {
+    auto pb = program->parameter_blocks();
+    old_parameter_blocks.assign(pb.begin(), pb.end());
+  }
   std::vector<ParameterBlock*>* parameter_blocks =
       program->mutable_parameter_blocks();
   const std::map<int, std::set<double*>>& group_to_elements =
@@ -444,7 +449,7 @@ static void ReorderSchurComplementColumnsUsingEigen(
 #endif
   }
 
-  const std::vector<ParameterBlock*>& parameter_blocks =
+  absl::Span<ParameterBlock* const> parameter_blocks =
       program->parameter_blocks();
   std::vector<ParameterBlock*> ordering(num_cols);
 

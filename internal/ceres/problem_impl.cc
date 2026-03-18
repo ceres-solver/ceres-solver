@@ -45,6 +45,7 @@
 #include "absl/log/check.h"
 #include "absl/log/log.h"
 #include "absl/strings/str_format.h"
+#include "absl/types/span.h"
 #include "ceres/casts.h"
 #include "ceres/compressed_row_jacobian_writer.h"
 #include "ceres/compressed_row_sparse_matrix.h"
@@ -596,10 +597,13 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
   // If the user supplied residual blocks, then use them, otherwise
   // take the residual blocks from the underlying program.
   Program program;
-  *program.mutable_residual_blocks() =
-      ((evaluate_options.residual_blocks.size() > 0)
-           ? evaluate_options.residual_blocks
-           : program_->residual_blocks());
+  auto* residual_blocks_ptr = program.mutable_residual_blocks();
+  if (evaluate_options.residual_blocks.size() > 0) {
+    *residual_blocks_ptr = evaluate_options.residual_blocks;
+  } else {
+    auto rb = program_->residual_blocks();
+    residual_blocks_ptr->assign(rb.begin(), rb.end());
+  }
 
   const std::vector<double*>& parameter_block_ptrs =
       evaluate_options.parameter_blocks;
@@ -612,7 +616,8 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
     // The user did not provide any parameter blocks, so default to
     // using all the parameter blocks in the order that they are in
     // the underlying program object.
-    parameter_blocks = program_->parameter_blocks();
+    auto pb = program_->parameter_blocks();
+    parameter_blocks.assign(pb.begin(), pb.end());
   } else {
     // The user supplied a vector of parameter blocks. Using this list
     // requires a number of steps.
@@ -638,10 +643,16 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
     // columns of the jacobian, we need to make sure that they are
     // constant during evaluation and then make them variable again
     // after we are done.
-    std::vector<ParameterBlock*> all_parameter_blocks(
-        program_->parameter_blocks());
-    std::vector<ParameterBlock*> included_parameter_blocks(
-        program.parameter_blocks());
+    std::vector<ParameterBlock*> all_parameter_blocks;
+    {
+      auto pb = program_->parameter_blocks();
+      all_parameter_blocks.assign(pb.begin(), pb.end());
+    }
+    std::vector<ParameterBlock*> included_parameter_blocks;
+    {
+      auto pb = program.parameter_blocks();
+      included_parameter_blocks.assign(pb.begin(), pb.end());
+    }
 
     std::vector<ParameterBlock*> excluded_parameter_blocks;
     std::sort(all_parameter_blocks.begin(), all_parameter_blocks.end());
@@ -758,7 +769,8 @@ bool ProblemImpl::EvaluateResidualBlock(ResidualBlock* residual_block,
     evaluation_callback->PrepareForEvaluation(jacobians != nullptr, new_point);
   }
 
-  ParameterBlock* const* parameter_blocks = residual_block->parameter_blocks();
+  absl::Span<ParameterBlock* const> parameter_blocks =
+      residual_block->parameter_blocks();
   const int num_parameter_blocks = residual_block->NumParameterBlocks();
   for (int i = 0; i < num_parameter_blocks; ++i) {
     ParameterBlock* parameter_block = parameter_blocks[i];
@@ -839,7 +851,8 @@ void ProblemImpl::GetParameterBlocks(
 void ProblemImpl::GetResidualBlocks(
     std::vector<ResidualBlockId>* residual_blocks) const {
   CHECK(residual_blocks != nullptr);
-  *residual_blocks = program().residual_blocks();
+  auto rb = program().residual_blocks();
+  residual_blocks->assign(rb.begin(), rb.end());
 }
 
 void ProblemImpl::GetParameterBlocksForResidualBlock(

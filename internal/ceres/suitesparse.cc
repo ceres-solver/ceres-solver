@@ -217,8 +217,8 @@ cholmod_factor* SuiteSparse::AnalyzeCholeskyWithGivenOrdering(
 
 bool SuiteSparse::BlockOrdering(const cholmod_sparse* A,
                                 OrderingType ordering_type,
-                                const std::vector<Block>& row_blocks,
-                                const std::vector<Block>& col_blocks,
+                                absl::Span<const Block> row_blocks,
+                                absl::Span<const Block> col_blocks,
                                 std::vector<int>* ordering) {
   if (ordering_type == OrderingType::NATURAL) {
     ordering->resize(A->nrow);
@@ -268,8 +268,8 @@ bool SuiteSparse::BlockOrdering(const cholmod_sparse* A,
 cholmod_factor* SuiteSparse::BlockAnalyzeCholesky(
     cholmod_sparse* A,
     OrderingType ordering_type,
-    const std::vector<Block>& row_blocks,
-    const std::vector<Block>& col_blocks,
+    absl::Span<const Block> row_blocks,
+    absl::Span<const Block> col_blocks,
     std::string* message) {
   std::vector<int> ordering;
   if (!BlockOrdering(A, ordering_type, row_blocks, col_blocks, &ordering)) {

@@ -34,6 +34,7 @@
 #include <vector>
 
 #include "absl/log/check.h"
+#include "absl/types/span.h"
 #include "ceres/internal/export.h"
 
 namespace ceres::internal {
@@ -41,8 +42,8 @@ namespace ceres::internal {
 void CompressedColumnScalarMatrixToBlockMatrix(
     const int* scalar_rows,
     const int* scalar_cols,
-    const std::vector<Block>& row_blocks,
-    const std::vector<Block>& col_blocks,
+    const absl::Span<const Block> row_blocks,
+    const absl::Span<const Block> col_blocks,
     std::vector<int>* block_rows,
     std::vector<int>* block_cols) {
   CHECK(block_rows != nullptr);
@@ -88,7 +89,7 @@ void CompressedColumnScalarMatrixToBlockMatrix(
   }
 }
 
-void BlockOrderingToScalarOrdering(const std::vector<Block>& blocks,
+void BlockOrderingToScalarOrdering(const absl::Span<const Block> blocks,
                                    const std::vector<int>& block_ordering,
                                    std::vector<int>* scalar_ordering) {
   CHECK_EQ(blocks.size(), block_ordering.size());

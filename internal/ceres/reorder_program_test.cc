@@ -37,6 +37,7 @@
 #include <unordered_set>
 #include <vector>
 
+#include "absl/types/span.h"
 #include "ceres/internal/config.h"
 #include "ceres/ordered_groups.h"
 #include "ceres/parameter_block.h"
@@ -94,8 +95,11 @@ TEST(_, ReorderResidualBlockNormalFunction) {
   options.linear_solver_type = DENSE_SCHUR;
   options.linear_solver_ordering = linear_solver_ordering;
 
-  const std::vector<ResidualBlock*>& residual_blocks =
-      problem.program().residual_blocks();
+  std::vector<ResidualBlock*> residual_blocks;
+  {
+    auto rb = problem.program().residual_blocks();
+    residual_blocks.assign(rb.begin(), rb.end());
+  }
 
   std::vector<ResidualBlock*> expected_residual_blocks;
 
@@ -116,9 +120,10 @@ TEST(_, ReorderResidualBlockNormalFunction) {
   std::string message;
   EXPECT_TRUE(LexicographicallyOrderResidualBlocks(
       2, problem.mutable_program(), &message));
-  EXPECT_EQ(residual_blocks.size(), expected_residual_blocks.size());
+  auto actual_residual_blocks = problem.program().residual_blocks();
+  EXPECT_EQ(actual_residual_blocks.size(), expected_residual_blocks.size());
   for (int i = 0; i < expected_residual_blocks.size(); ++i) {
-    EXPECT_EQ(residual_blocks[i], expected_residual_blocks[i]);
+    EXPECT_EQ(actual_residual_blocks[i], expected_residual_blocks[i]);
   }
 }
 
@@ -162,13 +167,12 @@ TEST(_, ApplyOrderingNormal) {
 
   EXPECT_TRUE(ApplyOrdering(
       problem.parameter_map(), linear_solver_ordering, program, &message));
-  const std::vector<ParameterBlock*>& parameter_blocks =
-      program->parameter_blocks();
+  auto pb = program->parameter_blocks();
 
-  EXPECT_EQ(parameter_blocks.size(), 3);
-  EXPECT_EQ(parameter_blocks[0]->user_state(), &x);
-  EXPECT_EQ(parameter_blocks[1]->user_state(), &z);
-  EXPECT_EQ(parameter_blocks[2]->user_state(), &y);
+  EXPECT_EQ(pb.size(), 3);
+  EXPECT_EQ(pb[0]->user_state(), &x);
+  EXPECT_EQ(pb[1]->user_state(), &z);
+  EXPECT_EQ(pb[2]->user_state(), &y);
 }
 
 // Test that ApplyOrdering preserves the original program order within each
@@ -216,7 +220,7 @@ TEST(_, ApplyOrderingPreservesOrderWithinGroups) {
   EXPECT_TRUE(ApplyOrdering(
       problem.parameter_map(), linear_solver_ordering, program, &message));
 
-  const std::vector<ParameterBlock*>& parameter_blocks =
+  absl::Span<ParameterBlock* const> parameter_blocks =
       program->parameter_blocks();
 
   EXPECT_EQ(parameter_blocks.size(), kNumParams);
@@ -254,8 +258,11 @@ class ReorderProgramForSparseCholeskyUsingSuiteSparseTest
   void ComputeAndValidateOrdering(
       const ParameterBlockOrdering& linear_solver_ordering) {
     Program* program = problem_.mutable_program();
-    std::vector<ParameterBlock*> unordered_parameter_blocks =
-        program->parameter_blocks();
+    std::vector<ParameterBlock*> unordered_parameter_blocks;
+    {
+      auto pb = program->parameter_blocks();
+      unordered_parameter_blocks.assign(pb.begin(), pb.end());
+    }
 
     std::string error;
     EXPECT_TRUE(ReorderProgramForSparseCholesky(ceres::SUITE_SPARSE,
@@ -264,7 +271,7 @@ class ReorderProgramForSparseCholeskyUsingSuiteSparseTest
                                                 0, /* use all rows */
                                                 program,
                                                 &error));
-    const std::vector<ParameterBlock*>& ordered_parameter_blocks =
+    absl::Span<ParameterBlock* const> ordered_parameter_blocks =
         program->parameter_blocks();
     EXPECT_EQ(ordered_parameter_blocks.size(),
               unordered_parameter_blocks.size());
@@ -337,7 +344,7 @@ TEST(_, ReorderResidualBlocksbyPartition) {
 
   std::vector<ResidualBlockId> residual_block_ids;
   problem.GetResidualBlocks(&residual_block_ids);
-  std::vector<ResidualBlock*> residual_blocks =
+  absl::Span<ResidualBlock* const> residual_blocks =
       problem.program().residual_blocks();
   auto rng = std::mt19937{};
   for (int i = 1; i < 6; ++i) {
@@ -347,7 +354,7 @@ TEST(_, ReorderResidualBlocksbyPartition) {
                                                residual_block_ids.begin() + i);
     const int start_bottom =
         ReorderResidualBlocksByPartition(bottom, problem.mutable_program());
-    std::vector<ResidualBlock*> actual_residual_blocks =
+    absl::Span<ResidualBlock* const> actual_residual_blocks =
         problem.program().residual_blocks();
     EXPECT_THAT(actual_residual_blocks,
                 testing::UnorderedElementsAreArray(residual_blocks));

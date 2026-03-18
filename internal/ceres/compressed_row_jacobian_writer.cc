@@ -39,6 +39,7 @@
 
 #include "absl/log/check.h"
 #include "absl/log/log.h"
+#include "absl/types/span.h"
 #include "ceres/casts.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/parameter_block.h"
@@ -49,7 +50,8 @@
 namespace ceres::internal {
 void CompressedRowJacobianWriter::PopulateJacobianRowAndColumnBlockVectors(
     const Program* program, CompressedRowSparseMatrix* jacobian) {
-  const auto& parameter_blocks = program->parameter_blocks();
+  absl::Span<ParameterBlock* const> parameter_blocks =
+      program->parameter_blocks();
   auto& col_blocks = *(jacobian->mutable_col_blocks());
   col_blocks.resize(parameter_blocks.size());
   int col_pos = 0;
@@ -59,8 +61,9 @@ void CompressedRowJacobianWriter::PopulateJacobianRowAndColumnBlockVectors(
     col_pos += col_blocks[i].size;
   }
 
-  const auto& residual_blocks = program->residual_blocks();
+  absl::Span<ResidualBlock* const> residual_blocks = program->residual_blocks();
   auto& row_blocks = *(jacobian->mutable_row_blocks());
+
   row_blocks.resize(residual_blocks.size());
   int row_pos = 0;
   for (int i = 0; i < residual_blocks.size(); ++i) {
@@ -74,11 +77,11 @@ void CompressedRowJacobianWriter::GetOrderedParameterBlocks(
     const Program* program,
     int residual_id,
     std::vector<std::pair<int, int>>* evaluated_jacobian_blocks) {
-  auto residual_block = program->residual_blocks()[residual_id];
+  ResidualBlock* residual_block = program->residual_blocks()[residual_id];
   const int num_parameter_blocks = residual_block->NumParameterBlocks();
 
   for (int j = 0; j < num_parameter_blocks; ++j) {
-    auto parameter_block = residual_block->parameter_blocks()[j];
+    ParameterBlock* parameter_block = residual_block->parameter_blocks()[j];
     if (!parameter_block->IsConstant()) {
       evaluated_jacobian_blocks->push_back(
           std::make_pair(parameter_block->index(), j));
@@ -90,7 +93,7 @@ void CompressedRowJacobianWriter::GetOrderedParameterBlocks(
 
 std::unique_ptr<SparseMatrix> CompressedRowJacobianWriter::CreateJacobian()
     const {
-  const auto& residual_blocks = program_->residual_blocks();
+  absl::Span<ResidualBlock* const> residual_blocks = program_->residual_blocks();
 
   const int total_num_residuals = program_->NumResiduals();
   const int total_num_effective_parameters = program_->NumEffectiveParameters();
@@ -100,11 +103,11 @@ std::unique_ptr<SparseMatrix> CompressedRowJacobianWriter::CreateJacobian()
   // We used an unsigned int here, so that we can compare it INT_MAX without
   // triggering overflow behaviour.
   unsigned int num_jacobian_nonzeros = total_num_effective_parameters;
-  for (auto* residual_block : residual_blocks) {
+  for (ResidualBlock* residual_block : residual_blocks) {
     const int num_residuals = residual_block->NumResiduals();
     const int num_parameter_blocks = residual_block->NumParameterBlocks();
     for (int j = 0; j < num_parameter_blocks; ++j) {
-      auto parameter_block = residual_block->parameter_blocks()[j];
+      ParameterBlock* parameter_block = residual_block->parameter_blocks()[j];
       if (!parameter_block->IsConstant()) {
         num_jacobian_nonzeros += num_residuals * parameter_block->TangentSize();
         if (num_jacobian_nonzeros > std::numeric_limits<int>::max()) {
@@ -134,7 +137,7 @@ std::unique_ptr<SparseMatrix> CompressedRowJacobianWriter::CreateJacobian()
 
   int row_pos = 0;
   rows[0] = 0;
-  for (auto* residual_block : residual_blocks) {
+  for (ResidualBlock* residual_block : residual_blocks) {
     const int num_parameter_blocks = residual_block->NumParameterBlocks();
 
     // Count the number of derivatives for a row of this residual block and
@@ -142,7 +145,7 @@ std::unique_ptr<SparseMatrix> CompressedRowJacobianWriter::CreateJacobian()
     int num_derivatives = 0;
     std::vector<int> parameter_indices;
     for (int j = 0; j < num_parameter_blocks; ++j) {
-      auto parameter_block = residual_block->parameter_blocks()[j];
+      ParameterBlock* parameter_block = residual_block->parameter_blocks()[j];
       if (!parameter_block->IsConstant()) {
         parameter_indices.push_back(parameter_block->index());
         num_derivatives += parameter_block->TangentSize();

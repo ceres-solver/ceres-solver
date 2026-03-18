@@ -40,6 +40,7 @@
 #include "absl/log/check.h"
 #include "absl/log/log.h"
 #include "absl/strings/str_format.h"
+#include "absl/types/span.h"
 #include "ceres/context_impl.h"
 #include "ceres/crs_matrix.h"
 #include "ceres/internal/export.h"
@@ -560,21 +561,24 @@ void CompressedRowSparseMatrix::SetMaxNumNonZeros(int num_nonzeros) {
 
 std::unique_ptr<CompressedRowSparseMatrix>
 CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(
-    const double* diagonal, const std::vector<Block>& blocks) {
+    const double* diagonal, absl::Span<const Block> blocks) {
   const int num_rows = NumScalarEntries(blocks);
   int num_nonzeros = 0;
-  for (auto& block : blocks) {
+  for (const auto& block : blocks) {
     num_nonzeros += block.size * block.size;
   }
 
   auto matrix = std::make_unique<CompressedRowSparseMatrix>(
       num_rows, num_rows, num_nonzeros);
 
-  int* rows = matrix->mutable_rows();
-  int* cols = matrix->mutable_cols();
+  matrix->mutable_row_blocks()->assign(blocks.begin(), blocks.end());
+  matrix->mutable_col_blocks()->assign(blocks.begin(), blocks.end());
+
   double* values = matrix->mutable_values();
   std::fill(values, values + num_nonzeros, 0.0);
 
+  int* rows = matrix->mutable_rows();
+  int* cols = matrix->mutable_cols();
   int idx_cursor = 0;
   int col_cursor = 0;
   for (auto& block : blocks) {
@@ -590,9 +594,6 @@ CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(
     col_cursor += block.size;
   }
   *rows = idx_cursor;
-
-  *matrix->mutable_row_blocks() = blocks;
-  *matrix->mutable_col_blocks() = blocks;
 
   CHECK_EQ(idx_cursor, num_nonzeros);
   CHECK_EQ(col_cursor, num_rows);
@@ -634,8 +635,8 @@ CompressedRowSparseMatrix::Transpose() const {
     return transpose;
   }
 
-  *(transpose->mutable_row_blocks()) = col_blocks_;
-  *(transpose->mutable_col_blocks()) = row_blocks_;
+  transpose->mutable_row_blocks()->assign(col_blocks_.begin(), col_blocks_.end());
+  transpose->mutable_col_blocks()->assign(row_blocks_.begin(), row_blocks_.end());
   return transpose;
 }
 
@@ -762,8 +763,8 @@ CompressedRowSparseMatrix::CreateRandomMatrix(
   auto matrix = CompressedRowSparseMatrix::FromTripletSparseMatrix(
       TripletSparseMatrix(num_rows, num_cols, tsm_rows, tsm_cols, tsm_values),
       kDoNotTranspose);
-  (*matrix->mutable_row_blocks()) = row_blocks;
-  (*matrix->mutable_col_blocks()) = col_blocks;
+  matrix->mutable_row_blocks()->assign(row_blocks.begin(), row_blocks.end());
+  matrix->mutable_col_blocks()->assign(col_blocks.begin(), col_blocks.end());
   matrix->set_storage_type(options.storage_type);
   return matrix;
 }

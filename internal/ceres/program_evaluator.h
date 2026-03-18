@@ -93,6 +93,7 @@
 #include <vector>
 
 #include "absl/log/log.h"
+#include "absl/types/span.h"
 #include "ceres/evaluation_callback.h"
 #include "ceres/evaluator.h"
 #include "ceres/execution_summary.h"
@@ -349,7 +350,7 @@ class ProgramEvaluator final : public Evaluator {
 
   static void BuildResidualLayout(const Program& program,
                                   std::vector<int>* residual_layout) {
-    const std::vector<ResidualBlock*>& residual_blocks =
+    absl::Span<ResidualBlock* const> residual_blocks =
         program.residual_blocks();
     residual_layout->resize(program.NumResidualBlocks());
     int residual_pos = 0;

@@ -32,40 +32,83 @@
 
 #include <vector>
 
-#include "absl/log/check.h"
 #include "absl/types/span.h"
+#include "gtest/gtest.h"
 
 namespace ceres::internal {
 
-bool CellLessThan(const Cell& lhs, const Cell& rhs) {
-  if (lhs.block_id == rhs.block_id) {
-    return (lhs.position < rhs.position);
-  }
-  return (lhs.block_id < rhs.block_id);
+TEST(BlockStructure, CellLessThan) {
+  Cell a(1, 10);
+  Cell b(1, 20);
+  Cell c(2, 5);
+
+  EXPECT_TRUE(CellLessThan(a, b));
+  EXPECT_FALSE(CellLessThan(b, a));
+  EXPECT_TRUE(CellLessThan(a, c));
+  EXPECT_FALSE(CellLessThan(c, a));
 }
 
-std::vector<Block> Tail(absl::Span<const Block> blocks, int n) {
-  CHECK_LE(n, blocks.size());
-  std::vector<Block> tail;
-  const int num_blocks = blocks.size();
-  const int start = num_blocks - n;
+TEST(BlockStructure, Tail) {
+  std::vector<Block> blocks;
+  blocks.emplace_back(2, 0);
+  blocks.emplace_back(3, 2);
+  blocks.emplace_back(4, 5);
 
-  int position = 0;
-  tail.reserve(n);
-  for (int i = start; i < num_blocks; ++i) {
-    tail.emplace_back(blocks[i].size, position);
-    position += blocks[i].size;
+  {
+    std::vector<Block> tail = Tail(absl::MakeSpan(blocks), 0);
+    EXPECT_EQ(tail.size(), 0);
   }
 
-  return tail;
+  {
+    std::vector<Block> tail = Tail(absl::MakeSpan(blocks), 1);
+    EXPECT_EQ(tail.size(), 1);
+    EXPECT_EQ(tail[0].size, 4);
+    EXPECT_EQ(tail[0].position, 0);
+  }
+
+  {
+    std::vector<Block> tail = Tail(absl::MakeSpan(blocks), 2);
+    EXPECT_EQ(tail.size(), 2);
+    EXPECT_EQ(tail[0].size, 3);
+    EXPECT_EQ(tail[0].position, 0);
+    EXPECT_EQ(tail[1].size, 4);
+    EXPECT_EQ(tail[1].position, 3);
+  }
+
+  {
+    std::vector<Block> tail = Tail(absl::MakeSpan(blocks), 3);
+    EXPECT_EQ(tail.size(), 3);
+    EXPECT_EQ(tail[0].size, 2);
+    EXPECT_EQ(tail[0].position, 0);
+    EXPECT_EQ(tail[1].size, 3);
+    EXPECT_EQ(tail[1].position, 2);
+    EXPECT_EQ(tail[2].size, 4);
+    EXPECT_EQ(tail[2].position, 5);
+  }
 }
 
-int SumSquaredSizes(absl::Span<const Block> blocks) {
-  int sum = 0;
-  for (const auto& b : blocks) {
-    sum += b.size * b.size;
+TEST(BlockStructure, SumSquaredSizes) {
+  std::vector<Block> blocks;
+  blocks.emplace_back(2, 0);
+  blocks.emplace_back(3, 2);
+  blocks.emplace_back(4, 5);
+
+  EXPECT_EQ(SumSquaredSizes(absl::MakeSpan(blocks)), 2 * 2 + 3 * 3 + 4 * 4);
+}
+
+TEST(BlockStructure, NumScalarEntries) {
+  {
+    std::vector<Block> blocks;
+    EXPECT_EQ(NumScalarEntries(absl::MakeSpan(blocks)), 0);
   }
-  return sum;
+
+  {
+    std::vector<Block> blocks;
+    blocks.emplace_back(2, 0);
+    blocks.emplace_back(3, 2);
+    blocks.emplace_back(4, 5);
+    EXPECT_EQ(NumScalarEntries(absl::MakeSpan(blocks)), 9);
+  }
 }
 
 }  // namespace ceres::internal

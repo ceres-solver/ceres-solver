@@ -34,6 +34,7 @@
 #include <algorithm>
 #include <vector>
 
+#include "absl/types/span.h"
 #include "ceres/block_structure.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
@@ -53,8 +54,8 @@ namespace ceres::internal {
 CERES_NO_EXPORT void CompressedColumnScalarMatrixToBlockMatrix(
     const int* scalar_rows,
     const int* scalar_cols,
-    const std::vector<Block>& row_blocks,
-    const std::vector<Block>& col_blocks,
+    const absl::Span<const Block> row_blocks,
+    const absl::Span<const Block> col_blocks,
     std::vector<int>* block_rows,
     std::vector<int>* block_cols);
 
@@ -62,7 +63,7 @@ CERES_NO_EXPORT void CompressedColumnScalarMatrixToBlockMatrix(
 // the corresponding "scalar" ordering, where the scalar ordering of
 // size sum(blocks).
 CERES_NO_EXPORT void BlockOrderingToScalarOrdering(
-    const std::vector<Block>& blocks,
+    const absl::Span<const Block> blocks,
     const std::vector<int>& block_ordering,
     std::vector<int>* scalar_ordering);
 

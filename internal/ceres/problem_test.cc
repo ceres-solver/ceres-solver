@@ -407,9 +407,9 @@ struct DynamicProblem : public ::testing::TestWithParam<bool> {
            problem->residual_block_set().end());
     }
     have_residual_block &=
-        find(problem->program().residual_blocks().begin(),
-             problem->program().residual_blocks().end(),
-             residual_block) != problem->program().residual_blocks().end();
+        std::find(problem->program().residual_blocks().begin(),
+                  problem->program().residual_blocks().end(),
+                  residual_block) != problem->program().residual_blocks().end();
     return have_residual_block;
   }
 
