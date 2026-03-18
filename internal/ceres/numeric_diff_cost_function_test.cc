@@ -460,4 +460,16 @@ TEST(NumericDiffCostFunction, UniquePtrCtor) {
       NumericDiffCostFunction<EasyFunctor, CENTRAL, 3, 5, 5>>();
 }
 
+TEST(NumericDiffCostFunction, Ownership) {
+  EasyFunctor functor;
+  {
+    NumericDiffCostFunction<EasyFunctor, CENTRAL, 3, 5, 5> cost_function(
+        &functor, DO_NOT_TAKE_OWNERSHIP);
+    double parameters_data[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    double* parameters[2] = {parameters_data, parameters_data + 5};
+    double residuals[3];
+    cost_function.Evaluate(parameters, residuals, nullptr);
+  }
+}
+
 }  // namespace ceres::internal

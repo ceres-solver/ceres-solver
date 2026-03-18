@@ -98,4 +98,16 @@ TEST(NumericDiffFirstOrderFunction, BilinearDifferentiationTestDynamic) {
   EXPECT_NEAR(gradient[3], parameters[2], kTolerance);
 }
 
+TEST(NumericDiffFirstOrderFunction, OwnershipTest) {
+  QuadraticCostFunctor functor(1.0);
+  {
+    NumericDiffFirstOrderFunction<QuadraticCostFunctor, CENTRAL, 4> function(
+        &functor, DO_NOT_TAKE_OWNERSHIP);
+    double parameters[4] = {1.0, 2.0, 3.0, 4.0};
+    double cost;
+    function.Evaluate(parameters, &cost, nullptr);
+    EXPECT_EQ(cost, 13.0);
+  }
+}
+
 }  // namespace ceres::internal
