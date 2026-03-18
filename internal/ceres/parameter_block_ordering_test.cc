@@ -81,7 +81,7 @@ class SchurOrderingTest : public ::testing::Test {
 
 TEST_F(SchurOrderingTest, NoFixed) {
   const Program& program = problem_.program();
-  const std::vector<ParameterBlock*>& parameter_blocks =
+  absl::Span<ParameterBlock* const> parameter_blocks =
       program.parameter_blocks();
   auto graph = CreateHessianGraph(program);
 
@@ -136,7 +136,7 @@ TEST_F(SchurOrderingTest, OneFixed) {
   problem_.SetParameterBlockConstant(x_);
 
   const Program& program = problem_.program();
-  const std::vector<ParameterBlock*>& parameter_blocks =
+  absl::Span<ParameterBlock* const> parameter_blocks =
       program.parameter_blocks();
   auto graph = CreateHessianGraph(program);
 

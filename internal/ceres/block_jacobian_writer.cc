@@ -204,7 +204,7 @@ std::unique_ptr<SparseMatrix> BlockJacobianWriter::CreateJacobian() const {
 
   auto* bs = new CompressedRowBlockStructure;
 
-  const std::vector<ParameterBlock*>& parameter_blocks =
+  absl::Span<ParameterBlock* const> parameter_blocks =
       program_->parameter_blocks();
 
   // Construct the column blocks.
@@ -218,7 +218,7 @@ std::unique_ptr<SparseMatrix> BlockJacobianWriter::CreateJacobian() const {
   }
 
   // Construct the cells in each row.
-  const std::vector<ResidualBlock*>& residual_blocks =
+  absl::Span<ResidualBlock* const> residual_blocks =
       program_->residual_blocks();
   int row_block_position = 0;
   bs->rows.resize(residual_blocks.size());
