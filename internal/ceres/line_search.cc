@@ -32,16 +32,13 @@
 
 #include <algorithm>
 #include <cmath>
-#include <iomanip>
 #include <map>
 #include <memory>
-#include <ostream>  // NOLINT
 #include <string>
 #include <vector>
 
 #include "absl/log/check.h"
 #include "absl/log/log.h"
-#include "absl/strings/str_cat.h"
 #include "absl/strings/str_format.h"
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
@@ -55,8 +52,8 @@
 namespace ceres::internal {
 
 namespace {
-// Precision used for floating point values in error message output.
-const int kErrorMessageNumericPrecision = 8;
+// Format used for floating point values in error message output.
+#define CERES_DOUBLE_FORMAT "%.8e"
 }  // namespace
 
 std::ostream& operator<<(std::ostream& os, const FunctionSample& sample);
@@ -228,16 +225,15 @@ double LineSearch::InterpolatingPolynomialMinimizingStepSize(
     // agnostic to the interpolation type.
     return max_step_size;
   }
-  // Only check if lower-bound is valid here, where it is required
-  // to avoid replicating current.value_is_valid == false
-  // behaviour in WolfeLineSearch.
   CHECK(lowerbound.value_is_valid)
-      << std::scientific << std::setprecision(kErrorMessageNumericPrecision)
-      << "Ceres bug: lower-bound sample for interpolation is invalid, "
-      << "please contact the developers!, interpolation_type: "
-      << LineSearchInterpolationTypeToString(interpolation_type)
-      << ", lowerbound: " << lowerbound << ", previous: " << previous
-      << ", current: " << current;
+      << absl::StrFormat(
+             "Ceres bug: lower-bound sample for interpolation is invalid, "
+             "please contact the developers!, interpolation_type: %s, "
+             "lowerbound: %s, previous: %s, current: %s",
+             LineSearchInterpolationTypeToString(interpolation_type),
+             lowerbound.ToDebugString(),
+             previous.ToDebugString(),
+             current.ToDebugString());
 
   // Select step size by interpolating the function and gradient values
   // and minimizing the corresponding polynomial.
@@ -432,12 +428,13 @@ void WolfeLineSearch::DoSearch(const double step_size_estimate,
     return;
   }
 
-  VLOG(3) << std::scientific << std::setprecision(kErrorMessageNumericPrecision)
-          << "Starting line search zoom phase with bracket_low: " << bracket_low
-          << ", bracket_high: " << bracket_high
-          << ", bracket width: " << fabs(bracket_low.x - bracket_high.x)
-          << ", bracket abs delta cost: "
-          << fabs(bracket_low.value - bracket_high.value);
+  VLOG(3) << "Starting line search zoom phase with bracket_low: "
+          << bracket_low.ToDebugString()
+          << ", bracket_high: " << bracket_high.ToDebugString()
+          << absl::StrFormat(", bracket width: " CERES_DOUBLE_FORMAT
+                             ", bracket abs delta cost: " CERES_DOUBLE_FORMAT,
+                             std::abs(bracket_low.x - bracket_high.x),
+                             std::abs(bracket_low.value - bracket_high.value));
 
   // Wolfe Zoom phase: Called when the Bracketing phase finds an interval of
   // non-zero, finite width that should bracket step sizes which satisfy the
@@ -540,11 +537,12 @@ bool WolfeLineSearch::BracketingPhase(const FunctionSample& initial_position,
       *do_zoom_search = true;
       *bracket_low = previous;
       *bracket_high = current;
-      VLOG(3) << std::scientific
-              << std::setprecision(kErrorMessageNumericPrecision)
-              << "Bracket found: current step (" << current.x
-              << ") violates Armijo sufficient condition, or has passed an "
-              << "inflection point of f() based on value.";
+      VLOG(3) << absl::StrFormat(
+          "Bracket found: current step (" CERES_DOUBLE_FORMAT
+          ") violates Armijo sufficient "
+          "condition, or has passed an inflection point of f() based on "
+          "value.",
+          current.x);
       break;
     }
 
@@ -555,11 +553,13 @@ bool WolfeLineSearch::BracketingPhase(const FunctionSample& initial_position,
       // valid termination point, therefore a Zoom not required.
       *bracket_low = current;
       *bracket_high = current;
-      VLOG(3) << std::scientific
-              << std::setprecision(kErrorMessageNumericPrecision)
-              << "Bracketing phase found step size: " << current.x
-              << ", satisfying strong Wolfe conditions, initial_position: "
-              << initial_position << ", current: " << current;
+      VLOG(3) << absl::StrFormat(
+          "Bracketing phase found step size: " CERES_DOUBLE_FORMAT
+          ", satisfying strong Wolfe "
+          "conditions, initial_position: %s, current: %s",
+          current.x,
+          initial_position.ToDebugString(),
+          current.ToDebugString());
       break;
 
     } else if (current.value_is_valid && current.gradient >= 0) {
