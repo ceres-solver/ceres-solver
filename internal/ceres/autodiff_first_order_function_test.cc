@@ -73,5 +73,20 @@ TEST(AutoDiffFirstOrderFunction, BilinearDifferentiationTest) {
   EXPECT_EQ(gradient[3], parameters[2]);
 }
 
+TEST(AutoDiffFirstOrderFunction, OwnershipTest) {
+  QuadraticCostFunctor functor(1.0);
+  {
+    AutoDiffFirstOrderFunction<QuadraticCostFunctor, 4> function(
+        &functor, DO_NOT_TAKE_OWNERSHIP);
+    double parameters[4] = {1.0, 2.0, 3.0, 4.0};
+    double cost;
+    function.Evaluate(parameters, &cost, nullptr);
+    EXPECT_EQ(cost, 13.0);
+  }
+  // If ownership was taken, this would be a use-after-free or double-free
+  // (though here it's on stack, so it would just be wrong).
+  // The test is that it doesn't crash during destruction of 'function'.
+}
+
 }  // namespace internal
 }  // namespace ceres

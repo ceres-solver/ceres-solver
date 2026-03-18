@@ -159,30 +159,38 @@ class AutoDiffCostFunction final
   // Takes ownership of functor by default. Uses the template-provided
   // value for the number of residuals ("kNumResiduals").
   explicit AutoDiffCostFunction(std::unique_ptr<CostFunctor> functor)
-      : AutoDiffCostFunction{std::move(functor), TAKE_OWNERSHIP, FIXED_INIT} {}
+      : AutoDiffCostFunction(std::move(functor), TAKE_OWNERSHIP) {
+    static_assert(kNumResiduals != DYNAMIC,
+                  "When kNumResiduals is DYNAMIC, the number of residuals must "
+                  "be provided as a constructor argument.");
+  }
 
   // Constructs the CostFunctor on the heap and takes the ownership.
   // Invocable only if the number of residuals is known at compile-time.
-  template <class... Args,
-            bool kIsDynamic = kNumResiduals == DYNAMIC,
-            std::enable_if_t<!kIsDynamic &&
-                             std::is_constructible_v<CostFunctor, Args&&...>>* =
-                nullptr>
+  template <typename... Args,
+            typename = std::enable_if_t<
+                (kNumResiduals != DYNAMIC) &&
+                std::is_constructible_v<CostFunctor, Args&&...>>>
   explicit AutoDiffCostFunction(Args&&... args)
       // NOTE We explicitly use direct initialization using parentheses instead
       // of uniform initialization using braces to avoid narrowing conversion
       // warnings.
-      : AutoDiffCostFunction{
-            std::make_unique<CostFunctor>(std::forward<Args>(args)...)} {}
+      : AutoDiffCostFunction(
+            std::make_unique<CostFunctor>(std::forward<Args>(args)...),
+            TAKE_OWNERSHIP) {}
 
+  // Takes ownership of functor by default. Ignores the template-provided
+  // kNumResiduals in favor of the "num_residuals" argument provided.
   AutoDiffCostFunction(std::unique_ptr<CostFunctor> functor, int num_residuals)
-      : AutoDiffCostFunction{
-            std::move(functor), num_residuals, TAKE_OWNERSHIP, DYNAMIC_INIT} {}
+      : AutoDiffCostFunction(std::move(functor), num_residuals, TAKE_OWNERSHIP) {}
 
   explicit AutoDiffCostFunction(CostFunctor* functor,
                                 Ownership ownership = TAKE_OWNERSHIP)
-      : AutoDiffCostFunction{
-            std::unique_ptr<CostFunctor>{functor}, ownership, FIXED_INIT} {}
+      : AutoDiffCostFunction(std::unique_ptr<CostFunctor>(functor), ownership) {
+    static_assert(kNumResiduals != DYNAMIC,
+                  "When kNumResiduals is DYNAMIC, the number of residuals must "
+                  "be provided as a constructor argument.");
+  }
 
   // Takes ownership of functor by default. Ignores the template-provided
   // kNumResiduals in favor of the "num_residuals" argument provided.
@@ -192,10 +200,8 @@ class AutoDiffCostFunction final
   AutoDiffCostFunction(CostFunctor* functor,
                        int num_residuals,
                        Ownership ownership = TAKE_OWNERSHIP)
-      : AutoDiffCostFunction{std::unique_ptr<CostFunctor>{functor},
-                             num_residuals,
-                             ownership,
-                             DYNAMIC_INIT} {}
+      : AutoDiffCostFunction(
+            std::unique_ptr<CostFunctor>(functor), num_residuals, ownership) {}
 
   AutoDiffCostFunction(AutoDiffCostFunction&& other) noexcept = default;
   AutoDiffCostFunction& operator=(AutoDiffCostFunction&& other) noexcept =
@@ -235,37 +241,26 @@ class AutoDiffCostFunction final
         this->num_residuals(),
         residuals,
         jacobians);
-  };
+  }
 
   const CostFunctor& functor() const { return *functor_; }
 
  private:
-  // Tags used to differentiate between dynamic and fixed size constructor
-  // delegate invocations.
-  static constexpr std::integral_constant<int, DYNAMIC> DYNAMIC_INIT{};
-  static constexpr std::integral_constant<int, kNumResiduals> FIXED_INIT{};
+  // Internal delegating constructor for fixed-size residuals.
+  AutoDiffCostFunction(std::unique_ptr<CostFunctor> functor, Ownership ownership)
+      : functor_(std::move(functor)), ownership_(ownership) {}
 
-  template <class InitTag>
+  // Internal delegating constructor for dynamic-size residuals.
   AutoDiffCostFunction(std::unique_ptr<CostFunctor> functor,
                        int num_residuals,
-                       Ownership ownership,
-                       InitTag /*unused*/)
-      : functor_{std::move(functor)}, ownership_{ownership} {
-    static_assert(kNumResiduals == FIXED_INIT,
-                  "Can't run the fixed-size constructor if the number of "
-                  "residuals is set to ceres::DYNAMIC.");
-
-    if constexpr (InitTag::value == DYNAMIC_INIT) {
+                       Ownership ownership)
+      : functor_(std::move(functor)), ownership_(ownership) {
+    if constexpr (kNumResiduals == DYNAMIC) {
       this->set_num_residuals(num_residuals);
+    } else {
+      DCHECK_EQ(num_residuals, kNumResiduals);
     }
   }
-
-  template <class InitTag>
-  AutoDiffCostFunction(std::unique_ptr<CostFunctor> functor,
-                       Ownership ownership,
-                       InitTag tag)
-      : AutoDiffCostFunction{
-            std::move(functor), kNumResiduals, ownership, tag} {}
 
   std::unique_ptr<CostFunctor> functor_;
   Ownership ownership_;

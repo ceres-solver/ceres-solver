@@ -131,19 +131,30 @@ class NumericDiffFirstOrderFunction final : public FirstOrderFunction {
   explicit NumericDiffFirstOrderFunction(
       std::unique_ptr<FirstOrderFunctor> functor,
       const NumericDiffOptions& options = NumericDiffOptions())
-      : NumericDiffFirstOrderFunction{std::move(functor),
-                                      kNumParameters,
-                                      TAKE_OWNERSHIP,
-                                      options,
-                                      FIXED_INIT} {}
+      : NumericDiffFirstOrderFunction(
+            std::move(functor), TAKE_OWNERSHIP, kNumParameters, options) {
+    static_assert(kNumParameters != DYNAMIC,
+                  "When kNumParameters is DYNAMIC, the number of parameters "
+                  "must be provided as a constructor argument.");
+  }
+
   template <class... Args,
-            bool kIsDynamic = kNumParameters == DYNAMIC,
-            std::enable_if_t<!kIsDynamic &&
-                             std::is_constructible_v<FirstOrderFunctor,
-                                                     Args&&...>>* = nullptr>
+            typename = std::enable_if_t<
+                (kNumParameters != DYNAMIC) &&
+                std::is_constructible_v<FirstOrderFunctor, Args&&...>>>
   explicit NumericDiffFirstOrderFunction(Args&&... args)
-      : NumericDiffFirstOrderFunction{
-            std::make_unique<FirstOrderFunctor>(std::forward<Args>(args)...)} {}
+      : NumericDiffFirstOrderFunction(
+            std::make_unique<FirstOrderFunctor>(std::forward<Args>(args)...)) {}
+
+  explicit NumericDiffFirstOrderFunction(FirstOrderFunctor* functor,
+                                         Ownership ownership = TAKE_OWNERSHIP)
+      : NumericDiffFirstOrderFunction(std::unique_ptr<FirstOrderFunctor>(functor),
+                                   kNumParameters,
+                                   ownership) {
+    static_assert(kNumParameters != DYNAMIC,
+                  "When kNumParameters is DYNAMIC, the number of parameters "
+                  "must be provided as a constructor argument.");
+  }
 
   // Constructor for the case where the parameter size is specified at run time.
   explicit NumericDiffFirstOrderFunction(
@@ -151,14 +162,15 @@ class NumericDiffFirstOrderFunction final : public FirstOrderFunction {
       int num_parameters,
       Ownership ownership = TAKE_OWNERSHIP,
       const NumericDiffOptions& options = NumericDiffOptions())
-      : NumericDiffFirstOrderFunction{std::move(functor),
-                                      num_parameters,
-                                      ownership,
-                                      options,
-                                      DYNAMIC_INIT} {}
+      : NumericDiffFirstOrderFunction(
+            std::move(functor), ownership, num_parameters, options) {
+    if constexpr (kNumParameters != DYNAMIC) {
+      DCHECK_EQ(num_parameters, kNumParameters);
+    }
+  }
 
   ~NumericDiffFirstOrderFunction() override {
-    if (ownership_ != TAKE_OWNERSHIP) {
+    if (ownership_ == DO_NOT_TAKE_OWNERSHIP) {
       functor_.release();
     }
   }
@@ -213,29 +225,18 @@ class NumericDiffFirstOrderFunction final : public FirstOrderFunction {
   const FirstOrderFunctor& functor() const { return *functor_; }
 
  private:
-  // Tags used to differentiate between dynamic and fixed size constructor
-  // delegate invocations.
-  static constexpr std::integral_constant<int, DYNAMIC> DYNAMIC_INIT{};
-  static constexpr std::integral_constant<int, kNumParameters> FIXED_INIT{};
-
-  template <class InitTag>
-  explicit NumericDiffFirstOrderFunction(
-      std::unique_ptr<FirstOrderFunctor> functor,
-      int num_parameters,
-      Ownership ownership,
-      const NumericDiffOptions& options,
-      InitTag /*unused*/)
+  explicit NumericDiffFirstOrderFunction(std::unique_ptr<FirstOrderFunctor> functor,
+                                         Ownership ownership,
+                                         int num_parameters,
+                                         const NumericDiffOptions& options)
       : functor_(std::move(functor)),
         num_parameters_(num_parameters),
         ownership_(ownership),
         options_(options) {
-    static_assert(
-        kNumParameters == FIXED_INIT,
-        "Template parameter must be DYNAMIC when using this constructor. If "
-        "you want to provide the number of parameters statically use the other "
-        "constructor.");
-    if constexpr (InitTag::value == DYNAMIC_INIT) {
-      CHECK_GT(num_parameters, 0);
+    if constexpr (kNumParameters == DYNAMIC) {
+      DCHECK_GT(num_parameters, 0);
+    } else {
+      DCHECK_EQ(num_parameters, kNumParameters);
     }
   }
 
