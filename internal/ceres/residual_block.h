@@ -40,6 +40,7 @@
 #include <vector>
 
 #include "absl/strings/str_format.h"
+#include "absl/types/span.h"
 #include "ceres/cost_function.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
@@ -111,8 +112,8 @@ class CERES_NO_EXPORT ResidualBlock {
 
   // Access the parameter blocks for this residual. The array has size
   // NumParameterBlocks().
-  ParameterBlock* const* parameter_blocks() const {
-    return parameter_blocks_.get();
+  absl::Span<ParameterBlock* const> parameter_blocks() const {
+    return absl::MakeSpan(parameter_blocks_.get(), NumParameterBlocks());
   }
 
   // Number of variable blocks that this residual term depends on.

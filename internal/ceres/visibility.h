@@ -39,6 +39,7 @@
 #include <vector>
 
 #include "absl/container/btree_set.h"
+#include "absl/types/span.h"
 #include "ceres/graph.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
@@ -74,7 +75,7 @@ CERES_NO_EXPORT void ComputeVisibility(
 // Caller acquires ownership of the returned WeightedGraph pointer
 // (heap-allocated).
 CERES_NO_EXPORT std::unique_ptr<WeightedGraph<int>> CreateSchurComplementGraph(
-    const std::vector<absl::btree_set<int>>& visibility);
+    absl::Span<const absl::btree_set<int>> visibility);
 
 }  // namespace ceres::internal
 
