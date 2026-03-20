@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5d0238b_86e9beb7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-03-20T03:30:39Z",
+      "side": 1,
+      "message": "abandoned.",
+      "revId": "ca9dc4a77f2109bb17a87853377402b2eccabafe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4ef41ec5_f2d26fd2",
@@ -14,6 +31,24 @@
       "writtenOn": "2026-03-17T19:36:21Z",
       "side": 1,
       "message": "Now that the variable is no longer `const`, are we actually gaining anything by using `if constexpr`?",
+      "revId": "ca9dc4a77f2109bb17a87853377402b2eccabafe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc9d1ecd_a0223b0d",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-03-20T03:30:39Z",
+      "side": 1,
+      "message": "good point, this is pointless.",
+      "parentUuid": "4ef41ec5_f2d26fd2",
       "revId": "ca9dc4a77f2109bb17a87853377402b2eccabafe",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
