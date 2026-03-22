@@ -41,6 +41,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e104864_4d3377c6",
+        "filename": "include/ceres/product_manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-03-22T17:25:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4a05c78_f99440d0",
+      "range": {
+        "startLine": 181,
+        "startChar": 32,
+        "endLine": 181,
+        "endChar": 63
+      },
+      "revId": "74f7b8bb09bc9f83362c9c9f331a1bca867d8658",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a53bd168_3aa64493",
@@ -54,6 +78,30 @@
       "writtenOn": "2026-03-22T13:53:53Z",
       "side": 1,
       "message": "```suggestion\n      constexpr std::size_t i \u003d index_constant();\n```",
+      "range": {
+        "startLine": 202,
+        "startChar": 32,
+        "endLine": 202,
+        "endChar": 63
+      },
+      "revId": "74f7b8bb09bc9f83362c9c9f331a1bca867d8658",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "434b4a0c_cb4f0b46",
+        "filename": "include/ceres/product_manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-03-22T17:25:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a53bd168_3aa64493",
       "range": {
         "startLine": 202,
         "startChar": 32,
