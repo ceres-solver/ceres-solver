@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45a0397b_39de6ccc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-03-22T13:53:53Z",
+      "side": 1,
+      "message": "Looks reasonable. Just one minor suggestion.",
+      "revId": "74f7b8bb09bc9f83362c9c9f331a1bca867d8658",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4a05c78_f99440d0",
+        "filename": "include/ceres/product_manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-03-22T13:53:53Z",
+      "side": 1,
+      "message": "```suggestion\n      constexpr std::size_t i \u003d index_constant();\n```",
+      "range": {
+        "startLine": 181,
+        "startChar": 32,
+        "endLine": 181,
+        "endChar": 63
+      },
+      "revId": "74f7b8bb09bc9f83362c9c9f331a1bca867d8658",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a53bd168_3aa64493",
+        "filename": "include/ceres/product_manifold.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-03-22T13:53:53Z",
+      "side": 1,
+      "message": "```suggestion\n      constexpr std::size_t i \u003d index_constant();\n```",
+      "range": {
+        "startLine": 202,
+        "startChar": 32,
+        "endLine": 202,
+        "endChar": 63
+      },
+      "revId": "74f7b8bb09bc9f83362c9c9f331a1bca867d8658",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
