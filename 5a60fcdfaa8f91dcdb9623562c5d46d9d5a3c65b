@@ -126,6 +126,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3e95be77_4a331bfb",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-03-22T19:02:17Z",
+      "side": 1,
+      "message": "I do not think this works, because we only want to call Take1stOrderPart when jacobians[BlockIdx] is not null. \n\nThe expression you proposed\n ((jacobians[BlockIdx] !\u003d nullptr \u0026\u0026\n    (Take1stOrderPart\u003cOffsets, Ns\u003e(num_outputs, output, jacobians[BlockIdx]),\n     true)),\n   ...);\n\n\ncomplains about \n\n/Users/sameeragarwal/ceres-solver/include/ceres/internal/autodiff.h:239:36: warning: expression result unused [-Wunused-value]\n  239 |   ((jacobians[BlockIdx] !\u003d nullptr \u0026\u0026\n      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^\n  240 |     (Take1stOrderPart\u003cOffsets, Ns\u003e(num_outputs, output, jacobians[BlockIdx]),\n      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n  241 |      true)),\n      |      ~~~~~\n      \n so I had to cast to void to make it work, so we kind of end up with a version of the former.",
+      "parentUuid": "3d869458_34c55605",
+      "range": {
+        "startLine": 238,
+        "startChar": 2,
+        "endLine": 241,
+        "endChar": 8
+      },
+      "revId": "5a60fcdfaa8f91dcdb9623562c5d46d9d5a3c65b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "afd108fd_6309cdaf",
         "filename": "include/ceres/internal/integer_sequence_algorithm.h",
         "patchSetId": 2
@@ -185,6 +209,30 @@
       "side": 1,
       "message": "Yes. According to the diff, `IntegerSequenceTraits` has been added as part of this CL. Ceres compiles just fine without `IntegerSequenceTraits` definitions.",
       "parentUuid": "cef127a0_46b677fc",
+      "range": {
+        "startLine": 175,
+        "startChar": 7,
+        "endLine": 175,
+        "endChar": 28
+      },
+      "revId": "5a60fcdfaa8f91dcdb9623562c5d46d9d5a3c65b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "250f9276_3b004e9b",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-03-22T19:02:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f316b021_fb4f5e05",
       "range": {
         "startLine": 175,
         "startChar": 7,
