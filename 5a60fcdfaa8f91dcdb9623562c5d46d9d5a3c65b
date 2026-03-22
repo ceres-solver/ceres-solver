@@ -16,6 +16,69 @@
       "message": "This is ready for review.",
       "revId": "5a60fcdfaa8f91dcdb9623562c5d46d9d5a3c65b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc016ddf_dd397d26",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-03-22T17:30:34Z",
+      "side": 1,
+      "message": "The diff format seems to be a bit off in a few places. I use `clang-format` 22.1.1 though.",
+      "revId": "5a60fcdfaa8f91dcdb9623562c5d46d9d5a3c65b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "681867ab_587ee440",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-03-22T17:30:34Z",
+      "side": 1,
+      "message": "Ternary operator is unnecessary. We can use short-circuit evaluation with the comma operator instead:\n```suggestion\n  ((jacobians[BlockIdx] !\u003d nullptr \u0026\u0026\n    (Take1stOrderPart\u003cOffsets, Ns\u003e(num_outputs, output, jacobians[BlockIdx]),\n     true)),\n   ...);\n```",
+      "range": {
+        "startLine": 238,
+        "startChar": 2,
+        "endLine": 241,
+        "endChar": 8
+      },
+      "revId": "5a60fcdfaa8f91dcdb9623562c5d46d9d5a3c65b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "afd108fd_6309cdaf",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-03-22T17:30:34Z",
+      "side": 1,
+      "message": "This type trait doesn\u0027t seem to be used anywhere.",
+      "range": {
+        "startLine": 175,
+        "startChar": 7,
+        "endLine": 175,
+        "endChar": 28
+      },
+      "revId": "5a60fcdfaa8f91dcdb9623562c5d46d9d5a3c65b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
