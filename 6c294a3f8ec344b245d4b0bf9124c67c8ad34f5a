@@ -39,6 +39,30 @@
       },
       "revId": "6c294a3f8ec344b245d4b0bf9124c67c8ad34f5a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47341d07_633b9692",
+        "filename": "include/ceres/numeric_diff_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-03-22T18:30:30Z",
+      "side": 1,
+      "message": "this is weird, sorry I missed this.",
+      "parentUuid": "4080cf2d_056d8649",
+      "range": {
+        "startLine": 196,
+        "startChar": 6,
+        "endLine": 196,
+        "endChar": 80
+      },
+      "revId": "6c294a3f8ec344b245d4b0bf9124c67c8ad34f5a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
