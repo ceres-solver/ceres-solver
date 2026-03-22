@@ -102,6 +102,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3d869458_34c55605",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-03-22T18:10:55Z",
+      "side": 1,
+      "message": "I\u0027m not sure if keeping the ternary and only inverting the condition was intentional.",
+      "parentUuid": "702b46d6_ceb87060",
+      "range": {
+        "startLine": 238,
+        "startChar": 2,
+        "endLine": 241,
+        "endChar": 8
+      },
+      "revId": "5a60fcdfaa8f91dcdb9623562c5d46d9d5a3c65b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "afd108fd_6309cdaf",
         "filename": "include/ceres/internal/integer_sequence_algorithm.h",
         "patchSetId": 2
@@ -137,6 +161,30 @@
       "side": 1,
       "message": "you mean IntegerSequenceTraits as a whole? I thought it was being used in an earlier iteration of this or another CL. Let me get my stack of cls out and then come back and see if this is not being used and I will clean it up. Dropping a TODO for now.",
       "parentUuid": "afd108fd_6309cdaf",
+      "range": {
+        "startLine": 175,
+        "startChar": 7,
+        "endLine": 175,
+        "endChar": 28
+      },
+      "revId": "5a60fcdfaa8f91dcdb9623562c5d46d9d5a3c65b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f316b021_fb4f5e05",
+        "filename": "include/ceres/internal/integer_sequence_algorithm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-03-22T18:10:55Z",
+      "side": 1,
+      "message": "Yes. According to the diff, `IntegerSequenceTraits` has been added as part of this CL. Ceres compiles just fine without `IntegerSequenceTraits` definitions.",
+      "parentUuid": "cef127a0_46b677fc",
       "range": {
         "startLine": 175,
         "startChar": 7,
