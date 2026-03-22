@@ -148,6 +148,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b0eecf9_21811393",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-03-22T19:06:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e95be77_4a331bfb",
+      "range": {
+        "startLine": 238,
+        "startChar": 2,
+        "endLine": 241,
+        "endChar": 8
+      },
+      "revId": "5a60fcdfaa8f91dcdb9623562c5d46d9d5a3c65b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "afd108fd_6309cdaf",
