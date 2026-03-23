@@ -55,6 +55,7 @@
 #include <cassert>
 #include <cmath>
 
+#include "Eigen/Core"
 #include "Eigen/Dense"
 
 namespace ceres {
@@ -126,11 +127,15 @@ namespace ceres {
 //
 //   int NumParameters() const;
 //
-template <typename Function,
+template <typename Function, int kMaxResiduals = Function::NUM_RESIDUALS,
+          int kMaxParameters = Function::NUM_PARAMETERS,
           typename LinearSolver =
               Eigen::LDLT<Eigen::Matrix<typename Function::Scalar,  //
                                         Function::NUM_PARAMETERS,   //
-                                        Function::NUM_PARAMETERS>>>
+                                        Function::NUM_PARAMETERS,   //
+                                        0,                          //
+                                        kMaxParameters,             //
+                                        kMaxParameters>>>
 class TinySolver {
  public:
   // This class needs to have an Eigen aligned operator new as it contains
@@ -139,10 +144,27 @@ class TinySolver {
 
   enum {
     NUM_RESIDUALS = Function::NUM_RESIDUALS,
-    NUM_PARAMETERS = Function::NUM_PARAMETERS
+    NUM_PARAMETERS = Function::NUM_PARAMETERS,
+    MAX_NUM_RESIDUALS = kMaxResiduals,
+    MAX_NUM_PARAMETERS = kMaxParameters,
   };
   using Scalar = typename Function::Scalar;
-  using Parameters = typename Eigen::Matrix<Scalar, NUM_PARAMETERS, 1>;
+  using ParameterVector = typename Eigen::
+      Matrix<Scalar, NUM_PARAMETERS, 1, 0, MAX_NUM_PARAMETERS, 1>;
+  using ResidualVector =
+      typename Eigen::Matrix<Scalar, NUM_RESIDUALS, 1, 0, MAX_NUM_RESIDUALS, 1>;
+  using JacobianMatrix = typename Eigen::Matrix<Scalar,
+                                                NUM_RESIDUALS,
+                                                NUM_PARAMETERS,
+                                                0,
+                                                MAX_NUM_RESIDUALS,
+                                                MAX_NUM_PARAMETERS>;
+  using HessianMatrix = Eigen::Matrix<Scalar,
+                                      NUM_PARAMETERS,
+                                      NUM_PARAMETERS,
+                                      0,
+                                      MAX_NUM_PARAMETERS,
+                                      MAX_NUM_PARAMETERS>;
 
   enum Status {
     // max_norm |J'(x) * f(x)| < gradient_tolerance
@@ -188,7 +210,7 @@ class TinySolver {
     Status status = HIT_MAX_ITERATIONS;
   };
 
-  bool Update(const Function& function, const Parameters& x) {
+  bool Update(const Function& function, const ParameterVector& x) {
     if (!function(x.data(), residuals_.data(), jacobian_.data())) {
       return false;
     }
@@ -218,10 +240,10 @@ class TinySolver {
     return true;
   }
 
-  const Summary& Solve(const Function& function, Parameters* x_and_min) {
+  const Summary& Solve(const Function& function, ParameterVector* x_and_min) {
     Initialize<NUM_RESIDUALS, NUM_PARAMETERS>(function);
     assert(x_and_min);
-    Parameters& x = *x_and_min;
+    ParameterVector& x = *x_and_min;
     summary = Summary();
     summary.iterations = 0;
 
@@ -329,12 +351,13 @@ class TinySolver {
     return summary;
   }
 
-  Eigen::Matrix<Scalar, NUM_RESIDUALS, 1> Residuals() const {
+  ResidualVector Residuals()
+      const {
     // Residual updates are stored with the opposite sign.
     return -residuals_;
   }
 
-  Eigen::Matrix<Scalar, NUM_RESIDUALS, NUM_PARAMETERS> Jacobian() const {
+  JacobianMatrix Jacobian() const {
     // Undo the scaling applied to the jacobian matrix during Update().
     return jacobian_ * jacobi_scaling_.cwiseInverse().asDiagonal();
   }
@@ -347,10 +370,10 @@ class TinySolver {
   // linear system. This allows reusing the intermediate storage across solves.
   LinearSolver linear_solver_;
   Scalar cost_;
-  Parameters dx_, x_new_, g_, jacobi_scaling_, lm_step_;
-  Eigen::Matrix<Scalar, NUM_RESIDUALS, 1> residuals_, f_x_new_;
-  Eigen::Matrix<Scalar, NUM_RESIDUALS, NUM_PARAMETERS> jacobian_;
-  Eigen::Matrix<Scalar, NUM_PARAMETERS, NUM_PARAMETERS> jtj_, jtj_regularized_;
+  ParameterVector dx_, x_new_, g_, jacobi_scaling_, lm_step_;
+  ResidualVector residuals_, f_x_new_;
+  JacobianMatrix jacobian_;
+  HessianMatrix jtj_, jtj_regularized_;
 
   template <int R, int P>
   void Initialize(const Function& function) {
