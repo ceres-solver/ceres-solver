@@ -58,13 +58,9 @@ ResidualBlock::ResidualBlock(
     int index)
     : cost_function_(cost_function),
       loss_function_(loss_function),
-      parameter_blocks_(
-          new ParameterBlock*[cost_function->parameter_block_sizes().size()]),
+      parameter_blocks_(parameter_blocks.begin(), parameter_blocks.end()),
       index_(index) {
   CHECK(cost_function_ != nullptr);
-  std::copy(parameter_blocks.begin(),
-            parameter_blocks.end(),
-            parameter_blocks_.get());
 }
 
 bool ResidualBlock::Evaluate(const bool apply_loss_function,

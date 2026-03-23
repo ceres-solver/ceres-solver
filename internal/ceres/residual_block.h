@@ -39,6 +39,7 @@
 #include <string>
 #include <vector>
 
+#include "absl/container/fixed_array.h"
 #include "absl/strings/str_format.h"
 #include "ceres/cost_function.h"
 #include "ceres/internal/disable_warnings.h"
@@ -112,7 +113,7 @@ class CERES_NO_EXPORT ResidualBlock {
   // Access the parameter blocks for this residual. The array has size
   // NumParameterBlocks().
   ParameterBlock* const* parameter_blocks() const {
-    return parameter_blocks_.get();
+    return parameter_blocks_.data();
   }
 
   // Number of variable blocks that this residual term depends on.
@@ -137,7 +138,7 @@ class CERES_NO_EXPORT ResidualBlock {
  private:
   const CostFunction* cost_function_;
   const LossFunction* loss_function_;
-  std::unique_ptr<ParameterBlock*[]> parameter_blocks_;
+  absl::FixedArray<ParameterBlock*, 4> parameter_blocks_;
 
   // The index of the residual, typically in a Program. This is only to permit
   // switching from a ResidualBlock* to an index in the Program's array, needed
