@@ -236,13 +236,16 @@ class CERES_NO_EXPORT ParameterBlock {
     }
 
     // Project onto the box constraints.
-    if (lower_bounds_.get() != nullptr) {
+    if (lower_bounds_ && upper_bounds_) {
+      for (int i = 0; i < size_; ++i) {
+        x_plus_delta[i] =
+            std::clamp(x_plus_delta[i], lower_bounds_[i], upper_bounds_[i]);
+      }
+    } else if (lower_bounds_) {
       for (int i = 0; i < size_; ++i) {
         x_plus_delta[i] = std::max(x_plus_delta[i], lower_bounds_[i]);
       }
-    }
-
-    if (upper_bounds_.get() != nullptr) {
+    } else if (upper_bounds_) {
       for (int i = 0; i < size_; ++i) {
         x_plus_delta[i] = std::min(x_plus_delta[i], upper_bounds_[i]);
       }
