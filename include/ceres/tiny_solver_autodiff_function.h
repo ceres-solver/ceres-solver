@@ -103,10 +103,8 @@ namespace ceres {
 //   solver.Solve(f, &x);
 //
 // WARNING: The cost function adapter is not thread safe.
-template <typename CostFunctor,
-          int kNumResiduals,
-          int kNumParameters,
-          typename T = double>
+template <typename CostFunctor, int kNumResiduals, int kNumParameters,
+          typename T = double, int kMaxResiduals = kNumResiduals>
 class TinySolverAutoDiffFunction {
  public:
   // This class needs to have an Eigen aligned operator new as it contains
@@ -151,8 +149,9 @@ class TinySolverAutoDiffFunction {
     }
 
     // Copy the jacobian out of the derivative part of the residual jets.
-    Eigen::Map<Eigen::Matrix<T, kNumResiduals, kNumParameters>> jacobian_matrix(
-        jacobian, num_residuals_, kNumParameters);
+    Eigen::Map<Eigen::Matrix<T, kNumResiduals, kNumParameters, 0, kMaxResiduals,
+                             kNumParameters>>
+        jacobian_matrix(jacobian, num_residuals_, kNumParameters);
     for (int r = 0; r < num_residuals_; ++r) {
       residuals[r] = jet_residuals_[r].a;
       // Note that while this looks like a fast vectorized write, in practice it
@@ -182,7 +181,8 @@ class TinySolverAutoDiffFunction {
   using JetType = Jet<T, kNumParameters>;
   mutable JetType jet_parameters_[kNumParameters];
   // Eigen::Matrix serves as static or dynamic container.
-  mutable Eigen::Matrix<JetType, kNumResiduals, 1> jet_residuals_;
+  mutable Eigen::Matrix<JetType, kNumResiduals, 1, 0, kMaxResiduals, 1>
+      jet_residuals_;
 
   template <int R>
   void Initialize(const CostFunctor& function) {
