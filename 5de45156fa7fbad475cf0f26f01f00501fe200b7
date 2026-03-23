@@ -39,6 +39,29 @@
       },
       "revId": "5de45156fa7fbad475cf0f26f01f00501fe200b7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ae2c55f_ebe0c0b4",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-03-23T23:06:08Z",
+      "side": 1,
+      "message": "also it seems that MAX_NUM_RESIDUALS and MAX_NUM_PARAMETERS are more of a TinySolver attribute rather than a Function attribute. why not just define parameters for TinySolver?",
+      "range": {
+        "startLine": 154,
+        "startChar": 10,
+        "endLine": 154,
+        "endChar": 18
+      },
+      "revId": "5de45156fa7fbad475cf0f26f01f00501fe200b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
