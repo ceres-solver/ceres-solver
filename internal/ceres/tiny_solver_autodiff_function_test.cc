@@ -143,4 +143,21 @@ TEST(TinySolverAutoDiffFunction, ResidualsDynamicAutoDiff) {
   EXPECT_NEAR(0.0, solver.summary.final_cost, 1e-10);
 }
 
+// A test case for when the number of residuals is dynamic,
+// but the maximum is statically sized.
+TEST(TinySolverAutoDiffFunction, ResidualsDynamicWithMaxResiduals) {
+  Eigen::Vector3d x0(0.76026643, -30.01799744, 0.55192142);
+
+  DynamicResidualsFunctor f;
+  // kNumResiduals = Eigen::Dynamic, but kMaxResiduals = 5
+  using AutoDiffCostFunctor =
+      ceres::TinySolverAutoDiffFunction<DynamicResidualsFunctor, Eigen::Dynamic,
+                                        3, double, 5>;
+  AutoDiffCostFunctor f_autodiff(f);
+
+  TinySolver<AutoDiffCostFunctor> solver;
+  solver.Solve(f_autodiff, &x0);
+  EXPECT_NEAR(0.0, solver.summary.final_cost, 1e-10);
+}
+
 }  // namespace ceres
