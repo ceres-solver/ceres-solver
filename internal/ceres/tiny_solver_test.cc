@@ -111,6 +111,60 @@ class ExampleAllDynamic {
   }
 };
 
+class ExampleParametersDynamicWithMaxNumParameters {
+ public:
+  using Scalar = double;
+  enum {
+    NUM_RESIDUALS = 2,
+    NUM_PARAMETERS = Eigen::Dynamic,
+    MAX_NUM_PARAMETERS = 5,
+  };
+
+  int NumParameters() const { return 3; }
+
+  bool operator()(const double* parameters, double* residuals,
+                  double* jacobian) const {
+    return EvaluateResidualsAndJacobians(parameters, residuals, jacobian);
+  }
+};
+
+class ExampleResidualsDynamicWithMaxNumResiduals {
+ public:
+  using Scalar = double;
+  enum {
+    NUM_RESIDUALS = Eigen::Dynamic,
+    NUM_PARAMETERS = 3,
+    MAX_NUM_RESIDUALS = 5,
+  };
+
+  int NumResiduals() const { return 2; }
+
+  bool operator()(const double* parameters, double* residuals,
+                  double* jacobian) const {
+    return EvaluateResidualsAndJacobians(parameters, residuals, jacobian);
+  }
+};
+
+class ExampleAllDynamicWithMaxNumResidualsAndParameters {
+ public:
+  using Scalar = double;
+  enum {
+    NUM_RESIDUALS = Eigen::Dynamic,
+    NUM_PARAMETERS = Eigen::Dynamic,
+    MAX_NUM_RESIDUALS = 5,
+    MAX_NUM_PARAMETERS = 5,
+  };
+
+  int NumResiduals() const { return 2; }
+
+  int NumParameters() const { return 3; }
+
+  bool operator()(const double* parameters, double* residuals,
+                  double* jacobian) const {
+    return EvaluateResidualsAndJacobians(parameters, residuals, jacobian);
+  }
+};
+
 template <typename Function, typename Vector>
 void TestHelper(const Function& f, const Vector& x0) {
   Vector x = x0;
@@ -165,6 +219,38 @@ TEST(TinySolver, ParametersAndResidualsDynamic) {
   x0 << 0.76026643, -30.01799744, 0.55192142;
 
   ExampleAllDynamic f;
+
+  TestHelper(f, x0);
+}
+
+// A test case for when the number of parameters is dynamically sized, but the
+// maximum number of parameters is statically sized.
+TEST(TinySolver, ParametersDynamicWithMaxNumParameters) {
+  Eigen::Matrix<double, Eigen::Dynamic, 1, 0, 5, 1> x0(3);
+  x0 << 0.76026643, -30.01799744, 0.55192142;
+
+  ExampleParametersDynamicWithMaxNumParameters f;
+
+  TestHelper(f, x0);
+}
+
+// A test case for when the number of residuals is dynamically sized, but the
+// maximum number of residuals is statically sized.
+TEST(TinySolver, ResidualsDynamicWithMaxNumResiduals) {
+  Vec3 x0(0.76026643, -30.01799744, 0.55192142);
+
+  ExampleResidualsDynamicWithMaxNumResiduals f;
+
+  TestHelper(f, x0);
+}
+
+// A test case for when the number of parameters and residuals is dynamically
+// sized, but the maximum number of parameters and residuals is statically sized.
+TEST(TinySolver, AllDynamicWithMaxNumResidualsAndParameters) {
+  Eigen::Matrix<double, Eigen::Dynamic, 1, 0, 5, 1> x0(3);
+  x0 << 0.76026643, -30.01799744, 0.55192142;
+
+  ExampleAllDynamicWithMaxNumResidualsAndParameters f;
 
   TestHelper(f, x0);
 }

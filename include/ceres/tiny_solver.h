@@ -54,6 +54,7 @@
 #include <algorithm>
 #include <cassert>
 #include <cmath>
+#include <type_traits>
 
 #include "Eigen/Dense"
 
@@ -71,6 +72,8 @@ namespace ceres {
 //     enum {
 //       NUM_RESIDUALS = <int> OR Eigen::Dynamic,
 //       NUM_PARAMETERS = <int> OR Eigen::Dynamic,
+//       MAX_NUM_RESIDUALS = optional <int> if NUM_RESIDUALS == Eigen::Dynamic
+//       MAX_NUM_PARAMETERS = optional <int> if NUM_PARAMETERS == Eigen::Dynamic
 //     };
 //     bool operator()(const double* parameters,
 //                     double* residuals,
@@ -126,11 +129,55 @@ namespace ceres {
 //
 //   int NumParameters() const;
 //
+
+namespace internal {
+
+// Trait to detect if MAX_NUM_RESIDUALS exists in the Function class.
+template <typename T, typename = void>
+struct HasMaxNumResiduals : std::false_type {};
+
+template <typename T>
+struct HasMaxNumResiduals<T, std::void_t<decltype(T::MAX_NUM_RESIDUALS)>>
+    : std::true_type {};
+
+// If MAX_NUM_RESIDUALS is defined, then use it, otherwise use NUM_RESIDUALS.
+template <typename Function>
+inline constexpr int kMaxNumResiduals = []() {
+  if constexpr (HasMaxNumResiduals<Function>::value) {
+    return Function::MAX_NUM_RESIDUALS;
+  } else {
+    return Function::NUM_RESIDUALS;
+  }
+}();
+
+// Trait to detect if MAX_NUM_PARAMETERS exists in the Function class.
+template <typename T, typename = void>
+struct HasMaxNumParameters : std::false_type {};
+
+template <typename T>
+struct HasMaxNumParameters<T, std::void_t<decltype(T::MAX_NUM_PARAMETERS)>>
+    : std::true_type {};
+
+// If MAX_NUM_PARAMETERS is defined, then use it, otherwise use NUM_PARAMETERS.
+template <typename Function>
+inline constexpr int kMaxNumParameters = []() {
+  if constexpr (HasMaxNumParameters<Function>::value) {
+    return Function::MAX_NUM_PARAMETERS;
+  } else {
+    return Function::NUM_PARAMETERS;
+  }
+}();
+
+}  // namespace internal
+
 template <typename Function,
-          typename LinearSolver =
-              Eigen::LDLT<Eigen::Matrix<typename Function::Scalar,  //
-                                        Function::NUM_PARAMETERS,   //
-                                        Function::NUM_PARAMETERS>>>
+          typename LinearSolver = Eigen::LDLT<
+              Eigen::Matrix<typename Function::Scalar,  //
+                            Function::NUM_PARAMETERS,   //
+                            Function::NUM_PARAMETERS,   //
+                            0,                          //
+                            internal::kMaxNumParameters<Function>,  //
+                            internal::kMaxNumParameters<Function>>>>
 class TinySolver {
  public:
   // This class needs to have an Eigen aligned operator new as it contains
@@ -139,10 +186,13 @@ class TinySolver {
 
   enum {
     NUM_RESIDUALS = Function::NUM_RESIDUALS,
-    NUM_PARAMETERS = Function::NUM_PARAMETERS
+    NUM_PARAMETERS = Function::NUM_PARAMETERS,
+    MAX_NUM_RESIDUALS = internal::kMaxNumResiduals<Function>,
+    MAX_NUM_PARAMETERS = internal::kMaxNumParameters<Function>,
   };
   using Scalar = typename Function::Scalar;
-  using Parameters = typename Eigen::Matrix<Scalar, NUM_PARAMETERS, 1>;
+  using Parameters = typename Eigen::Matrix<Scalar, NUM_PARAMETERS, 1, 0,
+                                            MAX_NUM_PARAMETERS, 1>;
 
   enum Status {
     // max_norm |J'(x) * f(x)| < gradient_tolerance
@@ -329,12 +379,15 @@ class TinySolver {
     return summary;
   }
 
-  Eigen::Matrix<Scalar, NUM_RESIDUALS, 1> Residuals() const {
+  Eigen::Matrix<Scalar, NUM_RESIDUALS, 1, 0, MAX_NUM_RESIDUALS, 1> Residuals()
+      const {
     // Residual updates are stored with the opposite sign.
     return -residuals_;
   }
 
-  Eigen::Matrix<Scalar, NUM_RESIDUALS, NUM_PARAMETERS> Jacobian() const {
+  Eigen::Matrix<Scalar, NUM_RESIDUALS, NUM_PARAMETERS, 0, MAX_NUM_RESIDUALS,
+                MAX_NUM_PARAMETERS>
+  Jacobian() const {
     // Undo the scaling applied to the jacobian matrix during Update().
     return jacobian_ * jacobi_scaling_.cwiseInverse().asDiagonal();
   }
@@ -348,9 +401,14 @@ class TinySolver {
   LinearSolver linear_solver_;
   Scalar cost_;
   Parameters dx_, x_new_, g_, jacobi_scaling_, lm_step_;
-  Eigen::Matrix<Scalar, NUM_RESIDUALS, 1> residuals_, f_x_new_;
-  Eigen::Matrix<Scalar, NUM_RESIDUALS, NUM_PARAMETERS> jacobian_;
-  Eigen::Matrix<Scalar, NUM_PARAMETERS, NUM_PARAMETERS> jtj_, jtj_regularized_;
+  Eigen::Matrix<Scalar, NUM_RESIDUALS, 1, 0, MAX_NUM_RESIDUALS, 1> residuals_,
+      f_x_new_;
+  Eigen::Matrix<Scalar, NUM_RESIDUALS, NUM_PARAMETERS, 0, MAX_NUM_RESIDUALS,
+                MAX_NUM_PARAMETERS>
+      jacobian_;
+  Eigen::Matrix<Scalar, NUM_PARAMETERS, NUM_PARAMETERS, 0, MAX_NUM_PARAMETERS,
+                MAX_NUM_PARAMETERS>
+      jtj_, jtj_regularized_;
 
   template <int R, int P>
   void Initialize(const Function& function) {
