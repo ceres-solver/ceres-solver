@@ -29,11 +29,14 @@
 //
 // Author: mierle@gmail.com (Keir Mierle)
 
+#define EIGEN_RUNTIME_NO_MALLOC  // Needed for enabling memory allocation
+                                 // assertions in Eigen.
 #include "ceres/tiny_solver.h"
 
 #include <algorithm>
 #include <cmath>
 
+#include "Eigen/Core"
 #include "ceres/tiny_solver_test_util.h"
 #include "gtest/gtest.h"
 
@@ -111,14 +114,16 @@ class ExampleAllDynamic {
   }
 };
 
-template <typename Function, typename Vector>
+template <typename Function, typename Vector,
+          int kMaxResiduals = Function::NUM_RESIDUALS,
+          int kMaxParameters = Function::NUM_PARAMETERS>
 void TestHelper(const Function& f, const Vector& x0) {
   Vector x = x0;
   Vec2 residuals;
   f(x.data(), residuals.data(), nullptr);
   EXPECT_GT(residuals.squaredNorm() / 2.0, 1e-10);
 
-  TinySolver<Function> solver;
+  TinySolver<Function, kMaxResiduals, kMaxParameters> solver;
   solver.Solve(f, &x);
   EXPECT_NEAR(0.0, solver.summary.final_cost, 1e-10);
 
@@ -168,5 +173,57 @@ TEST(TinySolver, ParametersAndResidualsDynamic) {
 
   TestHelper(f, x0);
 }
+
+// A test case for when the number of parameters and residuals is dynamically
+// sized, but the maximum number of parameters and residuals is statically
+// sized.
+TEST(TinySolver, AllDynamicWithMaxNumResidualsAndParameters) {
+  // Enable assertions for memory allocation in Eigen.
+  Eigen::internal::set_is_malloc_allowed(false);
+
+  Eigen::Matrix<double, Eigen::Dynamic, 1, 0, 5, 1> x0(3);
+  x0 << 0.76026643, -30.01799744, 0.55192142;
+
+  ExampleAllDynamic f;
+
+  TestHelper<ExampleAllDynamic, decltype(x0), 5, 5>(f, x0);
+
+  // Re-enable dynamic memory allocation in Eigen.
+  Eigen::internal::set_is_malloc_allowed(true);
+}
+
+// A test case to make sure dynamic memory allocation assertions can be enabled
+// in Eigen. Eigen assertions are only enabled when NDEBUG is not defined.
+// Otherwise, the assertions are compiled out as no-op.
+#if !defined(EIGEN_NO_DEBUG)
+TEST(TinySolver, EigenMallocAssertions) {
+  // Enable assertions for memory allocation in Eigen.
+  Eigen::internal::set_is_malloc_allowed(false);
+
+  // Make sure dynamic memory allocation is not allowed.
+  ASSERT_DEATH(VecX x0(10), "EIGEN_RUNTIME_NO_MALLOC is defined");
+
+  // Re-enable dynamic memory allocation in Eigen.
+  Eigen::internal::set_is_malloc_allowed(true);
+}
+
+// A test case for when the number of parameters and residuals is
+// dynamically sized requires dynamic allocation.
+TEST(TinySolver, ParametersAndResidualsDynamicNeedsDynamicAllocation) {
+  VecX x0(3);
+  x0 << 0.76026643, -30.01799744, 0.55192142;
+
+  ExampleAllDynamic f;
+
+  // Enable assertions for memory allocation in Eigen.
+  Eigen::internal::set_is_malloc_allowed(false);
+
+  ASSERT_DEATH(TestHelper(f, x0), "EIGEN_RUNTIME_NO_MALLOC is defined");
+
+  // Re-enable dynamic memory allocation in Eigen.
+  Eigen::internal::set_is_malloc_allowed(true);
+}
+
+#endif  // !defined(EIGEN_NO_DEBUG)
 
 }  // namespace ceres
