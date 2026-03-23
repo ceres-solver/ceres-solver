@@ -101,6 +101,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca8e4f8d_6d538a7a",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 4725805
+      },
+      "writtenOn": "2026-03-23T23:53:03Z",
+      "side": 1,
+      "message": "PTAL",
+      "parentUuid": "c3a0374d_a2126335",
+      "range": {
+        "startLine": 136,
+        "startChar": 24,
+        "endLine": 136,
+        "endChar": 25
+      },
+      "revId": "5de45156fa7fbad475cf0f26f01f00501fe200b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4ae2c55f_ebe0c0b4",
@@ -114,6 +138,30 @@
       "writtenOn": "2026-03-23T23:06:08Z",
       "side": 1,
       "message": "also it seems that MAX_NUM_RESIDUALS and MAX_NUM_PARAMETERS are more of a TinySolver attribute rather than a Function attribute. why not just define parameters for TinySolver?",
+      "range": {
+        "startLine": 154,
+        "startChar": 10,
+        "endLine": 154,
+        "endChar": 18
+      },
+      "revId": "5de45156fa7fbad475cf0f26f01f00501fe200b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59f286e6_f02aae95",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 4725805
+      },
+      "writtenOn": "2026-03-23T23:53:03Z",
+      "side": 1,
+      "message": "This is a good suggestion. It makes sense architecturally because these values define the capacity of the solver\u0027s internal buffers rather than a property of the cost function itself.\n\nMy main concern is maintaining backward compatibility for existing clients of `TinySolver`. Currently, the template signature is:\n\n```cpp\ntemplate \u003ctypename Function, typename LinearSolver \u003d ...\u003e\nclass TinySolver;\n```\n\nIf we add `MAX_NUM_RESIDUALS` and `MAX_NUM_PARAMETERS` as template arguments, we face two issues:\n\n* Breaking API: If we place them before `LinearSolver`, we break any code that explicitly provides a custom solver.\n\n* Dependency: The default `LinearSolver` (typically `Eigen::LDLT`) depends on the matrix size. If we place the new parameters at the end, the default solver cannot easily reference them without more complex template metaprogramming.\n\nBecause of this, I opted to pull these values from the `Function` class as optional traits. This allows us to support variable sizes while keeping the `TinySolver` API completely unchanged for all existing users.\n\nDo you have a preferred template structure in mind that would move these to TinySolver while preserving the existing LinearSolver parameter?",
+      "parentUuid": "4ae2c55f_ebe0c0b4",
       "range": {
         "startLine": 154,
         "startChar": 10,
