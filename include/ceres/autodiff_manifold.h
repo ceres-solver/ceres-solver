@@ -203,15 +203,8 @@ struct MinusWrapper {
 template <typename Functor, int kAmbientSize, int kTangentSize>
 bool AutoDiffManifold<Functor, kAmbientSize, kTangentSize>::PlusJacobian(
     const double* x, double* jacobian) const {
-  double zero_delta[kTangentSize];
-  for (int i = 0; i < kTangentSize; ++i) {
-    zero_delta[i] = 0.0;
-  }
-
-  double x_plus_delta[kAmbientSize];
-  for (int i = 0; i < kAmbientSize; ++i) {
-    x_plus_delta[i] = 0.0;
-  }
+  double zero_delta[kTangentSize] = {};
+  double x_plus_delta[kAmbientSize] = {};
 
   const double* parameter_ptrs[2] = {x, zero_delta};
 
@@ -231,10 +224,7 @@ bool AutoDiffManifold<Functor, kAmbientSize, kTangentSize>::PlusJacobian(
 template <typename Functor, int kAmbientSize, int kTangentSize>
 bool AutoDiffManifold<Functor, kAmbientSize, kTangentSize>::MinusJacobian(
     const double* x, double* jacobian) const {
-  double y_minus_x[kTangentSize];
-  for (int i = 0; i < kTangentSize; ++i) {
-    y_minus_x[i] = 0.0;
-  }
+  double y_minus_x[kTangentSize] = {};
 
   const double* parameter_ptrs[2] = {x, x};
 

@@ -160,6 +160,7 @@
 #ifndef CERES_PUBLIC_NUMERIC_DIFF_COST_FUNCTION_H_
 #define CERES_PUBLIC_NUMERIC_DIFF_COST_FUNCTION_H_
 
+#include <algorithm>
 #include <array>
 #include <memory>
 #include <type_traits>
@@ -261,9 +262,9 @@ class NumericDiffCostFunction final
         ParameterDims::GetUnpackedParameters(parameters_copy.data());
 
     for (int block = 0; block < kNumParameterBlocks; ++block) {
-      memcpy(parameters_reference_copy[block],
-             parameters[block],
-             sizeof(double) * ParameterDims::GetDim(block));
+      std::copy_n(parameters[block],
+                  ParameterDims::GetDim(block),
+                  parameters_reference_copy[block]);
     }
 
     internal::EvaluateJacobianForParameterBlocks<kMethod,
