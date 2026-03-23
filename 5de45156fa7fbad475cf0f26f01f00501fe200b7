@@ -18,6 +18,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c45672d_9146e178",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4725805
+      },
+      "writtenOn": "2026-03-23T23:18:27Z",
+      "side": 1,
+      "message": "The main driver for this change is not a performance speed-up, but rather ensuring that TinySolver can be used on small MCUs that do not have memory allocation support. We are looking to switch from a custom Levenberg-Marquardt implementation to TinySolver, but our problems have a variable number of residuals and parameters.\n\nWhile we know the maximum number of residuals and parameters ahead of time, using Eigen::Dynamic sizes would normally trigger heap allocations during Initialize. By adding support for MAX_NUM_RESIDUALS and MAX_NUM_PARAMETERS, we allow Eigen to allocate the necessary buffers as part of the TinySolver object itself (avoiding the heap) while still supporting variable runtime sizes up to those limits.\n\nFor our current use case, ensuring zero dynamic memory allocation is a strict requirement, while performance improvements are not a priority at this time.",
+      "parentUuid": "a0d9e25d_fc32371a",
+      "revId": "5de45156fa7fbad475cf0f26f01f00501fe200b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e0107252_96dcc79c",
@@ -31,6 +49,30 @@
       "writtenOn": "2026-03-23T23:05:04Z",
       "side": 1,
       "message": "requires is a c++20 feature, and ceres only uses c++17 so far.",
+      "range": {
+        "startLine": 136,
+        "startChar": 24,
+        "endLine": 136,
+        "endChar": 25
+      },
+      "revId": "5de45156fa7fbad475cf0f26f01f00501fe200b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3a0374d_a2126335",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 4725805
+      },
+      "writtenOn": "2026-03-23T23:18:27Z",
+      "side": 1,
+      "message": "Let me work on this to make it C++17 compatible.",
+      "parentUuid": "e0107252_96dcc79c",
       "range": {
         "startLine": 136,
         "startChar": 24,
