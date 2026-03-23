@@ -65,11 +65,14 @@ class CostFunction2x3 : public SizedCostFunction<2, 3> {
   }
 };
 
-template <int kNumResiduals, int kNumParameters>
+template <int kNumResiduals, int kNumParameters,
+          int kMaxResiduals = kNumResiduals,
+          int kMaxParameters = kNumParameters>
 void TestHelper() {
   std::unique_ptr<CostFunction> cost_function(new CostFunction2x3);
   using CostFunctionAdapter =
-      TinySolverCostFunctionAdapter<kNumResiduals, kNumParameters>;
+      TinySolverCostFunctionAdapter<kNumResiduals, kNumParameters,
+                                    kMaxResiduals, kMaxParameters>;
   CostFunctionAdapter cfa(*cost_function);
   EXPECT_EQ(CostFunctionAdapter::NUM_RESIDUALS, kNumResiduals);
   EXPECT_EQ(CostFunctionAdapter::NUM_PARAMETERS, kNumParameters);
@@ -128,6 +131,11 @@ TEST(TinySolverCostFunctionAdapter, StaticResidualsDynamicParameterBlock) {
 
 TEST(TinySolverCostFunctionAdapter, DynamicResidualsDynamicParameterBlock) {
   TestHelper<Eigen::Dynamic, Eigen::Dynamic>();
+}
+
+TEST(TinySolverCostFunctionAdapter, AllDynamicWithMaxSizes) {
+  // Both sizes are Dynamic, but capacity is fixed to 10x20.
+  TestHelper<Eigen::Dynamic, Eigen::Dynamic, 10, 20>();
 }
 
 }  // namespace ceres
