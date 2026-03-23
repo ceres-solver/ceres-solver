@@ -71,15 +71,25 @@ namespace ceres {
 //
 //   TinySolverCostFunctionAdapter cost_function_adapter(*cost_function);
 //
-template <int kNumResiduals = Eigen::Dynamic,
-          int kNumParameters = Eigen::Dynamic>
+template <
+    int kNumResiduals = Eigen::Dynamic, int kNumParameters = Eigen::Dynamic,
+    int kMaxResiduals = kNumResiduals, int kMaxParameters = kNumParameters>
 class TinySolverCostFunctionAdapter {
  public:
   using Scalar = double;
   enum ComponentSizeType {
     NUM_PARAMETERS = kNumParameters,
-    NUM_RESIDUALS = kNumResiduals
+    NUM_RESIDUALS = kNumResiduals,
+    MAX_NUM_RESIDUALS = kMaxResiduals,
+    MAX_NUM_PARAMETERS = kMaxParameters,
   };
+  template <int option>  // Eigen::RowMajor or Eigen::ColMajor
+  using JacobianMatrix = typename Eigen::Matrix<Scalar,
+                                                NUM_RESIDUALS,
+                                                NUM_PARAMETERS,
+                                                option,
+                                                MAX_NUM_RESIDUALS,
+                                                MAX_NUM_PARAMETERS>;
 
   // This struct needs to have an Eigen aligned operator new as it contains
   // fixed-size Eigen types.
@@ -120,8 +130,8 @@ class TinySolverCostFunctionAdapter {
     // column-major layout, and the CostFunction objects use row-major
     // Jacobian matrices. So the following bit of code does the
     // conversion from row-major Jacobians to column-major Jacobians.
-    Eigen::Map<Eigen::Matrix<double, NUM_RESIDUALS, NUM_PARAMETERS>>
-        col_major_jacobian(jacobian, NumResiduals(), NumParameters());
+    Eigen::Map<JacobianMatrix<Eigen::ColMajor>> col_major_jacobian(
+        jacobian, NumResiduals(), NumParameters());
     col_major_jacobian = row_major_jacobian_;
     return true;
   }
@@ -133,8 +143,7 @@ class TinySolverCostFunctionAdapter {
 
  private:
   const CostFunction& cost_function_;
-  mutable Eigen::Matrix<double, NUM_RESIDUALS, NUM_PARAMETERS, Eigen::RowMajor>
-      row_major_jacobian_;
+  mutable JacobianMatrix<Eigen::RowMajor> row_major_jacobian_;
 };
 
 }  // namespace ceres

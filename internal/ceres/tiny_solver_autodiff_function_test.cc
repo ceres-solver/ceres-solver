@@ -143,4 +143,112 @@ TEST(TinySolverAutoDiffFunction, ResidualsDynamicAutoDiff) {
   EXPECT_NEAR(0.0, solver.summary.final_cost, 1e-10);
 }
 
+// A test case for when the number of residuals is dynamic,
+// but the maximum is statically sized.
+TEST(TinySolverAutoDiffFunction, ResidualsDynamicWithMaxResiduals) {
+  Eigen::Vector3d x0(0.76026643, -30.01799744, 0.55192142);
+
+  DynamicResidualsFunctor f;
+  // kNumResiduals = Eigen::Dynamic, but kMaxResiduals = 5
+  using AutoDiffCostFunctor =
+      ceres::TinySolverAutoDiffFunction<DynamicResidualsFunctor, Eigen::Dynamic,
+                                        3, double, 5>;
+  AutoDiffCostFunctor f_autodiff(f);
+
+  TinySolver<AutoDiffCostFunctor> solver;
+  solver.Solve(f_autodiff, &x0);
+  EXPECT_NEAR(0.0, solver.summary.final_cost, 1e-10);
+}
+
+class DynamicParametersFunctor {
+ public:
+  using Scalar = double;
+  enum {
+    NUM_RESIDUALS = 2,
+    NUM_PARAMETERS = Eigen::Dynamic,
+  };
+
+  int NumParameters() const { return 3; }
+
+  template <typename T>
+  bool operator()(const T* parameters, T* residuals) const {
+    // Jacobian is not evaluated by the functor itself, but by autodiff.
+    T* jacobian = nullptr;
+    return EvaluateResidualsAndJacobians(parameters, residuals, jacobian);
+  }
+};
+
+// A test case for when the number of parameters is dynamic,
+// but the maximum is statically sized.
+TEST(TinySolverAutoDiffFunction, ParametersDynamicWithMaxParameters) {
+  Eigen::VectorXd x0(3);
+  x0 << 0.76026643, -30.01799744, 0.55192142;
+
+  DynamicParametersFunctor f;
+  // kNumResiduals = 2, kNumParameters = Eigen::Dynamic
+  // kMaxResiduals = 2, kMaxParameters = 5
+  using AutoDiffCostFunctor =
+      ceres::TinySolverAutoDiffFunction<DynamicParametersFunctor,
+                                        2,
+                                        Eigen::Dynamic,
+                                        double,
+                                        2,
+                                        5>;
+
+  AutoDiffCostFunctor f_autodiff(f);
+
+  // Verify that the adapter reports the correct runtime parameters.
+  EXPECT_EQ(f_autodiff.NumParameters(), 3);
+
+  TinySolver<AutoDiffCostFunctor> solver;
+  solver.Solve(f_autodiff, &x0);
+
+  EXPECT_NEAR(0.0, solver.summary.final_cost, 1e-10);
+}
+
+class DynamicAllFunctor {
+ public:
+  using Scalar = double;
+  enum {
+    NUM_RESIDUALS = Eigen::Dynamic,
+    NUM_PARAMETERS = Eigen::Dynamic,
+  };
+
+  int NumResiduals() const { return 2; }
+  int NumParameters() const { return 3; }
+
+  template <typename T>
+  bool operator()(const T* parameters, T* residuals) const {
+    // Jacobian is not evaluated by the functor itself, but by autodiff.
+    T* jacobian = nullptr;
+    return EvaluateResidualsAndJacobians(parameters, residuals, jacobian);
+  }
+};
+
+TEST(TinySolverAutoDiffFunction, AllDynamicWithMaxSizes) {
+  Eigen::VectorXd x0(3);
+  x0 << 0.76026643, -30.01799744, 0.55192142;
+
+  DynamicAllFunctor f;
+  // kNumResiduals = Eigen::Dynamic, kNumParameters = Eigen::Dynamic
+  // kMaxResiduals = 10, kMaxParameters = 10
+  using AutoDiffCostFunctor =
+      ceres::TinySolverAutoDiffFunction<DynamicAllFunctor,
+                                        Eigen::Dynamic,
+                                        Eigen::Dynamic,
+                                        double,
+                                        10,
+                                        10>;
+
+  AutoDiffCostFunctor f_autodiff(f);
+
+  // Verify that the adapter reports the correct runtime parameters.
+  EXPECT_EQ(f_autodiff.NumParameters(), 3);
+
+  TinySolver<AutoDiffCostFunctor> solver;
+  solver.Solve(f_autodiff, &x0);
+
+  EXPECT_NEAR(0.0, solver.summary.final_cost, 1e-10);
+}
+
 }  // namespace ceres
