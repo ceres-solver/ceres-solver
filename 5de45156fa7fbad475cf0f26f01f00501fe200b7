@@ -170,6 +170,30 @@
       },
       "revId": "5de45156fa7fbad475cf0f26f01f00501fe200b7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4504981_e8b2ca5e",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-03-24T00:12:19Z",
+      "side": 1,
+      "message": "The ideal thing would be if we can do the right thing where we make these optional parameters the last two parameters, and do whatever metaprogramming thats needed. How complicated is that going to be?\n\nmaybe instead of code churn here we can iterate over a simpler prototype?\n\nactually now that I think about it some more, why do we need the linear solver to be a template parameter, I suppose if we are planning on doing something like change linear solvers, \n\nbut in terms of dense solvers, there are only three choices,\n\nLLT\nLDLT\nQR\n\nQR is not going to happen (our code will have to evolve way too much for that), the only choices are LLT or LDLT, so I think the only question is how do we keep the ability to switch between them without needing the full template specialization, and that way your ordering problem becomes simpler.",
+      "parentUuid": "59f286e6_f02aae95",
+      "range": {
+        "startLine": 154,
+        "startChar": 10,
+        "endLine": 154,
+        "endChar": 18
+      },
+      "revId": "5de45156fa7fbad475cf0f26f01f00501fe200b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
