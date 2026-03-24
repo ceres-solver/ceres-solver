@@ -35,28 +35,16 @@ FindSuiteSparse
 
 Module for locating SuiteSparse libraries and its dependencies.
 
+This module requires SuiteSparse version 7.0 or later, which provides
+native CMake configuration files.
+
 This module defines the following variables:
 
 ``SuiteSparse_FOUND``
-   ``TRUE`` iff SuiteSparse and all dependencies have been found.
+   ``TRUE`` iff SuiteSparse and all required components have been found.
 
 ``SuiteSparse_VERSION``
-   Extracted from ``SuiteSparse_config.h`` (>= v4).
-
-``SuiteSparse_VERSION_MAJOR``
-    Equal to 4 if ``SuiteSparse_VERSION`` = 4.2.1
-
-``SuiteSparse_VERSION_MINOR``
-    Equal to 2 if ``SuiteSparse_VERSION`` = 4.2.1
-
-``SuiteSparse_VERSION_PATCH``
-    Equal to 1 if ``SuiteSparse_VERSION`` = 4.2.1
-
-The following variables control the behaviour of this module:
-
-``SuiteSparse_NO_CMAKE``
-  Do not attempt to use the native SuiteSparse CMake package configuration.
-
+   Extracted from the SuiteSparse configuration or headers.
 
 Targets
 -------
@@ -67,7 +55,7 @@ The following targets define the SuiteSparse components searched for.
     Symmetric Approximate Minimum Degree (AMD)
 
 ``SuiteSparse::CAMD``
-    Constrained Approximate Minimum Degree (CAMD)
+    Constrained Approximate Minimum Degree (AMD)
 
 ``SuiteSparse::COLAMD``
     Column Approximate Minimum Degree (COLAMD)
@@ -85,7 +73,7 @@ The following targets define the SuiteSparse components searched for.
     Multifrontal Sparse QR (SuiteSparseQR)
 
 ``SuiteSparse::Config``
-    Common configuration for all but CSparse (SuiteSparse version >= 4).
+    Common configuration (SuiteSparse_config).
 
 Optional SuiteSparse dependencies:
 
@@ -93,435 +81,208 @@ Optional SuiteSparse dependencies:
     Serial Graph Partitioning and Fill-reducing Matrix Ordering (METIS)
 ]=======================================================================]
 
-if (NOT SuiteSparse_NO_CMAKE)
-  find_package (SuiteSparse NO_MODULE QUIET)
-endif (NOT SuiteSparse_NO_CMAKE)
+# On macOS, SuiteSparse often depends on OpenMP which might not be found
+# automatically by AppleClang.
+if (APPLE)
+  find_package(OpenMP QUIET)
+endif()
 
-if (SuiteSparse_FOUND)
-  return ()
-endif (SuiteSparse_FOUND)
+# List of components SuiteSparse 7.0+ exports as individual CMake packages.
+set(SuiteSparse_EXPORTED_COMPONENTS
+  AMD
+  BTF
+  CAMD
+  CCOLAMD
+  CHOLMOD
+  COLAMD
+  CXSparse
+  KLU
+  LDL
+  RBio
+  SPQR
+  SuiteSparse_config
+  UMFPACK
+)
 
-# Push CMP0057 to enable support for IN_LIST, when cmake_minimum_required is
-# set to <3.3.
-cmake_policy (PUSH)
-cmake_policy (SET CMP0057 NEW)
-
-if (NOT SuiteSparse_FIND_COMPONENTS)
-  set (SuiteSparse_FIND_COMPONENTS
-    AMD
-    CAMD
-    CCOLAMD
-    CHOLMOD
-    COLAMD
-    SPQR
-  )
-
+# Initialize component found variables.
+if (SuiteSparse_FIND_COMPONENTS)
   foreach (component IN LISTS SuiteSparse_FIND_COMPONENTS)
-    set (SuiteSparse_FIND_REQUIRED_${component} TRUE)
-  endforeach (component IN LISTS SuiteSparse_FIND_COMPONENTS)
-endif (NOT SuiteSparse_FIND_COMPONENTS)
+    set(SuiteSparse_${component}_FOUND FALSE)
+  endforeach()
+endif()
 
-# Assume SuiteSparse was found and set it to false only if third-party
-# dependencies could not be located. SuiteSparse components are handled by
-# FindPackageHandleStandardArgs HANDLE_COMPONENTS option.
-set (SuiteSparse_FOUND TRUE)
+# We always need SuiteSparse_config for versioning and as a base dependency.
+set(SuiteSparse_config_FOUND FALSE)
 
-include (CheckLibraryExists)
-include (CheckSymbolExists)
-include (CMakePushCheckState)
+# 1. Try finding SuiteSparse using CONFIG mode (preferred for 7.0+).
+# Some installations might provide a top-level SuiteSparseConfig.cmake.
+find_package(SuiteSparse 7.0 CONFIG QUIET)
 
-# Config is a base component and thus always required
-set (SuiteSparse_IMPLICIT_COMPONENTS Config)
+if (NOT SuiteSparse_FOUND)
+  # Try finding individual components using CONFIG mode.
+  foreach (component IN LISTS SuiteSparse_EXPORTED_COMPONENTS)
+    find_package(${component} CONFIG QUIET)
+    if (${component}_FOUND)
+      # Map to our namespace if not already done by the config file.
+      if (NOT TARGET SuiteSparse::${component})
+        # Some components might export SuiteSparse::<component> directly.
+        # If they export <component> or <component>_static, we wrap them.
+        if (TARGET ${component})
+          add_library(SuiteSparse::${component} INTERFACE IMPORTED)
+          set_target_properties(SuiteSparse::${component} PROPERTIES
+            INTERFACE_LINK_LIBRARIES ${component})
+        elseif (TARGET ${component}_static)
+           add_library(SuiteSparse::${component} INTERFACE IMPORTED)
+           set_target_properties(SuiteSparse::${component} PROPERTIES
+             INTERFACE_LINK_LIBRARIES ${component}_static)
+        elseif (TARGET SuiteSparse::${component}_static)
+           add_library(SuiteSparse::${component} INTERFACE IMPORTED)
+           set_target_properties(SuiteSparse::${component} PROPERTIES
+             INTERFACE_LINK_LIBRARIES SuiteSparse::${component}_static)
+        endif()
+      endif()
 
-# CHOLMOD depends on AMD, CAMD, CCOLAMD, and COLAMD.
-if (CHOLMOD IN_LIST SuiteSparse_FIND_COMPONENTS)
-  list (APPEND SuiteSparse_IMPLICIT_COMPONENTS AMD CAMD CCOLAMD COLAMD)
-endif (CHOLMOD IN_LIST SuiteSparse_FIND_COMPONENTS)
-
-# SPQR depends on CHOLMOD.
-if (SPQR IN_LIST SuiteSparse_FIND_COMPONENTS)
-  list (APPEND SuiteSparse_IMPLICIT_COMPONENTS CHOLMOD)
-endif (SPQR IN_LIST SuiteSparse_FIND_COMPONENTS)
-
-# Implicit components are always required
-foreach (component IN LISTS SuiteSparse_IMPLICIT_COMPONENTS)
-  set (SuiteSparse_FIND_REQUIRED_${component} TRUE)
-endforeach (component IN LISTS SuiteSparse_IMPLICIT_COMPONENTS)
-
-list (APPEND SuiteSparse_FIND_COMPONENTS ${SuiteSparse_IMPLICIT_COMPONENTS})
-
-# Do not list components multiple times.
-list (REMOVE_DUPLICATES SuiteSparse_FIND_COMPONENTS)
-
-# Reset CALLERS_CMAKE_FIND_LIBRARY_PREFIXES to its value when
-# FindSuiteSparse was invoked.
-macro(SuiteSparse_RESET_FIND_LIBRARY_PREFIX)
-  if (MSVC)
-    set(CMAKE_FIND_LIBRARY_PREFIXES "${CALLERS_CMAKE_FIND_LIBRARY_PREFIXES}")
-  endif (MSVC)
-endmacro(SuiteSparse_RESET_FIND_LIBRARY_PREFIX)
-
-# Called if we failed to find SuiteSparse or any of it's required dependencies,
-# unsets all public (designed to be used externally) variables and reports
-# error message at priority depending upon [REQUIRED/QUIET/<NONE>] argument.
-macro(SuiteSparse_REPORT_NOT_FOUND REASON_MSG)
-  # Will be set to FALSE by find_package_handle_standard_args
-  unset (SuiteSparse_FOUND)
-
-  # Do NOT unset SuiteSparse_REQUIRED_VARS here, as it is used by
-  # FindPackageHandleStandardArgs() to generate the automatic error message on
-  # failure which highlights which components are missing.
-
-  suitesparse_reset_find_library_prefix()
-
-  # Note <package>_FIND_[REQUIRED/QUIETLY] variables defined by FindPackage()
-  # use the camelcase library name, not uppercase.
-  if (SuiteSparse_FIND_QUIETLY)
-    message(STATUS "Failed to find SuiteSparse - " ${REASON_MSG} ${ARGN})
-  elseif (SuiteSparse_FIND_REQUIRED)
-    message(FATAL_ERROR "Failed to find SuiteSparse - " ${REASON_MSG} ${ARGN})
-  else()
-    # Neither QUIETLY nor REQUIRED, use no priority which emits a message
-    # but continues configuration and allows generation.
-    message("-- Failed to find SuiteSparse - " ${REASON_MSG} ${ARGN})
-  endif (SuiteSparse_FIND_QUIETLY)
-
-  # Do not call return(), s/t we keep processing if not called with REQUIRED
-  # and report all missing components, rather than bailing after failing to find
-  # the first.
-endmacro(SuiteSparse_REPORT_NOT_FOUND)
-
-# Handle possible presence of lib prefix for libraries on MSVC, see
-# also SuiteSparse_RESET_FIND_LIBRARY_PREFIX().
-if (MSVC)
-  # Preserve the caller's original values for CMAKE_FIND_LIBRARY_PREFIXES
-  # s/t we can set it back before returning.
-  set(CALLERS_CMAKE_FIND_LIBRARY_PREFIXES "${CMAKE_FIND_LIBRARY_PREFIXES}")
-  # The empty string in this list is important, it represents the case when
-  # the libraries have no prefix (shared libraries / DLLs).
-  set(CMAKE_FIND_LIBRARY_PREFIXES "lib" "" "${CMAKE_FIND_LIBRARY_PREFIXES}")
-endif (MSVC)
-
-# Additional suffixes to try appending to each search path.
-list(APPEND SuiteSparse_CHECK_PATH_SUFFIXES
-  suitesparse) # Windows/Ubuntu
-
-# Wrappers to find_path/library that pass the SuiteSparse search hints/paths.
-#
-# suitesparse_find_component(<component> [FILES name1 [name2 ...]]
-#                                        [LIBRARIES name1 [name2 ...]])
-macro(suitesparse_find_component COMPONENT)
-  include(CMakeParseArguments)
-  set(MULTI_VALUE_ARGS FILES LIBRARIES)
-  cmake_parse_arguments(SuiteSparse_FIND_COMPONENT_${COMPONENT}
-    "" "" "${MULTI_VALUE_ARGS}" ${ARGN})
-
-  set(SuiteSparse_${COMPONENT}_FOUND TRUE)
-  if (SuiteSparse_FIND_COMPONENT_${COMPONENT}_FILES)
-    find_path(SuiteSparse_${COMPONENT}_INCLUDE_DIR
-      NAMES ${SuiteSparse_FIND_COMPONENT_${COMPONENT}_FILES}
-      PATH_SUFFIXES ${SuiteSparse_CHECK_PATH_SUFFIXES})
-    if (SuiteSparse_${COMPONENT}_INCLUDE_DIR)
-      message(STATUS "Found ${COMPONENT} headers in: "
-        "${SuiteSparse_${COMPONENT}_INCLUDE_DIR}")
-      mark_as_advanced(SuiteSparse_${COMPONENT}_INCLUDE_DIR)
-    else()
-      # Specified headers not found.
-      set(SuiteSparse_${COMPONENT}_FOUND FALSE)
-      if (SuiteSparse_FIND_REQUIRED_${COMPONENT})
-        suitesparse_report_not_found(
-          "Did not find ${COMPONENT} header (required SuiteSparse component).")
-      else()
-        message(STATUS "Did not find ${COMPONENT} header (optional "
-          "SuiteSparse component).")
-        # Hide optional vars from CMake GUI even if not found.
-        mark_as_advanced(SuiteSparse_${COMPONENT}_INCLUDE_DIR)
+      # Special handling for SuiteSparse_config -> SuiteSparse::Config
+      if (component STREQUAL "SuiteSparse_config")
+        set(SuiteSparse_config_FOUND TRUE)
+        if (TARGET SuiteSparse::SuiteSparse_config AND NOT TARGET SuiteSparse::Config)
+          add_library(SuiteSparse::Config INTERFACE IMPORTED)
+          set_target_properties(SuiteSparse::Config PROPERTIES
+            INTERFACE_LINK_LIBRARIES SuiteSparse::SuiteSparse_config)
+        endif()
+        if (NOT SuiteSparse_VERSION)
+          set(SuiteSparse_VERSION ${SuiteSparse_config_VERSION})
+        endif()
+      endif()
+      
+      # Mark requested components as found.
+      if (SuiteSparse_FIND_COMPONENTS)
+        list(FIND SuiteSparse_FIND_COMPONENTS ${component} _index)
+        if (_index GREATER -1)
+          set(SuiteSparse_${component}_FOUND TRUE)
+        endif()
       endif()
     endif()
-  endif()
+  endforeach()
+endif()
 
-  if (SuiteSparse_FIND_COMPONENT_${COMPONENT}_LIBRARIES)
-    find_library(SuiteSparse_${COMPONENT}_LIBRARY
-      NAMES ${SuiteSparse_FIND_COMPONENT_${COMPONENT}_LIBRARIES}
-      PATH_SUFFIXES ${SuiteSparse_CHECK_PATH_SUFFIXES})
-    if (SuiteSparse_${COMPONENT}_LIBRARY)
-      message(STATUS "Found ${COMPONENT} library: ${SuiteSparse_${COMPONENT}_LIBRARY}")
-      mark_as_advanced(SuiteSparse_${COMPONENT}_LIBRARY)
-    else ()
-      # Specified libraries not found.
-      set(SuiteSparse_${COMPONENT}_FOUND FALSE)
-      if (SuiteSparse_FIND_REQUIRED_${COMPONENT})
-        suitesparse_report_not_found(
-          "Did not find ${COMPONENT} library (required SuiteSparse component).")
-      else()
-        message(STATUS "Did not find ${COMPONENT} library (optional SuiteSparse "
-          "dependency)")
-        # Hide optional vars from CMake GUI even if not found.
-        mark_as_advanced(SuiteSparse_${COMPONENT}_LIBRARY)
-      endif()
+# 2. Manual fallback if CONFIG mode failed to find required components.
+# This is useful if dependencies (like OpenMP) are missing from the CONFIG search
+# or if the installation doesn't provide CONFIG files.
+if (NOT SuiteSparse_config_FOUND)
+  find_path(SuiteSparse_config_INCLUDE_DIR NAMES SuiteSparse_config.h
+    PATH_SUFFIXES suitesparse include/suitesparse .)
+  find_library(SuiteSparse_config_LIBRARY NAMES suitesparseconfig)
+
+  if (SuiteSparse_config_INCLUDE_DIR AND SuiteSparse_config_LIBRARY)
+    set(SuiteSparse_config_FOUND TRUE)
+    if (NOT TARGET SuiteSparse::Config)
+      add_library(SuiteSparse::Config UNKNOWN IMPORTED)
+      set_target_properties(SuiteSparse::Config PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${SuiteSparse_config_INCLUDE_DIR}"
+        IMPORTED_LOCATION "${SuiteSparse_config_LIBRARY}")
+    endif()
+
+    # If we found config, try finding other requested components manually.
+    if (SuiteSparse_FIND_COMPONENTS)
+      foreach (component IN LISTS SuiteSparse_FIND_COMPONENTS)
+        if (NOT SuiteSparse_${component}_FOUND AND NOT component STREQUAL "Partition")
+          string(TOLOWER ${component} component_lower)
+          set(header_names ${component_lower}.h)
+          # Special header names for some components
+          if (component STREQUAL "SPQR")
+            set(header_names SuiteSparseQR.hpp SuiteSparseQR_C.h)
+          endif()
+          
+          find_path(SuiteSparse_${component}_INCLUDE_DIR NAMES ${header_names}
+            PATH_SUFFIXES suitesparse include/suitesparse .)
+          
+          # Note: SPQR library is often named libspqr, but some might name it libsuitesparseqr.
+          if (component STREQUAL "SPQR")
+            find_library(SuiteSparse_${component}_LIBRARY NAMES spqr suitesparseqr)
+          else()
+            find_library(SuiteSparse_${component}_LIBRARY NAMES ${component_lower})
+          endif()
+
+          if (SuiteSparse_${component}_INCLUDE_DIR AND SuiteSparse_${component}_LIBRARY)
+            set(SuiteSparse_${component}_FOUND TRUE)
+            if (NOT TARGET SuiteSparse::${component})
+              add_library(SuiteSparse::${component} UNKNOWN IMPORTED)
+              set_target_properties(SuiteSparse::${component} PROPERTIES
+                INTERFACE_INCLUDE_DIRECTORIES "${SuiteSparse_${component}_INCLUDE_DIR}"
+                IMPORTED_LOCATION "${SuiteSparse_${component}_LIBRARY}"
+                INTERFACE_LINK_LIBRARIES SuiteSparse::Config)
+            endif()
+          endif()
+        endif()
+      endforeach()
     endif()
   endif()
+endif()
 
-  # A component can be optional (given to OPTIONAL_COMPONENTS). However, if the
-  # component is implicit (must be always present, such as the Config component)
-  # assume it be required as well.
-  if (SuiteSparse_FIND_REQUIRED_${COMPONENT})
-    list (APPEND SuiteSparse_REQUIRED_VARS SuiteSparse_${COMPONENT}_INCLUDE_DIR)
-    list (APPEND SuiteSparse_REQUIRED_VARS SuiteSparse_${COMPONENT}_LIBRARY)
-  endif (SuiteSparse_FIND_REQUIRED_${COMPONENT})
+# Extract version from SuiteSparse_config.h if possible.
+if (SuiteSparse_config_FOUND AND NOT SuiteSparse_VERSION)
+  if (TARGET SuiteSparse::Config)
+    get_target_property(_inc_dirs SuiteSparse::Config INTERFACE_INCLUDE_DIRECTORIES)
+    # Also check IMPORTED_LOCATION for library dir, maybe headers are nearby
+    get_target_property(_lib_file SuiteSparse::Config IMPORTED_LOCATION)
+    if (_lib_file)
+      get_filename_component(_lib_dir "${_lib_file}" DIRECTORY)
+      list(APPEND _inc_dirs "${_lib_dir}/../include" "${_lib_dir}/../include/suitesparse")
+    endif()
+    
+    foreach (_dir IN LISTS _inc_dirs)
+      if (EXISTS "${_dir}/SuiteSparse_config.h")
+        file(READ "${_dir}/SuiteSparse_config.h" _config_content)
+        string(REGEX MATCH "#define SUITESPARSE_MAIN_VERSION[ \t]+([0-9]+)" _major_match "${_config_content}")
+        set(_major ${CMAKE_MATCH_1})
+        string(REGEX MATCH "#define SUITESPARSE_SUB_VERSION[ \t]+([0-9]+)" _minor_match "${_config_content}")
+        set(_minor ${CMAKE_MATCH_1})
+        string(REGEX MATCH "#define SUITESPARSE_SUBSUB_VERSION[ \t]+([0-9]+)" _patch_match "${_config_content}")
+        set(_patch ${CMAKE_MATCH_1})
+        if (_major)
+          set(SuiteSparse_VERSION "${_major}.${_minor}.${_patch}")
+        endif()
+        break()
+      endif()
+    endforeach()
+  endif()
+endif()
 
-  # Define the target only if the include directory and the library were found
-  if (SuiteSparse_${COMPONENT}_INCLUDE_DIR AND SuiteSparse_${COMPONENT}_LIBRARY)
-    if (NOT TARGET SuiteSparse::${COMPONENT})
-      add_library(SuiteSparse::${COMPONENT} IMPORTED UNKNOWN)
-    endif (NOT TARGET SuiteSparse::${COMPONENT})
+# 3. Handle Partition component (CHOLMOD with METIS support).
+if (SuiteSparse_CHOLMOD_FOUND OR TARGET SuiteSparse::CHOLMOD)
+  set(SuiteSparse_Partition_FOUND FALSE)
+  # Check if CHOLMOD target links against METIS.
+  get_target_property(_cholmod_deps SuiteSparse::CHOLMOD INTERFACE_LINK_LIBRARIES)
+  if (_cholmod_deps)
+    if (_cholmod_deps MATCHES "METIS" OR _cholmod_deps MATCHES "metis")
+      set(SuiteSparse_Partition_FOUND TRUE)
+    endif()
+  endif()
+  
+  if (NOT SuiteSparse_Partition_FOUND)
+     # Some installations might have METIS linked but not explicitly in INTERFACE_LINK_LIBRARIES
+     # or it might be in a different property.
+     get_target_property(_cholmod_loc SuiteSparse::CHOLMOD IMPORTED_LOCATION)
+     if (_cholmod_loc)
+       # We could try to use 'nm' or 'objdump' but that's overkill.
+       # Let's check if METIS is found and maybe it's just not linked.
+     endif()
+  endif()
 
-    set_property(TARGET SuiteSparse::${COMPONENT} PROPERTY
-      INTERFACE_INCLUDE_DIRECTORIES ${SuiteSparse_${COMPONENT}_INCLUDE_DIR})
-    set_property(TARGET SuiteSparse::${COMPONENT} PROPERTY
-      IMPORTED_LOCATION ${SuiteSparse_${COMPONENT}_LIBRARY})
-  endif (SuiteSparse_${COMPONENT}_INCLUDE_DIR AND SuiteSparse_${COMPONENT}_LIBRARY)
-endmacro()
-
-# Given the number of components of SuiteSparse, and to ensure that the
-# automatic failure message generated by FindPackageHandleStandardArgs()
-# when not all required components are found is helpful, we maintain a list
-# of all variables that must be defined for SuiteSparse to be considered found.
-unset(SuiteSparse_REQUIRED_VARS)
-
-# BLAS.
-find_package(BLAS QUIET)
-if (NOT BLAS_FOUND)
-  suitesparse_report_not_found(
-    "Did not find BLAS library (required for SuiteSparse).")
-endif (NOT BLAS_FOUND)
-
-# LAPACK.
-find_package(LAPACK QUIET)
-if (NOT LAPACK_FOUND)
-  suitesparse_report_not_found(
-    "Did not find LAPACK library (required for SuiteSparse).")
-endif (NOT LAPACK_FOUND)
-
-foreach (component IN LISTS SuiteSparse_FIND_COMPONENTS)
-  if (component STREQUAL Partition)
-    # Partition is a meta component that neither provides additional headers nor
-    # a separate library. It is strictly part of CHOLMOD.
-    continue ()
-  endif (component STREQUAL Partition)
-  string (TOLOWER ${component} component_library)
-
-  if (component STREQUAL "Config")
-    set (component_header SuiteSparse_config.h)
-    set (component_library suitesparseconfig)
-  elseif (component STREQUAL "SPQR")
-    set (component_header SuiteSparseQR.hpp)
-  else (component STREQUAL "SPQR")
-    set (component_header ${component_library}.h)
-  endif (component STREQUAL "Config")
-
-  suitesparse_find_component(${component}
-    FILES ${component_header}
-    LIBRARIES ${component_library})
-endforeach (component IN LISTS SuiteSparse_FIND_COMPONENTS)
-
-if (TARGET SuiteSparse::SPQR)
-  # SuiteSparseQR may be compiled with Intel Threading Building Blocks,
-  # we assume that if TBB is installed, SuiteSparseQR was compiled with
-  # support for it, this will do no harm if it wasn't.
-  find_package(TBB QUIET NO_MODULE)
-  if (TBB_FOUND)
-    message(STATUS "Found Intel Thread Building Blocks (TBB) library "
-      "(${TBB_VERSION}). "
-      "Assuming SuiteSparseQR was compiled with TBB.")
-    # Add the TBB libraries to the SuiteSparseQR libraries (the only
-    # libraries to optionally depend on TBB).
-    set_property (TARGET SuiteSparse::SPQR APPEND PROPERTY
-      INTERFACE_LINK_LIBRARIES TBB::tbb)
-  else (TBB_FOUND)
-    message(STATUS "Did not find Intel TBB library, assuming SuiteSparseQR was "
-      "not compiled with TBB.")
-  endif (TBB_FOUND)
-endif (TARGET SuiteSparse::SPQR)
-
-check_library_exists(rt shm_open "" HAVE_LIBRT)
-
-if (TARGET SuiteSparse::Config)
-  # SuiteSparse_config (SuiteSparse version >= 4) requires librt library for
-  # timing by default when compiled on Linux or Unix, but not on OSX (which
-  # does not have librt).
-  if (HAVE_LIBRT)
-    message(STATUS "Adding librt to "
-      "SuiteSparse_config libraries (required on Linux & Unix [not OSX] if "
-      "SuiteSparse is compiled with timing).")
-    set_property (TARGET SuiteSparse::Config APPEND PROPERTY
-      INTERFACE_LINK_LIBRARIES $<LINK_ONLY:rt>)
-  else (HAVE_LIBRT)
-    message(STATUS "Could not find librt, but found SuiteSparse_config, "
-      "assuming that SuiteSparse was compiled without timing.")
-  endif (HAVE_LIBRT)
-
-  # Add BLAS and LAPACK as dependencies of SuiteSparse::Config for convenience
-  # given that all components depend on it.
-  if (BLAS_FOUND)
-    if (TARGET BLAS::BLAS)
-      set_property (TARGET SuiteSparse::Config APPEND PROPERTY
-        INTERFACE_LINK_LIBRARIES $<LINK_ONLY:BLAS::BLAS>)
-    else (TARGET BLAS::BLAS)
-      set_property (TARGET SuiteSparse::Config APPEND PROPERTY
-        INTERFACE_LINK_LIBRARIES ${BLAS_LIBRARIES})
-    endif (TARGET BLAS::BLAS)
-  endif (BLAS_FOUND)
-
-  if (LAPACK_FOUND)
-    if (TARGET LAPACK::LAPACK)
-      set_property (TARGET SuiteSparse::Config APPEND PROPERTY
-        INTERFACE_LINK_LIBRARIES $<LINK_ONLY:LAPACK::LAPACK>)
-    else (TARGET LAPACK::LAPACK)
-      set_property (TARGET SuiteSparse::Config APPEND PROPERTY
-        INTERFACE_LINK_LIBRARIES ${LAPACK_LIBRARIES})
-    endif (TARGET LAPACK::LAPACK)
-  endif (LAPACK_FOUND)
-
-  # SuiteSparse version >= 4.
-  set(SuiteSparse_VERSION_FILE
-    ${SuiteSparse_Config_INCLUDE_DIR}/SuiteSparse_config.h)
-  if (NOT EXISTS ${SuiteSparse_VERSION_FILE})
-    suitesparse_report_not_found(
-      "Could not find file: ${SuiteSparse_VERSION_FILE} containing version "
-      "information for >= v4 SuiteSparse installs, but SuiteSparse_config was "
-      "found (only present in >= v4 installs).")
-  else (NOT EXISTS ${SuiteSparse_VERSION_FILE})
-    file(READ ${SuiteSparse_VERSION_FILE} Config_CONTENTS)
-
-    string(REGEX MATCH "#define SUITESPARSE_MAIN_VERSION[ \t]+([0-9]+)"
-      SuiteSparse_VERSION_LINE "${Config_CONTENTS}")
-    set (SuiteSparse_VERSION_MAJOR ${CMAKE_MATCH_1})
-
-    string(REGEX MATCH "#define SUITESPARSE_SUB_VERSION[ \t]+([0-9]+)"
-      SuiteSparse_VERSION_LINE "${Config_CONTENTS}")
-    set (SuiteSparse_VERSION_MINOR ${CMAKE_MATCH_1})
-
-    string(REGEX MATCH "#define SUITESPARSE_SUBSUB_VERSION[ \t]+([0-9]+)"
-      SuiteSparse_VERSION_LINE "${Config_CONTENTS}")
-    set (SuiteSparse_VERSION_PATCH ${CMAKE_MATCH_1})
-
-    unset (SuiteSparse_VERSION_LINE)
-
-    # This is on a single line s/t CMake does not interpret it as a list of
-    # elements and insert ';' separators which would result in 4.;2.;1 nonsense.
-    set(SuiteSparse_VERSION
-      "${SuiteSparse_VERSION_MAJOR}.${SuiteSparse_VERSION_MINOR}.${SuiteSparse_VERSION_PATCH}")
-
-    if (SuiteSparse_VERSION MATCHES "[0-9]+\\.[0-9]+\\.[0-9]+")
-      set(SuiteSparse_VERSION_COMPONENTS 3)
-    else (SuiteSparse_VERSION MATCHES "[0-9]+\\.[0-9]+\\.[0-9]+")
-      message (WARNING "Could not parse SuiteSparse_config.h: SuiteSparse "
-        "version will not be available")
-
-      unset (SuiteSparse_VERSION)
-      unset (SuiteSparse_VERSION_MAJOR)
-      unset (SuiteSparse_VERSION_MINOR)
-      unset (SuiteSparse_VERSION_PATCH)
-    endif (SuiteSparse_VERSION MATCHES "[0-9]+\\.[0-9]+\\.[0-9]+")
-  endif (NOT EXISTS ${SuiteSparse_VERSION_FILE})
-endif (TARGET SuiteSparse::Config)
-
-# CHOLMOD requires AMD CAMD CCOLAMD COLAMD
-if (TARGET SuiteSparse::CHOLMOD)
-  foreach (component IN ITEMS AMD CAMD CCOLAMD COLAMD)
-    if (TARGET SuiteSparse::${component})
-      set_property (TARGET SuiteSparse::CHOLMOD APPEND PROPERTY
-        INTERFACE_LINK_LIBRARIES SuiteSparse::${component})
-    else (TARGET SuiteSparse::${component})
-      # Consider CHOLMOD not found if COLAMD cannot be found
-      set (SuiteSparse_CHOLMOD_FOUND FALSE)
-    endif (TARGET SuiteSparse::${component})
-  endforeach (component IN ITEMS AMD CAMD CCOLAMD COLAMD)
-endif (TARGET SuiteSparse::CHOLMOD)
-
-# SPQR requires CHOLMOD
-if (TARGET SuiteSparse::SPQR)
-  if (TARGET SuiteSparse::CHOLMOD)
-    set_property (TARGET SuiteSparse::SPQR APPEND PROPERTY
-      INTERFACE_LINK_LIBRARIES SuiteSparse::CHOLMOD)
-  else (TARGET SuiteSparse::CHOLMOD)
-    # Consider SPQR not found if CHOLMOD cannot be found
-    set (SuiteSparse_SQPR_FOUND FALSE)
-  endif (TARGET SuiteSparse::CHOLMOD)
-endif (TARGET SuiteSparse::SPQR)
-
-# Add SuiteSparse::Config as dependency to all components
-if (TARGET SuiteSparse::Config)
-  foreach (component IN LISTS SuiteSparse_FIND_COMPONENTS)
-    if (component STREQUAL Config)
-      continue ()
-    endif (component STREQUAL Config)
-
-    if (TARGET SuiteSparse::${component})
-      set_property (TARGET SuiteSparse::${component} APPEND PROPERTY
-        INTERFACE_LINK_LIBRARIES SuiteSparse::Config)
-    endif (TARGET SuiteSparse::${component})
-  endforeach (component IN LISTS SuiteSparse_FIND_COMPONENTS)
-endif (TARGET SuiteSparse::Config)
-
-# Check whether CHOLMOD was compiled with METIS support. The check can be
-# performed only after the main components have been set up.
-if (TARGET SuiteSparse::CHOLMOD)
-  # NOTE If SuiteSparse was compiled as a static library we'll need to link
-  # against METIS already during the check. Otherwise, the check can fail due to
-  # undefined references even though SuiteSparse was compiled with METIS.
-  find_package (METIS)
-
-  if (TARGET METIS::METIS)
-    cmake_push_check_state (RESET)
-    set (CMAKE_REQUIRED_LIBRARIES SuiteSparse::CHOLMOD METIS::METIS)
-    check_symbol_exists (cholmod_metis cholmod.h SuiteSparse_CHOLMOD_USES_METIS)
-    cmake_pop_check_state ()
-
-    if (SuiteSparse_CHOLMOD_USES_METIS)
-      set_property (TARGET SuiteSparse::CHOLMOD APPEND PROPERTY
-        INTERFACE_LINK_LIBRARIES $<LINK_ONLY:METIS::METIS>)
-
-      # Provide the SuiteSparse::Partition component whose availability indicates
-      # that CHOLMOD was compiled with the Partition module.
-      if (NOT TARGET SuiteSparse::Partition)
-        add_library (SuiteSparse::Partition IMPORTED INTERFACE)
-      endif (NOT TARGET SuiteSparse::Partition)
-
-      set_property (TARGET SuiteSparse::Partition APPEND PROPERTY
+  if (SuiteSparse_Partition_FOUND)
+    if (NOT TARGET SuiteSparse::Partition)
+      add_library(SuiteSparse::Partition INTERFACE IMPORTED)
+      set_target_properties(SuiteSparse::Partition PROPERTIES
         INTERFACE_LINK_LIBRARIES SuiteSparse::CHOLMOD)
-    endif (SuiteSparse_CHOLMOD_USES_METIS)
-  endif (TARGET METIS::METIS)
-endif (TARGET SuiteSparse::CHOLMOD)
+    endif()
+  endif()
+endif()
 
-# We do not use suitesparse_find_component to find Partition and therefore must
-# handle the availability in an extra step.
-if (TARGET SuiteSparse::Partition)
-  set (SuiteSparse_Partition_FOUND TRUE)
-else (TARGET SuiteSparse::Partition)
-  set (SuiteSparse_Partition_FOUND FALSE)
-endif (TARGET SuiteSparse::Partition)
-
-suitesparse_reset_find_library_prefix()
-
-# Handle REQUIRED and QUIET arguments to FIND_PACKAGE
 include(FindPackageHandleStandardArgs)
-if (SuiteSparse_FOUND)
-  find_package_handle_standard_args(SuiteSparse
-    REQUIRED_VARS ${SuiteSparse_REQUIRED_VARS}
-    VERSION_VAR SuiteSparse_VERSION
-    FAIL_MESSAGE "Failed to find some/all required components of SuiteSparse."
-    HANDLE_COMPONENTS)
-else (SuiteSparse_FOUND)
-  # Do not pass VERSION_VAR to FindPackageHandleStandardArgs() if we failed to
-  # find SuiteSparse to avoid a confusing autogenerated failure message
-  # that states 'not found (missing: FOO) (found version: x.y.z)'.
-  find_package_handle_standard_args(SuiteSparse
-    REQUIRED_VARS ${SuiteSparse_REQUIRED_VARS}
-    FAIL_MESSAGE "Failed to find some/all required components of SuiteSparse."
-    HANDLE_COMPONENTS)
-endif (SuiteSparse_FOUND)
+find_package_handle_standard_args(SuiteSparse
+  REQUIRED_VARS SuiteSparse_config_FOUND
+  VERSION_VAR SuiteSparse_VERSION
+  HANDLE_COMPONENTS)
 
-# Pop CMP0057.
-cmake_policy (POP)
+
