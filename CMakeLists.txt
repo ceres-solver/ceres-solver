@@ -345,10 +345,10 @@ if (USE_CUDA)
           # Support Ampere GPUs.
           list(APPEND CMAKE_CUDA_ARCHITECTURES "80")
         endif(CUDAToolkit_VERSION VERSION_GREATER_EQUAL "11.0")
-        if (CUDAToolkit_VERSION VERSION_GREATER_EQUAL "11.8")
+        if (CUDAToolkit_VERSION VERSION_GREATER_EQUAL "12.0")
           # Support Hopper GPUs.
           list(APPEND CMAKE_CUDA_ARCHITECTURES "90")
-        endif(CUDAToolkit_VERSION VERSION_GREATER_EQUAL "11.8")
+        endif(CUDAToolkit_VERSION VERSION_GREATER_EQUAL "12.0")
         message("-- Setting CUDA Architecture to ${CMAKE_CUDA_ARCHITECTURES}")
       endif()
 
