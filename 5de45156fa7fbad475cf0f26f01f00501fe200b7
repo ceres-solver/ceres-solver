@@ -194,6 +194,30 @@
       },
       "revId": "5de45156fa7fbad475cf0f26f01f00501fe200b7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4ef254a_f3a53079",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 4725805
+      },
+      "writtenOn": "2026-03-24T01:24:19Z",
+      "side": 1,
+      "message": "We could use a \"sizing\" trait or a more flexible template structure:\n\n```cpp\ntemplate \u003ctypename Function, typename... Args\u003e\nclass TinySolver {\n  // Use helper to extract MaxRes, MaxParams, and LinearSolver from Args...\n};\n\n```\nI can look into this if you think this is acceptable.",
+      "parentUuid": "f4504981_e8b2ca5e",
+      "range": {
+        "startLine": 154,
+        "startChar": 10,
+        "endLine": 154,
+        "endChar": 18
+      },
+      "revId": "5de45156fa7fbad475cf0f26f01f00501fe200b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
