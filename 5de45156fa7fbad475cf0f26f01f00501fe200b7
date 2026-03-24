@@ -242,6 +242,30 @@
       },
       "revId": "5de45156fa7fbad475cf0f26f01f00501fe200b7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5528bfa_7e60a8d7",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 4725805
+      },
+      "writtenOn": "2026-03-24T15:46:25Z",
+      "side": 1,
+      "message": "Here is my rough idea of how we could achieve this using a sizing tag and template deduction. The goal of the design is to  support the new attributes while keeping `TinySolver\u003cFunction\u003e` and `TinySolver\u003cFunction, CustomSolver\u003e` fully functional.\n\nFirst, we define a simple struct to hold the maximum sizes:\n\n```cpp\ntemplate \u003cint MaxRes \u003d Eigen::Dynamic, int MaxParams \u003d Eigen::Dynamic\u003e\nstruct Sizing {};\n```\n\nThen we use a variadic template to extract the sizes and the solver type from the arguments:\n\n```cpp\ntemplate \u003ctypename Function, typename... Args\u003e\nclass TinySolver {\n  // Use meta-programming to find Sizing\u003cR, P\u003e in Args...\n  // Default to Function::MAX_NUM_... (or NUM_...) if not found.\n  static constexpr int kMaxRes \u003d internal::ExtractMaxRes\u003cFunction, Args...\u003e::value;\n  static constexpr int kMaxParams \u003d internal::ExtractMaxParams\u003cFunction, Args...\u003e::value;\n\n  // Use meta-programming to find a LinearSolver type in Args...\n  // If not found, default to LDLT using kMaxParams to avoid heap allocation.\n  using Solver \u003d typename internal::ExtractSolver\u003cFunction, kMaxRes, kMaxParams, Args...\u003e::type;\n\n  // Internal buffers now use kMaxRes and kMaxParams\n  Eigen::Matrix\u003cScalar, NUM_RESIDUALS, 1, 0, kMaxRes, 1\u003e residuals_;\n};\n\n```\n\nHere are some usage examples.\n\n* Existing (Auto-Sized): `TinySolver\u003cMyFunc\u003e solver;`\n* Existing (Custom Solver): `TinySolver\u003cMyFunc, MyCustomSolver\u003e solver;`\n* New (Explicit Max Sizes): `TinySolver\u003cMyFunc, Sizing\u003c10, 5\u003e\u003e solver;`\n* New (Sizes + Custom Solver): `TinySolver\u003cMyFunc, Sizing\u003c10, 5\u003e, MyCustomSolver\u003e solver;`\n\nI don\u0027t know how much of pain it would be to implement this but it should be doable.",
+      "parentUuid": "c08237a7_d71edffd",
+      "range": {
+        "startLine": 154,
+        "startChar": 10,
+        "endLine": 154,
+        "endChar": 18
+      },
+      "revId": "5de45156fa7fbad475cf0f26f01f00501fe200b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
