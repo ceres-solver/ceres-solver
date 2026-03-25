@@ -62,8 +62,11 @@ const char* LinearSolverTypeToString(LinearSolverType type) {
   }
 }
 
-bool StringToLinearSolverType(std::string value, LinearSolverType* type) {
-  UpperCase(&value);
+bool StringToLinearSolverType(const std::string& value,
+                              LinearSolverType* type) {
+  std::string value_upper = value;
+  UpperCase(&value_upper);
+#define value value_upper
   STRENUM(DENSE_NORMAL_CHOLESKY);
   STRENUM(DENSE_QR);
   STRENUM(SPARSE_NORMAL_CHOLESKY);
@@ -71,6 +74,7 @@ bool StringToLinearSolverType(std::string value, LinearSolverType* type) {
   STRENUM(SPARSE_SCHUR);
   STRENUM(ITERATIVE_SCHUR);
   STRENUM(CGNR);
+#undef value
   return false;
 }
 
@@ -88,8 +92,11 @@ const char* PreconditionerTypeToString(PreconditionerType type) {
   }
 }
 
-bool StringToPreconditionerType(std::string value, PreconditionerType* type) {
-  UpperCase(&value);
+bool StringToPreconditionerType(const std::string& value,
+                                PreconditionerType* type) {
+  std::string value_upper = value;
+  UpperCase(&value_upper);
+#define value value_upper
   STRENUM(IDENTITY);
   STRENUM(JACOBI);
   STRENUM(SCHUR_JACOBI);
@@ -97,6 +104,7 @@ bool StringToPreconditionerType(std::string value, PreconditionerType* type) {
   STRENUM(CLUSTER_JACOBI);
   STRENUM(CLUSTER_TRIDIAGONAL);
   STRENUM(SUBSET);
+#undef value
   return false;
 }
 
@@ -114,13 +122,16 @@ const char* SparseLinearAlgebraLibraryTypeToString(
 }
 
 bool StringToSparseLinearAlgebraLibraryType(
-    std::string value, SparseLinearAlgebraLibraryType* type) {
-  UpperCase(&value);
+    const std::string& value, SparseLinearAlgebraLibraryType* type) {
+  std::string value_upper = value;
+  UpperCase(&value_upper);
+#define value value_upper
   STRENUM(SUITE_SPARSE);
   STRENUM(EIGEN_SPARSE);
   STRENUM(ACCELERATE_SPARSE);
   STRENUM(CUDA_SPARSE);
   STRENUM(NO_SPARSE);
+#undef value
   return false;
 }
 
@@ -133,11 +144,14 @@ const char* LinearSolverOrderingTypeToString(LinearSolverOrderingType type) {
   }
 }
 
-bool StringToLinearSolverOrderingType(std::string value,
+bool StringToLinearSolverOrderingType(const std::string& value,
                                       LinearSolverOrderingType* type) {
-  UpperCase(&value);
+  std::string value_upper = value;
+  UpperCase(&value_upper);
+#define value value_upper
   STRENUM(AMD);
   STRENUM(NESDIS);
+#undef value
   return false;
 }
 
@@ -153,11 +167,14 @@ const char* DenseLinearAlgebraLibraryTypeToString(
 }
 
 bool StringToDenseLinearAlgebraLibraryType(
-    std::string value, DenseLinearAlgebraLibraryType* type) {
-  UpperCase(&value);
+    const std::string& value, DenseLinearAlgebraLibraryType* type) {
+  std::string value_upper = value;
+  UpperCase(&value_upper);
+#define value value_upper
   STRENUM(EIGEN);
   STRENUM(LAPACK);
   STRENUM(CUDA);
+#undef value
   return false;
 }
 
@@ -170,11 +187,14 @@ const char* TrustRegionStrategyTypeToString(TrustRegionStrategyType type) {
   }
 }
 
-bool StringToTrustRegionStrategyType(std::string value,
+bool StringToTrustRegionStrategyType(const std::string& value,
                                      TrustRegionStrategyType* type) {
-  UpperCase(&value);
+  std::string value_upper = value;
+  UpperCase(&value_upper);
+#define value value_upper
   STRENUM(LEVENBERG_MARQUARDT);
   STRENUM(DOGLEG);
+#undef value
   return false;
 }
 
@@ -187,10 +207,13 @@ const char* DoglegTypeToString(DoglegType type) {
   }
 }
 
-bool StringToDoglegType(std::string value, DoglegType* type) {
-  UpperCase(&value);
+bool StringToDoglegType(const std::string& value, DoglegType* type) {
+  std::string value_upper = value;
+  UpperCase(&value_upper);
+#define value value_upper
   STRENUM(TRADITIONAL_DOGLEG);
   STRENUM(SUBSPACE_DOGLEG);
+#undef value
   return false;
 }
 
@@ -203,10 +226,13 @@ const char* MinimizerTypeToString(MinimizerType type) {
   }
 }
 
-bool StringToMinimizerType(std::string value, MinimizerType* type) {
-  UpperCase(&value);
+bool StringToMinimizerType(const std::string& value, MinimizerType* type) {
+  std::string value_upper = value;
+  UpperCase(&value_upper);
+#define value value_upper
   STRENUM(TRUST_REGION);
   STRENUM(LINE_SEARCH);
+#undef value
   return false;
 }
 
@@ -221,13 +247,16 @@ const char* LineSearchDirectionTypeToString(LineSearchDirectionType type) {
   }
 }
 
-bool StringToLineSearchDirectionType(std::string value,
+bool StringToLineSearchDirectionType(const std::string& value,
                                      LineSearchDirectionType* type) {
-  UpperCase(&value);
+  std::string value_upper = value;
+  UpperCase(&value_upper);
+#define value value_upper
   STRENUM(STEEPEST_DESCENT);
   STRENUM(NONLINEAR_CONJUGATE_GRADIENT);
   STRENUM(LBFGS);
   STRENUM(BFGS);
+#undef value
   return false;
 }
 
@@ -240,10 +269,13 @@ const char* LineSearchTypeToString(LineSearchType type) {
   }
 }
 
-bool StringToLineSearchType(std::string value, LineSearchType* type) {
-  UpperCase(&value);
+bool StringToLineSearchType(const std::string& value, LineSearchType* type) {
+  std::string value_upper = value;
+  UpperCase(&value_upper);
+#define value value_upper
   STRENUM(ARMIJO);
   STRENUM(WOLFE);
+#undef value
   return false;
 }
 
@@ -258,12 +290,15 @@ const char* LineSearchInterpolationTypeToString(
   }
 }
 
-bool StringToLineSearchInterpolationType(std::string value,
+bool StringToLineSearchInterpolationType(const std::string& value,
                                          LineSearchInterpolationType* type) {
-  UpperCase(&value);
+  std::string value_upper = value;
+  UpperCase(&value_upper);
+#define value value_upper
   STRENUM(BISECTION);
   STRENUM(QUADRATIC);
   STRENUM(CUBIC);
+#undef value
   return false;
 }
 
@@ -279,11 +314,14 @@ const char* NonlinearConjugateGradientTypeToString(
 }
 
 bool StringToNonlinearConjugateGradientType(
-    std::string value, NonlinearConjugateGradientType* type) {
-  UpperCase(&value);
+    const std::string& value, NonlinearConjugateGradientType* type) {
+  std::string value_upper = value;
+  UpperCase(&value_upper);
+#define value value_upper
   STRENUM(FLETCHER_REEVES);
   STRENUM(POLAK_RIBIERE);
   STRENUM(HESTENES_STIEFEL);
+#undef value
   return false;
 }
 
@@ -296,11 +334,14 @@ const char* CovarianceAlgorithmTypeToString(CovarianceAlgorithmType type) {
   }
 }
 
-bool StringToCovarianceAlgorithmType(std::string value,
+bool StringToCovarianceAlgorithmType(const std::string& value,
                                      CovarianceAlgorithmType* type) {
-  UpperCase(&value);
+  std::string value_upper = value;
+  UpperCase(&value_upper);
+#define value value_upper
   STRENUM(DENSE_SVD);
   STRENUM(SPARSE_QR);
+#undef value
   return false;
 }
 
@@ -314,12 +355,15 @@ const char* NumericDiffMethodTypeToString(NumericDiffMethodType type) {
   }
 }
 
-bool StringToNumericDiffMethodType(std::string value,
+bool StringToNumericDiffMethodType(const std::string& value,
                                    NumericDiffMethodType* type) {
-  UpperCase(&value);
+  std::string value_upper = value;
+  UpperCase(&value_upper);
+#define value value_upper
   STRENUM(CENTRAL);
   STRENUM(FORWARD);
   STRENUM(RIDDERS);
+#undef value
   return false;
 }
 
@@ -332,11 +376,14 @@ const char* VisibilityClusteringTypeToString(VisibilityClusteringType type) {
   }
 }
 
-bool StringToVisibilityClusteringType(std::string value,
+bool StringToVisibilityClusteringType(const std::string& value,
                                       VisibilityClusteringType* type) {
-  UpperCase(&value);
+  std::string value_upper = value;
+  UpperCase(&value_upper);
+#define value value_upper
   STRENUM(CANONICAL_VIEWS);
   STRENUM(SINGLE_LINKAGE);
+#undef value
   return false;
 }
 
@@ -361,10 +408,13 @@ const char* LoggingTypeToString(LoggingType type) {
   }
 }
 
-bool StringtoLoggingType(std::string value, LoggingType* type) {
-  UpperCase(&value);
+bool StringToLoggingType(const std::string& value, LoggingType* type) {
+  std::string value_upper = value;
+  UpperCase(&value_upper);
+#define value value_upper
   STRENUM(SILENT);
   STRENUM(PER_MINIMIZER_ITERATION);
+#undef value
   return false;
 }
 
@@ -377,10 +427,13 @@ const char* DumpFormatTypeToString(DumpFormatType type) {
   }
 }
 
-bool StringtoDumpFormatType(std::string value, DumpFormatType* type) {
-  UpperCase(&value);
+bool StringToDumpFormatType(const std::string& value, DumpFormatType* type) {
+  std::string value_upper = value;
+  UpperCase(&value_upper);
+#define value value_upper
   STRENUM(CONSOLE);
   STRENUM(TEXTFILE);
+#undef value
   return false;
 }
 

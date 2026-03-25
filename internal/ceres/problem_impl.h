@@ -36,8 +36,8 @@
 // to always put a Problem object into a scoped pointer; this needlessly muddies
 // client code for little benefit. Therefore, the PIMPL comprise was chosen.
 
-#ifndef CERES_PUBLIC_PROBLEM_IMPL_H_
-#define CERES_PUBLIC_PROBLEM_IMPL_H_
+#ifndef CERES_INTERNAL_PROBLEM_IMPL_H_
+#define CERES_INTERNAL_PROBLEM_IMPL_H_
 
 #include <array>
 #include <map>
@@ -225,4 +225,4 @@ class CERES_NO_EXPORT ProblemImpl {
 
 #include "ceres/internal/reenable_warnings.h"
 
-#endif  // CERES_PUBLIC_PROBLEM_IMPL_H_
+#endif  // CERES_INTERNAL_PROBLEM_IMPL_H_
