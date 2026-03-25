@@ -361,7 +361,7 @@ const char* LoggingTypeToString(LoggingType type) {
   }
 }
 
-bool StringtoLoggingType(std::string value, LoggingType* type) {
+bool StringToLoggingType(std::string value, LoggingType* type) {
   UpperCase(&value);
   STRENUM(SILENT);
   STRENUM(PER_MINIMIZER_ITERATION);
@@ -377,7 +377,7 @@ const char* DumpFormatTypeToString(DumpFormatType type) {
   }
 }
 
-bool StringtoDumpFormatType(std::string value, DumpFormatType* type) {
+bool StringToDumpFormatType(std::string value, DumpFormatType* type) {
   UpperCase(&value);
   STRENUM(CONSOLE);
   STRENUM(TEXTFILE);

@@ -543,12 +543,11 @@ CERES_EXPORT bool StringToNumericDiffMethodType(std::string value,
                                                 NumericDiffMethodType* type);
 
 CERES_EXPORT const char* LoggingTypeToString(LoggingType type);
-CERES_EXPORT bool StringtoLoggingType(std::string value, LoggingType* type);
+CERES_EXPORT bool StringToLoggingType(std::string value, LoggingType* type);
 
 CERES_EXPORT const char* DumpFormatTypeToString(DumpFormatType type);
-CERES_EXPORT bool StringtoDumpFormatType(std::string value,
+CERES_EXPORT bool StringToDumpFormatType(std::string value,
                                          DumpFormatType* type);
-CERES_EXPORT bool StringtoDumpFormatType(std::string value, LoggingType* type);
 
 CERES_EXPORT const char* TerminationTypeToString(TerminationType type);
 
