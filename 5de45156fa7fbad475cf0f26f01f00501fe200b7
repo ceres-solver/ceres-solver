@@ -266,6 +266,30 @@
       },
       "revId": "5de45156fa7fbad475cf0f26f01f00501fe200b7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb6c13b6_807624a4",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-03-26T18:50:17Z",
+      "side": 1,
+      "message": "Given that we still mark this guy as experimental API and all the examples I have seen, no one is touching the solver, what if we are willing to break the API?\nhow would you structure the API then?",
+      "parentUuid": "f5528bfa_7e60a8d7",
+      "range": {
+        "startLine": 154,
+        "startChar": 10,
+        "endLine": 154,
+        "endChar": 18
+      },
+      "revId": "5de45156fa7fbad475cf0f26f01f00501fe200b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
