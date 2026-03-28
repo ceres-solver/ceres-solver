@@ -22,6 +22,30 @@
       },
       "revId": "97a3bfb16b4bc46697371b1d8991dd9db4d22fc2",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3346a25_09aa0b7f",
+        "filename": "internal/ceres/residual_block.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-03-28T15:24:35Z",
+      "side": 1,
+      "message": "good point, and frankly I am a bit conflicted about this change.\nThe thing is, we could introduce this constant maintain it and not have anyone use it is also a real possibility.. let me think about it.",
+      "parentUuid": "b65395a2_aa097ef1",
+      "range": {
+        "startLine": 141,
+        "startChar": 36,
+        "endLine": 141,
+        "endChar": 37
+      },
+      "revId": "97a3bfb16b4bc46697371b1d8991dd9db4d22fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
