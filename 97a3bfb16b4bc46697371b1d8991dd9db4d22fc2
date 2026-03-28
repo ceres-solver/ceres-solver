@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b65395a2_aa097ef1",
+        "filename": "internal/ceres/residual_block.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-03-28T09:13:41Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it make sense to make the constant configurable at compile-time, e.g., using a define?",
+      "range": {
+        "startLine": 141,
+        "startChar": 36,
+        "endLine": 141,
+        "endChar": 37
+      },
+      "revId": "97a3bfb16b4bc46697371b1d8991dd9db4d22fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
