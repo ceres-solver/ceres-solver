@@ -1,0 +1,111 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a11cc40a_f36bd39a",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-04-01T14:49:02Z",
+      "side": 1,
+      "message": "maybe also define Residuals just like this and use it below?",
+      "range": {
+        "startLine": 152,
+        "startChar": 8,
+        "endLine": 152,
+        "endChar": 18
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "753c2921_fc0116bb",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "include/ceres/tiny_solver.h",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 1,
+                "endChar": 0
+              },
+              "replacement": "  using Residuals \u003d typename Eigen::Matrix\u003cScalar, NUM_RESIDUALS, 1, 0,\n                                           MAX_NUM_RESIDUALS, 1\u003e;\n"
+            },
+            {
+              "path": "include/ceres/tiny_solver.h",
+              "range": {
+                "startLine": 340,
+                "startChar": 0,
+                "endLine": 342,
+                "endChar": 0
+              },
+              "replacement": "  Residuals Residuals() const {\n"
+            },
+            {
+              "path": "include/ceres/tiny_solver.h",
+              "range": {
+                "startLine": 362,
+                "startChar": 0,
+                "endLine": 364,
+                "endChar": 0
+              },
+              "replacement": "  Residuals residuals_, f_x_new_;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "629e2be41c18f53b78f12adfec3141451b44b2df",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e41f73f_3e707bc0",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-04-01T14:49:02Z",
+      "side": 1,
+      "message": "here and below it maybe better to use the aliases defined above.",
+      "range": {
+        "startLine": 340,
+        "startChar": 16,
+        "endLine": 340,
+        "endChar": 22
+      },
+      "revId": "629e2be41c18f53b78f12adfec3141451b44b2df",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15129ee1_f19d7851",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-04-01T14:49:02Z",
+      "side": 1,
+      "message": "same here.",
+      "range": {
+        "startLine": 362,
+        "startChar": 38,
+        "endLine": 362,
+        "endChar": 39
+      },
+      "revId": "629e2be41c18f53b78f12adfec3141451b44b2df",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
