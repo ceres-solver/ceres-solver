@@ -62,6 +62,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9f819fe_991d9666",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 4725805
+      },
+      "writtenOn": "2026-04-02T22:21:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a11cc40a_f36bd39a",
+      "range": {
+        "startLine": 152,
+        "startChar": 8,
+        "endLine": 152,
+        "endChar": 18
+      },
+      "revId": "629e2be41c18f53b78f12adfec3141451b44b2df",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8e41f73f_3e707bc0",
@@ -85,6 +109,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e4cbbde_5e74facf",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 4725805
+      },
+      "writtenOn": "2026-04-02T22:21:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e41f73f_3e707bc0",
+      "range": {
+        "startLine": 340,
+        "startChar": 16,
+        "endLine": 340,
+        "endChar": 22
+      },
+      "revId": "629e2be41c18f53b78f12adfec3141451b44b2df",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "15129ee1_f19d7851",
@@ -98,6 +146,30 @@
       "writtenOn": "2026-04-01T14:49:02Z",
       "side": 1,
       "message": "same here.",
+      "range": {
+        "startLine": 362,
+        "startChar": 38,
+        "endLine": 362,
+        "endChar": 39
+      },
+      "revId": "629e2be41c18f53b78f12adfec3141451b44b2df",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7670c32c_3cd68ff1",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 4725805
+      },
+      "writtenOn": "2026-04-02T22:21:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15129ee1_f19d7851",
       "range": {
         "startLine": 362,
         "startChar": 38,
