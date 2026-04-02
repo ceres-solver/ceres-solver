@@ -130,4 +130,22 @@ TEST(TinySolverCostFunctionAdapter, DynamicResidualsDynamicParameterBlock) {
   TestHelper<Eigen::Dynamic, Eigen::Dynamic>();
 }
 
+TEST(TinySolverCostFunctionAdapter, AllDynamicWithMaxSizes) {
+  std::unique_ptr<CostFunction> cost_function(new CostFunction2x3);
+  // Both sizes are Dynamic, but capacity is fixed to 10x10.
+  using CostFunctionAdapter =
+      TinySolverCostFunctionAdapter<Eigen::Dynamic, Eigen::Dynamic, 10, 10>;
+
+  CostFunctionAdapter cfa(*cost_function);
+
+  EXPECT_EQ(cfa.NumResiduals(), 2);
+  EXPECT_EQ(cfa.NumParameters(), 3);
+
+  Eigen::Matrix<double, 2, 1> residuals;
+  Eigen::Matrix<double, 2, 3, Eigen::ColMajor> jacobian;
+  double xyz[3] = {1.0, -1.0, 2.0};
+
+  EXPECT_TRUE(cfa(xyz, residuals.data(), jacobian.data()));
+}
+
 }  // namespace ceres

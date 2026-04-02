@@ -71,8 +71,9 @@ namespace ceres {
 //
 //   TinySolverCostFunctionAdapter cost_function_adapter(*cost_function);
 //
-template <int kNumResiduals = Eigen::Dynamic,
-          int kNumParameters = Eigen::Dynamic>
+template <
+    int kNumResiduals = Eigen::Dynamic, int kNumParameters = Eigen::Dynamic,
+    int kMaxResiduals = kNumResiduals, int kMaxParameters = kNumParameters>
 class TinySolverCostFunctionAdapter {
  public:
   using Scalar = double;
@@ -120,7 +121,8 @@ class TinySolverCostFunctionAdapter {
     // column-major layout, and the CostFunction objects use row-major
     // Jacobian matrices. So the following bit of code does the
     // conversion from row-major Jacobians to column-major Jacobians.
-    Eigen::Map<Eigen::Matrix<double, NUM_RESIDUALS, NUM_PARAMETERS>>
+    Eigen::Map<Eigen::Matrix<double, NUM_RESIDUALS, NUM_PARAMETERS, 0,
+                             kMaxResiduals, kMaxParameters>>
         col_major_jacobian(jacobian, NumResiduals(), NumParameters());
     col_major_jacobian = row_major_jacobian_;
     return true;
@@ -133,7 +135,8 @@ class TinySolverCostFunctionAdapter {
 
  private:
   const CostFunction& cost_function_;
-  mutable Eigen::Matrix<double, NUM_RESIDUALS, NUM_PARAMETERS, Eigen::RowMajor>
+  mutable Eigen::Matrix<double, NUM_RESIDUALS, NUM_PARAMETERS, Eigen::RowMajor,
+                        kMaxResiduals, kMaxParameters>
       row_major_jacobian_;
 };
 
