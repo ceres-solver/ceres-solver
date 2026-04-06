@@ -213,6 +213,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b671e94_1d481950",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 4725805
+      },
+      "writtenOn": "2026-04-06T15:34:05Z",
+      "side": 1,
+      "message": "Please take a look at the added tests to `tiny_solver_autodiff_function_test.cc`. Maybe the added tests are not covering what you have in mind?",
+      "parentUuid": "d1705a3f_0364f6e6",
+      "range": {
+        "startLine": 216,
+        "startChar": 21,
+        "endLine": 216,
+        "endChar": 22
+      },
+      "revId": "b2e7b1c00d75d63e120e8511efd08d1c3fb3b35a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6699295c_b216d149",
@@ -250,6 +274,30 @@
           ]
         }
       ],
+      "revId": "b2e7b1c00d75d63e120e8511efd08d1c3fb3b35a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0c6ebc6_6fd6296f",
+        "filename": "include/ceres/tiny_solver_cost_function_adapter.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 4725805
+      },
+      "writtenOn": "2026-04-06T15:34:05Z",
+      "side": 1,
+      "message": "Yes, it compiles fine. I just recompiled and ran the tests this morning:\n\n```\n$~/ceres-solver/build$ ctest -R tiny_solver\nTest project /usr/local/google/home/pezhman/ceres-solver/build\n    Start 94: tiny_solver_test\n1/3 Test #94: tiny_solver_test .........................   Passed    0.01 sec\n    Start 95: tiny_solver_autodiff_function_test\n2/3 Test #95: tiny_solver_autodiff_function_test .......   Passed    0.01 sec\n    Start 96: tiny_solver_cost_function_adapter_test\n3/3 Test #96: tiny_solver_cost_function_adapter_test ...   Passed    0.01 sec\n\n100% tests passed, 0 tests failed out of 3\n```",
+      "parentUuid": "6699295c_b216d149",
+      "range": {
+        "startLine": 133,
+        "startChar": 15,
+        "endLine": 133,
+        "endChar": 29
+      },
       "revId": "b2e7b1c00d75d63e120e8511efd08d1c3fb3b35a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
