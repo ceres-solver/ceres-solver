@@ -16,6 +16,242 @@
       "message": "I also updated `tiny_solver_autodiff_function.h` to support dynamic number of parameters too. Please take a look.",
       "revId": "b2e7b1c00d75d63e120e8511efd08d1c3fb3b35a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e78ee64d_e662a1fd",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-04-06T04:08:40Z",
+      "side": 1,
+      "message": "this is not correct, the number of parameters HAS to be static. The Jet size has to be static, only the number of residuals can be dynamic",
+      "range": {
+        "startLine": 188,
+        "startChar": 19,
+        "endLine": 188,
+        "endChar": 29
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "ca36afd7_650b46f2",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "include/ceres/tiny_solver_autodiff_function.h",
+              "range": {
+                "startLine": 106,
+                "startChar": 0,
+                "endLine": 109,
+                "endChar": 0
+              },
+              "replacement": "template \u003ctypename CostFunctor,\n          int kNumResiduals,\n          int kNumParameters,\n          typename T \u003d double,\n          int kMaxResiduals \u003d kNumResiduals\u003e\n"
+            },
+            {
+              "path": "include/ceres/tiny_solver_autodiff_function.h",
+              "range": {
+                "startLine": 117,
+                "startChar": 0,
+                "endLine": 118,
+                "endChar": 0
+              },
+              "replacement": "    static_assert(kNumParameters !\u003d Eigen::Dynamic,\n                  \"The number of parameters must be a static size.\");\n    Initialize\u003ckNumResiduals\u003e(cost_functor);\n"
+            },
+            {
+              "path": "include/ceres/tiny_solver_autodiff_function.h",
+              "range": {
+                "startLine": 124,
+                "startChar": 0,
+                "endLine": 125,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "include/ceres/tiny_solver_autodiff_function.h",
+              "range": {
+                "startLine": 131,
+                "startChar": 0,
+                "endLine": 133,
+                "endChar": 0
+              },
+              "replacement": "                                                MAX_NUM_RESIDUALS, NUM_PARAMETERS\u003e;\n"
+            },
+            {
+              "path": "include/ceres/tiny_solver_autodiff_function.h",
+              "range": {
+                "startLine": 178,
+                "startChar": 0,
+                "endLine": 179,
+                "endChar": 0
+              },
+              "replacement": "    return kNumParameters;\n"
+            },
+            {
+              "path": "include/ceres/tiny_solver_autodiff_function.h",
+              "range": {
+                "startLine": 188,
+                "startChar": 0,
+                "endLine": 192,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "include/ceres/tiny_solver_autodiff_function.h",
+              "range": {
+                "startLine": 197,
+                "startChar": 0,
+                "endLine": 201,
+                "endChar": 0
+              },
+              "replacement": "  using JetType \u003d Jet\u003cT, kNumParameters\u003e;\n"
+            },
+            {
+              "path": "include/ceres/tiny_solver_autodiff_function.h",
+              "range": {
+                "startLine": 203,
+                "startChar": 0,
+                "endLine": 204,
+                "endChar": 0
+              },
+              "replacement": "  mutable JetType jet_parameters_[kNumParameters];\n"
+            },
+            {
+              "path": "include/ceres/tiny_solver_autodiff_function.h",
+              "range": {
+                "startLine": 208,
+                "startChar": 0,
+                "endLine": 209,
+                "endChar": 0
+              },
+              "replacement": "  template \u003cint R\u003e\n"
+            },
+            {
+              "path": "include/ceres/tiny_solver_autodiff_function.h",
+              "range": {
+                "startLine": 216,
+                "startChar": 0,
+                "endLine": 221,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "b2e7b1c00d75d63e120e8511efd08d1c3fb3b35a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c15e4eb6_e220f411",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-04-06T04:08:40Z",
+      "side": 1,
+      "message": "I think unless you actually go down all the way to Jets (which you should not do in this CL), you are going to have a problem here because Jets also allocate vectors underneath and you are going to end up doing kParameterSize jets.",
+      "range": {
+        "startLine": 200,
+        "startChar": 25,
+        "endLine": 200,
+        "endChar": 40
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "ec51f5e4_7c0d13d3",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "include/ceres/tiny_solver_autodiff_function.h",
+              "range": {
+                "startLine": 168,
+                "startChar": 0,
+                "endLine": 169,
+                "endChar": 0
+              },
+              "replacement": "      // We use head() because jet_residuals_[r].v might be larger than\n      // num_parameters_ when kNumParameters is Eigen::Dynamic.\n      jacobian_matrix.row(r) \u003d jet_residuals_[r].v.head(num_parameters_);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b2e7b1c00d75d63e120e8511efd08d1c3fb3b35a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1705a3f_0364f6e6",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-04-06T04:08:40Z",
+      "side": 1,
+      "message": "pretty sure this is not going to work, have you tried testing this?",
+      "range": {
+        "startLine": 216,
+        "startChar": 21,
+        "endLine": 216,
+        "endChar": 22
+      },
+      "revId": "b2e7b1c00d75d63e120e8511efd08d1c3fb3b35a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6699295c_b216d149",
+        "filename": "include/ceres/tiny_solver_cost_function_adapter.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-04-06T04:08:40Z",
+      "side": 1,
+      "message": "this template specialization does not seem right, are you sure this compiles and works?",
+      "range": {
+        "startLine": 133,
+        "startChar": 15,
+        "endLine": 133,
+        "endChar": 29
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "0a667e68_4100beb7",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "include/ceres/tiny_solver_cost_function_adapter.h",
+              "range": {
+                "startLine": 133,
+                "startChar": 0,
+                "endLine": 135,
+                "endChar": 0
+              },
+              "replacement": "    using ColMajorJacobianType \u003d\n        Eigen::Matrix\u003cScalar, NUM_RESIDUALS, NUM_PARAMETERS, Eigen::ColMajor\u003e;\n    Eigen::Map\u003cColMajorJacobianType\u003e col_major_jacobian(jacobian,\n                                                         NumResiduals(),\n                                                         NumParameters());\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b2e7b1c00d75d63e120e8511efd08d1c3fb3b35a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
