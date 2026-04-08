@@ -202,6 +202,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8225e77_8b119666",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 4725805
+      },
+      "writtenOn": "2026-04-08T06:17:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e78ee64d_e662a1fd",
+      "range": {
+        "startLine": 188,
+        "startChar": 19,
+        "endLine": 188,
+        "endChar": 29
+      },
+      "revId": "b2e7b1c00d75d63e120e8511efd08d1c3fb3b35a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c15e4eb6_e220f411",
@@ -239,6 +263,30 @@
           ]
         }
       ],
+      "revId": "b2e7b1c00d75d63e120e8511efd08d1c3fb3b35a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a9c1181_8dc45b19",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 4725805
+      },
+      "writtenOn": "2026-04-08T06:17:01Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c15e4eb6_e220f411",
+      "range": {
+        "startLine": 200,
+        "startChar": 25,
+        "endLine": 200,
+        "endChar": 40
+      },
       "revId": "b2e7b1c00d75d63e120e8511efd08d1c3fb3b35a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -361,6 +409,30 @@
           ]
         }
       ],
+      "revId": "b2e7b1c00d75d63e120e8511efd08d1c3fb3b35a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64388208_56ac13d0",
+        "filename": "include/ceres/tiny_solver_cost_function_adapter.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 4725805
+      },
+      "writtenOn": "2026-04-08T06:17:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b7ea3c3_8d15e46d",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 62
+      },
       "revId": "b2e7b1c00d75d63e120e8511efd08d1c3fb3b35a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
