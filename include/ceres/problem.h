@@ -91,7 +91,7 @@ using ResidualBlockId = internal::ResidualBlock*;
 //
 // This class is specifically designed to address the important subset of
 // "sparse" least squares problems, where each component of the residual depends
-// only on a small number number of parameters, even though the total number of
+// only on a small number of parameters, even though the total number of
 // residuals and parameters may be very large. This property affords tremendous
 // gains in scale, allowing efficient solving of large problems that are
 // otherwise inaccessible.
@@ -149,7 +149,7 @@ class CERES_EXPORT Problem {
     // the problem. There is a small but measurable performance penalty to these
     // checks, typically around 5% of construction time. If you are sure your
     // problem construction is correct, and 5% of the problem construction time
-    // is truly an overhead you want to avoid, then you can set
+    // is truly overhead you want to avoid, then you can set
     // disable_all_safety_checks to true.
     //
     // WARNING: Do not set this to true, unless you are absolutely sure of what
@@ -182,6 +182,8 @@ class CERES_EXPORT Problem {
   // Problem(Problem::Options()).
   Problem();
   explicit Problem(const Options& options);
+
+  // Move constructor and assignment.
   Problem(Problem&&);
   Problem& operator=(Problem&&);
 
@@ -226,7 +228,7 @@ class CERES_EXPORT Problem {
   //   problem.AddResidualBlock(new MyBinaryCostFunction(...), nullptr, x2, x1);
   //
   // Add a residual block by listing the parameter block pointers directly
-  // instead of wapping them in a container.
+  // instead of wrapping them in a container.
   template <typename... Ts>
   ResidualBlockId AddResidualBlock(CostFunction* cost_function,
                                    LossFunction* loss_function,
@@ -240,6 +242,7 @@ class CERES_EXPORT Problem {
   }
 
   // Add a residual block by providing a vector of parameter blocks.
+  // Ownership of cost_function and loss_function is handled as described above.
   ResidualBlockId AddResidualBlock(
       CostFunction* cost_function,
       LossFunction* loss_function,
@@ -247,6 +250,7 @@ class CERES_EXPORT Problem {
 
   // Add a residual block by providing a pointer to the parameter block array
   // and the number of parameter blocks.
+  // Ownership of cost_function and loss_function is handled as described above.
   ResidualBlockId AddResidualBlock(CostFunction* cost_function,
                                    LossFunction* loss_function,
                                    double* const* const parameter_blocks,
@@ -261,7 +265,7 @@ class CERES_EXPORT Problem {
   // problem. It is okay for manifold to be nullptr.
   //
   // Repeated calls with the same arguments are ignored. Repeated calls
-  // with the same double pointer but a different size results in a crash
+  // with the same double pointer but a different size result in a crash
   // (unless Solver::Options::disable_all_safety_checks is set to true).
   //
   // Repeated calls with the same double pointer and size but different Manifold
@@ -340,23 +344,18 @@ class CERES_EXPORT Problem {
   double GetParameterLowerBound(const double* values, int index) const;
   double GetParameterUpperBound(const double* values, int index) const;
 
-  // Number of parameter blocks in the problem. Always equals
-  // parameter_blocks().size() and parameter_block_sizes().size().
   int NumParameterBlocks() const;
 
   // The size of the parameter vector obtained by summing over the sizes of all
   // the parameter blocks.
   int NumParameters() const;
 
-  // Number of residual blocks in the problem. Always equals
-  // residual_blocks().size().
   int NumResidualBlocks() const;
 
   // The size of the residual vector obtained by summing over the sizes of all
   // of the residual blocks.
   int NumResiduals() const;
 
-  // The size of the parameter block.
   int ParameterBlockSize(const double* values) const;
 
   // The dimension of the tangent space of the Manifold for the parameter block.
@@ -364,7 +363,6 @@ class CERES_EXPORT Problem {
   // ParameterBlockTangentSize = ParameterBlockSize.
   int ParameterBlockTangentSize(const double* values) const;
 
-  // Is the given parameter block present in this problem or not?
   bool HasParameterBlock(const double* values) const;
 
   // Fills the passed parameter_blocks vector with pointers to the parameter
@@ -536,10 +534,8 @@ class CERES_EXPORT Problem {
       double* residuals,
       double** jacobians) const;
 
-  // Returns reference to the options with which the Problem was constructed.
   const Options& options() const;
 
-  // Returns pointer to Problem implementation
   internal::ProblemImpl* mutable_impl();
 
  private:

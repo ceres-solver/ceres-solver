@@ -43,11 +43,11 @@ namespace ceres::internal {
 // used to pass parameter block dimensions around (e.g. between functions or
 // classes).
 //
-// As an example if one have three parameter blocks with dimensions (2, 4, 1),
+// As an example if one has three parameter blocks with dimensions (2, 4, 1),
 // one would use 'StaticParameterDims<2, 4, 1>' which is a synonym for
 // 'ParameterDims<false, 2, 4, 1>'.
-// For dynamic parameter dims, one would just use 'DynamicParameterDims', which
-// is a synonym for 'ParameterDims<true>'.
+// For dynamic parameter dimensions, one would just use 'DynamicParameterDims',
+// which is a synonym for 'ParameterDims<true>'.
 template <bool IsDynamic, int... Ns>
 class ParameterDims {
  public:
@@ -58,7 +58,7 @@ class ParameterDims {
   static constexpr bool kIsValid = ((Ns > 0) && ...);
   static_assert(kIsValid,
                 "Invalid parameter block dimension detected. Each parameter "
-                "block dimension must be bigger than zero.");
+                "block dimension must be greater than zero.");
 
   static constexpr bool kIsDynamic = IsDynamic;
   static constexpr int kNumParameterBlocks = sizeof...(Ns);
@@ -67,10 +67,11 @@ class ParameterDims {
 
   static constexpr int kNumParameters = (Ns + ... + 0);
 
-  static constexpr int GetDim(int dim) { return params_[dim]; }
+  // Returns the dimension of the i-th parameter block.
+  static constexpr int GetDim(int i) { return params_[i]; }
 
-  // If one has all parameters packed into a single array this function unpacks
-  // the parameters.
+  // If one has all parameters packed into a single array, this function unpacks
+  // the parameters into an array of pointers.
   template <typename T>
   static inline std::array<T*, kNumParameterBlocks> GetUnpackedParameters(
       T* ptr) {

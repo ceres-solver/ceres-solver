@@ -59,29 +59,29 @@ enum LinearSolverType {
   // normal equations A'A x = A'b. They are direct solvers and do not
   // assume any special problem structure.
 
-  // Solve the normal equations using a dense Cholesky solver; based
+  // Solve the normal equations using a dense Cholesky solver based
   // on Eigen.
   DENSE_NORMAL_CHOLESKY,
 
-  // Solve the normal equations using a dense QR solver; based on
+  // Solve the normal equations using a dense QR solver based on
   // Eigen.
   DENSE_QR,
 
-  // Solve the normal equations using a sparse cholesky solver;
+  // Solve the normal equations using a sparse Cholesky solver.
   SPARSE_NORMAL_CHOLESKY,
 
   // Specialized solvers, specific to problems with a generalized
-  // bi-partitite structure.
+  // bipartite structure.
 
-  // Solves the reduced linear system using a dense Cholesky solver;
+  // Solves the reduced linear system using a dense Cholesky solver
   // based on Eigen.
   DENSE_SCHUR,
 
-  // Solves the reduced linear system using a sparse Cholesky solver;
+  // Solves the reduced linear system using a sparse Cholesky solver
   // based on CHOLMOD.
   SPARSE_SCHUR,
 
-  // Solves the reduced linear system using Conjugate Gradients, based
+  // Solves the reduced linear system using conjugate gradients, based
   // on a new Ceres implementation.  Suitable for large scale
   // problems.
   ITERATIVE_SCHUR,
@@ -105,8 +105,8 @@ enum PreconditionerType {
   // only be used with the ITERATIVE_SCHUR solver.
   SCHUR_JACOBI,
 
-  // Use power series expansion to approximate the inversion of Schur complement
-  // as a preconditioner.
+  // Use power series expansion to approximate the inversion of the Schur
+  // complement as a preconditioner.
   SCHUR_POWER_SERIES_EXPANSION,
 
   // Visibility clustering based preconditioners.
@@ -118,7 +118,7 @@ enum PreconditionerType {
   CLUSTER_JACOBI,
   CLUSTER_TRIDIAGONAL,
 
-  // Subset preconditioner is a general purpose preconditioner
+  // Subset preconditioner is a general purpose preconditioner for
   // linear least squares problems. Given a set of residual blocks,
   // it uses the corresponding subset of the rows of the Jacobian to
   // construct a preconditioner.
@@ -208,21 +208,28 @@ enum LinearSolverOrderingType {
   NESDIS
 };
 
+// Available dense linear algebra libraries.
 enum DenseLinearAlgebraLibraryType {
+  // Eigen's dense linear algebra routines.
   EIGEN,
+  // System BLAS + LAPACK.
   LAPACK,
+  // Nvidia's cuSOLVER + cuBLAS.
   CUDA,
 };
 
-// Logging options
+// Logging options.
 // The options get progressively noisier.
 enum LoggingType {
   SILENT,
   PER_MINIMIZER_ITERATION,
 };
 
+// Minimizer types.
 enum MinimizerType {
+  // Line search based minimizer.
   LINE_SEARCH,
+  // Trust region based minimizer.
   TRUST_REGION,
 };
 
@@ -237,11 +244,11 @@ enum LineSearchDirectionType {
   // used is determined by NonlinerConjuateGradientType.
   NONLINEAR_CONJUGATE_GRADIENT,
 
-  // BFGS, and it's limited memory approximation L-BFGS, are quasi-Newton
+  // BFGS, and its limited memory approximation L-BFGS, are quasi-Newton
   // algorithms that approximate the Hessian matrix by iteratively refining
   // an initial estimate with rank-one updates using the gradient at each
-  // iteration. They are a generalisation of the Secant method and satisfy
-  // the Secant equation.  The Secant equation has an infinium of solutions
+  // iteration. They are a generalization of the Secant method and satisfy
+  // the Secant equation.  The Secant equation has an infinitum of solutions
   // in multiple dimensions, as there are N*(N+1)/2 degrees of freedom in a
   // symmetric matrix but only N conditions are specified by the Secant
   // equation. The requirement that the Hessian approximation be positive
@@ -306,10 +313,12 @@ enum NonlinearConjugateGradientType {
   HESTENES_STIEFEL,
 };
 
+// Line search algorithms.
 enum LineSearchType {
   // Backtracking line search with polynomial interpolation or
   // bisection.
   ARMIJO,
+  // Line search satisfying the Wolfe conditions.
   WOLFE,
 };
 
@@ -357,12 +366,12 @@ enum DoglegType {
 };
 
 enum TerminationType {
-  // Minimizer terminated because one of the convergence criterion set
+  // Minimizer terminated because one of the convergence criteria set
   // by the user was satisfied.
   //
-  // 1.  (new_cost - old_cost) < function_tolerance * old_cost;
-  // 2.  max_i |gradient_i| < gradient_tolerance
-  // 3.  |step|_2 <= parameter_tolerance * ( |x|_2 +  parameter_tolerance)
+  // 1.  (old_cost - new_cost) < function_tolerance * old_cost;
+  // 2.  max_i |x_i - Project(Plus(x, -g))_i| < gradient_tolerance
+  // 3.  |step|_2 <= parameter_tolerance * (|x|_2 + parameter_tolerance)
   //
   // The user's parameter blocks will be updated with the solution.
   CONVERGENCE,
@@ -373,7 +382,7 @@ enum TerminationType {
   // blocks will be updated with the solution found so far.
   NO_CONVERGENCE,
 
-  // The minimizer terminated because of an error.  The user's
+  // Minimizer terminated because of an error.  The user's
   // parameter blocks will not be updated.
   FAILURE,
 
@@ -387,7 +396,7 @@ enum TerminationType {
   // The user's parameter blocks will be updated with the solution.
   USER_SUCCESS,
 
-  // Minimizer terminated because because a user IterationCallback
+  // Minimizer terminated because a user IterationCallback
   // returned SOLVER_ABORT.
   //
   // The user's parameter blocks will not be updated.
@@ -404,7 +413,7 @@ enum CallbackReturnType {
 
   // Terminate solver, and do not update the parameter blocks upon
   // return. Unless the user has set
-  // Solver:Options:::update_state_every_iteration, in which case the
+  // Solver::Options::update_state_every_iteration, in which case the
   // state would have been updated every iteration
   // anyways. Solver::Summary::termination_type is set to USER_ABORT.
   SOLVER_ABORT,
@@ -436,7 +445,7 @@ enum DumpFormatType {
 
 // For SizedCostFunction and AutoDiffCostFunction, DYNAMIC can be
 // specified for the number of residuals. If specified, then the
-// number of residuas for that cost function can vary at runtime.
+// number of residuals for that cost function can vary at runtime.
 enum DimensionType {
   DYNAMIC = -1,
 };
@@ -456,12 +465,14 @@ enum NumericDiffMethodType {
   RIDDERS
 };
 
+// Type of polynomial used for interpolation during line search.
 enum LineSearchInterpolationType {
   BISECTION,
   QUADRATIC,
   CUBIC,
 };
 
+// Type of algorithm used for computing the covariance matrix.
 enum CovarianceAlgorithmType {
   DENSE_SVD,
   SPARSE_QR,
@@ -552,8 +563,10 @@ CERES_EXPORT bool StringToDumpFormatType(std::string value,
 CERES_EXPORT const char* TerminationTypeToString(TerminationType type);
 
 CERES_EXPORT bool IsSchurType(LinearSolverType type);
+
 CERES_EXPORT bool IsSparseLinearAlgebraLibraryTypeAvailable(
     SparseLinearAlgebraLibraryType type);
+
 CERES_EXPORT bool IsDenseLinearAlgebraLibraryTypeAvailable(
     DenseLinearAlgebraLibraryType type);
 

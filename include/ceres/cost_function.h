@@ -27,7 +27,7 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
-//         keir@google.m (Keir Mierle)
+//         keir@google.com (Keir Mierle)
 //
 // This is the interface through which the least squares solver accesses the
 // residual and Jacobian of the least squares problem. Users are expected to
@@ -74,9 +74,9 @@ class CERES_EXPORT CostFunction {
   // parameters is an array of pointers to arrays containing the
   // various parameter blocks. parameters has the same number of
   // elements as parameter_block_sizes_.  Parameter blocks are in the
-  // same order as parameter_block_sizes_.i.e.,
+  // same order as parameter_block_sizes_, i.e.,
   //
-  //   parameters_[i] = double[parameter_block_sizes_[i]]
+  //   parameters[i] = double[parameter_block_sizes_[i]]
   //
   // Outputs:
   //
@@ -85,17 +85,17 @@ class CERES_EXPORT CostFunction {
   // jacobians is an array of size parameter_block_sizes_ containing
   // pointers to storage for jacobian blocks corresponding to each
   // parameter block. Jacobian blocks are in the same order as
-  // parameter_block_sizes, i.e. jacobians[i], is an
-  // array that contains num_residuals_* parameter_block_sizes_[i]
+  // parameter_block_sizes_, i.e., jacobians[i] is an
+  // array that contains num_residuals_ * parameter_block_sizes_[i]
   // elements. Each jacobian block is stored in row-major order, i.e.,
   //
-  //   jacobians[i][r*parameter_block_size_[i] + c] =
+  //   jacobians[i][r * parameter_block_sizes_[i] + c] =
   //                              d residual[r] / d parameters[i][c]
   //
   // If jacobians is nullptr, then no derivatives are returned; this is
   // the case when computing cost only. If jacobians[i] is nullptr, then
   // the jacobian block corresponding to the i'th parameter block must
-  // not to be returned.
+  // not be returned.
   //
   // The return value indicates whether the computation of the
   // residuals and/or jacobians was successful or not.

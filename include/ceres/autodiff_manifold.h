@@ -120,7 +120,8 @@ namespace ceres {
 //     T ambient_y_minus_x[4];
 //     QuaternionProduct(y, minus_x, ambient_y_minus_x);
 //     T u_norm = hypot(ambient_y_minus_x[1], ambient_y_minus_x[2],
-//                      ambient_y_minus_x[3]); if (u_norm > 0.0) {
+//                      ambient_y_minus_x[3]);
+//     if (u_norm > 0.0) {
 //       T theta = T(2) * atan2(u_norm, ambient_y_minus_x[0]);
 //       y_minus_x[0] = theta * ambient_y_minus_x[1] / u_norm;
 //       y_minus_x[1] = theta * ambient_y_minus_x[2] / u_norm;
@@ -146,8 +147,16 @@ class AutoDiffManifold final : public Manifold {
  public:
   AutoDiffManifold() : functor_(std::make_unique<Functor>()) {}
 
-  // Takes ownership of functor.
   explicit AutoDiffManifold(Functor* functor) : functor_(functor) {}
+
+  // Move-only.
+  AutoDiffManifold(AutoDiffManifold&&) = default;
+  AutoDiffManifold& operator=(AutoDiffManifold&&) = default;
+
+  AutoDiffManifold(const AutoDiffManifold&) = delete;
+  AutoDiffManifold& operator=(const AutoDiffManifold&) = delete;
+
+  ~AutoDiffManifold() override = default;
 
   int AmbientSize() const override { return kAmbientSize; }
   int TangentSize() const override { return kTangentSize; }

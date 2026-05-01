@@ -303,7 +303,7 @@ class CERES_EXPORT Solver {
 
     // Minimizer terminates when
     //
-    //   (new_cost - old_cost) < function_tolerance * old_cost;
+    //   (old_cost - new_cost) < function_tolerance * old_cost;
     //
     double function_tolerance = 1e-6;
 
@@ -316,7 +316,7 @@ class CERES_EXPORT Solver {
 
     // Minimizer terminates when
     //
-    //   |step|_2 <= parameter_tolerance * ( |x|_2 +  parameter_tolerance)
+    //   |step|_2 <= parameter_tolerance * (|x|_2 + parameter_tolerance)
     //
     double parameter_tolerance = 1e-8;
 
@@ -580,11 +580,11 @@ class CERES_EXPORT Solver {
     // max_num_refinement_iterations = 0, then the Gauss-Newton step is computed
     // in single precision.
     //
-    // This options is available when linear solver uses sparse or dense
-    // cholesky factorization.
+    // This option is available when the linear solver uses sparse or dense
+    // Cholesky factorization.
     bool use_mixed_precision_solves = false;
 
-    // Number steps of the iterative refinement process to run when computing
+    // Number of steps of the iterative refinement process to run when computing
     // the Gauss-Newton step. This is most useful when used in conjunction with
     // use_mixed_precision = true.
     int max_num_refinement_iterations = 0;
@@ -601,7 +601,7 @@ class CERES_EXPORT Solver {
 
     // Maximum number of iterations performed by SCHUR_POWER_SERIES_EXPANSION.
     // Each iteration corresponds to one more term in the power series expansion
-    // od the inverse of the Schur complement.  This value controls the maximum
+    // of the inverse of the Schur complement.  This value controls the maximum
     // number of iterations whether it is used as a preconditioner or just to
     // initialize the solution for ITERATIVE_SCHUR.
     int max_num_spse_iterations = 5;
@@ -645,12 +645,11 @@ class CERES_EXPORT Solver {
     // Notice here that the expression on the left is linear in a_1
     // and a_2, and given any value for b_1, b_2 and c_1, it is
     // possible to use linear regression to estimate the optimal
-    // values of a_1 and a_2. Indeed, its possible to analytically
-    // eliminate the variables a_1 and a_2 from the problem all
-    // together. Problems like these are known as separable least
-    // squares problem and the most famous algorithm for solving them
-    // is the Variable Projection algorithm invented by Golub &
-    // Pereyra.
+    // values of a_1 and a_2. Indeed, it's possible to analytically
+    // eliminate the variables a_1 and a_2 from the problem altogether.
+    // Problems like these are known as separable least squares problems
+    // and the most famous algorithm for solving them is the Variable
+    // Projection algorithm invented by Golub & Pereyra.
     //
     // Similar structure can be found in the matrix factorization with
     // missing data problem. There the corresponding algorithm is
@@ -732,11 +731,13 @@ class CERES_EXPORT Solver {
     // non-empty and trust_region_problem_dump_format_type is not
     // CONSOLE.
     std::string trust_region_problem_dump_directory = "/tmp";
+
+    // Format in which the trust region problem should be dumped.
     DumpFormatType trust_region_problem_dump_format_type = TEXTFILE;
 
     // Finite differences options ----------------------------------------------
 
-    // Check all jacobians computed by each residual block with finite
+    // Check all Jacobians computed by each residual block with finite
     // differences. This is expensive since it involves computing the
     // derivative by normal means (e.g. user specified, autodiff,
     // etc), then also computing it using finite differences. The
@@ -745,13 +746,13 @@ class CERES_EXPORT Solver {
     bool check_gradients = false;
 
     // Relative precision to check for in the gradient checker. If the
-    // relative difference between an element in a jacobian exceeds
-    // this number, then the jacobian for that cost term is dumped.
+    // relative difference between an element in a Jacobian exceeds
+    // this number, then the Jacobian for that cost term is dumped.
     double gradient_check_relative_precision = 1e-8;
 
-    // WARNING: This option only applies to the to the numeric
+    // WARNING: This option only applies to the numeric
     // differentiation used for checking the user provided derivatives
-    // when when Solver::Options::check_gradients is true. If you are
+    // when Solver::Options::check_gradients is true. If you are
     // using NumericDiffCostFunction and are interested in changing
     // the step size for numeric differentiation in your cost
     // function, please have a look at
@@ -824,6 +825,9 @@ class CERES_EXPORT Solver {
     // termination.
     std::string FullReport() const;
 
+    // Returns true if the solver terminated for a reason that allows
+    // the solution to be used. This is true if the termination_type is
+    // CONVERGENCE or USER_SUCCESS.
     bool IsSolutionUsable() const;
 
     // Minimizer summary -------------------------------------------------
@@ -1012,7 +1016,7 @@ class CERES_EXPORT Solver {
     std::vector<int> linear_solver_ordering_given;
 
     // Size of the parameter groups used by the solver when ordering
-    // the columns of the Jacobian.  This maybe different from
+    // the columns of the Jacobian.  This may be different from
     // linear_solver_ordering_given if the user left
     // linear_solver_ordering_given blank and asked for an automatic
     // ordering, or if the problem contains some constant or inactive
@@ -1048,7 +1052,7 @@ class CERES_EXPORT Solver {
     std::vector<int> inner_iteration_ordering_given;
 
     // Size of the parameter groups given used by the solver for
-    // performing inner iterations. This maybe different from
+    // performing inner iterations. This may be different from
     // inner_iteration_ordering_given if the user left
     // inner_iteration_ordering_given blank and asked for an automatic
     // ordering, or if the problem contains some constant or inactive
@@ -1105,17 +1109,11 @@ class CERES_EXPORT Solver {
     int max_lbfgs_rank = -1;
   };
 
-  // Once a least squares problem has been built, this function takes
-  // the problem and optimizes it based on the values of the options
-  // parameters. Upon return, a detailed summary of the work performed
-  // by the preprocessor, the non-linear minimizer and the linear
-  // solver are reported in the summary object.
   virtual void Solve(const Options& options,
                      Problem* problem,
                      Solver::Summary* summary);
 };
 
-// Helper function which avoids going through the interface.
 CERES_EXPORT void Solve(const Solver::Options& options,
                         Problem* problem,
                         Solver::Summary* summary);

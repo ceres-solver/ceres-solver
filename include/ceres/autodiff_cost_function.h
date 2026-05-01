@@ -43,7 +43,7 @@
 // The function must write the computed value in the last argument
 // (the only non-const one) and return true to indicate
 // success. Please see cost_function.h for details on how the return
-// value maybe used to impose simple constraints on the parameter
+// value may be used to impose simple constraints on the parameter
 // block.
 //
 // For example, consider a scalar error e = k - x'y, where both x and y are
@@ -61,11 +61,12 @@
 // define the object
 //
 //   class MyScalarCostFunctor {
+//    public:
 //     MyScalarCostFunctor(double k): k_(k) {}
 //
 //     template <typename T>
 //     bool operator()(const T* const x , const T* const y, T* e) const {
-//       e[0] = T(k_) - x[0] * y[0] + x[1] * y[1];
+//       e[0] = T(k_) - (x[0] * y[0] + x[1] * y[1]);
 //       return true;
 //     }
 //

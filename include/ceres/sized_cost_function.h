@@ -41,8 +41,8 @@
 #include <initializer_list>
 
 #include "ceres/cost_function.h"
+#include "ceres/internal/parameter_dims.h"
 #include "ceres/types.h"
-#include "internal/parameter_dims.h"
 
 namespace ceres {
 
@@ -50,7 +50,7 @@ template <int kNumResiduals, int... Ns>
 class SizedCostFunction : public CostFunction {
  public:
   static_assert(kNumResiduals > 0 || kNumResiduals == DYNAMIC,
-                "Cost functions must have at least one residual block.");
+                "Cost functions must have at least one residual.");
   static_assert(internal::StaticParameterDims<Ns...>::kIsValid,
                 "Invalid parameter block dimension detected. Each parameter "
                 "block dimension must be bigger than zero.");

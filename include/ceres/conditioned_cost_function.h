@@ -64,9 +64,9 @@ namespace ceres {
 //   CostFunction* f_N = ...
 //   conditioners.push_back(f_N);
 //   ConditionedCostFunction* ccf =
-//     new ConditionedCostFunction(my_cost_function, conditioners);
+//     new ConditionedCostFunction(my_cost_function, conditioners, TAKE_OWNERSHIP);
 //
-// Now ccf's residual i (i=0..N-1) will be passed though the i'th conditioner.
+// Now ccf's residual i (i=0..N-1) will be passed through the i'th conditioner.
 //
 //   ccf_residual[i] = f_i(my_cost_function_residual[i])
 //
@@ -82,6 +82,15 @@ class CERES_EXPORT ConditionedCostFunction final : public CostFunction {
   ConditionedCostFunction(CostFunction* wrapped_cost_function,
                           const std::vector<CostFunction*>& conditioners,
                           Ownership ownership);
+
+  ConditionedCostFunction(const ConditionedCostFunction&) = delete;
+  ConditionedCostFunction& operator=(const ConditionedCostFunction&) = delete;
+
+  // Move constructor and assignment.
+  ConditionedCostFunction(ConditionedCostFunction&& other) noexcept = default;
+  ConditionedCostFunction& operator=(ConditionedCostFunction&& other) noexcept =
+      default;
+
   ~ConditionedCostFunction() override;
 
   bool Evaluate(double const* const* parameters,

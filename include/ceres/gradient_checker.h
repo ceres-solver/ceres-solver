@@ -25,7 +25,6 @@
 // CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
-// Copyright 2023 Google Inc. All Rights Reserved.
 //
 // Authors: wjr@google.com (William Rucklidge),
 //          keir@google.com (Keir Mierle),
@@ -57,8 +56,8 @@ namespace ceres {
 //   max(J_actual(i, j), J_numeric(i, j))
 //
 // where J_actual(i, j) is the Jacobian as computed by the supplied cost
-// function (by the user) multiplied by the manifold Jacobian and J_numeric is
-// the Jacobian as computed by finite differences, multiplied by the manifold
+// function (by the user) multiplied by the Manifold Jacobian and J_numeric is
+// the Jacobian as computed by finite differences, multiplied by the Manifold
 // Jacobian as well.
 //
 // How to use: Fill in an array of pointers to parameter blocks for your
@@ -78,6 +77,9 @@ class CERES_EXPORT GradientChecker {
                   const std::vector<const Manifold*>* manifolds,
                   const NumericDiffOptions& options);
 
+  // Destructor.
+  ~GradientChecker();
+
   // Contains results from a call to Probe for later inspection.
   struct CERES_EXPORT ProbeResults {
     // The return value of the cost function.
@@ -88,7 +90,7 @@ class CERES_EXPORT GradientChecker {
 
     // The sizes of the Jacobians below are dictated by the cost function's
     // parameter block size and residual block sizes. If a parameter block has a
-    // manifold associated with it, the size of the "local" Jacobian will be
+    // Manifold associated with it, the size of the "local" Jacobian will be
     // determined by the dimension of the manifold (which is the same as the
     // dimension of the tangent space) and residual block size, otherwise it
     // will be identical to the regular Jacobian.
@@ -114,11 +116,11 @@ class CERES_EXPORT GradientChecker {
   };
 
   // Call the cost function, compute alternative Jacobians using finite
-  // differencing and compare results. If manifolds are given, the Jacobians
-  // will be multiplied by the manifold Jacobians before performing the check,
+  // differencing and compare results. If Manifolds are given, the Jacobians
+  // will be multiplied by the Manifold Jacobians before performing the check,
   // which effectively means that all errors along the null space of the
-  // manifold will be ignored.  Returns false if the Jacobians don't match, the
-  // cost function return false, or if a cost function returns a different
+  // Manifold will be ignored.  Returns false if the Jacobians don't match, the
+  // cost function returns false, or if a cost function returns a different
   // residual when called with a Jacobian output argument vs. calling it
   // without. Otherwise returns true.
   //
@@ -130,7 +132,7 @@ class CERES_EXPORT GradientChecker {
   // here. May be nullptr.
   //
   // Returns true if no problems are detected and the difference between the
-  // Jacobians is less than error_tolerance.
+  // Jacobians is less than relative_precision.
   bool Probe(double const* const* parameters,
              double relative_precision,
              ProbeResults* results) const;

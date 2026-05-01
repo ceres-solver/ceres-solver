@@ -237,8 +237,9 @@ void EulerAnglesToRotation(const T* euler,
 // Internally, Euler Axis sequences are classified by Ken Shoemake's scheme from
 // "Euler angle conversion", Graphics Gems IV, where a choice of axis for the
 // first rotation and 3 binary choices:
-// 1. Oddness of the axis permutation, that defines whether the second axis is
-// 'greater-than' the first axis according to the order X>Y>Z>X)
+// 1. Parity of the axis permutation. The axis sequence has Even parity if the
+// second axis of rotation is 'greater-than' the first axis of rotation
+// according to the order X<Y<Z<X, otherwise it has Odd parity.
 // 2. Proper Euler Angles v.s. Tait-Bryan Angles
 // 3. Extrinsic Rotations v.s. Intrinsic Rotations
 // compactly represent all 24 possible Euler Angle Conventions
@@ -430,7 +431,7 @@ inline void QuaternionToAngleAxis(const T* quaternion, T* angle_axis) {
     // result in a normalized angle-axis vector.
     //
     // In that case we observe that 2 * theta ~ 2 * theta - 2 * pi,
-    // which is equivalent saying
+    // which is equivalent to saying
     //
     //   theta - pi = atan(sin(theta - pi), cos(theta - pi))
     //              = atan(-sin(theta), -cos(theta))
@@ -491,9 +492,9 @@ void RotationMatrixToQuaternion(
 }
 
 // The conversion of a rotation matrix to the angle-axis form is
-// numerically problematic when then rotation angle is close to zero
+// numerically problematic when the rotation angle is close to zero
 // or to Pi. The following implementation detects when these two cases
-// occurs and deals with them by taking code paths that are guaranteed
+// occur and deals with them by taking code paths that are guaranteed
 // to not perform division by a small number.
 template <typename T>
 inline void RotationMatrixToAngleAxis(const T* R, T* angle_axis) {

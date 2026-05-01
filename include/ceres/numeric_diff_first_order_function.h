@@ -50,10 +50,10 @@ namespace ceres {
 
 // Creates FirstOrderFunctions as needed by the GradientProblem
 // framework, with gradients computed via numeric differentiation. For
-// more information on numeric differentiation, see the wikipedia
+// more information on numeric differentiation, see the Wikipedia
 // article at https://en.wikipedia.org/wiki/Numerical_differentiation
 //
-// To get an numerically differentiated cost function, you must define
+// To get a numerically differentiated cost function, you must define
 // a class with an operator() (a functor) that computes the cost.
 //
 // The function must write the computed value in the last argument
@@ -63,7 +63,7 @@ namespace ceres {
 // two-dimensional column vector parameters, the prime sign indicates
 // transposition, and a is a constant.
 //
-// To write an numerically-differentiable cost function for the above model,
+// To write a numerically-differentiable cost function for the above model,
 // first define the object
 //
 //  class QuadraticCostFunctor {
@@ -87,12 +87,12 @@ namespace ceres {
 // doubles. The output cost is the last parameter.
 //
 // Then given this class definition, the numerically differentiated
-// first order function with central differences used for computing the
+// first order function with Central differences used for computing the
 // derivative can be constructed as follows.
 //
 //   std::unique_ptr<FirstOrderFunction> function
 //       = std::make_unique<
-//           NumericDiffFirstOrderFunction<MyScalarCostFunctor, CENTRAL, 4>>(
+//           NumericDiffFirstOrderFunction<QuadraticCostFunctor, CENTRAL, 4>>(
 //               std::make_unique<QuadraticCostFunctor>(1.0));     ^     ^
 //                                                                 |     |
 //                                 Finite Differencing Scheme -----+     |
@@ -108,7 +108,7 @@ namespace ceres {
 // alternate construction syntax can be used:
 //
 //   std::unique_ptr<FirstOrderFunction> function
-//       = std::make_unique<NumericDiffFirstOrderFunction<MyScalarCostFunctor,
+//       = std::make_unique<NumericDiffFirstOrderFunction<QuadraticCostFunctor,
 //                                                        CENTRAL>>(
 //           std::make_unique<QuadraticCostFunctor>(1.0), 4);
 //
@@ -122,12 +122,13 @@ class NumericDiffFirstOrderFunction final : public FirstOrderFunction {
   NumericDiffFirstOrderFunction(const NumericDiffFirstOrderFunction&) = delete;
   NumericDiffFirstOrderFunction& operator=(
       const NumericDiffFirstOrderFunction&) = delete;
+
+  // Move constructor and assignment.
   NumericDiffFirstOrderFunction(
       NumericDiffFirstOrderFunction&& other) noexcept = default;
   NumericDiffFirstOrderFunction& operator=(
       NumericDiffFirstOrderFunction&& other) noexcept = default;
 
-  // Constructor for the case where the parameter size is known at compile time.
   explicit NumericDiffFirstOrderFunction(
       std::unique_ptr<FirstOrderFunctor> functor,
       const NumericDiffOptions& options = NumericDiffOptions())
@@ -157,7 +158,6 @@ class NumericDiffFirstOrderFunction final : public FirstOrderFunction {
                   "must be provided as a constructor argument.");
   }
 
-  // Constructor for the case where the parameter size is specified at run time.
   explicit NumericDiffFirstOrderFunction(
       std::unique_ptr<FirstOrderFunctor> functor,
       int num_parameters,

@@ -46,17 +46,18 @@
 
 namespace ceres::internal {
 
-// Variadic evaluate is a helper function to evaluate ceres cost function or
+// VariadicEvaluate is a helper function to evaluate Ceres cost functions or
 // functors using an input, output and the parameter dimensions. There are
-// several ways different possibilities:
-// 1) If the passed functor is a 'ceres::CostFunction' its evaluate method is
+// several possibilities:
+// 1) If the passed functor is a 'ceres::CostFunction', its Evaluate method is
 // called.
 // 2) If the functor is not a 'ceres::CostFunction' and the specified parameter
-// dims is dynamic, the functor must have the following signature
+// dimensions are dynamic, the functor must have the following signature:
 // 'bool(T const* const* input, T* output)'.
 // 3) If the functor is not a 'ceres::CostFunction' and the specified parameter
-// dims is not dynamic, the input is expanded by using the number of parameter
-// blocks. The signature of the functor must have the following signature
+// dimensions are not dynamic, the input is expanded by using the number of
+// parameter blocks. The signature of the functor must have the following
+// signature:
 // 'bool()(const T* i_1, const T* i_2, ... const T* i_n, T* output)'.
 template <typename ParameterDims, typename Functor, typename T>
 inline bool VariadicEvaluate(const Functor& functor,
@@ -104,6 +105,7 @@ class FirstOrderFunctorAdapter {
  public:
   explicit FirstOrderFunctorAdapter(const Functor& functor)
       : functor_(functor) {}
+
   bool operator()(double const* const* parameters, double* cost) const {
     return functor_(*parameters, cost);
   }

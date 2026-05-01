@@ -63,17 +63,17 @@ class FirstOrderFunction;
 //
 // Example usage:
 //
-// The following demonstrate the problem construction for Rosenbrock's function
+// The following demonstrates the problem construction for Rosenbrock's function
 //
 //   f(x,y) = (1-x)^2 + 100(y - x^2)^2;
 //
 // class Rosenbrock : public ceres::FirstOrderFunction {
 //  public:
-//   virtual ~Rosenbrock() {}
+//   ~Rosenbrock() override {}
 //
-//   virtual bool Evaluate(const double* parameters,
-//                         double* cost,
-//                         double* gradient) const {
+//   bool Evaluate(const double* parameters,
+//                 double* cost,
+//                 double* gradient) const override {
 //     const double x = parameters[0];
 //     const double y = parameters[1];
 //
@@ -83,25 +83,28 @@ class FirstOrderFunction;
 //       gradient[1] = 200.0 * (y - x * x);
 //     }
 //     return true;
-//   };
+//   }
 //
-//   virtual int NumParameters() const { return 2; };
+//   int NumParameters() const override { return 2; }
 // };
 //
 // ceres::GradientProblem problem(std::make_unique<Rosenbrock>());
 class CERES_EXPORT GradientProblem {
  public:
   explicit GradientProblem(std::unique_ptr<FirstOrderFunction> function);
+
   GradientProblem(std::unique_ptr<FirstOrderFunction> function,
                   std::unique_ptr<Manifold> manifold);
 
+  ~GradientProblem();
+
   int NumParameters() const;
 
-  // Dimension of the manifold (and its tangent space).
   int NumTangentParameters() const;
 
   // This call is not thread safe.
   bool Evaluate(const double* parameters, double* cost, double* gradient) const;
+
   bool Plus(const double* x, const double* delta, double* x_plus_delta) const;
 
   const FirstOrderFunction* function() const { return function_.get(); }

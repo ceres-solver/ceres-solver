@@ -29,17 +29,17 @@
 // Author: keir@google.com (Keir Mierle)
 //         sameeragarwal@google.com (Sameer Agarwal)
 //
-// Create CostFunctions as needed by the least squares framework with jacobians
+// Create CostFunctions as needed by the least squares framework with Jacobians
 // computed via numeric (a.k.a. finite) differentiation. For more details see
 // http://en.wikipedia.org/wiki/Numerical_differentiation.
 //
-// To get an numerically differentiated cost function, you must define
-// a class with a operator() (a functor) that computes the residuals.
+// To get a numerically differentiated cost function, you must define
+// a class with an operator() (a functor) that computes the residuals.
 //
 // The function must write the computed value in the last argument
 // (the only non-const one) and return true to indicate success.
 // Please see cost_function.h for details on how the return value
-// maybe used to impose simple constraints on the parameter block.
+// may be used to impose simple constraints on the parameter block.
 //
 // For example, consider a scalar error e = k - x'y, where both x and y are
 // two-dimensional column vector parameters, the prime sign indicates
@@ -49,19 +49,20 @@
 // for a series of measurements, where there is an instance of the cost function
 // for each measurement k.
 //
-// The actual cost added to the total problem is e^2, or (k - x'k)^2; however,
+// The actual cost added to the total problem is e^2, or (k - x'y)^2; however,
 // the squaring is implicitly done by the optimization framework.
 //
-// To write an numerically-differentiable cost function for the above model,
+// To write a numerically-differentiable cost function for the above model,
 // first define the object
 //
 //   class MyScalarCostFunctor {
+//    public:
 //     explicit MyScalarCostFunctor(double k): k_(k) {}
 //
 //     bool operator()(const double* const x,
 //                     const double* const y,
 //                     double* residuals) const {
-//       residuals[0] = k_ - x[0] * y[0] - x[1] * y[1];
+//       residuals[0] = k_ - (x[0] * y[0] + x[1] * y[1]);
 //       return true;
 //     }
 //
@@ -116,7 +117,7 @@
 //
 // The central difference method is considerably more accurate at the cost of
 // twice as many function evaluations than forward difference. Consider using
-// central differences begin with, and only after that works, trying forward
+// central differences to begin with, and only after that works, trying forward
 // difference to improve performance.
 //
 // WARNING #1: A common beginner's error when first using
@@ -246,7 +247,7 @@ class NumericDiffCostFunction final
     constexpr int kNumParameters = ParameterDims::kNumParameters;
     constexpr int kNumParameterBlocks = ParameterDims::kNumParameterBlocks;
 
-    // Get the function value (residuals) at the the point to evaluate.
+    // Get the function value (residuals) at the point to evaluate.
     if (!internal::VariadicEvaluate<ParameterDims>(
             *functor_, parameters, residuals)) {
       return false;

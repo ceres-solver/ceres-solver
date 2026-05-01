@@ -61,12 +61,12 @@ struct CERES_EXPORT IterationSummary {
   // Note: step_is_nonmonotonic is always false when iteration = 0;
   bool step_is_nonmonotonic = false;
 
-  // Whether or not the minimizer accepted this step or not. If the
+  // Whether the minimizer accepted this step. If the
   // ordinary trust region algorithm is used, this means that the
   // relative reduction in the objective function value was greater
   // than Solver::Options::min_relative_decrease. However, if the
   // non-monotonic trust region algorithm is used
-  // (Solver::Options:use_nonmonotonic_steps = true), then even if the
+  // (Solver::Options::use_nonmonotonic_steps = true), then even if the
   // relative decrease is not sufficient, the algorithm may accept the
   // step and the step is declared successful.
   //
@@ -106,7 +106,7 @@ struct CERES_EXPORT IterationSummary {
   // ignore it.
   double eta = 0.0;
 
-  // Step sized computed by the line search algorithm.
+  // Step size computed by the line search algorithm.
   double step_size = 0.0;
 
   // Number of function value evaluations used by the line search algorithm.
@@ -196,7 +196,6 @@ class CERES_EXPORT IterationCallback {
   virtual ~IterationCallback();
   virtual CallbackReturnType operator()(const IterationSummary& summary) = 0;
 };
-
 }  // namespace ceres
 
 #include "ceres/internal/reenable_warnings.h"

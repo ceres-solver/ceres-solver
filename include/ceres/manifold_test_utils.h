@@ -52,7 +52,7 @@ namespace ceres {
 // Testing a Manifold has two parts.
 //
 // 1. Checking that Manifold::Plus() and Manifold::Minus() are correctly
-//    defined. This requires per manifold tests.
+//    defined. This requires per-manifold tests.
 //
 // 2. The other methods of the manifold have mathematical properties that make
 //    them compatible with Plus() and Minus(), as described in [1].
@@ -136,6 +136,8 @@ MATCHER_P2(XMinusXIsZeroAt, x, tolerance, "") {
 struct PlusFunctor {
   PlusFunctor(const Manifold& manifold, const double* x)
       : manifold(manifold), x(x) {}
+
+  // Evaluates Plus(x, delta).
   bool operator()(double const* const* parameters, double* x_plus_delta) const {
     return manifold.Plus(x, parameters[0], x_plus_delta);
   }
@@ -163,10 +165,10 @@ MATCHER_P2(HasCorrectPlusJacobianAt, x, tolerance, "") {
 
   Vector x_plus_zero = Vector::Zero(ambient_size);
   Matrix expected = Matrix::Zero(ambient_size, tangent_size);
-  double* jacobians[1] = {expected.data()};
+  double* Jacobians[1] = {expected.data()};
 
   EXPECT_TRUE(
-      cost_function.Evaluate(parameters, x_plus_zero.data(), jacobians));
+      cost_function.Evaluate(parameters, x_plus_zero.data(), Jacobians));
 
   Matrix actual = Matrix::Random(ambient_size, tangent_size);
   EXPECT_TRUE(arg.PlusJacobian(x.data(), actual.data()));
@@ -247,7 +249,7 @@ MATCHER_P3(PlusMinusIsIdentityAt, x, y, tolerance, "") {
     //   https://doi.org/10.1007/s11263-012-0601-0
     //
     // The computation here is closely related to the IsNearQuaternion matcher
-    // use in rotation_test.cc. The matcher, however, does not compute the
+    // used in rotation_test.cc. The matcher, however, does not compute the
     // distance but only compares the coefficients.
     const Eigen::Vector4d plus = actual + Vector{y};
     const Eigen::Vector4d minus = actual - Vector{y};
@@ -274,6 +276,8 @@ MATCHER_P3(PlusMinusIsIdentityAt, x, y, tolerance, "") {
 struct MinusFunctor {
   MinusFunctor(const Manifold& manifold, const double* x)
       : manifold(manifold), x(x) {}
+
+  // Evaluates Minus(y, x).
   bool operator()(double const* const* parameters, double* y_minus_x) const {
     return manifold.Minus(parameters[0], x, y_minus_x);
   }
@@ -301,9 +305,9 @@ MATCHER_P2(HasCorrectMinusJacobianAt, x, tolerance, "") {
   double* parameters[1] = {y.data()};
 
   Matrix expected = Matrix::Zero(tangent_size, ambient_size);
-  double* jacobians[1] = {expected.data()};
+  double* Jacobians[1] = {expected.data()};
 
-  EXPECT_TRUE(cost_function.Evaluate(parameters, y_minus_x.data(), jacobians));
+  EXPECT_TRUE(cost_function.Evaluate(parameters, y_minus_x.data(), Jacobians));
 
   Matrix actual = Matrix::Random(tangent_size, ambient_size);
   EXPECT_TRUE(arg.MinusJacobian(x.data(), actual.data()));

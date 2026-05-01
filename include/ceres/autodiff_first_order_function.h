@@ -45,13 +45,13 @@ namespace ceres {
 // Create FirstOrderFunctions as needed by the GradientProblem
 // framework, with gradients computed via automatic
 // differentiation. For more information on automatic differentiation,
-// see the wikipedia article at
+// see the Wikipedia article at
 // http://en.wikipedia.org/wiki/Automatic_differentiation
 //
 // To get an auto differentiated function, you must define a class
 // with a templated operator() (a functor) that computes the cost
 // function in terms of the template parameter T. The autodiff
-// framework substitutes appropriate "jet" objects for T in order to
+// framework substitutes appropriate "Jet" objects for T in order to
 // compute the derivative when necessary, but this is hidden, and you
 // should write the function as if T were a scalar type (e.g. a
 // double-precision floating point number).
@@ -112,7 +112,7 @@ class AutoDiffFirstOrderFunction final : public FirstOrderFunction {
     static_assert(kNumParameters > 0, "kNumParameters must be positive");
   }
 
-  // Constructs the FirstOrderFunctor on the heap and takes the ownership.
+  // Constructs the FirstOrderFunctor on the heap and takes ownership.
   template <typename... Args,
             typename = std::enable_if_t<
                 std::is_constructible_v<FirstOrderFunctor, Args&&...>>>
@@ -124,6 +124,7 @@ class AutoDiffFirstOrderFunction final : public FirstOrderFunction {
             std::make_unique<FirstOrderFunctor>(std::forward<Args>(args)...),
             TAKE_OWNERSHIP) {}
 
+  // Takes ownership of functor if ownership == TAKE_OWNERSHIP.
   explicit AutoDiffFirstOrderFunction(FirstOrderFunctor* functor,
                                       Ownership ownership = TAKE_OWNERSHIP)
       : AutoDiffFirstOrderFunction(std::unique_ptr<FirstOrderFunctor>(functor),
@@ -134,6 +135,8 @@ class AutoDiffFirstOrderFunction final : public FirstOrderFunction {
   AutoDiffFirstOrderFunction(const AutoDiffFirstOrderFunction&) = delete;
   AutoDiffFirstOrderFunction& operator=(const AutoDiffFirstOrderFunction&) =
       delete;
+
+  // Move constructor and assignment.
   AutoDiffFirstOrderFunction(AutoDiffFirstOrderFunction&& other) noexcept =
       default;
   AutoDiffFirstOrderFunction& operator=(

@@ -32,17 +32,17 @@
 // WARNING WARNING WARNING  Tiny solver is experimental and will change.
 // WARNING WARNING WARNING
 //
-// A tiny least squares solver using Levenberg-Marquardt, intended for solving
-// small dense problems with low latency and low overhead. The implementation
-// takes care to do all allocation up front, so that no memory is allocated
-// during solving. This is especially useful when solving many similar problems;
-// for example, inverse pixel distortion for every pixel on a grid.
+// A Tiny Solver least squares solver using Levenberg-Marquardt, intended for
+// solving small dense problems with low latency and low overhead. The
+// implementation takes care to do all allocation up front, so that no memory is
+// allocated during solving. This is especially useful when solving many similar
+// problems; for example, inverse pixel distortion for every pixel on a grid.
 //
 // Note: This code has no dependencies beyond Eigen, including on other parts of
 // Ceres, so it is possible to take this file alone and put it in another
 // project without the rest of Ceres.
 //
-// Algorithm based off of:
+// Algorithm based on:
 //
 // [1] K. Madsen, H. Nielsen, O. Tingleoff.
 //     Methods for Non-linear Least Squares Problems.
@@ -60,12 +60,12 @@
 
 namespace ceres {
 
-// To use tiny solver, create a class or struct that allows computing the cost
+// To use Tiny Solver, create a class or struct that allows computing the cost
 // function (described below). This is similar to a ceres::CostFunction, but is
 // different to enable statically allocating all memory for the solver
 // (specifically, enum sizes). Key parts are the Scalar typedef, the enums to
 // describe problem sizes (needed to remove all heap allocations), and the
-// operator() overload to evaluate the cost and (optionally) jacobians.
+// operator() overload to evaluate the cost and (optionally) Jacobians.
 //
 //   struct TinySolverCostFunctionTraits {
 //     typedef double Scalar;
@@ -75,7 +75,7 @@ namespace ceres {
 //     };
 //     bool operator()(const double* parameters,
 //                     double* residuals,
-//                     double* jacobian) const;
+//                     double* Jacobian) const;
 //
 //     int NumResiduals() const;  -- Needed if NUM_RESIDUALS == Eigen::Dynamic.
 //     int NumParameters() const; -- Needed if NUM_PARAMETERS == Eigen::Dynamic.
@@ -85,8 +85,8 @@ namespace ceres {
 //
 //   double* parameters -- NUM_PARAMETERS or NumParameters()
 //   double* residuals  -- NUM_RESIDUALS or NumResiduals()
-//   double* jacobian   -- NUM_RESIDUALS * NUM_PARAMETERS in column-major format
-//                         (Eigen's default); or nullptr if no jacobian
+//   double* Jacobian   -- NUM_RESIDUALS * NUM_PARAMETERS in column-major format
+//                         (Eigen's default); or nullptr if no Jacobian
 //                         requested.
 //
 // An example (fully statically sized):
@@ -99,22 +99,22 @@ namespace ceres {
 //     };
 //     bool operator()(const double* parameters,
 //                     double* residuals,
-//                     double* jacobian) const {
+//                     double* Jacobian) const {
 //       residuals[0] = x + 2*y + 4*z;
 //       residuals[1] = y * z;
-//       if (jacobian) {
-//         jacobian[0 * 2 + 0] = 1;   // First column (x).
-//         jacobian[0 * 2 + 1] = 0;
+//       if (Jacobian) {
+//         Jacobian[0 * 2 + 0] = 1;   // First column (x).
+//         Jacobian[0 * 2 + 1] = 0;
 //
-//         jacobian[1 * 2 + 0] = 2;   // Second column (y).
-//         jacobian[1 * 2 + 1] = z;
+//         Jacobian[1 * 2 + 0] = 2;   // Second column (y).
+//         Jacobian[1 * 2 + 1] = z;
 //
-//         jacobian[2 * 2 + 0] = 4;   // Third column (z).
-//         jacobian[2 * 2 + 1] = y;
+//         Jacobian[2 * 2 + 0] = 4;   // Third column (z).
+//         Jacobian[2 * 2 + 1] = y;
 //       }
 //       return true;
 //     }
-//   };
+//   }
 //
 // The solver supports either statically or dynamically sized cost
 // functions. If the number of residuals is dynamic then the Function
@@ -166,6 +166,7 @@ class TinySolver {
                                       MAX_NUM_PARAMETERS,
                                       MAX_NUM_PARAMETERS>;
 
+  // Termination status of the solver.
   enum Status {
     // max_norm |J'(x) * f(x)| < gradient_tolerance
     GRADIENT_TOO_SMALL,
@@ -181,24 +182,30 @@ class TinySolver {
     // TODO(sameeragarwal): Deal with numerical failures.
   };
 
+  // Solver options.
   struct Options {
+    // Maximum number of iterations to run.
     int max_num_iterations = 50;
 
-    // max_norm |J'(x) * f(x)| < gradient_tolerance
+    // Minimizer terminates when max_norm |J'(x) * f(x)| < gradient_tolerance.
     Scalar gradient_tolerance = 1e-10;
 
-    //  ||dx|| <= parameter_tolerance * (||x|| + parameter_tolerance)
+    // Minimizer terminates when
+    // ||dx|| <= parameter_tolerance * (||x|| + parameter_tolerance).
     Scalar parameter_tolerance = 1e-8;
 
-    // (new_cost - old_cost) < function_tolerance * old_cost
+    // Minimizer terminates when (new_cost - old_cost) < function_tolerance *
+    // old_cost.
     Scalar function_tolerance = 1e-6;
 
-    // cost_threshold > ||f(x)||^2 / 2
+    // Minimizer terminates when cost_threshold > ||f(x)||^2 / 2.
     Scalar cost_threshold = std::numeric_limits<Scalar>::epsilon();
 
+    // Initial trust region radius.
     Scalar initial_trust_region_radius = 1e4;
   };
 
+  // Summary of the optimization.
   struct Summary {
     // 1/2 ||f(x_0)||^2
     Scalar initial_cost = -1;
@@ -206,7 +213,9 @@ class TinySolver {
     Scalar final_cost = -1;
     // max_norm(J'f(x))
     Scalar gradient_max_norm = -1;
+    // Number of iterations performed.
     int iterations = -1;
+    // Termination status.
     Status status = HIT_MAX_ITERATIONS;
   };
 
@@ -351,14 +360,13 @@ class TinySolver {
     return summary;
   }
 
-  ResidualVector Residuals()
-      const {
+  ResidualVector Residuals() const {
     // Residual updates are stored with the opposite sign.
     return -residuals_;
   }
 
   JacobianMatrix Jacobian() const {
-    // Undo the scaling applied to the jacobian matrix during Update().
+    // Undo the scaling applied to the Jacobian matrix during Update().
     return jacobian_ * jacobi_scaling_.cwiseInverse().asDiagonal();
   }
 
@@ -366,8 +374,6 @@ class TinySolver {
   Summary summary;
 
  private:
-  // Preallocate everything, including temporary storage needed for solving the
-  // linear system. This allows reusing the intermediate storage across solves.
   LinearSolver linear_solver_;
   Scalar cost_;
   ParameterVector dx_, x_new_, g_, jacobi_scaling_, lm_step_;

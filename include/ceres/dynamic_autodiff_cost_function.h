@@ -79,13 +79,11 @@ namespace ceres {
 template <typename CostFunctor, int Stride = 4>
 class DynamicAutoDiffCostFunction final : public DynamicCostFunction {
  public:
-  // Takes ownership of functor by default.
   explicit DynamicAutoDiffCostFunction(std::unique_ptr<CostFunctor> functor)
       : DynamicAutoDiffCostFunction(std::move(functor), TAKE_OWNERSHIP) {
     static_assert(Stride > 0, "Stride must be positive");
   }
 
-  // Constructs the CostFunctor on the heap and takes the ownership.
   template <typename... Args,
             typename = std::enable_if_t<
                 std::is_constructible_v<CostFunctor, Args&&...>>>
@@ -97,7 +95,6 @@ class DynamicAutoDiffCostFunction final : public DynamicCostFunction {
             std::make_unique<CostFunctor>(std::forward<Args>(args)...),
             TAKE_OWNERSHIP) {}
 
-  // Takes ownership by default.
   explicit DynamicAutoDiffCostFunction(CostFunctor* functor,
                                        Ownership ownership = TAKE_OWNERSHIP)
       : DynamicAutoDiffCostFunction(std::unique_ptr<CostFunctor>(functor),
@@ -109,6 +106,8 @@ class DynamicAutoDiffCostFunction final : public DynamicCostFunction {
       delete;
   DynamicAutoDiffCostFunction& operator=(
       const DynamicAutoDiffCostFunction& other) = delete;
+
+  // Move constructor and assignment.
   DynamicAutoDiffCostFunction(DynamicAutoDiffCostFunction&& other) noexcept =
       default;
   DynamicAutoDiffCostFunction& operator=(
@@ -146,7 +145,7 @@ class DynamicAutoDiffCostFunction final : public DynamicCostFunction {
     // depends on.
     //
     // To work around this issue, the solution here is to evaluate the
-    // jacobians in a series of passes, each one computing Stride *
+    // Jacobians in a series of passes, each one computing Stride *
     // num_residuals() derivatives. This is done with small, fixed-size jets.
     const int num_parameter_blocks =
         static_cast<int>(parameter_block_sizes().size());
@@ -251,7 +250,7 @@ class DynamicAutoDiffCostFunction final : public DynamicCostFunction {
         return false;
       }
 
-      // Copy the pieces of the jacobians into their final place.
+      // Copy the pieces of the Jacobians into their final place.
       active_parameter_count = 0;
 
       current_derivative_section = initial_derivative_section;

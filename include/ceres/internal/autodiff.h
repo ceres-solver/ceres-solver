@@ -33,7 +33,7 @@
 // dual numbers in jet.h. Before reading the rest of this file, it is advisable
 // to read jet.h's header comment in detail.
 //
-// The helper wrapper AutoDifferentiate() computes the jacobian of
+// The helper wrapper AutoDifferentiate() computes the Jacobian of
 // functors with templated operator() taking this form:
 //
 //   struct F {
@@ -46,7 +46,7 @@
 //
 // All inputs and outputs may be vector-valued.
 //
-// To understand how jets are used to compute the jacobian, a
+// To understand how Jets are used to compute the Jacobian, a
 // picture may help. Consider a vector-valued function, F, returning 3
 // dimensions and taking a vector-valued parameter of 4 dimensions:
 //
@@ -57,11 +57,11 @@
 //                [ * ]
 //
 // Similar to the 2-parameter example for f described in jet.h, computing the
-// jacobian dy/dx is done by substituting a suitable jet object for x and all
-// intermediate steps of the computation of F. Since x is has 4 dimensions, use
+// Jacobian dy/dx is done by substituting a suitable Jet object for x and all
+// intermediate steps of the computation of F. Since x has 4 dimensions, use
 // a Jet<double, 4>.
 //
-// Before substituting a jet object for x, the dual components are set
+// Before substituting a Jet object for x, the dual components are set
 // appropriately for each dimension of x:
 //
 //          y                       x
@@ -80,21 +80,21 @@
 // Each column of the 4x4 identity is therefore for a single component of the
 // independent variable x.
 //
-// Then the jacobian of the mapping, dy/dx, is the 3x4 sub-matrix of the
+// Then the Jacobian of the mapping, dy/dx, is the 3x4 sub-matrix of the
 // extended y vector, indicated in the above diagram.
 //
 // Functors with multiple parameters
 // ---------------------------------
 // In practice, it is often convenient to use a function f of two or more
-// vector-valued parameters, for example, x[3] and z[6]. Unfortunately, the jet
+// vector-valued parameters, for example, x[3] and z[6]. Unfortunately, the Jet
 // framework is designed for a single-parameter vector-valued input. The wrapper
 // in this file addresses this issue adding support for functions with one or
 // more parameter vectors.
 //
 // To support multiple parameters, all the parameter vectors are concatenated
 // into one and treated as a single parameter vector, except that since the
-// functor expects different inputs, we need to construct the jets as if they
-// were part of a single parameter vector. The extended jets are passed
+// functor expects different inputs, we need to construct the Jets as if they
+// were part of a single parameter vector. The extended Jets are passed
 // separately for each parameter.
 //
 // For example, consider a functor F taking two vector parameters, p[2] and
@@ -107,8 +107,8 @@
 //     }
 //   };
 //
-// In this case, the necessary jet type is Jet<double, 5>. Here is a
-// visualization of the jet objects in this case:
+// In this case, the necessary Jet type is Jet<double, 5>. Here is a
+// visualization of the Jet objects in this case:
 //
 //          Dual components for p ----+
 //                                    |

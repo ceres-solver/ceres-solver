@@ -44,19 +44,19 @@ namespace ceres {
 // A class for storing and manipulating an ordered collection of
 // groups/sets with the following semantics:
 //
-// Group ids are non-negative integer values. Elements are any type
+// Group IDs are non-negative integer values. Elements are any type
 // that can serve as a key in a map or an element of a set.
 //
 // An element can only belong to one group at a time. A group may
 // contain an arbitrary number of elements.
 //
-// Groups are ordered by their group id.
+// Groups are ordered by their group ID.
 template <typename T>
 class OrderedGroups {
  public:
-  // Add an element to a group. If a group with this id does not
+  // Add an element to a group. If a group with this ID does not
   // exist, one is created. This method can be called any number of
-  // times for the same element. Group ids should be non-negative
+  // times for the same element. Group IDs should be non-negative
   // numbers.
   //
   // Return value indicates if adding the element was a success.
@@ -73,7 +73,7 @@ class OrderedGroups {
       }
 
       group_to_elements_[it->second].erase(element);
-      if (group_to_elements_[it->second].size() == 0) {
+      if (group_to_elements_[it->second].empty()) {
         group_to_elements_.erase(it->second);
       }
     }
@@ -83,6 +83,7 @@ class OrderedGroups {
     return true;
   }
 
+  // Remove all elements from all groups.
   void Clear() {
     group_to_elements_.clear();
     element_to_group_.clear();
@@ -98,7 +99,7 @@ class OrderedGroups {
 
     group_to_elements_[current_group].erase(element);
 
-    if (group_to_elements_[current_group].size() == 0) {
+    if (group_to_elements_[current_group].empty()) {
       // If the group is empty, then get rid of it.
       group_to_elements_.erase(current_group);
     }
@@ -110,7 +111,7 @@ class OrderedGroups {
   // Bulk remove elements. The return value indicates the number of
   // elements successfully removed.
   int Remove(const std::vector<T>& elements) {
-    if (NumElements() == 0 || elements.size() == 0) {
+    if (NumElements() == 0 || elements.empty()) {
       return 0;
     }
 
@@ -143,7 +144,7 @@ class OrderedGroups {
     group_to_elements_.swap(new_group_to_elements);
   }
 
-  // Return the group id for the element. If the element is not a
+  // Return the group ID for the element. If the element is not a
   // member of any group, return -1.
   int GroupId(const T element) const {
     auto it = element_to_group_.find(element);
@@ -153,6 +154,7 @@ class OrderedGroups {
     return it->second;
   }
 
+  // Returns true if the element is a member of any group.
   bool IsMember(const T element) const {
     auto it = element_to_group_.find(element);
     return (it != element_to_group_.end());
@@ -167,11 +169,10 @@ class OrderedGroups {
 
   int NumElements() const { return element_to_group_.size(); }
 
-  // Number of groups with one or more elements.
   int NumGroups() const { return group_to_elements_.size(); }
 
   // The first group with one or more elements. Calling this when
-  // there are no groups with non-zero elements will result in a
+  // there are no groups with one or more elements will result in a
   // crash.
   int MinNonZeroGroup() const {
     CHECK_NE(NumGroups(), 0);

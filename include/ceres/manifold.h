@@ -59,16 +59,16 @@ namespace ceres {
 // the two dimensional plane that is tangent to the sphere at that point. There
 // are two reasons tangent spaces are interesting:
 //
-// 1. They are Eucliean spaces so the usual vector space operations apply there,
+// 1. They are Euclidean spaces so the usual vector space operations apply there,
 //    which makes numerical operations easy.
-// 2. Movement in the tangent space translate into movements along the manifold.
+// 2. Movement in the tangent space translates into movements along the manifold.
 //    Movements perpendicular to the tangent space do not translate into
 //    movements on the manifold.
 //
 // Returning to our sphere example, moving in the 2 dimensional plane
 // tangent to the sphere and projecting back onto the sphere will move you away
 // from the point you started from but moving along the normal at the same point
-// and the projecting back onto the sphere brings you back to the point.
+// and then projecting back onto the sphere brings you back to the point.
 //
 // The Manifold interface defines two operations (and their derivatives)
 // involving the tangent space, allowing filtering and optimization to be
@@ -100,7 +100,7 @@ namespace ceres {
 // 9 dimensional vectors or 3x3 matrices, and points in its tangent spaces are
 // represented by 3 dimensional vectors.
 //
-// Defining Plus and Minus are defined in terms of the matrix Exp and Log
+// Plus and Minus are defined in terms of the matrix Exp and Log
 // operations as follows:
 //
 // Let Exp(p, q, r) = [cos(theta) + cp^2, -sr + cpq        ,  sq + cpr        ]
@@ -228,11 +228,11 @@ class CERES_EXPORT Manifold {
 //   Minus(y, x) = y - x.
 //
 // The class works with dynamic and static ambient space dimensions. If the
-// ambient space dimensions is know at compile time use
+// ambient space dimension is known at compile time use
 //
 //    EuclideanManifold<3> manifold;
 //
-// If the ambient space dimensions is not known at compile time the template
+// If the ambient space dimension is not known at compile time the template
 // parameter needs to be set to ceres::DYNAMIC and the actual dimension needs
 // to be provided as a constructor argument:
 //
@@ -311,6 +311,7 @@ class EuclideanManifold final : public Manifold {
 class CERES_EXPORT SubsetManifold final : public Manifold {
  public:
   SubsetManifold(int size, const std::vector<int>& constant_parameters);
+
   int AmbientSize() const override;
   int TangentSize() const override;
 

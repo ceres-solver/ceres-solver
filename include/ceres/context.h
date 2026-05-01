@@ -44,6 +44,7 @@ namespace ceres {
 class CERES_EXPORT Context {
  public:
   Context();
+
   Context(const Context&) = delete;
   void operator=(const Context&) = delete;
 

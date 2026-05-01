@@ -37,7 +37,7 @@
 
 namespace ceres {
 
-// An adapter class that lets users of TinySolver use
+// An adapter class that lets users of Tiny Solver use
 // ceres::CostFunction objects that have exactly one parameter block.
 //
 // The adapter allows for the number of residuals and the size of the
@@ -98,7 +98,7 @@ class TinySolverCostFunctionAdapter {
   explicit TinySolverCostFunctionAdapter(const CostFunction& cost_function)
       : cost_function_(cost_function) {
     CHECK_EQ(cost_function_.parameter_block_sizes().size(), 1)
-        << "Only CostFunctions with exactly one parameter blocks are allowed.";
+        << "Only CostFunctions with exactly one parameter block are allowed.";
 
     const int parameter_block_size = cost_function_.parameter_block_sizes()[0];
     if (NUM_PARAMETERS == Eigen::Dynamic || NUM_RESIDUALS == Eigen::Dynamic) {
@@ -114,29 +114,33 @@ class TinySolverCostFunctionAdapter {
     }
   }
 
+  ~TinySolverCostFunctionAdapter() = default;
+
+  // Evaluates the cost function.
   bool operator()(const double* parameters,
                   double* residuals,
-                  double* jacobian) const {
-    if (!jacobian) {
+                  double* Jacobian) const {
+    if (!Jacobian) {
       return cost_function_.Evaluate(&parameters, residuals, nullptr);
     }
 
-    double* jacobians[1] = {row_major_jacobian_.data()};
-    if (!cost_function_.Evaluate(&parameters, residuals, jacobians)) {
+    double* Jacobians[1] = {row_major_jacobian_.data()};
+    if (!cost_function_.Evaluate(&parameters, residuals, Jacobians)) {
       return false;
     }
 
-    // The Function object used by TinySolver takes its Jacobian in a
+    // The Function object used by Tiny Solver takes its Jacobian in a
     // column-major layout, and the CostFunction objects use row-major
     // Jacobian matrices. So the following bit of code does the
-    // conversion from row-major Jacobians to column-major Jacobians.
+    // conversion from the row-major Jacobians to the column-major Jacobians.
     Eigen::Map<JacobianMatrix<Eigen::ColMajor>> col_major_jacobian(
-        jacobian, NumResiduals(), NumParameters());
+        Jacobian, NumResiduals(), NumParameters());
     col_major_jacobian = row_major_jacobian_;
     return true;
   }
 
   int NumResiduals() const { return cost_function_.num_residuals(); }
+
   int NumParameters() const {
     return cost_function_.parameter_block_sizes()[0];
   }

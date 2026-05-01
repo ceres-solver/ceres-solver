@@ -49,7 +49,7 @@
 //   f(x) = x^2 ,
 //
 // evaluated at 10. Using normal arithmetic, f(10) = 100, and df/dx(10) = 20.
-// Next, argument 10 with an infinitesimal to get:
+// Next, augment 10 with an infinitesimal to get:
 //
 //   f(10 + e) = (10 + e)^2
 //             = 100 + 2 * 10 * e + e^2
@@ -111,7 +111,7 @@
 //             << "df/dy = " << z.v[1];
 //
 // Most users should not use Jet objects directly; a wrapper around Jet objects,
-// which makes computing the derivative, gradient, or jacobian of templated
+// which makes computing the derivative, gradient, or Jacobian of templated
 // functors simple, is in autodiff.h. Even autodiff.h should not be used
 // directly; instead autodiff_cost_function.h is typically the file of interest.
 //

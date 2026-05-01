@@ -66,7 +66,7 @@ class CERES_EXPORT GradientProblemSolver {
     NonlinearConjugateGradientType nonlinear_conjugate_gradient_type =
         FLETCHER_REEVES;
 
-    // The LBFGS hessian approximation is a low rank approximation to
+    // The LBFGS Hessian approximation is a low rank approximation to
     // the inverse of the Hessian matrix. The rank of the
     // approximation determines (linearly) the space and time
     // complexity of using the approximation. Higher the rank, the
@@ -105,9 +105,9 @@ class CERES_EXPORT GradientProblemSolver {
     // by default.  In particular it can degrade performance when the
     // sensitivity of the problem to different parameters varies significantly,
     // as in this case a single scalar factor fails to capture this variation
-    // and detrimentally downscales parts of the jacobian approximation which
+    // and detrimentally downscales parts of the Jacobian approximation which
     // correspond to low-sensitivity parameters. It can also reduce the
-    // robustness of the solution to errors in the jacobians.
+    // robustness of the solution to errors in the Jacobians.
     //
     // Oren S.S., Self-scaling variable metric (SSVM) algorithms
     // Part II: Implementation and experiments, Management Science,
@@ -203,7 +203,7 @@ class CERES_EXPORT GradientProblemSolver {
 
     // Minimizer terminates when
     //
-    //   (new_cost - old_cost) < function_tolerance * old_cost;
+    //   (old_cost - new_cost) < function_tolerance * old_cost;
     //
     double function_tolerance = 1e-6;
 
@@ -216,7 +216,7 @@ class CERES_EXPORT GradientProblemSolver {
 
     // Minimizer terminates when
     //
-    //   |step|_2 <= parameter_tolerance * ( |x|_2 +  parameter_tolerance)
+    //   |step|_2 <= parameter_tolerance * (|x|_2 + parameter_tolerance)
     //
     double parameter_tolerance = 1e-8;
 
@@ -247,8 +247,8 @@ class CERES_EXPORT GradientProblemSolver {
     // this vector. By default, parameter blocks are updated only at
     // the end of the optimization, i.e when the Minimizer
     // terminates. This behaviour is controlled by
-    // update_state_every_variable. If the user wishes to have access
-    // to the update parameter blocks when his/her callbacks are
+    // update_state_every_iteration. If the user wishes to have access
+    // to the updated parameter blocks when his/her callbacks are
     // executed, then set update_state_every_iteration to true.
     //
     // The solver does NOT take ownership of these pointers.
@@ -264,13 +264,16 @@ class CERES_EXPORT GradientProblemSolver {
     // termination.
     std::string FullReport() const;
 
+    // Returns true if the solver terminated for a reason that allows
+    // the solution to be used. This is true if the termination_type is
+    // CONVERGENCE or USER_SUCCESS.
     bool IsSolutionUsable() const;
 
     // Minimizer summary -------------------------------------------------
     TerminationType termination_type = FAILURE;
 
     // Reason why the solver terminated.
-    std::string message = "ceres::GradientProblemSolve was not called.";
+    std::string message = "ceres::GradientProblemSolver::Solve was not called.";
 
     // Cost of the problem (value of the objective function) before
     // the optimization.
@@ -329,18 +332,12 @@ class CERES_EXPORT GradientProblemSolver {
     int max_lbfgs_rank = -1;
   };
 
-  // Once a least squares problem has been built, this function takes
-  // the problem and optimizes it based on the values of the options
-  // parameters. Upon return, a detailed summary of the work performed
-  // by the preprocessor, the non-linear minimizer and the linear
-  // solver are reported in the summary object.
   virtual void Solve(const GradientProblemSolver::Options& options,
                      const GradientProblem& problem,
                      double* parameters,
                      GradientProblemSolver::Summary* summary);
 };
 
-// Helper function which avoids going through the interface.
 CERES_EXPORT void Solve(const GradientProblemSolver::Options& options,
                         const GradientProblem& problem,
                         double* parameters,
