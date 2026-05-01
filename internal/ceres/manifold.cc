@@ -16,8 +16,22 @@ inline void QuaternionPlusImpl(const double* x,
                                double* x_plus_delta) {
   // x_plus_delta = QuaternionProduct(q_delta, x), where q_delta is the
   // quaternion constructed from delta.
+  const double norm_delta = std::hypot(delta[0], delta[1], delta[2]);
+
+  if (std::fpclassify(norm_delta) == FP_ZERO) {
+    // No change in rotation: return the quaternion as is.
+    std::copy_n(x, 4, x_plus_delta);
+    return;
+  }
+
+  const double sin_delta_by_delta = std::sin(norm_delta) / norm_delta;
+
   double q_delta[4];
-  AngleAxisToQuaternion<Order>(delta, q_delta);
+  q_delta[Order::kW] = std::cos(norm_delta);
+  q_delta[Order::kX] = sin_delta_by_delta * delta[0];
+  q_delta[Order::kY] = sin_delta_by_delta * delta[1];
+  q_delta[Order::kZ] = sin_delta_by_delta * delta[2];
+
   QuaternionProduct<Order>(q_delta, x, x_plus_delta);
 }
 
@@ -38,7 +52,6 @@ inline void QuaternionPlusJacobianImpl(const double* x, double* jacobian_ptr) {
   jacobian(Order::kZ, 0) = x[Order::kY];
   jacobian(Order::kZ, 1) = -x[Order::kX];
   jacobian(Order::kZ, 2) = x[Order::kW];
-  jacobian /= 2;
 }
 
 template <typename Order>
@@ -52,7 +65,19 @@ inline void QuaternionMinusImpl(const double* y,
 
   double ambient_y_minus_x[4];
   QuaternionProduct<Order>(y, x_conj, ambient_y_minus_x);
-  QuaternionToAngleAxis<Order>(ambient_y_minus_x, y_minus_x);
+
+  const double u_norm = std::hypot(ambient_y_minus_x[Order::kX],
+                                   ambient_y_minus_x[Order::kY],
+                                   ambient_y_minus_x[Order::kZ]);
+
+  if (std::fpclassify(u_norm) != FP_ZERO) {
+    const double theta = std::atan2(u_norm, ambient_y_minus_x[Order::kW]);
+    y_minus_x[0] = theta * ambient_y_minus_x[Order::kX] / u_norm;
+    y_minus_x[1] = theta * ambient_y_minus_x[Order::kY] / u_norm;
+    y_minus_x[2] = theta * ambient_y_minus_x[Order::kZ] / u_norm;
+  } else {
+    std::fill_n(y_minus_x, 3, 0.0);
+  }
 }
 
 template <typename Order>
@@ -72,7 +97,6 @@ inline void QuaternionMinusJacobianImpl(const double* x, double* jacobian_ptr) {
   jacobian(2, Order::kX) = -x[Order::kY];
   jacobian(2, Order::kY) = x[Order::kX];
   jacobian(2, Order::kZ) = x[Order::kW];
-  jacobian *= 2;
 }
 
 }  // namespace
