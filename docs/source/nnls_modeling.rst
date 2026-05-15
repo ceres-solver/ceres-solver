@@ -1189,7 +1189,7 @@ problems.
 
 
 While the theory described above is elegant, in practice we observe
-that using the Triggs correction when :math:`\rho'' > 0` leads to poor
+that using the Triggs correction when :math:`\rho'' < 0` leads to poor
 performance, so we upper bound it by zero. For more details see
 `corrector.cc <https://github.com/ceres-solver/ceres-solver/blob/master/internal/ceres/corrector.cc#L51>`_
 
