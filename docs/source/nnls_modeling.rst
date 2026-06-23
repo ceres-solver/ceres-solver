@@ -915,8 +915,8 @@ Numeric Differentiation & Manifolds
        GradientChecker gradient_checker(my_cost_function,
                                         manifolds,
                                         numeric_diff_options);
-       GradientCheckResults results;
-       if (!gradient_checker.Probe(parameter_blocks.data(), 1e-9, &results) {
+       GradientChecker::ProbeResults results;
+       if (!gradient_checker.Probe(parameter_blocks.data(), 1e-9, &results)) {
          LOG(ERROR) << "An error has occurred:\n" << results.error_log;
        }
 
