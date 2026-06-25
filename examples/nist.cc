@@ -489,7 +489,7 @@ struct Nelson {
 static void SetNumericDiffOptions(ceres::NumericDiffOptions* options) {
   options->max_num_ridders_extrapolations =
       absl::GetFlag(FLAGS_ridders_extrapolations);
-  options->ridders_relative_initial_step_size =
+  options->ridders_min_initial_step_size =
       absl::GetFlag(FLAGS_ridders_step_size);
 }
 

@@ -54,7 +54,7 @@ struct CERES_EXPORT NumericDiffOptions {
   // Note: For Ridders' method to converge, the step size should be initialized
   // to a value that is large enough to produce a significant change in the
   // function. As the derivative is estimated, the step size decreases.
-  double ridders_relative_initial_step_size = 1e-2;
+  double ridders_min_initial_step_size = 1e-2;
 
   // Maximal number of adaptive extrapolations (sampling) in Ridders' method.
   int max_num_ridders_extrapolations = 10;
