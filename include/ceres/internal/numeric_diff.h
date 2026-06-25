@@ -105,10 +105,8 @@ struct NumericDiff {
         parameters[parameter_block_index_internal],
         parameter_block_size_internal);
     ParameterVector x(x_plus_delta);
-    ParameterVector step_size =
-        x.array().abs() * ((kMethod == RIDDERS)
-                               ? options.ridders_relative_initial_step_size
-                               : options.relative_step_size);
+    const ParameterVector step_size =
+        x.array().abs() * options.relative_step_size;
 
     // It is not a good idea to make the step size arbitrarily
     // small. This will lead to problems with round off and numerical
@@ -117,10 +115,10 @@ struct NumericDiff {
     double min_step_size = std::sqrt(std::numeric_limits<double>::epsilon());
 
     // For Ridders' method, the initial step size is required to be large,
-    // thus ridders_relative_initial_step_size is used.
+    // thus ridders_min_initial_step_size is used.
     if (kMethod == RIDDERS) {
       min_step_size =
-          (std::max)(min_step_size, options.ridders_relative_initial_step_size);
+          (std::max)(min_step_size, options.ridders_min_initial_step_size);
     }
 
     // For each parameter in the parameter block, use finite differences to
