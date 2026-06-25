@@ -178,10 +178,11 @@ ABSL_FLAG(std::string,
           "ridders",
           "When using numeric differentiation, selects algorithm. Options "
           "are: central, forward, ridders.");
-ABSL_FLAG(double,
-          ridders_step_size,
-          1e-9,
-          "Initial step size for Ridders numeric differentiation.");
+ABSL_FLAG(
+    double,
+    ridders_min_initial_step_size,
+    1e-9,
+    "Minimum allowed initial step size for Ridders numeric differentiation.");
 ABSL_FLAG(int32_t,
           ridders_extrapolations,
           3,
@@ -489,8 +490,8 @@ struct Nelson {
 static void SetNumericDiffOptions(ceres::NumericDiffOptions* options) {
   options->max_num_ridders_extrapolations =
       absl::GetFlag(FLAGS_ridders_extrapolations);
-  options->ridders_relative_initial_step_size =
-      absl::GetFlag(FLAGS_ridders_step_size);
+  options->ridders_min_initial_step_size =
+      absl::GetFlag(FLAGS_ridders_min_initial_step_size);
 }
 
 void SetMinimizerOptions(ceres::Solver::Options* options) {

@@ -41,20 +41,22 @@ namespace ceres {
 // step sizes).
 struct CERES_EXPORT NumericDiffOptions {
   // Numeric differentiation step size (multiplied by parameter block's
-  // order of magnitude). If parameters are close to zero, the step size
-  // is set to sqrt(machine_epsilon).
-  double relative_step_size = 1e-6;
-
-  // Initial step size for Ridders adaptive numeric differentiation (multiplied
-  // by parameter block's order of magnitude).
-  // If parameters are close to zero, Ridders' method sets the step size
-  // directly to this value. This parameter is separate from
-  // "relative_step_size" in order to set a different default value.
+  // order of magnitude). If the product of the parameter block's magnitude and
+  // relative_step_size is less than sqrt(machine_epsilon) then the step_size is
+  // set to sqrt(machine_epsilon) or ridders_min_initial_step_size if Ridders'
+  // method is used.
   //
   // Note: For Ridders' method to converge, the step size should be initialized
   // to a value that is large enough to produce a significant change in the
   // function. As the derivative is estimated, the step size decreases.
-  double ridders_relative_initial_step_size = 1e-2;
+  double relative_step_size = 1e-6;
+
+  // If parameters are close to zero, Ridders' method sets the step size
+  // directly to this value.
+  //
+  // See note above about the large initial step size required by Ridder's
+  // method for convergence.
+  double ridders_min_initial_step_size = 1e-2;
 
   // Maximal number of adaptive extrapolations (sampling) in Ridders' method.
   int max_num_ridders_extrapolations = 10;
