@@ -150,10 +150,11 @@ TEST(NumericDiffCostFunction, TranscendentalCaseFunctorForwardDifferences) {
 
 TEST(NumericDiffCostFunction, TranscendentalCaseFunctorRidders) {
   NumericDiffOptions options;
+  options.relative_step_size = 1e-3;
 
-  // Using a smaller initial step size to overcome oscillatory function
-  // behavior.
-  options.ridders_relative_initial_step_size = 1e-3;
+  // Using a smaller than default minimum initial step size to overcome
+  // oscillatory function behavior.
+  options.ridders_min_initial_step_size = 1e-3;
   auto cost_function =
       std::make_unique<NumericDiffCostFunction<TranscendentalFunctor,
                                                RIDDERS,
@@ -197,10 +198,11 @@ TEST(NumericDiffCostFunction,
 
 TEST(NumericDiffCostFunction, TranscendentalCaseCostFunctionRidders) {
   NumericDiffOptions options;
+  options.relative_step_size = 1e-3;
 
   // Using a smaller initial step size to overcome oscillatory function
   // behavior.
-  options.ridders_relative_initial_step_size = 1e-3;
+  options.ridders_min_initial_step_size = 1e-3;
 
   auto cost_function =
       std::make_unique<NumericDiffCostFunction<TranscendentalCostFunction,
@@ -287,23 +289,33 @@ TEST(NumericDiffCostFunction,
 }
 
 TEST(NumericDiffCostFunction, ExponentialFunctorRidders) {
+  NumericDiffOptions options;
+  options.relative_step_size = 1e-2;
+
   auto cost_function =
       std::make_unique<NumericDiffCostFunction<ExponentialFunctor,
                                                RIDDERS,
                                                1,  // number of residuals
                                                1   // size of x1
-                                               >>(new ExponentialFunctor);
+                                               >>(
+          new ExponentialFunctor, TAKE_OWNERSHIP, 1, options);
   ExponentialFunctor functor;
   functor.ExpectCostFunctionEvaluationIsNearlyCorrect(*cost_function);
 }
 
 TEST(NumericDiffCostFunction, ExponentialCostFunctionRidders) {
+  NumericDiffOptions options;
+  options.relative_step_size = 1e-2;
+
   auto cost_function =
       std::make_unique<NumericDiffCostFunction<ExponentialCostFunction,
                                                RIDDERS,
                                                1,  // number of residuals
                                                1   // size of x1
-                                               >>(new ExponentialCostFunction);
+                                               >>(new ExponentialCostFunction,
+                                                 TAKE_OWNERSHIP,
+                                                 1,
+                                                 options);
   ExponentialFunctor functor;
   functor.ExpectCostFunctionEvaluationIsNearlyCorrect(*cost_function);
 }
@@ -313,7 +325,7 @@ TEST(NumericDiffCostFunction, RandomizedFunctorRidders) {
   NumericDiffOptions options;
   // Larger initial step size is chosen to produce robust results in the
   // presence of random noise.
-  options.ridders_relative_initial_step_size = 10.0;
+  options.ridders_min_initial_step_size = 10.0;
 
   auto cost_function =
       std::make_unique<NumericDiffCostFunction<RandomizedFunctor,
@@ -334,7 +346,7 @@ TEST(NumericDiffCostFunction, RandomizedCostFunctionRidders) {
   NumericDiffOptions options;
   // Larger initial step size is chosen to produce robust results in the
   // presence of random noise.
-  options.ridders_relative_initial_step_size = 10.0;
+  options.ridders_min_initial_step_size = 10.0;
 
   auto cost_function =
       std::make_unique<NumericDiffCostFunction<RandomizedCostFunction,

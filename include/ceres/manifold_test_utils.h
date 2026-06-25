@@ -151,7 +151,7 @@ MATCHER_P2(HasCorrectPlusJacobianAt, x, tolerance, "") {
   const int tangent_size = arg.TangentSize();
 
   NumericDiffOptions options;
-  options.ridders_relative_initial_step_size = 1e-4;
+  options.ridders_min_initial_step_size = 1e-4;
 
   DynamicNumericDiffCostFunction<PlusFunctor, RIDDERS> cost_function(
       new PlusFunctor(arg, x.data()), TAKE_OWNERSHIP, options);
@@ -292,7 +292,7 @@ MATCHER_P2(HasCorrectMinusJacobianAt, x, tolerance, "") {
   Vector y_minus_x = Vector::Zero(tangent_size);
 
   NumericDiffOptions options;
-  options.ridders_relative_initial_step_size = 1e-4;
+  options.ridders_min_initial_step_size = 1e-4;
   DynamicNumericDiffCostFunction<MinusFunctor, RIDDERS> cost_function(
       new MinusFunctor(arg, x.data()), TAKE_OWNERSHIP, options);
   cost_function.AddParameterBlock(ambient_size);
