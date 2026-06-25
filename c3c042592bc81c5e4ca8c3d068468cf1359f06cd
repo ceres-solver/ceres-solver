@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac5a89d5_0c7ca9fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4936476
+      },
+      "writtenOn": "2026-06-25T10:56:18Z",
+      "side": 1,
+      "message": "The existing implementation for the numerical configuration violates the principle of least surprise in two ways.\n\nIt uses both the",
+      "revId": "c3c042592bc81c5e4ca8c3d068468cf1359f06cd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72dbaed3_21edd03f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4936476
+      },
+      "writtenOn": "2026-06-25T10:56:18Z",
+      "side": 1,
+      "message": "The existing implementation for the numerical diff configuration violates the principle of least surprise in two ways.\n\n(1) It uses both the relative_step_size and ridders_relative_initial_step_size to configure what is in essence the same\nparameter.\n(2) It uses the ridders_relative_initial_step_size to set the minimum step size directly.\n\nThis patch proposes a solution to both of these problems. First I refactor the step_size to be calculated using only the\nrelative_step_size parameter. I think it is reasonable to expect the user to understand that they might need a different\nvalue here when using different numerical differentiation methods. Second I rename the ridders_relative_initial_step_size to\nridders_min_initial_step_size to reflect what it actually is.\n\nNote that because some of the testing depended on the default config values and the removed ternary condition logic, I needed to explicitly \nspecify some config values which were set implicitly/by default before.\n\nThank you for your time and thoughts!",
+      "revId": "c3c042592bc81c5e4ca8c3d068468cf1359f06cd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
