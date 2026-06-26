@@ -69,6 +69,23 @@
       "parentUuid": "bdffee88_2a6bd529",
       "revId": "c3c042592bc81c5e4ca8c3d068468cf1359f06cd",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a589ffa8_ee4c6906",
+        "filename": "examples/nist.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 4936476
+      },
+      "writtenOn": "2026-06-26T07:21:50Z",
+      "side": 1,
+      "message": "Should this flag be renamed to?",
+      "revId": "c3c042592bc81c5e4ca8c3d068468cf1359f06cd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
