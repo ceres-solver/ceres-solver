@@ -71,6 +71,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7931be2_a2f3c28c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-07-03T17:53:46Z",
+      "side": 1,
+      "message": "thanks for the  patch and sorry for the delay in looking at this, I will take a look over the holiday weekend.",
+      "revId": "c3c042592bc81c5e4ca8c3d068468cf1359f06cd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a589ffa8_ee4c6906",
