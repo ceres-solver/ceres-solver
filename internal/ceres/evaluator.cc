@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -61,6 +61,10 @@ std::unique_ptr<Evaluator> Evaluator::Create(const Evaluator::Options& options,
       return std::make_unique<
           ProgramEvaluator<ScratchEvaluatePreparer, DenseJacobianWriter>>(
           options, program);
+    case MKL_SPARSE_QR:
+      return std::make_unique<
+          ProgramEvaluator<ScratchEvaluatePreparer,
+                           CompressedRowJacobianWriter>>(options, program);
     case DENSE_SCHUR:
     case SPARSE_SCHUR:
     case ITERATIVE_SCHUR: {

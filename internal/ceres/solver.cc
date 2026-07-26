@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -234,6 +234,33 @@ bool OptionsAreValidForDenseQr(const Solver::Options& options,
   return true;
 }
 
+bool OptionsAreValidForMKLSparseQr(const Solver::Options& options,
+                                   std::string* error) {
+  CHECK_EQ(options.linear_solver_type, MKL_SPARSE_QR);
+  if (options.sparse_linear_algebra_library_type != MKL_SPARSE) {
+    *error = absl::StrFormat(
+        "MKL_SPARSE_QR requires sparse_linear_algebra_library_type = "
+        "MKL_SPARSE, got %s.",
+        SparseLinearAlgebraLibraryTypeToString(
+            options.sparse_linear_algebra_library_type));
+    return false;
+  }
+
+  if (!IsSparseLinearAlgebraLibraryTypeAvailable(MKL_SPARSE)) {
+    *error =
+        "Can't use MKL_SPARSE_QR because MKL support was not enabled when "
+        "Ceres was built.";
+    return false;
+  }
+
+  if (options.use_mixed_precision_solves) {
+    *error = "Can't use use_mixed_precision_solves with MKL_SPARSE_QR.";
+    return false;
+  }
+
+  return true;
+}
+
 bool OptionsAreValidForSparseNormalCholesky(const Solver::Options& options,
                                             std::string* error) {
   CHECK_EQ(options.linear_solver_type, SPARSE_NORMAL_CHOLESKY);
@@ -383,6 +410,8 @@ bool OptionsAreValidForLinearSolver(const Solver::Options& options,
       return OptionsAreValidForDenseNormalCholesky(options, error);
     case DENSE_QR:
       return OptionsAreValidForDenseQr(options, error);
+    case MKL_SPARSE_QR:
+      return OptionsAreValidForMKLSparseQr(options, error);
     case SPARSE_NORMAL_CHOLESKY:
       return OptionsAreValidForSparseNormalCholesky(options, error);
     case DENSE_SCHUR:
@@ -700,6 +729,7 @@ bool IsCudaRequired(const Solver::Options& options) {
   if (options.linear_solver_type == CGNR ||
       options.linear_solver_type == SPARSE_SCHUR ||
       options.linear_solver_type == SPARSE_NORMAL_CHOLESKY ||
+      options.linear_solver_type == MKL_SPARSE_QR ||
       (options.linear_solver_type == ITERATIVE_SCHUR &&
        (options.preconditioner_type == CLUSTER_JACOBI ||
         options.preconditioner_type == CLUSTER_TRIDIAGONAL))) {
@@ -936,6 +966,7 @@ std::string Solver::Summary::FullReport() const {
 
     const bool used_sparse_linear_algebra_library =
         linear_solver_type_used == SPARSE_NORMAL_CHOLESKY ||
+        linear_solver_type_used == MKL_SPARSE_QR ||
         linear_solver_type_used == SPARSE_SCHUR ||
         linear_solver_type_used == CGNR ||
         (linear_solver_type_used == ITERATIVE_SCHUR &&

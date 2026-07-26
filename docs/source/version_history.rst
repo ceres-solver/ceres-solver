@@ -11,6 +11,15 @@
 Version History
 ===============
 
+Unreleased
+==========
+
+New Features
+------------
+
+#. Added Intel oneMKL Sparse QR support for covariance estimation and the
+   ``MKL_SPARSE_QR`` nonlinear linear solver.
+
 2.2.0
 =====
 

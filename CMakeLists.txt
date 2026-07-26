@@ -1,5 +1,5 @@
 # Ceres Solver - A fast non-linear least squares minimizer
-# Copyright 2024 Google Inc. All rights reserved.
+# Copyright 2026 Google Inc. All rights reserved.
 # http://ceres-solver.org/
 #
 # Redistribution and use in source and binary forms, with or without
@@ -96,6 +96,7 @@ endif()
 # language definition.
 set(USE_CUDA "default" CACHE STRING "Enable use of CUDA linear algebra solvers.")
 option(LAPACK "Enable use of LAPACK directly within Ceres." ON)
+option(MKL "Enable use of Intel oneMKL sparse QR." ON)
 # Template specializations for the Schur complement based solvers. If
 # compile time, binary size or compiler performance is an issue, you
 # may consider disabling this.
@@ -388,15 +389,42 @@ else (USE_CUDA)
   list(APPEND CERES_COMPILE_OPTIONS CERES_NO_CUDA)
 endif (USE_CUDA)
 
+if (MKL)
+  if (NOT DEFINED MKL_INTERFACE_FULL)
+    set(MKL_INTERFACE_FULL intel_lp64)
+  endif (NOT DEFINED MKL_INTERFACE_FULL)
+  # Intel's package version file only considers the same major version
+  # compatible, so passing the minimum version would reject newer oneMKL
+  # releases. MKLConfig.cmake was introduced in oneMKL 2021.3.
+  find_package(MKL CONFIG QUIET)
+  if (MKL_FOUND)
+    message("-- Found MKL ${MKL_VERSION}, building with MKL Sparse QR.")
+    set(MKL_DEPENDENCY "find_dependency(MKL)")
+  else (MKL_FOUND)
+    message("-- Did not find MKL 2021.3 or newer, disabling MKL Sparse QR support.")
+    update_cache_variable(MKL OFF)
+    list(APPEND CERES_COMPILE_OPTIONS CERES_NO_MKL)
+  endif (MKL_FOUND)
+else (MKL)
+  message("-- Building without MKL Sparse QR.")
+  list(APPEND CERES_COMPILE_OPTIONS CERES_NO_MKL)
+endif (MKL)
+
 if (LAPACK)
-  find_package(LAPACK QUIET)
-  if (LAPACK_FOUND)
-    message("-- Found LAPACK library: ${LAPACK_LIBRARIES}")
-  else (LAPACK_FOUND)
-    message("-- Did not find LAPACK library, disabling LAPACK support.")
-    update_cache_variable(LAPACK OFF)
-    list(APPEND CERES_COMPILE_OPTIONS CERES_NO_LAPACK)
-  endif (LAPACK_FOUND)
+  if (MKL AND MKL_FOUND)
+    set(LAPACK_FOUND TRUE)
+    set(LAPACK_LIBRARIES MKL::MKL)
+    message("-- Using MKL for BLAS and LAPACK.")
+  else (MKL AND MKL_FOUND)
+    find_package(LAPACK QUIET)
+    if (LAPACK_FOUND)
+      message("-- Found LAPACK library: ${LAPACK_LIBRARIES}")
+    else (LAPACK_FOUND)
+      message("-- Did not find LAPACK library, disabling LAPACK support.")
+      update_cache_variable(LAPACK OFF)
+      list(APPEND CERES_COMPILE_OPTIONS CERES_NO_LAPACK)
+    endif (LAPACK_FOUND)
+  endif (MKL AND MKL_FOUND)
 else (LAPACK)
   message("-- Building without LAPACK.")
   list(APPEND CERES_COMPILE_OPTIONS CERES_NO_LAPACK)

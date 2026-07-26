@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -79,6 +79,7 @@ class CERES_NO_EXPORT CovarianceImpl {
   bool ComputeCovarianceValuesUsingDenseSVD();
   bool ComputeCovarianceValuesUsingSuiteSparseQR();
   bool ComputeCovarianceValuesUsingEigenSparseQR();
+  bool ComputeCovarianceValuesUsingMKLSparseQR();
 
   const CompressedRowSparseMatrix* covariance_matrix() const {
     return covariance_matrix_.get();

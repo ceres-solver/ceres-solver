@@ -50,6 +50,9 @@
 // If defined, Ceres was compiled without SuiteSparse.
 @CERES_NO_SUITESPARSE@
 
+// If defined, Ceres was compiled without MKL Sparse QR.
+@CERES_NO_MKL@
+
 // If defined, Ceres was compiled without CUDA.
 @CERES_NO_CUDA@
 

@@ -46,6 +46,10 @@ optional. For details on customizing the build process, see
      found TBB version. You can customize the searched TBB location
      with the ``TBB_ROOT`` variable.
 
+- `Intel oneMKL <https://www.intel.com/content/www/us/en/developer/tools/oneapi/onemkl.html>`_
+  (**Optional**). oneMKL provides the MKL Sparse QR backend for covariance
+  estimation and the ``MKL_SPARSE_QR`` linear solver.
+
 - `Apple's Accelerate sparse solvers
   <https://developer.apple.com/documentation/accelerate/sparse_solvers>`_. (**Optional**)
 
@@ -635,6 +639,19 @@ Options controlling Ceres configuration
       terms.  Ceres requires some components that are only licensed under
       GPL/Commercial terms.
 
+#. ``MKL [Default: ON]``: By default, Ceres will use Intel oneMKL when its
+   CMake package configuration is found. This enables ``MKL_SPARSE`` for
+   covariance estimation and ``MKL_SPARSE_QR`` for general sparse nonlinear
+   least squares problems. Existing sparse solver defaults are unchanged.
+
+   CMake automatically searches for the oneMKL package configuration. If
+   detection fails, set ``MKL_DIR`` to the directory containing
+   ``MKLConfig.cmake`` or add the oneMKL installation prefix to
+   ``CMAKE_PREFIX_PATH``. oneMKL 2021.3 or newer is required because this is
+   the first version that provides ``MKLConfig.cmake``. Ceres selects the LP64
+   MKL interface by default because its sparse matrix indices use 32-bit
+   integers.
+
 #. ``ACCELERATESPARSE [Default: ON]``: By default, Ceres will link to
    Apple's Accelerate framework directly if a version of it is detected
    which supports solving sparse linear systems.  Note that on Apple OSs
@@ -714,6 +731,12 @@ This means you can use the standard ``CMake`` facilities to customize
 where these dependencies are found, such as ``CMAKE_PREFIX_PATH``,
 the ``<DEPENDENCY_NAME>_DIR`` variables, or since ``CMake`` 3.12 the
 ``<DEPENDENCY_NAME>_ROOT`` variables.
+
+oneMKL 2021.3 or newer is found automatically in Config mode. If it is
+installed outside the default CMake search path, set ``MKL_DIR`` to the
+directory containing ``MKLConfig.cmake`` or add its installation prefix to
+``CMAKE_PREFIX_PATH``. The Ceres package exported by an MKL-enabled build
+reloads the ``MKL::MKL`` target automatically for downstream projects.
 
 Other dependencies are found using
 ``Find<DEPENDENCY_NAME>.cmake`` scripts which are either included in

@@ -141,10 +141,12 @@ cases.
 
 .. member:: SparseLinearAlgebraLibraryType Covariance::Options::sparse_linear_algebra_library_type
 
-   Default: ``SUITE_SPARSE`` Ceres Solver is built with support for
+   Default: ``SUITE_SPARSE`` when Ceres is built with support for
    `SuiteSparse <http://faculty.cse.tamu.edu/davis/suitesparse.html>`_
-   and ``EIGEN_SPARSE`` otherwise. Note that ``EIGEN_SPARSE`` is
-   always available.
+   and ``EIGEN_SPARSE`` otherwise. ``EIGEN_SPARSE`` is always available when
+   Eigen sparse support is enabled. ``MKL_SPARSE`` selects Intel oneMKL and is
+   available when Ceres is configured with ``MKL=ON`` and finds
+   ``MKLConfig.cmake``.
 
 .. member:: CovarianceAlgorithmType Covariance::Options::algorithm_type
 
@@ -169,6 +171,11 @@ cases.
       ``SuiteSparseQR`` which is enabled by setting
       :member:`Covariance::Options::sparse_linear_algebra_library_type`
       to ``SUITE_SPARSE``.
+
+      Intel oneMKL Sparse QR can be selected by setting the sparse library to
+      ``MKL_SPARSE``. It supports square and overdetermined Jacobians. The
+      oneMKL backend reports factorization or solve failures when the Jacobian
+      is rank deficient.
 
       ``SPARSE_QR`` cannot compute the covariance if the
       Jacobian is rank deficient.

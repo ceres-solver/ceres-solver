@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -46,6 +46,44 @@
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
+
+TEST(Solver, SparseQrTypes) {
+  EXPECT_STREQ(LinearSolverTypeToString(MKL_SPARSE_QR), "MKL_SPARSE_QR");
+  EXPECT_STREQ(SparseLinearAlgebraLibraryTypeToString(MKL_SPARSE),
+               "MKL_SPARSE");
+
+  LinearSolverType linear_solver_type = DENSE_QR;
+  EXPECT_TRUE(
+      StringToLinearSolverType("MKL_SPARSE_QR", &linear_solver_type));
+  EXPECT_EQ(linear_solver_type, MKL_SPARSE_QR);
+
+  SparseLinearAlgebraLibraryType sparse_library = EIGEN_SPARSE;
+  EXPECT_TRUE(
+      StringToSparseLinearAlgebraLibraryType("MKL_SPARSE", &sparse_library));
+  EXPECT_EQ(sparse_library, MKL_SPARSE);
+}
+
+TEST(SolverOptions, MKLSparseQr) {
+  Solver::Options options;
+  options.linear_solver_type = MKL_SPARSE_QR;
+  options.sparse_linear_algebra_library_type = MKL_SPARSE;
+  std::string message;
+  if (IsSparseLinearAlgebraLibraryTypeAvailable(MKL_SPARSE)) {
+    EXPECT_TRUE(options.IsValid(&message));
+
+    options.dynamic_sparsity = true;
+    EXPECT_TRUE(options.IsValid(&message));
+    options.dynamic_sparsity = false;
+
+    options.use_mixed_precision_solves = true;
+    EXPECT_FALSE(options.IsValid(&message));
+  } else {
+    EXPECT_FALSE(options.IsValid(&message));
+  }
+
+  options.sparse_linear_algebra_library_type = EIGEN_SPARSE;
+  EXPECT_FALSE(options.IsValid(&message));
+}
 
 TEST(SolverOptions, DefaultTrustRegionOptionsAreValid) {
   Solver::Options options;

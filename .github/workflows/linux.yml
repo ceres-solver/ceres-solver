@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   build:
-    name: ${{matrix.os}}-${{matrix.build_type}}-${{matrix.lib}}-${{matrix.gpu}}
+    name: ${{matrix.os}}-${{matrix.build_type}}-${{matrix.lib}}-${{matrix.gpu}}-${{matrix.mkl}}
     runs-on: ubuntu-latest
     container: ${{matrix.os}}
     defaults:
@@ -28,6 +28,16 @@ jobs:
         gpu:
           - cuda
           - no-cuda
+        mkl:
+          - no-oneapi
+        include:
+          - os: ubuntu:22.04
+            build_type: Release
+            lib: shared
+            gpu: no-cuda
+            mkl: oneapi
+            mkl_version: 2026.1.0
+            mkl_package: intel-oneapi-mkl-devel-2026.1
 
     steps:
       - name: Setup Dependencies
@@ -45,7 +55,8 @@ jobs:
             libmetis-dev \
             libsuitesparse-dev \
             ninja-build \
-            wget
+            wget \
+            gpg
 
       - uses: actions/checkout@v4
         with:
@@ -72,6 +83,39 @@ jobs:
           apt-get update
           apt-get install -y cuda
           echo "CUDACXX=/usr/local/cuda/bin/nvcc" >> $GITHUB_ENV
+
+      - name: Setup Intel oneAPI Repository
+        if: matrix.mkl != 'no-oneapi'
+        run: |
+          wget -qO- \
+            https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB \
+            | gpg --dearmor -o /usr/share/keyrings/oneapi-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/oneapi-archive-keyring.gpg] https://apt.repos.intel.com/oneapi all main" \
+            > /etc/apt/sources.list.d/oneAPI.list
+          apt-get update
+
+      - name: Install oneAPI
+        if: matrix.mkl != 'no-oneapi'
+        run: apt-get install -y ${{matrix.mkl_package}}
+
+      - name: Configure oneAPI Environment
+        if: matrix.mkl != 'no-oneapi'
+        run: |
+          setvars_file="$(find /opt/intel/oneapi -maxdepth 1 -name setvars.sh \
+            -print -quit)"
+          test -n "$setvars_file"
+          source "$setvars_file" intel64
+          echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH" >> "$GITHUB_ENV"
+          echo "MKLROOT=$MKLROOT" >> "$GITHUB_ENV"
+          echo "PATH=$PATH" >> "$GITHUB_ENV"
+
+      - name: Locate MKLConfig.cmake
+        if: matrix.mkl != 'no-oneapi'
+        run: |
+          mkl_dir="$(find /opt/intel/oneapi/mkl \
+            -type f -name MKLConfig.cmake -printf '%h\n' | head -n 1)"
+          test -n "$mkl_dir"
+          echo "MKL_DIR=$mkl_dir" >> "$GITHUB_ENV"
 
       - name: Setup CUDA Toolkit (>=24.04)
         if: matrix.gpu == 'cuda' && matrix.os == 'ubuntu:24.04'
@@ -118,6 +162,7 @@ jobs:
           echo "${{github.workspace}}/mold-2.36.0-x86_64-linux/libexec/mold" >> $GITHUB_PATH
 
       - name: Configure
+        if: matrix.mkl == 'no-oneapi'
         run: |
           cmake -S . -B build_${{matrix.build_type}} \
                 -DBUILD_SHARED_LIBS=${{matrix.lib == 'shared'}} \
@@ -126,6 +171,20 @@ jobs:
                 -DCMAKE_C_COMPILER_LAUNCHER=$(which ccache) \
                 -DCMAKE_CXX_COMPILER_LAUNCHER=$(which ccache) \
                 -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install
+
+      - name: Configure with oneAPI
+        if: matrix.mkl != 'no-oneapi'
+        run: |
+          cmake -S . -B build_${{matrix.build_type}} \
+                -DBUILD_SHARED_LIBS=${{matrix.lib == 'shared'}} \
+                -DCMAKE_BUILD_TYPE=${{matrix.build_type}} \
+                -DCMAKE_C_COMPILER_LAUNCHER=$(which ccache) \
+                -DCMAKE_CXX_COMPILER_LAUNCHER=$(which ccache) \
+                -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install \
+                -DCMAKE_REQUIRE_FIND_PACKAGE_MKL=ON \
+                -DLAPACK=ON \
+                -DMKL=ON \
+                -DUSE_CUDA=${{matrix.gpu == 'cuda'}}
 
       - name: Build
         run: |

@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -52,6 +52,7 @@ const char* LinearSolverTypeToString(LinearSolverType type) {
   switch (type) {
     CASESTR(DENSE_NORMAL_CHOLESKY);
     CASESTR(DENSE_QR);
+    CASESTR(MKL_SPARSE_QR);
     CASESTR(SPARSE_NORMAL_CHOLESKY);
     CASESTR(DENSE_SCHUR);
     CASESTR(SPARSE_SCHUR);
@@ -66,6 +67,7 @@ bool StringToLinearSolverType(std::string value, LinearSolverType* type) {
   UpperCase(&value);
   STRENUM(DENSE_NORMAL_CHOLESKY);
   STRENUM(DENSE_QR);
+  STRENUM(MKL_SPARSE_QR);
   STRENUM(SPARSE_NORMAL_CHOLESKY);
   STRENUM(DENSE_SCHUR);
   STRENUM(SPARSE_SCHUR);
@@ -104,6 +106,7 @@ const char* SparseLinearAlgebraLibraryTypeToString(
     SparseLinearAlgebraLibraryType type) {
   switch (type) {
     CASESTR(SUITE_SPARSE);
+    CASESTR(MKL_SPARSE);
     CASESTR(EIGEN_SPARSE);
     CASESTR(ACCELERATE_SPARSE);
     CASESTR(CUDA_SPARSE);
@@ -117,6 +120,7 @@ bool StringToSparseLinearAlgebraLibraryType(
     std::string value, SparseLinearAlgebraLibraryType* type) {
   UpperCase(&value);
   STRENUM(SUITE_SPARSE);
+  STRENUM(MKL_SPARSE);
   STRENUM(EIGEN_SPARSE);
   STRENUM(ACCELERATE_SPARSE);
   STRENUM(CUDA_SPARSE);
@@ -399,6 +403,14 @@ bool IsSparseLinearAlgebraLibraryTypeAvailable(
     SparseLinearAlgebraLibraryType type) {
   if (type == SUITE_SPARSE) {
 #ifdef CERES_NO_SUITESPARSE
+    return false;
+#else
+    return true;
+#endif
+  }
+
+  if (type == MKL_SPARSE) {
+#ifdef CERES_NO_MKL
     return false;
 #else
     return true;

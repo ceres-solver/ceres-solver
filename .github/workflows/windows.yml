@@ -81,7 +81,7 @@ jobs:
               --target install
 
   build-msvc:
-    name: ${{matrix.msvc}}-${{matrix.arch}}-${{matrix.build_type}}-${{matrix.lib}}-${{matrix.gpu}}
+    name: ${{matrix.msvc}}-${{matrix.arch}}-${{matrix.build_type}}-${{matrix.lib}}-${{matrix.gpu}}-${{matrix.mkl}}
     runs-on: ${{matrix.os}}
     defaults:
       run:
@@ -104,11 +104,25 @@ jobs:
         gpu:
           - cuda
           - no-cuda
+        mkl:
+          - no-oneapi
         include:
           - msvc: VS-17-2022
             os: windows-2022
             generator: 'Visual Studio 17 2022'
             marker: vc17
+          - arch: x64
+            build_type: Release
+            msvc: VS-17-2022
+            lib: shared
+            gpu: no-cuda
+            mkl: oneapi
+            os: windows-2022
+            generator: 'Visual Studio 17 2022'
+            marker: vc17
+            mkl_version: 2026.1.0
+            mkl_installer_url: https://registrationcenter-download.intel.com/akdlm/IRC_NAS/838e2a31-c5db-429e-93d8-509c08d71ceb/intel-onemkl-2026.1.0.238_offline.exe
+            mkl_installer_sha256: A8334DF5655766C1D2EAA813D7949228A2CCF9AF588CA1A271C37D1B1E802496
 
     steps:
       - uses: actions/checkout@v4
@@ -136,6 +150,82 @@ jobs:
           $CUDSS_CMAKE_CONFIG = "$CUDSS_PATH/lib/cmake/cudss/cudss-config.cmake"
           echo "cudss_DIR=$CUDSS_PATH/lib/cmake/cudss" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           echo "$CUDSS_PATH/bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+      - name: Cache oneAPI
+        if: matrix.mkl != 'no-oneapi'
+        id: cache-mkl
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{github.workspace}}/oneapi-download
+            C:\Program Files (x86)\Intel\oneAPI
+          key: ${{runner.os}}-mkl-${{matrix.mkl_version}}-x64
+
+      - name: Download oneAPI installer
+        if: matrix.mkl != 'no-oneapi' && steps.cache-mkl.outputs.cache-hit != 'true'
+        run: |
+          $download_dir = "${{github.workspace}}/oneapi-download"
+          New-Item -ItemType Directory -Force -Path $download_dir | Out-Null
+          $installer = Join-Path $download_dir "intel-onemkl-${{matrix.mkl_version}}.exe"
+          Invoke-WebRequest `
+            -Uri "${{matrix.mkl_installer_url}}" `
+            -OutFile $installer
+          $hash = (Get-FileHash -Algorithm SHA256 -Path $installer).Hash
+          if ($hash -ne "${{matrix.mkl_installer_sha256}}") {
+            throw "The oneMKL installer checksum did not match."
+          }
+
+      - name: Install oneAPI
+        if: matrix.mkl != 'no-oneapi' && steps.cache-mkl.outputs.cache-hit != 'true'
+        run: |
+          $download_dir = "${{github.workspace}}/oneapi-download"
+          $installer = Get-ChildItem $download_dir -Filter *.exe | Select-Object -First 1
+          if ($null -eq $installer) {
+            throw "The oneMKL installer was not downloaded."
+          }
+          $process = Start-Process `
+            -FilePath $installer.FullName `
+            -ArgumentList '-s', '-a', '--silent', '--eula', 'accept' `
+            -Wait `
+            -PassThru
+          $expected_exit_code = 0
+          if ($process.ExitCode -ne $expected_exit_code) {
+            throw "The oneMKL installer failed with exit code $($process.ExitCode), expected $expected_exit_code."
+          }
+
+      - name: Configure oneAPI Environment
+        if: matrix.mkl != 'no-oneapi'
+        run: |
+          $install_dirs = @(
+            "${env:ProgramFiles(x86)}\Intel\oneAPI",
+            "${env:ProgramFiles}\Intel\oneAPI"
+          )
+          $mkl_config = $null
+          $vars = $null
+          foreach ($install_dir in $install_dirs) {
+            if (-not (Test-Path $install_dir)) {
+              continue
+            }
+            if ($null -eq $mkl_config) {
+              $mkl_config = Get-ChildItem $install_dir -Filter MKLConfig.cmake -Recurse | Select-Object -First 1
+            }
+            if ($null -eq $vars) {
+              $vars = Get-ChildItem $install_dir -Filter *vars.bat -Recurse | Select-Object -First 1
+            }
+          }
+          if ($null -eq $mkl_config) {
+            throw "MKLConfig.cmake was not found in the oneMKL installation."
+          }
+          "MKL_DIR=$($mkl_config.DirectoryName)" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          if ($null -eq $vars) {
+            throw "The oneMKL environment script was not found."
+          }
+          cmd /c "`"$($vars.FullName)`" intel64 lp64 > nul && set" | ForEach-Object {
+            if ($_ -match "^(MKLROOT|PATH|LIB|INCLUDE|CMAKE_PREFIX_PATH)=(.*)$") {
+              Set-Item "env:$($matches[1])" $matches[2]
+              "$($matches[1])=$($matches[2])" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+            }
+          }
 
       - name: Cache SuiteSparse
         id: cache-suitesparse
@@ -178,13 +268,18 @@ jobs:
       - name: Setup Build Environment
         run: |
           echo "Eigen3_ROOT=${{github.workspace}}/eigen" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          echo "CMAKE_PREFIX_PATH=${{github.workspace}}/suitesparse" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          $prefix_path = "${{github.workspace}}/suitesparse"
+          if ($env:CMAKE_PREFIX_PATH) {
+            $prefix_path = "$prefix_path;$env:CMAKE_PREFIX_PATH"
+          }
+          echo "CMAKE_PREFIX_PATH=$prefix_path" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
       - name: Setup Runtime Environment
         run: |
           echo '${{github.workspace}}\suitesparse\bin' | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
       - name: Configure
+        if: matrix.mkl == 'no-oneapi'
         run: |
           cmake -S . -B build_${{matrix.build_type}}/ `
                 -DBLAS_blas_LIBRARY=${{github.workspace}}/suitesparse/lib/libblas.lib `
@@ -192,6 +287,17 @@ jobs:
                 -DCMAKE_CONFIGURATION_TYPES=${{matrix.build_type}} `
                 -DCMAKE_INSTALL_PREFIX:PATH=${{github.workspace}}/install `
                 -DLAPACK_lapack_LIBRARY=${{github.workspace}}/suitesparse/lib/liblapack.lib
+
+      - name: Configure with oneAPI
+        if: matrix.mkl != 'no-oneapi'
+        run: |
+          cmake -S . -B build_${{matrix.build_type}}/ `
+                -DBUILD_SHARED_LIBS=${{matrix.lib == 'shared'}} `
+                -DCMAKE_CONFIGURATION_TYPES=${{matrix.build_type}} `
+                -DCMAKE_INSTALL_PREFIX:PATH=${{github.workspace}}/install `
+                -DCMAKE_REQUIRE_FIND_PACKAGE_MKL=ON `
+                -DLAPACK=ON `
+                -DMKL=ON
 
       - name: Build
         run: |
