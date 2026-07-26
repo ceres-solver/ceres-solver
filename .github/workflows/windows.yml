@@ -106,7 +106,7 @@ jobs:
           - no-cuda
         include:
           - msvc: VS-17-2022
-            os: windows-2025
+            os: windows-2022
             generator: 'Visual Studio 17 2022'
             marker: vc17
 
