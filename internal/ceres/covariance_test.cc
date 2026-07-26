@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -638,6 +638,11 @@ TEST_F(CovarianceTest, NormalBehavior) {
   options.algorithm_type = SPARSE_QR;
   options.sparse_linear_algebra_library_type = EIGEN_SPARSE;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+
+#ifndef CERES_NO_MKL
+  options.sparse_linear_algebra_library_type = MKL_SPARSE;
+  ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+#endif
 }
 
 TEST_F(CovarianceTest, ThreadedNormalBehavior) {
@@ -1193,6 +1198,16 @@ TEST_F(RankDeficientCovarianceTest, AutomaticTruncation) {
   options.null_space_rank = -1;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
 }
+
+#ifndef CERES_NO_MKL
+TEST_F(RankDeficientCovarianceTest, MKLSparseQrRejectsRankDeficientJacobian) {
+  Covariance::Options options;
+  options.algorithm_type = SPARSE_QR;
+  options.sparse_linear_algebra_library_type = MKL_SPARSE;
+  Covariance covariance(options);
+  EXPECT_FALSE(covariance.Compute(all_covariance_blocks_, &problem_));
+}
+#endif
 
 struct LinearCostFunction {
   template <typename T>

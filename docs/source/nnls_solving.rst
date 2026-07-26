@@ -513,6 +513,27 @@ on the GPU is large enough to also account for the time taken to
 transfer the Jacobian to the GPU, using CUDA will not be better than
 just doing the decomposition on the CPU.
 
+.. _section-mkl-sparse-qr:
+
+MKL_SPARSE_QR
+-------------
+
+For large problems with a general sparse Jacobian, Intel oneMKL provides a
+multifrontal sparse QR factorization. Select it with
+:member:`Solver::Options::linear_solver_type` set to ``MKL_SPARSE_QR`` and
+:member:`Solver::Options::sparse_linear_algebra_library_type` set to
+``MKL_SPARSE``.
+
+The solver works directly with the rectangular Jacobian and avoids forming
+the normal equations. It supports square and overdetermined systems with
+fixed or dynamic sparsity, including the diagonal damping rows used by
+trust-region methods.
+
+The solver requires Ceres to be built with MKL support. It does not support
+Schur solver modes, mixed precision solves, or underdetermined systems.
+Existing SuiteSparse, Accelerate, Eigen, and nonlinear solver defaults are
+unchanged.
+
 .. _section-dense-normal-cholesky:
 
 DENSE_NORMAL_CHOLESKY
@@ -1578,7 +1599,8 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    algorithm. If Ceres is built with support for ``SuiteSparse`` or
    ``Accelerate`` or ``Eigen``'s sparse Cholesky factorization, the
    default is ``SPARSE_NORMAL_CHOLESKY``, it is ``DENSE_QR``
-   otherwise.
+   otherwise. ``MKL_SPARSE_QR`` is available for general sparse problems when
+   Ceres is built with MKL support.
 
 .. member:: PreconditionerType Solver::Options::preconditioner_type
 
@@ -1658,12 +1680,14 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    Default: The highest available according to: ``SUITE_SPARSE`` >
    ``ACCELERATE_SPARSE`` > ``EIGEN_SPARSE`` > ``NO_SPARSE``
 
-   Ceres supports the use of three sparse linear algebra libraries,
+   Ceres supports the use of five sparse linear algebra libraries,
    ``SuiteSparse``, which is enabled by setting this parameter to
-   ``SUITE_SPARSE``, ``Acclerate``, which can be selected by setting
-   this parameter to ``ACCELERATE_SPARSE`` and ``Eigen`` which is
-   enabled by setting this parameter to ``EIGEN_SPARSE``.  Lastly,
-   ``NO_SPARSE`` means that no sparse linear solver should be used;
+   ``SUITE_SPARSE``, ``Accelerate``, which can be selected by setting this
+   parameter to ``ACCELERATE_SPARSE``, ``Eigen``, which is enabled by setting
+   this parameter to ``EIGEN_SPARSE``, Intel oneMKL Sparse QR, which can be
+   selected with ``MKL_SPARSE``, and Nvidia's sparse libraries, which can be
+   selected with ``CUDA_SPARSE``. ``NO_SPARSE`` means that no sparse linear
+   solver should be used;
    note that this is irrespective of whether Ceres was compiled with
    support for one.
 

@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -87,7 +87,10 @@ enum LinearSolverType {
   ITERATIVE_SCHUR,
 
   // Conjugate gradients on the normal equations.
-  CGNR
+  CGNR,
+
+  // Solve a sparse rectangular system using MKL Sparse QR.
+  MKL_SPARSE_QR
 };
 
 enum PreconditionerType {
@@ -181,7 +184,10 @@ enum SparseLinearAlgebraLibraryType {
   // No sparse linear solver should be used.  This does not necessarily
   // imply that Ceres was built without any sparse library, although that
   // is the likely use case, merely that one should not be used.
-  NO_SPARSE
+  NO_SPARSE,
+
+  // Intel oneMKL sparse QR routines.
+  MKL_SPARSE
 };
 
 // The order in which variables are eliminated in a linear solver

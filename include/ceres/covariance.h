@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -205,7 +205,8 @@ class CERES_EXPORT Covariance {
     // Sparse linear algebra library to use when a sparse matrix
     // factorization is being used to compute the covariance matrix.
     //
-    // Currently this only applies to SPARSE_QR.
+    // Currently this only applies to SPARSE_QR. MKL_SPARSE selects Intel
+    // oneMKL Sparse QR when MKL support is enabled.
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type =
 #if !defined(CERES_NO_SUITESPARSE)
         SUITE_SPARSE;
@@ -241,8 +242,8 @@ class CERES_EXPORT Covariance {
     // SPARSE_QR is not capable of computing the covariance if the
     // Jacobian is rank deficient. Depending on the value of
     // Covariance::Options::sparse_linear_algebra_library_type, either
-    // Eigen's Sparse QR factorization algorithm will be used or
-    // SuiteSparse's high performance SuiteSparseQR algorithm will be
+    // Eigen's Sparse QR factorization algorithm, SuiteSparse's high
+    // performance SuiteSparseQR algorithm, or Intel oneMKL Sparse QR will be
     // used.
     CovarianceAlgorithmType algorithm_type = SPARSE_QR;
 

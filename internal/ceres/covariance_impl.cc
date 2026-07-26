@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -60,6 +60,10 @@
 #include "ceres/problem_impl.h"
 #include "ceres/residual_block.h"
 #include "ceres/suitesparse.h"
+
+#ifndef CERES_NO_MKL
+#include "mkl.h"
+#endif
 
 namespace ceres::internal {
 
@@ -523,6 +527,16 @@ bool CovarianceImpl::ComputeCovarianceValues() {
 #endif
     }
 
+    if (options_.sparse_linear_algebra_library_type == MKL_SPARSE) {
+#if !defined(CERES_NO_MKL)
+      return ComputeCovarianceValuesUsingMKLSparseQR();
+#else
+      LOG(ERROR) << "MKL is required to use the SPARSE_QR algorithm with "
+                    "sparse_linear_algebra_library_type = MKL_SPARSE.";
+      return false;
+#endif
+    }
+
     LOG(ERROR) << "Unsupported "
                << "Covariance::Options::sparse_linear_algebra_library_type "
                << "= "
@@ -534,6 +548,132 @@ bool CovarianceImpl::ComputeCovarianceValues() {
   LOG(ERROR) << "Unsupported Covariance::Options::algorithm_type = "
              << CovarianceAlgorithmTypeToString(options_.algorithm_type);
   return false;
+}
+
+bool CovarianceImpl::ComputeCovarianceValuesUsingMKLSparseQR() {
+  EventLogger event_logger(
+      "CovarianceImpl::ComputeCovarianceValuesUsingMKLSparseQR");
+
+#ifndef CERES_NO_MKL
+  if (covariance_matrix_ == nullptr) {
+    return true;
+  }
+
+  CRSMatrix jacobian;
+  problem_->Evaluate(evaluate_options_, nullptr, nullptr, nullptr, &jacobian);
+  event_logger.AddEvent("Evaluate");
+
+  const int num_rows = jacobian.num_rows;
+  const int num_cols = jacobian.num_cols;
+  const int num_nonzeros = jacobian.values.size();
+  if (num_rows < num_cols) {
+    LOG(ERROR) << "MKL Sparse QR requires an overdetermined or square "
+                  "Jacobian. Number of rows: "
+               << num_rows << ", number of columns: " << num_cols << ".";
+    return false;
+  }
+
+  using EigenSparseMatrix = Eigen::SparseMatrix<double, Eigen::ColMajor>;
+  EigenSparseMatrix sparse_jacobian =
+      Eigen::Map<Eigen::SparseMatrix<double, Eigen::RowMajor>>(
+          num_rows,
+          num_cols,
+          num_nonzeros,
+          jacobian.rows.data(),
+          jacobian.cols.data(),
+          jacobian.values.data());
+  Eigen::SparseQR<EigenSparseMatrix, Eigen::COLAMDOrdering<int>> rank_check;
+  rank_check.compute(sparse_jacobian);
+  if (rank_check.info() != Eigen::Success) {
+    LOG(ERROR) << "MKL Sparse QR rank check failed.";
+    return false;
+  }
+  if (rank_check.rank() < num_cols) {
+    LOG(ERROR) << "Jacobian matrix is rank deficient. Number of columns: "
+               << num_cols << " rank: " << rank_check.rank();
+    return false;
+  }
+
+  std::vector<MKL_INT> rows_start(num_rows);
+  std::vector<MKL_INT> rows_end(num_rows);
+  std::vector<MKL_INT> columns(num_nonzeros);
+  std::vector<double> values(num_nonzeros);
+  for (int row = 0; row < num_rows; ++row) {
+    rows_start[row] = jacobian.rows[row];
+    rows_end[row] = jacobian.rows[row + 1];
+  }
+  std::copy(jacobian.cols.begin(), jacobian.cols.end(), columns.begin());
+  std::copy(jacobian.values.begin(), jacobian.values.end(), values.begin());
+
+  sparse_matrix_t matrix = nullptr;
+  sparse_status_t status = mkl_sparse_d_create_csr(
+      &matrix, SPARSE_INDEX_BASE_ZERO, num_rows, num_cols,
+      rows_start.data(), rows_end.data(), columns.data(), values.data());
+  if (status != SPARSE_STATUS_SUCCESS) {
+    LOG(ERROR) << "mkl_sparse_d_create_csr returned status "
+               << static_cast<int>(status) << ", expected status "
+               << static_cast<int>(SPARSE_STATUS_SUCCESS) << ".";
+    return false;
+  }
+
+  const auto destroy_matrix = [&matrix]() {
+    if (matrix != nullptr) {
+      mkl_sparse_destroy(matrix);
+    }
+  };
+
+  matrix_descr descriptor{};
+  descriptor.type = SPARSE_MATRIX_TYPE_GENERAL;
+  status = mkl_sparse_qr_reorder(matrix, descriptor);
+  if (status == SPARSE_STATUS_SUCCESS) {
+    status = mkl_sparse_d_qr_factorize(matrix, values.data());
+  }
+  event_logger.AddEvent("QR Factorization");
+  if (status != SPARSE_STATUS_SUCCESS) {
+    LOG(ERROR) << "MKL Sparse QR factorization returned status "
+               << static_cast<int>(status) << ", expected status "
+               << static_cast<int>(SPARSE_STATUS_SUCCESS) << ".";
+    destroy_matrix();
+    return false;
+  }
+
+  const int* rows = covariance_matrix_->rows();
+  const int* cols = covariance_matrix_->cols();
+  double* covariance_values = covariance_matrix_->mutable_values();
+  std::fill(covariance_values,
+            covariance_values + covariance_matrix_->num_nonzeros(), 0.0);
+  std::vector<double> rhs(num_rows, 0.0);
+  std::vector<double> solution(num_cols, 0.0);
+  for (int rhs_index = 0; rhs_index < num_rows; ++rhs_index) {
+    rhs[rhs_index] = 1.0;
+    status = mkl_sparse_d_qr_solve(
+        SPARSE_OPERATION_NON_TRANSPOSE, matrix, values.data(),
+        SPARSE_LAYOUT_COLUMN_MAJOR, 1, solution.data(), num_cols, rhs.data(),
+        num_rows);
+    rhs[rhs_index] = 0.0;
+    if (status != SPARSE_STATUS_SUCCESS) {
+      LOG(ERROR) << "MKL Sparse QR solve returned status "
+                 << static_cast<int>(status) << ", expected status "
+                 << static_cast<int>(SPARSE_STATUS_SUCCESS) << ".";
+      destroy_matrix();
+      return false;
+    }
+
+    // Accumulate only requested covariance entries because MKL has no masked
+    // dense Gram update. Forming the full product would waste memory and work.
+    for (int row = 0; row < covariance_matrix_->num_rows(); ++row) {
+      for (int index = rows[row]; index < rows[row + 1]; ++index) {
+        covariance_values[index] += solution[row] * solution[cols[index]];
+      }
+    }
+  }
+
+  destroy_matrix();
+  event_logger.AddEvent("Inversion");
+  return true;
+#else
+  return false;
+#endif
 }
 
 bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {

@@ -109,6 +109,10 @@ if (SUITESPARSE AND SuiteSparse_FOUND)
   endif (SuiteSparse_Partition_FOUND)
 endif (SUITESPARSE AND SuiteSparse_FOUND)
 
+if (MKL AND MKL_FOUND)
+  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES MKL::MKL)
+endif (MKL AND MKL_FOUND)
+
 if (SuiteSparse_Partition_FOUND OR EIGENMETIS)
   # Define version information for use in Solver::FullReport.
   add_definitions(-DCERES_METIS_VERSION="${METIS_VERSION}")
@@ -132,9 +136,9 @@ if (USE_CUDA)
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ceres_cuda_kernels)
 endif (USE_CUDA)
 
-if (LAPACK_FOUND)
+if (LAPACK_FOUND AND NOT (MKL AND MKL_FOUND))
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${LAPACK_LIBRARIES})
-endif ()
+endif (LAPACK_FOUND AND NOT (MKL AND MKL_FOUND))
 
 # Source files that contain private symbols and live in the ceres::internal
 # namespace. The corresponding symbols (classes, functions, etc.) are expected
@@ -208,6 +212,7 @@ add_library(ceres_internal OBJECT
     linear_least_squares_problems.cc
     linear_operator.cc
     linear_solver.cc
+    mkl_sparse_qr_solver.cc
     low_rank_inverse_hessian.cc
     minimizer.cc
     parallel_invoke.cc
@@ -503,6 +508,7 @@ if (BUILD_TESTING)
   ceres_test(solver)
   ceres_test(sparse_cholesky)
   ceres_test(sparse_normal_cholesky_solver)
+  ceres_test(mkl_sparse_qr_solver)
   ceres_test(subset_preconditioner)
   ceres_test(system)
   ceres_test(tiny_solver)

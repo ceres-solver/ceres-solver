@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -38,6 +38,7 @@
 #include "ceres/dense_normal_cholesky_solver.h"
 #include "ceres/dense_qr_solver.h"
 #include "ceres/dynamic_sparse_normal_cholesky_solver.h"
+#include "ceres/mkl_sparse_qr_solver.h"
 #include "ceres/internal/config.h"
 #include "ceres/iterative_schur_complement_solver.h"
 #include "ceres/schur_complement_solver.h"
@@ -117,6 +118,13 @@ std::unique_ptr<LinearSolver> LinearSolver::Create(
 
     case DENSE_QR:
       return std::make_unique<DenseQRSolver>(options);
+
+    case MKL_SPARSE_QR:
+#ifndef CERES_NO_MKL
+      return std::make_unique<MKLSparseQRSolver>(options);
+#else
+      return nullptr;
+#endif
 
     case DENSE_NORMAL_CHOLESKY:
       return std::make_unique<DenseNormalCholeskySolver>(options);
