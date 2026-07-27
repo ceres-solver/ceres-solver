@@ -33,6 +33,24 @@
       "message": "this is a very large change, for me to be able to review it effectively I am going to need a bit more context on the changes and a detailed list of changes and why or maybe break this into smaller cls?",
       "revId": "2412594457d0de07c3973c3b3953b6a6291f26c6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41b5c789_9e8981e8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-07-27T19:59:46Z",
+      "side": 1,
+      "message": "Fair. However, breaking this CL into smaller ones is not straightforward at this point.\n\nThe general goal of this CL to modernize and cleanup the CMake setup, get rid of the many custom messages, and reduce the verbosity of CMake output during configuration. Instead, standardized CMake output combined with `FeatureSummary` for an overview of enabled features and dependencies (including their versions) is used.\n\nAll the dependencies are now found eagerly right at the beginning in a sorted order and are no longer scattered throughout the output. CMake also no longer disables features/dependencies (retrospectively using `UpdateCacheVariable.cmake`) which previously caused unwanted side-effects.\n\nConfiguration options now consistently use the `WITH_` prefix (similar to `BUILD_` variables) instead of `USE_CUDA` and `SUITESPARSE` etc. and thus can be easier sorted and grouped in the CMake GUI.\n\nOur CMake find modules now report failures using standard (and compact) CMake means instead of using custom error reporting.\n\nBefore reviewing, I suggest to try out the changes, ideally in a fresh build directory.",
+      "parentUuid": "33ea4c5b_4c9e3bf3",
+      "revId": "2412594457d0de07c3973c3b3953b6a6291f26c6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
