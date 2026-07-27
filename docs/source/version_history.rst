@@ -11,6 +11,17 @@
 Version History
 ===============
 
+Unreleased
+==========
+
+Backward Incompatible API Changes
+---------------------------------
+
+#. The ``SUITESPARSE`` CMake option now defaults to ``OFF``. Passing
+   ``-DSUITESPARSE=ON`` restores the previous behavior, but makes the
+   resulting Ceres build GPL licensed unless you hold a commercial
+   SuiteSparse license.
+
 2.2.0
 =====
 
