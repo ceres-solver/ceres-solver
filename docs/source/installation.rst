@@ -120,6 +120,10 @@ versions included with Ceres Solver as submodules by using the command
 
    git clone --recurse-submodules https://github.com/ceres-solver/ceres-solver
 
+The build instructions below use ``ceres-solver-2.2.0`` as the source
+directory because they assume a release archive. If you build from a Git
+checkout, replace it with the name of your checkout, usually ``ceres-solver``.
+
 
 .. _section-linux:
 

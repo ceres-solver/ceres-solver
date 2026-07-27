@@ -11,6 +11,15 @@
 Version History
 ===============
 
+Unreleased
+==========
+
+Bug Fixes & Minor Changes
+-------------------------
+
+#. Clarify building Ceres Solver from Git sources in the installation
+   documentation.
+
 2.2.0
 =====
 
