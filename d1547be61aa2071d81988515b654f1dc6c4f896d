@@ -16,6 +16,24 @@
       "message": "I think you meant to say vs 17 2022 not vs2017 in the commit log.",
       "revId": "d1547be61aa2071d81988515b654f1dc6c4f896d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc397b57_8027e317",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-07-27T19:32:09Z",
+      "side": 1,
+      "message": "Right, let me update the commit message quickly.",
+      "parentUuid": "10ae1c06_e8953d2e",
+      "revId": "d1547be61aa2071d81988515b654f1dc6c4f896d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
