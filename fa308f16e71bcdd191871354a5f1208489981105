@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46ec321f_fbc436bd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-07-27T19:50:47Z",
+      "side": 1,
+      "message": "Could you add more context to the cl description with some history of the changes and why we are rolling this back?",
+      "revId": "fa308f16e71bcdd191871354a5f1208489981105",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
