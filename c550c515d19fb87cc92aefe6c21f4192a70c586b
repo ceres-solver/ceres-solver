@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4609f31_79d7c7de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-07-27T19:45:47Z",
+      "side": 1,
+      "message": "do you have some sense of the performance we get out of this? experiments I did a long time ago showed that the sparseqr doesn\u0027t do a great job of efficiently solving problems, because of the amount of fill-in that happens.\n\nIt would good to know at least some problems where this linear solver performs better.. so that we can give users some guidance.",
+      "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
