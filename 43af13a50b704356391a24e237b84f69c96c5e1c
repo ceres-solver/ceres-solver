@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8376d611_50ffcd16",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-07-27T18:37:45Z",
+      "side": 1,
+      "message": "This CL supersedes [Extending hypot for 4 arguments](https://ceres-solver-review.googlesource.com/c/ceres-solver/+/23824).",
+      "revId": "43af13a50b704356391a24e237b84f69c96c5e1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
