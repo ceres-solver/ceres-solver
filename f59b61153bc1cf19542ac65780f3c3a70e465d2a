@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a672e681_7209b172",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-07-27T23:08:35Z",
+      "side": 1,
+      "message": "I am not sure this is a good idea. The common case is people using this on their desktop/doing academic work etc. And most software on their desktop is already gpl.\n\nIt is only when they are distributing software gpl matters, and in that case they should of course worry about the build.\n\nThis is going to make the default performance of Ceres Solver worse, unless packagers enable it by default going forward.",
+      "revId": "f59b61153bc1cf19542ac65780f3c3a70e465d2a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
