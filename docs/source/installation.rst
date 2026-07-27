@@ -629,15 +629,19 @@ Options controlling Ceres configuration
    note that if ``LAPACK=ON`` and ``SUITESPARSE=ON``, the ``LAPACK`` and
    ``BLAS`` libraries used by SuiteSparse and Ceres should be the same.
 
-#. ``SUITESPARSE [Default: ON]``: By default, Ceres will link to
-   ``SuiteSparse`` if it and all of its dependencies are present. Turn
-   this ``OFF`` to build Ceres without ``SuiteSparse``.
+#. ``SUITESPARSE [Default: OFF]``: SuiteSparse support is opt-in. Turn this
+   ``ON`` to link Ceres against ``SuiteSparse``, provided it and all of its
+   dependencies are present.
 
-   .. NOTE::
+   .. WARNING::
 
-      SuiteSparse is licensed under a mixture of GPL/LGPL/Commercial
-      terms.  Ceres requires some components that are only licensed under
-      GPL/Commercial terms.
+      SuiteSparse is licensed under a mixture of GPL/LGPL/Commercial terms.
+      Ceres requires the CHOLMOD supernodal factorization and SPQR components,
+      which are only available under GPL/Commercial terms. Consequently, unless
+      you hold a commercial SuiteSparse license, a Ceres build with
+      ``SUITESPARSE=ON`` is GPL licensed. This is why SuiteSparse support is
+      opt-in rather than enabled by default. Obtaining a commercial SuiteSparse
+      license removes this restriction.
 
 #. ``ACCELERATESPARSE [Default: ON]``: By default, Ceres will link to
    Apple's Accelerate framework directly if a version of it is detected

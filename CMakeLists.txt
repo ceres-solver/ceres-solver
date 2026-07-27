@@ -85,7 +85,7 @@ enable_testing()
 include(CMakeDependentOption)
 include(PrettyPrintCMakeList)
 
-option(SUITESPARSE "Enable SuiteSparse." ON)
+option(SUITESPARSE "Enable SuiteSparse." OFF)
 if (APPLE)
   option(ACCELERATESPARSE
     "Enable use of sparse solvers in Apple's Accelerate framework." ON)
@@ -407,16 +407,15 @@ endif (LAPACK)
 set(RELATIVE_CMAKECONFIG_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/cmake/Ceres)
 
 if (SUITESPARSE)
-  # By default, if SuiteSparse and all dependencies are found, Ceres is
-  # built with SuiteSparse support.
+  # SuiteSparse support is opt-in and was explicitly requested. If it and
+  # all of its dependencies are found, Ceres is built with SuiteSparse
+  # support.
 
   # Check for SuiteSparse and dependencies.
   find_package(SuiteSparse 4.5.6 COMPONENTS CHOLMOD SPQR
     OPTIONAL_COMPONENTS Partition)
   if (SuiteSparse_FOUND)
     set(SuiteSparse_DEPENDENCY "find_dependency(SuiteSparse ${SuiteSparse_VERSION})")
-    # By default, if all of SuiteSparse's dependencies are found, Ceres is
-    # built with SuiteSparse support.
     message("-- Found SuiteSparse ${SuiteSparse_VERSION}, "
             "building with SuiteSparse.")
 
