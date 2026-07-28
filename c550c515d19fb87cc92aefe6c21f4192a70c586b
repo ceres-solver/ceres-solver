@@ -163,6 +163,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6746ce5d_ac32f63b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-07-28T17:52:25Z",
+      "side": 1,
+      "message": "sure you can do eigensparse but it needs to be substantially faster than eigensparse.\nbut as I noted elsewhere as I am looking at this CL, you are using the wrong linear solver, the right linear solver is Paradiso and not sparseqr.",
+      "parentUuid": "df18da99_c2358756",
+      "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8c0d3baa_3511b938",
         "filename": "CMakeLists.txt",
         "patchSetId": 2
