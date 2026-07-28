@@ -106,6 +106,24 @@
       "parentUuid": "2f0bdc6d_415c862a",
       "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68ea4115_fa5a4854",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-07-28T17:33:21Z",
+      "side": 1,
+      "message": "suitesparse.\neigensparse is what you use when you have nothing else available.",
+      "parentUuid": "70c61351_13107eaf",
+      "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
