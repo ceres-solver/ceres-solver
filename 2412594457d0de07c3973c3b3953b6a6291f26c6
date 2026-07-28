@@ -51,6 +51,24 @@
       "parentUuid": "33ea4c5b_4c9e3bf3",
       "revId": "2412594457d0de07c3973c3b3953b6a6291f26c6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5c9ec62_ebe0385c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-07-28T16:51:21Z",
+      "side": 1,
+      "message": "Good idea on running it, which I just did. Here is the relevant part of the output with some comments.\n\n-- The following features have been enabled:\n\n* Apple Accelerate sparse, Sparse solvers provided by Apple\u0027s Accelerate framework\n * Custom BLAS, Ceres hand-coded BLAS routines\n * Eigen Sparse, Eigen sparse linear algebra support\n * CHOLMOD single precision, Single-precision CHOLMOD factorization support\n * Examples, Ceres example programs\n * Benchmarks, Ceres microbenchmark programs\n * LAPACK support, Direct use of LAPACK routines\n * Schur specializations, Fixed-size Schur solver specializations\n * SuiteSparse support, SuiteSparse sparse linear solvers\n * Tests, Ceres unit and integration tests\n \n The order of things in the above list is a bit random. linear solvers are mixed with library support, example programs etc. I was wondering its its possible to have them be grouped thematically and ordered by importance?\n \nThen in the following list, we go from\n\noptional, to recommended to required that are found.\n\nI would think that the list would be the opposite, where it is required, recommended, and then optional. Also do you think this list should come before we talk about what features are enabled/disabled? maybe not, I am less sure about this.\n\nOne of the things that has been lost in this process is the reasoning for why a certain feature is disabled, but maybe thats okay.\n\n-- The following OPTIONAL packages have been found:\n\n * absl, C++ common libraries from Google (version 20250127), \u003chttps://abseil.io\u003e\n * AccelerateSparse, Apple\u0027s Accelerate framework with sparse linear solvers\n * benchmark (required version \u003e\u003d 1.3), A microbenchmark support library (version 1.9.5), \u003chttps://github.com/google/benchmark\u003e\n   Benchmarking of Ceres\n * BLAS, Basic Linear Algebra Subprograms implementation\n   LAPACK dependency\n * Eigen3 (required version 3.3.4...5), C++ template library for linear algebra (version 5.0.1), \u003chttps://eigen.tuxfamily.org\u003e\n * GTest, Google\u0027s C++ testing framework (version 1.16.0), \u003chttps://github.com/google/googletest\u003e\n   Ceres unit tests\n\n-- The following RECOMMENDED packages have been found:\n\n * LAPACK, Linear Algebra PACKage implementation\n * SuiteSparse (required version \u003e\u003d 4.5.6), A suite of sparse matrix algorithms (version 7.12.2), \u003chttps://github.com/DrTimothyAldenDavis/SuiteSparse\u003e\n\n-- The following REQUIRED packages have been found:\n\n * Threads, Native platform threading support\n   Multithreading support\n\n-- The following features have been disabled:\n\n * CUDA acceleration, CUDA-accelerated linear solvers\n * cuDSS sparse solver, cuDSS sparse linear solver support\n * Documentation, Ceres HTML documentation\n * Eigen METIS, METIS ordering for Eigen sparse solvers\n * CHOLMOD Partition, CHOLMOD graph partitioning support\n * Shared library, Shared Ceres library\n\n-- The following OPTIONAL packages have not been found:\n\n * CUDAToolkit, NVIDIA CUDA toolkit, \u003chttps://developer.nvidia.com/cuda-toolkit\u003e\n   CUDA solver acceleration\n * cudss, NVIDIA CUDA sparse solver library, \u003chttps://developer.nvidia.com/cudss\u003e\n   CUDA sparse solver support\n * OpenMP, OpenMP parallel execution API\n   Parallel execution support\n * TBB, Threading Building Blocks\n   SuiteSparseQR dependency\n\n-- The following RECOMMENDED packages have not been found:\n\n * METIS, Serial graph partitioning and fill-reducing matrix ordering\n\n-- Configuring done (15.6s)\n-- Generating done (1.1s)\n-- Build files have been written to: /Users/sameeragarwal/ceres-solver/cmake-build",
+      "parentUuid": "41b5c789_9e8981e8",
+      "revId": "2412594457d0de07c3973c3b3953b6a6291f26c6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
