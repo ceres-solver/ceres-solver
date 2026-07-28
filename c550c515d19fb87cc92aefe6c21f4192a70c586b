@@ -70,6 +70,24 @@
       "parentUuid": "ec873b5a_3c254d20",
       "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f0bdc6d_415c862a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-07-28T16:43:05Z",
+      "side": 1,
+      "message": "1. I think whenever add a backend, we should have some idea of its performance. Running the benchmarks also tells us if we missed some basic performance optimization, like caching the symbolic factorization etc. I have not looked at the code yet.\n2. Sure licensing is an issue, but people will only use this backend if it works well, if it craps out in terms of memory or time, then even though it has a commercial license, its mostly useless and we have dead code in the library.",
+      "parentUuid": "ea091a19_c627fdba",
+      "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
