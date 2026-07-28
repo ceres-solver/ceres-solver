@@ -182,6 +182,29 @@
       },
       "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14535603_94652012",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-07-28T17:51:22Z",
+      "side": 1,
+      "message": "this seems like you are first computing the rank using eigen and then calling mkl after that, this is not great.\nmkl should be able to tell you that the matrix is rank deficient, this is one of the things qr decomposition can tell you.",
+      "range": {
+        "startLine": 585,
+        "startChar": 44,
+        "endLine": 585,
+        "endChar": 58
+      },
+      "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
