@@ -179,6 +179,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "36c1e6bb_ef64bd91",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-07-28T18:19:02Z",
+      "side": 1,
+      "message": "You mean PARDISO for nonsymmetric matrices, right? I\u0027m asking because there\u0027s already an ongoing (but seemingly stale) integration of MKL\u0027s Sparse Cholesky by Dmitriy in this [CL](https://ceres-solver-review.googlesource.com/c/ceres-solver/+/24140).",
+      "parentUuid": "750af467_4e818384",
+      "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8c0d3baa_3511b938",
