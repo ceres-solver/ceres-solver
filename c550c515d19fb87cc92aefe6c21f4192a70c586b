@@ -197,6 +197,41 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c7baa4a_92a07554",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-07-28T18:22:30Z",
+      "side": 1,
+      "message": "no I was saying that paradiso for symmetric psd, dmitry\u0027s patch has gone stale and is stuck in la la land and he has stopped responding on it.\nwe can still add this, but I suspect you are going to have very bad performance, because sparse qr has terrible fill in.\n\nthis is why we do not suppose suitesparseqr for linear solves.",
+      "parentUuid": "36c1e6bb_ef64bd91",
+      "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc0b453d_cb5166f9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-07-28T18:22:30Z",
+      "side": 1,
+      "message": "`",
+      "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8c0d3baa_3511b938",
