@@ -145,6 +145,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "df18da99_c2358756",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-07-28T17:47:45Z",
+      "side": 1,
+      "message": "Yeah, sure. But isn\u0027t the goal to be at least faster than EigenSparse which would justify the inclusion too?",
+      "parentUuid": "68ea4115_fa5a4854",
+      "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8c0d3baa_3511b938",
         "filename": "CMakeLists.txt",
         "patchSetId": 2
