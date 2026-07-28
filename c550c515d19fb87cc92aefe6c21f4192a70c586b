@@ -124,6 +124,46 @@
       "parentUuid": "70c61351_13107eaf",
       "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "750af467_4e818384",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-07-28T17:44:44Z",
+      "side": 1,
+      "message": "actually I just realized something.\nthe sparseqr is the wrong linear solver to plumb in, intel mkl ships with the paradiso solver, which is the right thing for solving positive definite/semi-definite linear systems.\n\nhttps://www.intel.com/content/www/us/en/docs/onemkl/developer-reference-c/2025-0/onemkl-pardiso-parallel-direct-sparse-solver-iface.html",
+      "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c0d3baa_3511b938",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-07-28T17:44:44Z",
+      "side": 1,
+      "message": "what is this? is it using int64 indices? a comment would be useful",
+      "range": {
+        "startLine": 394,
+        "startChar": 27,
+        "endLine": 394,
+        "endChar": 37
+      },
+      "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
