@@ -88,6 +88,24 @@
       "parentUuid": "ea091a19_c627fdba",
       "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70c61351_13107eaf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-07-28T17:28:39Z",
+      "side": 1,
+      "message": "That\u0027s fair. What the baseline then? EigenSparse and/or SuiteSparse?",
+      "parentUuid": "2f0bdc6d_415c862a",
+      "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
