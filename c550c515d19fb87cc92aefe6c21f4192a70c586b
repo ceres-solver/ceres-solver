@@ -52,6 +52,24 @@
       "parentUuid": "850cef3e_bf454d47",
       "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea091a19_c627fdba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-07-28T16:40:34Z",
+      "side": 1,
+      "message": "Before I run any benchmarks, what is the goal of this given (1) the available comparison between SuiteSparse and Sparse QR by Intel (2) in light of the licensing issues?",
+      "parentUuid": "ec873b5a_3c254d20",
+      "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
