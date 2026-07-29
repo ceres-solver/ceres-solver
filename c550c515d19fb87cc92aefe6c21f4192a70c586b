@@ -234,6 +234,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "88c3faff_055cf62c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-07-29T19:20:34Z",
+      "side": 1,
+      "message": "For completeness I intended to run the benchmark on all the datasets and problems but `final/problem-13682-4456117-pre.txt.bz2` fails with SuiteSparse after one iteration. Is this a known problem? I run `bundle_adjuster` using defaults and only set `--sparse_linear_algebra_library` in addition to the problem.",
+      "parentUuid": "6746ce5d_ac32f63b",
+      "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8c0d3baa_3511b938",
         "filename": "CMakeLists.txt",
         "patchSetId": 2
