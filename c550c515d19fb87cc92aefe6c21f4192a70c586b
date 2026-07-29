@@ -252,6 +252,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a07d4c3f_387172fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-07-29T19:25:27Z",
+      "side": 1,
+      "message": "Looking at the [supp material](https://grail.cs.washington.edu/projects/bal/supp.pdf) it seems to be a known issue. The question is then: what are reasonable parameters for the performance evaluation using `bundle_adjuster`?",
+      "parentUuid": "88c3faff_055cf62c",
+      "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8c0d3baa_3511b938",
         "filename": "CMakeLists.txt",
         "patchSetId": 2
