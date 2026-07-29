@@ -286,6 +286,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "481a857a_fd04c720",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-07-29T19:26:35Z",
+      "side": 1,
+      "message": "SPARSE_SCHUR for everything but the very largest problems should work.\n\nOn Wed, Jul 29, 2026 at 12:25 PM Sergiu Deitsch (Gerrit) \u003cnoreply-gerritcodereview+2IOHGVqgDrG06rZMyMfMjw\u003d\u003d@\u003e wrote: google.com",
+      "tag": "mailMessageId\u003d\u003cCABqdRUCJf\u003d8BH3ELW0vu-wDsCmwmerYkz+j+vbcFNxq+6Ln-aw@mail.gmail.com\u003e",
+      "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8c0d3baa_3511b938",
