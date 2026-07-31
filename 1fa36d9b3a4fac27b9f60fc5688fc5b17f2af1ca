@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e0b647d_e4ace023",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-07-31T15:49:25Z",
+      "side": 1,
+      "message": "sergiu do you want to revive this CL?",
+      "revId": "1fa36d9b3a4fac27b9f60fc5688fc5b17f2af1ca",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
