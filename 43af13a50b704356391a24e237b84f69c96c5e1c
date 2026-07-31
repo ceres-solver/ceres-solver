@@ -123,6 +123,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9788b0a_5f4767e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-07-31T17:18:40Z",
+      "side": 1,
+      "message": "lets do one cl for accurate norm, and the other one for rnorm and then one that uses it in the code. wdyt? I suspect if I can make sense of the first one then the rest would be straight forward.",
+      "revId": "43af13a50b704356391a24e237b84f69c96c5e1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0431985e_3cf61247",
