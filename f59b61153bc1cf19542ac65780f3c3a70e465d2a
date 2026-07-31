@@ -51,6 +51,24 @@
       "message": "I thought some more about it, this is fine, but it needs to be rebased, I am unable to rebase it on my own.",
       "revId": "f59b61153bc1cf19542ac65780f3c3a70e465d2a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a1309a2_7aecd0fa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-07-31T17:20:51Z",
+      "side": 1,
+      "message": "Rebased.",
+      "parentUuid": "4bde6b77_4a08638b",
+      "revId": "f59b61153bc1cf19542ac65780f3c3a70e465d2a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
