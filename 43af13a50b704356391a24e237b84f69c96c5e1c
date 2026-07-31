@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "85d8f1b3_1c950292",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-07-31T16:59:55Z",
+      "side": 1,
+      "message": "1. Will update.\n2. The modified sources can be reviewed pretty much independently, but breaking into smaller CLs does not really make sense. This is just implementation + tests + integration (the latter being only a minor part).",
+      "parentUuid": "3461fec7_7faf7dcf",
+      "revId": "43af13a50b704356391a24e237b84f69c96c5e1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0431985e_3cf61247",
         "filename": "include/ceres/accurate_norm.h",
         "patchSetId": 1
