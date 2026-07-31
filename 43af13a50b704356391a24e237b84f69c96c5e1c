@@ -157,6 +157,42 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "80665510_774313f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-07-31T17:28:59Z",
+      "side": 1,
+      "message": "Yeah, that works.",
+      "parentUuid": "b9788b0a_5f4767e1",
+      "revId": "43af13a50b704356391a24e237b84f69c96c5e1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b983271_3f45f952",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-07-31T17:28:59Z",
+      "side": 1,
+      "message": "hypot is limited to three arguments, whereas Accurate(R)Norm is variadic and avoids the need of composition which can result in invalid derivatives (see this [CL](https://ceres-solver-review.googlesource.com/c/ceres-solver/+/23840)).",
+      "parentUuid": "8a56390e_9d9fb6ab",
+      "revId": "43af13a50b704356391a24e237b84f69c96c5e1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0431985e_3cf61247",
