@@ -16,6 +16,24 @@
       "message": "sergiu do you want to revive this CL?",
       "revId": "1fa36d9b3a4fac27b9f60fc5688fc5b17f2af1ca",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "365ceb28_7fa33e92",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-07-31T15:59:59Z",
+      "side": 1,
+      "message": "I\u0027m already looking into PARDISO as part of my MKL Sparse (QR) backend CL.",
+      "parentUuid": "0e0b647d_e4ace023",
+      "revId": "1fa36d9b3a4fac27b9f60fc5688fc5b17f2af1ca",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
