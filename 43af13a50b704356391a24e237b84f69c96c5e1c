@@ -80,6 +80,30 @@
       },
       "revId": "43af13a50b704356391a24e237b84f69c96c5e1c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a54a830f_57cb52ac",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-07-31T16:00:02Z",
+      "side": 1,
+      "message": "in theory sure, what platform do you know of that supports radix other than 2?",
+      "parentUuid": "ff64a4be_697dc311",
+      "range": {
+        "startLine": 37,
+        "startChar": 27,
+        "endLine": 37,
+        "endChar": 31
+      },
+      "revId": "43af13a50b704356391a24e237b84f69c96c5e1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
