@@ -56,6 +56,30 @@
       },
       "revId": "43af13a50b704356391a24e237b84f69c96c5e1c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff64a4be_697dc311",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-07-31T15:58:11Z",
+      "side": 1,
+      "message": "C++ does not limit the radix to 2. IEEE 754 also includes radix 10.",
+      "parentUuid": "0431985e_3cf61247",
+      "range": {
+        "startLine": 37,
+        "startChar": 27,
+        "endLine": 37,
+        "endChar": 31
+      },
+      "revId": "43af13a50b704356391a24e237b84f69c96c5e1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
