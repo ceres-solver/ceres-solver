@@ -87,6 +87,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "95e1dd52_c905a0a9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-07-31T17:14:11Z",
+      "side": 1,
+      "message": "What split do you have in mind? Implementation and tests are around 500 LOC each and make up the biggest parts but splitting them does not make sense, IMHO.",
+      "parentUuid": "7faa20c8_67c5dd6e",
+      "revId": "43af13a50b704356391a24e237b84f69c96c5e1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0431985e_3cf61247",
