@@ -53,6 +53,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7faa20c8_67c5dd6e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-07-31T17:06:21Z",
+      "side": 1,
+      "message": "regardless of the radix 2 issue, can we break this CL up into more digestable pieces please",
+      "revId": "43af13a50b704356391a24e237b84f69c96c5e1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0431985e_3cf61247",
@@ -138,6 +155,30 @@
       "side": 1,
       "message": "IBM mainframes use radix 16, which is not even IEEE 754 compliant. The point is moot here, though, since only radix 2 is currently implemented, with minimal radix-independent support in place.",
       "parentUuid": "a54a830f_57cb52ac",
+      "range": {
+        "startLine": 37,
+        "startChar": 27,
+        "endLine": 37,
+        "endChar": 31
+      },
+      "revId": "43af13a50b704356391a24e237b84f69c96c5e1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32062073_3559aacc",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-07-31T17:06:21Z",
+      "side": 1,
+      "message": "I was just commenting on the comment which implies that the implementation extends the original paper for radix other than 2.",
+      "parentUuid": "21697384_5530f762",
       "range": {
         "startLine": 37,
         "startChar": 27,
