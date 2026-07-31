@@ -69,6 +69,24 @@
       "parentUuid": "41b5c789_9e8981e8",
       "revId": "2412594457d0de07c3973c3b3953b6a6291f26c6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bfa98684_b5d145c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-07-31T19:36:01Z",
+      "side": 1,
+      "message": "\u003e One of the things that has been lost in this process is the reasoning for why a certain feature is disabled, but maybe thats okay.\n\nThat\u0027s actually less relevant now because features are no longer disabled by Ceres retrospectively. Either the feature is disabled by default or it was disabled by the user. There\u0027s no adaptive mechanism anymore.",
+      "parentUuid": "a5c9ec62_ebe0385c",
+      "revId": "2412594457d0de07c3973c3b3953b6a6291f26c6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
