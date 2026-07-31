@@ -104,6 +104,30 @@
       },
       "revId": "43af13a50b704356391a24e237b84f69c96c5e1c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21697384_5530f762",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-07-31T16:54:13Z",
+      "side": 1,
+      "message": "IBM mainframes use radix 16, which is not even IEEE 754 compliant. The point is moot here, though, since only radix 2 is currently implemented, with minimal radix-independent support in place.",
+      "parentUuid": "a54a830f_57cb52ac",
+      "range": {
+        "startLine": 37,
+        "startChar": 27,
+        "endLine": 37,
+        "endChar": 31
+      },
+      "revId": "43af13a50b704356391a24e237b84f69c96c5e1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
