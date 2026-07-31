@@ -16,6 +16,46 @@
       "message": "This CL supersedes [Extending hypot for 4 arguments](https://ceres-solver-review.googlesource.com/c/ceres-solver/+/23824).",
       "revId": "43af13a50b704356391a24e237b84f69c96c5e1c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3461fec7_7faf7dcf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-07-31T15:47:26Z",
+      "side": 1,
+      "message": "this is a rather large and complicated cl.\n1. what necessitates this? it would be good to know this in the commit log.\n2. is it possible to break it up into smaller pieces that I can review more carefully.",
+      "revId": "43af13a50b704356391a24e237b84f69c96c5e1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0431985e_3cf61247",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-07-31T15:47:26Z",
+      "side": 1,
+      "message": "we only ever use radix 2, so what extensions is this talking about?",
+      "range": {
+        "startLine": 37,
+        "startChar": 27,
+        "endLine": 37,
+        "endChar": 31
+      },
+      "revId": "43af13a50b704356391a24e237b84f69c96c5e1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
