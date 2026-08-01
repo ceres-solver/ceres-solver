@@ -298,34 +298,36 @@ void BALProblem::Perturb(const double rotation_sigma,
   CHECK_GE(rotation_sigma, 0.0);
   CHECK_GE(translation_sigma, 0.0);
   std::mt19937 prng;
-  std::normal_distribution<double> point_noise_distribution(0.0, point_sigma);
   double* points = mutable_points();
   if (point_sigma > 0) {
+    std::normal_distribution<double> point_noise_distribution(0.0, point_sigma);
     for (int i = 0; i < num_points_; ++i) {
       PerturbPoint3(std::bind(point_noise_distribution, std::ref(prng)),
                     points + 3 * i);
     }
   }
 
-  std::normal_distribution<double> rotation_noise_distribution(0.0,
-                                                               point_sigma);
-  std::normal_distribution<double> translation_noise_distribution(
-      0.0, translation_sigma);
-  for (int i = 0; i < num_cameras_; ++i) {
-    double* camera = mutable_cameras() + camera_block_size() * i;
-
-    double angle_axis[3];
-    double center[3];
-    // Perturb in the rotation of the camera in the angle-axis
-    // representation.
-    CameraToAngleAxisAndCenter(camera, angle_axis, center);
-    if (rotation_sigma > 0.0) {
+  if (rotation_sigma > 0.0) {
+    std::normal_distribution<double> rotation_noise_distribution(
+        0.0, rotation_sigma);
+    for (int i = 0; i < num_cameras_; ++i) {
+      double* camera = mutable_cameras() + camera_block_size() * i;
+      double angle_axis[3];
+      double center[3];
+      // Perturb in the rotation of the camera in the angle-axis
+      // representation.
+      CameraToAngleAxisAndCenter(camera, angle_axis, center);
       PerturbPoint3(std::bind(rotation_noise_distribution, std::ref(prng)),
                     angle_axis);
+      AngleAxisAndCenterToCamera(angle_axis, center, camera);
     }
-    AngleAxisAndCenterToCamera(angle_axis, center, camera);
+  }
 
-    if (translation_sigma > 0.0) {
+  if (translation_sigma > 0.0) {
+    std::normal_distribution<double> translation_noise_distribution(
+        0.0, translation_sigma);
+    for (int i = 0; i < num_cameras_; ++i) {
+      double* camera = mutable_cameras() + camera_block_size() * i;
       PerturbPoint3(std::bind(translation_noise_distribution, std::ref(prng)),
                     camera + camera_block_size() - 6);
     }

@@ -102,6 +102,19 @@ add_executable(bundle_adjuster
   bal_problem.cc)
 target_link_libraries(bundle_adjuster PRIVATE absl::log_initialize absl::flags absl::flags_parse Ceres::ceres)
 
+if (BUILD_TESTING)
+  add_executable(bal_problem_test
+    bal_problem_test.cc
+    bal_problem.cc)
+  target_compile_definitions(bal_problem_test PRIVATE
+    CERES_TEST_DATA_DIR="${Ceres_SOURCE_DIR}/data")
+  target_link_libraries(bal_problem_test PRIVATE
+    absl::log_initialize
+    Ceres::ceres
+    GTest::gmock_main)
+  add_test(NAME bal_problem_test COMMAND bal_problem_test)
+endif (BUILD_TESTING)
+
 add_executable(libmv_bundle_adjuster
   libmv_bundle_adjuster.cc)
 target_link_libraries(libmv_bundle_adjuster PRIVATE absl::log_initialize absl::flags absl::flags_parse Ceres::ceres)
