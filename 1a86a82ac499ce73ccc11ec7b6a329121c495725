@@ -1,0 +1,370 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8982b3d5_b4023f40",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-02T23:15:59Z",
+      "side": 1,
+      "message": "a few more nits and questions",
+      "revId": "1a86a82ac499ce73ccc11ec7b6a329121c495725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3e36579_99963c9e",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-02T23:15:59Z",
+      "side": 1,
+      "message": "I like this new scheme of using \"WITH_FOO\". I think makes the intent quite clear.",
+      "range": {
+        "startLine": 99,
+        "startChar": 7,
+        "endLine": 99,
+        "endChar": 28
+      },
+      "revId": "1a86a82ac499ce73ccc11ec7b6a329121c495725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d38c1285_d6e78531",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-02T23:15:59Z",
+      "side": 1,
+      "message": "should we just make 7.0.0 the min required version? it was released on January 17, 2023. I suppose the argument is that 22.04 predates it by an year...",
+      "range": {
+        "startLine": 364,
+        "startChar": 46,
+        "endLine": 364,
+        "endChar": 51
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "d78137de_e802d596",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "CMakeLists.txt",
+              "range": {
+                "startLine": 364,
+                "startChar": 0,
+                "endLine": 365,
+                "endChar": 0
+              },
+              "replacement": "    SuiteSparse_VERSION VERSION_GREATER_EQUAL 7.0.0)\n"
+            }
+          ]
+        }
+      ],
+      "revId": "1a86a82ac499ce73ccc11ec7b6a329121c495725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca846f3a_ce61726a",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-02T23:15:59Z",
+      "side": 1,
+      "message": "we can drop this now right? since the min version is 3.22?",
+      "range": {
+        "startLine": 380,
+        "startChar": 20,
+        "endLine": 380,
+        "endChar": 41
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "c09cc7e3_8ef262e8",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "CMakeLists.txt",
+              "range": {
+                "startLine": 380,
+                "startChar": 0,
+                "endLine": 401,
+                "endChar": 0
+              },
+              "replacement": "  set(CMAKE_CUDA_ARCHITECTURES \"\")\n  if (CUDAToolkit_VERSION VERSION_LESS \"13.0\")\n    # Support Maxwell GPUs.\n    list(APPEND CMAKE_CUDA_ARCHITECTURES \"50\")\n    if (CUDAToolkit_VERSION VERSION_GREATER_EQUAL \"8.0\")\n      # Support Pascal GPUs.\n      list(APPEND CMAKE_CUDA_ARCHITECTURES \"60\")\n"
+            },
+            {
+              "path": "CMakeLists.txt",
+              "range": {
+                "startLine": 402,
+                "startChar": 0,
+                "endLine": 405,
+                "endChar": 0
+              },
+              "replacement": "    if (CUDAToolkit_VERSION VERSION_GREATER_EQUAL \"9.0\")\n      # Support Volta GPUs.\n      list(APPEND CMAKE_CUDA_ARCHITECTURES \"70\")\n"
+            },
+            {
+              "path": "CMakeLists.txt",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 1,
+                "endChar": 0
+              },
+              "replacement": "  endif()\n  if (CUDAToolkit_VERSION VERSION_GREATER_EQUAL \"10.0\")\n    # Support Turing GPUs.\n    list(APPEND CMAKE_CUDA_ARCHITECTURES \"75\")\n  endif()\n  if (CUDAToolkit_VERSION VERSION_GREATER_EQUAL \"11.0\")\n    # Support Ampere GPUs.\n    list(APPEND CMAKE_CUDA_ARCHITECTURES \"80\")\n  endif()\n  if (CUDAToolkit_VERSION VERSION_GREATER_EQUAL \"11.8\")\n    # Support Hopper GPUs.\n    list(APPEND CMAKE_CUDA_ARCHITECTURES \"90\")\n"
+            }
+          ]
+        }
+      ],
+      "revId": "1a86a82ac499ce73ccc11ec7b6a329121c495725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "363cdbf9_2393a069",
+        "filename": "cmake/AddGerritCommitHook.cmake",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-02T23:15:59Z",
+      "side": 1,
+      "message": "why go from STATUS to DEBUG here?",
+      "range": {
+        "startLine": 69,
+        "startChar": 14,
+        "endLine": 69,
+        "endChar": 19
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "a5487cd7_918fe44a",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "cmake/AddGerritCommitHook.cmake",
+              "range": {
+                "startLine": 69,
+                "startChar": 0,
+                "endLine": 70,
+                "endChar": 0
+              },
+              "replacement": "      message(STATUS \"Detected Ceres being used as a git submodule, adding \"\n"
+            }
+          ]
+        }
+      ],
+      "revId": "1a86a82ac499ce73ccc11ec7b6a329121c495725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53abd566_4ae76e89",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-02T23:15:59Z",
+      "side": 1,
+      "message": "I am surprised that we have to define something like this, shouldn\u0027t there be a built in cmake facility for something like this? isn\u0027t this a common thing that everyone doing a cmake file like this should be doing?",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 28
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "ec43a89d_ceab90f9",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "cmake/CeresConfig.cmake.in",
+              "range": {
+                "startLine": 81,
+                "startChar": 0,
+                "endLine": 84,
+                "endChar": 0
+              },
+              "replacement": "  list(APPEND CERES_FIND_PACKAGE_REASON \"${CERES_FAILURE_REASON}\")\n  list(REMOVE_DUPLICATES CERES_FIND_PACKAGE_REASON)\n  string(JOIN \"\\n    \" CERES_FAILURE_REASON ${CERES_FIND_PACKAGE_REASON})\n"
+            }
+          ]
+        }
+      ],
+      "revId": "1a86a82ac499ce73ccc11ec7b6a329121c495725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aca25e53_ce819082",
+        "filename": "cmake/CreateCeresConfig.cmake",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-02T23:15:59Z",
+      "side": 1,
+      "message": "same question here. status to debug ?",
+      "range": {
+        "startLine": 61,
+        "startChar": 12,
+        "endLine": 61,
+        "endChar": 17
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "714071d7_bb6b8bae",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "cmake/CreateCeresConfig.cmake",
+              "range": {
+                "startLine": 61,
+                "startChar": 0,
+                "endLine": 62,
+                "endChar": 0
+              },
+              "replacement": "    message(STATUS \"Creating configured Ceres config.h output directory: \"\n"
+            }
+          ]
+        }
+      ],
+      "revId": "1a86a82ac499ce73ccc11ec7b6a329121c495725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44558b28_5369592d",
+        "filename": "cmake/FindAccelerateSparse.cmake",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-02T23:15:59Z",
+      "side": 1,
+      "message": "For my own education\n\nthere is no standard cmake support for this as of yet? one would think that this should be standard by now? I suppose in this case it is apple\u0027s responsiblity to provide this module, and they do not care about cmake ?\n\nAlso the interwebs say that we should be able to do something simpler?\n\n# Find the Apple Accelerate Framework\nif(APPLE)\n    find_library(ACCELERATE_FRAMEWORK Accelerate REQUIRED)\nelse()\n    message(FATAL_ERROR \"Accelerate Framework is only available on macOS/iOS platforms.\")\nendif()\n\nWhy do we need this whole file? (again this is just my cmake ignorance speaking)",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 24
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "1a06143e_22c71bda",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "cmake/FindAccelerateSparse.cmake",
+              "range": {
+                "startLine": 40,
+                "startChar": 0,
+                "endLine": 41,
+                "endChar": 0
+              },
+              "replacement": "# AccelerateSparse_FOUND /\n# ACCELERATESPARSE_FOUND: TRUE iff an Accelerate framework including the sparse\n"
+            },
+            {
+              "path": "cmake/FindAccelerateSparse.cmake",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 1,
+                "endChar": 0
+              },
+              "replacement": "  unset(ACCELERATESPARSE_FOUND)\n"
+            },
+            {
+              "path": "cmake/FindAccelerateSparse.cmake",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 1,
+                "endChar": 0
+              },
+              "replacement": "  set(ACCELERATESPARSE_FOUND TRUE)\n"
+            }
+          ]
+        }
+      ],
+      "revId": "1a86a82ac499ce73ccc11ec7b6a329121c495725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62c99348_b58eee91",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-02T23:15:59Z",
+      "side": 1,
+      "message": "if and when we move to a modern enough version of suitesparse, I am guessing this file will become much smaller/simpler?",
+      "revId": "1a86a82ac499ce73ccc11ec7b6a329121c495725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d503c060_81cfc722",
+        "filename": "cmake/iOS.cmake",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-02T23:15:59Z",
+      "side": 1,
+      "message": "what determines the choice of status/debug/verbose?",
+      "range": {
+        "startLine": 195,
+        "startChar": 8,
+        "endLine": 195,
+        "endChar": 15
+      },
+      "revId": "1a86a82ac499ce73ccc11ec7b6a329121c495725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
