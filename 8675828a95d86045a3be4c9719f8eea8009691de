@@ -22,6 +22,30 @@
       },
       "revId": "8675828a95d86045a3be4c9719f8eea8009691de",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5d2e220_9cfd1ceb",
+        "filename": "examples/bal_problem_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-02T09:11:51Z",
+      "side": 1,
+      "message": "This is a regression test that also fails in any build mode if the fix is reverted. The debug assertion itself only triggers when `bundle_adjuster` is compiled in debug mode, which is how the issue went unnoticed initially. In release builds, the underlying problem produces no visible symptoms. This test catches the regression independent of build type.",
+      "parentUuid": "13fc98b7_2a160844",
+      "range": {
+        "startLine": 42,
+        "startChar": 17,
+        "endLine": 42,
+        "endChar": 64
+      },
+      "revId": "8675828a95d86045a3be4c9719f8eea8009691de",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
