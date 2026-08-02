@@ -67,6 +67,24 @@
       "message": "CUDA 11.8 release notes [first mention](https://docs.nvidia.com/cuda/archive/11.8.0/cuda-toolkit-release-notes/index.html#cuda-general-new-features) Hopper. However, CUDA 12.0 [exposes programming](https://docs.nvidia.com/cuda/archive/12.0.0/cuda-toolkit-release-notes/index.html#general-cuda) functionality for the architecture. Not sure which one to use though.",
       "revId": "d17424a30a16d221b9d22f9c0a2dd9623503b319",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b41d0e24_e5443488",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-02T23:00:08Z",
+      "side": 1,
+      "message": "Lets start with 12.0 and if someone comes back and complains about it, we will take it back to 11.8. I think people update cuda often enough that this should not be a problem.",
+      "parentUuid": "426f6dae_62b5b501",
+      "revId": "d17424a30a16d221b9d22f9c0a2dd9623503b319",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
