@@ -105,6 +105,23 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3714bd0_dd7e640f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-02T02:16:35Z",
+      "side": 1,
+      "message": "I left some minor comments but I am starting to realize that if ridders method is being used, then isn\u0027t it the case that just want a large relative_step_size and then the min_step_size is also the relative_step_size if we are using ridders method?\n\nwhy do we even need the ridders_min_initial_step_size anymore? is it going to have a value other than the relative_step_size?",
+      "revId": "c3c042592bc81c5e4ca8c3d068468cf1359f06cd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a589ffa8_ee4c6906",
@@ -118,6 +135,74 @@
       "writtenOn": "2026-06-26T07:21:50Z",
       "side": 1,
       "message": "Should this flag be renamed to?",
+      "revId": "c3c042592bc81c5e4ca8c3d068468cf1359f06cd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9524d652_9176ab1e",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-02T02:16:35Z",
+      "side": 1,
+      "message": "isn\u0027t it better to combine this line and next into one so that we can set this as \nconst double min_step_size \u003d  kMethod \u003d\u003d RIDDERS? ridders_min_initial_step_size : std::sqrt(std::numeric_limits\u003cdouble\u003e::epsilon());",
+      "range": {
+        "startLine": 115,
+        "startChar": 42,
+        "endLine": 115,
+        "endChar": 56
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "eeff716f_dbd7f4fb",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "include/ceres/internal/numeric_diff.h",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 1,
+                "endChar": 0
+              },
+              "replacement": "#include \u003calgorithm\u003e\n#include \u003ccmath\u003e\n"
+            },
+            {
+              "path": "include/ceres/internal/numeric_diff.h",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 1,
+                "endChar": 0
+              },
+              "replacement": "#include \u003climits\u003e\n"
+            }
+          ]
+        }
+      ],
+      "revId": "c3c042592bc81c5e4ca8c3d068468cf1359f06cd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86b497b6_6f6a10ac",
+        "filename": "include/ceres/manifold_test_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-02T02:16:35Z",
+      "side": 1,
+      "message": "in these cases don\u0027t you need to set the relative_step_size to 1e-4 also?",
       "revId": "c3c042592bc81c5e4ca8c3d068468cf1359f06cd",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
