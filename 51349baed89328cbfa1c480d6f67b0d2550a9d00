@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "437162f6_577ec3d5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-02T20:43:41Z",
+      "side": 1,
+      "message": "I split the CL into two parts since the integration plays only a minor part (less than 40 LOC).",
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
