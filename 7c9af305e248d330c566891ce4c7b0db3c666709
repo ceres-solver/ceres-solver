@@ -24,6 +24,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6fc5038d_15b5a29a",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-02T15:54:09Z",
+      "side": 1,
+      "message": "Since we opt for Ubuntu 22.04 I raised this to CMake 3.22.",
+      "parentUuid": "e7cfa980_ea9972c5",
+      "range": {
+        "startLine": 32,
+        "startChar": 31,
+        "endLine": 32,
+        "endChar": 35
+      },
+      "revId": "7c9af305e248d330c566891ce4c7b0db3c666709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7fdf314c_7e7f6efb",
@@ -47,6 +71,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fd94a71_c249ed35",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-02T15:54:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fdf314c_7e7f6efb",
+      "range": {
+        "startLine": 126,
+        "startChar": 8,
+        "endLine": 126,
+        "endChar": 17
+      },
+      "revId": "7c9af305e248d330c566891ce4c7b0db3c666709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f11c3273_bde7bb29",
@@ -60,6 +108,30 @@
       "writtenOn": "2026-08-02T01:56:43Z",
       "side": 1,
       "message": "move this next to blas?",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 12
+      },
+      "revId": "7c9af305e248d330c566891ce4c7b0db3c666709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "479ae1b7_6314d9b4",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-02T15:54:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f11c3273_bde7bb29",
       "range": {
         "startLine": 170,
         "startChar": 0,
@@ -95,6 +167,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a8cb3f27_bdf62a93",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-02T15:54:09Z",
+      "side": 1,
+      "message": "This METIS is unrelated to SuiteSparse.",
+      "parentUuid": "ec1632e9_2a97a332",
+      "range": {
+        "startLine": 171,
+        "startChar": 13,
+        "endLine": 171,
+        "endChar": 18
+      },
+      "revId": "7c9af305e248d330c566891ce4c7b0db3c666709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "90d0c74a_f6915219",
         "filename": "CMakeLists.txt",
         "patchSetId": 4
@@ -106,6 +202,30 @@
       "writtenOn": "2026-08-02T01:56:43Z",
       "side": 1,
       "message": "this is required by metis? or something else?",
+      "range": {
+        "startLine": 172,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 12
+      },
+      "revId": "7c9af305e248d330c566891ce4c7b0db3c666709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "04e93d6c_a0c16fa0",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-02T15:54:09Z",
+      "side": 1,
+      "message": "Good catch. This is a left-over from a cherry-pick of a very old version of FeatureSummary changes.",
+      "parentUuid": "90d0c74a_f6915219",
       "range": {
         "startLine": 172,
         "startChar": 0,
@@ -167,6 +287,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4930204d_799b5363",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-02T15:54:09Z",
+      "side": 1,
+      "message": "I kept `find_package` sorted but `Threads_DEPENDENCY` is not necessary. As this is a required dependency we can put it directly into `CeresConfig.cmake.in`.",
+      "parentUuid": "3fda5bd6_8da92058",
+      "range": {
+        "startLine": 176,
+        "startChar": 13,
+        "endLine": 176,
+        "endChar": 20
+      },
+      "revId": "7c9af305e248d330c566891ce4c7b0db3c666709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4b1b58a7_2cd8608e",
@@ -180,6 +324,24 @@
       "writtenOn": "2026-08-02T01:56:43Z",
       "side": 1,
       "message": "shouldn\u0027t these be at the top of the file? why are they so far down?",
+      "revId": "7c9af305e248d330c566891ce4c7b0db3c666709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31960a3a_4454c5e9",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-02T15:54:09Z",
+      "side": 1,
+      "message": "Yes, it is better to group them.",
+      "parentUuid": "4b1b58a7_2cd8608e",
       "revId": "7c9af305e248d330c566891ce4c7b0db3c666709",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -207,6 +369,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3826c706_201e7a22",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-02T15:54:09Z",
+      "side": 1,
+      "message": "After is fine. But I now grouped all the checks.",
+      "parentUuid": "a3cbd580_16af1458",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 195,
+        "endChar": 23
+      },
+      "revId": "7c9af305e248d330c566891ce4c7b0db3c666709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ef9e95bd_0736f5e8",
@@ -220,6 +406,30 @@
       "writtenOn": "2026-08-02T01:56:43Z",
       "side": 1,
       "message": "I think we can drop support for 20.04 and as a result support for 3.16.",
+      "range": {
+        "startLine": 336,
+        "startChar": 40,
+        "endLine": 336,
+        "endChar": 47
+      },
+      "revId": "7c9af305e248d330c566891ce4c7b0db3c666709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6499a9dd_116b114d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-02T15:54:09Z",
+      "side": 1,
+      "message": "Done. Actually updated to 3.22 since this is what Ubuntu 22.04 (coincidentally) supports.",
+      "parentUuid": "ef9e95bd_0736f5e8",
       "range": {
         "startLine": 336,
         "startChar": 40,

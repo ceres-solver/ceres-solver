@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3c97d266_654046ab",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-02T15:54:09Z",
+      "side": 0,
+      "message": "It\u0027s redundant. FeatureSummary already reports which sparse functionality is found or enabled/disabled. The custom message would duplicate the information. An additional disablement message is not needed and only clutters the output.\n\n\nAlso since Eigen Sparse is enabled by default the only way to reach the constellation being warned about is by purposefully disabling Eigen Sparse too which makes the warning only annoying.",
+      "parentUuid": "321d6e45_dd032092",
+      "range": {
+        "startLine": 491,
+        "startChar": 34,
+        "endLine": 491,
+        "endChar": 35
+      },
+      "revId": "76b431ef0495776f9cce48dd4d212927c3c0c627",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2ced84ae_e855570d",
         "filename": "CMakeLists.txt",
         "patchSetId": 4
@@ -37,6 +61,30 @@
       "writtenOn": "2026-08-02T01:56:43Z",
       "side": 0,
       "message": "same here? why drop this?",
+      "range": {
+        "startLine": 506,
+        "startChar": 56,
+        "endLine": 506,
+        "endChar": 61
+      },
+      "revId": "76b431ef0495776f9cce48dd4d212927c3c0c627",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af904266_f51c14e5",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-02T15:54:09Z",
+      "side": 0,
+      "message": "Also redundant. FeatureSummary provides the corresponding information already. Additionally keeping verbose output is unnecessary.",
+      "parentUuid": "2ced84ae_e855570d",
       "range": {
         "startLine": 506,
         "startChar": 56,
