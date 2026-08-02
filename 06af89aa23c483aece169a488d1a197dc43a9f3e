@@ -50,6 +50,23 @@
       "message": "ping?",
       "revId": "06af89aa23c483aece169a488d1a197dc43a9f3e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dda8d1f5_698ccb75",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-02T21:29:14Z",
+      "side": 1,
+      "message": "`--expt-extended-lambda` is available going back to [CUDA 8.0](https://docs.nvidia.com/cuda/archive/8.0/cuda-c-programming-guide/index.html#extended-lambda). Newer versions [alias it](https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/index.html#expt-extended-lambda-expt-extended-lambda) to `--extended-lambda`.\n\nThis should work.",
+      "revId": "06af89aa23c483aece169a488d1a197dc43a9f3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
