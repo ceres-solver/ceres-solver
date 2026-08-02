@@ -1,0 +1,233 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7cfa980_ea9972c5",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-02T01:56:43Z",
+      "side": 1,
+      "message": "should this be 3.17? or do we want to keep the 3.17 conditional below related to cuda?",
+      "range": {
+        "startLine": 32,
+        "startChar": 31,
+        "endLine": 32,
+        "endChar": 35
+      },
+      "revId": "7c9af305e248d330c566891ce4c7b0db3c666709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fdf314c_7e7f6efb",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-02T01:56:43Z",
+      "side": 1,
+      "message": "should we group the cuda stuff together? its weird to have it spread across multiple blocks like this.",
+      "range": {
+        "startLine": 126,
+        "startChar": 8,
+        "endLine": 126,
+        "endChar": 17
+      },
+      "revId": "7c9af305e248d330c566891ce4c7b0db3c666709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f11c3273_bde7bb29",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-02T01:56:43Z",
+      "side": 1,
+      "message": "move this next to blas?",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 12
+      },
+      "revId": "7c9af305e248d330c566891ce4c7b0db3c666709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec1632e9_2a97a332",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-02T01:56:43Z",
+      "side": 1,
+      "message": "move this next to suitesparse?",
+      "range": {
+        "startLine": 171,
+        "startChar": 13,
+        "endLine": 171,
+        "endChar": 18
+      },
+      "revId": "7c9af305e248d330c566891ce4c7b0db3c666709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90d0c74a_f6915219",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-02T01:56:43Z",
+      "side": 1,
+      "message": "this is required by metis? or something else?",
+      "range": {
+        "startLine": 172,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 12
+      },
+      "revId": "7c9af305e248d330c566891ce4c7b0db3c666709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fda5bd6_8da92058",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-02T01:56:43Z",
+      "side": 1,
+      "message": "make this one of the first things perhaps?",
+      "range": {
+        "startLine": 176,
+        "startChar": 13,
+        "endLine": 176,
+        "endChar": 20
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "5551a85a_37d018a9",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "CMakeLists.txt",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 1,
+                "endChar": 0
+              },
+              "replacement": "find_package(Threads REQUIRED)\nset(Threads_DEPENDENCY \"find_dependency(Threads)\")\n\n"
+            },
+            {
+              "path": "CMakeLists.txt",
+              "range": {
+                "startLine": 176,
+                "startChar": 0,
+                "endLine": 180,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "7c9af305e248d330c566891ce4c7b0db3c666709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b1b58a7_2cd8608e",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-02T01:56:43Z",
+      "side": 1,
+      "message": "shouldn\u0027t these be at the top of the file? why are they so far down?",
+      "revId": "7c9af305e248d330c566891ce4c7b0db3c666709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3cbd580_16af1458",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-02T01:56:43Z",
+      "side": 1,
+      "message": "should these tests happen before we check for dependencies or after?",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 195,
+        "endChar": 23
+      },
+      "revId": "7c9af305e248d330c566891ce4c7b0db3c666709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef9e95bd_0736f5e8",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-02T01:56:43Z",
+      "side": 1,
+      "message": "I think we can drop support for 20.04 and as a result support for 3.16.",
+      "range": {
+        "startLine": 336,
+        "startChar": 40,
+        "endLine": 336,
+        "endChar": 47
+      },
+      "revId": "7c9af305e248d330c566891ce4c7b0db3c666709",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

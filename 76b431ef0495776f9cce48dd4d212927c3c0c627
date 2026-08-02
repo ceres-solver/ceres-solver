@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "321d6e45_dd032092",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-02T01:56:43Z",
+      "side": 0,
+      "message": "why drop this?",
+      "range": {
+        "startLine": 491,
+        "startChar": 34,
+        "endLine": 491,
+        "endChar": 35
+      },
+      "revId": "76b431ef0495776f9cce48dd4d212927c3c0c627",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ced84ae_e855570d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-02T01:56:43Z",
+      "side": 0,
+      "message": "same here? why drop this?",
+      "range": {
+        "startLine": 506,
+        "startChar": 56,
+        "endLine": 506,
+        "endChar": 61
+      },
+      "revId": "76b431ef0495776f9cce48dd4d212927c3c0c627",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
