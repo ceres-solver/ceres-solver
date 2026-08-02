@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13fc98b7_2a160844",
+        "filename": "examples/bal_problem_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-02T01:43:51Z",
+      "side": 1,
+      "message": "what is the point of this test? it reads very odd to me. do we really need it?\nI thought the point of the CL was to make sure that certain debug assertions did not trigger, this test is checking change..",
+      "range": {
+        "startLine": 42,
+        "startChar": 17,
+        "endLine": 42,
+        "endChar": 64
+      },
+      "revId": "8675828a95d86045a3be4c9719f8eea8009691de",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
