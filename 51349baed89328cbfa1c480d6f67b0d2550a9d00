@@ -16,6 +16,944 @@
       "message": "I split the CL into two parts since the integration plays only a minor part (less than 40 LOC).",
       "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1463cdfd_ea161a32",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "sorry for the nitpicky comments, but this is complicated subtle code and I want to make sure both that I understand it, and that it is modifiable in the future.",
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "543c0011_74fce343",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "add a comment describing what Promote does.",
+      "range": {
+        "startLine": 64,
+        "startChar": 5,
+        "endLine": 64,
+        "endChar": 6
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "4f0cd58d_c7dfdac6",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "include/ceres/accurate_norm.h",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 1,
+                "endChar": 0
+              },
+              "replacement": "// Helper trait to promote integral types to double and keep floating-point\n// types unchanged.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60746916_f88324d2",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "don\u0027t we define stuff like this in port.h?",
+      "range": {
+        "startLine": 80,
+        "startChar": 12,
+        "endLine": 80,
+        "endChar": 37
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f236e51_ba111909",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "isn\u0027t this just the same as having the c++ standard being used to be c++23? I thought we had a symbol for this already.",
+      "range": {
+        "startLine": 84,
+        "startChar": 8,
+        "endLine": 84,
+        "endChar": 35
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2bdaf2f_82357c99",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "is it worth doing these gymnastics? and just require c++23? or is the idea that we want to support this in as early a version of gcc as possible?",
+      "range": {
+        "startLine": 88,
+        "startChar": 3,
+        "endLine": 88,
+        "endChar": 6
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2a13a89_4c6b25fa",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "it would be nice if these and other macros were a bit more generic and were defined in port.h but if these really are narrow for this file then thats fine.",
+      "range": {
+        "startLine": 107,
+        "startChar": 12,
+        "endLine": 107,
+        "endChar": 54
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4a15781_835e9adc",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "here again I am wondering, if the dependence on c++23/3 is actually worth it, since these are constants and you are computing them once and just use it?\n\nalso up above the comments and macros talk about c++23 being required for these functions to be constexpr, but in the comment below it says c++26.",
+      "range": {
+        "startLine": 113,
+        "startChar": 10,
+        "endLine": 113,
+        "endChar": 18
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd8d0081_aa2924c7",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "document function, input/output.\ndo we need auto here? shouldn\u0027t this just be \u003cT, T\u003e ?\nalso the function name is odd, I can\u0027t quite tell what it does,",
+      "range": {
+        "startLine": 159,
+        "startChar": 15,
+        "endLine": 159,
+        "endChar": 44
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "14b7cc8f_a50396ee",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "include/ceres/accurate_norm.h",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 1,
+                "endChar": 0
+              },
+              "replacement": "// Computes the sum of squares x^2 + y^2 and its corresponding rounding error.\n//\n// Parameters:\n//   x: First value.\n//   y: Second value.\n//\n// Returns:\n//   A pair (sigma, sigma_e) where sigma is x^2 + y^2 and sigma_e is the\n//   rounding error of the sum.\n"
+            },
+            {
+              "path": "include/ceres/accurate_norm.h",
+              "range": {
+                "startLine": 159,
+                "startChar": 0,
+                "endLine": 161,
+                "endChar": 0
+              },
+              "replacement": "constexpr std::enable_if_t\u003cstd::is_floating_point_v\u003cT\u003e, std::pair\u003cT, T\u003e\u003e\nUnscaledAccurateNormWithError(T x, T y) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da2800d3_c3ea36bc",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "are these temporaries really needed? even if we computed them twice below, won\u0027t the compiler take care of common subexpression elimination?",
+      "range": {
+        "startLine": 164,
+        "startChar": 10,
+        "endLine": 164,
+        "endChar": 14
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45866548_49a18041",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "no point calling this hypoteenuse more, just say sqrt(x^2+y^2) and if this is not be invoked by users, maybe this should be an internal namespace?",
+      "range": {
+        "startLine": 174,
+        "startChar": 16,
+        "endLine": 174,
+        "endChar": 26
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "686c3646_64908fb6",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "include/ceres/accurate_norm.h",
+              "range": {
+                "startLine": 174,
+                "startChar": 0,
+                "endLine": 175,
+                "endChar": 0
+              },
+              "replacement": "// Computes sqrt(x^2 + y^2) without checking the arguments and\n"
+            }
+          ]
+        }
+      ],
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35c8975f_f292a3ff",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "add debug mode checks that these invariants are being respected? will help with debugging?",
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5239fb0a_579f2cf3",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "document function",
+      "range": {
+        "startLine": 195,
+        "startChar": 15,
+        "endLine": 195,
+        "endChar": 27
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c176cae_9c207785",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "document function",
+      "range": {
+        "startLine": 240,
+        "startChar": 22,
+        "endLine": 240,
+        "endChar": 30
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21875220_b7c7a383",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "the implementation for this function should be documented.",
+      "range": {
+        "startLine": 241,
+        "startChar": 15,
+        "endLine": 241,
+        "endChar": 27
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3443e034_fddd36e7",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "why are we having to do type promotion gymanstics here? are we expecting to pass integers in here and then move then up to floats? if so why? and if are indeed going to do that, should we do that in an outer wrapper, so that the implementation itself can be super simple?",
+      "range": {
+        "startLine": 245,
+        "startChar": 34,
+        "endLine": 245,
+        "endChar": 35
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "ace7dabc_26659b46",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "include/ceres/accurate_norm.h",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 1,
+                "endChar": 0
+              },
+              "replacement": "// Type promotion mirrors the semantics of standard library math functions like\n// std::hypot. If integral types are passed, they are promoted to double. This\n// allows seamless integration where users might mix integer literals with\n// floating-point variables.\n"
+            },
+            {
+              "path": "include/ceres/accurate_norm.h",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 1,
+                "endChar": 0
+              },
+              "replacement": "// Variadic version of AccurateNorm. Like standard hypot, it handles type\n// promotion to ensure arithmetic operations do not lose precision or fail on\n// integral types.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e95cf87e_37de997a",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "why bother with lambdas ? why not have free standing functions for this?",
+      "range": {
+        "startLine": 257,
+        "startChar": 13,
+        "endLine": 257,
+        "endChar": 29
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "727e42ec_7d901749",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "document function",
+      "range": {
+        "startLine": 293,
+        "startChar": 9,
+        "endLine": 293,
+        "endChar": 10
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ca6dd6d_a6758774",
+        "filename": "include/ceres/constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "isn\u0027t this true now? we moved to c++20 no?",
+      "range": {
+        "startLine": 34,
+        "startChar": 69,
+        "endLine": 34,
+        "endChar": 71
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5eb2f52e_70254d80",
+        "filename": "include/ceres/internal/compensated_math.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "why auto? isn\u0027t this \u003cT,T? ?",
+      "range": {
+        "startLine": 46,
+        "startChar": 10,
+        "endLine": 46,
+        "endChar": 14
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "72d19524_e81444d2",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "include/ceres/internal/compensated_math.h",
+              "range": {
+                "startLine": 46,
+                "startChar": 0,
+                "endLine": 48,
+                "endChar": 0
+              },
+              "replacement": "constexpr std::enable_if_t\u003cstd::is_floating_point_v\u003cT\u003e, std::pair\u003cT, T\u003e\u003e\nFast2Sum(T x, T y) {\n"
+            },
+            {
+              "path": "include/ceres/internal/compensated_math.h",
+              "range": {
+                "startLine": 61,
+                "startChar": 0,
+                "endLine": 63,
+                "endChar": 0
+              },
+              "replacement": "constexpr std::enable_if_t\u003cstd::is_floating_point_v\u003cT\u003e, std::pair\u003cT, T\u003e\u003e\nTwoSum(T a, T b) {\n"
+            },
+            {
+              "path": "include/ceres/internal/compensated_math.h",
+              "range": {
+                "startLine": 73,
+                "startChar": 0,
+                "endLine": 77,
+                "endChar": 0
+              },
+              "replacement": "constexpr std::enable_if_t\u003cstd::is_floating_point_v\u003cT\u003e \u0026\u0026\n                                (std::numeric_limits\u003cT\u003e::radix \u003c\u003d 3),\n                            std::pair\u003cT, T\u003e\u003e\nSumWithError(T a, T b) {\n"
+            },
+            {
+              "path": "include/ceres/internal/compensated_math.h",
+              "range": {
+                "startLine": 81,
+                "startChar": 0,
+                "endLine": 85,
+                "endChar": 0
+              },
+              "replacement": "constexpr std::enable_if_t\u003cstd::is_floating_point_v\u003cT\u003e \u0026\u0026\n                                (std::numeric_limits\u003cT\u003e::radix \u003e 3),\n                            std::pair\u003cT, T\u003e\u003e\nSumWithError(T a, T b) {\n"
+            },
+            {
+              "path": "include/ceres/internal/compensated_math.h",
+              "range": {
+                "startLine": 90,
+                "startChar": 0,
+                "endLine": 92,
+                "endChar": 0
+              },
+              "replacement": "constexpr std::enable_if_t\u003cstd::is_floating_point_v\u003cT\u003e, T\u003e TwoMultFMA(T x, T y,\n                                                                      T xy) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76c378ca_3c04d784",
+        "filename": "include/ceres/internal/compensated_math.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "FastTwoSumWithError no? since ordering is assumed?",
+      "range": {
+        "startLine": 73,
+        "startChar": 15,
+        "endLine": 73,
+        "endChar": 27
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9130123f_982adc8d",
+        "filename": "include/ceres/internal/compensated_math.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "why are we worried about radix here? this seems overly generic.",
+      "range": {
+        "startLine": 75,
+        "startChar": 49,
+        "endLine": 75,
+        "endChar": 50
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8cce5bf_41850978",
+        "filename": "include/ceres/internal/compensated_math.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "this is dead code IMO :)",
+      "range": {
+        "startLine": 83,
+        "startChar": 58,
+        "endLine": 83,
+        "endChar": 59
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a1eed2e_68d53db5",
+        "filename": "include/ceres/internal/compensated_math.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "This is not a great name, it makes it appear you are computing twomult but actually you are just computing the error. \nthis needs a better name.",
+      "range": {
+        "startLine": 90,
+        "startChar": 15,
+        "endLine": 90,
+        "endChar": 25
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "b05f8d8d_64ec59d1",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "include/ceres/internal/compensated_math.h",
+              "range": {
+                "startLine": 90,
+                "startChar": 0,
+                "endLine": 91,
+                "endChar": 0
+              },
+              "replacement": "constexpr auto MultError(T x, T y, T xy)\n"
+            }
+          ]
+        }
+      ],
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd6c42dc_5f022dc0",
+        "filename": "include/ceres/internal/ulp.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "I think it is worth simplifying this to point outt hat beta^emin-p + 1 is just numeric_limits::min() and for the other case it is worth explaining the ilogb based computation.",
+      "range": {
+        "startLine": 44,
+        "startChar": 21,
+        "endLine": 44,
+        "endChar": 22
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "614194de_b7c3f8c5",
+        "filename": "include/ceres/internal/ulp.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "add tests for this function please.",
+      "range": {
+        "startLine": 48,
+        "startChar": 15,
+        "endLine": 48,
+        "endChar": 18
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62868855_acb7c109",
+        "filename": "include/ceres/internal/ulp.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "why auto? isn\u0027t this just T?",
+      "range": {
+        "startLine": 48,
+        "startChar": 10,
+        "endLine": 48,
+        "endChar": 14
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52400634_6a4500bf",
+        "filename": "include/ceres/internal/ulp.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "class, cls is unecessarily brief.",
+      "range": {
+        "startLine": 53,
+        "startChar": 12,
+        "endLine": 53,
+        "endChar": 15
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ba35f50_d5851ff9",
+        "filename": "include/ceres/internal/ulp.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "this does not look right to me, we should not mix casting and ulp calculations, if the user really wants type T ulp from an integral value, they should cast it explicitly IMO.",
+      "range": {
+        "startLine": 71,
+        "startChar": 66,
+        "endLine": 71,
+        "endChar": 67
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88248598_a3bfcb11",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "document function.\nalso why do we need use decltype(auto) here?",
+      "range": {
+        "startLine": 533,
+        "startChar": 25,
+        "endLine": 533,
+        "endChar": 27
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0b7db0e_b3b0a4a8",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "document function",
+      "range": {
+        "startLine": 537,
+        "startChar": 0,
+        "endLine": 537,
+        "endChar": 8
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "780f4206_0e469fe2",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "this comment is odd and not terribly readable. It should in the style of other comments in this file.",
+      "range": {
+        "startLine": 541,
+        "startChar": 9,
+        "endLine": 541,
+        "endChar": 10
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f33fa8b8_f55cac85",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "maybe worth defining a function which demands that a vector is non-zero? it would improve readability here. On a first read I actually mis-read this line.",
+      "range": {
+        "startLine": 390,
+        "startChar": 6,
+        "endLine": 390,
+        "endChar": 16
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9b29e06_9fbdccfb",
+        "filename": "internal/ceres/autodiff_manifold_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "I think you didn\u0027t mean to touch this file in this CL, since you are planning on using AccurateRNorm here no?",
+      "range": {
+        "startLine": 148,
+        "startChar": 21,
+        "endLine": 148,
+        "endChar": 26
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9cee8705_1cd0c1c1",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 1,
+      "message": "no need to touch this file in this CL.",
+      "range": {
+        "startLine": 2,
+        "startChar": 13,
+        "endLine": 2,
+        "endChar": 17
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }

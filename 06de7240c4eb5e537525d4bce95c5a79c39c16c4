@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20cf8edb_d0411c21",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:01:29Z",
+      "side": 0,
+      "message": "another thought I had was, that is it worth overloading/overriding std::hypot? or defining hypot in the ceres namespace using AccurateNorm?",
+      "range": {
+        "startLine": 382,
+        "startChar": 13,
+        "endLine": 382,
+        "endChar": 18
+      },
+      "revId": "06de7240c4eb5e537525d4bce95c5a79c39c16c4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
