@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b16852e_fb70d637",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-03T00:03:41Z",
+      "side": 1,
+      "message": "This is an old attempt using gemini to modernize the detection of suitesparse 7.0.0 onwards.\nI have no idea if this is sane or not, just FYI",
+      "revId": "ab57ecc54170f2c5bb07c85e91169834ab56b609",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
