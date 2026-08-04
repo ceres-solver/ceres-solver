@@ -372,6 +372,30 @@
       },
       "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "383448f3_f36f199a",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-04T17:58:40Z",
+      "side": 1,
+      "message": "the thing is, if you are calling Eigen::SparseQR to compute the decomposition anyways? then why use Intel at all? you have already done a QR factorization at that point, redoing it using Intel just does the work all over again..",
+      "parentUuid": "97e77051_d0ce946d",
+      "range": {
+        "startLine": 585,
+        "startChar": 44,
+        "endLine": 585,
+        "endChar": 58
+      },
+      "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
