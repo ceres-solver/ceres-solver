@@ -348,6 +348,30 @@
       },
       "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97e77051_d0ce946d",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-04T17:56:06Z",
+      "side": 1,
+      "message": "MKL Sparse QR decomposition is not rank-revealing. It looks like even setting [`mkl_sparse_set_qr_hint`](https://www.intel.com/content/www/us/en/docs/onemkl/developer-reference-c/2025-2/mkl-sparse-set-qr-hint.html) to `SPARSE_QR_WITH_PIVOTS` reports success in case of a Jacobian with all zeros column while returning NaNs.\n\nA possible option is a post-hoc finiteness/non-negativity test.",
+      "parentUuid": "14535603_94652012",
+      "range": {
+        "startLine": 585,
+        "startChar": 44,
+        "endLine": 585,
+        "endChar": 58
+      },
+      "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
