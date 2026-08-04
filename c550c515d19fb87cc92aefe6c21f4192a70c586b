@@ -396,6 +396,30 @@
       },
       "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb20c4d4_11d5f069",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-04T18:15:21Z",
+      "side": 1,
+      "message": "Agreed. The question though is how do I reliably determine whether the Jacobian is full rank in this situation? Is the post hoc test previously mentioned acceptable?",
+      "parentUuid": "383448f3_f36f199a",
+      "range": {
+        "startLine": 585,
+        "startChar": 44,
+        "endLine": 585,
+        "endChar": 58
+      },
+      "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
