@@ -420,6 +420,30 @@
       },
       "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "921d8a66_12d191d3",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-04T18:20:53Z",
+      "side": 1,
+      "message": "I am not sure, I will take a look, but I am not optimistic. If it could reveal rank, it would have done it. Rank revealing factorizations require work. That said, in this case we don\u0027t actually need the full estimate of rank, just whether the matrix is full rank or not. Let me look at the docs and get back to you. \n\nHow about we split this effort into two, one to get the cholesky factorization in which will actually get most people satisfied and then a separate one for this covariance stuff while I figure out the numerics here?",
+      "parentUuid": "fb20c4d4_11d5f069",
+      "range": {
+        "startLine": 585,
+        "startChar": 44,
+        "endLine": 585,
+        "endChar": 58
+      },
+      "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
