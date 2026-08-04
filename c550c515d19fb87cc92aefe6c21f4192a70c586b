@@ -444,6 +444,30 @@
       },
       "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3450da9_f5864a83",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-04T18:25:02Z",
+      "side": 1,
+      "message": "Sounds good!",
+      "parentUuid": "921d8a66_12d191d3",
+      "range": {
+        "startLine": 585,
+        "startChar": 44,
+        "endLine": 585,
+        "endChar": 58
+      },
+      "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
