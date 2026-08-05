@@ -468,6 +468,30 @@
       },
       "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ddbc38ee_09c48d84",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-05T21:46:28Z",
+      "side": 1,
+      "message": "On a second thought: I could extract R using [`mkl_sparse_?_qr_qmult`](https://www.intel.com/content/www/us/en/docs/onemkl/developer-reference-c/2026-0/mkl-sparse-qr-qmult.html#MKL-SPARSE-X-QR-QMULT) by solving R \u003d Q^T J and checking the diagonal for coefficients close to zero. This should work without pivoting, right?",
+      "parentUuid": "d3450da9_f5864a83",
+      "range": {
+        "startLine": 585,
+        "startChar": 44,
+        "endLine": 585,
+        "endChar": 58
+      },
+      "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
