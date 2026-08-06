@@ -53,7 +53,7 @@ class AngleManifold {
              const T* x_radians,
              T* y_minus_x_radians) const {
     *y_minus_x_radians =
-        NormalizeAngle(*y_radians) - NormalizeAngle(*x_radians);
+        NormalizeAngle(*y_radians - *x_radians);
 
     return true;
   }
