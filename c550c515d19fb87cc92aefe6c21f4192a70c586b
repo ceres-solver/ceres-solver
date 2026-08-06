@@ -304,6 +304,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2779ff0_924178fe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-06T01:05:59Z",
+      "side": 1,
+      "message": "1. That is a rather expensive matrix-vector multiplication because you can\u0027t use GEMV, as the Q matrix is not stored as a dense matrix.\n\n2. You will have to convert the Jacobian into a dense matrix, since I don\u0027t see an option for b to be a sparse matrix.\n\n3. In finite precision, you aren\u0027t actually guaranteed that the matrix R you calculate this way will be the same as the one computed by the QR factorization.\n\nSameer\n\nOn Wed, Aug 5, 2026, 2:46 PM Sergiu Deitsch (Gerrit) \u003cnoreply-gerritcodereview+2IOHGVqgDrG06rZMyMfMjw\u003d\u003d@\u003e wrote: google.com",
+      "tag": "mailMessageId\u003d\u003cCABqdRUAcBQAMxqckK5QergXNXZKfZEuXq-d5kKh+H0vLcwCc1Q@mail.gmail.com\u003e",
+      "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8c0d3baa_3511b938",
