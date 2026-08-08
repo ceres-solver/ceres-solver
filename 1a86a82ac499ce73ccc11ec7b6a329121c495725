@@ -84,6 +84,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b322932c_69cfe77e",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:50:02Z",
+      "side": 1,
+      "message": "We can drop it with 24.04 update. However, we will lose MSVC testing capability then (there are no offical SuiteSparse MSVC binaries). Also there are major issues with MKL ABI which will not be able to handle effectively without our FindSuiteSparse.cmake.",
+      "parentUuid": "d38c1285_d6e78531",
+      "range": {
+        "startLine": 364,
+        "startChar": 46,
+        "endLine": 364,
+        "endChar": 51
+      },
+      "revId": "1a86a82ac499ce73ccc11ec7b6a329121c495725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ca846f3a_ce61726a",
         "filename": "CMakeLists.txt",
         "patchSetId": 6
@@ -143,6 +167,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c994c915_91916c88",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:50:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca846f3a_ce61726a",
+      "range": {
+        "startLine": 380,
+        "startChar": 20,
+        "endLine": 380,
+        "endChar": 41
+      },
+      "revId": "1a86a82ac499ce73ccc11ec7b6a329121c495725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "363cdbf9_2393a069",
@@ -180,6 +228,30 @@
           ]
         }
       ],
+      "revId": "1a86a82ac499ce73ccc11ec7b6a329121c495725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4277c7db_ec16707f",
+        "filename": "cmake/AddGerritCommitHook.cmake",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:50:02Z",
+      "side": 1,
+      "message": "Because the message is not relevant for the average user.",
+      "parentUuid": "363cdbf9_2393a069",
+      "range": {
+        "startLine": 69,
+        "startChar": 14,
+        "endLine": 69,
+        "endChar": 19
+      },
       "revId": "1a86a82ac499ce73ccc11ec7b6a329121c495725",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -227,6 +299,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "59d8b124_138a632c",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:50:02Z",
+      "side": 1,
+      "message": "This is just a helper macro. We are already using standard CMake definitions.",
+      "parentUuid": "53abd566_4ae76e89",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 28
+      },
+      "revId": "1a86a82ac499ce73ccc11ec7b6a329121c495725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "aca25e53_ce819082",
         "filename": "cmake/CreateCeresConfig.cmake",
         "patchSetId": 6
@@ -262,6 +358,30 @@
           ]
         }
       ],
+      "revId": "1a86a82ac499ce73ccc11ec7b6a329121c495725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6bc263b9_edfe308a",
+        "filename": "cmake/CreateCeresConfig.cmake",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:50:02Z",
+      "side": 1,
+      "message": "It\u0027s not useful for normal users.",
+      "parentUuid": "aca25e53_ce819082",
+      "range": {
+        "startLine": 61,
+        "startChar": 12,
+        "endLine": 61,
+        "endChar": 17
+      },
       "revId": "1a86a82ac499ce73ccc11ec7b6a329121c495725",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -327,6 +447,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "60d9fae7_ad869d23",
+        "filename": "cmake/FindAccelerateSparse.cmake",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:50:02Z",
+      "side": 1,
+      "message": "`find_library` is a low-level function. It is not intended to be used for user-facing functionality. This is what find modules are for.",
+      "parentUuid": "44558b28_5369592d",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 24
+      },
+      "revId": "1a86a82ac499ce73ccc11ec7b6a329121c495725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "62c99348_b58eee91",
@@ -357,6 +501,30 @@
       "writtenOn": "2026-08-02T23:15:59Z",
       "side": 1,
       "message": "what determines the choice of status/debug/verbose?",
+      "range": {
+        "startLine": 195,
+        "startChar": 8,
+        "endLine": 195,
+        "endChar": 15
+      },
+      "revId": "1a86a82ac499ce73ccc11ec7b6a329121c495725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39fc0130_2454a14a",
+        "filename": "cmake/iOS.cmake",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:50:02Z",
+      "side": 1,
+      "message": "The level depends on how useful/helpful the message for the average user is.",
+      "parentUuid": "d503c060_81cfc722",
       "range": {
         "startLine": 195,
         "startChar": 8,
