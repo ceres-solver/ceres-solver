@@ -76,6 +76,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "032b7775_612a5353",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "543c0011_74fce343",
+      "range": {
+        "startLine": 64,
+        "startChar": 5,
+        "endLine": 64,
+        "endChar": 6
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "60746916_f88324d2",
@@ -89,6 +113,30 @@
       "writtenOn": "2026-08-03T00:01:29Z",
       "side": 1,
       "message": "don\u0027t we define stuff like this in port.h?",
+      "range": {
+        "startLine": 80,
+        "startChar": 12,
+        "endLine": 80,
+        "endChar": 37
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c558d1b9_748557fc",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "60746916_f88324d2",
       "range": {
         "startLine": 80,
         "startChar": 12,
@@ -122,6 +170,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8754156b_845855eb",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "No, it\u0027s not. A compiler can claim C++23 ability but the library does not have to provide a comparable level of support (cf. special mathematical function in Clang C++17).",
+      "parentUuid": "2f236e51_ba111909",
+      "range": {
+        "startLine": 84,
+        "startChar": 8,
+        "endLine": 84,
+        "endChar": 35
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f2bdaf2f_82357c99",
@@ -135,6 +207,30 @@
       "writtenOn": "2026-08-03T00:01:29Z",
       "side": 1,
       "message": "is it worth doing these gymnastics? and just require c++23? or is the idea that we want to support this in as early a version of gcc as possible?",
+      "range": {
+        "startLine": 88,
+        "startChar": 3,
+        "endLine": 88,
+        "endChar": 6
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd0c59ea_c7719272",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "As before, having C++23 does not guarantee cmath contexpr support.\n\nRegardless, these are gone now.",
+      "parentUuid": "f2bdaf2f_82357c99",
       "range": {
         "startLine": 88,
         "startChar": 3,
@@ -168,6 +264,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9daf4e96_3d5941a3",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "We only need `constexpr` suport `scalbn` and `ilogb` so generalizing would not help.\n\nRegardless, these are gone now.",
+      "parentUuid": "f2a13a89_4c6b25fa",
+      "range": {
+        "startLine": 107,
+        "startChar": 12,
+        "endLine": 107,
+        "endChar": 54
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a4a15781_835e9adc",
@@ -181,6 +301,30 @@
       "writtenOn": "2026-08-03T00:01:29Z",
       "side": 1,
       "message": "here again I am wondering, if the dependence on c++23/3 is actually worth it, since these are constants and you are computing them once and just use it?\n\nalso up above the comments and macros talk about c++23 being required for these functions to be constexpr, but in the comment below it says c++26.",
+      "range": {
+        "startLine": 113,
+        "startChar": 10,
+        "endLine": 113,
+        "endChar": 18
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7c55e3b_f6ac9ce4",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "I dropped the specialization.",
+      "parentUuid": "a4a15781_835e9adc",
       "range": {
         "startLine": 113,
         "startChar": 10,
@@ -244,6 +388,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b4d96423_fca681eb",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "`auto` with a trailing return type for SFINAE is one the few cases where the combination makes sense. `enable_if_t` ensures that the function is only defined if `T` is a floating point type. Compared to `static_assert`, this allows users to partially specialize the function if necessary.\n\nAlso the function description is not in a style used in Ceres. Do you want to have this style specifically for the changes in this CL?",
+      "parentUuid": "cd8d0081_aa2924c7",
+      "range": {
+        "startLine": 159,
+        "startChar": 15,
+        "endLine": 159,
+        "endChar": 44
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "da2800d3_c3ea36bc",
         "filename": "include/ceres/accurate_norm.h",
         "patchSetId": 2
@@ -255,6 +423,30 @@
       "writtenOn": "2026-08-03T00:01:29Z",
       "side": 1,
       "message": "are these temporaries really needed? even if we computed them twice below, won\u0027t the compiler take care of common subexpression elimination?",
+      "range": {
+        "startLine": 164,
+        "startChar": 10,
+        "endLine": 164,
+        "endChar": 14
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8938874_5f1b3428",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "I\u0027m not a compiler expert and cannot tell how CSE is implemented by various compilers.\n\nRegardless of CSE, I don\u0027t see a good reason to compute the same result multiple times. That does not make the source more readable, IMO.",
+      "parentUuid": "da2800d3_c3ea36bc",
       "range": {
         "startLine": 164,
         "startChar": 10,
@@ -306,6 +498,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "34b557c1_d36e6b94",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "The function is already in the `internal` namespace.",
+      "parentUuid": "45866548_49a18041",
+      "range": {
+        "startLine": 174,
+        "startChar": 16,
+        "endLine": 174,
+        "endChar": 26
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "35c8975f_f292a3ff",
@@ -325,6 +541,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f3fd15f8_2dea51e3",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "The invariant is already asserted by `Fast2Sum`.",
+      "parentUuid": "35c8975f_f292a3ff",
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5239fb0a_579f2cf3",
         "filename": "include/ceres/accurate_norm.h",
         "patchSetId": 2
@@ -336,6 +570,30 @@
       "writtenOn": "2026-08-03T00:01:29Z",
       "side": 1,
       "message": "document function",
+      "range": {
+        "startLine": 195,
+        "startChar": 15,
+        "endLine": 195,
+        "endChar": 27
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6245578_cd0aa421",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5239fb0a_579f2cf3",
       "range": {
         "startLine": 195,
         "startChar": 15,
@@ -369,6 +627,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d6db79d_15d6ef6f",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c176cae_9c207785",
+      "range": {
+        "startLine": 240,
+        "startChar": 22,
+        "endLine": 240,
+        "endChar": 30
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "21875220_b7c7a383",
@@ -382,6 +664,30 @@
       "writtenOn": "2026-08-03T00:01:29Z",
       "side": 1,
       "message": "the implementation for this function should be documented.",
+      "range": {
+        "startLine": 241,
+        "startChar": 15,
+        "endLine": 241,
+        "endChar": 27
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fc33347_2463e426",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21875220_b7c7a383",
       "range": {
         "startLine": 241,
         "startChar": 15,
@@ -445,6 +751,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "64fdb5db_963488f9",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "Yes, this allows calling `AccurateNorm(1.0, 2)` without getting a compiler error, a standard practice for mathematical functions in the C++ standard library.\n\nAlso this is not a wrapper but rather called directly by users. I don\u0027t see how a wrapper helps here.",
+      "parentUuid": "3443e034_fddd36e7",
+      "range": {
+        "startLine": 245,
+        "startChar": 34,
+        "endLine": 245,
+        "endChar": 35
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e95cf87e_37de997a",
         "filename": "include/ceres/accurate_norm.h",
         "patchSetId": 2
@@ -456,6 +786,30 @@
       "writtenOn": "2026-08-03T00:01:29Z",
       "side": 1,
       "message": "why bother with lambdas ? why not have free standing functions for this?",
+      "range": {
+        "startLine": 257,
+        "startChar": 13,
+        "endLine": 257,
+        "endChar": 29
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a94ef153_7462b6d7",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "The lambda is specific to this function and not needed anywhere else.",
+      "parentUuid": "e95cf87e_37de997a",
       "range": {
         "startLine": 257,
         "startChar": 13,
@@ -489,6 +843,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "47aa5186_9d156606",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "727e42ec_7d901749",
+      "range": {
+        "startLine": 293,
+        "startChar": 9,
+        "endLine": 293,
+        "endChar": 10
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2ca6dd6d_a6758774",
@@ -502,6 +880,30 @@
       "writtenOn": "2026-08-03T00:01:29Z",
       "side": 1,
       "message": "isn\u0027t this true now? we moved to c++20 no?",
+      "range": {
+        "startLine": 34,
+        "startChar": 69,
+        "endLine": 34,
+        "endChar": 71
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9098a30_2395ba18",
+        "filename": "include/ceres/constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "I\u0027m not aware of that.",
+      "parentUuid": "2ca6dd6d_a6758774",
       "range": {
         "startLine": 34,
         "startChar": 69,
@@ -595,6 +997,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "359709cc_533cebe4",
+        "filename": "include/ceres/internal/compensated_math.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "These are also SFINAE constraints. Moving trailing return type in front results in terrible readability and formatting IMO.",
+      "parentUuid": "5eb2f52e_70254d80",
+      "range": {
+        "startLine": 46,
+        "startChar": 10,
+        "endLine": 46,
+        "endChar": 14
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "76c378ca_3c04d784",
         "filename": "include/ceres/internal/compensated_math.h",
         "patchSetId": 2
@@ -606,6 +1032,30 @@
       "writtenOn": "2026-08-03T00:01:29Z",
       "side": 1,
       "message": "FastTwoSumWithError no? since ordering is assumed?",
+      "range": {
+        "startLine": 73,
+        "startChar": 15,
+        "endLine": 73,
+        "endChar": 27
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1acac8f3_fe572f4a",
+        "filename": "include/ceres/internal/compensated_math.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "Not quite. `TwoSum` does not impose ordering on arguments according to their magnitude. But since we don\u0027t support radix other than 2, I removed this shim.",
+      "parentUuid": "76c378ca_3c04d784",
       "range": {
         "startLine": 73,
         "startChar": 15,
@@ -639,6 +1089,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0590c60_4db2f447",
+        "filename": "include/ceres/internal/compensated_math.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "`FastTwoSum` is defined only for radii 2 and 3.",
+      "parentUuid": "9130123f_982adc8d",
+      "range": {
+        "startLine": 75,
+        "startChar": 49,
+        "endLine": 75,
+        "endChar": 50
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a8cce5bf_41850978",
@@ -652,6 +1126,30 @@
       "writtenOn": "2026-08-03T00:01:29Z",
       "side": 1,
       "message": "this is dead code IMO :)",
+      "range": {
+        "startLine": 83,
+        "startChar": 58,
+        "endLine": 83,
+        "endChar": 59
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c61a2f7e_8a92592a",
+        "filename": "include/ceres/internal/compensated_math.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a8cce5bf_41850978",
       "range": {
         "startLine": 83,
         "startChar": 58,
@@ -705,6 +1203,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ef239c67_5ee6b3c5",
+        "filename": "include/ceres/internal/compensated_math.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "The name `2MulFMA` is from literature not mine. Renaming it would make the function\u0027s name unrecognizable.",
+      "parentUuid": "7a1eed2e_68d53db5",
+      "range": {
+        "startLine": 90,
+        "startChar": 15,
+        "endLine": 90,
+        "endChar": 25
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dd6c42dc_5f022dc0",
         "filename": "include/ceres/internal/ulp.h",
         "patchSetId": 2
@@ -716,6 +1238,30 @@
       "writtenOn": "2026-08-03T00:01:29Z",
       "side": 1,
       "message": "I think it is worth simplifying this to point outt hat beta^emin-p + 1 is just numeric_limits::min() and for the other case it is worth explaining the ilogb based computation.",
+      "range": {
+        "startLine": 44,
+        "startChar": 21,
+        "endLine": 44,
+        "endChar": 22
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9df27ab4_55f3d7bc",
+        "filename": "include/ceres/internal/ulp.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "Can you elaborate? What\u0027s the simplification exactly?",
+      "parentUuid": "dd6c42dc_5f022dc0",
       "range": {
         "startLine": 44,
         "startChar": 21,
@@ -774,6 +1320,54 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "de463714_6297ff46",
+        "filename": "include/ceres/internal/ulp.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "What do you mean? What tests are missing?",
+      "parentUuid": "614194de_b7c3f8c5",
+      "range": {
+        "startLine": 48,
+        "startChar": 15,
+        "endLine": 48,
+        "endChar": 18
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af541667_59c339ef",
+        "filename": "include/ceres/internal/ulp.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "As previously mentioned, this an SFINAE contraint.",
+      "parentUuid": "62868855_acb7c109",
+      "range": {
+        "startLine": 48,
+        "startChar": 10,
+        "endLine": 48,
+        "endChar": 14
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "52400634_6a4500bf",
         "filename": "include/ceres/internal/ulp.h",
         "patchSetId": 2
@@ -785,6 +1379,30 @@
       "writtenOn": "2026-08-03T00:01:29Z",
       "side": 1,
       "message": "class, cls is unecessarily brief.",
+      "range": {
+        "startLine": 53,
+        "startChar": 12,
+        "endLine": 53,
+        "endChar": 15
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cde95196_a985e47f",
+        "filename": "include/ceres/internal/ulp.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "Not possible: `class` is a reserved keyword in C++.",
+      "parentUuid": "52400634_6a4500bf",
       "range": {
         "startLine": 53,
         "startChar": 12,
@@ -820,6 +1438,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d8e0b5db_45033260",
+        "filename": "include/ceres/internal/ulp.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "There\u0027s no mixing here. The point of the constraint (to be more precise, it\u0027s a promotion) is to enable calling both `Ulp(1)` and `Ulp(1.0)`. I cannot think of a good reason to prevent `Ulp(1)` but at the same time disallow `Ulp(1.0)`. That\u0027s unnecessarily restrictive.",
+      "parentUuid": "9ba35f50_d5851ff9",
+      "range": {
+        "startLine": 71,
+        "startChar": 66,
+        "endLine": 71,
+        "endChar": 67
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "88248598_a3bfcb11",
         "filename": "include/ceres/jet.h",
         "patchSetId": 2
@@ -831,6 +1473,30 @@
       "writtenOn": "2026-08-03T00:01:29Z",
       "side": 1,
       "message": "document function.\nalso why do we need use decltype(auto) here?",
+      "range": {
+        "startLine": 533,
+        "startChar": 25,
+        "endLine": 533,
+        "endChar": 27
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba36c46b_e0b98532",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "To avoid evaluating the expression eagerly.",
+      "parentUuid": "88248598_a3bfcb11",
       "range": {
         "startLine": 533,
         "startChar": 25,
@@ -864,6 +1530,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e12fb2f9_56cdaacf",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0b7db0e_b3b0a4a8",
+      "range": {
+        "startLine": 537,
+        "startChar": 0,
+        "endLine": 537,
+        "endChar": 8
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "780f4206_0e469fe2",
@@ -877,6 +1567,30 @@
       "writtenOn": "2026-08-03T00:01:29Z",
       "side": 1,
       "message": "this comment is odd and not terribly readable. It should in the style of other comments in this file.",
+      "range": {
+        "startLine": 541,
+        "startChar": 9,
+        "endLine": 541,
+        "endChar": 10
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0c6d05e_94c80613",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "That\u0027s actually the `hypot` comment extended to variadic case. Using `copysign` style instead.",
+      "parentUuid": "780f4206_0e469fe2",
       "range": {
         "startLine": 541,
         "startChar": 9,
@@ -910,6 +1624,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0177426d_28527546",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f33fa8b8_f55cac85",
+      "range": {
+        "startLine": 390,
+        "startChar": 6,
+        "endLine": 390,
+        "endChar": 16
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c9b29e06_9fbdccfb",
@@ -933,6 +1671,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "42ac033c_e081996b",
+        "filename": "internal/ceres/autodiff_manifold_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9b29e06_9fbdccfb",
+      "range": {
+        "startLine": 148,
+        "startChar": 21,
+        "endLine": 148,
+        "endChar": 26
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9cee8705_1cd0c1c1",
@@ -946,6 +1708,30 @@
       "writtenOn": "2026-08-03T00:01:29Z",
       "side": 1,
       "message": "no need to touch this file in this CL.",
+      "range": {
+        "startLine": 2,
+        "startChar": 13,
+        "endLine": 2,
+        "endChar": 17
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4dd1a329_44f62463",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-08T20:08:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cee8705_1cd0c1c1",
       "range": {
         "startLine": 2,
         "startChar": 13,
