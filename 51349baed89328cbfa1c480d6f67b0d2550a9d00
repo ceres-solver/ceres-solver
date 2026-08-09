@@ -1162,6 +1162,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d8495dac_b0d447c2",
+        "filename": "include/ceres/internal/compensated_math.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-09T12:30:08Z",
+      "side": 1,
+      "message": "On a second thought, this shim is trivial. Artificially limiting the code to radii 2 and 3 despite the required generalized code (`TwoSum`) being already present seems very wrong.",
+      "parentUuid": "c61a2f7e_8a92592a",
+      "range": {
+        "startLine": 83,
+        "startChar": 58,
+        "endLine": 83,
+        "endChar": 59
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7a1eed2e_68d53db5",
         "filename": "include/ceres/internal/compensated_math.h",
         "patchSetId": 2
