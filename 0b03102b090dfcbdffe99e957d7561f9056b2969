@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87ec1f9e_d2f7973a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-09T23:03:35Z",
+      "side": 1,
+      "message": "alright lets get this in, we can always iterate on this going forward. I suspect people are going to complain a bit about the changed options etc, but this is a better more consistent state than it used to be.",
+      "revId": "0b03102b090dfcbdffe99e957d7561f9056b2969",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
