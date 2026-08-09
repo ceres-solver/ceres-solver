@@ -775,6 +775,53 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7b6223ce_7d67e1ac",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-09T23:36:42Z",
+      "side": 1,
+      "message": "The name \"Type\" is not very descriptive.",
+      "range": {
+        "startLine": 245,
+        "startChar": 8,
+        "endLine": 245,
+        "endChar": 12
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "499fe375_671ba94f",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-09T23:36:42Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "64fdb5db_963488f9",
+      "range": {
+        "startLine": 245,
+        "startChar": 34,
+        "endLine": 245,
+        "endChar": 35
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e95cf87e_37de997a",
         "filename": "include/ceres/accurate_norm.h",
         "patchSetId": 2
@@ -1251,6 +1298,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d0b3ccd4_d2c80b9b",
+        "filename": "include/ceres/internal/compensated_math.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-09T23:36:42Z",
+      "side": 1,
+      "message": "what I mean is, that this is not quite the 2multfma algorithm, in the sense that you would expect the 2multfma to compute the product AND return the error, what this impl does is that it assumes that the product has been computed and just computes the error. I am wondering if you are better off not having this function at all, and just inlining the call to std::fma(x,x, x_sq) at the two places where it is called, and I think the resulting code will be clearer.",
+      "parentUuid": "ef239c67_5ee6b3c5",
+      "range": {
+        "startLine": 90,
+        "startChar": 15,
+        "endLine": 90,
+        "endChar": 25
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dd6c42dc_5f022dc0",
         "filename": "include/ceres/internal/ulp.h",
         "patchSetId": 2
@@ -1286,6 +1357,30 @@
       "side": 1,
       "message": "Can you elaborate? What\u0027s the simplification exactly?",
       "parentUuid": "dd6c42dc_5f022dc0",
+      "range": {
+        "startLine": 44,
+        "startChar": 21,
+        "endLine": 44,
+        "endChar": 22
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa41427a_3dc6d8cb",
+        "filename": "include/ceres/internal/ulp.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-09T23:36:42Z",
+      "side": 1,
+      "message": "In the code comment you say that\n\nulp(x) \u003d 𝛽^(max{e,e_min}−p+1\n\nbut in the actual code, the revelant bit is\n\n if (cls \u003d\u003d FP_NORMAL) {\n    return scalbn(std::numeric_limits\u003cT\u003e::epsilon(), ilogb(x));\n  }\n\n  return std::numeric_limits\u003cT\u003e::min();\n  \n\nwhere e \u003e e_min for the case of x being normal, so when you have a subnormal beta^(e_min - p + 1) \u003d numeric_limits::min.",
+      "parentUuid": "9df27ab4_55f3d7bc",
       "range": {
         "startLine": 44,
         "startChar": 21,
@@ -1392,6 +1487,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6f387e66_a88ab375",
+        "filename": "include/ceres/internal/ulp.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-09T23:36:42Z",
+      "side": 1,
+      "message": "that you are computing the ulp correctly. as far as I can tell, this function has no tests. so I would have tests for numbers in the normal and the subnormal range.",
+      "parentUuid": "de463714_6297ff46",
+      "range": {
+        "startLine": 48,
+        "startChar": 15,
+        "endLine": 48,
+        "endChar": 18
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "52400634_6a4500bf",
         "filename": "include/ceres/internal/ulp.h",
         "patchSetId": 2
@@ -1474,6 +1593,30 @@
       "side": 1,
       "message": "There\u0027s no mixing here. The point of the constraint (to be more precise, it\u0027s a promotion) is to enable calling both `Ulp(1)` and `Ulp(1.0)`. I cannot think of a good reason to prevent `Ulp(1)` but at the same time disallow `Ulp(1.0)`. That\u0027s unnecessarily restrictive.",
       "parentUuid": "9ba35f50_d5851ff9",
+      "range": {
+        "startLine": 71,
+        "startChar": 66,
+        "endLine": 71,
+        "endChar": 67
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b21d908_4e069339",
+        "filename": "include/ceres/internal/ulp.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-09T23:36:42Z",
+      "side": 1,
+      "message": "1.0 and 1.0f and 1 are three distinct types, with three different ulps.\n2^-52, 2^-23 and 1 respectively. The unit in last place for an integer is not the same as the unit in last place of a double. \nso you are not really computing the ulp of an integer here, you are computing the ulp of an integer promoted to double, which is a very different thing.",
+      "parentUuid": "d8e0b5db_45033260",
       "range": {
         "startLine": 71,
         "startChar": 66,

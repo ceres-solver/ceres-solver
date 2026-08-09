@@ -1,0 +1,405 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ed897ab_2d394e1e",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-09T23:36:42Z",
+      "side": 1,
+      "message": "IIUC, this is saying, find the type of the sum of the promoted types, so if all or some are integral, we will get double, but if all are float, we will get float?",
+      "fixSuggestions": [
+        {
+          "fixId": "9f309164_2f0ee883",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "include/ceres/accurate_norm.h",
+              "range": {
+                "startLine": 79,
+                "startChar": 0,
+                "endLine": 80,
+                "endChar": 0
+              },
+              "replacement": "using Promote_t \u003d std::common_type_t\u003ctypename Promote\u003cTs\u003e::type...\u003e;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fd6f9ee_520c2f39",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-09T23:36:42Z",
+      "side": 1,
+      "message": "why do you need Enable here? it is not being used anywhere that I can see.",
+      "range": {
+        "startLine": 81,
+        "startChar": 22,
+        "endLine": 81,
+        "endChar": 30
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "69d8724a_456aca02",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "include/ceres/accurate_norm.h",
+              "range": {
+                "startLine": 81,
+                "startChar": 0,
+                "endLine": 82,
+                "endChar": 0
+              },
+              "replacement": "template \u003ctypename T\u003e\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29c7723d_b418bb98",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-09T23:36:42Z",
+      "side": 1,
+      "message": "what the word \"Varying\" here mean? I understand Huge and Tiny, but I have no idea what this means. Please document.",
+      "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b44104b6_df1ce5bd",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-09T23:36:42Z",
+      "side": 1,
+      "message": "This is a very generic name when this is really just a fixed scale factor.",
+      "range": {
+        "startLine": 104,
+        "startChar": 11,
+        "endLine": 104,
+        "endChar": 16
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "9aaa122c_e0aff4e1",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "include/ceres/accurate_norm.h",
+              "range": {
+                "startLine": 104,
+                "startChar": 0,
+                "endLine": 105,
+                "endChar": 0
+              },
+              "replacement": "  static T UlpTiny() noexcept { return Ulp(Tiny()); }\n"
+            },
+            {
+              "path": "include/ceres/accurate_norm.h",
+              "range": {
+                "startLine": 182,
+                "startChar": 0,
+                "endLine": 183,
+                "endChar": 0
+              },
+              "replacement": "  const T scale \u003d AccurateNormTraits\u003cT\u003e::UlpTiny();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e755ee82_134f1fe2",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-09T23:36:42Z",
+      "side": 1,
+      "message": "as I mentioned elsewhere, you are better off just saying fma(y,y, -y_sq)",
+      "range": {
+        "startLine": 118,
+        "startChar": 23,
+        "endLine": 118,
+        "endChar": 33
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "a6bb2680_e90adbce",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "include/ceres/accurate_norm.h",
+              "range": {
+                "startLine": 115,
+                "startChar": 0,
+                "endLine": 116,
+                "endChar": 0
+              },
+              "replacement": "  // Use the 2Mult algorithm to recover the rounding error due to squaring x\n"
+            },
+            {
+              "path": "include/ceres/accurate_norm.h",
+              "range": {
+                "startLine": 118,
+                "startChar": 0,
+                "endLine": 119,
+                "endChar": 0
+              },
+              "replacement": "      sigma, sigma_e + TwoMult(y, y, y_sq) + TwoMult(x, x, x_sq));\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9aaf737_b8c02e1a",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-09T23:36:42Z",
+      "side": 1,
+      "message": "given that this is just one call and not a user visible function, you may as well inline this no?",
+      "range": {
+        "startLine": 133,
+        "startChar": 32,
+        "endLine": 133,
+        "endChar": 67
+      },
+      "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f52ee85_59fa12c5",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-09T23:36:42Z",
+      "side": 1,
+      "message": "why is this a good idea, if b is nan?",
+      "range": {
+        "startLine": 154,
+        "startChar": 12,
+        "endLine": 154,
+        "endChar": 13
+      },
+      "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e58abf9d_8ccb0bda",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-09T23:36:42Z",
+      "side": 1,
+      "message": "okay reading this code more carefully, you have one implementation for AccurateNorm(x,y) but a completely different implementation for AccurateNorm(x,y,z,...)?",
+      "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6135fbc_083c4f26",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-09T23:36:42Z",
+      "side": 1,
+      "message": "I do not understand this variable name. what is this variable doing?",
+      "range": {
+        "startLine": 216,
+        "startChar": 7,
+        "endLine": 216,
+        "endChar": 16
+      },
+      "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd2b36d0_2611b6b1",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-09T23:36:42Z",
+      "side": 1,
+      "message": "this lambda needs a better name and a comment documenting it.",
+      "range": {
+        "startLine": 218,
+        "startChar": 13,
+        "endLine": 218,
+        "endChar": 29
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "31425a59_8bcf5b52",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "include/ceres/accurate_norm.h",
+              "range": {
+                "startLine": 218,
+                "startChar": 0,
+                "endLine": 219,
+                "endChar": 0
+              },
+              "replacement": "  const auto accumulate_nonfinite \u003d [\u0026nonfinite, \u0026has_nonfinite](Type value) {\n"
+            },
+            {
+              "path": "include/ceres/accurate_norm.h",
+              "range": {
+                "startLine": 225,
+                "startChar": 0,
+                "endLine": 228,
+                "endChar": 0
+              },
+              "replacement": "  accumulate_nonfinite(first);\n  accumulate_nonfinite(second);\n  (accumulate_nonfinite(fabs(Type(std::forward\u003cArgs\u003e(args)))), ...);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ec9e23b_1cef687f",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-09T23:36:42Z",
+      "side": 1,
+      "message": "are you guaranteed if one of the values is nan, you will always get a nan out of this? \n\nwe should consider (inf, finite, finite), (finite, inf, nan) and (nan, nan, finite), (nan, infinite, finite) and other combos here.",
+      "range": {
+        "startLine": 220,
+        "startChar": 6,
+        "endLine": 220,
+        "endChar": 15
+      },
+      "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6c29a5e_18b7b44b",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-09T23:36:42Z",
+      "side": 1,
+      "message": "normalized_sum or scaled_sum is better",
+      "range": {
+        "startLine": 241,
+        "startChar": 7,
+        "endLine": 241,
+        "endChar": 10
+      },
+      "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c4edaa1_1e9e8543",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-09T23:36:42Z",
+      "side": 1,
+      "message": "The name `Type` is not great, it is better to use a different name.",
+      "range": {
+        "startLine": 259,
+        "startChar": 8,
+        "endLine": 259,
+        "endChar": 12
+      },
+      "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
