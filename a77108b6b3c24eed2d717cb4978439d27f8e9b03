@@ -54,6 +54,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5238969c_56eda2ca",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-12T00:53:27Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "2ee44b9f_69d489d8",
+      "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3fd6f9ee_520c2f39",
@@ -429,6 +447,24 @@
       "side": 1,
       "message": "This is because the original algorithm is defined only for two arguments and does not generalize directly to the variadic case. In particular, its guard can discard one small argument using a two-term error bound, whereas multiple arguments require accounting for accumulated squared-term errors.",
       "parentUuid": "e58abf9d_8ccb0bda",
+      "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6d1fe00_a035b9c4",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-12T00:53:27Z",
+      "side": 1,
+      "message": "ah I thought you had a multi-term generalization of the accurate norm algorithm in that paper (I had not looked at the paper). Now that I realize that, A couple of suggestions.\n\n1. It is worth documenting the delta between 2 argument case and the n-argument case at the top of the file.\n2. I asked gemini for generalizations of the borges paper and it pointed me in two directions. The second one is closer to what you are doing, but here are they are.\n\n\nRecent literature in floating-point arithmetic addresses this multi-term generalization through two primary approaches:\n\n1. Recursive VectorizationOne approach is to compute the multi-term norm by recursively applying a highly accurate 2-term hypotenuse function (like Algorithm 1014). Novaković (2025) outlines how to compute the Frobenius norm of real arrays by applying 2-term hypot operations sequentially or in parallel. By utilizing vector instructions (SIMD), this method achieves performance comparable to standard BLAS routines while maintaining the rigorous relative accuracy bounds and overflow protection of the underlying 2-term algorithm.\n\n\n2. Double-Word Arithmetic for $n$-DimensionsInstead of chaining 2-term operations, other implementations compute the $n$-dimensional norm directly by accumulating the sum of squares using extended precision. As discussed in a comprehensive survey of modern floating-point arithmetic (Boldo et al., 2023), recent algorithms utilize double-word arithmetic to compute $n$-dimensional Euclidean norms. This ensures that the final $L_2$ norm is returned within slightly more than 0.5 ulp (units in the last place) from the exact mathematical result, effectively guaranteeing correct rounding without intermediate scaling issues.\n\nReferences\n\nBoldo, S., Jeannerod, C.-P., Melquiond, G., \u0026 Muller, J.-M. (2023). Floating-point arithmetic. Acta Numerica, 32, 203–290. https://doi.org/10.1017/s0962492922000101\n\nhttps://hal.science/hal-04095151/file/floatingpoint_arithmetic.pdf\n\nNovaković, V. (2025). Recursive vectorized computation of the Frobenius norm. arXiv. https://doi.org/10.48550/arxiv.2509.06220\n\nhttps://arxiv.org/pdf/2509.06220",
+      "parentUuid": "73e9a4a6_56726485",
       "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
