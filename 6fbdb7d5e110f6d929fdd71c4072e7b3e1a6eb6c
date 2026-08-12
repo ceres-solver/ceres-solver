@@ -52,6 +52,24 @@
       "parentUuid": "39bb1df5_aaa180ad",
       "revId": "6fbdb7d5e110f6d929fdd71c4072e7b3e1a6eb6c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "387597fa_c6f76fc2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-12T14:35:19Z",
+      "side": 1,
+      "message": "I was only curious about how your approach compares to the first reference.",
+      "parentUuid": "d7bd2a44_b417c316",
+      "revId": "6fbdb7d5e110f6d929fdd71c4072e7b3e1a6eb6c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
