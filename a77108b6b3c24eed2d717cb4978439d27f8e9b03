@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2ee44b9f_69d489d8",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-12T00:19:55Z",
+      "side": 1,
+      "message": "Yes, this is how the language standard defines the promotion. `common_type_t` is a bad choice here. While equivalent for supported types, it does not express the intent in terms of arithmetic operations.",
+      "parentUuid": "8ed897ab_2d394e1e",
+      "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3fd6f9ee_520c2f39",
         "filename": "include/ceres/accurate_norm.h",
         "patchSetId": 6
@@ -79,6 +97,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "48976efb_2c439dbb",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-12T00:19:55Z",
+      "side": 1,
+      "message": "It is not but it can be used to provide a fast path as I did before. Traits are generally intended to be extended/specialized if necessary.",
+      "parentUuid": "3fd6f9ee_520c2f39",
+      "range": {
+        "startLine": 81,
+        "startChar": 22,
+        "endLine": 81,
+        "endChar": 30
+      },
+      "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "29c7723d_b418bb98",
         "filename": "include/ceres/accurate_norm.h",
         "patchSetId": 6
@@ -90,6 +132,24 @@
       "writtenOn": "2026-08-09T23:36:42Z",
       "side": 1,
       "message": "what the word \"Varying\" here mean? I understand Huge and Tiny, but I have no idea what this means. Please document.",
+      "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb199e1a_3f0468d0",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-12T00:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29c7723d_b418bb98",
       "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -147,6 +207,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6379167f_d6b9625f",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-12T00:19:55Z",
+      "side": 1,
+      "message": "IMO, UlpTiny is bad name as it no longer describes the purpose of the method but what it invokes.",
+      "parentUuid": "b44104b6_df1ce5bd",
+      "range": {
+        "startLine": 104,
+        "startChar": 11,
+        "endLine": 104,
+        "endChar": 16
+      },
+      "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e755ee82_134f1fe2",
         "filename": "include/ceres/accurate_norm.h",
         "patchSetId": 6
@@ -196,6 +280,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2294c779_399ffb3e",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-12T00:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e755ee82_134f1fe2",
+      "range": {
+        "startLine": 118,
+        "startChar": 23,
+        "endLine": 118,
+        "endChar": 33
+      },
+      "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a9aaf737_b8c02e1a",
@@ -209,6 +317,30 @@
       "writtenOn": "2026-08-09T23:36:42Z",
       "side": 1,
       "message": "given that this is just one call and not a user visible function, you may as well inline this no?",
+      "range": {
+        "startLine": 133,
+        "startChar": 32,
+        "endLine": 133,
+        "endChar": 67
+      },
+      "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "501865d9_c879dade",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-12T00:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9aaf737_b8c02e1a",
       "range": {
         "startLine": 133,
         "startChar": 32,
@@ -242,6 +374,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "611d1f04_41911024",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-12T00:19:55Z",
+      "side": 1,
+      "message": "This is how [`std::hypot`](https://en.cppreference.com/cpp/numeric/math/hypot) works:\n\u003e if one of the arguments is ±∞, `std::hypot(x, y)` returns +∞ even if the other argument is NaN",
+      "parentUuid": "7f52ee85_59fa12c5",
+      "range": {
+        "startLine": 154,
+        "startChar": 12,
+        "endLine": 154,
+        "endChar": 13
+      },
+      "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e58abf9d_8ccb0bda",
@@ -261,6 +417,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "73e9a4a6_56726485",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-12T00:19:55Z",
+      "side": 1,
+      "message": "This is because the original algorithm is defined only for two arguments and does not generalize directly to the variadic case. In particular, its guard can discard one small argument using a two-term error bound, whereas multiple arguments require accounting for accumulated squared-term errors.",
+      "parentUuid": "e58abf9d_8ccb0bda",
+      "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a6135fbc_083c4f26",
         "filename": "include/ceres/accurate_norm.h",
         "patchSetId": 6
@@ -272,6 +446,30 @@
       "writtenOn": "2026-08-09T23:36:42Z",
       "side": 1,
       "message": "I do not understand this variable name. what is this variable doing?",
+      "range": {
+        "startLine": 216,
+        "startChar": 7,
+        "endLine": 216,
+        "endChar": 16
+      },
+      "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47f206a9_82949246",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-12T00:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6135fbc_083c4f26",
       "range": {
         "startLine": 216,
         "startChar": 7,
@@ -333,6 +531,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d3aab49_eef22081",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-12T00:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd2b36d0_2611b6b1",
+      "range": {
+        "startLine": 218,
+        "startChar": 13,
+        "endLine": 218,
+        "endChar": 29
+      },
+      "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9ec9e23b_1cef687f",
@@ -346,6 +568,30 @@
       "writtenOn": "2026-08-09T23:36:42Z",
       "side": 1,
       "message": "are you guaranteed if one of the values is nan, you will always get a nan out of this? \n\nwe should consider (inf, finite, finite), (finite, inf, nan) and (nan, nan, finite), (nan, infinite, finite) and other combos here.",
+      "range": {
+        "startLine": 220,
+        "startChar": 6,
+        "endLine": 220,
+        "endChar": 15
+      },
+      "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d705024_fe34e2e2",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-12T00:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ec9e23b_1cef687f",
       "range": {
         "startLine": 220,
         "startChar": 6,
@@ -379,6 +625,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b89a1e41_c8cfe66d",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-12T00:19:55Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "d6c29a5e_18b7b44b",
+      "range": {
+        "startLine": 241,
+        "startChar": 7,
+        "endLine": 241,
+        "endChar": 10
+      },
+      "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6c4edaa1_1e9e8543",
@@ -392,6 +662,30 @@
       "writtenOn": "2026-08-09T23:36:42Z",
       "side": 1,
       "message": "The name `Type` is not great, it is better to use a different name.",
+      "range": {
+        "startLine": 259,
+        "startChar": 8,
+        "endLine": 259,
+        "endChar": 12
+      },
+      "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6ace5cd_56579551",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-12T00:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c4edaa1_1e9e8543",
       "range": {
         "startLine": 259,
         "startChar": 8,

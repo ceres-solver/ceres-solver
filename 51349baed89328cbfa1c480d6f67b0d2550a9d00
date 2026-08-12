@@ -820,6 +820,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "885f1d40_232f2af5",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-12T00:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b6223ce_7d67e1ac",
+      "range": {
+        "startLine": 245,
+        "startChar": 8,
+        "endLine": 245,
+        "endChar": 12
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e95cf87e_37de997a",
@@ -1320,6 +1344,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a244e5ba_cc2ddbc0",
+        "filename": "include/ceres/internal/compensated_math.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-12T00:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0b3ccd4_d2c80b9b",
+      "range": {
+        "startLine": 90,
+        "startChar": 15,
+        "endLine": 90,
+        "endChar": 25
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dd6c42dc_5f022dc0",
@@ -1381,6 +1429,30 @@
       "side": 1,
       "message": "In the code comment you say that\n\nulp(x) \u003d 𝛽^(max{e,e_min}−p+1\n\nbut in the actual code, the revelant bit is\n\n if (cls \u003d\u003d FP_NORMAL) {\n    return scalbn(std::numeric_limits\u003cT\u003e::epsilon(), ilogb(x));\n  }\n\n  return std::numeric_limits\u003cT\u003e::min();\n  \n\nwhere e \u003e e_min for the case of x being normal, so when you have a subnormal beta^(e_min - p + 1) \u003d numeric_limits::min.",
       "parentUuid": "9df27ab4_55f3d7bc",
+      "range": {
+        "startLine": 44,
+        "startChar": 21,
+        "endLine": 44,
+        "endChar": 22
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9849025_56cbf40b",
+        "filename": "include/ceres/internal/ulp.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-12T00:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa41427a_3dc6d8cb",
       "range": {
         "startLine": 44,
         "startChar": 21,
@@ -1557,6 +1629,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4a99ab8_88dca59a",
+        "filename": "include/ceres/internal/ulp.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-12T00:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24209dee_dc8dfc0a",
+      "range": {
+        "startLine": 48,
+        "startChar": 15,
+        "endLine": 48,
+        "endChar": 18
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "52400634_6a4500bf",
@@ -1665,6 +1761,30 @@
       "side": 1,
       "message": "1.0 and 1.0f and 1 are three distinct types, with three different ulps.\n2^-52, 2^-23 and 1 respectively. The unit in last place for an integer is not the same as the unit in last place of a double. \nso you are not really computing the ulp of an integer here, you are computing the ulp of an integer promoted to double, which is a very different thing.",
       "parentUuid": "d8e0b5db_45033260",
+      "range": {
+        "startLine": 71,
+        "startChar": 66,
+        "endLine": 71,
+        "endChar": 67
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db9001be_294f166e",
+        "filename": "include/ceres/internal/ulp.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-12T00:19:55Z",
+      "side": 1,
+      "message": "`Ulp(1)` is not intended to compute the ULP of an integer. `Ulp` is only defined for floating-point types anyway. An integer must therefore be explicitly converted to the desired floating-point type before calling it. `double` is here and elsewhere the canonical floating-point type for integral inputs as used by standard math conventions.",
+      "parentUuid": "6b21d908_4e069339",
       "range": {
         "startLine": 71,
         "startChar": 66,
