@@ -1255,6 +1255,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e3efc06_fedb65a7",
+        "filename": "include/ceres/internal/compensated_math.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-12T10:47:55Z",
+      "side": 1,
+      "message": "No longer relevant.",
+      "parentUuid": "d8495dac_b0d447c2",
+      "range": {
+        "startLine": 83,
+        "startChar": 58,
+        "endLine": 83,
+        "endChar": 59
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7a1eed2e_68d53db5",
@@ -1785,6 +1809,30 @@
       "side": 1,
       "message": "`Ulp(1)` is not intended to compute the ULP of an integer. `Ulp` is only defined for floating-point types anyway. An integer must therefore be explicitly converted to the desired floating-point type before calling it. `double` is here and elsewhere the canonical floating-point type for integral inputs as used by standard math conventions.",
       "parentUuid": "6b21d908_4e069339",
+      "range": {
+        "startLine": 71,
+        "startChar": 66,
+        "endLine": 71,
+        "endChar": 67
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18850975_cd80e67f",
+        "filename": "include/ceres/internal/ulp.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-12T10:47:55Z",
+      "side": 1,
+      "message": "No longer relevant.",
+      "parentUuid": "db9001be_294f166e",
       "range": {
         "startLine": 71,
         "startChar": 66,
