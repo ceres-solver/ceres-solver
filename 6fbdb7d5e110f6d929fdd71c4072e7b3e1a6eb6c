@@ -34,6 +34,24 @@
       "tag": "mailMessageId\u003d\u003cCABqdRUDBQysDDJTEiT9Ddwt8niS985TNc1PD-xHKGnnAoAWWCQ@mail.gmail.com\u003e",
       "revId": "6fbdb7d5e110f6d929fdd71c4072e7b3e1a6eb6c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7bd2a44_b417c316",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-08-12T14:30:19Z",
+      "side": 1,
+      "message": "All these issues are already handled by the current approach including the pairwise compensated summation of normalized squared terms.\n\nWhat tradeoffs are you specifically interested in? Composing hypot is not very efficient to begin with due to repeated square root computation.",
+      "parentUuid": "39bb1df5_aaa180ad",
+      "revId": "6fbdb7d5e110f6d929fdd71c4072e7b3e1a6eb6c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
