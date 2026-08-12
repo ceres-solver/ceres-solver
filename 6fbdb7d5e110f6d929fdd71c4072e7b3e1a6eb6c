@@ -16,6 +16,24 @@
       "message": "I will take another careful look tomorrow sometime with a clear head.",
       "revId": "6fbdb7d5e110f6d929fdd71c4072e7b3e1a6eb6c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39bb1df5_aaa180ad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-08-12T14:09:50Z",
+      "side": 1,
+      "message": "If you are going down this route, consider using the recursive//pairwise application of hypot as the first paper talks about. At least it would be worth understanding what the tradeoffs are.\n\nAs I see them there are three problems to be solved\n\n1. Underflow\n\n2. Overflow\n\n3. Round off error.\n\nThe first two require scaling and the last one requires some kind of compensated sum.\n\nSameer\n\nOn Wed, Aug 12, 2026, 3:47 AM Sergiu Deitsch (Gerrit) \u003cnoreply-gerritcodereview+2IOHGVqgDrG06rZMyMfMjw\u003d\u003d@\u003e wrote: google.com",
+      "tag": "mailMessageId\u003d\u003cCABqdRUDBQysDDJTEiT9Ddwt8niS985TNc1PD-xHKGnnAoAWWCQ@mail.gmail.com\u003e",
+      "revId": "6fbdb7d5e110f6d929fdd71c4072e7b3e1a6eb6c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
