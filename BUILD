@@ -31,6 +31,7 @@
 # These are Bazel rules to build Ceres. It's currently in Alpha state, and does
 # not support parameterization around threading choice or sparse backends.
 load("//:bazel/ceres.bzl", "ceres_library")
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
 
 ceres_library(
     name = "ceres",
