@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "832348e5_fd3bfcd1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5089107
+      },
+      "writtenOn": "2026-08-19T06:59:55Z",
+      "side": 1,
+      "message": "https://github.com/ceres-solver/ceres-solver/pull/1212",
+      "revId": "ad232afcf72f8b13ad23d5ada4e677b78163b6b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
