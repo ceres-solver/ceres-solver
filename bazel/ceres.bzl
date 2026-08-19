@@ -28,6 +28,8 @@
 #
 # Support for building Ceres Solver with a specific configuration.
 
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
 CERES_SRCS = ["internal/ceres/" + filename for filename in [
     "accelerate_sparse.cc",
     "array_utils.cc",
@@ -160,7 +162,7 @@ def ceres_library(
     else:
         schur_sources = native.glob(["internal/ceres/generated/*.cc"])
 
-    native.cc_library(
+    cc_library(
         name = name,
 
         # Internal sources, options, and dependencies.
