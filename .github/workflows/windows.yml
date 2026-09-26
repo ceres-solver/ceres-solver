@@ -60,6 +60,7 @@ jobs:
               -DCMAKE_BUILD_TYPE=${{matrix.build_type}} \
               -DCMAKE_C_COMPILER_LAUNCHER:FILEPATH=ccache \
               -DCMAKE_CXX_COMPILER_LAUNCHER:FILEPATH=ccache \
+              -DWITH_SUITESPARSE=ON \
               -G Ninja
 
     - name: Build
@@ -191,7 +192,8 @@ jobs:
                 -DBUILD_SHARED_LIBS=${{matrix.lib == 'shared'}} `
                 -DCMAKE_CONFIGURATION_TYPES=${{matrix.build_type}} `
                 -DCMAKE_INSTALL_PREFIX:PATH=${{github.workspace}}/install `
-                -DLAPACK_lapack_LIBRARY=${{github.workspace}}/suitesparse/lib/liblapack.lib
+                -DLAPACK_lapack_LIBRARY=${{github.workspace}}/suitesparse/lib/liblapack.lib `
+                -DWITH_SUITESPARSE=ON
 
       - name: Build
         run: |

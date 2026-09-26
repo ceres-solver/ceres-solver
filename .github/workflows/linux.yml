@@ -125,7 +125,8 @@ jobs:
                 -DCMAKE_BUILD_TYPE=${{matrix.build_type}} \
                 -DCMAKE_C_COMPILER_LAUNCHER=$(which ccache) \
                 -DCMAKE_CXX_COMPILER_LAUNCHER=$(which ccache) \
-                -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install
+                -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install \
+                -DWITH_SUITESPARSE=ON
 
       - name: Build
         run: |
