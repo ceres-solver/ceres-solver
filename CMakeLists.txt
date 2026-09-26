@@ -827,6 +827,7 @@ ceres_dependency_description(CERES_TBB_DESCRIPTION
 
 set_package_properties(absl PROPERTIES
   DESCRIPTION "${CERES_ABSL_DESCRIPTION}"
+  TYPE REQUIRED
   URL "https://abseil.io")
 set_package_properties(AccelerateSparse PROPERTIES
   DESCRIPTION "Apple's Accelerate framework with sparse linear solvers")
