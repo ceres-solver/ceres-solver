@@ -105,6 +105,12 @@ if (_Ceres_FEATURE_SUITESPARSE)
   # environment. CHOLMOD and METIS are linked explicitly instead.
 endif (_Ceres_FEATURE_SUITESPARSE)
 
+if (_Ceres_FEATURE_MKL)
+  # Define version information for use in Solver::FullReport.
+  add_compile_definitions(CERES_MKL_VERSION="${MKL_VERSION}")
+  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES MKL::MKL)
+endif (_Ceres_FEATURE_MKL)
+
 if (_Ceres_FEATURE_CHOLMOD_PARTITION OR _Ceres_FEATURE_EIGEN_METIS)
   # Define version information for use in Solver::FullReport.
   add_definitions(-DCERES_METIS_VERSION="${METIS_VERSION}")
@@ -129,7 +135,7 @@ if (_Ceres_FEATURE_CUDA)
 endif (_Ceres_FEATURE_CUDA)
 
 if (_Ceres_FEATURE_LAPACK)
-  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${LAPACK_LIBRARIES})
+  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${CERES_LAPACK_LIBRARIES})
 endif ()
 
 # Source files that contain private symbols and live in the ceres::internal
@@ -206,6 +212,10 @@ add_library(ceres_internal OBJECT
     linear_solver.cc
     low_rank_inverse_hessian.cc
     minimizer.cc
+    mkl_covariance.cc
+    mkl_diagnostics.cc
+    mkl_sparse_matrix.cc
+    mkl_utils.cc
     parallel_invoke.cc
     parallel_utils.cc
     parallel_vector_ops.cc
@@ -371,13 +381,6 @@ if (BUILD_TESTING)
     target_link_libraries(${NAME}_test PRIVATE test_util ceres_static
       ${CERES_LIBRARY_PRIVATE_DEPENDENCIES} GTest::gmock_main)
 
-    # covariance_test uses SuiteSparseQR.hpp. However, since SuiteSparse import
-    # targets are private (link only) dependencies not propagated to consumers,
-    # we need to link against the target explicitly here.
-    if (TARGET SuiteSparse::SPQR)
-      target_link_libraries (${NAME}_test PRIVATE SuiteSparse::SPQR)
-    endif (TARGET SuiteSparse::SPQR)
-
     add_test(NAME ${NAME}_test COMMAND ${NAME}_test)
     # Override testing::SrcDir to support multi-configuration builds, such as MSVC
     # that write binaries into addtional configuration specific subdirectories.
@@ -451,6 +454,8 @@ if (BUILD_TESTING)
   ceres_test(loss_function)
   ceres_test(manifold)
   ceres_test(minimizer)
+  ceres_test(mkl_sparse_matrix)
+  ceres_test(mkl_utils)
   ceres_test(normal_prior)
   ceres_test(numeric_diff_cost_function)
   ceres_test(numeric_diff_first_order_function)

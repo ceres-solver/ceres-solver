@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -241,8 +241,8 @@ class CERES_EXPORT Covariance {
     // SPARSE_QR is not capable of computing the covariance if the
     // Jacobian is rank deficient. Depending on the value of
     // Covariance::Options::sparse_linear_algebra_library_type, either
-    // Eigen's Sparse QR factorization algorithm will be used or
-    // SuiteSparse's high performance SuiteSparseQR algorithm will be
+    // Eigen's Sparse QR factorization algorithm, SuiteSparse's high
+    // performance SuiteSparseQR algorithm, or oneMKL Sparse QR will be
     // used.
     CovarianceAlgorithmType algorithm_type = SPARSE_QR;
 
@@ -258,6 +258,10 @@ class CERES_EXPORT Covariance {
     // This is an advanced option meant for users who know enough
     // about their Jacobian matrices that they can determine a value
     // better than the default.
+    //
+    // oneMKL Sparse QR does not expose a pivot threshold, so MKL_SPARSE
+    // rejects positive values. Like EIGEN_SPARSE, it uses the default value
+    // for a threshold of zero, whereas SUITE_SPARSE uses zero as is.
     double column_pivot_threshold = -1;
 
     // If the Jacobian matrix is near singular, then inverting J'J

@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -54,6 +54,7 @@
 #include "ceres/event_logger.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/map_util.h"
+#include "ceres/mkl_covariance.h"
 #include "ceres/parallel_for.h"
 #include "ceres/parallel_utils.h"
 #include "ceres/parameter_block.h"
@@ -523,6 +524,16 @@ bool CovarianceImpl::ComputeCovarianceValues() {
 #endif
     }
 
+    if (options_.sparse_linear_algebra_library_type == MKL_SPARSE) {
+#if !defined(CERES_NO_MKL)
+      return ComputeCovarianceValuesUsingMklSparseQR();
+#else
+      LOG(ERROR) << "MKL is required to use the SPARSE_QR algorithm with "
+                    "sparse_linear_algebra_library_type = MKL_SPARSE.";
+      return false;
+#endif
+    }
+
     LOG(ERROR) << "Unsupported "
                << "Covariance::Options::sparse_linear_algebra_library_type "
                << "= "
@@ -534,6 +545,35 @@ bool CovarianceImpl::ComputeCovarianceValues() {
   LOG(ERROR) << "Unsupported Covariance::Options::algorithm_type = "
              << CovarianceAlgorithmTypeToString(options_.algorithm_type);
   return false;
+}
+
+bool CovarianceImpl::ComputeCovarianceValuesUsingMklSparseQR() {
+#ifndef CERES_NO_MKL
+  EventLogger event_logger(
+      "CovarianceImpl::ComputeCovarianceValuesUsingMklSparseQR");
+  if (covariance_matrix_ == nullptr) {
+    // Nothing to do, all zeros covariance matrix.
+    return true;
+  }
+
+  CRSMatrix jacobian;
+  problem_->Evaluate(evaluate_options_, nullptr, nullptr, nullptr, &jacobian);
+  event_logger.AddEvent("Evaluate");
+
+  std::string message;
+  if (!ComputeCovarianceUsingMklSparseQR(jacobian,
+                                         options_,
+                                         problem_->context(),
+                                         covariance_matrix_.get(),
+                                         &message)) {
+    LOG(ERROR) << message;
+    return false;
+  }
+  event_logger.AddEvent("Inversion");
+  return true;
+#else
+  return false;
+#endif
 }
 
 bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {

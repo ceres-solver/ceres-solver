@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -41,6 +41,7 @@
 #include "absl/strings/str_format.h"
 #include "ceres/internal/config.h"
 #include "ceres/iterative_refiner.h"
+#include "ceres/lapack_int.h"
 
 #ifndef CERES_NO_CUDA
 #include "ceres/context_impl.h"
@@ -52,29 +53,35 @@
 #ifndef CERES_NO_LAPACK
 
 // C interface to the LAPACK Cholesky factorization and triangular solve.
-extern "C" void dpotrf_(
-    const char* uplo, const int* n, double* a, const int* lda, int* info);
+extern "C" void dpotrf_(const char* uplo,
+                        const CeresLapackInt* n,
+                        double* a,
+                        const CeresLapackInt* lda,
+                        CeresLapackInt* info) noexcept;
 
 extern "C" void dpotrs_(const char* uplo,
-                        const int* n,
-                        const int* nrhs,
+                        const CeresLapackInt* n,
+                        const CeresLapackInt* nrhs,
                         const double* a,
-                        const int* lda,
+                        const CeresLapackInt* lda,
                         double* b,
-                        const int* ldb,
-                        int* info);
+                        const CeresLapackInt* ldb,
+                        CeresLapackInt* info) noexcept;
 
-extern "C" void spotrf_(
-    const char* uplo, const int* n, float* a, const int* lda, int* info);
+extern "C" void spotrf_(const char* uplo,
+                        const CeresLapackInt* n,
+                        float* a,
+                        const CeresLapackInt* lda,
+                        CeresLapackInt* info) noexcept;
 
 extern "C" void spotrs_(const char* uplo,
-                        const int* n,
-                        const int* nrhs,
+                        const CeresLapackInt* n,
+                        const CeresLapackInt* nrhs,
                         const float* a,
-                        const int* lda,
+                        const CeresLapackInt* lda,
                         float* b,
-                        const int* ldb,
-                        int* info);
+                        const CeresLapackInt* ldb,
+                        CeresLapackInt* info) noexcept;
 #endif
 
 namespace ceres::internal {
@@ -212,8 +219,9 @@ LinearSolverTerminationType LAPACKDenseCholesky::Factorize(
   num_cols_ = num_cols;
 
   const char uplo = 'L';
-  int info = 0;
-  dpotrf_(&uplo, &num_cols_, lhs_, &num_cols_, &info);
+  const CeresLapackInt lapack_num_cols = num_cols_;
+  CeresLapackInt info = 0;
+  dpotrf_(&uplo, &lapack_num_cols, lhs_, &lapack_num_cols, &info);
 
   if (info < 0) {
     termination_type_ = LinearSolverTerminationType::FATAL_ERROR;
@@ -226,7 +234,7 @@ LinearSolverTerminationType LAPACKDenseCholesky::Factorize(
     *message = absl::StrFormat(
         "LAPACK::dpotrf numerical failure. "
         "The leading minor of order %d is not positive definite.",
-        info);
+        static_cast<int>(info));
   } else {
     termination_type_ = LinearSolverTerminationType::SUCCESS;
     *message = "Success.";
@@ -238,12 +246,19 @@ LinearSolverTerminationType LAPACKDenseCholesky::Solve(const double* rhs,
                                                        double* solution,
                                                        std::string* message) {
   const char uplo = 'L';
-  const int nrhs = 1;
-  int info = 0;
+  const CeresLapackInt lapack_num_cols = num_cols_;
+  const CeresLapackInt nrhs = 1;
+  CeresLapackInt info = 0;
 
   VectorRef(solution, num_cols_) = ConstVectorRef(rhs, num_cols_);
-  dpotrs_(
-      &uplo, &num_cols_, &nrhs, lhs_, &num_cols_, solution, &num_cols_, &info);
+  dpotrs_(&uplo,
+          &lapack_num_cols,
+          &nrhs,
+          lhs_,
+          &lapack_num_cols,
+          solution,
+          &lapack_num_cols,
+          &info);
 
   if (info < 0) {
     termination_type_ = LinearSolverTerminationType::FATAL_ERROR;
@@ -265,8 +280,9 @@ LinearSolverTerminationType FloatLAPACKDenseCholesky::Factorize(
   lhs_ = Eigen::Map<Eigen::MatrixXd>(lhs, num_cols, num_cols).cast<float>();
 
   const char uplo = 'L';
-  int info = 0;
-  spotrf_(&uplo, &num_cols_, lhs_.data(), &num_cols_, &info);
+  const CeresLapackInt lapack_num_cols = num_cols_;
+  CeresLapackInt info = 0;
+  spotrf_(&uplo, &lapack_num_cols, lhs_.data(), &lapack_num_cols, &info);
 
   if (info < 0) {
     termination_type_ = LinearSolverTerminationType::FATAL_ERROR;
@@ -279,7 +295,7 @@ LinearSolverTerminationType FloatLAPACKDenseCholesky::Factorize(
     *message = absl::StrFormat(
         "LAPACK::spotrf numerical failure. "
         "The leading minor of order %d is not positive definite.",
-        info);
+        static_cast<int>(info));
   } else {
     termination_type_ = LinearSolverTerminationType::SUCCESS;
     *message = "Success.";
@@ -290,16 +306,17 @@ LinearSolverTerminationType FloatLAPACKDenseCholesky::Factorize(
 LinearSolverTerminationType FloatLAPACKDenseCholesky::Solve(
     const double* rhs, double* solution, std::string* message) {
   const char uplo = 'L';
-  const int nrhs = 1;
-  int info = 0;
+  const CeresLapackInt lapack_num_cols = num_cols_;
+  const CeresLapackInt nrhs = 1;
+  CeresLapackInt info = 0;
   rhs_and_solution_ = ConstVectorRef(rhs, num_cols_).cast<float>();
   spotrs_(&uplo,
-          &num_cols_,
+          &lapack_num_cols,
           &nrhs,
           lhs_.data(),
-          &num_cols_,
+          &lapack_num_cols,
           rhs_and_solution_.data(),
-          &num_cols_,
+          &lapack_num_cols,
           &info);
 
   if (info < 0) {

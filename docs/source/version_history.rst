@@ -51,6 +51,9 @@ New Features
 #. Move C++17 Bessel functions availability checks from configuration time to
    inclusion time, with fallback to POSIX implementations on ``libc++``.
    (Sergiu Deitsch)
+#. Added Intel oneMKL Sparse QR covariance estimation. If oneMKL is enabled,
+   it also provides BLAS and LAPACK, and SuiteSparse is disabled if its BLAS
+   integer interface does not match the one of oneMKL. (Sergiu Deitsch)
 
 
 Backward Incompatible API Changes

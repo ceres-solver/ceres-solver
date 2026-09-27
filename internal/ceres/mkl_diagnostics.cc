@@ -26,75 +26,56 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: sameeragarwal@google.com (Sameer Agarwal)
+// Author: sergiu.deitsch@gmail.com (Sergiu Deitsch)
 
-#include "ceres/solver_utils.h"
+#include "ceres/mkl_diagnostics.h"
 
-#include "Eigen/Core"
-#include "ceres/internal/config.h"
-#include "ceres/internal/export.h"
-#include "ceres/version.h"
-#ifndef CERES_NO_CUDA
-#include "cuda_runtime.h"
-#ifndef CERES_NO_CUDSS
-#include "cudss.h"
-#endif  // CERES_NO_CUDSS
-#endif  // CERES_NO_CUDA
+#ifndef CERES_NO_MKL
+
+#include <string>
+#include <string_view>
+
+#include "absl/strings/str_format.h"
 
 namespace ceres::internal {
 
-constexpr char kVersion[] =
-    // clang-format off
-  CERES_VERSION_STRING "-eigen-("
-  CERES_SEMVER_VERSION(EIGEN_WORLD_VERSION,
-                       EIGEN_MAJOR_VERSION,
-                       EIGEN_MINOR_VERSION) ")"
+std::string_view MklStatusToString(const sparse_status_t status) {
+  switch (status) {
+    case SPARSE_STATUS_SUCCESS:
+      return "success";
+    case SPARSE_STATUS_NOT_INITIALIZED:
+      return "not initialized";
+    case SPARSE_STATUS_ALLOC_FAILED:
+      return "allocation failed";
+    case SPARSE_STATUS_INVALID_VALUE:
+      return "invalid value";
+    case SPARSE_STATUS_EXECUTION_FAILED:
+      return "execution failed";
+    case SPARSE_STATUS_INTERNAL_ERROR:
+      return "internal error";
+    case SPARSE_STATUS_NOT_SUPPORTED:
+      return "not supported";
+    default:
+      return "unknown";
+  }
+}
 
-#ifdef CERES_NO_LAPACK
-  "-no_lapack"
-#else
-  "-lapack"
-#endif
+bool CheckMklStatus(const sparse_status_t actual,
+                    const std::string_view operation,
+                    std::string* message) {
+  if (actual == SPARSE_STATUS_SUCCESS) {
+    return true;
+  }
 
-#ifndef CERES_NO_MKL
-  "-mkl-(" CERES_MKL_VERSION ")"
-#endif
-
-#ifndef CERES_NO_SUITESPARSE
-  "-suitesparse-(" CERES_SUITESPARSE_VERSION ")"
-#endif
-
-#if !defined(CERES_NO_EIGEN_METIS) || !defined(CERES_NO_CHOLMOD_PARTITION)
-  "-metis-(" CERES_METIS_VERSION ")"
-#endif
-
-#ifndef CERES_NO_ACCELERATE_SPARSE
-  "-acceleratesparse"
-#endif
-
-#ifdef CERES_USE_EIGEN_SPARSE
-  "-eigensparse"
-#endif
-
-#ifdef CERES_RESTRUCT_SCHUR_SPECIALIZATIONS
-  "-no_schur_specializations"
-#endif
-
-#ifdef CERES_NO_CUSTOM_BLAS
-  "-no_custom_blas"
-#endif
-
-#ifndef CERES_NO_CUDA
-  "-cuda-(" CERES_TO_STRING(CUDART_VERSION) ")"
-#ifndef CERES_NO_CUDSS
-  "-cudss-(" CERES_SEMVER_VERSION(CUDSS_VERSION_MAJOR,
-                                  CUDSS_VERSION_MINOR,
-                                  CUDSS_VERSION_PATCH) ")"
-#endif // CERES_NO_CUDSS
-#endif
-  ;
-// clang-format on
-
-std::string VersionString() { return kVersion; }
+  *message = absl::StrFormat("MKL %s returned %s (%d), expected %s (%d).",
+                             operation,
+                             MklStatusToString(actual),
+                             static_cast<int>(actual),
+                             MklStatusToString(SPARSE_STATUS_SUCCESS),
+                             static_cast<int>(SPARSE_STATUS_SUCCESS));
+  return false;
+}
 
 }  // namespace ceres::internal
+
+#endif  // CERES_NO_MKL

@@ -26,75 +26,37 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: sameeragarwal@google.com (Sameer Agarwal)
+// Author: sergiu.deitsch@gmail.com (Sergiu Deitsch)
 
-#include "ceres/solver_utils.h"
+#ifndef CERES_INTERNAL_MKL_UTILS_H_
+#define CERES_INTERNAL_MKL_UTILS_H_
 
-#include "Eigen/Core"
 #include "ceres/internal/config.h"
+
+#ifndef CERES_NO_MKL
+
 #include "ceres/internal/export.h"
-#include "ceres/version.h"
-#ifndef CERES_NO_CUDA
-#include "cuda_runtime.h"
-#ifndef CERES_NO_CUDSS
-#include "cudss.h"
-#endif  // CERES_NO_CUDSS
-#endif  // CERES_NO_CUDA
 
 namespace ceres::internal {
 
-constexpr char kVersion[] =
-    // clang-format off
-  CERES_VERSION_STRING "-eigen-("
-  CERES_SEMVER_VERSION(EIGEN_WORLD_VERSION,
-                       EIGEN_MAJOR_VERSION,
-                       EIGEN_MINOR_VERSION) ")"
+// Limits the number of threads oneMKL uses in the calling thread for the
+// lifetime of the scope. The requested count never exceeds the current oneMKL
+// maximum, which respects MKL_NUM_THREADS and MKL_DYNAMIC. Otherwise, a large
+// requested count could oversubscribe the processor.
+class CERES_NO_EXPORT MklThreadScope final {
+ public:
+  explicit MklThreadScope(int num_threads) noexcept;
+  ~MklThreadScope() noexcept;
 
-#ifdef CERES_NO_LAPACK
-  "-no_lapack"
-#else
-  "-lapack"
-#endif
+  MklThreadScope(const MklThreadScope&) = delete;
+  MklThreadScope& operator=(const MklThreadScope&) = delete;
 
-#ifndef CERES_NO_MKL
-  "-mkl-(" CERES_MKL_VERSION ")"
-#endif
-
-#ifndef CERES_NO_SUITESPARSE
-  "-suitesparse-(" CERES_SUITESPARSE_VERSION ")"
-#endif
-
-#if !defined(CERES_NO_EIGEN_METIS) || !defined(CERES_NO_CHOLMOD_PARTITION)
-  "-metis-(" CERES_METIS_VERSION ")"
-#endif
-
-#ifndef CERES_NO_ACCELERATE_SPARSE
-  "-acceleratesparse"
-#endif
-
-#ifdef CERES_USE_EIGEN_SPARSE
-  "-eigensparse"
-#endif
-
-#ifdef CERES_RESTRUCT_SCHUR_SPECIALIZATIONS
-  "-no_schur_specializations"
-#endif
-
-#ifdef CERES_NO_CUSTOM_BLAS
-  "-no_custom_blas"
-#endif
-
-#ifndef CERES_NO_CUDA
-  "-cuda-(" CERES_TO_STRING(CUDART_VERSION) ")"
-#ifndef CERES_NO_CUDSS
-  "-cudss-(" CERES_SEMVER_VERSION(CUDSS_VERSION_MAJOR,
-                                  CUDSS_VERSION_MINOR,
-                                  CUDSS_VERSION_PATCH) ")"
-#endif // CERES_NO_CUDSS
-#endif
-  ;
-// clang-format on
-
-std::string VersionString() { return kVersion; }
+ private:
+  int previous_num_threads_;
+};
 
 }  // namespace ceres::internal
+
+#endif  // CERES_NO_MKL
+
+#endif  // CERES_INTERNAL_MKL_UTILS_H_

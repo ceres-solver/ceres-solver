@@ -82,6 +82,55 @@ macro(ceres_set_not_found REASON_MSG)
   return()
 endmacro(ceres_set_not_found)
 
+# Reloads oneMKL with the integer interface Ceres was built with and provides
+# it as the BLAS and LAPACK implementation for SuiteSparse. A macro keeps the
+# early return of find_dependency effective for this file.
+macro(ceres_find_mkl_dependency INTERFACE_FULL)
+  # Ceres and its MKL dependency must use the same integer interface.
+  if (TARGET MKL::MKL AND DEFINED MKL_INTERFACE_FULL AND
+      NOT MKL_INTERFACE_FULL STREQUAL "${INTERFACE_FULL}")
+    ceres_set_not_found(
+      "Ceres was built with oneMKL interface ${INTERFACE_FULL}, "
+      "but the existing MKL::MKL target uses interface ${MKL_INTERFACE_FULL}.")
+  endif()
+  # Save the interface settings of the caller, which are restored below.
+  foreach (_ceres_mkl_variable MKL_INTERFACE MKL_INTERFACE_FULL)
+    unset(_CERES_SAVED_${_ceres_mkl_variable})
+    if (DEFINED ${_ceres_mkl_variable})
+      set(_CERES_SAVED_${_ceres_mkl_variable} "${${_ceres_mkl_variable}}")
+    endif()
+  endforeach()
+
+  set(MKL_INTERFACE "")
+  set(MKL_INTERFACE_FULL "${INTERFACE_FULL}")
+  find_dependency(MKL)
+  set(BLAS_FOUND TRUE)
+  set(BLAS_LIBRARIES MKL::MKL)
+  set(LAPACK_FOUND TRUE)
+  set(LAPACK_LIBRARIES MKL::MKL)
+  # Use MKL for SuiteSparse BLAS dependencies.
+  if (NOT TARGET BLAS::BLAS)
+    add_library(BLAS::BLAS INTERFACE IMPORTED)
+    set_property(TARGET BLAS::BLAS
+      PROPERTY INTERFACE_LINK_LIBRARIES MKL::MKL)
+  endif()
+  if (NOT TARGET LAPACK::LAPACK)
+    add_library(LAPACK::LAPACK INTERFACE IMPORTED)
+    set_property(TARGET LAPACK::LAPACK
+      PROPERTY INTERFACE_LINK_LIBRARIES MKL::MKL)
+  endif()
+
+  foreach (_ceres_mkl_variable MKL_INTERFACE MKL_INTERFACE_FULL)
+    if (DEFINED _CERES_SAVED_${_ceres_mkl_variable})
+      set(${_ceres_mkl_variable} "${_CERES_SAVED_${_ceres_mkl_variable}}")
+      unset(_CERES_SAVED_${_ceres_mkl_variable})
+    else()
+      unset(${_ceres_mkl_variable})
+    endif()
+  endforeach()
+  unset(_ceres_mkl_variable)
+endmacro(ceres_find_mkl_dependency)
+
 # The list of (optional) components this version of Ceres was compiled with.
 set(CERES_COMPILED_COMPONENTS "@CERES_COMPILED_COMPONENTS@")
 
@@ -107,6 +156,7 @@ find_dependency(Threads)
 
 # Optional dependencies
 @METIS_DEPENDENCY@
+@MKL_DEPENDENCY@
 @SuiteSparse_DEPENDENCY@
 @CUDAToolkit_DEPENDENCY@
 @cudss_DEPENDENCY@

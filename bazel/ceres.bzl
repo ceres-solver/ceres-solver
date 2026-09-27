@@ -1,5 +1,5 @@
 # Ceres Solver - A fast non-linear least squares minimizer
-# Copyright 2023 Google Inc. All rights reserved.
+# Copyright 2026 Google Inc. All rights reserved.
 # http://ceres-solver.org/
 #
 # Redistribution and use in source and binary forms, with or without
@@ -198,6 +198,7 @@ def ceres_library(
             "CERES_NO_EIGEN_METIS",
             "CERES_NO_EXPORT=",
             "CERES_NO_LAPACK",
+            "CERES_NO_MKL",
             "CERES_NO_SUITESPARSE",
             "CERES_USE_EIGEN_SPARSE",
             "CERES_EXPORT=",
