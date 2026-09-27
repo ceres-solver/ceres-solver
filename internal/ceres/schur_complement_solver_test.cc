@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -317,5 +317,12 @@ TEST_F(SchurComplementSolverTest,
       3, true, SPARSE_SCHUR, EIGEN, EIGEN_SPARSE, OrderingType::NATURAL);
 }
 #endif  // CERES_USE_EIGEN_SPARSE
+
+#ifndef CERES_NO_MKL
+TEST_F(SchurComplementSolverTest, SparseSchurWithMklSparseSmallProblemAMD) {
+  ComputeAndCompareSolutions(
+      2, false, SPARSE_SCHUR, EIGEN, MKL_SPARSE, OrderingType::AMD);
+}
+#endif  // CERES_NO_MKL
 
 }  // namespace ceres::internal

@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -59,6 +59,8 @@ class CERES_NO_EXPORT Preconditioner : public LinearOperator {
           sparse_linear_algebra_library_type(
               linear_solver_options.sparse_linear_algebra_library_type),
           num_threads(linear_solver_options.num_threads),
+          use_two_level_factorization(
+              linear_solver_options.use_two_level_factorization),
           elimination_groups(linear_solver_options.elimination_groups),
           row_block_size(linear_solver_options.row_block_size),
           e_block_size(linear_solver_options.e_block_size),
@@ -85,6 +87,9 @@ class CERES_NO_EXPORT Preconditioner : public LinearOperator {
 
     // If possible, how many threads the preconditioner can use.
     int num_threads = 1;
+
+    // Use the two-level parallel factorization of oneMKL PARDISO.
+    bool use_two_level_factorization = false;
 
     // Hints about the order in which the parameter blocks should be
     // eliminated by the linear solver.

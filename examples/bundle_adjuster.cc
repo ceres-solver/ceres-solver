@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -101,7 +101,8 @@ ABSL_FLAG(bool, use_spse_initialization, false,
             "Use power series expansion to initialize the solution in ITERATIVE_SCHUR linear solver.");
 
 ABSL_FLAG(std::string, sparse_linear_algebra_library, "suite_sparse",
-              "Options are: suite_sparse, accelerate_sparse, eigen_sparse and cuda_sparse");
+              "Options are: suite_sparse, mkl_sparse, accelerate_sparse, "
+              "eigen_sparse and cuda_sparse");
 ABSL_FLAG(std::string, dense_linear_algebra_library, "eigen",
               "Options are: eigen, lapack, and cuda");
 ABSL_FLAG(std::string, ordering_type, "amd", "Options are: amd, nesdis");
@@ -141,6 +142,8 @@ ABSL_FLAG(int32_t, random_seed, 38401, "Random seed used to set the state "
 ABSL_FLAG(bool, line_search, false, "Use a line search instead of trust region "
             "algorithm.");
 ABSL_FLAG(bool, mixed_precision_solves, false, "Use mixed precision solves.");
+ABSL_FLAG(bool, two_level_factorization, false,
+          "Use the two-level parallel factorization of oneMKL PARDISO.");
 ABSL_FLAG(int32_t, max_num_refinement_iterations, 0, "Iterative refinement iterations");
 ABSL_FLAG(std::string, initial_ply, "", "Export the BAL file data as a PLY file.");
 ABSL_FLAG(std::string, final_ply, "", "Export the refined BAL file data as a PLY "
@@ -171,6 +174,8 @@ void SetLinearSolver(Solver::Options* options) {
       absl::GetFlag(FLAGS_explicit_schur_complement);
   options->use_mixed_precision_solves =
       absl::GetFlag(FLAGS_mixed_precision_solves);
+  options->use_two_level_factorization =
+      absl::GetFlag(FLAGS_two_level_factorization);
   options->max_num_refinement_iterations =
       absl::GetFlag(FLAGS_max_num_refinement_iterations);
   options->max_linear_solver_iterations =

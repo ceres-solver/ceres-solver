@@ -214,6 +214,10 @@ add_library(ceres_internal OBJECT
     minimizer.cc
     mkl_covariance.cc
     mkl_diagnostics.cc
+    mkl_normal_matrix.cc
+    mkl_ordering.cc
+    mkl_pardiso.cc
+    mkl_pardiso_diagnostics.cc
     mkl_sparse_matrix.cc
     mkl_utils.cc
     parallel_invoke.cc
@@ -454,6 +458,8 @@ if (BUILD_TESTING)
   ceres_test(loss_function)
   ceres_test(manifold)
   ceres_test(minimizer)
+  ceres_test(mkl_normal_matrix)
+  ceres_test(mkl_pardiso)
   ceres_test(mkl_sparse_matrix)
   ceres_test(mkl_utils)
   ceres_test(normal_prior)

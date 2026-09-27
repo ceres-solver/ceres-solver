@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -78,6 +78,7 @@ CERES_NO_EXPORT bool ReorderProgramForSchurTypeLinearSolver(
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
     LinearSolverOrderingType linear_solver_ordering_type,
     const ProblemImpl::ParameterMap& parameter_map,
+    int max_num_threads,
     ParameterBlockOrdering* parameter_block_ordering,
     Program* program,
     std::string* error);
@@ -97,6 +98,7 @@ CERES_NO_EXPORT bool ReorderProgramForSparseCholesky(
     LinearSolverOrderingType linear_solver_ordering_type,
     const ParameterBlockOrdering& parameter_block_ordering,
     int start_row_block,
+    int max_num_threads,
     Program* program,
     std::string* error);
 
