@@ -46,6 +46,25 @@ optional. For details on customizing the build process, see
      found TBB version. You can customize the searched TBB location
      with the ``TBB_ROOT`` variable.
 
+  If Ceres is built with oneMKL, SuiteSparse must use the same BLAS and
+  LAPACK integer interface, LP64 or ILP64, as oneMKL. A mismatch can link
+  successfully but fail at runtime, for example with ``Intel oneMKL ERROR:
+  Parameter 4 was incorrect on entry to DPOTRF``. During configuration, Ceres
+  compares ``SUITESPARSE_BLAS_INT`` with ``MKL_INTERFACE_FULL`` and runs a
+  small supernodal CHOLMOD factorization, which calls LAPACK. It disables
+  SuiteSparse if either check fails or if SuiteSparse does not define
+  ``SUITESPARSE_BLAS_INT``. When cross
+  compiling, the factorization runs only if ``CMAKE_CROSSCOMPILING_EMULATOR``
+  is set. Projects that change the BLAS or LAPACK libraries after Ceres is
+  configured must keep the interfaces consistent themselves. See the `oneMKL
+  documentation on LP64 and ILP64
+  <https://www.intel.com/content/www/us/en/docs/onemkl/developer-guide-linux/2026-0/using-the-ilp64-interface-vs-lp64-interface.html>`_.
+
+- `Intel oneMKL <https://www.intel.com/content/www/us/en/developer/tools/oneapi/onemkl.html>`_
+  (**Optional**). oneMKL provides the Sparse QR covariance estimation selected
+  by ``MKL_SPARSE``. If enabled, oneMKL also replaces the BLAS and LAPACK
+  libraries.
+
 - `Apple's Accelerate sparse solvers
   <https://developer.apple.com/documentation/accelerate/sparse_solvers>`_. (**Optional**)
 
@@ -703,6 +722,19 @@ An unavailable optional package does not change the corresponding cache option.
    link dependencies independently. Direct LAPACK use is always disabled for
    iOS builds because Apple treats ``dsyrk_`` as a private API.
 
+#. ``WITH_MKL [Default: ON]``: Use Intel oneMKL if its CMake package
+   configuration ``MKLConfig.cmake`` is found. oneMKL provides it since
+   version 2021.3. This enables ``MKL_SPARSE`` for covariance estimation, and
+   Ceres then also uses oneMKL for BLAS and LAPACK. If oneMKL is not found,
+   set ``MKL_DIR`` to the directory containing ``MKLConfig.cmake`` or add the
+   oneMKL installation prefix to ``CMAKE_PREFIX_PATH``.
+
+   ``MKL_INTERFACE_FULL`` selects the integer interface. If it is not set,
+   oneMKL chooses its own default, which is ILP64 in oneMKL 2026.0. Set
+   ``MKL_INTERFACE_FULL=intel_lp64`` to keep using a SuiteSparse installation
+   built for LP64. Otherwise, Ceres disables SuiteSparse, which also changes
+   the default sparse linear algebra library.
+
 #. ``WITH_SANITIZERS [Default: empty]``: A semicolon-separated list of
    sanitizers to enable, such as ``address`` or ``thread``.
 
@@ -744,6 +776,9 @@ This means you can use the standard ``CMake`` facilities to customize
 where these dependencies are found, such as ``CMAKE_PREFIX_PATH``,
 the ``<DEPENDENCY_NAME>_DIR`` variables, or since ``CMake`` 3.12 the
 ``<DEPENDENCY_NAME>_ROOT`` variables.
+
+A Ceres package built with oneMKL finds oneMKL again for downstream projects
+using the integer interface Ceres was built with.
 
 Other dependencies are found using
 ``Find<DEPENDENCY_NAME>.cmake`` scripts which are either included in
@@ -869,6 +904,8 @@ built with.
 The Ceres components which can be specified are:
 
 #. ``LAPACK``: Ceres built with direct LAPACK support.
+
+#. ``MKL``: Ceres built with oneMKL.
 
 #. ``SuiteSparse``: Ceres built with SuiteSparse support.
 

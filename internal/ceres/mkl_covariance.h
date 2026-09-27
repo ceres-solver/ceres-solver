@@ -26,75 +26,46 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: sameeragarwal@google.com (Sameer Agarwal)
+// Author: sergiu.deitsch@gmail.com (Sergiu Deitsch)
 
-#include "ceres/solver_utils.h"
+#ifndef CERES_INTERNAL_MKL_COVARIANCE_H_
+#define CERES_INTERNAL_MKL_COVARIANCE_H_
 
-#include "Eigen/Core"
 #include "ceres/internal/config.h"
+
+#ifndef CERES_NO_MKL
+
+#include <string>
+
+#include "ceres/covariance.h"
+#include "ceres/crs_matrix.h"
 #include "ceres/internal/export.h"
-#include "ceres/version.h"
-#ifndef CERES_NO_CUDA
-#include "cuda_runtime.h"
-#ifndef CERES_NO_CUDSS
-#include "cudss.h"
-#endif  // CERES_NO_CUDSS
-#endif  // CERES_NO_CUDA
 
 namespace ceres::internal {
 
-constexpr char kVersion[] =
-    // clang-format off
-  CERES_VERSION_STRING "-eigen-("
-  CERES_SEMVER_VERSION(EIGEN_WORLD_VERSION,
-                       EIGEN_MAJOR_VERSION,
-                       EIGEN_MINOR_VERSION) ")"
+class CompressedRowSparseMatrix;
+class ContextImpl;
 
-#ifdef CERES_NO_LAPACK
-  "-no_lapack"
-#else
-  "-lapack"
-#endif
-
-#ifndef CERES_NO_MKL
-  "-mkl-(" CERES_MKL_VERSION ")"
-#endif
-
-#ifndef CERES_NO_SUITESPARSE
-  "-suitesparse-(" CERES_SUITESPARSE_VERSION ")"
-#endif
-
-#if !defined(CERES_NO_EIGEN_METIS) || !defined(CERES_NO_CHOLMOD_PARTITION)
-  "-metis-(" CERES_METIS_VERSION ")"
-#endif
-
-#ifndef CERES_NO_ACCELERATE_SPARSE
-  "-acceleratesparse"
-#endif
-
-#ifdef CERES_USE_EIGEN_SPARSE
-  "-eigensparse"
-#endif
-
-#ifdef CERES_RESTRUCT_SCHUR_SPECIALIZATIONS
-  "-no_schur_specializations"
-#endif
-
-#ifdef CERES_NO_CUSTOM_BLAS
-  "-no_custom_blas"
-#endif
-
-#ifndef CERES_NO_CUDA
-  "-cuda-(" CERES_TO_STRING(CUDART_VERSION) ")"
-#ifndef CERES_NO_CUDSS
-  "-cudss-(" CERES_SEMVER_VERSION(CUDSS_VERSION_MAJOR,
-                                  CUDSS_VERSION_MINOR,
-                                  CUDSS_VERSION_PATCH) ")"
-#endif // CERES_NO_CUDSS
-#endif
-  ;
-// clang-format on
-
-std::string VersionString() { return kVersion; }
+// Computes the entries of covariance that its sparsity pattern selects from
+// [J'J]^-1 using oneMKL Sparse QR.
+//
+// oneMKL Sparse QR exposes neither R nor transposed solves, so the result is
+// accumulated as J+ (J+)' from one least squares solve per Jacobian row. The
+// solutions are gathered in blocks so the accumulation can be spread over
+// threads. Rank deficiency is reported through the return value because the
+// backend offers no rank query of its own.
+//
+// This declaration deliberately mentions no MKL type so that callers do not
+// have to include the oneMKL headers.
+CERES_NO_EXPORT bool ComputeCovarianceUsingMklSparseQR(
+    const CRSMatrix& jacobian,
+    const Covariance::Options& options,
+    ContextImpl* context,
+    CompressedRowSparseMatrix* covariance,
+    std::string* message);
 
 }  // namespace ceres::internal
+
+#endif  // CERES_NO_MKL
+
+#endif  // CERES_INTERNAL_MKL_COVARIANCE_H_

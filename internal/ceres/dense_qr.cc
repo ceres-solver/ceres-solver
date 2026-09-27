@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -35,6 +35,7 @@
 #include <string>
 
 #include "absl/log/log.h"
+#include "ceres/lapack_int.h"
 
 #ifndef CERES_NO_CUDA
 #include "ceres/context_impl.h"
@@ -68,8 +69,10 @@
 //
 // info = 0, successful exit.
 // info < 0, if info = -i, then the i^th argument had illegal value.
-extern "C" void dgeqrf_(const int* m, const int* n, double* a, const int* lda,
-                        double* tau, double* work, const int* lwork, int* info);
+extern "C" void dgeqrf_(const CeresLapackInt* m, const CeresLapackInt* n,
+                        double* a, const CeresLapackInt* lda, double* tau,
+                        double* work, const CeresLapackInt* lwork,
+                        CeresLapackInt* info) noexcept;
 
 // Apply Q or Q' to b.
 //
@@ -86,10 +89,13 @@ extern "C" void dgeqrf_(const int* m, const int* n, double* a, const int* lda,
 //
 // info = 0, successful exit.
 // info < 0, if info = -i, then the i^th argument had illegal value.
-extern "C" void dormqr_(const char* side, const char* trans, const int* m,
-                        const int* n ,const int* k, double* a, const int* lda,
-                        double* tau, double* b, const int* ldb, double* work,
-                        const int* lwork, int* info);
+extern "C" void dormqr_(const char* side, const char* trans,
+                        const CeresLapackInt* m, const CeresLapackInt* n,
+                        const CeresLapackInt* k, const double* a,
+                        const CeresLapackInt* lda, const double* tau,
+                        double* b, const CeresLapackInt* ldb, double* work,
+                        const CeresLapackInt* lwork,
+                        CeresLapackInt* info) noexcept;
 
 // Solve a triangular system of the form A * x = b
 //
@@ -105,8 +111,10 @@ extern "C" void dormqr_(const char* side, const char* trans, const int* m,
 //      = -i < 0 i^th argument is an illegal value.
 //      = i > 0, i^th diagonal element of A is zero.
 extern "C" void dtrtrs_(const char* uplo, const char* trans, const char* diag,
-                        const int* n, const int* nrhs, double* a, const int* lda,
-                        double* b, const int* ldb, int* info);
+                        const CeresLapackInt* n, const CeresLapackInt* nrhs,
+                        const double* a, const CeresLapackInt* lda, double* b,
+                        const CeresLapackInt* ldb,
+                        CeresLapackInt* info) noexcept;
 // clang-format on
 
 #endif
@@ -185,16 +193,18 @@ LinearSolverTerminationType LAPACKDenseQR::Factorize(int num_rows,
                                                      int num_cols,
                                                      double* lhs,
                                                      std::string* message) {
-  int lwork = -1;
+  const CeresLapackInt lapack_num_rows = num_rows;
+  const CeresLapackInt lapack_num_cols = num_cols;
+  CeresLapackInt lwork = -1;
   double work_size;
-  int info = 0;
+  CeresLapackInt info = 0;
 
   // Compute the size of the temporary workspace needed to compute the QR
   // factorization in the dgeqrf call below.
-  dgeqrf_(&num_rows,
-          &num_cols,
+  dgeqrf_(&lapack_num_rows,
+          &lapack_num_cols,
           lhs_,
-          &num_rows,
+          &lapack_num_rows,
           tau_.data(),
           &work_size,
           &lwork,
@@ -210,7 +220,7 @@ LinearSolverTerminationType LAPACKDenseQR::Factorize(int num_rows,
   num_rows_ = num_rows;
   num_cols_ = num_cols;
 
-  lwork = static_cast<int>(work_size);
+  lwork = static_cast<CeresLapackInt>(work_size);
 
   if (work_.size() < lwork) {
     work_.resize(lwork);
@@ -224,10 +234,10 @@ LinearSolverTerminationType LAPACKDenseQR::Factorize(int num_rows,
   }
 
   // Factorize the lhs_ using the workspace that we just constructed above.
-  dgeqrf_(&num_rows,
-          &num_cols,
+  dgeqrf_(&lapack_num_rows,
+          &lapack_num_cols,
           lhs_,
-          &num_rows,
+          &lapack_num_rows,
           tau_.data(),
           work_.data(),
           &lwork,
@@ -254,21 +264,23 @@ LinearSolverTerminationType LAPACKDenseQR::Solve(const double* rhs,
 
   std::copy_n(rhs, num_rows_, q_transpose_rhs_.data());
 
+  const CeresLapackInt lapack_num_rows = num_rows_;
+  const CeresLapackInt lapack_num_cols = num_cols_;
   const char side = 'L';
   char trans = 'T';
-  const int num_c_cols = 1;
-  const int lwork = work_.size();
-  int info = 0;
+  const CeresLapackInt num_c_cols = 1;
+  const CeresLapackInt lwork = work_.size();
+  CeresLapackInt info = 0;
   dormqr_(&side,
           &trans,
-          &num_rows_,
+          &lapack_num_rows,
           &num_c_cols,
-          &num_cols_,
+          &lapack_num_cols,
           lhs_,
-          &num_rows_,
+          &lapack_num_rows,
           tau_.data(),
           q_transpose_rhs_.data(),
-          &num_rows_,
+          &lapack_num_rows,
           work_.data(),
           &lwork,
           &info);
@@ -284,12 +296,12 @@ LinearSolverTerminationType LAPACKDenseQR::Solve(const double* rhs,
   dtrtrs_(&uplo,
           &trans,
           &diag,
-          &num_cols_,
+          &lapack_num_cols,
           &num_c_cols,
           lhs_,
-          &num_rows_,
+          &lapack_num_rows,
           q_transpose_rhs_.data(),
-          &num_rows_,
+          &lapack_num_rows,
           &info);
 
   if (info < 0) {

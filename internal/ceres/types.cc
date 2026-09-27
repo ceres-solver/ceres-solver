@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -104,6 +104,7 @@ const char* SparseLinearAlgebraLibraryTypeToString(
     SparseLinearAlgebraLibraryType type) {
   switch (type) {
     CASESTR(SUITE_SPARSE);
+    CASESTR(MKL_SPARSE);
     CASESTR(EIGEN_SPARSE);
     CASESTR(ACCELERATE_SPARSE);
     CASESTR(CUDA_SPARSE);
@@ -117,6 +118,7 @@ bool StringToSparseLinearAlgebraLibraryType(
     std::string value, SparseLinearAlgebraLibraryType* type) {
   UpperCase(&value);
   STRENUM(SUITE_SPARSE);
+  STRENUM(MKL_SPARSE);
   STRENUM(EIGEN_SPARSE);
   STRENUM(ACCELERATE_SPARSE);
   STRENUM(CUDA_SPARSE);
@@ -403,6 +405,11 @@ bool IsSparseLinearAlgebraLibraryTypeAvailable(
 #else
     return true;
 #endif
+  }
+
+  if (type == MKL_SPARSE) {
+    // oneMKL is only used for covariance estimation.
+    return false;
   }
 
   if (type == ACCELERATE_SPARSE) {

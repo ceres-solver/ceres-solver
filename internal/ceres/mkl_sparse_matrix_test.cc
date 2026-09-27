@@ -26,75 +26,47 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: sameeragarwal@google.com (Sameer Agarwal)
+// Author: sergiu.deitsch@gmail.com (Sergiu Deitsch)
 
-#include "ceres/solver_utils.h"
+#include "ceres/mkl_sparse_matrix.h"
 
-#include "Eigen/Core"
+#include <string>
+#include <vector>
+
+#include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/internal/config.h"
-#include "ceres/internal/export.h"
-#include "ceres/version.h"
-#ifndef CERES_NO_CUDA
-#include "cuda_runtime.h"
-#ifndef CERES_NO_CUDSS
-#include "cudss.h"
-#endif  // CERES_NO_CUDSS
-#endif  // CERES_NO_CUDA
+#include "gmock/gmock.h"
+#include "gtest/gtest.h"
 
 namespace ceres::internal {
 
-constexpr char kVersion[] =
-    // clang-format off
-  CERES_VERSION_STRING "-eigen-("
-  CERES_SEMVER_VERSION(EIGEN_WORLD_VERSION,
-                       EIGEN_MAJOR_VERSION,
-                       EIGEN_MINOR_VERSION) ")"
-
-#ifdef CERES_NO_LAPACK
-  "-no_lapack"
-#else
-  "-lapack"
-#endif
-
 #ifndef CERES_NO_MKL
-  "-mkl-(" CERES_MKL_VERSION ")"
-#endif
+// mkl_sparse_order sorts the arrays a handle refers to in place, which must not
+// change the matrix of the caller.
+TEST(MklCsrMatrix, CreateLeavesUnsortedInputUntouched) {
+  constexpr int kNumRows = 1;
+  constexpr int kNumCols = 3;
+  constexpr int kNumNonzeros = 2;
+  constexpr int kFirstColumn = 2;
+  constexpr int kSecondColumn = 0;
+  CompressedRowSparseMatrix input(kNumRows, kNumCols, kNumNonzeros);
+  input.mutable_rows()[0] = 0;
+  input.mutable_rows()[1] = kNumNonzeros;
+  input.mutable_cols()[0] = kFirstColumn;
+  input.mutable_cols()[1] = kSecondColumn;
+  input.mutable_values()[0] = 1.0;
+  input.mutable_values()[1] = 2.0;
 
-#ifndef CERES_NO_SUITESPARSE
-  "-suitesparse-(" CERES_SUITESPARSE_VERSION ")"
-#endif
+  MklCsrMatrix matrix;
+  std::string message;
+  ASSERT_TRUE(matrix.Create(input, &message)) << message;
+  EXPECT_THAT(std::vector<int>(input.cols(), input.cols() + kNumNonzeros),
+              ::testing::ElementsAre(kFirstColumn, kSecondColumn));
+  EXPECT_THAT(
+      std::vector<double>(input.values(), input.values() + kNumNonzeros),
+      ::testing::ElementsAre(1.0, 2.0));
+}
 
-#if !defined(CERES_NO_EIGEN_METIS) || !defined(CERES_NO_CHOLMOD_PARTITION)
-  "-metis-(" CERES_METIS_VERSION ")"
-#endif
-
-#ifndef CERES_NO_ACCELERATE_SPARSE
-  "-acceleratesparse"
-#endif
-
-#ifdef CERES_USE_EIGEN_SPARSE
-  "-eigensparse"
-#endif
-
-#ifdef CERES_RESTRUCT_SCHUR_SPECIALIZATIONS
-  "-no_schur_specializations"
-#endif
-
-#ifdef CERES_NO_CUSTOM_BLAS
-  "-no_custom_blas"
-#endif
-
-#ifndef CERES_NO_CUDA
-  "-cuda-(" CERES_TO_STRING(CUDART_VERSION) ")"
-#ifndef CERES_NO_CUDSS
-  "-cudss-(" CERES_SEMVER_VERSION(CUDSS_VERSION_MAJOR,
-                                  CUDSS_VERSION_MINOR,
-                                  CUDSS_VERSION_PATCH) ")"
-#endif // CERES_NO_CUDSS
-#endif
-  ;
-// clang-format on
-
-std::string VersionString() { return kVersion; }
+#endif  // CERES_NO_MKL
 
 }  // namespace ceres::internal

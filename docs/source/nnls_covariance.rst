@@ -139,12 +139,18 @@ cases.
    Number of threads to be used for evaluating the Jacobian and
    estimation of covariance.
 
+   With ``MKL_SPARSE``, oneMKL uses at most as many threads as its own
+   configuration allows. By default, oneMKL chooses this limit based on the
+   processor, and the ``MKL_NUM_THREADS``, ``OMP_NUM_THREADS`` and
+   ``MKL_DYNAMIC`` environment variables override it.
+
 .. member:: SparseLinearAlgebraLibraryType Covariance::Options::sparse_linear_algebra_library_type
 
    Default: ``SUITE_SPARSE`` Ceres Solver is built with support for
    `SuiteSparse <http://faculty.cse.tamu.edu/davis/suitesparse.html>`_
    and ``EIGEN_SPARSE`` otherwise. Note that ``EIGEN_SPARSE`` is
-   always available.
+   always available. ``MKL_SPARSE`` selects Intel oneMKL Sparse QR and
+   requires Ceres to be built with oneMKL.
 
 .. member:: CovarianceAlgorithmType Covariance::Options::algorithm_type
 
@@ -169,6 +175,10 @@ cases.
       ``SuiteSparseQR`` which is enabled by setting
       :member:`Covariance::Options::sparse_linear_algebra_library_type`
       to ``SUITE_SPARSE``.
+
+      Intel oneMKL Sparse QR, which ``MKL_SPARSE`` selects, requires at
+      least as many rows as columns and performs one sparse solve per row
+      of the Jacobian.
 
       ``SPARSE_QR`` cannot compute the covariance if the
       Jacobian is rank deficient.
@@ -203,6 +213,12 @@ cases.
     This is an advanced option meant for users who know enough about
     their Jacobian matrices that they can determine a value better
     than the default.
+
+    oneMKL Sparse QR does not expose a pivot threshold. With
+    ``MKL_SPARSE``, :func:`Covariance::Compute` returns ``false`` for
+    positive values. Like ``EIGEN_SPARSE``, ``MKL_SPARSE`` uses the
+    default value for a threshold of zero, whereas ``SUITE_SPARSE`` uses
+    zero as is.
 
 
 .. member:: int Covariance::Options::min_reciprocal_condition_number
@@ -250,6 +266,12 @@ cases.
        of :math:`J` returned by the sparse QR factorization
        algorithm. It is a fairly reliable indication of rank
        deficiency.
+
+       oneMKL does not report the rank of its factorization. With
+       ``MKL_SPARSE``, :math:`J` is instead considered rank deficient if a
+       row of its pseudo-inverse :math:`J^+` has a norm that is not less than
+       :math:`1/\tau`, where :math:`\tau = 20(m+n)\epsilon\max_j\|J e_j\|`
+       is the default column pivot threshold.
 
 .. member:: int Covariance::Options::null_space_rank
 
