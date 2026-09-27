@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -31,18 +31,23 @@
 #include "ceres/reorder_program.h"
 
 #include <algorithm>
+#include <functional>
+#include <limits>
 #include <map>
 #include <memory>
 #include <numeric>
 #include <set>
 #include <string>
 #include <unordered_map>
+#include <utility>
 #include <vector>
 
 #include "Eigen/SparseCore"
 #include "absl/strings/str_format.h"
 #include "ceres/internal/config.h"
 #include "ceres/internal/export.h"
+#include "ceres/mkl_ordering.h"
+#include "ceres/mkl_sparse_matrix.h"
 #include "ceres/ordered_groups.h"
 #include "ceres/parameter_block.h"
 #include "ceres/parameter_block_ordering.h"
@@ -210,6 +215,121 @@ void OrderingForSparseNormalCholeskyUsingEigenSparse(
     ordering[i] = perm.indices()[i];
   }
 #endif  // CERES_USE_EIGEN_SPARSE
+}
+
+#ifndef CERES_NO_MKL
+// Creates the block sparsity structure of the Jacobian rows from
+// start_row_block on, restricted to the parameter blocks with indices in
+// [column_begin, column_end), directly in the representation of oneMKL.
+// Columns are relative to column_begin. Like
+// Program::CreateJacobianBlockSparsityTranspose, constant parameter blocks are
+// skipped, and every structural entry has the value one.
+bool CreateMklBlockJacobian(const Program& program,
+                            const int start_row_block,
+                            const int column_begin,
+                            const int column_end,
+                            MklCsrMatrix* matrix,
+                            std::string* error) {
+  const std::vector<ResidualBlock*>& residual_blocks =
+      program.residual_blocks();
+  const int num_rows =
+      static_cast<int>(residual_blocks.size()) - start_row_block;
+  auto in_range = [column_begin,
+                   column_end](const ParameterBlock* parameter_block) {
+    return !parameter_block->IsConstant() &&
+           parameter_block->index() >= column_begin &&
+           parameter_block->index() < column_end;
+  };
+
+  std::vector<MKL_INT> rows(num_rows + 1);
+  rows[0] = 0;
+  const auto row_blocks_begin = residual_blocks.begin() + start_row_block;
+  std::transform_inclusive_scan(
+      row_blocks_begin,
+      row_blocks_begin + num_rows,
+      rows.begin() + 1,
+      std::plus{},
+      [&in_range](const ResidualBlock* residual_block) -> MKL_INT {
+        ParameterBlock* const* parameter_blocks =
+            residual_block->parameter_blocks();
+        return std::count_if(
+            parameter_blocks,
+            parameter_blocks + residual_block->NumParameterBlocks(),
+            in_range);
+      });
+
+  std::vector<MKL_INT> columns;
+  columns.reserve(rows.back());
+  for (int row = 0; row < num_rows; ++row) {
+    const ResidualBlock* residual_block =
+        residual_blocks[start_row_block + row];
+    for (int index = 0; index < residual_block->NumParameterBlocks(); ++index) {
+      const ParameterBlock* parameter_block =
+          residual_block->parameter_blocks()[index];
+      if (in_range(parameter_block)) {
+        columns.push_back(parameter_block->index() - column_begin);
+      }
+    }
+  }
+
+  constexpr double kStructureValue = 1.0;
+  std::vector<double> values(columns.size(), kStructureValue);
+  return matrix->Create(num_rows,
+                        column_end - column_begin,
+                        std::move(rows),
+                        std::move(columns),
+                        std::move(values),
+                        error);
+}
+#endif  // CERES_NO_MKL
+
+// Stably sorts the entries of ordering, which index parameter_blocks, by the
+// group of their parameter block. PARDISO offers no constrained ordering, so
+// this honors the groups while keeping the relative order of its fill reducing
+// ordering within each group. Blocks missing from parameter_block_ordering
+// come first, as with CAMD.
+void StablySortOrderingByGroup(
+    const std::vector<ParameterBlock*>& parameter_blocks,
+    const ParameterBlockOrdering& parameter_block_ordering,
+    std::vector<int>::iterator ordering_begin,
+    std::vector<int>::iterator ordering_end) {
+  if (parameter_block_ordering.NumGroups() <= 1) {
+    return;
+  }
+  std::vector<int> groups(parameter_blocks.size());
+  for (auto ordering = ordering_begin; ordering != ordering_end; ++ordering) {
+    groups[*ordering] = parameter_block_ordering.GroupId(
+        parameter_blocks[*ordering]->mutable_user_state());
+  }
+  std::stable_sort(
+      ordering_begin, ordering_end, [&groups](const int lhs, const int rhs) {
+        return groups[lhs] < groups[rhs];
+      });
+}
+
+bool OrderingForSparseNormalCholeskyUsingMkl(
+    [[maybe_unused]] const LinearSolverOrderingType ordering_type,
+    [[maybe_unused]] const Program& program,
+    [[maybe_unused]] const int start_row_block,
+    [[maybe_unused]] const int max_num_threads,
+    [[maybe_unused]] int* ordering,
+    std::string* error) {
+#ifdef CERES_NO_MKL
+  *error = "Ceres was compiled without MKL support.";
+  return false;
+#else
+  MklCsrMatrix block_jacobian;
+  if (!CreateMklBlockJacobian(program,
+                              start_row_block,
+                              0,
+                              program.NumParameterBlocks(),
+                              &block_jacobian,
+                              error)) {
+    return false;
+  }
+  return MklComputeOrdering(
+      block_jacobian, ordering_type, max_num_threads, ordering, error);
+#endif
 }
 
 }  // namespace
@@ -465,11 +585,112 @@ static void ReorderSchurComplementColumnsUsingEigen(
 #endif
 }
 
+static bool ReorderSchurComplementColumnsUsingMkl(
+    [[maybe_unused]] const LinearSolverOrderingType ordering_type,
+    [[maybe_unused]] const ParameterBlockOrdering& parameter_block_ordering,
+    [[maybe_unused]] const int size_of_first_elimination_group,
+    [[maybe_unused]] const int max_num_threads,
+    [[maybe_unused]] Program* program,
+    std::string* error) {
+#ifdef CERES_NO_MKL
+  *error = "Ceres was compiled without MKL support.";
+  return false;
+#else
+  // There is nothing to order when every parameter block is eliminated.
+  // oneMKL also rejects the resulting matrix without columns.
+  if (size_of_first_elimination_group == program->NumParameterBlocks()) {
+    return true;
+  }
+
+  const int num_f_blocks =
+      program->NumParameterBlocks() - size_of_first_elimination_group;
+  MklCsrMatrix e_matrix;
+  MklCsrMatrix f_matrix;
+  if (!CreateMklBlockJacobian(
+          *program, 0, 0, size_of_first_elimination_group, &e_matrix, error) ||
+      !CreateMklBlockJacobian(*program,
+                              0,
+                              size_of_first_elimination_group,
+                              program->NumParameterBlocks(),
+                              &f_matrix,
+                              error)) {
+    return false;
+  }
+  std::vector<int> schur_ordering(num_f_blocks);
+  if (!MklComputeSchurOrdering(e_matrix,
+                               f_matrix,
+                               ordering_type,
+                               max_num_threads,
+                               schur_ordering.data(),
+                               error)) {
+    return false;
+  }
+
+  const std::vector<ParameterBlock*>& parameter_blocks =
+      program->parameter_blocks();
+  std::vector<int> f_ordering(num_f_blocks);
+  for (int index = 0; index < num_f_blocks; ++index) {
+    f_ordering[index] = size_of_first_elimination_group + schur_ordering[index];
+  }
+  StablySortOrderingByGroup(parameter_blocks,
+                            parameter_block_ordering,
+                            f_ordering.begin(),
+                            f_ordering.end());
+
+  // Eliminate the e_blocks in the order of the first f_block they share a
+  // residual block with. In bundle adjustment, points observed by the same
+  // cameras are then eliminated consecutively, which made the Schur
+  // elimination considerably faster than the original order of the points on
+  // large problems. The constrained ordering of SuiteSparse also reorders the
+  // e_blocks.
+  std::vector<int> f_positions(num_f_blocks);
+  for (int position = 0; position < num_f_blocks; ++position) {
+    f_positions[f_ordering[position] - size_of_first_elimination_group] =
+        position;
+  }
+  std::vector<int> first_f_positions(size_of_first_elimination_group,
+                                     std::numeric_limits<int>::max());
+  for (int row = 0; row < e_matrix.num_rows(); ++row) {
+    int first_f_position = std::numeric_limits<int>::max();
+    for (MKL_INT index = f_matrix.rows()[row]; index < f_matrix.rows()[row + 1];
+         ++index) {
+      first_f_position =
+          std::min(first_f_position, f_positions[f_matrix.columns()[index]]);
+    }
+    for (MKL_INT index = e_matrix.rows()[row]; index < e_matrix.rows()[row + 1];
+         ++index) {
+      int& e_position = first_f_positions[e_matrix.columns()[index]];
+      e_position = std::min(e_position, first_f_position);
+    }
+  }
+  std::vector<int> e_ordering(size_of_first_elimination_group);
+  std::iota(e_ordering.begin(), e_ordering.end(), 0);
+  std::stable_sort(e_ordering.begin(),
+                   e_ordering.end(),
+                   [&first_f_positions](const int lhs, const int rhs) {
+                     return first_f_positions[lhs] < first_f_positions[rhs];
+                   });
+
+  std::vector<ParameterBlock*> ordering(parameter_blocks.size());
+  for (int index = 0; index < size_of_first_elimination_group; ++index) {
+    ordering[index] = parameter_blocks[e_ordering[index]];
+  }
+  for (int index = 0; index < num_f_blocks; ++index) {
+    ordering[size_of_first_elimination_group + index] =
+        parameter_blocks[f_ordering[index]];
+  }
+  swap(*program->mutable_parameter_blocks(), ordering);
+  program->SetParameterOffsetsAndIndex();
+  return true;
+#endif
+}
+
 bool ReorderProgramForSchurTypeLinearSolver(
     const LinearSolverType linear_solver_type,
     const SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
     const LinearSolverOrderingType linear_solver_ordering_type,
     const ProblemImpl::ParameterMap& parameter_map,
+    const int max_num_threads,
     ParameterBlockOrdering* parameter_block_ordering,
     Program* program,
     std::string* error) {
@@ -552,6 +773,16 @@ bool ReorderProgramForSchurTypeLinearSolver(
                                               size_of_first_elimination_group,
                                               parameter_map,
                                               program);
+    } else if (sparse_linear_algebra_library_type == MKL_SPARSE) {
+      if (!ReorderSchurComplementColumnsUsingMkl(
+              linear_solver_ordering_type,
+              *parameter_block_ordering,
+              size_of_first_elimination_group,
+              max_num_threads,
+              program,
+              error)) {
+        return false;
+      }
     }
   }
 
@@ -565,7 +796,8 @@ bool ReorderProgramForSparseCholesky(
     const SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
     const LinearSolverOrderingType linear_solver_ordering_type,
     const ParameterBlockOrdering& parameter_block_ordering,
-    int start_row_block,
+    const int start_row_block,
+    const int max_num_threads,
     Program* program,
     std::string* error) {
   if (parameter_block_ordering.NumElements() != program->NumParameterBlocks()) {
@@ -577,9 +809,14 @@ bool ReorderProgramForSparseCholesky(
     return false;
   }
 
-  // Compute a block sparse presentation of J'.
-  std::unique_ptr<TripletSparseMatrix> tsm_block_jacobian_transpose(
-      program->CreateJacobianBlockSparsityTranspose(start_row_block));
+  // Compute a block sparse presentation of J' for the libraries that order
+  // it.
+  std::unique_ptr<TripletSparseMatrix> tsm_block_jacobian_transpose;
+  if (sparse_linear_algebra_library_type == SUITE_SPARSE ||
+      sparse_linear_algebra_library_type == EIGEN_SPARSE) {
+    tsm_block_jacobian_transpose =
+        program->CreateJacobianBlockSparsityTranspose(start_row_block);
+  }
 
   std::vector<int> ordering(program->NumParameterBlocks(), 0);
   std::vector<ParameterBlock*>& parameter_blocks =
@@ -608,6 +845,19 @@ bool ReorderProgramForSparseCholesky(
         linear_solver_ordering_type,
         *tsm_block_jacobian_transpose,
         ordering.data());
+  } else if (sparse_linear_algebra_library_type == MKL_SPARSE) {
+    if (!OrderingForSparseNormalCholeskyUsingMkl(linear_solver_ordering_type,
+                                                 *program,
+                                                 start_row_block,
+                                                 max_num_threads,
+                                                 ordering.data(),
+                                                 error)) {
+      return false;
+    }
+    StablySortOrderingByGroup(parameter_blocks,
+                              parameter_block_ordering,
+                              ordering.begin(),
+                              ordering.end());
   }
 
   // Apply ordering.
@@ -649,7 +899,11 @@ bool AreJacobianColumnsOrdered(
     return false;
   }
 
-  if (sparse_linear_algebra_library_type == ceres::EIGEN_SPARSE) {
+  // Eigen ignores the ordering groups beyond the elimination group. The MKL
+  // backend honors them by stably sorting the fill reducing ordering of
+  // PARDISO by group. Both always preorder the columns.
+  if (sparse_linear_algebra_library_type == ceres::EIGEN_SPARSE ||
+      sparse_linear_algebra_library_type == ceres::MKL_SPARSE) {
     if (linear_solver_type == SPARSE_NORMAL_CHOLESKY ||
         linear_solver_type == SPARSE_SCHUR ||
         (linear_solver_type == CGNR && preconditioner_type == SUBSET)) {

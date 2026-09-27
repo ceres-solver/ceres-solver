@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -57,6 +57,7 @@
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
+#include "ceres/reorder_program.h"
 #include "ceres/schur_templates.h"
 #include "ceres/solver_utils.h"
 #include "ceres/suitesparse.h"
@@ -113,7 +114,7 @@ bool CommonOptionsAreValid(const Solver::Options& options, std::string* error) {
 bool IsNestedDissectionAvailable(SparseLinearAlgebraLibraryType type) {
   return (((type == SUITE_SPARSE) &&
            internal::SuiteSparse::IsNestedDissectionAvailable()) ||
-          (type == ACCELERATE_SPARSE) ||
+          (type == ACCELERATE_SPARSE) || (type == MKL_SPARSE) ||
           ((type == EIGEN_SPARSE) &&
            internal::EigenSparse::IsNestedDissectionAvailable())
 #ifndef CERES_NO_CUDSS
@@ -202,6 +203,12 @@ bool OptionsAreValidForSparseCholeskyBasedSolver(const Solver::Options& options,
     return false;
   }
 #endif
+
+  if (options.use_mixed_precision_solves &&
+      options.sparse_linear_algebra_library_type == MKL_SPARSE) {
+    *error = "Mixed-precision solves are not implemented for MKL.";
+    return false;
+  }
 
   if (options.dynamic_sparsity &&
       options.sparse_linear_algebra_library_type == ACCELERATE_SPARSE) {
@@ -376,8 +383,74 @@ bool OptionsAreValidForCgnr(const Solver::Options& options,
   return true;
 }
 
+bool UsesSparseCholeskyFactorization(const Solver::Options& options) {
+  switch (options.linear_solver_type) {
+    case SPARSE_NORMAL_CHOLESKY:
+    case SPARSE_SCHUR:
+      return true;
+    case ITERATIVE_SCHUR:
+      return options.preconditioner_type == CLUSTER_JACOBI ||
+             options.preconditioner_type == CLUSTER_TRIDIAGONAL;
+    case CGNR:
+      return options.preconditioner_type == SUBSET;
+    case DENSE_NORMAL_CHOLESKY:
+    case DENSE_QR:
+    case DENSE_SCHUR:
+      return false;
+  }
+  return false;
+}
+
+bool TwoLevelFactorizationOptionsAreValid(const Solver::Options& options,
+                                          std::string* error) {
+  if (!options.use_two_level_factorization) {
+    return true;
+  }
+  if (!UsesSparseCholeskyFactorization(options)) {
+    *error = absl::StrFormat(
+        "use_two_level_factorization requires a sparse Cholesky "
+        "factorization, which linear_solver_type = %s with "
+        "preconditioner_type = %s does not use.",
+        LinearSolverTypeToString(options.linear_solver_type),
+        PreconditionerTypeToString(options.preconditioner_type));
+    return false;
+  }
+  if (options.sparse_linear_algebra_library_type != MKL_SPARSE) {
+    *error = absl::StrFormat(
+        "use_two_level_factorization requires "
+        "sparse_linear_algebra_library_type = MKL_SPARSE, got %s.",
+        SparseLinearAlgebraLibraryTypeToString(
+            options.sparse_linear_algebra_library_type));
+    return false;
+  }
+  // The two-level factorization of PARDISO supports only nested dissection
+  // and silently replaces the minimum degree ordering. This matters only if
+  // PARDISO orders the columns itself, i.e., if Ceres does not preorder them.
+  const bool columns_ordered = !options.dynamic_sparsity &&
+                               internal::AreJacobianColumnsOrdered(
+                                   options.linear_solver_type,
+                                   options.preconditioner_type,
+                                   options.sparse_linear_algebra_library_type,
+                                   options.linear_solver_ordering_type);
+  if (!columns_ordered && options.linear_solver_ordering_type == AMD) {
+    *error = absl::StrFormat(
+        "use_two_level_factorization with linear_solver_type = %s, "
+        "preconditioner_type = %s and dynamic_sparsity = %s requires "
+        "linear_solver_ordering_type = NESDIS, got %s.",
+        LinearSolverTypeToString(options.linear_solver_type),
+        PreconditionerTypeToString(options.preconditioner_type),
+        options.dynamic_sparsity ? "true" : "false",
+        LinearSolverOrderingTypeToString(options.linear_solver_ordering_type));
+    return false;
+  }
+  return true;
+}
+
 bool OptionsAreValidForLinearSolver(const Solver::Options& options,
                                     std::string* error) {
+  if (!TwoLevelFactorizationOptionsAreValid(options, error)) {
+    return false;
+  }
   switch (options.linear_solver_type) {
     case DENSE_NORMAL_CHOLESKY:
       return OptionsAreValidForDenseNormalCholesky(options, error);

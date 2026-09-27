@@ -1,5 +1,5 @@
 # Ceres Solver - A fast non-linear least squares minimizer
-# Copyright 2023 Google Inc. All rights reserved.
+# Copyright 2026 Google Inc. All rights reserved.
 # http://ceres-solver.org/
 #
 # Redistribution and use in source and binary forms, with or without
@@ -54,10 +54,12 @@ SPARSE_SOLVER_CONFIGS = [
     ('SPARSE_NORMAL_CHOLESKY', 'EIGEN_SPARSE'),
     ('SPARSE_NORMAL_CHOLESKY', 'ACCELERATE_SPARSE'),
     ('SPARSE_NORMAL_CHOLESKY', 'CUDA_SPARSE'),
+    ('SPARSE_NORMAL_CHOLESKY', 'MKL_SPARSE'),
     ('SPARSE_SCHUR',           'SUITE_SPARSE'),
     ('SPARSE_SCHUR',           'EIGEN_SPARSE'),
     ('SPARSE_SCHUR',           'ACCELERATE_SPARSE'),
-    ('SPARSE_SCHUR',           'CUDA_SPARSE')
+    ('SPARSE_SCHUR',           'CUDA_SPARSE'),
+    ('SPARSE_SCHUR',           'MKL_SPARSE')
 ]
 
 ITERATIVE_SOLVER_CONFIGS = [
@@ -69,10 +71,12 @@ ITERATIVE_SOLVER_CONFIGS = [
     ('ITERATIVE_SCHUR',        'EIGEN_SPARSE',     'CLUSTER_JACOBI'),
     ('ITERATIVE_SCHUR',        'ACCELERATE_SPARSE','CLUSTER_JACOBI'),
     ('ITERATIVE_SCHUR',        'CUDA_SPARSE',      'CLUSTER_JACOBI'),
+    ('ITERATIVE_SCHUR',        'MKL_SPARSE',       'CLUSTER_JACOBI'),
     ('ITERATIVE_SCHUR',        'SUITE_SPARSE',     'CLUSTER_TRIDIAGONAL'),
     ('ITERATIVE_SCHUR',        'EIGEN_SPARSE',     'CLUSTER_TRIDIAGONAL'),
     ('ITERATIVE_SCHUR',        'ACCELERATE_SPARSE','CLUSTER_TRIDIAGONAL'),
     ('ITERATIVE_SCHUR',        'CUDA_SPARSE',      'CLUSTER_TRIDIAGONAL'),
+    ('ITERATIVE_SCHUR',        'MKL_SPARSE',       'CLUSTER_TRIDIAGONAL'),
 ]
 
 FILENAME_SHORTENING_MAP = dict(
@@ -85,6 +89,7 @@ FILENAME_SHORTENING_MAP = dict(
   CUDA='cuda',
   NO_SPARSE='',  # Omit sparse reference entirely for dense tests.
   SUITE_SPARSE='suitesparse',
+  MKL_SPARSE='mklsparse',
   EIGEN_SPARSE='eigensparse',
   ACCELERATE_SPARSE='acceleratesparse',
   CUDA_SPARSE='cudasparse',
@@ -100,7 +105,7 @@ FILENAME_SHORTENING_MAP = dict(
 
 COPYRIGHT_HEADER = (
 """// Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -220,6 +225,9 @@ def generate_bundle_test(linear_solver,
   if sparse_backend == 'SUITE_SPARSE':
     preprocessor_conditions_begin.append('#ifndef CERES_NO_SUITESPARSE')
     preprocessor_conditions_end.insert(0, '#endif  // CERES_NO_SUITESPARSE')
+  elif sparse_backend == 'MKL_SPARSE':
+    preprocessor_conditions_begin.append('#ifndef CERES_NO_MKL')
+    preprocessor_conditions_end.insert(0, '#endif  // CERES_NO_MKL')
   elif sparse_backend == 'ACCELERATE_SPARSE':
     preprocessor_conditions_begin.append('#ifndef CERES_NO_ACCELERATE_SPARSE')
     preprocessor_conditions_end.insert(0, '#endif  // CERES_NO_ACCELERATE_SPARSE')

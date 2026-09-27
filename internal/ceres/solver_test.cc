@@ -43,6 +43,7 @@
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"
 #include "ceres/sized_cost_function.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
@@ -655,6 +656,101 @@ TEST(Solver, SparseNormalCholeskyOptionsSuiteSparse) {
   options.dynamic_sparsity = false;
   EXPECT_FALSE(options.IsValid(&message));
 #endif
+}
+
+TEST(Solver, DefaultsToMklSparseIfAvailable) {
+  if (!IsSparseLinearAlgebraLibraryTypeAvailable(MKL_SPARSE)) {
+    GTEST_SKIP() << "Ceres was built without oneMKL.";
+  }
+  EXPECT_EQ(Solver::Options().sparse_linear_algebra_library_type, MKL_SPARSE);
+}
+
+TEST(Solver, SparseNormalCholeskyOptionsMklSparse) {
+  std::string message;
+  Solver::Options options;
+  options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+  options.sparse_linear_algebra_library_type = MKL_SPARSE;
+  options.linear_solver_ordering_type = AMD;
+
+  if (!IsSparseLinearAlgebraLibraryTypeAvailable(
+          options.sparse_linear_algebra_library_type)) {
+    EXPECT_FALSE(options.IsValid(&message));
+    return;
+  }
+
+  EXPECT_TRUE(options.IsValid(&message)) << message;
+
+  options.dynamic_sparsity = true;
+  EXPECT_TRUE(options.IsValid(&message)) << message;
+
+  options.dynamic_sparsity = false;
+  options.use_mixed_precision_solves = true;
+  EXPECT_FALSE(options.IsValid(&message));
+
+  options.use_mixed_precision_solves = false;
+  options.linear_solver_ordering_type = NESDIS;
+  EXPECT_TRUE(options.IsValid(&message)) << message;
+}
+
+TEST(Solver, TwoLevelFactorizationOptions) {
+  std::string message;
+  Solver::Options options;
+  options.use_two_level_factorization = true;
+
+  // The option is rejected for other sparse linear algebra libraries and for
+  // linear solvers that do not factorize a sparse matrix using Cholesky.
+  options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+  options.sparse_linear_algebra_library_type = EIGEN_SPARSE;
+  EXPECT_FALSE(options.IsValid(&message));
+  EXPECT_THAT(message, ::testing::HasSubstr("use_two_level_factorization"));
+
+  options.sparse_linear_algebra_library_type = MKL_SPARSE;
+  options.linear_solver_type = DENSE_QR;
+  EXPECT_FALSE(options.IsValid(&message));
+  EXPECT_THAT(message, ::testing::HasSubstr("use_two_level_factorization"));
+
+  options.linear_solver_type = ITERATIVE_SCHUR;
+  options.preconditioner_type = SCHUR_JACOBI;
+  EXPECT_FALSE(options.IsValid(&message));
+  EXPECT_THAT(message, ::testing::HasSubstr("use_two_level_factorization"));
+
+  if (!IsSparseLinearAlgebraLibraryTypeAvailable(MKL_SPARSE)) {
+    return;
+  }
+
+  // PARDISO replaces the minimum degree ordering with nested dissection in the
+  // two-level factorization. AMD is therefore rejected wherever PARDISO
+  // computes the ordering itself.
+  options.preconditioner_type = CLUSTER_JACOBI;
+  options.linear_solver_ordering_type = AMD;
+  EXPECT_FALSE(options.IsValid(&message));
+  EXPECT_THAT(message, ::testing::HasSubstr("NESDIS"));
+
+  options.linear_solver_ordering_type = NESDIS;
+  EXPECT_TRUE(options.IsValid(&message)) << message;
+
+  options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+  options.dynamic_sparsity = true;
+  options.linear_solver_ordering_type = AMD;
+  EXPECT_FALSE(options.IsValid(&message));
+  EXPECT_THAT(message, ::testing::HasSubstr("NESDIS"));
+
+  options.linear_solver_ordering_type = NESDIS;
+  EXPECT_TRUE(options.IsValid(&message)) << message;
+
+  // Ceres orders the columns of these solvers before PARDISO factorizes them,
+  // so AMD remains available.
+  options.dynamic_sparsity = false;
+  options.linear_solver_ordering_type = AMD;
+  EXPECT_TRUE(options.IsValid(&message)) << message;
+
+  options.linear_solver_type = SPARSE_SCHUR;
+  EXPECT_TRUE(options.IsValid(&message)) << message;
+
+  options.linear_solver_type = CGNR;
+  options.preconditioner_type = SUBSET;
+  options.residual_blocks_for_subset_preconditioner.insert(nullptr);
+  EXPECT_TRUE(options.IsValid(&message)) << message;
 }
 
 TEST(Solver, SparseNormalCholeskyOptionsAccelerateSparse) {

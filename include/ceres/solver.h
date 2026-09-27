@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -378,7 +378,9 @@ class CERES_EXPORT Solver {
     // Ceres supports using multiple sparse linear algebra libraries for sparse
     // matrix ordering and factorizations.
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type =
-#if !defined(CERES_NO_SUITESPARSE)
+#if !defined(CERES_NO_MKL)
+        MKL_SPARSE;
+#elif !defined(CERES_NO_SUITESPARSE)
         SUITE_SPARSE;
 #elif !defined(CERES_NO_ACCELERATE_SPARSE)
         ACCELERATE_SPARSE;
@@ -514,6 +516,30 @@ class CERES_EXPORT Solver {
     // ONLY the lowest group is used to compute the Schur complement, and AMD
     // or NESDIS is used to compute a fill reducing ordering for the Schur
     // Complement (or its preconditioner).
+    //
+    // sparse_linear_algebra_library_type = MKL_SPARSE
+    // ===============================================
+    //
+    // AMD selects the minimum degree ordering of PARDISO and NESDIS its
+    // parallel nested dissection ordering. PARDISO offers no option to
+    // constrain these orderings to the groups, so Ceres sorts the fill reducing
+    // ordering stably by group. The parameter blocks in the lowest numbered
+    // group come first, then those in the next lowest numbered group and so on.
+    // Within each group, the parameter blocks keep the relative order PARDISO
+    // chose.
+    //
+    // a. linear_solver_type = SPARSE_NORMAL_CHOLESKY or
+    //    linear_solver_type = CGNR and preconditioner_type = SUBSET
+    //
+    // The fill reducing ordering is computed for all parameter blocks.
+    //
+    // b. linear_solver_type = SPARSE_SCHUR
+    //
+    // The lowest group is used to compute the Schur complement and the fill
+    // reducing ordering is computed for the Schur complement. The parameter
+    // blocks of the lowest group are eliminated sorted by the position of the
+    // earliest parameter block outside this group that they share a residual
+    // block with.
     std::shared_ptr<ParameterBlockOrdering> linear_solver_ordering;
 
     // Use an explicitly computed Schur complement matrix with
@@ -565,9 +591,29 @@ class CERES_EXPORT Solver {
     // If your problem does not have this property (or you do not know),
     // then it is probably best to keep this false, otherwise it will
     // likely lead to worse performance.
+    //
+    // The fill reducing ordering is then computed anew in every iteration.
+    // With MKL_SPARSE, the minimum degree ordering of PARDISO, which AMD
+    // selects, can dominate the solve time of large problems. Setting
+    // linear_solver_ordering_type to NESDIS selects the parallel nested
+    // dissection ordering of PARDISO, which can be much faster to compute.
 
     // This setting only affects the SPARSE_NORMAL_CHOLESKY solver.
     bool dynamic_sparsity = false;
+
+    // Use the two-level parallel factorization algorithm of oneMKL PARDISO
+    // instead of the classic one.
+    //
+    // This option requires sparse_linear_algebra_library_type = MKL_SPARSE and
+    // a linear solver or preconditioner that uses a sparse Cholesky
+    // factorization.
+    //
+    // The two-level factorization supports only the nested dissection
+    // orderings of PARDISO. If PARDISO orders the columns itself, which is the
+    // case with dynamic_sparsity and with the CLUSTER_JACOBI and
+    // CLUSTER_TRIDIAGONAL preconditioners, linear_solver_ordering_type must be
+    // NESDIS.
+    bool use_two_level_factorization = false;
 
     // If use_mixed_precision_solves is true, the Gauss-Newton matrix is
     // computed in double precision, but its factorization is computed in single

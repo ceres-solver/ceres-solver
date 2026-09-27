@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -158,6 +158,8 @@ LinearSolver::Summary CgnrSolver::SolveImpl(
         options_.sparse_linear_algebra_library_type;
     preconditioner_options.ordering_type = options_.ordering_type;
     preconditioner_options.num_threads = options_.num_threads;
+    preconditioner_options.use_two_level_factorization =
+        options_.use_two_level_factorization;
     preconditioner_options.context = options_.context;
 
     if (options_.preconditioner_type == JACOBI) {
@@ -329,6 +331,8 @@ void CudaCgnrSolver::CpuToGpuTransfer(const CompressedRowSparseMatrix& A,
         options_.sparse_linear_algebra_library_type;
     preconditioner_options.ordering_type = options_.ordering_type;
     preconditioner_options.num_threads = options_.num_threads;
+    preconditioner_options.use_two_level_factorization =
+        options_.use_two_level_factorization;
     preconditioner_options.context = options_.context;
 
     if (options_.preconditioner_type == JACOBI) {

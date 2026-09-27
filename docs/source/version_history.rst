@@ -54,6 +54,8 @@ New Features
 #. Added Intel oneMKL Sparse QR covariance estimation. If oneMKL is enabled,
    it also provides BLAS and LAPACK, and SuiteSparse is disabled if its BLAS
    integer interface does not match the one of oneMKL. (Sergiu Deitsch)
+#. Added Intel oneMKL PARDISO for sparse Cholesky factorizations. (Sergiu
+   Deitsch)
 
 
 Backward Incompatible API Changes
