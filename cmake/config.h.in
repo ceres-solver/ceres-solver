@@ -65,6 +65,7 @@
 #if defined(CERES_NO_SUITESPARSE) &&              \
     defined(CERES_NO_ACCELERATE_SPARSE) &&        \
     defined(CERES_NO_CUDSS) &&                    \
+    defined(CERES_NO_MKL) &&                      \
     !defined(CERES_USE_EIGEN_SPARSE)  // NOLINT
 // If defined Ceres was compiled without any sparse linear algebra support.
 #define CERES_NO_SPARSE
@@ -104,6 +105,9 @@
 #endif
 #if !defined(CERES_NO_CUDSS)
 #error CERES_NO_SPARSE required CERES_NO_CUDSS
+#endif
+#if !defined(CERES_NO_MKL)
+#error CERES_NO_SPARSE requires CERES_NO_MKL
 #endif
 #endif
 

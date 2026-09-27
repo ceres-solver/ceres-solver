@@ -814,8 +814,8 @@ add_feature_info("Accelerate sparse solvers" _Ceres_FEATURE_ACCELERATE
   "Sparse solvers from Apple's Accelerate framework")
 add_feature_info("Eigen sparse solvers" _Ceres_FEATURE_EIGEN_SPARSE
   "Sparse linear solvers using Eigen")
-add_feature_info("oneMKL" _Ceres_FEATURE_MKL
-  "Sparse QR covariance estimation, BLAS and LAPACK from Intel oneMKL")
+add_feature_info("oneMKL sparse solvers" _Ceres_FEATURE_MKL
+  "Sparse solvers, BLAS and LAPACK from Intel oneMKL")
 add_feature_info("Eigen METIS ordering" _Ceres_FEATURE_EIGEN_METIS
   "METIS ordering for Eigen sparse solvers")
 add_feature_info("CHOLMOD partitioning" _Ceres_FEATURE_CHOLMOD_PARTITION
@@ -917,7 +917,7 @@ set_package_properties(METIS PROPERTIES
 set_package_properties(MKL PROPERTIES
   DESCRIPTION "${CERES_MKL_DESCRIPTION}"
   URL "https://www.intel.com/content/www/us/en/developer/tools/oneapi/onemkl.html"
-  PURPOSE "Covariance estimation, BLAS and LAPACK")
+  PURPOSE "Sparse linear solvers, covariance estimation, BLAS and LAPACK")
 set_package_properties(Python PROPERTIES
   DESCRIPTION "${CERES_PYTHON_DESCRIPTION}"
   URL "https://www.python.org"

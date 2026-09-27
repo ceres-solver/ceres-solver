@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -45,6 +45,8 @@
 #include "ceres/internal/config.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
+#include "ceres/mkl_normal_matrix.h"
+#include "ceres/sparse_cholesky.h"
 #include "ceres/suitesparse.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
@@ -94,6 +96,9 @@ LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImpl(
     case CUDA_SPARSE:
       summary = SolveImplUsingCuda(A, x);
       break;
+    case MKL_SPARSE:
+      summary = SolveImplUsingMkl(A, x);
+      break;
     default:
       LOG(FATAL) << "Unsupported sparse linear algebra library for "
                  << "dynamic sparsity: "
@@ -106,6 +111,49 @@ LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImpl(
   }
 
   return summary;
+}
+
+LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImplUsingMkl(
+    [[maybe_unused]] CompressedRowSparseMatrix* A,
+    [[maybe_unused]] double* rhs_and_solution) {
+#ifdef CERES_NO_MKL
+  LinearSolver::Summary summary;
+  summary.num_iterations = 0;
+  summary.termination_type = LinearSolverTerminationType::FATAL_ERROR;
+  summary.message =
+      "SPARSE_NORMAL_CHOLESKY cannot be used with MKL_SPARSE "
+      "because Ceres was not built with support for oneMKL. "
+      "This requires enabling building with -DWITH_MKL=ON.";
+  return summary;
+#else
+  EventLogger event_logger("DynamicSparseNormalCholeskySolver::MKL::Solve");
+
+  LinearSolver::Summary summary;
+  summary.num_iterations = 1;
+  summary.termination_type = LinearSolverTerminationType::SUCCESS;
+  summary.message = "Success.";
+
+  std::unique_ptr<CompressedRowSparseMatrix> lhs;
+  if (!ComputeAtAUsingMkl(*A, options_.num_threads, &lhs, &summary.message)) {
+    summary.termination_type = LinearSolverTerminationType::FATAL_ERROR;
+    return summary;
+  }
+  event_logger.AddEvent("Compute A^T * A");
+
+  auto sparse_cholesky = SparseCholesky::Create(options_);
+  summary.termination_type =
+      sparse_cholesky->Factorize(lhs.get(), &summary.message);
+  if (summary.termination_type != LinearSolverTerminationType::SUCCESS) {
+    return summary;
+  }
+  event_logger.AddEvent("Factorize");
+
+  const Vector rhs = ConstVectorRef(rhs_and_solution, A->num_cols());
+  summary.termination_type =
+      sparse_cholesky->Solve(rhs.data(), rhs_and_solution, &summary.message);
+  event_logger.AddEvent("Solve");
+  return summary;
+#endif
 }
 
 LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImplUsingEigen(

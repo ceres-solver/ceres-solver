@@ -408,8 +408,11 @@ bool IsSparseLinearAlgebraLibraryTypeAvailable(
   }
 
   if (type == MKL_SPARSE) {
-    // oneMKL is only used for covariance estimation.
+#ifdef CERES_NO_MKL
     return false;
+#else
+    return true;
+#endif
   }
 
   if (type == ACCELERATE_SPARSE) {

@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -31,13 +31,19 @@
 #include "ceres/reorder_program.h"
 
 #include <algorithm>
+#include <deque>
+#include <limits>
 #include <memory>
+#include <numeric>
 #include <random>
 #include <string>
 #include <unordered_set>
+#include <utility>
 #include <vector>
 
 #include "ceres/internal/config.h"
+#include "ceres/mkl_ordering.h"
+#include "ceres/mkl_sparse_matrix.h"
 #include "ceres/ordered_groups.h"
 #include "ceres/parameter_block.h"
 #include "ceres/problem.h"
@@ -238,9 +244,9 @@ TEST(_, ApplyOrderingPreservesOrderWithinGroups) {
   EXPECT_EQ(parameter_blocks[9]->user_state(), param_ptrs[9]);
 }
 
-#ifndef CERES_NO_SUITESPARSE
-class ReorderProgramForSparseCholeskyUsingSuiteSparseTest
-    : public ::testing::Test {
+#if !defined(CERES_NO_SUITESPARSE) || !defined(CERES_NO_MKL)
+class ReorderProgramForSparseCholeskyTest
+    : public ::testing::TestWithParam<SparseLinearAlgebraLibraryType> {
  protected:
   void SetUp() override {
     problem_.AddResidualBlock(new UnaryCostFunction(), nullptr, &x_);
@@ -251,6 +257,8 @@ class ReorderProgramForSparseCholeskyUsingSuiteSparseTest
     problem_.AddResidualBlock(new UnaryCostFunction(), nullptr, &y_);
   }
 
+  // Verifies that the reordered parameter blocks are a permutation of the
+  // original ones in which lower numbered groups come first.
   void ComputeAndValidateOrdering(
       const ParameterBlockOrdering& linear_solver_ordering) {
     Program* program = problem_.mutable_program();
@@ -258,19 +266,26 @@ class ReorderProgramForSparseCholeskyUsingSuiteSparseTest
         program->parameter_blocks();
 
     std::string error;
-    EXPECT_TRUE(ReorderProgramForSparseCholesky(ceres::SUITE_SPARSE,
+    EXPECT_TRUE(ReorderProgramForSparseCholesky(GetParam(),
                                                 ceres::AMD,
                                                 linear_solver_ordering,
                                                 0, /* use all rows */
+                                                1,
                                                 program,
-                                                &error));
+                                                &error))
+        << error;
     const std::vector<ParameterBlock*>& ordered_parameter_blocks =
         program->parameter_blocks();
-    EXPECT_EQ(ordered_parameter_blocks.size(),
-              unordered_parameter_blocks.size());
-
     EXPECT_THAT(unordered_parameter_blocks,
                 ::testing::UnorderedElementsAreArray(ordered_parameter_blocks));
+
+    std::vector<int> groups;
+    for (ParameterBlock* parameter_block : ordered_parameter_blocks) {
+      groups.push_back(linear_solver_ordering.GroupId(
+          parameter_block->mutable_user_state()));
+    }
+    EXPECT_TRUE(std::is_sorted(groups.begin(), groups.end()))
+        << ::testing::PrintToString(groups);
   }
 
   ProblemImpl problem_;
@@ -279,8 +294,7 @@ class ReorderProgramForSparseCholeskyUsingSuiteSparseTest
   double z_;
 };
 
-TEST_F(ReorderProgramForSparseCholeskyUsingSuiteSparseTest,
-       EverythingInGroupZero) {
+TEST_P(ReorderProgramForSparseCholeskyTest, EverythingInGroupZero) {
   ParameterBlockOrdering linear_solver_ordering;
   linear_solver_ordering.AddElementToGroup(&x_, 0);
   linear_solver_ordering.AddElementToGroup(&y_, 0);
@@ -289,7 +303,7 @@ TEST_F(ReorderProgramForSparseCholeskyUsingSuiteSparseTest,
   ComputeAndValidateOrdering(linear_solver_ordering);
 }
 
-TEST_F(ReorderProgramForSparseCholeskyUsingSuiteSparseTest, ContiguousGroups) {
+TEST_P(ReorderProgramForSparseCholeskyTest, ContiguousGroups) {
   ParameterBlockOrdering linear_solver_ordering;
   linear_solver_ordering.AddElementToGroup(&x_, 0);
   linear_solver_ordering.AddElementToGroup(&y_, 1);
@@ -298,7 +312,7 @@ TEST_F(ReorderProgramForSparseCholeskyUsingSuiteSparseTest, ContiguousGroups) {
   ComputeAndValidateOrdering(linear_solver_ordering);
 }
 
-TEST_F(ReorderProgramForSparseCholeskyUsingSuiteSparseTest, GroupsWithGaps) {
+TEST_P(ReorderProgramForSparseCholeskyTest, GroupsWithGaps) {
   ParameterBlockOrdering linear_solver_ordering;
   linear_solver_ordering.AddElementToGroup(&x_, 0);
   linear_solver_ordering.AddElementToGroup(&y_, 2);
@@ -307,8 +321,7 @@ TEST_F(ReorderProgramForSparseCholeskyUsingSuiteSparseTest, GroupsWithGaps) {
   ComputeAndValidateOrdering(linear_solver_ordering);
 }
 
-TEST_F(ReorderProgramForSparseCholeskyUsingSuiteSparseTest,
-       NonContiguousStartingAtTwo) {
+TEST_P(ReorderProgramForSparseCholeskyTest, NonContiguousStartingAtTwo) {
   ParameterBlockOrdering linear_solver_ordering;
   linear_solver_ordering.AddElementToGroup(&x_, 2);
   linear_solver_ordering.AddElementToGroup(&y_, 4);
@@ -316,7 +329,369 @@ TEST_F(ReorderProgramForSparseCholeskyUsingSuiteSparseTest,
 
   ComputeAndValidateOrdering(linear_solver_ordering);
 }
+
+// w is absent from the problem but keeps the number of elements equal to the
+// number of parameter blocks. z, which the ordering lacks, comes first.
+TEST_P(ReorderProgramForSparseCholeskyTest, BlockNotInProgram) {
+  double w = 0.0;
+  ParameterBlockOrdering linear_solver_ordering;
+  linear_solver_ordering.AddElementToGroup(&x_, 1);
+  linear_solver_ordering.AddElementToGroup(&y_, 0);
+  linear_solver_ordering.AddElementToGroup(&w, 0);
+
+  ComputeAndValidateOrdering(linear_solver_ordering);
+}
+
+#ifndef CERES_NO_SUITESPARSE
+INSTANTIATE_TEST_SUITE_P(SuiteSparse,
+                         ReorderProgramForSparseCholeskyTest,
+                         ::testing::Values(SUITE_SPARSE));
 #endif  // CERES_NO_SUITESPARSE
+
+#ifndef CERES_NO_MKL
+INSTANTIATE_TEST_SUITE_P(MklSparse,
+                         ReorderProgramForSparseCholeskyTest,
+                         ::testing::Values(MKL_SPARSE));
+#endif  // CERES_NO_MKL
+#endif  // !defined(CERES_NO_SUITESPARSE) || !defined(CERES_NO_MKL)
+
+#ifndef CERES_NO_MKL
+// Creates a block structure matrix with unit values.
+static void CreateMklMatrix(const int num_rows,
+                            const int num_cols,
+                            std::vector<MKL_INT> row_offsets,
+                            std::vector<MKL_INT> columns,
+                            MklCsrMatrix* matrix) {
+  std::vector<double> values(columns.size(), 1.0);
+  std::string error;
+  ASSERT_TRUE(matrix->Create(num_rows,
+                             num_cols,
+                             std::move(row_offsets),
+                             std::move(columns),
+                             std::move(values),
+                             &error))
+      << error;
+}
+
+// Returns the user states of the parameter blocks of program in [begin, end).
+static std::vector<const double*> UserStates(const Program& program,
+                                             const int begin,
+                                             const int end) {
+  std::vector<const double*> user_states;
+  for (int index = begin; index < end; ++index) {
+    user_states.push_back(program.parameter_blocks()[index]->user_state());
+  }
+  return user_states;
+}
+
+static void ExpectMklSchurOrdering(const int num_schur_groups) {
+  constexpr int kNumEliminationBlocks = 4;
+  constexpr int kNumSchurBlocks = 4;
+  constexpr int kNumResidualBlocks = 8;
+
+  MklCsrMatrix e_matrix;
+  MklCsrMatrix f_matrix;
+  ASSERT_NO_FATAL_FAILURE(CreateMklMatrix(kNumResidualBlocks,
+                                          kNumEliminationBlocks,
+                                          {0, 1, 2, 3, 4, 5, 6, 7, 8},
+                                          {0, 0, 1, 1, 2, 2, 3, 3},
+                                          &e_matrix));
+  ASSERT_NO_FATAL_FAILURE(CreateMklMatrix(kNumResidualBlocks,
+                                          kNumSchurBlocks,
+                                          {0, 1, 2, 3, 4, 5, 6, 7, 8},
+                                          {0, 1, 1, 2, 2, 3, 3, 0},
+                                          &f_matrix));
+  std::vector<int> expected_schur_ordering(kNumSchurBlocks);
+  std::string error;
+  ASSERT_TRUE(MklComputeSchurOrdering(
+      e_matrix, f_matrix, AMD, 1, expected_schur_ordering.data(), &error))
+      << error;
+  ASSERT_THAT(expected_schur_ordering,
+              ::testing::Not(::testing::ElementsAre(0, 1, 2, 3)));
+
+  ProblemImpl problem;
+  double e[kNumEliminationBlocks];
+  double f[kNumSchurBlocks];
+  for (int i = 0; i < kNumEliminationBlocks; ++i) {
+    problem.AddParameterBlock(&e[i], 1);
+  }
+  for (int i = 0; i < kNumSchurBlocks; ++i) {
+    problem.AddParameterBlock(&f[i], 1);
+  }
+  for (int i = 0; i < kNumSchurBlocks; ++i) {
+    const int next = (i + 1) % kNumSchurBlocks;
+    problem.AddResidualBlock(new BinaryCostFunction(), nullptr, &e[i], &f[i]);
+    problem.AddResidualBlock(
+        new BinaryCostFunction(), nullptr, &e[i], &f[next]);
+  }
+
+  // Without Schur groups all blocks share group 0 and Ceres chooses the
+  // elimination group itself. Otherwise the Schur blocks are distributed over
+  // num_schur_groups consecutive groups in program order.
+  auto schur_group = [num_schur_groups](const int i) {
+    return num_schur_groups == 0 ? 0
+                                 : 1 + i * num_schur_groups / kNumSchurBlocks;
+  };
+  ParameterBlockOrdering ordering;
+  for (int i = 0; i < kNumEliminationBlocks; ++i) {
+    ordering.AddElementToGroup(&e[i], 0);
+  }
+  for (int i = 0; i < kNumSchurBlocks; ++i) {
+    ordering.AddElementToGroup(&f[i], schur_group(i));
+  }
+
+  // PARDISO has no constrained ordering, so Ceres keeps the relative order of
+  // its fill reducing ordering within each group.
+  std::vector<int> expected_ordering = expected_schur_ordering;
+  std::stable_sort(expected_ordering.begin(),
+                   expected_ordering.end(),
+                   [&schur_group](const int lhs, const int rhs) {
+                     return schur_group(lhs) < schur_group(rhs);
+                   });
+  if (num_schur_groups > 1) {
+    ASSERT_NE(expected_ordering, expected_schur_ordering)
+        << "The groups must constrain the PARDISO ordering for the test to "
+           "be meaningful.";
+  }
+
+  Program* program = problem.mutable_program();
+  ASSERT_TRUE(ReorderProgramForSchurTypeLinearSolver(SPARSE_SCHUR,
+                                                     MKL_SPARSE,
+                                                     AMD,
+                                                     problem.parameter_map(),
+                                                     1,
+                                                     &ordering,
+                                                     program,
+                                                     &error))
+      << error;
+
+  std::vector<const double*> expected_schur_blocks;
+  for (const int index : expected_ordering) {
+    expected_schur_blocks.push_back(&f[index]);
+  }
+  EXPECT_THAT(UserStates(*program,
+                         kNumEliminationBlocks,
+                         kNumEliminationBlocks + kNumSchurBlocks),
+              ::testing::ElementsAreArray(expected_schur_blocks));
+}
+
+class MklFillReducingOrderingTest
+    : public ::testing::TestWithParam<LinearSolverOrderingType> {};
+
+// Eliminating the center of a star first fills in the whole matrix, whereas
+// eliminating it last causes no fill-in. The center sits in the middle of the
+// program so that neither the identity nor its reversal moves it last.
+TEST_P(MklFillReducingOrderingTest, EliminatesStarCenterLast) {
+  constexpr int kNumParameterBlocks = 5;
+  constexpr int kCenter = 2;
+  ProblemImpl problem;
+  double parameters[kNumParameterBlocks];
+  for (double& parameter : parameters) {
+    problem.AddParameterBlock(&parameter, 1);
+  }
+  ParameterBlockOrdering ordering;
+  for (int i = 0; i < kNumParameterBlocks; ++i) {
+    ordering.AddElementToGroup(&parameters[i], 0);
+    if (i != kCenter) {
+      problem.AddResidualBlock(new BinaryCostFunction(),
+                               nullptr,
+                               &parameters[kCenter],
+                               &parameters[i]);
+    }
+  }
+
+  Program* program = problem.mutable_program();
+  std::string error;
+  ASSERT_TRUE(ReorderProgramForSparseCholesky(
+      MKL_SPARSE, GetParam(), ordering, 0, 1, program, &error))
+      << error;
+  EXPECT_EQ(program->parameter_blocks().back()->user_state(),
+            &parameters[kCenter]);
+}
+
+INSTANTIATE_TEST_SUITE_P(
+    MklSparse,
+    MklFillReducingOrderingTest,
+    ::testing::Values(AMD, NESDIS),
+    [](const ::testing::TestParamInfo<LinearSolverOrderingType>& info) {
+      return std::string(LinearSolverOrderingTypeToString(info.param));
+    });
+
+// The groups of the Schur blocks constrain the relative order PARDISO chooses
+// for them.
+class MklSchurGroupOrderingTest : public ::testing::TestWithParam<int> {};
+
+TEST_P(MklSchurGroupOrderingTest, KeepsPardisoOrderWithinGroups) {
+  ExpectMklSchurOrdering(GetParam());
+}
+
+INSTANTIATE_TEST_SUITE_P(MklSparse,
+                         MklSchurGroupOrderingTest,
+                         ::testing::Values(0, 2),
+                         [](const ::testing::TestParamInfo<int>& info) {
+                           return info.param == 0 ? "NoSchurGroups"
+                                                  : "TwoSchurGroups";
+                         });
+
+// A bundle adjustment problem, whose points SPARSE_SCHUR eliminates using
+// MKL_SPARSE.
+class MklSchurOrderingTest : public ::testing::Test {
+ protected:
+  static constexpr int kNumCameras = 4;
+
+  void SetUp() override {
+    for (double& camera : cameras_) {
+      problem_.AddParameterBlock(&camera, 1);
+      ordering_.AddElementToGroup(&camera, 1);
+    }
+  }
+
+  // Adds a point observed by the given cameras.
+  void AddPoint(const std::vector<int>& observed_cameras) {
+    double& point = points_.emplace_back(0.0);
+    problem_.AddParameterBlock(&point, 1);
+    ordering_.AddElementToGroup(&point, 0);
+    for (const int camera : observed_cameras) {
+      problem_.AddResidualBlock(
+          new BinaryCostFunction(), nullptr, &point, &cameras_[camera]);
+    }
+  }
+
+  // Adds a residual block that depends on two cameras but no point.
+  void CoupleCameras(const int first, const int second) {
+    problem_.AddResidualBlock(
+        new BinaryCostFunction(), nullptr, &cameras_[first], &cameras_[second]);
+  }
+
+  void Reorder() {
+    std::string error;
+    ASSERT_TRUE(
+        ReorderProgramForSchurTypeLinearSolver(SPARSE_SCHUR,
+                                               MKL_SPARSE,
+                                               AMD,
+                                               problem_.parameter_map(),
+                                               1,
+                                               &ordering_,
+                                               problem_.mutable_program(),
+                                               &error))
+        << error;
+  }
+
+  const std::vector<ParameterBlock*>& parameter_blocks() const {
+    return problem_.program().parameter_blocks();
+  }
+
+  ProblemImpl problem_;
+  double cameras_[kNumCameras];
+  // A deque keeps the addresses of the points stable as points are added.
+  std::deque<double> points_;
+  ParameterBlockOrdering ordering_;
+};
+
+// Camera 1 shares a point with every other camera. Only the E'F part of the
+// Schur complement couples it with them, which makes it the center of a star
+// that must be eliminated last.
+TEST_F(MklSchurOrderingTest, EliminatesCameraSharingPointsWithAllCamerasLast) {
+  constexpr int kCenter = 1;
+  for (int camera = 0; camera < kNumCameras; ++camera) {
+    if (camera != kCenter) {
+      AddPoint({kCenter, camera});
+    }
+  }
+  ASSERT_NO_FATAL_FAILURE(Reorder());
+  EXPECT_EQ(parameter_blocks().back()->user_state(), &cameras_[kCenter]);
+}
+
+// Here, only the F'F part of the Schur complement couples camera 1 with the
+// other cameras.
+TEST_F(MklSchurOrderingTest, EliminatesCameraCoupledWithAllCamerasLast) {
+  constexpr int kCenter = 1;
+  for (int camera = 0; camera < kNumCameras; ++camera) {
+    AddPoint({camera});
+    if (camera != kCenter) {
+      CoupleCameras(kCenter, camera);
+    }
+  }
+  ASSERT_NO_FATAL_FAILURE(Reorder());
+  EXPECT_EQ(parameter_blocks().back()->user_state(), &cameras_[kCenter]);
+}
+
+// Points are eliminated in the order of the first camera they observe, so that
+// consecutive points update nearby blocks of the Schur complement.
+TEST_F(MklSchurOrderingTest, SortsPointsByFirstCamera) {
+  // No camera ordering sorts the points in their original order because the
+  // first and the fifth point observe the same camera and the points in
+  // between observe the other cameras.
+  const std::vector<std::vector<int>> observed_cameras{
+      {3}, {2}, {1}, {0}, {3}, {0, 3}};
+  for (const std::vector<int>& cameras : observed_cameras) {
+    AddPoint(cameras);
+  }
+  ASSERT_NO_FATAL_FAILURE(Reorder());
+
+  const int num_points = static_cast<int>(points_.size());
+  std::vector<int> camera_positions(kNumCameras);
+  for (int camera = 0; camera < kNumCameras; ++camera) {
+    for (int position = num_points; position < num_points + kNumCameras;
+         ++position) {
+      if (parameter_blocks()[position]->user_state() == &cameras_[camera]) {
+        camera_positions[camera] = position;
+      }
+    }
+  }
+  std::vector<int> first_camera_positions(num_points,
+                                          std::numeric_limits<int>::max());
+  for (int point = 0; point < num_points; ++point) {
+    for (const int camera : observed_cameras[point]) {
+      first_camera_positions[point] =
+          std::min(first_camera_positions[point], camera_positions[camera]);
+    }
+  }
+
+  std::vector<int> expected_points(num_points);
+  std::iota(expected_points.begin(), expected_points.end(), 0);
+  auto by_first_camera = [&first_camera_positions](const int lhs,
+                                                   const int rhs) {
+    return first_camera_positions[lhs] < first_camera_positions[rhs];
+  };
+  ASSERT_FALSE(std::is_sorted(
+      expected_points.begin(), expected_points.end(), by_first_camera));
+  std::stable_sort(
+      expected_points.begin(), expected_points.end(), by_first_camera);
+  std::vector<const double*> expected_point_blocks;
+  for (const int point : expected_points) {
+    expected_point_blocks.push_back(&points_[point]);
+  }
+  EXPECT_THAT(UserStates(problem_.program(), 0, num_points),
+              ::testing::ElementsAreArray(expected_point_blocks));
+}
+
+// oneMKL rejects the Schur complement pattern without columns, which arises
+// if every parameter block is eliminated.
+TEST(MklSchurOrdering, AcceptsProblemWithoutSchurBlocks) {
+  ProblemImpl problem;
+  double x = 0.0;
+  double y = 0.0;
+  problem.AddResidualBlock(new UnaryCostFunction(), nullptr, &x);
+  problem.AddResidualBlock(new UnaryCostFunction(), nullptr, &y);
+
+  ParameterBlockOrdering ordering;
+  ordering.AddElementToGroup(&x, 0);
+  ordering.AddElementToGroup(&y, 0);
+
+  std::string error;
+  EXPECT_TRUE(ReorderProgramForSchurTypeLinearSolver(SPARSE_SCHUR,
+                                                     MKL_SPARSE,
+                                                     AMD,
+                                                     problem.parameter_map(),
+                                                     1,
+                                                     &ordering,
+                                                     problem.mutable_program(),
+                                                     &error))
+      << error;
+}
+
+#endif  // CERES_NO_MKL
 
 TEST(_, ReorderResidualBlocksbyPartition) {
   ProblemImpl problem;

@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -177,6 +177,30 @@ TEST_F(SparseNormalCholeskySolverTest,
   TestSolver(options);
 }
 #endif  // CERES_USE_EIGEN_SPARSE
+
+#ifndef CERES_NO_MKL
+TEST_F(SparseNormalCholeskySolverTest,
+       SparseNormalCholeskyUsingMklSparsePreOrdering) {
+  LinearSolver::Options options;
+  options.sparse_linear_algebra_library_type = MKL_SPARSE;
+  options.type = SPARSE_NORMAL_CHOLESKY;
+  options.ordering_type = OrderingType::NATURAL;
+  ContextImpl context;
+  options.context = &context;
+  TestSolver(options);
+}
+
+TEST_F(SparseNormalCholeskySolverTest,
+       SparseNormalCholeskyUsingMklSparsePostOrdering) {
+  LinearSolver::Options options;
+  options.sparse_linear_algebra_library_type = MKL_SPARSE;
+  options.type = SPARSE_NORMAL_CHOLESKY;
+  options.ordering_type = OrderingType::AMD;
+  ContextImpl context;
+  options.context = &context;
+  TestSolver(options);
+}
+#endif  // CERES_NO_MKL
 
 #ifndef CERES_NO_CUDSS
 TEST_F(SparseNormalCholeskySolverTest, SparseNormalCholeskyUsingCuDSSSingle) {

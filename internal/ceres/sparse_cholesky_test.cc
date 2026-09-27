@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2024 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -286,6 +286,20 @@ INSTANTIATE_TEST_SUITE_P(
                        ::testing::Values(true, false)),
     ParamInfoToString);
 #endif  // CERES_NO_CUDSS
+
+#ifndef CERES_NO_MKL
+INSTANTIATE_TEST_SUITE_P(
+    MklSparseCholesky,
+    SparseCholeskyTest,
+    ::testing::Combine(::testing::Values(MKL_SPARSE),
+                       // Mixed precision solves are not implemented for MKL.
+                       ::testing::Values(false),
+                       ::testing::Values(OrderingType::AMD,
+                                         OrderingType::NESDIS,
+                                         OrderingType::NATURAL),
+                       ::testing::Values(true, false)),
+    ParamInfoToString);
+#endif  // CERES_NO_MKL
 
 class MockSparseCholesky : public SparseCholesky {
  public:

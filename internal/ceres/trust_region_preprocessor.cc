@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -119,6 +119,7 @@ bool ReorderProgram(PreprocessedProblem* pp) {
         options.sparse_linear_algebra_library_type,
         options.linear_solver_ordering_type,
         pp->problem->parameter_map(),
+        options.num_threads,
         options.linear_solver_ordering.get(),
         pp->reduced_program.get(),
         &pp->error);
@@ -131,6 +132,7 @@ bool ReorderProgram(PreprocessedProblem* pp) {
         options.linear_solver_ordering_type,
         *options.linear_solver_ordering,
         0, /* use all the rows of the jacobian */
+        options.num_threads,
         pp->reduced_program.get(),
         &pp->error);
   }
@@ -147,6 +149,7 @@ bool ReorderProgram(PreprocessedProblem* pp) {
         options.linear_solver_ordering_type,
         *options.linear_solver_ordering,
         pp->linear_solver_options.subset_preconditioner_start_row_block,
+        options.num_threads,
         pp->reduced_program.get(),
         &pp->error);
   }
@@ -218,6 +221,8 @@ bool SetupLinearSolver(PreprocessedProblem* pp) {
   pp->linear_solver_options.use_explicit_schur_complement =
       options.use_explicit_schur_complement;
   pp->linear_solver_options.dynamic_sparsity = options.dynamic_sparsity;
+  pp->linear_solver_options.use_two_level_factorization =
+      options.use_two_level_factorization;
   pp->linear_solver_options.use_mixed_precision_solves =
       options.use_mixed_precision_solves;
   pp->linear_solver_options.max_num_refinement_iterations =

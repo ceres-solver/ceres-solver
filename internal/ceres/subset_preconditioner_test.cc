@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -195,6 +195,14 @@ INSTANTIATE_TEST_SUITE_P(
 INSTANTIATE_TEST_SUITE_P(SubsetPreconditionerWithEigenSparse,
                          SubsetPreconditionerTest,
                          ::testing::Combine(::testing::Values(EIGEN_SPARSE),
+                                            ::testing::Values(true, false)),
+                         ParamInfoToString);
+#endif
+
+#ifndef CERES_NO_MKL
+INSTANTIATE_TEST_SUITE_P(SubsetPreconditionerWithMklSparse,
+                         SubsetPreconditionerTest,
+                         ::testing::Combine(::testing::Values(MKL_SPARSE),
                                             ::testing::Values(true, false)),
                          ParamInfoToString);
 #endif

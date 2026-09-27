@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2023 Google Inc. All rights reserved.
+// Copyright 2026 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -39,6 +39,7 @@
 #include "ceres/cuda_sparse_cholesky.h"
 #include "ceres/eigensparse.h"
 #include "ceres/iterative_refiner.h"
+#include "ceres/mkl_pardiso.h"
 #include "ceres/suitesparse.h"
 
 namespace ceres::internal {
@@ -48,6 +49,20 @@ std::unique_ptr<SparseCholesky> SparseCholesky::Create(
   std::unique_ptr<SparseCholesky> sparse_cholesky;
 
   switch (options.sparse_linear_algebra_library_type) {
+    case MKL_SPARSE:
+#ifndef CERES_NO_MKL
+      if (options.use_mixed_precision_solves) {
+        LOG(FATAL) << "Mixed-precision solves are not implemented for MKL.";
+      }
+      sparse_cholesky =
+          MklSparseCholesky::Create(options.ordering_type,
+                                    options.num_threads,
+                                    options.use_two_level_factorization);
+      break;
+#else
+      LOG(FATAL) << "Ceres was compiled without support for MKL.";
+#endif
+
     case SUITE_SPARSE:
 #ifndef CERES_NO_SUITESPARSE
       if (options.use_mixed_precision_solves) {
