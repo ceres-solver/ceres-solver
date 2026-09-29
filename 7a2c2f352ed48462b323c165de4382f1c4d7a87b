@@ -1,0 +1,261 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8e9cd21_f3b8dc84",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-09-29T14:21:05Z",
+      "side": 1,
+      "message": "mostly comments about comments.",
+      "revId": "7a2c2f352ed48462b323c165de4382f1c4d7a87b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "acbfc0b4_47be2c31",
+        "filename": "internal/ceres/solver_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-09-29T14:21:05Z",
+      "side": 1,
+      "message": "add some comments to the test.",
+      "revId": "7a2c2f352ed48462b323c165de4382f1c4d7a87b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51ea8603_4cdb298f",
+        "filename": "internal/ceres/solver_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-09-29T14:21:05Z",
+      "side": 1,
+      "message": "These expectations are pointless they will be satisfied even if the solver did not do anything. you need to mutate them before calling solver no?",
+      "revId": "7a2c2f352ed48462b323c165de4382f1c4d7a87b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27f84fea_7880dffb",
+        "filename": "internal/ceres/solver_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-09-29T14:21:05Z",
+      "side": 1,
+      "message": "same comments as above.",
+      "range": {
+        "startLine": 411,
+        "startChar": 10,
+        "endLine": 411,
+        "endChar": 32
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "7a5f4b19_c4bd92f3",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/solver_test.cc",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 1,
+                "endChar": 0
+              },
+              "replacement": "\n  options.inner_iteration_ordering \u003d nullptr;\n  Solve(options, \u0026problem, \u0026summary);\n  EXPECT_TRUE(summary.IsSolutionUsable()) \u003c\u003c summary.message;\n  EXPECT_NEAR(x, 5.0, 1e-10);\n  EXPECT_NEAR(y, 5.0, 1e-10);\n  EXPECT_NEAR(z, 5.0, 1e-10);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "7a2c2f352ed48462b323c165de4382f1c4d7a87b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0bce39a4_b651e88d",
+        "filename": "internal/ceres/solver_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-09-29T14:21:05Z",
+      "side": 1,
+      "message": "this test needs some comments",
+      "revId": "7a2c2f352ed48462b323c165de4382f1c4d7a87b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "113a18d0_4e48c86d",
+        "filename": "internal/ceres/solver_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-09-29T14:21:05Z",
+      "side": 1,
+      "message": "why not convergence?",
+      "range": {
+        "startLine": 440,
+        "startChar": 39,
+        "endLine": 440,
+        "endChar": 40
+      },
+      "revId": "7a2c2f352ed48462b323c165de4382f1c4d7a87b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1138b0a0_4b268abe",
+        "filename": "internal/ceres/solver_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-09-29T14:21:05Z",
+      "side": 1,
+      "message": "EXPECT_EQ should work here. you are guaranteed that the value of x does not change.",
+      "range": {
+        "startLine": 441,
+        "startChar": 2,
+        "endLine": 441,
+        "endChar": 18
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "f578dea6_6bf15530",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/solver_test.cc",
+              "range": {
+                "startLine": 398,
+                "startChar": 0,
+                "endLine": 399,
+                "endChar": 0
+              },
+              "replacement": "  EXPECT_EQ(x, 0.0);\n"
+            },
+            {
+              "path": "internal/ceres/solver_test.cc",
+              "range": {
+                "startLine": 441,
+                "startChar": 0,
+                "endLine": 442,
+                "endChar": 0
+              },
+              "replacement": "  EXPECT_EQ(x, 0.0);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "7a2c2f352ed48462b323c165de4382f1c4d7a87b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21f58230_c3e909a0",
+        "filename": "internal/ceres/solver_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-09-29T14:21:05Z",
+      "side": 1,
+      "message": "why not check convergence here? just like above the solver should converge no?",
+      "range": {
+        "startLine": 450,
+        "startChar": 22,
+        "endLine": 450,
+        "endChar": 38
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "5ce65507_3c66b2c9",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/solver_test.cc",
+              "range": {
+                "startLine": 440,
+                "startChar": 0,
+                "endLine": 441,
+                "endChar": 0
+              },
+              "replacement": "  EXPECT_EQ(summary.termination_type, CONVERGENCE) \u003c\u003c summary.message;\n"
+            },
+            {
+              "path": "internal/ceres/solver_test.cc",
+              "range": {
+                "startLine": 450,
+                "startChar": 0,
+                "endLine": 451,
+                "endChar": 0
+              },
+              "replacement": "  EXPECT_EQ(summary.termination_type, CONVERGENCE) \u003c\u003c summary.message;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "7a2c2f352ed48462b323c165de4382f1c4d7a87b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0178e514_1298e442",
+        "filename": "internal/ceres/trust_region_preprocessor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-09-29T14:21:05Z",
+      "side": 1,
+      "message": "This chunk of code deserves some comments. Right now unless you read it carefully it makes it appear \nthat you copying someting onto itself, but actually what is happening is that you are creating a new shared_ptr object.",
+      "range": {
+        "startLine": 384,
+        "startChar": 8,
+        "endLine": 384,
+        "endChar": 9
+      },
+      "revId": "7a2c2f352ed48462b323c165de4382f1c4d7a87b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
