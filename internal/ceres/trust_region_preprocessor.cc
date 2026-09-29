@@ -381,6 +381,16 @@ bool TrustRegionPreprocessor::Preprocess(const Solver::Options& options,
   EventLogger event_logger("TrustRegionPreprocessor::Preprocess");
   CHECK(pp != nullptr);
   pp->options = options;
+  if (pp->options.linear_solver_ordering != nullptr) {
+    pp->options.linear_solver_ordering =
+        std::make_shared<ParameterBlockOrdering>(
+            *pp->options.linear_solver_ordering);
+  }
+  if (pp->options.inner_iteration_ordering != nullptr) {
+    pp->options.inner_iteration_ordering =
+        std::make_shared<ParameterBlockOrdering>(
+            *pp->options.inner_iteration_ordering);
+  }
   ChangeNumThreadsIfNeeded(&pp->options);
 
   pp->problem = problem;

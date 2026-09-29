@@ -375,6 +375,87 @@ TEST(Solver, ZeroSizedManifoldHoldsParameterBlockConstant) {
   EXPECT_EQ(y, 1.0);
 }
 
+TEST(Solver, RepeatedSolvePreservesCallerLinearSolverOrdering) {
+  double x = 0.0;
+  double y = 0.0;
+  Problem problem;
+  problem.AddResidualBlock(QuadraticCostFunctor::Create(), nullptr, &x);
+  problem.AddResidualBlock(QuadraticCostFunctor::Create(), nullptr, &y);
+
+  Solver::Options options;
+  options.linear_solver_type = DENSE_SCHUR;
+  options.dense_linear_algebra_library_type = EIGEN;
+  options.function_tolerance = 0.0;
+  options.parameter_tolerance = 1e-12;
+  options.linear_solver_ordering = std::make_shared<ParameterBlockOrdering>();
+  options.linear_solver_ordering->AddElementToGroup(&x, 0);
+  options.linear_solver_ordering->AddElementToGroup(&y, 1);
+
+  problem.SetParameterBlockConstant(&x);
+  Solver::Summary summary;
+  Solve(options, &problem, &summary);
+  EXPECT_EQ(summary.termination_type, CONVERGENCE) << summary.message;
+  EXPECT_DOUBLE_EQ(x, 0.0);
+  EXPECT_NEAR(y, 5.0, 1e-10);
+  EXPECT_EQ(options.linear_solver_ordering->GroupId(&x), 0);
+  EXPECT_EQ(options.linear_solver_ordering->GroupId(&y), 1);
+
+  problem.SetParameterBlockVariable(&x);
+  Solve(options, &problem, &summary);
+  EXPECT_EQ(summary.termination_type, CONVERGENCE) << summary.message;
+  EXPECT_NEAR(x, 5.0, 1e-10);
+  EXPECT_NEAR(y, 5.0, 1e-10);
+  EXPECT_EQ(options.linear_solver_ordering->GroupId(&x), 0);
+  EXPECT_EQ(options.linear_solver_ordering->GroupId(&y), 1);
+
+  options.linear_solver_ordering = nullptr;
+  Solve(options, &problem, &summary);
+  EXPECT_EQ(summary.termination_type, CONVERGENCE) << summary.message;
+  EXPECT_NEAR(x, 5.0, 1e-10);
+  EXPECT_NEAR(y, 5.0, 1e-10);
+}
+
+TEST(Solver, RepeatedSolvePreservesCallerInnerIterationOrdering) {
+  double x = 0.0;
+  double y = 0.0;
+  double z = 0.0;
+  Problem problem;
+  problem.AddResidualBlock(QuadraticCostFunctor::Create(), nullptr, &x);
+  problem.AddResidualBlock(QuadraticCostFunctor::Create(), nullptr, &y);
+  problem.AddResidualBlock(QuadraticCostFunctor::Create(), nullptr, &z);
+
+  Solver::Options options;
+  options.linear_solver_type = DENSE_QR;
+  options.use_inner_iterations = true;
+  options.function_tolerance = 0.0;
+  options.parameter_tolerance = 1e-12;
+  options.inner_iteration_ordering = std::make_shared<ParameterBlockOrdering>();
+  options.inner_iteration_ordering->AddElementToGroup(&x, 0);
+  options.inner_iteration_ordering->AddElementToGroup(&y, 1);
+  options.inner_iteration_ordering->AddElementToGroup(&z, 2);
+
+  problem.SetParameterBlockConstant(&x);
+  Solver::Summary summary;
+  Solve(options, &problem, &summary);
+  EXPECT_TRUE(summary.IsSolutionUsable()) << summary.message;
+  EXPECT_DOUBLE_EQ(x, 0.0);
+  EXPECT_NEAR(y, 5.0, 1e-10);
+  EXPECT_NEAR(z, 5.0, 1e-10);
+  EXPECT_EQ(options.inner_iteration_ordering->GroupId(&x), 0);
+  EXPECT_EQ(options.inner_iteration_ordering->GroupId(&y), 1);
+  EXPECT_EQ(options.inner_iteration_ordering->GroupId(&z), 2);
+
+  problem.SetParameterBlockVariable(&x);
+  Solve(options, &problem, &summary);
+  EXPECT_TRUE(summary.IsSolutionUsable()) << summary.message;
+  EXPECT_NEAR(x, 5.0, 1e-10);
+  EXPECT_NEAR(y, 5.0, 1e-10);
+  EXPECT_NEAR(z, 5.0, 1e-10);
+  EXPECT_EQ(options.inner_iteration_ordering->GroupId(&x), 0);
+  EXPECT_EQ(options.inner_iteration_ordering->GroupId(&y), 1);
+  EXPECT_EQ(options.inner_iteration_ordering->GroupId(&z), 2);
+}
+
 TEST(Solver, DenseNormalCholeskyOptions) {
   std::string message;
   Solver::Options options;
