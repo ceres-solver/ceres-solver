@@ -100,10 +100,9 @@ if (_Ceres_FEATURE_SUITESPARSE)
   add_definitions(-DCERES_SUITESPARSE_VERSION="${SuiteSparse_VERSION}")
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES SuiteSparse::CHOLMOD
     SuiteSparse::SPQR)
-
-  if (SuiteSparse_Partition_FOUND)
-    list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES SuiteSparse::Partition)
-  endif (SuiteSparse_Partition_FOUND)
+  # SuiteSparse::Partition only signals METIS support in CHOLMOD. Linking it
+  # would make consumers depend on the partitioning check succeeding in their
+  # environment. CHOLMOD and METIS are linked explicitly instead.
 endif (_Ceres_FEATURE_SUITESPARSE)
 
 if (_Ceres_FEATURE_CHOLMOD_PARTITION OR _Ceres_FEATURE_EIGEN_METIS)
