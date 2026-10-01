@@ -597,15 +597,23 @@ if (TARGET SuiteSparse::CHOLMOD)
   # NOTE If SuiteSparse was compiled as a static library we'll need to link
   # against METIS already during the check. Otherwise, the check can fail due to
   # undefined references even though SuiteSparse was compiled with METIS.
-  if (NOT DEFINED METIS_FOUND)
+  #
+  # Other METIS find modules may define METIS_FOUND without providing the
+  # METIS::METIS target required for linking.
+  if (NOT TARGET METIS::METIS)
     find_package (METIS)
-  endif()
+  endif (NOT TARGET METIS::METIS)
 
   if (TARGET METIS::METIS)
     cmake_push_check_state (RESET)
     set (CMAKE_REQUIRED_LIBRARIES SuiteSparse::CHOLMOD METIS::METIS)
     check_symbol_exists (cholmod_metis cholmod.h SuiteSparse_CHOLMOD_USES_METIS)
     cmake_pop_check_state ()
+
+    if (NOT SuiteSparse_CHOLMOD_USES_METIS AND SuiteSparse_FIND_REQUIRED_Partition)
+      list (APPEND CMAKE_FIND_PACKAGE_REASON
+        "Partition: CHOLMOD was not compiled with METIS support.")
+    endif (NOT SuiteSparse_CHOLMOD_USES_METIS AND SuiteSparse_FIND_REQUIRED_Partition)
 
     if (SuiteSparse_CHOLMOD_USES_METIS)
       set_property (TARGET SuiteSparse::CHOLMOD APPEND PROPERTY
@@ -620,6 +628,9 @@ if (TARGET SuiteSparse::CHOLMOD)
       set_property (TARGET SuiteSparse::Partition APPEND PROPERTY
         INTERFACE_LINK_LIBRARIES SuiteSparse::CHOLMOD)
     endif (SuiteSparse_CHOLMOD_USES_METIS)
+  elseif (SuiteSparse_FIND_REQUIRED_Partition)
+    list (APPEND CMAKE_FIND_PACKAGE_REASON
+      "Partition: METIS could not be found.")
   endif (TARGET METIS::METIS)
 endif (TARGET SuiteSparse::CHOLMOD)
 
