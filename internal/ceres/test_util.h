@@ -94,10 +94,13 @@ class CERES_NO_EXPORT SystemTest : public ::testing::Test {
         &expected_final_residuals_);
   }
 
-  void RunSolverForConfigAndExpectResidualsMatch(const Solver::Options& options,
-                                                 Problem* problem) {
+  void RunSolverForConfigAndExpectResidualsMatch(
+      const Solver::Options& options,
+      Problem* problem,
+      bool expect_mixed_precision = false) {
     std::vector<double> final_residuals;
-    SolveAndEvaluateFinalResiduals(options, problem, &final_residuals);
+    SolveAndEvaluateFinalResiduals(
+        options, problem, &final_residuals, expect_mixed_precision);
 
     // We compare solutions by comparing their residual vectors. We do
     // not compare parameter vectors because it is much more brittle
@@ -115,12 +118,19 @@ class CERES_NO_EXPORT SystemTest : public ::testing::Test {
 
   void SolveAndEvaluateFinalResiduals(const Solver::Options& options,
                                       Problem* problem,
-                                      std::vector<double>* final_residuals) {
+                                      std::vector<double>* final_residuals,
+                                      bool expect_mixed_precision = false) {
     Solver::Summary summary;
     Solve(options, problem, &summary);
     CHECK_NE(summary.termination_type, ceres::FAILURE);
-    problem->Evaluate(
-        Problem::EvaluateOptions(), nullptr, final_residuals, nullptr, nullptr);
+    if (expect_mixed_precision) {
+      EXPECT_TRUE(summary.mixed_precision_solves_used);
+    }
+    CHECK(problem->Evaluate(Problem::EvaluateOptions(),
+                            nullptr,
+                            final_residuals,
+                            nullptr,
+                            nullptr));
   }
 
   std::vector<double> expected_final_residuals_;

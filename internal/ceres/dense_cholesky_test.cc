@@ -114,6 +114,33 @@ TEST_P(DenseCholeskyTest, FactorAndSolve) {
   }
 }
 
+TEST(DenseCholesky, MixedPrecisionUsesLowerTriangle) {
+  for (int refinement_limit : {0, 2}) {
+    for (bool populate_upper_triangle : {false, true}) {
+      SCOPED_TRACE(::testing::Message()
+                   << "refinement limit: " << refinement_limit
+                   << ", populated upper triangle: "
+                   << populate_upper_triangle);
+
+      LinearSolver::Options options;
+      options.dense_linear_algebra_library_type = EIGEN;
+      options.use_mixed_precision_solves = true;
+      options.max_num_refinement_iterations = refinement_limit;
+      auto dense_cholesky = DenseCholesky::Create(options);
+
+      double lhs[] = {4.0, 1.0, populate_upper_triangle ? 1.0 : 0.0, 3.0};
+      const double rhs[] = {5.0, 4.0};
+      double solution[] = {0.0, 0.0};
+      std::string message;
+      ASSERT_EQ(dense_cholesky->FactorAndSolve(2, lhs, rhs, solution, &message),
+                LinearSolverTerminationType::SUCCESS)
+          << message;
+      EXPECT_NEAR(solution[0], 1.0, 1e-6);
+      EXPECT_NEAR(solution[1], 1.0, 1e-6);
+    }
+  }
+}
+
 INSTANTIATE_TEST_SUITE_P(EigenCholesky,
                          DenseCholeskyTest,
                          ::testing::Combine(::testing::Values(EIGEN),
