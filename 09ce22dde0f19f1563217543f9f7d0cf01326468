@@ -1,0 +1,327 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6da83b27_ecd6e5c2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-03T17:16:56Z",
+      "side": 1,
+      "message": "first round.",
+      "revId": "09ce22dde0f19f1563217543f9f7d0cf01326468",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83af99a1_49654af9",
+        "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-03T17:16:56Z",
+      "side": 1,
+      "message": "this test setup distributed across functions sort of makes sense but is quite complicated.\nwill a test fixture help here? I am not sure, but it is worth looking at.",
+      "fixSuggestions": [
+        {
+          "fixId": "a4080ed7_9d2bf880",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/coordinate_descent_minimizer_test.cc",
+              "range": {
+                "startLine": 89,
+                "startChar": 0,
+                "endLine": 93,
+                "endChar": 0
+              },
+              "replacement": "  ParameterBlock* block \u003d nullptr;\n  int index \u003d 0;\n  int state_offset \u003d 0;\n  int delta_offset \u003d 0;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "09ce22dde0f19f1563217543f9f7d0cf01326468",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4808a9c6_04a96acf",
+        "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-03T17:16:56Z",
+      "side": 1,
+      "message": "this should be a gmock  matcher not a function.",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 28
+      },
+      "revId": "09ce22dde0f19f1563217543f9f7d0cf01326468",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6c8f507_d85cafbd",
+        "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-03T17:16:56Z",
+      "side": 1,
+      "message": "having expect statements in functions like this called by tests makes test failure logs very difficult to make sense of, this is why I prefer using matchers, but I am not sure what the right thing to do here is.\n\nalso this function needs more comments",
+      "range": {
+        "startLine": 117,
+        "startChar": 5,
+        "endLine": 117,
+        "endChar": 21
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "c60c0c6c_98033f6b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/coordinate_descent_minimizer_test.cc",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 1,
+                "endChar": 0
+              },
+              "replacement": "  SCOPED_TRACE(\"MinimizeAndCheck\");\n"
+            }
+          ]
+        }
+      ],
+      "revId": "09ce22dde0f19f1563217543f9f7d0cf01326468",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f4ecf7a_4561296d",
+        "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-03T17:16:56Z",
+      "side": 1,
+      "message": "test naming for this and other tests describes the setup, but doesn\u0027t tell the reader what to expect.",
+      "range": {
+        "startLine": 147,
+        "startChar": 33,
+        "endLine": 147,
+        "endChar": 70
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "8a04ba14_c3d7fa19",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/coordinate_descent_minimizer_test.cc",
+              "range": {
+                "startLine": 147,
+                "startChar": 0,
+                "endLine": 148,
+                "endChar": 0
+              },
+              "replacement": "TEST(CoordinateDescentMinimizer, IndependentBlocksAreOptimized) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "09ce22dde0f19f1563217543f9f7d0cf01326468",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b1e675e_deece008",
+        "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-03T17:16:56Z",
+      "side": 1,
+      "message": "its not clear that for problems this small and so few partitions the number of threads actually does anything. indeed this problem only contains one group.",
+      "range": {
+        "startLine": 148,
+        "startChar": 11,
+        "endLine": 148,
+        "endChar": 22
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "415b4b89_39d8db02",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/coordinate_descent_minimizer_test.cc",
+              "range": {
+                "startLine": 148,
+                "startChar": 0,
+                "endLine": 149,
+                "endChar": 0
+              },
+              "replacement": "  for (int ti : {1, 2}) {\n"
+            },
+            {
+              "path": "internal/ceres/coordinate_descent_minimizer_test.cc",
+              "range": {
+                "startLine": 159,
+                "startChar": 0,
+                "endLine": 160,
+                "endChar": 0
+              },
+              "replacement": "    MinimizeAndCheck(\u0026problem, ordering, \u0026state, ti);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "09ce22dde0f19f1563217543f9f7d0cf01326468",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbae4037_f5155f4d",
+        "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-03T17:16:56Z",
+      "side": 1,
+      "message": "do not bury magic tolerances as literals, define a global constant and use it.",
+      "range": {
+        "startLine": 161,
+        "startChar": 35,
+        "endLine": 161,
+        "endChar": 36
+      },
+      "revId": "09ce22dde0f19f1563217543f9f7d0cf01326468",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d9ef1f8_532c7871",
+        "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-03T17:16:56Z",
+      "side": 1,
+      "message": "the test name is not informative.",
+      "range": {
+        "startLine": 165,
+        "startChar": 33,
+        "endLine": 165,
+        "endChar": 62
+      },
+      "revId": "09ce22dde0f19f1563217543f9f7d0cf01326468",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "333f99c2_4224d108",
+        "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-03T17:16:56Z",
+      "side": 1,
+      "message": "the combination of loop and the ternary makes this test hard to read.",
+      "range": {
+        "startLine": 166,
+        "startChar": 22,
+        "endLine": 166,
+        "endChar": 23
+      },
+      "revId": "09ce22dde0f19f1563217543f9f7d0cf01326468",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a9738af_c1bf9f98",
+        "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-03T17:16:56Z",
+      "side": 1,
+      "message": "ordering tests should come before solve tests.",
+      "range": {
+        "startLine": 197,
+        "startChar": 33,
+        "endLine": 197,
+        "endChar": 59
+      },
+      "revId": "09ce22dde0f19f1563217543f9f7d0cf01326468",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f25b79f8_660060ab",
+        "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-03T17:16:56Z",
+      "side": 1,
+      "message": "not sure what this test name says and what this test is doing.",
+      "range": {
+        "startLine": 216,
+        "startChar": 33,
+        "endLine": 216,
+        "endChar": 75
+      },
+      "revId": "09ce22dde0f19f1563217543f9f7d0cf01326468",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
