@@ -985,6 +985,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b53ddba0_0c4b986c",
+        "filename": "include/ceres/constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-03T18:09:07Z",
+      "side": 1,
+      "message": "nm, I am dreaming, we are still on c++17. Though we should have a separate conversation about c++20 as part of the current release.",
+      "parentUuid": "c9098a30_2395ba18",
+      "range": {
+        "startLine": 34,
+        "startChar": 69,
+        "endLine": 34,
+        "endChar": 71
+      },
+      "revId": "51349baed89328cbfa1c480d6f67b0d2550a9d00",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5eb2f52e_70254d80",
