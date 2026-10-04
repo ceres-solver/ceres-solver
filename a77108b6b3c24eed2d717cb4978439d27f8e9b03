@@ -511,6 +511,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8070274_54e8f4fd",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-04T23:15:17Z",
+      "side": 1,
+      "message": "I have now evaluated both compositional approaches by Novaković (sequential and recursive) on top of 2-argument Accurate(R)Norm (which the method presupposes).\n\nTo summarize, the compositional approach is both slower and less accurate than my compensated-compositional (n \u003e 2). The paper mentions though the compositional approach is intended to be used with SIMD which is out of scope.\n\nDetailed results, the benchmark harness and the actual implementation are [here](https://github.com/sergiud/ceres-solver/blob/accurate-norm-composition-results/compositional/compositional.md).",
+      "parentUuid": "66556852_465f8433",
+      "revId": "a77108b6b3c24eed2d717cb4978439d27f8e9b03",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a6135fbc_083c4f26",
