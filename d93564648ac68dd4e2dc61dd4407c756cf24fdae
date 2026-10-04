@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ee4e143_d0c5b0fd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-04T17:41:27Z",
+      "side": 1,
+      "message": "Issue identified using Claude Opus 5.5 following Gemini [`AccurateNorm` review](https://ceres-solver-review.googlesource.com/c/ceres-solver/+/28200/comments/24500aad_1721e1d1).",
+      "revId": "d93564648ac68dd4e2dc61dd4407c756cf24fdae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
