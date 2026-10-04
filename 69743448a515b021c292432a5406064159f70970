@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91b6e80e_2fc32b51",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-04T00:04:26Z",
+      "side": 1,
+      "message": "Hi Jack,\n\nLooking at the test changes and your commit message, I think we should keep the existing behavior on master:\n\n1. Why ridders_relative_initial_step_size is separate from relative_step_size.\n\nFORWARD and CENTRAL need a small default step (1e-6), while RIDDERS needs a much larger initial step (1e-2) that it shrinks across Romberg extrapolations. Because the method (CENTRAL vs RIDDERS) is a template parameter on NumericDiffCostFunction and not known to NumericDiffOptions, sharing relative_step_size (1e-6) means RIDDERS is broken out of the box with default NumericDiffOptions (which is why ExponentialFunctorRidders broke in this CL unless options.relative_step_size \u003d 1e-2 was set manually).\n\n2. Why ridders_relative_initial_step_size is also used as min_step_size.\n\nWhen x_j \u003d 0 (e.g. parameters initialized to zero, or Manifold::Plus(x, delta) at delta \u003d 0), |x_j| * step is zero, so delta falls back to min_step_size. FORWARD and CENTRAL can fall back to sqrt(eps) (~1.5e-8), but RIDDERS cannot start at 1.5e-8 and shrink it further without hitting pure roundoff noise. Using ridders_relative_initial_step_size for both gives:\n\ndelta \u003d max(sqrt(eps), ridders_relative_initial_step_size * max(1.0, |x_j|))\n\nSeparating them forces callers who want to tune Ridders\u0027 step size to set two options to the same value (as in TranscendentalCaseFunctorRidders and HasCorrectMinusJacobianAt in this CL).\n\n3. Public API:\n\nNumericDiffOptions is part of the public API, so renaming ridders_relative_initial_step_size is a breaking change.\n\nIf you found the code in numeric_diff.h confusing, I\u0027d be happy with a CL that just clarifies the comments there, otherwise let\u0027s abandon this change.",
+      "revId": "69743448a515b021c292432a5406064159f70970",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
