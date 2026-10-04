@@ -634,25 +634,29 @@ void RotationMatrixToEulerAngles(
 
   T ea[3];
   if constexpr (EulerSystem::kIsProperEuler) {
-    const T sy = hypot(R(i, j), R(i, k));
-    if (fpclassify(sy) != FP_ZERO) {
+    if (fpclassify(R(i, j)) != FP_ZERO || fpclassify(R(i, k)) != FP_ZERO) {
+      const T sy = hypot(R(i, j), R(i, k));
       ea[0] = atan2(R(i, j), R(i, k));
       ea[1] = atan2(sy, R(i, i));
       ea[2] = atan2(R(j, i), -R(k, i));
     } else {
+      // At gimbal lock, the norm is zero and has no derivative. Use the zero
+      // subgradient instead of differentiating the norm.
       ea[0] = atan2(-R(j, k), R(j, j));
-      ea[1] = atan2(sy, R(i, i));
+      ea[1] = atan2(T(0.0), R(i, i));
       ea[2] = T(0.0);
     }
   } else {
-    const T cy = hypot(R(i, i), R(j, i));
-    if (fpclassify(cy) != FP_ZERO) {
+    if (fpclassify(R(i, i)) != FP_ZERO || fpclassify(R(j, i)) != FP_ZERO) {
+      const T cy = hypot(R(i, i), R(j, i));
       ea[0] = atan2(R(k, j), R(k, k));
       ea[1] = atan2(-R(k, i), cy);
       ea[2] = atan2(R(j, i), R(i, i));
     } else {
+      // At gimbal lock, the norm is zero and has no derivative. Use the zero
+      // subgradient instead of differentiating the norm.
       ea[0] = atan2(-R(j, k), R(j, j));
-      ea[1] = atan2(-R(k, i), cy);
+      ea[1] = atan2(-R(k, i), T(0.0));
       ea[2] = T(0.0);
     }
   }
