@@ -1455,6 +1455,46 @@ static double sample_matrices[][9] = {
 };
 // clang-format on
 
+// At gimbal lock, the norm determining the middle angle is exactly zero and
+// has no derivative. The middle angle must use the zero subgradient instead
+// of propagating a NaN into the derivatives of the Euler angles.
+TEST(EulerAngles, RotationMatrixToEulerAnglesAtGimbalLockForJets) {
+  using J = Jet<double, 9>;
+  constexpr int kNumEntries = 9;
+  // The identity locks all proper Euler sequences.
+  constexpr double kIdentity[kNumEntries] = {1, 0, 0, 0, 1, 0, 0, 0, 1};
+  // A rotation about the Y axis by 90 degrees locks the ZYX sequence.
+  constexpr double kQuarterTurnAboutY[kNumEntries] = {
+      0, 0, 1, 0, 1, 0, -1, 0, 0};
+
+  // Assigns every entry its own derivative direction.
+  const auto make_matrix = [](const double (&entries)[kNumEntries],
+                              J(&matrix)[kNumEntries]) {
+    for (int entry = 0; entry < kNumEntries; ++entry) {
+      matrix[entry] = J(entries[entry], entry);
+    }
+  };
+
+  J matrix[kNumEntries];
+  J angles[3];
+
+  make_matrix(kIdentity, matrix);
+  RotationMatrixToEulerAngles<IntrinsicZXZ>(matrix, angles);
+  EXPECT_EQ(angles[1].a, 0.0);
+  EXPECT_TRUE(angles[1].v.isZero());
+  for (const J& angle : angles) {
+    EXPECT_TRUE(angle.v.allFinite());
+  }
+
+  make_matrix(kQuarterTurnAboutY, matrix);
+  RotationMatrixToEulerAngles<IntrinsicZYX>(matrix, angles);
+  EXPECT_EQ(angles[1].a, kPi / 2);
+  EXPECT_TRUE(angles[1].v.isZero());
+  for (const J& angle : angles) {
+    EXPECT_TRUE(angle.v.allFinite());
+  }
+}
+
 // Test rotation matrix to ZXY/312 Intrinsic Euler Angles conversion using Jets
 // The two ZXY test cases specifically cover handling of Tait-Bryan angles
 // i.e. last axis of rotation is different from the first
