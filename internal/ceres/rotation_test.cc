@@ -1455,6 +1455,50 @@ static double sample_matrices[][9] = {
 };
 // clang-format on
 
+// At gimbal lock, the norm determining the middle angle is exactly zero and
+// has no derivative. The middle angle must use the zero subgradient instead
+// of propagating a NaN into the derivatives of the Euler angles.
+TEST(EulerAngles, RotationMatrixToEulerAnglesAtGimbalLockForJets) {
+  using J = Jet<double, 9>;
+  constexpr int kNumEntries = 9;
+  // The identity locks all proper Euler sequences.
+  constexpr double kIdentity[kNumEntries] = {1, 0, 0, 0, 1, 0, 0, 0, 1};
+  // A rotation about the Y axis by 90 degrees locks the ZYX sequence.
+  constexpr double kQuarterTurnAboutY[kNumEntries] = {
+      0, 0, 1, 0, 1, 0, -1, 0, 0};
+
+  // Assigns every entry its own derivative direction.
+  const auto make_matrix = [](const double (&entries)[kNumEntries],
+                              J(&matrix)[kNumEntries]) {
+    for (int entry = 0; entry < kNumEntries; ++entry) {
+      matrix[entry] = J(entries[entry], entry);
+    }
+  };
+
+  J matrix[kNumEntries];
+  J angles[3];
+
+  // At gimbal lock with the axes (i, j, k), the first angle of the sequence is
+  // atan2(-R(j, k), R(j, j)) whose only nonzero derivative is -1 with respect
+  // to R(j, k). Intrinsic sequences report this angle last. The other angles
+  // are constant.
+  make_matrix(kIdentity, matrix);
+  RotationMatrixToEulerAngles<IntrinsicZXZ>(matrix, angles);
+  // The axes of the ZXZ sequence are (2, 0, 1), i.e., R(j, k) = R(0, 1).
+  J expected_identity[3] = {J(0.0), J(0.0), J(0.0)};
+  expected_identity[2].v[1] = -1.0;
+  EXPECT_THAT(angles,
+              testing::Pointwise(JetClose(kTolerance), expected_identity));
+
+  make_matrix(kQuarterTurnAboutY, matrix);
+  RotationMatrixToEulerAngles<IntrinsicZYX>(matrix, angles);
+  // The axes of the ZYX sequence are (0, 1, 2), i.e., R(j, k) = R(1, 2).
+  J expected_quarter_turn[3] = {J(0.0), J(kPi / 2), J(0.0)};
+  expected_quarter_turn[2].v[5] = -1.0;
+  EXPECT_THAT(angles,
+              testing::Pointwise(JetClose(kTolerance), expected_quarter_turn));
+}
+
 // Test rotation matrix to ZXY/312 Intrinsic Euler Angles conversion using Jets
 // The two ZXY test cases specifically cover handling of Tait-Bryan angles
 // i.e. last axis of rotation is different from the first
