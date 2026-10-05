@@ -16,6 +16,24 @@
       "message": "The commit message doesn\u0027t quite make sense to me, it says the norm is zero and has no derivative, can you say why not? (I do not have the algebra handy in my head), so regardless it would be good to have it in the commit message, right now I can\u0027t really tell what is going on.\n\nIndeed it would be good to annotate the code so that future readers know the mathematical reasoning here.",
       "revId": "1e8006efa59ae52c6b30c22cb6ac6f023e039603",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6db3fecb_bd89758c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-05T01:03:35Z",
+      "side": 1,
+      "message": "The derivative is undefined because differentiating the norm of a zero vector results in division by zero and thus NaN. Is that what you\u0027re missing?",
+      "parentUuid": "3307a14f_5995c20d",
+      "revId": "1e8006efa59ae52c6b30c22cb6ac6f023e039603",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
