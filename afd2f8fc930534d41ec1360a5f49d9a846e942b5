@@ -1,0 +1,237 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8912ae4_94c40285",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-05T16:39:28Z",
+      "side": 1,
+      "message": "almost there!",
+      "revId": "afd2f8fc930534d41ec1360a5f49d9a846e942b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8065ad6_02f5fc8d",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-05T16:39:28Z",
+      "side": 1,
+      "message": "I do not understand this, the name of the function is confusing and so is the documentation.",
+      "range": {
+        "startLine": 155,
+        "startChar": 2,
+        "endLine": 161,
+        "endChar": 3
+      },
+      "revId": "afd2f8fc930534d41ec1360a5f49d9a846e942b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f28f15e_ac729491",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-05T16:39:28Z",
+      "side": 1,
+      "message": "do we really need to do this dance for copying the payload? just return std::numeric_limits\u003cT\u003e::Nan or something like that. If not then it would be worth having a comment as to why this complexity is needed.",
+      "range": {
+        "startLine": 190,
+        "startChar": 21,
+        "endLine": 190,
+        "endChar": 22
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "26b58a9a_90afd571",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "include/ceres/accurate_norm.h",
+              "range": {
+                "startLine": 173,
+                "startChar": 0,
+                "endLine": 174,
+                "endChar": 0
+              },
+              "replacement": "// argument yields a NaN.\n"
+            },
+            {
+              "path": "include/ceres/accurate_norm.h",
+              "range": {
+                "startLine": 191,
+                "startChar": 0,
+                "endLine": 195,
+                "endChar": 0
+              },
+              "replacement": "    return std::numeric_limits\u003cT\u003e::quiet_NaN();\n"
+            },
+            {
+              "path": "include/ceres/accurate_norm.h",
+              "range": {
+                "startLine": 260,
+                "startChar": 0,
+                "endLine": 261,
+                "endChar": 0
+              },
+              "replacement": "// argument produces a NaN. When all arguments are\n"
+            }
+          ]
+        }
+      ],
+      "revId": "afd2f8fc930534d41ec1360a5f49d9a846e942b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf1723ca_066f1d5e",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-05T16:39:28Z",
+      "side": 1,
+      "message": "SquaredNorn not SquareNorm",
+      "range": {
+        "startLine": 205,
+        "startChar": 12,
+        "endLine": 205,
+        "endChar": 47
+      },
+      "revId": "afd2f8fc930534d41ec1360a5f49d9a846e942b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ba00e0a_7734acb5",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-05T16:39:28Z",
+      "side": 1,
+      "message": "sigma -\u003e sum_of_squares\nsigma_e -\u003e sum_of_squares_error",
+      "range": {
+        "startLine": 212,
+        "startChar": 4,
+        "endLine": 212,
+        "endChar": 9
+      },
+      "revId": "afd2f8fc930534d41ec1360a5f49d9a846e942b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40db812c_62421976",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-05T16:39:28Z",
+      "side": 1,
+      "message": "sum_error",
+      "range": {
+        "startLine": 220,
+        "startChar": 21,
+        "endLine": 220,
+        "endChar": 26
+      },
+      "revId": "afd2f8fc930534d41ec1360a5f49d9a846e942b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1515c0ff_127640f5",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-05T16:39:28Z",
+      "side": 1,
+      "message": "UnscaledAccurateNorm, UnscaledAccurateSquareNormWithError, and MaximumMagnitude still have -\u003e\n  std::enable_if_t\u003c...\u003e instead of returning T / std::pair\u003cT, T\u003e directly.)",
+      "revId": "afd2f8fc930534d41ec1360a5f49d9a846e942b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0234508a_2f42c930",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-05T16:39:28Z",
+      "side": 1,
+      "message": "squared_norm, squared_norm_error\nor\nsum_of_squares, sum_of_squares_error",
+      "range": {
+        "startLine": 241,
+        "startChar": 14,
+        "endLine": 241,
+        "endChar": 19
+      },
+      "revId": "afd2f8fc930534d41ec1360a5f49d9a846e942b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e550d6c_51521072",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-05T16:39:28Z",
+      "side": 1,
+      "message": "This partially reverts CL 28460 by calling AccurateNorm before checking AnyExactlyNonZero(sy) / AnyExactlyNonZero(cy), which still evaluates 0.0 / 0.0 \u003d NaN in the\n  Jet derivatives at gimbal lock. Please check AnyExactlyNonZero(R(i, j), R(i, k)) and AnyExactlyNonZero(R(i, i), R(j, i)) before calling AccurateNorm, matching the other\n  functions in this file.",
+      "range": {
+        "startLine": 643,
+        "startChar": 17,
+        "endLine": 643,
+        "endChar": 29
+      },
+      "revId": "afd2f8fc930534d41ec1360a5f49d9a846e942b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
