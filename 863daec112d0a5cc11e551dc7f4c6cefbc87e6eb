@@ -1,0 +1,200 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77c84417_f553c9a6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-05T01:19:23Z",
+      "side": 1,
+      "message": "this is much simpler and nicer, couple of quick questions about the structure of the code, and then I (and maybe gemini) will take a full pass.",
+      "revId": "863daec112d0a5cc11e551dc7f4c6cefbc87e6eb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcd651c2_c3bc37e9",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-05T01:19:23Z",
+      "side": 1,
+      "message": "guard this with CPP_23 and use std::scalbn in that case? Also maybe call this Scalbn so that the name lines up?",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 22
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "fcdb5783_c49e6eaf",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "include/ceres/accurate_norm.h",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 1,
+                "endChar": 0
+              },
+              "replacement": "#if __cplusplus \u003e\u003d 202302L\n  return std::scalbn(T{1}, exponent);\n#else\n"
+            },
+            {
+              "path": "include/ceres/accurate_norm.h",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 1,
+                "endChar": 0
+              },
+              "replacement": "#endif\n"
+            }
+          ]
+        }
+      ],
+      "revId": "863daec112d0a5cc11e551dc7f4c6cefbc87e6eb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4763a2f1_ef199fd9",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-05T01:19:23Z",
+      "side": 1,
+      "message": "why are we opening and closing the internal namespace twice here?",
+      "range": {
+        "startLine": 254,
+        "startChar": 5,
+        "endLine": 254,
+        "endChar": 6
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "35906fe9_efde2460",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "include/ceres/accurate_norm.h",
+              "range": {
+                "startLine": 254,
+                "startChar": 0,
+                "endLine": 258,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "863daec112d0a5cc11e551dc7f4c6cefbc87e6eb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16482f3c_297ee8ff",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-05T01:19:23Z",
+      "side": 1,
+      "message": "again for my own understanding, since this function only gets called with the uniform promoted types anyways, can\u0027t the return type of this function be T? and that would simplify the code substantially?",
+      "range": {
+        "startLine": 261,
+        "startChar": 7,
+        "endLine": 261,
+        "endChar": 16
+      },
+      "revId": "863daec112d0a5cc11e551dc7f4c6cefbc87e6eb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "206832ea_f2ac52f0",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-05T01:19:23Z",
+      "side": 1,
+      "message": "just returning 0 should work and give you automatic promotion no?",
+      "range": {
+        "startLine": 275,
+        "startChar": 11,
+        "endLine": 275,
+        "endChar": 23
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "a523d4d6_fde381b9",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "include/ceres/accurate_norm.h",
+              "range": {
+                "startLine": 275,
+                "startChar": 0,
+                "endLine": 276,
+                "endChar": 0
+              },
+              "replacement": "    return 0;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "863daec112d0a5cc11e551dc7f4c6cefbc87e6eb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2234792_7868fa32",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-05T01:19:23Z",
+      "side": 1,
+      "message": "for my own understanding, why do we need two variants of this function? the two argument and the three or more arguments version? Shouldn\u0027t the three argument version be enough? Is there a c++-ism that I am missing?",
+      "range": {
+        "startLine": 318,
+        "startChar": 0,
+        "endLine": 318,
+        "endChar": 8
+      },
+      "revId": "863daec112d0a5cc11e551dc7f4c6cefbc87e6eb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
