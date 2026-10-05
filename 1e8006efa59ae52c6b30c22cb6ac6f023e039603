@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3307a14f_5995c20d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-05T00:49:18Z",
+      "side": 1,
+      "message": "The commit message doesn\u0027t quite make sense to me, it says the norm is zero and has no derivative, can you say why not? (I do not have the algebra handy in my head), so regardless it would be good to have it in the commit message, right now I can\u0027t really tell what is going on.\n\nIndeed it would be good to annotate the code so that future readers know the mathematical reasoning here.",
+      "revId": "1e8006efa59ae52c6b30c22cb6ac6f023e039603",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
