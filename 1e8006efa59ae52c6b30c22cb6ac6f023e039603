@@ -34,6 +34,24 @@
       "parentUuid": "3307a14f_5995c20d",
       "revId": "1e8006efa59ae52c6b30c22cb6ac6f023e039603",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3de5509d_13765ea6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-05T01:17:15Z",
+      "side": 1,
+      "message": "I get that, what I meant was that the norm is only part of the expression of the derivative right? and are we sure that there isn\u0027t a l\u0027hopital\u0027s rule like limit argument that can\u0027t be made here?",
+      "parentUuid": "6db3fecb_bd89758c",
+      "revId": "1e8006efa59ae52c6b30c22cb6ac6f023e039603",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
