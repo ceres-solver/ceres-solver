@@ -41,6 +41,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba0f4d82_e6105d8a",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-05T17:42:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8065ad6_02f5fc8d",
+      "range": {
+        "startLine": 155,
+        "startChar": 2,
+        "endLine": 161,
+        "endChar": 3
+      },
+      "revId": "afd2f8fc930534d41ec1360a5f49d9a846e942b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8f28f15e_ac729491",
@@ -102,6 +126,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9295563_470328bc",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-05T17:42:59Z",
+      "side": 1,
+      "message": "That would drop the payload. I\u0027d rather not do that.",
+      "parentUuid": "8f28f15e_ac729491",
+      "range": {
+        "startLine": 190,
+        "startChar": 21,
+        "endLine": 190,
+        "endChar": 22
+      },
+      "revId": "afd2f8fc930534d41ec1360a5f49d9a846e942b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bf1723ca_066f1d5e",
@@ -115,6 +163,30 @@
       "writtenOn": "2026-10-05T16:39:28Z",
       "side": 1,
       "message": "SquaredNorn not SquareNorm",
+      "range": {
+        "startLine": 205,
+        "startChar": 12,
+        "endLine": 205,
+        "endChar": 47
+      },
+      "revId": "afd2f8fc930534d41ec1360a5f49d9a846e942b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ddf5af2b_eaeb4e72",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-05T17:42:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf1723ca_066f1d5e",
       "range": {
         "startLine": 205,
         "startChar": 12,
@@ -148,6 +220,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8da45b29_8d4f66e2",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-05T17:42:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ba00e0a_7734acb5",
+      "range": {
+        "startLine": 212,
+        "startChar": 4,
+        "endLine": 212,
+        "endChar": 9
+      },
+      "revId": "afd2f8fc930534d41ec1360a5f49d9a846e942b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "40db812c_62421976",
@@ -161,6 +257,30 @@
       "writtenOn": "2026-10-05T16:39:28Z",
       "side": 1,
       "message": "sum_error",
+      "range": {
+        "startLine": 220,
+        "startChar": 21,
+        "endLine": 220,
+        "endChar": 26
+      },
+      "revId": "afd2f8fc930534d41ec1360a5f49d9a846e942b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0253ac31_3249e1e4",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-05T17:42:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40db812c_62421976",
       "range": {
         "startLine": 220,
         "startChar": 21,
@@ -188,6 +308,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a096cbfa_85637a42",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-05T17:42:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1515c0ff_127640f5",
+      "revId": "afd2f8fc930534d41ec1360a5f49d9a846e942b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0234508a_2f42c930",
@@ -211,6 +349,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "944588d2_7e34a435",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-05T17:42:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0234508a_2f42c930",
+      "range": {
+        "startLine": 241,
+        "startChar": 14,
+        "endLine": 241,
+        "endChar": 19
+      },
+      "revId": "afd2f8fc930534d41ec1360a5f49d9a846e942b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7e550d6c_51521072",
@@ -224,6 +386,30 @@
       "writtenOn": "2026-10-05T16:39:28Z",
       "side": 1,
       "message": "This partially reverts CL 28460 by calling AccurateNorm before checking AnyExactlyNonZero(sy) / AnyExactlyNonZero(cy), which still evaluates 0.0 / 0.0 \u003d NaN in the\n  Jet derivatives at gimbal lock. Please check AnyExactlyNonZero(R(i, j), R(i, k)) and AnyExactlyNonZero(R(i, i), R(j, i)) before calling AccurateNorm, matching the other\n  functions in this file.",
+      "range": {
+        "startLine": 643,
+        "startChar": 17,
+        "endLine": 643,
+        "endChar": 29
+      },
+      "revId": "afd2f8fc930534d41ec1360a5f49d9a846e942b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee833e3e_901376f9",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-05T17:42:59Z",
+      "side": 1,
+      "message": "Ah, thanks for catching this!",
+      "parentUuid": "7e550d6c_51521072",
       "range": {
         "startLine": 643,
         "startChar": 17,
