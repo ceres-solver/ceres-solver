@@ -69,6 +69,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ca38520_47703e7d",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-05T15:30:11Z",
+      "side": 1,
+      "message": "Clang does not accept `std::scalbn` in constant expressions. Calling the function `Scalbn` is also misleading. `PowerOfTwo` computes `2^n` not `x*b^n`.",
+      "parentUuid": "fcd651c2_c3bc37e9",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 22
+      },
+      "revId": "863daec112d0a5cc11e551dc7f4c6cefbc87e6eb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4763a2f1_ef199fd9",
@@ -110,6 +134,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c43dfbf9_03896d01",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-05T15:30:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4763a2f1_ef199fd9",
+      "range": {
+        "startLine": 254,
+        "startChar": 5,
+        "endLine": 254,
+        "endChar": 6
+      },
+      "revId": "863daec112d0a5cc11e551dc7f4c6cefbc87e6eb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "16482f3c_297ee8ff",
@@ -123,6 +171,30 @@
       "writtenOn": "2026-10-05T01:19:23Z",
       "side": 1,
       "message": "again for my own understanding, since this function only gets called with the uniform promoted types anyways, can\u0027t the return type of this function be T? and that would simplify the code substantially?",
+      "range": {
+        "startLine": 261,
+        "startChar": 7,
+        "endLine": 261,
+        "endChar": 16
+      },
+      "revId": "863daec112d0a5cc11e551dc7f4c6cefbc87e6eb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cdb62d05_3bf7ff25",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-05T15:30:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16482f3c_297ee8ff",
       "range": {
         "startLine": 261,
         "startChar": 7,
@@ -174,6 +246,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7df05dc4_b89c74c3",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-05T15:30:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "206832ea_f2ac52f0",
+      "range": {
+        "startLine": 275,
+        "startChar": 11,
+        "endLine": 275,
+        "endChar": 23
+      },
+      "revId": "863daec112d0a5cc11e551dc7f4c6cefbc87e6eb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e2234792_7868fa32",
@@ -187,6 +283,30 @@
       "writtenOn": "2026-10-05T01:19:23Z",
       "side": 1,
       "message": "for my own understanding, why do we need two variants of this function? the two argument and the three or more arguments version? Shouldn\u0027t the three argument version be enough? Is there a c++-ism that I am missing?",
+      "range": {
+        "startLine": 318,
+        "startChar": 0,
+        "endLine": 318,
+        "endChar": 8
+      },
+      "revId": "863daec112d0a5cc11e551dc7f4c6cefbc87e6eb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f05a5c5_754b57fb",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-05T15:30:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2234792_7868fa32",
       "range": {
         "startLine": 318,
         "startChar": 0,
