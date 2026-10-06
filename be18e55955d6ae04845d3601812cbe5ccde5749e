@@ -1,0 +1,131 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f789526e_8e33dfb5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-06T00:48:16Z",
+      "side": 1,
+      "message": "with some help from my friend gemini",
+      "revId": "be18e55955d6ae04845d3601812cbe5ccde5749e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10897ed9_946e6df9",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-06T00:48:16Z",
+      "side": 1,
+      "message": "Please add a brief comment explaining why AccurateRNorm needs a tighter upper bound than AccurateNorm (namely, if the inputs are too large, the reciprocal norm rho \u003d 1 / norm falls below Tiny(), causing fma(-rho, rho, r) to underflow even when sum_of_squares itself does not overflow).",
+      "fixSuggestions": [
+        {
+          "fixId": "95b812db_f78fb9be",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "include/ceres/accurate_norm.h",
+              "range": {
+                "startLine": 180,
+                "startChar": 0,
+                "endLine": 182,
+                "endChar": 0
+              },
+              "replacement": "  // arguments, replacing UnscaledMaximum(num_arguments). AccurateRNorm needs a\n  // tighter upper bound than AccurateNorm because if the inputs are too large,\n  // the reciprocal norm rho \u003d 1 / norm falls below Tiny(), causing\n  // fma(-rho, rho, r) to underflow even when sum_of_squares itself does not\n  // overflow. The reciprocal norm then is at least Tiny() which keeps the\n  // rounding error of its square exact.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "be18e55955d6ae04845d3601812cbe5ccde5749e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70d737d1_96ea9507",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-06T00:48:16Z",
+      "side": 1,
+      "message": "To match the cleanup in UnscaledAccurateNorm in the parent CL:\n  \n  1. Still refers to sigma and sigma_e in the comment, which were renamed to sum_of_squares and sum_of_squares_error.\n  2. Please use descriptive variable names instead of r, rho, tau, nu (e.g., inv_sum_of_squares, rnorm, rnorm_error, correction).\n  3. On line 298, prefer multiplying by T(0.5) instead of dividing by T(2) for consistency with UnscaledAccurateNorm.",
+      "fixSuggestions": [
+        {
+          "fixId": "0e8ba443_39619619",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "include/ceres/accurate_norm.h",
+              "range": {
+                "startLine": 275,
+                "startChar": 0,
+                "endLine": 276,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "be18e55955d6ae04845d3601812cbe5ccde5749e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc829762_1811ea37",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-06T00:48:16Z",
+      "side": 1,
+      "message": "Same as in the parent CL: please drop the NaN payload preservation claim here and the memcmp NaN payload checks in accurate_norm_test.cc.",
+      "range": {
+        "startLine": 366,
+        "startChar": 44,
+        "endLine": 366,
+        "endChar": 48
+      },
+      "revId": "be18e55955d6ae04845d3601812cbe5ccde5749e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2da8959_4e6db70c",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1449,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-06T00:48:16Z",
+      "side": 1,
+      "message": "In the 3-argument test here, z \u003d MakeJet(12.0, 0.0, 0.0) has zero derivatives, so the variadic fold expression for args.v in AccurateRNorm(Jet...) multiplies by zero and is never actually tested for non-zero derivatives.\n  \nPlease move this next to TEST(Jet, AccurateNorm) as TEST(Jet, AccurateRNorm) and structure it the same way: test 2, 3, and 4 arguments with non-zero derivatives on all arguments, test zero scalar values with non-zero derivatives, and check AccurateRNorm against 1.0 / hypot(x, y) and 1.0 / hypot(x, y, z).",
+      "revId": "be18e55955d6ae04845d3601812cbe5ccde5749e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
