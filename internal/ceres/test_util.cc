@@ -139,7 +139,13 @@ void ExpectArraysClose(int n, const double* p, const double* q, double tol) {
 }
 
 std::string TestFileAbsolutePath(const std::string& filename) {
+#ifdef CERES_TEST_DATA_DIR
+  // The absolute data directory does not depend on the location of the
+  // build directory or on how the test is run.
+  return JoinPath(CERES_TEST_DATA_DIR, filename);
+#else
   return JoinPath(::testing::SrcDir() + CERES_TEST_SRCDIR_SUFFIX, filename);
+#endif
 }
 
 }  // namespace internal
