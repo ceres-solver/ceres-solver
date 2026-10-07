@@ -762,7 +762,7 @@ command to find all of its dependencies.
      ``SuiteSparse_<COMPONENT>_INCLUDE_DIR`` and
      ``SuiteSparse_<COMPONENT>_LIBRARY`` (for components ``AMD``, ``CAMD``,
      ``CCOLAMD``, ``CHOLMOD``, ``COLAMD``, ``SPQR``, ``Config``).
-   - **Sphinx**: ``Sphinx_EXECUTABLE``.
+   - **Sphinx**: ``Sphinx_BUILD_EXECUTABLE``.
 
 .. NOTE::
 
