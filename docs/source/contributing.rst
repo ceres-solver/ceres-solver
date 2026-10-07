@@ -6,7 +6,7 @@ Contributing
 
 We welcome contributions to Ceres, whether they are new features, bug
 fixes or tests. The Ceres `mailing
-<http://groups.google.com/group/ceres-solver>`_ list is the best place
+<https://groups.google.com/g/ceres-solver>`_ list is the best place
 for all development related discussions. Please consider joining
 it. If you have ideas on how you would like to contribute to Ceres, it
 is a good idea to let us know on the mailing list before you start
@@ -17,7 +17,7 @@ to make a suggestion or three.
 
 We follow Google's `C++ Style Guide
 <https://google.github.io/styleguide/cppguide.html>`_ and
-use `git <http://git-scm.com/>`_ for version control. We use the
+use `git <https://git-scm.com/>`_ for version control. We use
 `Gerrit <https://ceres-solver-review.googlesource.com/>`_ to collaborate and
 review changes to Ceres. Gerrit enables pre-commit reviews so that
 Ceres can maintain a linear history with clean, reviewed commits, and
@@ -33,14 +33,13 @@ Setting up your Environment
 
    * Mac ``brew install git``.
    * Linux ``sudo apt-get install git``.
-   * Windows. Download `msysgit
-     <https://code.google.com/p/msysgit/>`_, which includes a minimal
-     `Cygwin <http://www.cygwin.com/>`_ install.
+   * Windows. Download `Git for Windows
+     <https://git-scm.com/download/win>`__.
 
 2. Sign up for `Gerrit
    <https://ceres-solver-review.googlesource.com/>`_. You will also need to
    `sign the Contributor License Agreement (CLA)
-   <https://opensource.google.com/docs/cla/#sign>`_ with Google, which gives
+   <https://opensource.google/documentation/reference/cla>`_ with Google, which gives
    Google a royalty-free unlimited license to use your contributions. You
    retain copyright.
 

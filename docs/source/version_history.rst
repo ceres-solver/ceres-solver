@@ -14,32 +14,163 @@ Version History
 Unreleased
 ==========
 
-Bug Fixes & Minor Changes
--------------------------
+New Features
+------------
 
-#. Clarify building Ceres Solver from Git sources in the installation
-   documentation.
+#. Added ``CUDA_SPARSE`` sparse linear algebra library backend powered by
+   NVIDIA ``cuDSS``, enabling GPU-accelerated ``SPARSE_NORMAL_CHOLESKY`` and
+   ``SPARSE_SCHUR`` solves. (Mark Shachkov, Ben Hamilton & Sameer Agarwal)
+#. Mixed precision solves + iterative refinement when using ``SUITE_SPARSE``
+   as the sparse linear algebra library (requires SuiteSparse 7.4.0 or later
+   for single-precision ``CHOLMOD``). (Sameer Agarwal)
+#. Added ``AccurateNorm`` for overflow and underflow safe variadic norms
+   accurate to nearly full working precision. Its Jet derivatives are defined
+   wherever the norm is nonzero, unlike those of nested two-argument norms.
+   (Sergiu Deitsch)
+#. Simplify instantiation of cost functions and their functors by forwarding
+   functor constructor arguments directly, and add ``std::unique_ptr`` and
+   :enum:`Ownership` constructors across cost and first-order functions.
+   (Sergiu Deitsch & Sameer Agarwal)
+#. Add support for maximum matrix sizes (``kMaxResiduals`` and
+   ``kMaxParameters``) to :class:`TinySolver`,
+   :class:`TinySolverAutoDiffFunction`, and
+   :class:`TinySolverCostFunctionAdapter` to support zero dynamic memory
+   allocation when dimensions are ``Eigen::Dynamic``. (Pez Firoozfam)
+#. Add ``Residuals()`` and ``Jacobian()`` getters to :class:`TinySolver`.
+   (connorlee77)
+#. Do not restrict :class:`Grid1D` and :class:`Grid2D` output to ``double``.
+   (Sergiu Deitsch)
+#. Allow :func:`AngleAxisRotatePoint` to be applied in-place. (Sergiu Deitsch
+   & @CatInTheRain)
+#. Allow specifying the memory layout of quaternion coefficients via a
+   template parameter in rotation functions and reuse rotation functionality in
+   :class:`QuaternionManifold` and :class:`EigenQuaternionManifold`. (Sergiu
+   Deitsch)
+#. Provide ``Eigen::NumTraits`` ``quiet_NaN`` and ``infinity`` for
+   :class:`Jet`. (Sergiu Deitsch)
+#. Move C++17 Bessel functions availability checks from configuration time to
+   inclusion time, with fallback to POSIX implementations on ``libc++``.
+   (Sergiu Deitsch)
+
 
 Backward Incompatible API Changes
 ---------------------------------
 
-#. The ``SUITESPARSE`` CMake option now defaults to ``OFF``. Passing
-   ``-DSUITESPARSE=ON`` restores the previous behavior, but makes the
-   resulting Ceres build GPL licensed unless you hold a commercial
-   SuiteSparse license.
+#. ``glog``, ``gflags``, and ``MINIGLOG`` have been removed and replaced by
+   `Abseil <https://abseil.io/>`_ (version ``20240116`` or later).
+   `GoogleTest <https://github.com/google/googletest>`_ (version ``1.14.0`` or
+   later) is now required when ``BUILD_TESTING=ON``. (Sameer Agarwal, Reinhold
+   Gschweicher & Sergiu Deitsch)
+#. :class:`GradientProblem` and related classes now exclusively use
+   ``std::unique_ptr`` instead of raw pointers for ownership transfer. (Sameer
+   Agarwal)
+#. Fix casing of ``StringToLoggingType`` and ``StringToDumpFormatType``
+   (formerly ``StringToLoggingtype`` and ``StringToDumpFormatype``) for
+   consistency with the rest of the API, and fix a duplicate declaration in
+   ``ceres/types.h``. (Sameer Agarwal)
+#. Ceres Solver now requires CMake 3.22 or later and Eigen 3.3.4 or later.
+   (Sergiu Deitsch)
+#. The ``WITH_SUITESPARSE`` CMake option (formerly ``SUITESPARSE``) now
+   defaults to ``OFF``. Passing ``-DWITH_SUITESPARSE=ON`` restores the
+   previous behavior, but makes the resulting Ceres build GPL licensed unless
+   you hold a commercial SuiteSparse license. (Sergiu Deitsch)
 #. CMake configuration now reports dependencies using standard package output
    and ``FeatureSummary``, and feature options are renamed with a ``WITH_``
-   prefix (e.g. ``SUITESPARSE`` is now ``WITH_SUITESPARSE``). The
-   ``LIB_SUFFIX``, ``MSVC_USE_STATIC_CRT``, and ``EXPORT_BUILD_DIR`` options
-   are removed in favor of standard CMake variables. CMake 3.22 or later is
-   now required. See :ref:`options-controlling-ceres-configuration`.
+   prefix (e.g. ``SUITESPARSE`` is now ``WITH_SUITESPARSE``, ``USE_CUDA`` is
+   now ``WITH_CUDA``). The ``LIB_SUFFIX``, ``MSVC_USE_STATIC_CRT``,
+   ``EXPORT_BUILD_DIR``, and ``<DEPENDENCY>_INCLUDE/LIBRARY_DIR_HINTS``
+   options are removed in favor of standard CMake variables. See
+   :ref:`options-controlling-ceres-configuration`. (Sergiu Deitsch)
+#. Linking against the legacy unscoped ``ceres`` CMake import target now emits
+   a deprecation warning; link against ``Ceres::ceres`` instead. (Sergiu
+   Deitsch)
+#. Support for 32-bit MinGW has been removed. (Sergiu Deitsch)
 
-New Features
-------------
 
-#. Added ``AccurateNorm`` for overflow and underflow safe variadic norms
-   accurate to nearly full working precision. Its Jet derivatives are defined
-   wherever the norm is nonzero, unlike those of nested two-argument norms.
+Bug Fixes & Minor Changes
+-------------------------
+
+#. Use ``absl`` hash and B-tree containers in graph algorithms and
+   preprocessor, substantially reducing preprocessor time when finding an
+   automatic Schur ordering. (Sameer Agarwal)
+#. Remove a level of indirection when using ``CellInfo``, improving the
+   performance of the Schur eliminator and block diagonal preconditioners.
+   (Sameer Agarwal)
+#. Reorder the fields in ``ParameterBlock`` to group hot fields together and
+   reduce cache misses. (Sameer Agarwal)
+#. Preserve caller orderings during preprocessing so subsequent ``Solve``
+   calls are not mutated. (RanaPriyansh)
+#. Apply deterministic parameter block reordering. (Johannes Schönberger)
+#. Fix threading bug in ``CovarianceImpl`` where an extra thread was spawned
+   even when ``num_threads = 1``. (Matt Vitelli)
+#. Fix a bug in inner iterations where round-off error could cause an inner
+   iteration with slightly higher cost to be accepted. (Sameer Agarwal)
+#. Skip structure detection on preprocessor failure. (Dmitriy Korchemkin)
+#. Fix discrepancy in ``QuaternionRotatePoint`` for different quaternion
+   orders. (Sergiu Deitsch)
+#. Do not differentiate the norm at gimbal lock to avoid ``NaN`` derivatives.
+   (Sergiu Deitsch)
+#. Use Euler parameters in ``QuaternionPlusImpl`` while preserving the
+   half-angle tangent space scaling convention. (Sergiu Deitsch)
+#. Avoid division by zero in rotation routines under
+   ``-fsanitize=float-divide-by-zero`` and partially revert 3-argument
+   ``std::hypot`` zero checks due to ``libc++`` underflow. (Sergiu Deitsch)
+#. Fix an initialization order error in ``cuda_sparse_cholesky.cc``. (Sameer
+   Agarwal)
+#. Fix ODR violations when compiling Ceres with Schur specializations and Link
+   Time Optimization (LTO). (Sergiu Deitsch)
+#. Ensure ``DynamicCostFunctionToFunctor`` is exported in shared library
+   builds and ensure consistent visibility attributes. (Sergiu Deitsch)
+#. Do not rely on a preprocessor define for disabling warnings in public
+   headers. (Sergiu Deitsch)
+#. Modernize public and internal headers (``AutoDiffCostFunction``,
+   ``NumericDiffCostFunction``, ``ProductManifold``, ``EuclideanManifold``,
+   ``TinySolver``, ``InvertPSDMatrix``, ``ParameterBlock``,
+   ``cubic_interpolation.h``, ``parameter_dims.h``, ``jet_traits.h``) to C++17
+   and Abseil conventions (``absl::FixedArray``, ``absl::strings``,
+   ``absl::time``, ``std::string_view``), add an ``EventLogger`` to
+   ``TrustRegionPreprocessor``, and extensive ClangTidy cleanups. (Sameer
+   Agarwal)
+#. Support Eigen 5.0.0. (Sergiu Deitsch)
+#. Support CUDA 13 (Mackay), set ``CMAKE_CUDA_ARCHITECTURES`` depending on
+   ``CUDAToolkit_VERSION`` and link static CUDA libraries when configured
+   (Markus Heß), expose Hopper (``sm_90``) support only for CUDA 12.0 and
+   later, and replace ``--extended-lambda`` with ``--expt-extended-lambda``
+   for NVCC (Sameer Agarwal).
+#. Update bundled dependencies to support GCC 15. (Sergiu Deitsch & @adam-ce)
+#. Fix Abseil CMake package configuration usage, version checking, and
+   ``absl::log_flags`` linking. (Reinhold Gschweicher, Sameer Agarwal & Sergiu
+   Deitsch)
+#. Make ``test_util`` GTest-optional to fix benchmark builds when
+   ``BUILD_TESTING=OFF``. (Sameer Agarwal)
+#. Fix vector operations benchmark compilation (Sergey Sharybin) and eliminate
+   Google Benchmark deprecation warnings (Sergiu Deitsch).
+#. Do not export the SuiteSparse ``Partition`` target and make SuiteSparse
+   partitioning detection more robust. (Sergiu Deitsch)
+#. Do not discard caller's ``CMAKE_MODULE_PATH`` in ``CeresConfig.cmake``, use
+   native CMake ``TBB`` package configuration, do not assume Homebrew usage on
+   macOS, and enable Apple linker library deduplication. (Sergiu Deitsch)
+#. Fix shared library builds, MSVC builds, CTest build configuration
+   parameters, and bundle adjuster perturbation assertions in debug mode.
+   (Sergiu Deitsch)
+#. Fix Clang 16 compiler warnings (Johannes Schönberger), CUDA set-but-unused
+   variable warnings (Sergiu Deitsch), and missing ``std`` qualifiers and
+   header includes (Yuriy Chernyshov, Sergiu Deitsch & Sameer Agarwal).
+#. Reuse macro to format version string (Mark Shachkov) and remove remaining
+   references to ``CXSparse`` and
+   ``CreateFakeBundleAdjustmentPartitionedJacobian`` (Sameer Agarwal).
+#. Fix and modernize the Bazel build to use Bzlmod (``MODULE.bazel``), support
+   Bazel 8/9, and add missing sources, tests, benchmarks, and examples.
+   (Sameer Agarwal, Sergiu Deitsch & Laurenz)
+#. Add ReadTheDocs support, specify docs requirements, fix search on
+   ``ceres-solver.org``, document ``DumpLinearLeastSquaresProblem``, update
+   ``GradientChecker`` and installation docs, and fix various documentation
+   typos. (Sergiu Deitsch, Sameer Agarwal, Maxim Smolskiy, brettmichaelgreen,
+   reprojection.calibration, Ian Muldoon, Johannes Bruenger, @sarlinpe, Roger
+   Labbe & @valgur)
+#. Numerous GitHub Actions CI improvements (Ubuntu 24.04, macOS 14/15, Visual
+   Studio 2022, CUDA 12.5.1, Android NDK LTS, ``mold`` linker, SuiteSparse
+   testing, submodule checkout). (Sergiu Deitsch & Mark Shachkov)
 
 2.2.0
 =====

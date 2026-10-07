@@ -1636,7 +1636,7 @@ and given a unit quaternion :math:`q = \left [\begin{matrix}q_0,& q_1,& q_2,& q_
 .. class:: EigenQuaternionManifold
 
 Implements the quaternion manifold for `Eigen's
-<http://eigen.tuxfamily.org/index.php?title=Main_Page>`_
+<https://libeigen.gitlab.io/>`_
 representation of the Hamilton quaternion. Geometrically it is exactly
 the same as the :class:`QuaternionManifold` defined above. However,
 Eigen uses a different internal memory layout for the elements of the

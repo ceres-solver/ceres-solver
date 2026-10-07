@@ -48,7 +48,7 @@ Quaternion. Assuming that the order of entries in your parameter block is
 .. NOTE::
 
  If you are using `Eigen's Quaternion
- <http://eigen.tuxfamily.org/dox/classEigen_1_1Quaternion.html>`_
+ <https://libeigen.gitlab.io/eigen/docs-nightly/classEigen_1_1Quaternion.html>`_
  object, whose layout is :math:`x,y,z,w`, then you should use
  :class:`EigenQuaternionManifold`.
 

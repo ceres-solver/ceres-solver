@@ -142,7 +142,7 @@ cases.
 .. member:: SparseLinearAlgebraLibraryType Covariance::Options::sparse_linear_algebra_library_type
 
    Default: ``SUITE_SPARSE`` Ceres Solver is built with support for
-   `SuiteSparse <http://faculty.cse.tamu.edu/davis/suitesparse.html>`_
+   `SuiteSparse <https://people.engr.tamu.edu/davis/suitesparse.html>`_
    and ``EIGEN_SPARSE`` otherwise. Note that ``EIGEN_SPARSE`` is
    always available.
 

@@ -100,7 +100,7 @@ Ceres solve it.
 .. code-block:: c++
 
    int main(int argc, char** argv) {
-     google::InitGoogleLogging(argv[0]);
+     absl::InitializeLog();
 
      // The variable to solve for with its initial value.
      double initial_x = 5.0;
@@ -394,7 +394,7 @@ gives us:
       13  1.791438e-14    2.69e-13    2.91e-10   3.01e-04   9.37e-01  1.59e+10        1    1.91e-06    4.45e-04
       14  1.120029e-15    1.68e-14    3.64e-11   1.51e-04   9.37e-01  4.78e+10        1    2.15e-06    4.48e-04
 
-    Solver Summary (v 2.2.0-eigen-(3.4.0)-lapack-suitesparse-(7.1.0)-metis-(5.1.0)-acceleratesparse-eigensparse)
+    Solver Summary (v 2.3.0-eigen-(3.4.0)-lapack-suitesparse-(7.1.0)-metis-(5.1.0)-acceleratesparse-eigensparse)
 
                                          Original                  Reduced
     Parameter blocks                            4                        4
@@ -611,7 +611,7 @@ the observed feature location and the projection of the corresponding
 for solving bundle adjustment problems.
 
 Let us solve a problem from the `BAL
-<http://grail.cs.washington.edu/projects/bal/>`_ dataset [#f8]_.
+<https://grail.cs.washington.edu/projects/bal/>`_ dataset [#f8]_.
 
 The first step as usual is to define a templated functor that computes
 the reprojection error/residual. The structure of the functor is
@@ -623,8 +623,8 @@ and a nine parameter camera. The nine parameters defining the camera
 are: three for rotation as a Rodrigues' axis-angle vector, three
 for translation, one for focal length and two for radial distortion.
 The details of this camera model can be found the `Bundler homepage
-<http://phototour.cs.washington.edu/bundler/>`_ and the `BAL homepage
-<http://grail.cs.washington.edu/projects/bal/>`_.
+<https://www.cs.cornell.edu/~snavely/bundler/>`_ and the `BAL homepage
+<https://grail.cs.washington.edu/projects/bal/>`_.
 
 .. code-block:: c++
 
@@ -766,13 +766,13 @@ directory contains a number of other examples:
 #. `denoising.cc
    <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/denoising.cc>`_
    implements image denoising using the `Fields of Experts
-   <http://www.gris.informatik.tu-darmstadt.de/~sroth/research/foe/index.html>`_
+   <https://doi.org/10.1007/s11263-008-0197-6>`_
    model.
 
 #. `nist.cc
    <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/nist.cc>`_
    implements and attempts to solves the `NIST
-   <http://www.itl.nist.gov/div898/strd/nls/nls_main.shtml>`_
+   <https://www.itl.nist.gov/div898/strd/nls/nls_main.shtml>`_
    non-linear regression problems.
 
 #. `more_garbow_hillstrom.cc

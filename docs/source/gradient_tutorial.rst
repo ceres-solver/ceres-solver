@@ -112,7 +112,7 @@ algorithm.
       33: f: 4.835994e-17 d: 1.00e-12 g: 1.05e-07 h: 1.13e-06 s: 1.00e+00 e:  1 it: 1.19e-06 tt: 3.34e-04
       34: f: 1.885250e-22 d: 4.84e-17 g: 2.69e-10 h: 1.45e-08 s: 1.00e+00 e:  1 it: 9.54e-07 tt: 3.37e-04
 
-    Solver Summary (v 2.2.0-eigen-(3.4.0)-lapack-suitesparse-(7.1.0)-metis-(5.1.0)-acceleratesparse-eigensparse)
+    Solver Summary (v 2.3.0-eigen-(3.4.0)-lapack-suitesparse-(7.1.0)-metis-(5.1.0)-acceleratesparse-eigensparse)
 
     Parameters                                  2
     Line search direction              LBFGS (20)
