@@ -29,6 +29,7 @@
 // Author: alex@karatarakis.com (Alexander Karatarakis)
 
 #include <array>
+#include <vector>
 
 #include "benchmark/benchmark.h"
 #include "ceres/jet.h"
@@ -100,7 +101,8 @@ template <std::size_t JET_SIZE, class Function>
 static void JetBenchmarkHelper(benchmark::State& state, const Function& func) {
   using JetType = Jet<double, JET_SIZE>;
   JetInputData<JetType> data{};
-  JetType out{};
+  JetType out(1.0);
+  out.v.setConstant(1.0);
   const int iterations = static_cast<int>(state.range(0));
   for (auto _ : state) {
     for (int i = 0; i < iterations; i++) {
@@ -109,6 +111,45 @@ static void JetBenchmarkHelper(benchmark::State& state, const Function& func) {
     }
   }
   benchmark::DoNotOptimize(out);
+}
+
+template <std::size_t JET_SIZE, class Function>
+static void JetColdBenchmarkHelper(benchmark::State& state,
+                                   const Function& func) {
+  using JetType = Jet<double, JET_SIZE>;
+  // Allocate >= 32 MB across 3 input arrays + 1 output array.
+  constexpr std::size_t kTargetBytes = 32 * 1024 * 1024;
+  constexpr std::size_t kRawCount = kTargetBytes / (4 * sizeof(JetType));
+  // Round to power of two for fast masking.
+  std::size_t count = 1024;
+  while (count < kRawCount) {
+    count <<= 1;
+  }
+  const std::size_t mask = count - 1;
+
+  std::vector<JetType> x(count);
+  std::vector<JetType> y(count);
+  std::vector<JetType> z(count);
+  std::vector<JetType> out(count);
+
+  for (std::size_t i = 0; i < count; ++i) {
+    const double frac = 0.1 + 0.8 * static_cast<double>(i & 255) / 256.0;
+    x[i].a = frac;
+    x[i].v.setConstant(frac * 0.5);
+    y[i].a = 1.0 + frac;
+    y[i].v.setConstant(frac * 0.25);
+    z[i].a = 2.0 - frac * 0.5;
+    z[i].v.setConstant(frac * 0.125);
+    out[i].a = 1.0;
+    out[i].v.setConstant(0.1);
+  }
+
+  std::size_t idx = 0;
+  for (auto _ : state) {
+    func(x[idx], y[idx], z[idx], out[idx]);
+    idx = (idx + 1) & mask;
+  }
+  benchmark::DoNotOptimize(out[0]);
 }
 
 template <std::size_t JET_SIZE>
@@ -178,7 +219,7 @@ static void Multiplication(benchmark::State& state) {
   using JetType = Jet<double, JET_SIZE>;
   JetBenchmarkHelper<JET_SIZE>(
       state, [](const JetInputData<JetType>& d, JetType& out) {
-        out *= d.a() * d.b() * d.c() * d.d() * d.e();
+        out += d.a() * d.b() * d.c() * d.d() * d.e();
       });
 }
 BENCHMARK_TEMPLATE(Multiplication, 3)->Arg(1000);
@@ -225,7 +266,7 @@ static void Division(benchmark::State& state) {
   using JetType = Jet<double, JET_SIZE>;
   JetBenchmarkHelper<JET_SIZE>(
       state, [](const JetInputData<JetType>& d, JetType& out) {
-        out /= d.a() / d.b() / d.c() / d.d() / d.e();
+        out += d.a() / d.b() / d.c() / d.d() / d.e();
       });
 }
 BENCHMARK_TEMPLATE(Division, 3)->Arg(1000);
@@ -234,6 +275,26 @@ BENCHMARK_TEMPLATE(Division, 15)->Arg(1000);
 BENCHMARK_TEMPLATE(Division, 25)->Arg(1000);
 BENCHMARK_TEMPLATE(Division, 32)->Arg(1000);
 BENCHMARK_TEMPLATE(Division, 200)->Arg(160);
+
+template <std::size_t JET_SIZE>
+static void CompoundMultiplyDivide(benchmark::State& state) {
+  using JetType = Jet<double, JET_SIZE>;
+  JetBenchmarkHelper<JET_SIZE>(
+      state, [](const JetInputData<JetType>& d, JetType& out) {
+        JetType tmp = d.a();
+        tmp *= d.b();
+        tmp *= d.scalar_c();
+        tmp /= d.d();
+        tmp /= d.scalar_e();
+        out += tmp;
+      });
+}
+BENCHMARK_TEMPLATE(CompoundMultiplyDivide, 3)->Arg(1000);
+BENCHMARK_TEMPLATE(CompoundMultiplyDivide, 10)->Arg(1000);
+BENCHMARK_TEMPLATE(CompoundMultiplyDivide, 15)->Arg(1000);
+BENCHMARK_TEMPLATE(CompoundMultiplyDivide, 25)->Arg(1000);
+BENCHMARK_TEMPLATE(CompoundMultiplyDivide, 32)->Arg(1000);
+BENCHMARK_TEMPLATE(CompoundMultiplyDivide, 200)->Arg(160);
 
 template <std::size_t JET_SIZE>
 static void DivisionLeftScalar(benchmark::State& state) {
@@ -283,6 +344,77 @@ BENCHMARK_TEMPLATE(MultiplyAndAdd, 15)->Arg(1000);
 BENCHMARK_TEMPLATE(MultiplyAndAdd, 25)->Arg(1000);
 BENCHMARK_TEMPLATE(MultiplyAndAdd, 32)->Arg(1000);
 BENCHMARK_TEMPLATE(MultiplyAndAdd, 200)->Arg(160);
+
+template <std::size_t JET_SIZE>
+static void Cbrt(benchmark::State& state) {
+  using JetType = Jet<double, JET_SIZE>;
+  JetBenchmarkHelper<JET_SIZE>(
+      state, [](const JetInputData<JetType>& d, JetType& out) {
+        out += cbrt(d.a()) + cbrt(d.b());
+      });
+}
+BENCHMARK_TEMPLATE(Cbrt, 3)->Arg(1000);
+BENCHMARK_TEMPLATE(Cbrt, 12)->Arg(1000);
+
+template <std::size_t JET_SIZE>
+static void PowScalar(benchmark::State& state) {
+  using JetType = Jet<double, JET_SIZE>;
+  JetBenchmarkHelper<JET_SIZE>(
+      state, [](const JetInputData<JetType>& d, JetType& out) {
+        out += pow(d.a(), 2.3) + pow(d.b(), -0.7);
+      });
+}
+BENCHMARK_TEMPLATE(PowScalar, 3)->Arg(1000);
+BENCHMARK_TEMPLATE(PowScalar, 12)->Arg(1000);
+
+template <std::size_t JET_SIZE>
+static void PowJet(benchmark::State& state) {
+  using JetType = Jet<double, JET_SIZE>;
+  JetBenchmarkHelper<JET_SIZE>(
+      state, [](const JetInputData<JetType>& d, JetType& out) {
+        out += pow(d.a(), d.b());
+      });
+}
+BENCHMARK_TEMPLATE(PowJet, 3)->Arg(1000);
+BENCHMARK_TEMPLATE(PowJet, 12)->Arg(1000);
+
+template <std::size_t JET_SIZE>
+static void Hypot2(benchmark::State& state) {
+  using JetType = Jet<double, JET_SIZE>;
+  JetBenchmarkHelper<JET_SIZE>(
+      state, [](const JetInputData<JetType>& d, JetType& out) {
+        out += hypot(d.a(), d.b());
+      });
+}
+BENCHMARK_TEMPLATE(Hypot2, 3)->Arg(1000);
+BENCHMARK_TEMPLATE(Hypot2, 12)->Arg(1000);
+
+template <std::size_t JET_SIZE>
+static void Hypot3(benchmark::State& state) {
+  using JetType = Jet<double, JET_SIZE>;
+  JetBenchmarkHelper<JET_SIZE>(
+      state, [](const JetInputData<JetType>& d, JetType& out) {
+        out += hypot(d.a(), d.b(), d.c());
+      });
+}
+BENCHMARK_TEMPLATE(Hypot3, 3)->Arg(1000);
+BENCHMARK_TEMPLATE(Hypot3, 12)->Arg(1000);
+
+template <std::size_t JET_SIZE>
+static void ColdMultiplyAndAdd(benchmark::State& state) {
+  using JetType = Jet<double, JET_SIZE>;
+  JetColdBenchmarkHelper<JET_SIZE>(
+      state,
+      [](const JetType& x, const JetType& y, const JetType& z, JetType& out) {
+        out += x * y + z / y;
+      });
+}
+BENCHMARK_TEMPLATE(ColdMultiplyAndAdd, 3);
+BENCHMARK_TEMPLATE(ColdMultiplyAndAdd, 4);
+BENCHMARK_TEMPLATE(ColdMultiplyAndAdd, 9);
+BENCHMARK_TEMPLATE(ColdMultiplyAndAdd, 12);
+BENCHMARK_TEMPLATE(ColdMultiplyAndAdd, 14);
+BENCHMARK_TEMPLATE(ColdMultiplyAndAdd, 28);
 
 }  // namespace ceres
 

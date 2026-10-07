@@ -49,7 +49,9 @@ enum Dynamic { kNotDynamic, kDynamic };
 template <typename CostFunctionType, int kNumParameterBlocks>
 class ToDynamic {
  public:
-  template <typename... _Args>
+  template <typename... _Args,
+            typename = std::enable_if_t<
+                std::is_constructible_v<CostFunctionType, _Args&&...>>>
   explicit ToDynamic(_Args&&... __args)
       : cost_function_(std::forward<_Args>(__args)...) {}
 
@@ -151,9 +153,10 @@ static void BM_ConstantAutodiff(benchmark::State& state) {
   std::array<double, num_residuals * kParameterBlockSize> jacobian_values;
   double* jacobians[] = {jacobian_values.data()};
 
-  std::unique_ptr<ceres::CostFunction> cost_function =
-      CostFunctionFactory<kIsDynamic>::
-          template Create<ConstantCostFunction<kParameterBlockSize>, 1, 1>();
+  std::unique_ptr<ceres::CostFunction> cost_function = CostFunctionFactory<
+      kIsDynamic>::template Create<ConstantCostFunction<kParameterBlockSize>,
+                                   1,
+                                   kParameterBlockSize>();
 
   for (auto _ : state) {
     cost_function->Evaluate(parameters, residuals.data(), jacobians);
@@ -424,6 +427,709 @@ static void BM_BrdfAutoDiff(benchmark::State& state) {
 
 BENCHMARK_TEMPLATE(BM_BrdfAutoDiff, kNotDynamic)->Arg(0)->Arg(1);
 BENCHMARK_TEMPLATE(BM_BrdfAutoDiff, kDynamic)->Arg(0)->Arg(1);
+
+// ============================================================================
+// Cold-Cache / Streaming Working-Set Benchmarks
+// ============================================================================
+// Instead of evaluating a single CostFunction on the same ~200 bytes of stack
+// memory in a hot L1 loop, these benchmarks allocate a large pool of distinct
+// CostFunction instances, shuffled parameter blocks, residual buffers, and
+// Jacobian buffers exceeding 64 MB (larger than L1/L2/SLC cache) to simulate
+// ProgramEvaluator streaming through thousands of ResidualBlocks.
+
+constexpr size_t kColdWorkingSetBytes = 64 * 1024 * 1024;
+
+template <Dynamic kIsDynamic>
+static void BM_SnavelyReprojectionAutoDiff_Cold(benchmark::State& state) {
+  // Each slot holds:
+  // - 1 CostFunction (heap object + 2 doubles = ~64B)
+  // - 9 camera doubles + 3 point doubles = 96B
+  // - 2 residual doubles + 24 jacobian doubles = 208B
+  // - pointer arrays (2 param ptrs + 2 jacobian ptrs = 32B)
+  // Total ~400B per slot -> 131072 slots > 52 MB + heap overhead > 64 MB.
+  constexpr size_t kNumSlots = 131072;
+  constexpr size_t kMask = kNumSlots - 1;
+
+  std::mt19937 gen(42);
+  std::uniform_real_distribution<double> dist(-0.5, 0.5);
+
+  std::vector<std::unique_ptr<ceres::CostFunction>> cost_functions(kNumSlots);
+  std::vector<std::array<double, 9>> cameras(kNumSlots);
+  std::vector<std::array<double, 3>> points(kNumSlots);
+  std::vector<std::array<double, 2>> residuals(kNumSlots);
+  std::vector<std::array<double, 18>> jacobians_cam(kNumSlots);
+  std::vector<std::array<double, 6>> jacobians_pt(kNumSlots);
+
+  std::vector<size_t> cam_indices(kNumSlots);
+  std::vector<size_t> pt_indices(kNumSlots);
+  std::iota(cam_indices.begin(), cam_indices.end(), 0);
+  std::iota(pt_indices.begin(), pt_indices.end(), 0);
+  std::shuffle(cam_indices.begin(), cam_indices.end(), gen);
+  std::shuffle(pt_indices.begin(), pt_indices.end(), gen);
+
+  for (size_t i = 0; i < kNumSlots; ++i) {
+    cost_functions[i] = CostFunctionFactory<kIsDynamic>::
+        template Create<SnavelyReprojectionError, 2, 9, 3>(0.2 + dist(gen),
+                                                           0.3 + dist(gen));
+    cameras[i] = {0.1 + dist(gen),
+                  0.2 + dist(gen),
+                  0.3 + dist(gen),
+                  0.4 + dist(gen),
+                  0.5 + dist(gen),
+                  2.5 + dist(gen),
+                  500.0 + dist(gen),
+                  0.01 + dist(gen) * 0.01,
+                  0.001 + dist(gen) * 0.001};
+    points[i] = {0.5 + dist(gen), -0.3 + dist(gen), -5.0 + dist(gen)};
+  }
+
+  size_t idx = 0;
+  const bool compute_jacobians = state.range(0) != 0;
+  for (auto _ : state) {
+    const double* params[2] = {cameras[cam_indices[idx]].data(),
+                               points[pt_indices[idx]].data()};
+    double* jacs[2] = {jacobians_cam[idx].data(), jacobians_pt[idx].data()};
+    cost_functions[idx]->Evaluate(
+        params, residuals[idx].data(), compute_jacobians ? jacs : nullptr);
+    idx = (idx + 1) & kMask;
+  }
+  benchmark::DoNotOptimize(residuals[0]);
+  benchmark::DoNotOptimize(jacobians_cam[0]);
+  benchmark::DoNotOptimize(jacobians_pt[0]);
+}
+BENCHMARK_TEMPLATE(BM_SnavelyReprojectionAutoDiff_Cold, kNotDynamic)
+    ->Arg(0)
+    ->Arg(1);
+
+template <Dynamic kIsDynamic>
+static void BM_RelativePoseAutoDiff_Cold(benchmark::State& state) {
+  using FunctorType = RelativePoseError;
+  constexpr size_t kNumSlots = 65536;
+  constexpr size_t kMask = kNumSlots - 1;
+
+  std::mt19937 gen(42);
+  std::uniform_real_distribution<double> dist(-0.2, 0.2);
+
+  std::vector<std::unique_ptr<ceres::CostFunction>> cost_functions(kNumSlots);
+  std::vector<std::array<double, 7>> poses_i(kNumSlots);
+  std::vector<std::array<double, 7>> poses_j(kNumSlots);
+  std::vector<std::array<double, 6>> residuals(kNumSlots);
+  std::vector<std::array<double, 42>> jacobians_i(kNumSlots);
+  std::vector<std::array<double, 42>> jacobians_j(kNumSlots);
+
+  std::vector<size_t> idx_i(kNumSlots);
+  std::vector<size_t> idx_j(kNumSlots);
+  std::iota(idx_i.begin(), idx_i.end(), 0);
+  std::iota(idx_j.begin(), idx_j.end(), 0);
+  std::shuffle(idx_i.begin(), idx_i.end(), gen);
+  std::shuffle(idx_j.begin(), idx_j.end(), gen);
+
+  for (size_t k = 0; k < kNumSlots; ++k) {
+    Eigen::Quaterniond q_i_j =
+        Eigen::Quaterniond(1.0 + dist(gen), 2.0 + dist(gen), 3.0, 4.0)
+            .normalized();
+    Eigen::Vector3d t_i_j(1.0 + dist(gen), 2.0 + dist(gen), 3.0 + dist(gen));
+    cost_functions[k] =
+        CostFunctionFactory<kIsDynamic>::template Create<FunctorType, 6, 7, 7>(
+            q_i_j, t_i_j);
+
+    poses_i[k] = {1.0 + dist(gen), 2.0, 3.0, 4.0, 5.0 + dist(gen), 6.0, 7.0};
+    poses_j[k] = {1.1 + dist(gen), 2.1, 3.1, 4.1, 5.1 + dist(gen), 6.1, 7.1};
+    Eigen::Map<Eigen::Quaterniond>(poses_i[k].data()).normalize();
+    Eigen::Map<Eigen::Quaterniond>(poses_j[k].data()).normalize();
+  }
+
+  size_t idx = 0;
+  const bool compute_jacobians = state.range(0) != 0;
+  for (auto _ : state) {
+    const double* params[2] = {poses_i[idx_i[idx]].data(),
+                               poses_j[idx_j[idx]].data()};
+    double* jacs[2] = {jacobians_i[idx].data(), jacobians_j[idx].data()};
+    cost_functions[idx]->Evaluate(
+        params, residuals[idx].data(), compute_jacobians ? jacs : nullptr);
+    idx = (idx + 1) & kMask;
+  }
+  benchmark::DoNotOptimize(residuals[0]);
+  benchmark::DoNotOptimize(jacobians_i[0]);
+}
+BENCHMARK_TEMPLATE(BM_RelativePoseAutoDiff_Cold, kNotDynamic)->Arg(0)->Arg(1);
+
+template <Dynamic kIsDynamic>
+static void BM_Rat43AutoDiff_Cold(benchmark::State& state) {
+  constexpr size_t kNumSlots = 262144;
+  constexpr size_t kMask = kNumSlots - 1;
+
+  std::mt19937 gen(42);
+  std::uniform_real_distribution<double> dist(-0.05, 0.05);
+
+  std::vector<std::unique_ptr<ceres::CostFunction>> cost_functions(kNumSlots);
+  std::vector<std::array<double, 4>> params_pool(kNumSlots);
+  std::vector<double> residuals(kNumSlots);
+  std::vector<std::array<double, 4>> jacobians_pool(kNumSlots);
+
+  for (size_t k = 0; k < kNumSlots; ++k) {
+    cost_functions[k] = CostFunctionFactory<
+        kIsDynamic>::template Create<Rat43CostFunctor, 1, 4>(0.2 + dist(gen),
+                                                             0.3 + dist(gen));
+    params_pool[k] = {
+        1.0 + dist(gen), 2.0 + dist(gen), 3.0 + dist(gen), 4.0 + dist(gen)};
+  }
+
+  size_t idx = 0;
+  const bool compute_jacobians = state.range(0) != 0;
+  for (auto _ : state) {
+    const double* params[1] = {params_pool[idx].data()};
+    double* jacs[1] = {jacobians_pool[idx].data()};
+    cost_functions[idx]->Evaluate(
+        params, &residuals[idx], compute_jacobians ? jacs : nullptr);
+    idx = (idx + 1) & kMask;
+  }
+  benchmark::DoNotOptimize(residuals[0]);
+  benchmark::DoNotOptimize(jacobians_pool[0]);
+}
+BENCHMARK_TEMPLATE(BM_Rat43AutoDiff_Cold, kNotDynamic)->Arg(0)->Arg(1);
+
+template <Dynamic kIsDynamic>
+static void BM_Linear10AutoDiff_Cold(benchmark::State& state) {
+  constexpr size_t kNumSlots = 65536;
+  constexpr size_t kMask = kNumSlots - 1;
+
+  std::vector<std::unique_ptr<ceres::CostFunction>> cost_functions(kNumSlots);
+  std::vector<std::array<double, 10>> params_pool(kNumSlots);
+  std::vector<std::array<double, 10>> residuals_pool(kNumSlots);
+  std::vector<std::array<double, 100>> jacobians_pool(kNumSlots);
+
+  for (size_t k = 0; k < kNumSlots; ++k) {
+    cost_functions[k] = CostFunctionFactory<
+        kIsDynamic>::template Create<Linear10CostFunction, 10, 10>();
+    for (int i = 0; i < 10; ++i) {
+      params_pool[k][i] = static_cast<double>(i + 1) + 0.001 * (k & 255);
+    }
+  }
+
+  size_t idx = 0;
+  const bool compute_jacobians = state.range(0) != 0;
+  for (auto _ : state) {
+    const double* params[1] = {params_pool[idx].data()};
+    double* jacs[1] = {jacobians_pool[idx].data()};
+    cost_functions[idx]->Evaluate(
+        params, residuals_pool[idx].data(), compute_jacobians ? jacs : nullptr);
+    idx = (idx + 1) & kMask;
+  }
+  benchmark::DoNotOptimize(residuals_pool[0]);
+  benchmark::DoNotOptimize(jacobians_pool[0]);
+}
+BENCHMARK_TEMPLATE(BM_Linear10AutoDiff_Cold, kNotDynamic)->Arg(0)->Arg(1);
+
+struct BenchmarkQuaternionFunctor {
+  template <typename T>
+  bool Plus(const T* x, const T* delta, T* x_plus_delta) const {
+    T q_delta[4];
+    const T squared_norm_delta =
+        delta[0] * delta[0] + delta[1] * delta[1] + delta[2] * delta[2];
+    if (squared_norm_delta > T(0.0)) {
+      T norm_delta = sqrt(squared_norm_delta);
+      const T sin_delta_by_delta = sin(norm_delta) / norm_delta;
+      q_delta[0] = cos(norm_delta);
+      q_delta[1] = sin_delta_by_delta * delta[0];
+      q_delta[2] = sin_delta_by_delta * delta[1];
+      q_delta[3] = sin_delta_by_delta * delta[2];
+    } else {
+      q_delta[0] = T(1.0);
+      q_delta[1] = delta[0];
+      q_delta[2] = delta[1];
+      q_delta[3] = delta[2];
+    }
+    QuaternionProduct(q_delta, x, x_plus_delta);
+    return true;
+  }
+
+  template <typename T>
+  bool Minus(const T* y, const T* x, T* y_minus_x) const {
+    T minus_x[4] = {x[0], -x[1], -x[2], -x[3]};
+    T ambient_y_minus_x[4];
+    QuaternionProduct(y, minus_x, ambient_y_minus_x);
+    const T u_sq = ambient_y_minus_x[1] * ambient_y_minus_x[1] +
+                   ambient_y_minus_x[2] * ambient_y_minus_x[2] +
+                   ambient_y_minus_x[3] * ambient_y_minus_x[3];
+    if (u_sq > T(0.0)) {
+      T u_norm = sqrt(u_sq);
+      T theta = atan2(u_norm, ambient_y_minus_x[0]);
+      y_minus_x[0] = theta * ambient_y_minus_x[1] / u_norm;
+      y_minus_x[1] = theta * ambient_y_minus_x[2] / u_norm;
+      y_minus_x[2] = theta * ambient_y_minus_x[3] / u_norm;
+    } else {
+      y_minus_x[0] = ambient_y_minus_x[1];
+      y_minus_x[1] = ambient_y_minus_x[2];
+      y_minus_x[2] = ambient_y_minus_x[3];
+    }
+    return true;
+  }
+};
+
+struct BenchmarkPose3Functor {
+  template <typename T>
+  bool Plus(const T* x, const T* delta, T* x_plus_delta) const {
+    BenchmarkQuaternionFunctor q;
+    q.Plus(x, delta, x_plus_delta);
+    x_plus_delta[4] = x[4] + delta[3];
+    x_plus_delta[5] = x[5] + delta[4];
+    x_plus_delta[6] = x[6] + delta[5];
+    return true;
+  }
+
+  template <typename T>
+  bool Minus(const T* y, const T* x, T* y_minus_x) const {
+    BenchmarkQuaternionFunctor q;
+    q.Minus(y, x, y_minus_x);
+    y_minus_x[3] = y[4] - x[4];
+    y_minus_x[4] = y[5] - x[5];
+    y_minus_x[5] = y[6] - x[6];
+    return true;
+  }
+};
+
+static void BM_AutoDiffManifoldQuaternion_PlusJacobian(
+    benchmark::State& state) {
+  AutoDiffManifold<BenchmarkQuaternionFunctor, 4, 3> manifold;
+  double x[4] = {0.5, 0.5, 0.5, 0.5};
+  double jacobian[12];
+  for (auto _ : state) {
+    benchmark::DoNotOptimize(x);
+    manifold.PlusJacobian(x, jacobian);
+    benchmark::DoNotOptimize(jacobian);
+  }
+}
+BENCHMARK(BM_AutoDiffManifoldQuaternion_PlusJacobian);
+
+static void BM_AutoDiffManifoldQuaternion_MinusJacobian(
+    benchmark::State& state) {
+  AutoDiffManifold<BenchmarkQuaternionFunctor, 4, 3> manifold;
+  double x[4] = {0.5, 0.5, 0.5, 0.5};
+  double jacobian[12];
+  for (auto _ : state) {
+    benchmark::DoNotOptimize(x);
+    manifold.MinusJacobian(x, jacobian);
+    benchmark::DoNotOptimize(jacobian);
+  }
+}
+BENCHMARK(BM_AutoDiffManifoldQuaternion_MinusJacobian);
+
+static void BM_AutoDiffManifoldPose3_PlusJacobian(benchmark::State& state) {
+  AutoDiffManifold<BenchmarkPose3Functor, 7, 6> manifold;
+  double x[7] = {0.5, 0.5, 0.5, 0.5, 1.0, 2.0, 3.0};
+  double jacobian[42];
+  for (auto _ : state) {
+    benchmark::DoNotOptimize(x);
+    manifold.PlusJacobian(x, jacobian);
+    benchmark::DoNotOptimize(jacobian);
+  }
+}
+BENCHMARK(BM_AutoDiffManifoldPose3_PlusJacobian);
+
+static void BM_AutoDiffManifoldPose3_MinusJacobian(benchmark::State& state) {
+  AutoDiffManifold<BenchmarkPose3Functor, 7, 6> manifold;
+  double x[7] = {0.5, 0.5, 0.5, 0.5, 1.0, 2.0, 3.0};
+  double jacobian[42];
+  for (auto _ : state) {
+    benchmark::DoNotOptimize(x);
+    manifold.MinusJacobian(x, jacobian);
+    benchmark::DoNotOptimize(jacobian);
+  }
+}
+BENCHMARK(BM_AutoDiffManifoldPose3_MinusJacobian);
+
+template <int kNumParameters>
+struct RosenbrockFirstOrderFunctor {
+  template <typename T>
+  bool operator()(const T* const x, T* cost) const {
+    T sum = T(0.0);
+    for (int i = 0; i < kNumParameters - 1; ++i) {
+      const T t1 = T(1.0) - x[i];
+      const T t2 = x[i + 1] - x[i] * x[i];
+      sum += t1 * t1 + T(100.0) * t2 * t2;
+    }
+    *cost = sum;
+    return true;
+  }
+};
+
+template <int kNumParameters>
+static void BM_AutoDiffFirstOrderFunction(benchmark::State& state) {
+  AutoDiffFirstOrderFunction<RosenbrockFirstOrderFunctor<kNumParameters>,
+                             kNumParameters>
+      f;
+  std::array<double, kNumParameters> x;
+  for (int i = 0; i < kNumParameters; ++i) {
+    x[i] = 0.5 + 0.01 * i;
+  }
+  double cost = 0.0;
+  std::array<double, kNumParameters> gradient;
+  for (auto _ : state) {
+    benchmark::DoNotOptimize(x);
+    f.Evaluate(x.data(), &cost, gradient.data());
+    benchmark::DoNotOptimize(cost);
+    benchmark::DoNotOptimize(gradient);
+  }
+}
+BENCHMARK_TEMPLATE(BM_AutoDiffFirstOrderFunction, 4);
+BENCHMARK_TEMPLATE(BM_AutoDiffFirstOrderFunction, 10);
+BENCHMARK_TEMPLATE(BM_AutoDiffFirstOrderFunction, 16);
+BENCHMARK_TEMPLATE(BM_AutoDiffFirstOrderFunction, 24);
+
+struct InnerProjectionFunctor {
+  template <typename T>
+  bool operator()(const T* const intrinsics,
+                  const T* const point,
+                  T* residuals) const {
+    const T xp = point[0] / point[2];
+    const T yp = point[1] / point[2];
+    const T r2 = xp * xp + yp * yp;
+    const T distortion = T(1.0) + r2 * (intrinsics[1] + intrinsics[2] * r2);
+    residuals[0] = intrinsics[0] * distortion * xp;
+    residuals[1] = intrinsics[0] * distortion * yp;
+    return true;
+  }
+};
+
+struct OuterProjectionWithStaticFunctor {
+  OuterProjectionWithStaticFunctor()
+      : inner_(new AutoDiffCostFunction<InnerProjectionFunctor, 2, 3, 3>(
+            new InnerProjectionFunctor())) {}
+
+  template <typename T>
+  bool operator()(const T* const rotation,
+                  const T* const translation,
+                  const T* const intrinsics,
+                  const T* const point,
+                  T* residuals) const {
+    T p[3];
+    AngleAxisRotatePoint(rotation, point, p);
+    p[0] += translation[0];
+    p[1] += translation[1];
+    p[2] += translation[2];
+    return inner_(intrinsics, p, residuals);
+  }
+
+  CostFunctionToFunctor<2, 3, 3> inner_;
+};
+
+struct OuterProjectionWithDynamicFunctor {
+  OuterProjectionWithDynamicFunctor()
+      : inner_(new AutoDiffCostFunction<InnerProjectionFunctor, 2, 3, 3>(
+            new InnerProjectionFunctor())) {}
+
+  template <typename T>
+  bool operator()(const T* const rotation,
+                  const T* const translation,
+                  const T* const intrinsics,
+                  const T* const point,
+                  T* residuals) const {
+    T p[3];
+    AngleAxisRotatePoint(rotation, point, p);
+    p[0] += translation[0];
+    p[1] += translation[1];
+    p[2] += translation[2];
+    const T* params[2] = {intrinsics, p};
+    return inner_(params, residuals);
+  }
+
+  DynamicCostFunctionToFunctor inner_;
+};
+
+static void BM_CostFunctionToFunctor(benchmark::State& state) {
+  AutoDiffCostFunction<OuterProjectionWithStaticFunctor, 2, 3, 3, 3, 3>
+      cost_function(new OuterProjectionWithStaticFunctor());
+  double rot[3] = {0.1, -0.2, 0.05};
+  double trans[3] = {0.5, -0.1, 2.0};
+  double intr[3] = {500.0, -0.01, 0.001};
+  double pt[3] = {0.3, -0.4, 5.0};
+  const double* params[4] = {rot, trans, intr, pt};
+  double residuals[2];
+  double j0[6], j1[6], j2[6], j3[6];
+  double* jacobians[4] = {j0, j1, j2, j3};
+  for (auto _ : state) {
+    benchmark::DoNotOptimize(rot);
+    benchmark::DoNotOptimize(trans);
+    benchmark::DoNotOptimize(intr);
+    benchmark::DoNotOptimize(pt);
+    cost_function.Evaluate(params, residuals, jacobians);
+    benchmark::DoNotOptimize(residuals);
+    benchmark::DoNotOptimize(j0);
+    benchmark::DoNotOptimize(j1);
+    benchmark::DoNotOptimize(j2);
+    benchmark::DoNotOptimize(j3);
+  }
+}
+BENCHMARK(BM_CostFunctionToFunctor);
+
+static void BM_DynamicCostFunctionToFunctor(benchmark::State& state) {
+  AutoDiffCostFunction<OuterProjectionWithDynamicFunctor, 2, 3, 3, 3, 3>
+      cost_function(new OuterProjectionWithDynamicFunctor());
+  double rot[3] = {0.1, -0.2, 0.05};
+  double trans[3] = {0.5, -0.1, 2.0};
+  double intr[3] = {500.0, -0.01, 0.001};
+  double pt[3] = {0.3, -0.4, 5.0};
+  const double* params[4] = {rot, trans, intr, pt};
+  double residuals[2];
+  double j0[6], j1[6], j2[6], j3[6];
+  double* jacobians[4] = {j0, j1, j2, j3};
+  for (auto _ : state) {
+    benchmark::DoNotOptimize(rot);
+    benchmark::DoNotOptimize(trans);
+    benchmark::DoNotOptimize(intr);
+    benchmark::DoNotOptimize(pt);
+    cost_function.Evaluate(params, residuals, jacobians);
+    benchmark::DoNotOptimize(residuals);
+    benchmark::DoNotOptimize(j0);
+    benchmark::DoNotOptimize(j1);
+    benchmark::DoNotOptimize(j2);
+    benchmark::DoNotOptimize(j3);
+  }
+}
+BENCHMARK(BM_DynamicCostFunctionToFunctor);
+
+template <NumericDiffMethodType kMethod, Dynamic kIsDynamic>
+static void BM_SnavelyReprojectionNumericDiff(benchmark::State& state) {
+  constexpr int kBlock0 = 9;
+  constexpr int kBlock1 = 3;
+  constexpr int kNumResiduals = 2;
+
+  double parameter_block1[] = {1., 2., 3., 4., 5., 6., 7., 8., 9.};
+  double parameter_block2[] = {1., 2., 3.};
+  double const* parameters[] = {parameter_block1, parameter_block2};
+
+  double jacobian1[kNumResiduals * kBlock0];
+  double jacobian2[kNumResiduals * kBlock1];
+  double residuals[kNumResiduals];
+  double* jacobians[] = {jacobian1, jacobian2};
+
+  const double observed_x = -2.0;
+  const double observed_y = 1.0;
+
+  using FunctorType = ceres::SnavelyReprojectionError;
+
+  std::unique_ptr<ceres::CostFunction> cost_function;
+  if constexpr (kIsDynamic) {
+    using DynamicFunctor = ToDynamic<FunctorType, 2>;
+    auto dynamic_function = std::make_unique<
+        ceres::DynamicNumericDiffCostFunction<DynamicFunctor, kMethod>>(
+        std::make_unique<const DynamicFunctor>(observed_x, observed_y));
+    dynamic_function->AddParameterBlock(kBlock0);
+    dynamic_function->AddParameterBlock(kBlock1);
+    dynamic_function->SetNumResiduals(kNumResiduals);
+    cost_function = std::move(dynamic_function);
+  } else {
+    cost_function =
+        std::make_unique<ceres::NumericDiffCostFunction<FunctorType,
+                                                        kMethod,
+                                                        kNumResiduals,
+                                                        kBlock0,
+                                                        kBlock1>>(
+            new FunctorType(observed_x, observed_y));
+  }
+
+  for (auto _ : state) {
+    benchmark::DoNotOptimize(parameter_block1);
+    benchmark::DoNotOptimize(parameter_block2);
+    cost_function->Evaluate(parameters, residuals, jacobians);
+    benchmark::DoNotOptimize(residuals);
+    benchmark::DoNotOptimize(jacobian1);
+    benchmark::DoNotOptimize(jacobian2);
+  }
+}
+BENCHMARK_TEMPLATE(BM_SnavelyReprojectionNumericDiff, CENTRAL, kNotDynamic);
+BENCHMARK_TEMPLATE(BM_SnavelyReprojectionNumericDiff, CENTRAL, kDynamic);
+BENCHMARK_TEMPLATE(BM_SnavelyReprojectionNumericDiff, FORWARD, kNotDynamic);
+BENCHMARK_TEMPLATE(BM_SnavelyReprojectionNumericDiff, FORWARD, kDynamic);
+BENCHMARK_TEMPLATE(BM_SnavelyReprojectionNumericDiff, RIDDERS, kNotDynamic);
+BENCHMARK_TEMPLATE(BM_SnavelyReprojectionNumericDiff, RIDDERS, kDynamic);
+
+template <NumericDiffMethodType kMethod, Dynamic kIsDynamic>
+static void BM_SnavelyReprojectionNumericDiff_ConstantCamera(
+    benchmark::State& state) {
+  constexpr int kBlock0 = 9;
+  constexpr int kBlock1 = 3;
+  constexpr int kNumResiduals = 2;
+
+  double parameter_block1[] = {1., 2., 3., 4., 5., 6., 7., 8., 9.};
+  double parameter_block2[] = {1., 2., 3.};
+  double const* parameters[] = {parameter_block1, parameter_block2};
+
+  double jacobian2[kNumResiduals * kBlock1];
+  double residuals[kNumResiduals];
+  double* jacobians[] = {nullptr, jacobian2};
+
+  const double observed_x = -2.0;
+  const double observed_y = 1.0;
+
+  using FunctorType = ceres::SnavelyReprojectionError;
+
+  std::unique_ptr<ceres::CostFunction> cost_function;
+  if constexpr (kIsDynamic) {
+    using DynamicFunctor = ToDynamic<FunctorType, 2>;
+    auto dynamic_function = std::make_unique<
+        ceres::DynamicNumericDiffCostFunction<DynamicFunctor, kMethod>>(
+        std::make_unique<const DynamicFunctor>(observed_x, observed_y));
+    dynamic_function->AddParameterBlock(kBlock0);
+    dynamic_function->AddParameterBlock(kBlock1);
+    dynamic_function->SetNumResiduals(kNumResiduals);
+    cost_function = std::move(dynamic_function);
+  } else {
+    cost_function =
+        std::make_unique<ceres::NumericDiffCostFunction<FunctorType,
+                                                        kMethod,
+                                                        kNumResiduals,
+                                                        kBlock0,
+                                                        kBlock1>>(
+            new FunctorType(observed_x, observed_y));
+  }
+
+  for (auto _ : state) {
+    benchmark::DoNotOptimize(parameter_block1);
+    benchmark::DoNotOptimize(parameter_block2);
+    cost_function->Evaluate(parameters, residuals, jacobians);
+    benchmark::DoNotOptimize(residuals);
+    benchmark::DoNotOptimize(jacobian2);
+  }
+}
+BENCHMARK_TEMPLATE(BM_SnavelyReprojectionNumericDiff_ConstantCamera,
+                   CENTRAL,
+                   kNotDynamic);
+BENCHMARK_TEMPLATE(BM_SnavelyReprojectionNumericDiff_ConstantCamera,
+                   CENTRAL,
+                   kDynamic);
+
+template <NumericDiffMethodType kMethod, Dynamic kIsDynamic>
+static void BM_SnavelyReprojectionNumericDiff_Cold(benchmark::State& state) {
+  constexpr int kBlock0 = 9;
+  constexpr int kBlock1 = 3;
+  constexpr int kNumResiduals = 2;
+  constexpr size_t kWorkingSetBytes = 64 * 1024 * 1024;
+
+  using FunctorType = ceres::SnavelyReprojectionError;
+  struct alignas(64) ProblemInstance {
+    std::unique_ptr<ceres::CostFunction> cost_function;
+    double b0[kBlock0];
+    double b1[kBlock1];
+    double residuals[kNumResiduals];
+    double j0[kNumResiduals * kBlock0];
+    double j1[kNumResiduals * kBlock1];
+  };
+
+  const size_t num_instances =
+      std::max<size_t>(1024, kWorkingSetBytes / sizeof(ProblemInstance));
+  std::vector<ProblemInstance> instances(num_instances);
+  std::mt19937 rng(42);
+  std::uniform_real_distribution<double> dist(0.5, 2.0);
+
+  for (size_t i = 0; i < num_instances; ++i) {
+    for (int k = 0; k < kBlock0; ++k) instances[i].b0[k] = dist(rng);
+    for (int k = 0; k < kBlock1; ++k) instances[i].b1[k] = dist(rng);
+    const double ox = dist(rng);
+    const double oy = dist(rng);
+    if constexpr (kIsDynamic) {
+      using DynamicFunctor = ToDynamic<FunctorType, 2>;
+      auto fn = std::make_unique<
+          ceres::DynamicNumericDiffCostFunction<DynamicFunctor, kMethod>>(
+          std::make_unique<const DynamicFunctor>(ox, oy));
+      fn->AddParameterBlock(kBlock0);
+      fn->AddParameterBlock(kBlock1);
+      fn->SetNumResiduals(kNumResiduals);
+      instances[i].cost_function = std::move(fn);
+    } else {
+      instances[i].cost_function =
+          std::make_unique<ceres::NumericDiffCostFunction<FunctorType,
+                                                          kMethod,
+                                                          kNumResiduals,
+                                                          kBlock0,
+                                                          kBlock1>>(
+              new FunctorType(ox, oy));
+    }
+  }
+
+  std::vector<size_t> order(num_instances);
+  std::iota(order.begin(), order.end(), 0);
+  std::shuffle(order.begin(), order.end(), rng);
+
+  size_t idx = 0;
+  for (auto _ : state) {
+    auto& inst = instances[order[idx]];
+    idx = (idx + 1 == num_instances) ? 0 : idx + 1;
+    double const* parameters[] = {inst.b0, inst.b1};
+    double* jacobians[] = {inst.j0, inst.j1};
+    inst.cost_function->Evaluate(parameters, inst.residuals, jacobians);
+    benchmark::DoNotOptimize(inst.residuals);
+    benchmark::DoNotOptimize(inst.j0);
+    benchmark::DoNotOptimize(inst.j1);
+  }
+}
+BENCHMARK_TEMPLATE(BM_SnavelyReprojectionNumericDiff_Cold,
+                   CENTRAL,
+                   kNotDynamic);
+BENCHMARK_TEMPLATE(BM_SnavelyReprojectionNumericDiff_Cold, CENTRAL, kDynamic);
+
+static void BM_SnavelyReprojectionAutoDiff_DynamicResiduals(
+    benchmark::State& state) {
+  constexpr int kBlock0 = 9;
+  constexpr int kBlock1 = 3;
+  constexpr int kNumResiduals = 2;
+
+  double parameter_block1[] = {1., 2., 3., 4., 5., 6., 7., 8., 9.};
+  double parameter_block2[] = {1., 2., 3.};
+  double const* parameters[] = {parameter_block1, parameter_block2};
+
+  double jacobian1[kNumResiduals * kBlock0];
+  double jacobian2[kNumResiduals * kBlock1];
+  double residuals[kNumResiduals];
+  double* jacobians[] = {jacobian1, jacobian2};
+
+  using FunctorType = ceres::SnavelyReprojectionError;
+  AutoDiffCostFunction<FunctorType, DYNAMIC, kBlock0, kBlock1> cost_function(
+      std::make_unique<FunctorType>(-2.0, 1.0), kNumResiduals);
+
+  for (auto _ : state) {
+    benchmark::DoNotOptimize(parameter_block1);
+    benchmark::DoNotOptimize(parameter_block2);
+    cost_function.Evaluate(parameters, residuals, jacobians);
+    benchmark::DoNotOptimize(residuals);
+    benchmark::DoNotOptimize(jacobian1);
+    benchmark::DoNotOptimize(jacobian2);
+  }
+}
+BENCHMARK(BM_SnavelyReprojectionAutoDiff_DynamicResiduals);
+
+template <NumericDiffMethodType kMethod, int kNumParameters, Dynamic kIsDynamic>
+static void BM_NumericDiffFirstOrderFunction(benchmark::State& state) {
+  using Functor = RosenbrockFirstOrderFunctor<kNumParameters>;
+  std::unique_ptr<FirstOrderFunction> f;
+  if constexpr (kIsDynamic) {
+    f = std::make_unique<
+        NumericDiffFirstOrderFunction<Functor, kMethod, DYNAMIC>>(
+        std::make_unique<Functor>(), kNumParameters);
+  } else {
+    f = std::make_unique<
+        NumericDiffFirstOrderFunction<Functor, kMethod, kNumParameters>>(
+        std::make_unique<Functor>());
+  }
+
+  std::array<double, kNumParameters> x;
+  for (int i = 0; i < kNumParameters; ++i) {
+    x[i] = 0.5 + 0.01 * i;
+  }
+  double cost = 0.0;
+  std::array<double, kNumParameters> gradient;
+  for (auto _ : state) {
+    benchmark::DoNotOptimize(x);
+    f->Evaluate(x.data(), &cost, gradient.data());
+    benchmark::DoNotOptimize(cost);
+    benchmark::DoNotOptimize(gradient);
+  }
+}
+BENCHMARK_TEMPLATE(BM_NumericDiffFirstOrderFunction, CENTRAL, 10, kNotDynamic);
+BENCHMARK_TEMPLATE(BM_NumericDiffFirstOrderFunction, CENTRAL, 10, kDynamic);
+BENCHMARK_TEMPLATE(BM_NumericDiffFirstOrderFunction, CENTRAL, 24, kNotDynamic);
+BENCHMARK_TEMPLATE(BM_NumericDiffFirstOrderFunction, CENTRAL, 24, kDynamic);
 
 }  // namespace ceres
 
