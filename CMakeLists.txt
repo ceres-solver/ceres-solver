@@ -894,17 +894,12 @@ function(ceres_dependency_description OUTPUT DESCRIPTION VERSION)
   set(${OUTPUT} "${DESCRIPTION}" PARENT_SCOPE)
 endfunction()
 
-set(CERES_CUDA_VERSION "${CUDA_VERSION}")
-if (CUDAToolkit_VERSION)
-  set(CERES_CUDA_VERSION "${CUDAToolkit_VERSION}")
-endif()
-
 ceres_dependency_description(CERES_ABSL_DESCRIPTION
   "C++ common libraries from Google" "${absl_VERSION}")
 ceres_dependency_description(CERES_BENCHMARK_DESCRIPTION
   "A microbenchmark support library" "${benchmark_VERSION}")
 ceres_dependency_description(CERES_CUDA_DESCRIPTION
-  "NVIDIA CUDA toolkit" "${CERES_CUDA_VERSION}")
+  "NVIDIA CUDA toolkit" "${CUDAToolkit_VERSION}")
 ceres_dependency_description(CERES_CUDSS_DESCRIPTION
   "NVIDIA CUDA sparse solver library" "${cudss_VERSION}")
 ceres_dependency_description(CERES_EIGEN3_DESCRIPTION
@@ -936,10 +931,6 @@ set_package_properties(benchmark PROPERTIES
 set_package_properties(BLAS PROPERTIES
   DESCRIPTION "Basic Linear Algebra Subprograms implementation"
   PURPOSE "LAPACK dependency")
-set_package_properties(CUDA PROPERTIES
-  DESCRIPTION "${CERES_CUDA_DESCRIPTION}"
-  URL "https://developer.nvidia.com/cuda-toolkit"
-  PURPOSE "CUDA solver acceleration")
 set_package_properties(CUDAToolkit PROPERTIES
   DESCRIPTION "${CERES_CUDA_DESCRIPTION}"
   URL "https://developer.nvidia.com/cuda-toolkit"
