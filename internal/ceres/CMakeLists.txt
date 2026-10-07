@@ -75,8 +75,11 @@ file(GLOB CERES_INTERNAL_HDRS *.h)
 # Depend also on public headers so they appear in IDEs.
 file(GLOB CERES_PUBLIC_HDRS ${Ceres_SOURCE_DIR}/include/ceres/*.h)
 file(GLOB CERES_PUBLIC_INTERNAL_HDRS ${Ceres_SOURCE_DIR}/include/ceres/internal/*.h)
-file(GLOB CERES_PUBLIC_INTERNAL_HDRS
-  ${Ceres_BINARY_DIR}/${CMAKE_INSTALL_INCLUDEDIR}/ceres/internal/*.h)
+# The generated headers are listed explicitly because export.h does not exist
+# yet when configuring for the first time.
+list(APPEND CERES_PUBLIC_INTERNAL_HDRS
+  ${Ceres_BINARY_DIR}/${CMAKE_INSTALL_INCLUDEDIR}/ceres/internal/config.h
+  ${Ceres_BINARY_DIR}/${CMAKE_INSTALL_INCLUDEDIR}/ceres/internal/export.h)
 
 # Include the specialized schur solvers.
 if (WITH_SCHUR_SPECIALIZATIONS)
