@@ -60,7 +60,7 @@ namespace ceres {
 // Trivial wrapper to index linear arrays as matrices, given a fixed
 // column and row stride. When an array "T* array" is wrapped by a
 //
-//   (const) MatrixAdapter<T, row_stride, col_stride> M"
+//   (const) MatrixAdapter<T, row_stride, col_stride> M
 //
 // the expression  M(i, j) is equivalent to
 //
@@ -106,7 +106,7 @@ constexpr auto MakeQuaternion(T w, T x, T y, T z)
   return {w, x, y, z};
 }
 
-// Constructs a quaternion with the Ceres coefficient order (x, y, z, w).
+// Constructs a quaternion with the Eigen coefficient order (x, y, z, w).
 template <typename Order, typename T>
 constexpr auto MakeQuaternion(T w, T x, T y, T z)
     -> std::enable_if_t<std::is_same_v<Order, EigenQuaternionOrder>,
@@ -238,8 +238,9 @@ void EulerAnglesToRotation(const T* euler,
 // Internally, Euler Axis sequences are classified by Ken Shoemake's scheme from
 // "Euler angle conversion", Graphics Gems IV, where a choice of axis for the
 // first rotation and 3 binary choices:
-// 1. Oddness of the axis permutation, that defines whether the second axis is
-// 'greater-than' the first axis according to the order X>Y>Z>X)
+// 1. Parity of the axis permutation. The axis sequence has Even parity if the
+// second axis of rotation is 'greater-than' the first axis of rotation
+// according to the order X<Y<Z<X, otherwise it has Odd parity.
 // 2. Proper Euler Angles v.s. Tait-Bryan Angles
 // 3. Extrinsic Rotations v.s. Intrinsic Rotations
 // compactly represent all 24 possible Euler Angle Conventions
@@ -439,7 +440,7 @@ inline void QuaternionToAngleAxis(const T* quaternion, T* angle_axis) {
     // result in a normalized angle-axis vector.
     //
     // In that case we observe that 2 * theta ~ 2 * theta - 2 * pi,
-    // which is equivalent saying
+    // which is equivalent to saying
     //
     //   theta - pi = atan(sin(theta - pi), cos(theta - pi))
     //              = atan(-sin(theta), -cos(theta))
@@ -500,9 +501,9 @@ void RotationMatrixToQuaternion(
 }
 
 // The conversion of a rotation matrix to the angle-axis form is
-// numerically problematic when then rotation angle is close to zero
+// numerically problematic when the rotation angle is close to zero
 // or to Pi. The following implementation detects when these two cases
-// occurs and deals with them by taking code paths that are guaranteed
+// occur and deals with them by taking code paths that are guaranteed
 // to not perform division by a small number.
 template <typename T>
 inline void RotationMatrixToAngleAxis(const T* R, T* angle_axis) {
@@ -682,7 +683,7 @@ void RotationMatrixToEulerAngles(
     euler[2] = ea[2];
   }
 
-  // Proper euler angles are defined for angles in
+  // Proper Euler angles are defined for angles in
   //   [-pi, pi) x [0, pi / 2) x [-pi, pi)
   // which is enforced here
   if constexpr (EulerSystem::kIsProperEuler) {
@@ -881,7 +882,7 @@ inline void AngleAxisRotatePoint(const T angle_axis[3],
 
   if (internal::AnyExactlyNonZero(
           angle_axis[0], angle_axis[1], angle_axis[2])) {
-    // Away from zero, use the rodriguez formula
+    // Away from zero, use the Rodrigues formula
     //
     //   result = pt costheta +
     //            (w x pt) * sintheta +

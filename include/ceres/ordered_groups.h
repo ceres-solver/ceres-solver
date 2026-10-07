@@ -44,19 +44,19 @@ namespace ceres {
 // A class for storing and manipulating an ordered collection of
 // groups/sets with the following semantics:
 //
-// Group ids are non-negative integer values. Elements are any type
+// Group IDs are non-negative integer values. Elements are any type
 // that can serve as a key in a map or an element of a set.
 //
 // An element can only belong to one group at a time. A group may
 // contain an arbitrary number of elements.
 //
-// Groups are ordered by their group id.
+// Groups are ordered by their group ID.
 template <typename T>
 class OrderedGroups {
  public:
-  // Add an element to a group. If a group with this id does not
+  // Add an element to a group. If a group with this ID does not
   // exist, one is created. This method can be called any number of
-  // times for the same element. Group ids should be non-negative
+  // times for the same element. Group IDs should be non-negative
   // numbers.
   //
   // Return value indicates if adding the element was a success.
@@ -143,7 +143,7 @@ class OrderedGroups {
     group_to_elements_.swap(new_group_to_elements);
   }
 
-  // Return the group id for the element. If the element is not a
+  // Return the group ID for the element. If the element is not a
   // member of any group, return -1.
   int GroupId(const T element) const {
     auto it = element_to_group_.find(element);
@@ -171,7 +171,7 @@ class OrderedGroups {
   int NumGroups() const { return group_to_elements_.size(); }
 
   // The first group with one or more elements. Calling this when
-  // there are no groups with non-zero elements will result in a
+  // there are no groups with one or more elements will result in a
   // crash.
   int MinNonZeroGroup() const {
     CHECK_NE(NumGroups(), 0);

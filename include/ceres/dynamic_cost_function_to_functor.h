@@ -64,7 +64,7 @@ namespace ceres {
 // local coordinate system onto its image plane and subtracts it from
 // the observed point projection. It can compute its residual and
 // either via analytic or numerical differentiation can compute its
-// jacobians. The intrinsics are passed in as parameters[0] and the point as
+// Jacobians. The intrinsics are passed in as parameters[0] and the point as
 // parameters[1].
 //
 // Now we would like to compose the action of this CostFunction with
@@ -72,14 +72,16 @@ namespace ceres {
 // translation. Say we have a templated function
 //
 //   template<typename T>
-//   void RotateAndTranslatePoint(double const* const* parameters,
-//                                double* residuals);
+//   void RotateAndTranslatePoint(const T* rotation,
+//                                const T* translation,
+//                                const T* point,
+//                                T* result);
 //
 // Then we can now do the following,
 //
 // struct CameraProjection {
 //   CameraProjection(const double* observation)
-//       : intrinsic_projection_.(new IntrinsicProjection(observation)) {
+//       : intrinsic_projection_(new IntrinsicProjection(observation)) {
 //   }
 //   template <typename T>
 //   bool operator()(T const* const* parameters,
@@ -129,7 +131,7 @@ class CERES_EXPORT DynamicCostFunctionToFunctor {
     absl::FixedArray<double*> jacobian_blocks(num_parameter_blocks);
     absl::FixedArray<double> residuals(num_residuals);
 
-    // Build a set of arrays to get the residuals and jacobians from
+    // Build a set of arrays to get the residuals and Jacobians from
     // the CostFunction wrapped by this functor.
     double* parameter_ptr = parameters.data();
     double* jacobian_ptr = jacobians.data();
@@ -149,9 +151,9 @@ class CERES_EXPORT DynamicCostFunctionToFunctor {
     }
 
     // Now that we have the incoming Jets, which are carrying the
-    // partial derivatives of each of the inputs w.r.t to some other
+    // partial derivatives of each of the inputs w.r.t. some other
     // underlying parameters. The derivative of the outputs of the
-    // cost function w.r.t to the same underlying parameters can now
+    // cost function w.r.t. the same underlying parameters can now
     // be computed by applying the chain rule.
     //
     //  d output[i]               d output[i]   d input[j]
@@ -165,7 +167,7 @@ class CERES_EXPORT DynamicCostFunctionToFunctor {
     //  outputJet[i]  = sum_k jacobian[i][k] * inputJet[k]
     //
     // The following loop, iterates over the residuals, computing one
-    // output jet at a time.
+    // output Jet at a time.
     for (int i = 0; i < num_residuals; ++i) {
       output[i].a = residuals[i];
       output[i].v.setZero();

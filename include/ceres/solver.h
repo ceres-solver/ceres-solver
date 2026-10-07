@@ -94,12 +94,12 @@ class CERES_EXPORT Solver {
     NonlinearConjugateGradientType nonlinear_conjugate_gradient_type =
         FLETCHER_REEVES;
 
-    // The LBFGS hessian approximation is a low rank approximation to
+    // The LBFGS Hessian approximation is a low rank approximation to
     // the inverse of the Hessian matrix. The rank of the
     // approximation determines (linearly) the space and time
     // complexity of using the approximation. Higher the rank, the
     // better is the quality of the approximation. The increase in
-    // quality is however is bounded for a number of reasons.
+    // quality is however bounded for a number of reasons.
     //
     // 1. The method only uses secant information and not actual
     // derivatives.
@@ -133,9 +133,9 @@ class CERES_EXPORT Solver {
     // by default.  In particular it can degrade performance when the
     // sensitivity of the problem to different parameters varies significantly,
     // as in this case a single scalar factor fails to capture this variation
-    // and detrimentally downscales parts of the jacobian approximation which
+    // and detrimentally downscales parts of the Jacobian approximation which
     // correspond to low-sensitivity parameters. It can also reduce the
-    // robustness of the solution to errors in the jacobians.
+    // robustness of the solution to errors in the Jacobians.
     //
     // Oren S.S., Self-scaling variable metric (SSVM) algorithms
     // Part II: Implementation and experiments, Management Science,
@@ -269,7 +269,7 @@ class CERES_EXPORT Solver {
     double max_solver_time_in_seconds = 1e9;
 
     // Number of threads used by Ceres for evaluating the cost and
-    // jacobians.
+    // Jacobians.
     int num_threads = 1;
 
     // Trust region minimizer settings.
@@ -284,7 +284,7 @@ class CERES_EXPORT Solver {
     // accepted.
     double min_relative_decrease = 1e-3;
 
-    // For the Levenberg-Marquadt algorithm, the scaled diagonal of
+    // For the Levenberg-Marquardt algorithm, the scaled diagonal of
     // the normal equations J'J is used to control the size of the
     // trust region. Extremely small and large values along the
     // diagonal can make this regularization scheme
@@ -303,20 +303,20 @@ class CERES_EXPORT Solver {
 
     // Minimizer terminates when
     //
-    //   (new_cost - old_cost) < function_tolerance * old_cost;
+    //   (old_cost - new_cost) < function_tolerance * old_cost;
     //
     double function_tolerance = 1e-6;
 
     // Minimizer terminates when
     //
-    //   max_i |x - Project(Plus(x, -g(x))| < gradient_tolerance
+    //   max_i |x - Project(Plus(x, -g(x)))| < gradient_tolerance
     //
     // This value should typically be 1e-4 * function_tolerance.
     double gradient_tolerance = 1e-10;
 
     // Minimizer terminates when
     //
-    //   |step|_2 <= parameter_tolerance * ( |x|_2 +  parameter_tolerance)
+    //   |step|_2 <= parameter_tolerance * (|x|_2 + parameter_tolerance)
     //
     double parameter_tolerance = 1e-8;
 
@@ -392,8 +392,8 @@ class CERES_EXPORT Solver {
     // can have a significant impact on the efficiency and accuracy of
     // the method. e.g., when doing sparse Cholesky factorization,
     // there are matrices for which a good ordering will give a
-    // Cholesky factor with O(n) storage, where as a bad ordering will
-    // result in an completely dense factor.
+    // Cholesky factor with O(n) storage, whereas a bad ordering will
+    // result in a completely dense factor.
     //
     // Sparse direct solvers like SPARSE_NORMAL_CHOLESKY and
     // SPARSE_SCHUR use a fill reducing ordering of the columns and
@@ -462,12 +462,12 @@ class CERES_EXPORT Solver {
     // ordering, it must have one important property. The lowest
     // numbered elimination group must form an independent set in the
     // graph corresponding to the Hessian, or in other words, no two
-    // parameter blocks in in the first elimination group should
+    // parameter blocks in the first elimination group should
     // co-occur in the same residual block. For the best performance,
     // this elimination group should be as large as possible. For
     // standard bundle adjustment problems, this corresponds to the
     // first elimination group containing all the 3d points, and the
-    // second containing the all the cameras parameter blocks.
+    // second containing all the camera parameter blocks.
     //
     // If the user leaves the choice to Ceres, then the solver uses an
     // approximate maximum independent set algorithm to identify the first
@@ -479,10 +479,10 @@ class CERES_EXPORT Solver {
     // linear_solver_ordering_type = AMD
     // ---------------------------------
     //
-    // A Constrained Approximate Minimum Degree (CAMD) ordering used where the
-    // parameter blocks in the lowest numbered group are eliminated first, and
-    // then the parameter blocks in the next lowest numbered group and so
-    // on. Within each group, CAMD free to order the parameter blocks as it
+    // A Constrained Approximate Minimum Degree (CAMD) ordering is used where
+    // the parameter blocks in the lowest numbered group are eliminated first,
+    // and then the parameter blocks in the next lowest numbered group and so
+    // on. Within each group, CAMD is free to order the parameter blocks as it
     // chooses.
     //
     // linear_solver_ordering_type = NESDIS
@@ -496,7 +496,7 @@ class CERES_EXPORT Solver {
     //
     // b. linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR
     //
-    // ONLY the lowest group are used to compute the Schur complement, and
+    // ONLY the lowest group is used to compute the Schur complement, and
     // Nested Dissection is used to compute a fill reducing ordering for the
     // Schur Complement (or its preconditioner).
     //
@@ -511,7 +511,7 @@ class CERES_EXPORT Solver {
     //
     // b. linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR
     //
-    // ONLY the lowest group are used to compute the Schur complement, and AMD
+    // ONLY the lowest group is used to compute the Schur complement, and AMD
     // or NESDIS is used to compute a fill reducing ordering for the Schur
     // Complement (or its preconditioner).
     std::shared_ptr<ParameterBlockOrdering> linear_solver_ordering;
@@ -556,9 +556,9 @@ class CERES_EXPORT Solver {
 
     // Some non-linear least squares problems are symbolically dense but
     // numerically sparse. i.e. at any given state only a small number
-    // of jacobian entries are non-zero, but the position and number of
+    // of Jacobian entries are non-zero, but the position and number of
     // non-zeros is different depending on the state. For these problems
-    // it can be useful to factorize the sparse jacobian at each solver
+    // it can be useful to factorize the sparse Jacobian at each solver
     // iteration instead of including all of the zero entries in a single
     // general factorization.
     //
@@ -566,7 +566,7 @@ class CERES_EXPORT Solver {
     // then it is probably best to keep this false, otherwise it will
     // likely lead to worse performance.
 
-    // This settings only affects the SPARSE_NORMAL_CHOLESKY solver.
+    // This setting only affects the SPARSE_NORMAL_CHOLESKY solver.
     bool dynamic_sparsity = false;
 
     // If use_mixed_precision_solves is true, the Gauss-Newton matrix is
@@ -580,13 +580,13 @@ class CERES_EXPORT Solver {
     // max_num_refinement_iterations = 0, then the Gauss-Newton step is computed
     // in single precision.
     //
-    // This options is available when linear solver uses sparse or dense
-    // cholesky factorization.
+    // This option is available when the linear solver uses sparse or dense
+    // Cholesky factorization.
     bool use_mixed_precision_solves = false;
 
-    // Number steps of the iterative refinement process to run when computing
+    // Number of steps of the iterative refinement process to run when computing
     // the Gauss-Newton step. This is most useful when used in conjunction with
-    // use_mixed_precision = true.
+    // use_mixed_precision_solves = true.
     int max_num_refinement_iterations = 0;
 
     // Minimum number of iterations for which the linear solver should
@@ -601,7 +601,7 @@ class CERES_EXPORT Solver {
 
     // Maximum number of iterations performed by SCHUR_POWER_SERIES_EXPANSION.
     // Each iteration corresponds to one more term in the power series expansion
-    // od the inverse of the Schur complement.  This value controls the maximum
+    // of the inverse of the Schur complement.  This value controls the maximum
     // number of iterations whether it is used as a preconditioner or just to
     // initialize the solution for ITERATIVE_SCHUR.
     int max_num_spse_iterations = 5;
@@ -627,7 +627,7 @@ class CERES_EXPORT Solver {
     //  (Q_i - Q_{i-1})/Q_i < eta/i
     double eta = 1e-1;
 
-    // Normalize the jacobian using Jacobi scaling before calling
+    // Normalize the Jacobian using Jacobi scaling before calling
     // the linear least squares solver.
     bool jacobi_scaling = true;
 
@@ -645,12 +645,11 @@ class CERES_EXPORT Solver {
     // Notice here that the expression on the left is linear in a_1
     // and a_2, and given any value for b_1, b_2 and c_1, it is
     // possible to use linear regression to estimate the optimal
-    // values of a_1 and a_2. Indeed, its possible to analytically
-    // eliminate the variables a_1 and a_2 from the problem all
-    // together. Problems like these are known as separable least
-    // squares problem and the most famous algorithm for solving them
-    // is the Variable Projection algorithm invented by Golub &
-    // Pereyra.
+    // values of a_1 and a_2. Indeed, it's possible to analytically
+    // eliminate the variables a_1 and a_2 from the problem altogether.
+    // Problems like these are known as separable least squares problems
+    // and the most famous algorithm for solving them is the Variable
+    // Projection algorithm invented by Golub & Pereyra.
     //
     // Similar structure can be found in the matrix factorization with
     // missing data problem. There the corresponding algorithm is
@@ -665,7 +664,7 @@ class CERES_EXPORT Solver {
     // Implementing Variable Projection is tedious and expensive, and
     // they present a simpler algorithm, which they refer to as
     // Algorithm II, where once the Newton/Trust Region step has been
-    // computed for the whole problem (a_1, a_2, b_1, b_2, c_1) and
+    // computed for the whole problem (a_1, a_2, b_1, b_2, c_1), an
     // additional optimization step is performed to estimate a_1 and
     // a_2 exactly.
     //
@@ -691,13 +690,13 @@ class CERES_EXPORT Solver {
     // highly recommended.
     bool use_inner_iterations = false;
 
-    // If inner_iterations is true, then the user has two choices.
+    // If use_inner_iterations is true, then the user has two choices.
     //
     // 1. Let the solver heuristically decide which parameter blocks
     //    to optimize in each inner iteration. To do this leave
     //    Solver::Options::inner_iteration_ordering untouched.
     //
-    // 2. Specify a collection of of ordered independent sets. Where
+    // 2. Specify a collection of ordered independent sets. Where
     //    the lower numbered groups are optimized before the higher
     //    number groups. Each group must be an independent set. Not
     //    all parameter blocks need to be present in the ordering.
@@ -732,11 +731,13 @@ class CERES_EXPORT Solver {
     // non-empty and trust_region_problem_dump_format_type is not
     // CONSOLE.
     std::string trust_region_problem_dump_directory = "/tmp";
+
+    // Format in which the trust region problem should be dumped.
     DumpFormatType trust_region_problem_dump_format_type = TEXTFILE;
 
     // Finite differences options ----------------------------------------------
 
-    // Check all jacobians computed by each residual block with finite
+    // Check all Jacobians computed by each residual block with finite
     // differences. This is expensive since it involves computing the
     // derivative by normal means (e.g. user specified, autodiff,
     // etc), then also computing it using finite differences. The
@@ -745,13 +746,13 @@ class CERES_EXPORT Solver {
     bool check_gradients = false;
 
     // Relative precision to check for in the gradient checker. If the
-    // relative difference between an element in a jacobian exceeds
-    // this number, then the jacobian for that cost term is dumped.
+    // relative difference between an element in a Jacobian exceeds
+    // this number, then the Jacobian for that cost term is dumped.
     double gradient_check_relative_precision = 1e-8;
 
-    // WARNING: This option only applies to the to the numeric
+    // WARNING: This option only applies to the numeric
     // differentiation used for checking the user provided derivatives
-    // when when Solver::Options::check_gradients is true. If you are
+    // when Solver::Options::check_gradients is true. If you are
     // using NumericDiffCostFunction and are interested in changing
     // the step size for numeric differentiation in your cost
     // function, please have a look at
@@ -824,6 +825,9 @@ class CERES_EXPORT Solver {
     // termination.
     std::string FullReport() const;
 
+    // Returns true if the solver terminated for a reason that allows
+    // the solution to be used. This is true if the termination_type is
+    // CONVERGENCE or USER_SUCCESS.
     bool IsSolutionUsable() const;
 
     // Minimizer summary -------------------------------------------------
@@ -904,7 +908,7 @@ class CERES_EXPORT Solver {
     // Number of residual only evaluations.
     int num_residual_evaluations = -1;
 
-    // Time (in seconds) spent evaluating the jacobian matrix.
+    // Time (in seconds) spent evaluating the Jacobian matrix.
     double jacobian_evaluation_time_in_seconds = -1.0;
 
     // Number of Jacobian (and residual) evaluations.
@@ -1012,7 +1016,7 @@ class CERES_EXPORT Solver {
     std::vector<int> linear_solver_ordering_given;
 
     // Size of the parameter groups used by the solver when ordering
-    // the columns of the Jacobian.  This maybe different from
+    // the columns of the Jacobian.  This may be different from
     // linear_solver_ordering_given if the user left
     // linear_solver_ordering_given blank and asked for an automatic
     // ordering, or if the problem contains some constant or inactive
@@ -1029,7 +1033,7 @@ class CERES_EXPORT Solver {
     // schur_structure_given is because the corresponding template
     // specialization does not exist.
     //
-    // Template specializations can be added to ceres by editing
+    // Template specializations can be added to Ceres by editing
     // internal/ceres/generate_template_specializations.py
     std::string schur_structure_used;
 
@@ -1047,8 +1051,8 @@ class CERES_EXPORT Solver {
     // inner iterations.
     std::vector<int> inner_iteration_ordering_given;
 
-    // Size of the parameter groups given used by the solver for
-    // performing inner iterations. This maybe different from
+    // Size of the parameter groups used by the solver for
+    // performing inner iterations. This may be different from
     // inner_iteration_ordering_given if the user left
     // inner_iteration_ordering_given blank and asked for an automatic
     // ordering, or if the problem contains some constant or inactive

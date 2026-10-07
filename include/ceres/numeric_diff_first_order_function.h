@@ -50,10 +50,10 @@ namespace ceres {
 
 // Creates FirstOrderFunctions as needed by the GradientProblem
 // framework, with gradients computed via numeric differentiation. For
-// more information on numeric differentiation, see the wikipedia
+// more information on numeric differentiation, see the Wikipedia
 // article at https://en.wikipedia.org/wiki/Numerical_differentiation
 //
-// To get an numerically differentiated cost function, you must define
+// To get a numerically differentiated cost function, you must define
 // a class with an operator() (a functor) that computes the cost.
 //
 // The function must write the computed value in the last argument
@@ -63,7 +63,7 @@ namespace ceres {
 // two-dimensional column vector parameters, the prime sign indicates
 // transposition, and a is a constant.
 //
-// To write an numerically-differentiable cost function for the above model,
+// To write a numerically-differentiable cost function for the above model,
 // first define the object
 //
 //  class QuadraticCostFunctor {
@@ -92,7 +92,7 @@ namespace ceres {
 //
 //   std::unique_ptr<FirstOrderFunction> function
 //       = std::make_unique<
-//           NumericDiffFirstOrderFunction<MyScalarCostFunctor, CENTRAL, 4>>(
+//           NumericDiffFirstOrderFunction<QuadraticCostFunctor, CENTRAL, 4>>(
 //               std::make_unique<QuadraticCostFunctor>(1.0));     ^     ^
 //                                                                 |     |
 //                                 Finite Differencing Scheme -----+     |
@@ -108,7 +108,7 @@ namespace ceres {
 // alternate construction syntax can be used:
 //
 //   std::unique_ptr<FirstOrderFunction> function
-//       = std::make_unique<NumericDiffFirstOrderFunction<MyScalarCostFunctor,
+//       = std::make_unique<NumericDiffFirstOrderFunction<QuadraticCostFunctor,
 //                                                        CENTRAL>>(
 //           std::make_unique<QuadraticCostFunctor>(1.0), 4);
 //

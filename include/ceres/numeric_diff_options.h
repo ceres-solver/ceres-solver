@@ -60,8 +60,7 @@ struct CERES_EXPORT NumericDiffOptions {
   int max_num_ridders_extrapolations = 10;
 
   // Convergence criterion on extrapolation error for Ridders adaptive
-  // differentiation. The available error estimation methods are defined in
-  // NumericDiffErrorType and set in the "ridders_error_method" field.
+  // differentiation.
   double ridders_epsilon = 1e-12;
 
   // The factor in which to shrink the step size with each extrapolation in

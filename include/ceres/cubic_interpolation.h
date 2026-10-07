@@ -119,11 +119,11 @@ void CubicHermiteSpline(const Eigen::Matrix<double, kDataDimension, 1>& p0,
 //
 // Example usage:
 //
-//  const double data[] = {1.0, 2.0, 5.0, 6.0};
-//  Grid1D<double, 1> grid(data, 0, 4);
-//  CubicInterpolator<Grid1D<double, 1>> interpolator(grid);
-//  double f, dfdx;
-//  interpolator.Evaluator(1.5, &f, &dfdx);
+//   const double data[] = {1.0, 2.0, 5.0, 6.0};
+//   Grid1D<double, 1> grid(data, 0, 4);
+//   CubicInterpolator<Grid1D<double, 1>> interpolator(grid);
+//   double f, dfdx;
+//   interpolator.Evaluate(1.5, &f, &dfdx);
 template <typename Grid>
 class CubicInterpolator {
  public:
@@ -170,12 +170,11 @@ class CubicInterpolator {
 //   [begin, ..., end - 1]
 //
 // Since the input array is finite and the grid is infinite, values
-// outside this interval needs to be computed. Grid1D uses the value
-// from the nearest edge.
+// outside this interval are computed by clamping to the nearest edge.
 //
 // The function being provided can be vector valued, in which case
-// kDataDimension > 1. The dimensional slices of the function maybe
-// interleaved, or they maybe stacked, i.e., if the function has
+// kDataDimension > 1. The dimensional slices of the function may be
+// interleaved, or they may be stacked, i.e., if the function has
 // kDataDimension = 2, if kInterleaved = true, then it is stored as
 //
 //   f01, f02, f11, f12 ....
@@ -265,8 +264,8 @@ class BiCubicInterpolator {
     CHECK_GE(+Grid::DATA_DIMENSION, 1);
   }
 
-  // Evaluate the interpolated function value and/or its
-  // derivative. Uses the nearest point on the grid boundary if r or
+  // Evaluates the interpolated function value and/or its
+  // derivatives. Uses the nearest point on the grid boundary if r or
   // c is out of bounds.
   void Evaluate(
       double r, double c, double* f, double* dfdr, double* dfdc) const {
@@ -358,18 +357,17 @@ class BiCubicInterpolator {
 // by the BiCubicInterpolator where the source of the function values
 // is a grid of type T on the grid
 //
-//   [(row_start,   col_start), ..., (row_start,   col_end - 1)]
-//   [                          ...                            ]
-//   [(row_end - 1, col_start), ..., (row_end - 1, col_end - 1)]
+//   [(row_begin, col_begin), ..., (row_begin, col_end - 1)]
+//   [                        ...                         ]
+//   [(row_end - 1, col_begin), ..., (row_end - 1, col_end - 1)]
 //
 // Since the input grid is finite and the grid is infinite, values
-// outside this interval needs to be computed. Grid2D uses the value
-// from the nearest edge.
+// outside this interval are computed by clamping to the nearest edge.
 //
 // The function being provided can be vector valued, in which case
-// kDataDimension > 1. The data maybe stored in row or column major
-// format and the various dimensional slices of the function maybe
-// interleaved, or they maybe stacked, i.e., if the function has
+// kDataDimension > 1. The data may be stored in row or column major
+// format and the various dimensional slices of the function may be
+// interleaved, or they may be stacked, i.e., if the function has
 // kDataDimension = 2, is stored in row-major format and if
 // kInterleaved = true, then it is stored as
 //

@@ -85,7 +85,7 @@ class DynamicAutoDiffCostFunction final : public DynamicCostFunction {
     static_assert(Stride > 0, "Stride must be positive");
   }
 
-  // Constructs the CostFunctor on the heap and takes the ownership.
+  // Constructs the CostFunctor on the heap and takes ownership.
   template <typename... Args,
             typename = std::enable_if_t<
                 std::is_constructible_v<CostFunctor, Args&&...>>>
@@ -146,7 +146,7 @@ class DynamicAutoDiffCostFunction final : public DynamicCostFunction {
     // depends on.
     //
     // To work around this issue, the solution here is to evaluate the
-    // jacobians in a series of passes, each one computing Stride *
+    // Jacobians in a series of passes, each one computing Stride *
     // num_residuals() derivatives. This is done with small, fixed-size jets.
     const int num_parameter_blocks =
         static_cast<int>(parameter_block_sizes().size());
@@ -251,7 +251,7 @@ class DynamicAutoDiffCostFunction final : public DynamicCostFunction {
         return false;
       }
 
-      // Copy the pieces of the jacobians into their final place.
+      // Copy the pieces of the Jacobians into their final place.
       active_parameter_count = 0;
 
       current_derivative_section = initial_derivative_section;

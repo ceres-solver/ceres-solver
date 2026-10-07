@@ -59,7 +59,7 @@ namespace ceres {
 
 class CERES_EXPORT NormalPrior final : public CostFunction {
  public:
-  // Check that the number of rows in the vector b are the same as the
+  // Check that the number of rows in the vector b is the same as the
   // number of columns in the matrix A, crash otherwise.
   NormalPrior(const Matrix& A, Vector b);
   bool Evaluate(double const* const* parameters,

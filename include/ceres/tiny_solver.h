@@ -42,7 +42,7 @@
 // Ceres, so it is possible to take this file alone and put it in another
 // project without the rest of Ceres.
 //
-// Algorithm based off of:
+// Algorithm based on:
 //
 // [1] K. Madsen, H. Nielsen, O. Tingleoff.
 //     Methods for Non-linear Least Squares Problems.
@@ -60,12 +60,12 @@
 
 namespace ceres {
 
-// To use tiny solver, create a class or struct that allows computing the cost
+// To use TinySolver, create a class or struct that allows computing the cost
 // function (described below). This is similar to a ceres::CostFunction, but is
 // different to enable statically allocating all memory for the solver
 // (specifically, enum sizes). Key parts are the Scalar typedef, the enums to
 // describe problem sizes (needed to remove all heap allocations), and the
-// operator() overload to evaluate the cost and (optionally) jacobians.
+// operator() overload to evaluate the cost and (optionally) Jacobians.
 //
 //   struct TinySolverCostFunctionTraits {
 //     typedef double Scalar;
@@ -86,7 +86,7 @@ namespace ceres {
 //   double* parameters -- NUM_PARAMETERS or NumParameters()
 //   double* residuals  -- NUM_RESIDUALS or NumResiduals()
 //   double* jacobian   -- NUM_RESIDUALS * NUM_PARAMETERS in column-major format
-//                         (Eigen's default); or nullptr if no jacobian
+//                         (Eigen's default); or nullptr if no Jacobian
 //                         requested.
 //
 // An example (fully statically sized):
@@ -166,6 +166,7 @@ class TinySolver {
                                       MAX_NUM_PARAMETERS,
                                       MAX_NUM_PARAMETERS>;
 
+  // Termination status of the solver.
   enum Status {
     // max_norm |J'(x) * f(x)| < gradient_tolerance
     GRADIENT_TOO_SMALL,
@@ -175,30 +176,36 @@ class TinySolver {
     COST_TOO_SMALL,
     // num_iterations >= max_num_iterations
     HIT_MAX_ITERATIONS,
-    // (new_cost - old_cost) < function_tolerance * old_cost
+    // (old_cost - new_cost) < function_tolerance * old_cost
     COST_CHANGE_TOO_SMALL,
 
     // TODO(sameeragarwal): Deal with numerical failures.
   };
 
+  // Solver options.
   struct Options {
+    // Maximum number of iterations to run.
     int max_num_iterations = 50;
 
-    // max_norm |J'(x) * f(x)| < gradient_tolerance
+    // Minimizer terminates when max_norm |J'(x) * f(x)| < gradient_tolerance.
     Scalar gradient_tolerance = 1e-10;
 
-    //  ||dx|| <= parameter_tolerance * (||x|| + parameter_tolerance)
+    // Minimizer terminates when
+    // ||dx|| <= parameter_tolerance * (||x|| + parameter_tolerance).
     Scalar parameter_tolerance = 1e-8;
 
-    // (new_cost - old_cost) < function_tolerance * old_cost
+    // Minimizer terminates when
+    // (old_cost - new_cost) < function_tolerance * old_cost.
     Scalar function_tolerance = 1e-6;
 
-    // cost_threshold > ||f(x)||^2 / 2
+    // Minimizer terminates when cost_threshold > ||f(x)||^2 / 2.
     Scalar cost_threshold = std::numeric_limits<Scalar>::epsilon();
 
+    // Initial trust region radius.
     Scalar initial_trust_region_radius = 1e4;
   };
 
+  // Summary of the optimization.
   struct Summary {
     // 1/2 ||f(x_0)||^2
     Scalar initial_cost = -1;
@@ -206,7 +213,9 @@ class TinySolver {
     Scalar final_cost = -1;
     // max_norm(J'f(x))
     Scalar gradient_max_norm = -1;
+    // Number of iterations performed.
     int iterations = -1;
+    // Termination status.
     Status status = HIT_MAX_ITERATIONS;
   };
 
@@ -351,14 +360,13 @@ class TinySolver {
     return summary;
   }
 
-  ResidualVector Residuals()
-      const {
+  ResidualVector Residuals() const {
     // Residual updates are stored with the opposite sign.
     return -residuals_;
   }
 
   JacobianMatrix Jacobian() const {
-    // Undo the scaling applied to the jacobian matrix during Update().
+    // Undo the scaling applied to the Jacobian matrix during Update().
     return jacobian_ * jacobi_scaling_.cwiseInverse().asDiagonal();
   }
 

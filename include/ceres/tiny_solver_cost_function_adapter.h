@@ -98,7 +98,7 @@ class TinySolverCostFunctionAdapter {
   explicit TinySolverCostFunctionAdapter(const CostFunction& cost_function)
       : cost_function_(cost_function) {
     CHECK_EQ(cost_function_.parameter_block_sizes().size(), 1)
-        << "Only CostFunctions with exactly one parameter blocks are allowed.";
+        << "Only CostFunctions with exactly one parameter block are allowed.";
 
     const int parameter_block_size = cost_function_.parameter_block_sizes()[0];
     if (NUM_PARAMETERS == Eigen::Dynamic || NUM_RESIDUALS == Eigen::Dynamic) {
@@ -114,6 +114,7 @@ class TinySolverCostFunctionAdapter {
     }
   }
 
+  // Evaluates the cost function.
   bool operator()(const double* parameters,
                   double* residuals,
                   double* jacobian) const {

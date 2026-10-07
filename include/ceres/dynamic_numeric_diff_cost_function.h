@@ -52,7 +52,7 @@
 namespace ceres {
 
 // This numeric diff implementation differs from the one found in
-// numeric_diff_cost_function.h by supporting numericdiff on cost
+// numeric_diff_cost_function.h by supporting numeric diff on cost
 // functions with variable numbers of parameters with variable
 // sizes. With the other implementation, all the sizes (both the
 // number of parameter blocks and the size of each block) must be
@@ -67,7 +67,7 @@ namespace ceres {
 //                     double* residuals) const {
 //       // Use parameters[i] to access the i'th parameter block.
 //     }
-//   }
+//   };
 //
 // Since the sizing of the parameters is done at runtime, you must
 // also specify the sizes after creating the
@@ -87,7 +87,7 @@ class DynamicNumericDiffCostFunction final : public DynamicCostFunction {
       : DynamicNumericDiffCostFunction(
             std::move(functor), TAKE_OWNERSHIP, options) {}
 
-  // Constructs the CostFunctor on the heap and takes the ownership.
+  // Constructs the CostFunctor on the heap and takes ownership.
   template <class... Args,
             typename = std::enable_if_t<std::is_constructible_v<CostFunctor,
                                                                Args&&...>>>

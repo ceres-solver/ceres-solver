@@ -36,14 +36,14 @@
 namespace ceres {
 
 // Using this callback interface, Ceres can notify you when it is
-// about to evaluate the residuals or jacobians. With the callback,
+// about to evaluate the residuals or Jacobians. With the callback,
 // you can share computation between residual blocks by doing the
 // shared computation in PrepareForEvaluation() before Ceres calls
 // CostFunction::Evaluate(). It also enables caching results between a
-// pure residual evaluation and a residual & jacobian evaluation, via
+// pure residual evaluation and a residual & Jacobian evaluation, via
 // the new_evaluation_point argument.
 //
-// One use case for this callback is if the cost function compute is
+// One use case for this callback is if the cost function computation is
 // moved to the GPU. In that case, the prepare call does the actual
 // cost function evaluation, and subsequent calls from Ceres to the
 // actual cost functions merely copy the results from the GPU onto the
@@ -64,7 +64,7 @@ class CERES_EXPORT EvaluationCallback {
  public:
   virtual ~EvaluationCallback();
 
-  // Called before Ceres requests residuals or jacobians for a given setting of
+  // Called before Ceres requests residuals or Jacobians for a given setting of
   // the parameters. User parameters (the double* values provided to the cost
   // functions) are fixed until the next call to PrepareForEvaluation().
   //
@@ -73,7 +73,7 @@ class CERES_EXPORT EvaluationCallback {
   //
   // If new_evaluation_point == true, then this is a new point that is different
   // from the last evaluated point. Otherwise, it is the same point that was
-  // evaluated previously (either jacobian or residual) and the user can use
+  // evaluated previously (either Jacobian or residual) and the user can use
   // cached results from previous evaluations.
   virtual void PrepareForEvaluation(bool evaluate_jacobians,
                                     bool new_evaluation_point) = 0;

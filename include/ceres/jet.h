@@ -35,7 +35,7 @@
 // beyond the scope of this header (see
 // http://en.wikipedia.org/wiki/Automatic_differentiation for details), the
 // basic idea is to extend normal arithmetic with an extra element, "e," often
-// denoted with the greek symbol epsilon, such that e != 0 but e^2 = 0. Dual
+// denoted with the Greek symbol epsilon, such that e != 0 but e^2 = 0. Dual
 // numbers are extensions of the real numbers analogous to complex numbers:
 // whereas complex numbers augment the reals by introducing an imaginary unit i
 // such that i^2 = -1, dual numbers introduce an "infinitesimal" unit e such
@@ -49,7 +49,7 @@
 //   f(x) = x^2 ,
 //
 // evaluated at 10. Using normal arithmetic, f(10) = 100, and df/dx(10) = 20.
-// Next, argument 10 with an infinitesimal to get:
+// Next, augment 10 with an infinitesimal to get:
 //
 //   f(10 + e) = (10 + e)^2
 //             = 100 + 2 * 10 * e + e^2
@@ -111,7 +111,7 @@
 //             << "df/dy = " << z.v[1];
 //
 // Most users should not use Jet objects directly; a wrapper around Jet objects,
-// which makes computing the derivative, gradient, or jacobian of templated
+// which makes computing the derivative, gradient, or Jacobian of templated
 // functors simple, is in autodiff.h. Even autodiff.h should not be used
 // directly; instead autodiff_cost_function.h is typically the file of interest.
 //
@@ -151,7 +151,7 @@
 // WARNING: Most Ceres users should not directly include this file or know the
 // details of how jets work. Instead the suggested method for automatic
 // derivatives is to use autodiff_cost_function.h, which is a wrapper around
-// both jets.h and autodiff.h to make taking derivatives of cost functions for
+// both jet.h and autodiff.h to make taking derivatives of cost functions for
 // use in Ceres easier.
 
 #ifndef CERES_PUBLIC_JET_H_
@@ -174,12 +174,12 @@
 
 // Here we provide partial specializations of std::common_type for the Jet class
 // to allow determining a Jet type with a common underlying arithmetic type.
-// Such an arithmetic type can be either a scalar or an another Jet. An example
+// Such an arithmetic type can be either a scalar or another Jet. An example
 // for a common type, say, between a float and a Jet<double, N> is a Jet<double,
 // N> (i.e., std::common_type_t<float, ceres::Jet<double, N>> and
 // ceres::Jet<double, N> refer to the same type.)
 //
-// The partial specialization are also used for determining compatible types by
+// The partial specializations are also used for determining compatible types by
 // means of SFINAE and thus allow such types to be expressed as operands of
 // logical comparison operators. Missing (partial) specialization of
 // std::common_type for a particular (custom) type will therefore disable the

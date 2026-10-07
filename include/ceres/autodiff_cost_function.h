@@ -30,7 +30,7 @@
 //
 // Create CostFunctions as needed by the least squares framework, with
 // Jacobians computed via automatic differentiation. For more
-// information on automatic differentiation, see the wikipedia article
+// information on automatic differentiation, see the Wikipedia article
 // at http://en.wikipedia.org/wiki/Automatic_differentiation
 //
 // To get an auto differentiated cost function, you must define a class with a
@@ -43,7 +43,7 @@
 // The function must write the computed value in the last argument
 // (the only non-const one) and return true to indicate
 // success. Please see cost_function.h for details on how the return
-// value maybe used to impose simple constraints on the parameter
+// value may be used to impose simple constraints on the parameter
 // block.
 //
 // For example, consider a scalar error e = k - x'y, where both x and y are
@@ -61,11 +61,12 @@
 // define the object
 //
 //   class MyScalarCostFunctor {
+//    public:
 //     MyScalarCostFunctor(double k): k_(k) {}
 //
 //     template <typename T>
-//     bool operator()(const T* const x , const T* const y, T* e) const {
-//       e[0] = T(k_) - x[0] * y[0] + x[1] * y[1];
+//     bool operator()(const T* const x, const T* const y, T* e) const {
+//       e[0] = T(k_) - (x[0] * y[0] + x[1] * y[1]);
 //       return true;
 //     }
 //
@@ -137,7 +138,7 @@
 namespace ceres {
 
 // A cost function which computes the derivative of the cost with respect to
-// the parameters (a.k.a. the jacobian) using an auto differentiation framework.
+// the parameters (a.k.a. the Jacobian) using an auto differentiation framework.
 // The first template argument is the functor object, described in the header
 // comment. The second argument is the dimension of the residual (or
 // ceres::DYNAMIC to indicate it will be set at runtime), and subsequent
@@ -165,7 +166,7 @@ class AutoDiffCostFunction final
                   "be provided as a constructor argument.");
   }
 
-  // Constructs the CostFunctor on the heap and takes the ownership.
+  // Constructs the CostFunctor on the heap and takes ownership.
   // Invocable only if the number of residuals is known at compile-time.
   template <typename... Args,
             typename = std::enable_if_t<

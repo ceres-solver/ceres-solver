@@ -53,7 +53,7 @@
 // image processing algorithm, which is responsible for producing the
 // measurements that are input to Ceres, has found and matched all
 // such tippy-tops in all image frames, except that in one of the
-// frame it mistook a car's headlight for a hydrant. If we didn't do
+// frames it mistook a car's headlight for a hydrant. If we didn't do
 // anything special (i.e. if we used a basic quadratic loss), the
 // residual for the erroneous measurement will result in extreme error
 // due to the quadratic nature of squared loss. This results in the
@@ -65,7 +65,7 @@
 // reduced. In the example above, this leads to outlier terms getting
 // downweighted so they do not overly influence the final solution.
 //
-// What cost function is best?
+// What loss function is best?
 //
 // In general, there isn't a principled way to select a robust loss
 // function. The authors suggest starting with a non-robust cost, then
@@ -251,7 +251,7 @@ class CERES_EXPORT ArctanLoss final : public LossFunction {
 //
 // where c0 is chosen so that rho(0) == 0
 //
-//   c0 = b log(1 + exp(-a / b)
+//   c0 = b log(1 + exp(-a / b))
 //
 // This has the following useful properties:
 //
@@ -322,7 +322,7 @@ class CERES_EXPORT ComposedLoss final : public LossFunction {
 // s -> a * rho'(s)
 // s -> a * rho''(s)
 //
-// Since we treat the a nullptr Loss function as the Identity loss
+// Since we treat a nullptr Loss function as the Identity loss
 // function, rho = nullptr is a valid input and will result in the input
 // being scaled by a. This provides a simple way of implementing a
 // scaled ResidualBlock.
@@ -361,7 +361,7 @@ class CERES_EXPORT ScaledLoss final : public LossFunction {
 // whose scale can be mutated after an optimization problem has been
 // constructed.
 //
-// Since we treat the a nullptr Loss function as the Identity loss
+// Since we treat a nullptr Loss function as the Identity loss
 // function, rho = nullptr is a valid input.
 //
 // Example usage
@@ -380,13 +380,13 @@ class CERES_EXPORT ScaledLoss final : public LossFunction {
 //  problem.AddResidualBlock(cost_function, loss_function, parameters);
 //
 //  Solver::Options options;
-//  Solger::Summary summary;
+//  Solver::Summary summary;
 //
-//  Solve(options, &problem, &summary)
+//  Solve(options, &problem, &summary);
 //
 //  loss_function->Reset(new HuberLoss(1.0), TAKE_OWNERSHIP);
 //
-//  Solve(options, &problem, &summary)
+//  Solve(options, &problem, &summary);
 //
 class CERES_EXPORT LossFunctionWrapper final : public LossFunction {
  public:

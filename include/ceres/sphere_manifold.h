@@ -49,7 +49,7 @@
 namespace ceres {
 
 // This provides a manifold on a sphere meaning that the norm of the vector
-// stays the same. Such cases often arises in Structure for Motion
+// stays the same. Such cases often arise in Structure from Motion
 // problems. One example where they are used is in representing points whose
 // triangulation is ill-conditioned. Here it is advantageous to use an
 // over-parameterization since homogeneous vectors can represent points at
@@ -68,11 +68,11 @@ namespace ceres {
 // than 1.
 //
 // The class works with dynamic and static ambient space dimensions. If the
-// ambient space dimensions is known at compile time use
+// ambient space dimension is known at compile time use
 //
 //    SphereManifold<3> manifold;
 //
-// If the ambient space dimensions is not known at compile time the template
+// If the ambient space dimension is not known at compile time the template
 // parameter needs to be set to ceres::DYNAMIC and the actual dimension needs
 // to be provided as a constructor argument:
 //
@@ -203,7 +203,7 @@ bool SphereManifold<AmbientSpaceDimension>::Minus(const double* y_ptr,
   Eigen::Map<const AmbientVector> x(x_ptr, size_);
   Eigen::Map<TangentVector> y_minus_x(y_minus_x_ptr, size_ - 1);
 
-  // Apply hoseholder transformation.
+  // Apply Householder transformation.
   AmbientVector v(size_);
   double beta;
 

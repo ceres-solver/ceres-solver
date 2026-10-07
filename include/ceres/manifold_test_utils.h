@@ -52,7 +52,7 @@ namespace ceres {
 // Testing a Manifold has two parts.
 //
 // 1. Checking that Manifold::Plus() and Manifold::Minus() are correctly
-//    defined. This requires per manifold tests.
+//    defined. This requires per-manifold tests.
 //
 // 2. The other methods of the manifold have mathematical properties that make
 //    them compatible with Plus() and Minus(), as described in [1].
@@ -247,7 +247,7 @@ MATCHER_P3(PlusMinusIsIdentityAt, x, y, tolerance, "") {
     //   https://doi.org/10.1007/s11263-012-0601-0
     //
     // The computation here is closely related to the IsNearQuaternion matcher
-    // use in rotation_test.cc. The matcher, however, does not compute the
+    // used in rotation_test.cc. The matcher, however, does not compute the
     // distance but only compares the coefficients.
     const Eigen::Vector4d plus = actual + Vector{y};
     const Eigen::Vector4d minus = actual - Vector{y};

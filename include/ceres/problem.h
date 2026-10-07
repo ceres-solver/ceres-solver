@@ -91,7 +91,7 @@ using ResidualBlockId = internal::ResidualBlock*;
 //
 // This class is specifically designed to address the important subset of
 // "sparse" least squares problems, where each component of the residual depends
-// only on a small number number of parameters, even though the total number of
+// only on a small number of parameters, even though the total number of
 // residuals and parameters may be very large. This property affords tremendous
 // gains in scale, allowing efficient solving of large problems that are
 // otherwise inaccessible.
@@ -149,7 +149,7 @@ class CERES_EXPORT Problem {
     // the problem. There is a small but measurable performance penalty to these
     // checks, typically around 5% of construction time. If you are sure your
     // problem construction is correct, and 5% of the problem construction time
-    // is truly an overhead you want to avoid, then you can set
+    // is truly overhead you want to avoid, then you can set
     // disable_all_safety_checks to true.
     //
     // WARNING: Do not set this to true, unless you are absolutely sure of what
@@ -164,11 +164,11 @@ class CERES_EXPORT Problem {
     Context* context = nullptr;
 
     // Using this callback interface, Ceres can notify you when it is about to
-    // evaluate the residuals or jacobians. With the callback, you can share
+    // evaluate the residuals or Jacobians. With the callback, you can share
     // computation between residual blocks by doing the shared computation in
     // EvaluationCallback::PrepareForEvaluation() before Ceres calls
     // CostFunction::Evaluate(). It also enables caching results between a pure
-    // residual evaluation and a residual & jacobian evaluation.
+    // residual evaluation and a residual & Jacobian evaluation.
     //
     // Problem DOES NOT take ownership of the callback.
     //
@@ -182,6 +182,8 @@ class CERES_EXPORT Problem {
   // Problem(Problem::Options()).
   Problem();
   explicit Problem(const Options& options);
+
+  // Move constructor and assignment.
   Problem(Problem&&);
   Problem& operator=(Problem&&);
 
@@ -226,7 +228,7 @@ class CERES_EXPORT Problem {
   //   problem.AddResidualBlock(new MyBinaryCostFunction(...), nullptr, x2, x1);
   //
   // Add a residual block by listing the parameter block pointers directly
-  // instead of wapping them in a container.
+  // instead of wrapping them in a container.
   template <typename... Ts>
   ResidualBlockId AddResidualBlock(CostFunction* cost_function,
                                    LossFunction* loss_function,
@@ -240,6 +242,7 @@ class CERES_EXPORT Problem {
   }
 
   // Add a residual block by providing a vector of parameter blocks.
+  // Ownership of cost_function and loss_function is handled as described above.
   ResidualBlockId AddResidualBlock(
       CostFunction* cost_function,
       LossFunction* loss_function,
@@ -247,6 +250,7 @@ class CERES_EXPORT Problem {
 
   // Add a residual block by providing a pointer to the parameter block array
   // and the number of parameter blocks.
+  // Ownership of cost_function and loss_function is handled as described above.
   ResidualBlockId AddResidualBlock(CostFunction* cost_function,
                                    LossFunction* loss_function,
                                    double* const* const parameter_blocks,
@@ -261,7 +265,7 @@ class CERES_EXPORT Problem {
   // problem. It is okay for manifold to be nullptr.
   //
   // Repeated calls with the same arguments are ignored. Repeated calls
-  // with the same double pointer but a different size results in a crash
+  // with the same double pointer but a different size result in a crash
   // (unless Solver::Options::disable_all_safety_checks is set to true).
   //
   // Repeated calls with the same double pointer and size but different Manifold
@@ -280,8 +284,8 @@ class CERES_EXPORT Problem {
   // scan of the entire Problem object.
   //
   // WARNING: Removing a residual or parameter block will destroy the implicit
-  // ordering, rendering the jacobian or residuals returned from the solver
-  // uninterpretable. If you depend on the evaluated jacobian, do not use
+  // ordering, rendering the Jacobian or residuals returned from the solver
+  // uninterpretable. If you depend on the evaluated Jacobian, do not use
   // remove! This may change in a future release.
   void RemoveParameterBlock(const double* values);
 
@@ -291,8 +295,8 @@ class CERES_EXPORT Problem {
   // problem itself is deleted.
   //
   // WARNING: Removing a residual or parameter block will destroy the implicit
-  // ordering, rendering the jacobian or residuals returned from the solver
-  // uninterpretable. If you depend on the evaluated jacobian, do not use
+  // ordering, rendering the Jacobian or residuals returned from the solver
+  // uninterpretable. If you depend on the evaluated Jacobian, do not use
   // remove! This may change in a future release.
   void RemoveResidualBlock(ResidualBlockId residual_block);
 
@@ -405,20 +409,20 @@ class CERES_EXPORT Problem {
   struct EvaluateOptions {
     // The set of parameter blocks for which evaluation should be
     // performed. This vector determines the order that parameter blocks occur
-    // in the gradient vector and in the columns of the jacobian matrix. If
-    // parameter_blocks is empty, then it is assumed to be equal to vector
+    // in the gradient vector and in the columns of the Jacobian matrix. If
+    // parameter_blocks is empty, then it is assumed to be equal to the vector
     // containing ALL the parameter blocks. Generally speaking the parameter
     // blocks will occur in the order in which they were added to the
     // problem. But, this may change if the user removes any parameter blocks
     // from the problem.
     //
     // NOTE: This vector should contain the same pointers as the ones used to
-    // add parameter blocks to the Problem. These parameter block should NOT
+    // add parameter blocks to the Problem. These parameter blocks should NOT
     // point to new memory locations. Bad things will happen otherwise.
     std::vector<double*> parameter_blocks;
 
     // The set of residual blocks to evaluate. This vector determines the order
-    // in which the residuals occur, and how the rows of the jacobian are
+    // in which the residuals occur, and how the rows of the Jacobian are
     // ordered. If residual_blocks is empty, then it is assumed to be equal to
     // the vector containing ALL the residual blocks. Generally speaking the
     // residual blocks will occur in the order in which they were added to the
@@ -462,10 +466,10 @@ class CERES_EXPORT Problem {
   // is the way to do so.
   //
   // Note 2: If no Manifolds are used, then the size of the gradient vector (and
-  // the number of columns in the jacobian) is the sum of the sizes of all the
+  // the number of columns in the Jacobian) is the sum of the sizes of all the
   // parameter blocks. If a parameter block has a Manifold, then it contributes
   // "TangentSize" entries to the gradient vector (and the number of columns in
-  // the jacobian).
+  // the Jacobian).
   //
   // Note 3: This function cannot be called while the problem is being solved,
   // for example it cannot be called from an IterationCallback at the end of an
@@ -481,7 +485,7 @@ class CERES_EXPORT Problem {
                 CRSMatrix* jacobian);
 
   // Evaluates the residual block, storing the scalar cost in *cost, the
-  // residual components in *residuals, and the jacobians between the parameters
+  // residual components in *residuals, and the Jacobians between the parameters
   // and residuals in jacobians[i], in row-major order.
   //
   // If residuals is nullptr, the residuals are not computed.
@@ -496,8 +500,8 @@ class CERES_EXPORT Problem {
   // returns false, the caller should expect the output memory locations to have
   // been modified.
   //
-  // The returned cost and jacobians have had robustification and Manifold
-  // applied already; for example, the jacobian for a 4-dimensional quaternion
+  // The returned cost and Jacobians have had robustification and Manifold
+  // applied already; for example, the Jacobian for a 4-dimensional quaternion
   // parameter using the "QuaternionParameterization" is num_residuals by 3
   // instead of num_residuals by 4.
   //
@@ -524,7 +528,7 @@ class CERES_EXPORT Problem {
   // This means, if an EvaluationCallback is associated with the problem then it
   // is the user's responsibility to call PrepareForEvaluation before calling
   // this method if necessary, i.e. iff the parameter values have been changed
-  // since the last call to evaluate / solve.'
+  // since the last call to evaluate / solve.
   //
   // This is because, as the name implies, we assume that the parameter blocks
   // did not change since the last time PrepareForEvaluation was called (via

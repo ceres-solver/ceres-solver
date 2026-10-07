@@ -126,7 +126,7 @@ class CovarianceImpl;
 //
 // Rank of the Jacobian
 // --------------------
-// As we noted above, if the jacobian is rank deficient, then the
+// As we noted above, if the Jacobian is rank deficient, then the
 // inverse of J'J is not defined and instead a pseudo inverse needs to
 // be computed.
 //
@@ -335,7 +335,7 @@ class CERES_EXPORT Covariance {
     // the application of the loss function to the output of the cost
     // function and in turn its effect on the covariance.
     //
-    // TODO(sameergaarwal): Expand this based on Jim's experiments.
+    // TODO(sameeragarwal): Expand this based on Jim's experiments.
     bool apply_loss_function = true;
   };
 
@@ -447,7 +447,7 @@ class CERES_EXPORT Covariance {
   //
   // Compute must be called before calling GetCovarianceMatrix and all
   // parameter_blocks must have been present in the vector
-  // parameters_blocks when Compute was called. Otherwise
+  // parameter_blocks when Compute was called. Otherwise
   // GetCovarianceMatrix returns false.
   //
   // covariance_matrix must point to a memory location that can store
