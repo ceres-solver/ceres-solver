@@ -1,0 +1,62 @@
+version = 1
+SPDX-PackageName = "Ceres Solver"
+SPDX-PackageSupplier = "The Ceres Solver Authors"
+SPDX-PackageDownloadLocation = "https://github.com/ceres-solver/ceres-solver"
+
+# Source files carry their copyright notice and the full license text in their
+# header. Files without a notice, such as documentation, configuration and
+# images, fall back to the project's copyright and license.
+[[annotations]]
+path = "**"
+precedence = "closest"
+SPDX-FileCopyrightText = "2023 Google Inc. All rights reserved."
+SPDX-License-Identifier = "BSD-3-Clause"
+
+[[annotations]]
+path = "cmake/FindMETIS.cmake"
+precedence = "closest"
+SPDX-FileCopyrightText = "2025 Sergiu Deitsch"
+SPDX-License-Identifier = "MIT"
+
+[[annotations]]
+path = "cmake/iOS.cmake"
+precedence = "closest"
+SPDX-FileCopyrightText = "2014 Bogdan Cristea and LTE Engineering Software, Kitware, Inc., Insight Software Consortium. All rights reserved."
+SPDX-License-Identifier = "BSD-3-Clause"
+
+[[annotations]]
+path = "examples/libmv_bundle_adjuster.cc"
+precedence = "closest"
+SPDX-FileCopyrightText = "2013 libmv authors"
+SPDX-License-Identifier = "MIT"
+
+[[annotations]]
+path = "examples/libmv_homography.cc"
+precedence = "closest"
+SPDX-FileCopyrightText = [
+  "2023 Google Inc. All rights reserved.",
+  "2014 libmv authors",
+]
+SPDX-License-Identifier = "BSD-3-Clause AND MIT"
+
+# Fields of Experts filter coefficients by Stefan Roth, released under a BSD
+# license as described in data/README.foe.
+[[annotations]]
+path = "data/*.foe"
+precedence = "override"
+SPDX-FileCopyrightText = "Stefan Roth"
+SPDX-License-Identifier = "BSD-3-Clause"
+
+# Bundle adjustment problems extracted from the Tears of Steel production files.
+[[annotations]]
+path = "data/libmv-ba-problems/problem_*.bin"
+precedence = "override"
+SPDX-FileCopyrightText = "2012 Blender Foundation"
+SPDX-License-Identifier = "CC-BY-3.0"
+
+# NIST Statistical Reference Datasets are works of the U.S. Government.
+[[annotations]]
+path = "data/nist/*.dat"
+precedence = "override"
+SPDX-FileCopyrightText = "National Institute of Standards and Technology"
+SPDX-License-Identifier = "NIST-PD"
