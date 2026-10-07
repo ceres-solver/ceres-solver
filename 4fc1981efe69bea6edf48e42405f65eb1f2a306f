@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae8c174e_da6f0069",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-07T21:54:51Z",
+      "side": 1,
+      "message": "this is really weird and ugly. I do not even understand what this numbers are. can you add some documentation here or a pointer?",
+      "range": {
+        "startLine": 35,
+        "startChar": 10,
+        "endLine": 35,
+        "endChar": 18
+      },
+      "revId": "4fc1981efe69bea6edf48e42405f65eb1f2a306f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "369aa113_5fa1778b",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-07T21:54:51Z",
+      "side": 1,
+      "message": "should this stuff be abstracted into its own function?",
+      "range": {
+        "startLine": 761,
+        "startChar": 4,
+        "endLine": 761,
+        "endChar": 25
+      },
+      "revId": "4fc1981efe69bea6edf48e42405f65eb1f2a306f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
