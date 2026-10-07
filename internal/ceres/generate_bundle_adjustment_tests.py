@@ -34,8 +34,6 @@
 # easier to parallelize in continuous integration systems, and makes local
 # processing on multi-core workstations much faster.
 
-# Product of ORDERINGS, THREAD_CONFIGS, and SOLVER_CONFIGS is the full set of
-# tests to generate.
 ORDERINGS = ["kAutomaticOrdering", "kUserOrdering"]
 SINGLE_THREADED = "1"
 MULTI_THREADED = "4"
@@ -74,6 +72,13 @@ ITERATIVE_SOLVER_CONFIGS = [
     ('ITERATIVE_SCHUR',        'ACCELERATE_SPARSE','CLUSTER_TRIDIAGONAL'),
     ('ITERATIVE_SCHUR',        'CUDA_SPARSE',      'CLUSTER_TRIDIAGONAL'),
 ]
+
+MIXED_PRECISION_SOLVER_CONFIGS = [
+    ('DENSE_SCHUR', 'EIGEN', 'NO_SPARSE'),
+    ('SPARSE_NORMAL_CHOLESKY', 'EIGEN', 'EIGEN_SPARSE'),
+    ('SPARSE_SCHUR', 'EIGEN', 'EIGEN_SPARSE'),
+]
+MIXED_PRECISION_REFINEMENT_LIMITS = [0, 2]
 
 FILENAME_SHORTENING_MAP = dict(
   DENSE_SCHUR='denseschur',
@@ -158,11 +163,11 @@ TEST_F(BundleAdjustmentTest,
   options->dense_linear_algebra_library_type = %(dense_backend)s;
   options->sparse_linear_algebra_library_type = %(sparse_backend)s;
   options->preconditioner_type = %(preconditioner)s;
-  if (%(ordering)s) {
+%(mixed_precision_options)s  if (%(ordering)s) {
     options->linear_solver_ordering = nullptr;
   }
   Problem* problem = bundle_adjustment_problem.mutable_problem();
-  RunSolverForConfigAndExpectResidualsMatch(*options, problem);
+  RunSolverForConfigAndExpectResidualsMatch(*options, problem%(mixed_precision_expectation)s);
 }
 
 }  // namespace ceres::internal
@@ -178,7 +183,8 @@ def generate_bundle_test(linear_solver,
                          sparse_backend,
                          preconditioner,
                          ordering,
-                         thread_config):
+                         thread_config,
+                         refinement_limit=None):
   """Generate a bundle adjustment test executable configured appropriately"""
 
   # Preconditioner only makes sense for iterative schur; drop it otherwise.
@@ -204,6 +210,9 @@ def generate_bundle_test(linear_solver,
       ordering[1:],  # Strip 'k'
       'Threads' if thread_config == MULTI_THREADED else '']))
 
+  if refinement_limit is not None:
+    test_class_name += '_MixedPrecision_Refine%d' % refinement_limit
+
   # Initial template parameters (augmented more below).
   template_parameters = dict(
           linear_solver=linear_solver,
@@ -212,7 +221,15 @@ def generate_bundle_test(linear_solver,
           preconditioner=preconditioner,
           ordering=ordering,
           num_threads=thread_config,
-          test_class_name=test_class_name)
+          test_class_name=test_class_name,
+          mixed_precision_options='',
+          mixed_precision_expectation='')
+
+  if refinement_limit is not None:
+    template_parameters['mixed_precision_options'] = (
+        '  options->use_mixed_precision_solves = true;\n'
+        '  options->max_num_refinement_iterations = %d;\n' % refinement_limit)
+    template_parameters['mixed_precision_expectation'] = ', true'
 
   # Accumulate appropriate #ifdef/#ifndefs for the solver's sparse backend.
   preprocessor_conditions_begin = []
@@ -267,6 +284,9 @@ def generate_bundle_test(linear_solver,
   if (thread_config == MULTI_THREADED):
     filename_tag += '_threads'
 
+  if refinement_limit is not None:
+    filename_tag += '_mixed_refine%d' % refinement_limit
+
   filename = ('generated_bundle_adjustment_tests/ba_%s_test.cc' %
                 filename_tag.lower())
   with open(filename, 'w') as fd:
@@ -310,6 +330,17 @@ if __name__ == '__main__':
                                  preconditioner,
                                  ordering,
                                  thread_config))
+
+      for linear_solver, dense_backend, sparse_backend in MIXED_PRECISION_SOLVER_CONFIGS:
+        for refinement_limit in MIXED_PRECISION_REFINEMENT_LIMITS:
+          generated_files.append(
+              generate_bundle_test(linear_solver,
+                                   dense_backend,
+                                   sparse_backend,
+                                   'IDENTITY',
+                                   ordering,
+                                   thread_config,
+                                   refinement_limit))
 
 
   # Generate the CMakeLists.txt as well.
