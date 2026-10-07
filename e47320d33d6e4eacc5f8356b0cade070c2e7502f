@@ -3,6 +3,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "f53eb916_f9fa1644",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-07T19:29:39Z",
+      "side": 1,
+      "message": "This will require a careful look, since the API is rather sophisticated. Let me take a first look and get back to you, I will likely ask you to split this one one core cl which implements the linear algebra and then an integration/public ai + integration tests cl.",
+      "revId": "e47320d33d6e4eacc5f8356b0cade070c2e7502f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "c9292d59_44232328",
         "filename": "docs/mkl-pardiso-report.md",
         "patchSetId": 4
