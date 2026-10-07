@@ -322,6 +322,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2617a6a6_3b8e1ec7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-07T18:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a07d4c3f_387172fc",
+      "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8c0d3baa_3511b938",
@@ -335,6 +353,30 @@
       "writtenOn": "2026-07-28T17:44:44Z",
       "side": 1,
       "message": "what is this? is it using int64 indices? a comment would be useful",
+      "range": {
+        "startLine": 394,
+        "startChar": 27,
+        "endLine": 394,
+        "endChar": 37
+      },
+      "revId": "c550c515d19fb87cc92aefe6c21f4192a70c586b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "868cc230_6c45832b",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-07T18:55:33Z",
+      "side": 1,
+      "message": "No longer set by Ceres.",
+      "parentUuid": "8c0d3baa_3511b938",
       "range": {
         "startLine": 394,
         "startChar": 27,
