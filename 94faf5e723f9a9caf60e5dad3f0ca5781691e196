@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b714eeb0_1248ee4d",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-07T13:42:56Z",
+      "side": 1,
+      "message": "1. Instead of defining a separate `MIXED_PRECISION_SOLVER_CONFIGS` that only tests `EIGEN` and `EIGEN_SPARSE`, please use the existing `DENSE_SOLVER_CONFIGS` (`EIGEN`, `LAPACK`, `CUDA`) and `SPARSE_SOLVER_CONFIGS` (`SUITE_SPARSE`, `EIGEN_SPARSE`, `ACCELERATE_SPARSE`, `CUDA_SPARSE`), since all of them support `use_mixed_precision_solves \u003d true`. (For `SUITE_SPARSE` with mixed precision, guard with `#ifndef CERES_NO_CHOLMOD_FLOAT`.)\n\n2. We do not need to test both `0` and `2` refinement iterations (`MIXED_PRECISION_REFINEMENT_LIMITS \u003d [0, 2]`). Testing with `use_mixed_precision_solves \u003d true` and `max_num_refinement_iterations \u003d 2` (with suffix `_MixedPrecision` / `_mixed_test.cc`) already exercises both the single-precision factorization and iterative refinement without doubling the number of generated test binaries.",
+      "revId": "94faf5e723f9a9caf60e5dad3f0ca5781691e196",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20e968d8_b5af54d8",
+        "filename": "internal/ceres/test_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-07T13:42:56Z",
+      "side": 1,
+      "message": "`SolveAndEvaluateFinalResiduals` already receives `const Solver::Options\u0026 options`, so we do not need the extra `bool expect_mixed_precision \u003d false` parameter on `RunSolverForConfigAndExpectResidualsMatch` and `SolveAndEvaluateFinalResiduals` (or `mixed_precision_expectation` in the Python script). You can simply check:\n\n```cpp\nEXPECT_EQ(summary.mixed_precision_solves_used,\n          options.use_mixed_precision_solves);\n```\n\nunconditionally inside `SolveAndEvaluateFinalResiduals`.",
+      "revId": "94faf5e723f9a9caf60e5dad3f0ca5781691e196",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
