@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9292d59_44232328",
+        "filename": "docs/mkl-pardiso-report.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-07T18:53:36Z",
+      "side": 1,
+      "message": "The integration report can be best viewed [here](https://github.com/sergiud/ceres-solver/blob/mkl-pardiso/docs/mkl-pardiso-report.md).\n\nTo summarize: MKL beats SuiteSparse on most of the BAL dataset problems.\n\nI used GPT 5.6 Luna for much of the integration and Claude Opus 5.5 to figure out the optimal wiring of PARDISO\u0027s iparms and overall integration audit.",
+      "revId": "e47320d33d6e4eacc5f8356b0cade070c2e7502f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
