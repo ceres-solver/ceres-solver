@@ -92,19 +92,20 @@ if (METIS_INCLUDE_DIR)
     ${METIS_INCLUDE_DIR})
 endif (METIS_INCLUDE_DIR)
 
-if (METIS_LIBRARY_RELEASE)
+# METIS_LIBRARY takes precedence since it can also be provided by the user.
+# Configuration specific locations are used only if it refers to both the
+# debug and the release library.
+if (METIS_LIBRARY MATCHES "^(debug|optimized);")
   set_property (TARGET METIS::METIS PROPERTY IMPORTED_LOCATION_RELEASE
     ${METIS_LIBRARY_RELEASE})
-  set_property (TARGET METIS::METIS APPEND PROPERTY IMPORTED_CONFIGURATIONS
-    RELEASE)
-endif (METIS_LIBRARY_RELEASE)
-
-if (METIS_LIBRARY_DEBUG)
   set_property (TARGET METIS::METIS PROPERTY IMPORTED_LOCATION_DEBUG
     ${METIS_LIBRARY_DEBUG})
   set_property (TARGET METIS::METIS APPEND PROPERTY IMPORTED_CONFIGURATIONS
-    DEBUG)
-endif (METIS_LIBRARY_DEBUG)
+    RELEASE DEBUG)
+elseif (METIS_LIBRARY)
+  set_property (TARGET METIS::METIS PROPERTY IMPORTED_LOCATION
+    ${METIS_LIBRARY})
+endif (METIS_LIBRARY MATCHES "^(debug|optimized);")
 
 find_package_handle_standard_args (METIS REQUIRED_VARS
   METIS_INCLUDE_DIR METIS_LIBRARY VERSION_VAR METIS_VERSION)
