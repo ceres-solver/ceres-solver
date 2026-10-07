@@ -530,25 +530,15 @@ if (MSVC)
   # this warning may not be correct; needs investigation.
   # TODO(keir): Investigate these warnings in more detail.
   add_compile_options($<$<COMPILE_LANGUAGE:CXX>:/wd4244>)
-  # It's not possible to use STL types in DLL interfaces in a portable and
-  # reliable way. However, that's what happens with Google Log and Google Flags
-  # on Windows. MSVC gets upset about this and throws warnings that we can't do
-  # much about. The real solution is to link static versions of Google Log and
-  # Google Test, but that seems tricky on Windows. So, disable the warning.
+  # MSVC warns about exported classes with members whose types, such as those
+  # from the standard library, are not exported themselves. This cannot be
+  # avoided portably, so disable the warning.
   add_compile_options($<$<COMPILE_LANGUAGE:CXX>:/wd4251>)
 
   # Add bigobj flag otherwise the build would fail due to large object files
   # probably resulting from generated headers (like the fixed-size schur
   # specializations).
   add_compile_options($<$<COMPILE_LANGUAGE:CXX>:/bigobj>)
-
-  # Google Flags doesn't have their DLL import/export stuff set up correctly,
-  # which results in linker warnings. This is irrelevant for Ceres, so ignore
-  # the warnings.
-  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /ignore:4049")
-
-  # Tuple sizes of 10 are used by Gtest.
-  add_definitions("-D_VARIADIC_MAX=10")
 endif (MSVC)
 
 if (UNIX)
