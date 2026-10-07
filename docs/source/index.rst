@@ -47,10 +47,10 @@ If you use Ceres Solver for a publication, please cite it as::
   @software{Agarwal_Ceres_Solver_2022,
     author = {Agarwal, Sameer and Mierle, Keir and The Ceres Solver Team},
     title = {{Ceres Solver}},
-    license = {Apache-2.0},
+    license = {BSD-3-Clause},
     url = {https://github.com/ceres-solver/ceres-solver},
-    version = {2.2},
-    year = {2023},
+    version = {2.3},
+    year = {2026},
     month = {10}
   }
 

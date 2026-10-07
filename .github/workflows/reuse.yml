@@ -1,0 +1,14 @@
+name: REUSE
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    name: REUSE compliance
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check licensing information
+        uses: fsfe/reuse-action@v6
