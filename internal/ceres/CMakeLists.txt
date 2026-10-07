@@ -374,11 +374,9 @@ if (BUILD_TESTING)
 
     # Pull in local headers from the generated test directories when ceres_test()
     # is invoked there, as well as the private headers in this directory which
-    # may be referenced without the 'ceres' path prefix and all private
-    # dependencies that may be directly referenced.
+    # may be referenced without the 'ceres' path prefix.
     target_include_directories(${NAME}_test
-      PRIVATE ${Ceres_SOURCE_DIR}/internal/ceres
-      ${CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS})
+      PRIVATE ${Ceres_SOURCE_DIR}/internal/ceres)
 
     # Some tests include direct references/includes of private dependency
     # headers which are not propagated via the ceres targets, so link them
@@ -509,8 +507,7 @@ endif (BUILD_TESTING)
 
 macro(add_dependencies_to_benchmark BENCHMARK_TARGET)
   target_include_directories(${BENCHMARK_TARGET}
-    PRIVATE ${Ceres_SOURCE_DIR}/internal
-            ${CERES_LIBRARY_PRIVATE_DEPENDENCIES_INCLUDE_DIRS})
+    PRIVATE ${Ceres_SOURCE_DIR}/internal)
   # Benchmarks include direct references/includes of private
   # dependency headers which are not propagated via the ceres targets,
   # so link them explicitly.
