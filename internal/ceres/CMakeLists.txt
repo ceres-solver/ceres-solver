@@ -353,9 +353,13 @@ if (BUILD_TESTING)
   target_compile_definitions(test_util PUBLIC CERES_HAS_GTEST)
   target_compile_definitions(test_util PRIVATE CERES_TEST_SRCDIR_SUFFIX="../../data")
 
-  if (BUILD_SHARED_LIBS)
+  # GoogleTest built as part of Ceres provides the definition only to consumers
+  # of its installed package. Imported targets already provide it.
+  get_target_property(_Ceres_GTEST_TYPE GTest::gtest TYPE)
+  if (_Ceres_GTEST_TYPE STREQUAL SHARED_LIBRARY)
     target_compile_definitions(test_util PUBLIC GTEST_LINKED_AS_SHARED_LIBRARY=1)
-  endif (BUILD_SHARED_LIBS)
+  endif (_Ceres_GTEST_TYPE STREQUAL SHARED_LIBRARY)
+  unset(_Ceres_GTEST_TYPE)
 
   macro (CERES_TEST NAME)
     add_executable(${NAME}_test ${NAME}_test.cc)
