@@ -283,7 +283,7 @@ if (BUILD_TESTING)
     # GoogleTest is only needed for building the tests and must therefore not
     # be installed alongside Ceres.
     set(INSTALL_GTEST OFF)
-    add_subdirectory(${Ceres_SOURCE_DIR}/third_party/googletest ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/googletest)
+    add_subdirectory(third_party/googletest)
     set(GTest_FOUND TRUE)
     ceres_register_found_package(GTest)
   else()
