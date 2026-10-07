@@ -16,6 +16,23 @@
       "message": "Hardens licensing by declaring every file\u0027s license per [REUSE](https://reuse.software).",
       "revId": "9dcc07da2d03993e4380251c05b0ff5b82b20fab",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e73d751_165d2600",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-07T21:26:03Z",
+      "side": 1,
+      "message": "We should also think about switching to [SPDX](https://spdx.dev/about/overview) headers.",
+      "revId": "9dcc07da2d03993e4380251c05b0ff5b82b20fab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
