@@ -83,7 +83,6 @@ if (Sphinx_BUILD_EXECUTABLE)
   unset (_Sphinx_VERSION_STRING)
 
   find_package (Python COMPONENTS Interpreter)
-  set (_Sphinx_BUILD_RESULT FALSE)
 
   if (Python_Interpreter_FOUND)
     # Check for Sphinx theme dependency for documentation
