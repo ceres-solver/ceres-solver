@@ -60,8 +60,17 @@ list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES absl::fixed_array)
 # sorted in lexicographical order.
 set(CERES_EXPORTED_SRCS
     c_api.cc
+    conditioned_cost_function.cc
+    context.cc
+    cost_function.cc
+    covariance.cc
+    dynamic_cost_function_to_functor.cc
+    evaluation_callback.cc
+    first_order_function.cc
     gradient_checker.cc
     gradient_problem.cc
+    gradient_problem_solver.cc
+    iteration_callback.cc
     loss_function.cc
     manifold.cc
     normal_prior.cc
@@ -158,13 +167,9 @@ add_library(ceres_internal OBJECT
     compressed_col_sparse_matrix_utils.cc
     compressed_row_jacobian_writer.cc
     compressed_row_sparse_matrix.cc
-    conditioned_cost_function.cc
-    context.cc
     context_impl.cc
     coordinate_descent_minimizer.cc
     corrector.cc
-    cost_function.cc
-    covariance.cc
     covariance_impl.cc
     cuda_block_sparse_crs_view.cc
     cuda_partitioned_block_sparse_crs_view.cc
@@ -181,22 +186,17 @@ add_library(ceres_internal OBJECT
     dogleg_strategy.cc
     dynamic_compressed_row_jacobian_writer.cc
     dynamic_compressed_row_sparse_matrix.cc
-    dynamic_cost_function_to_functor.cc
     dynamic_sparse_normal_cholesky_solver.cc
     eigensparse.cc
-    evaluation_callback.cc
     evaluator.cc
     event_logger.cc
     fake_bundle_adjustment_jacobian.cc
     file.cc
-    first_order_function.cc
     function_sample.cc
     gradient_checking_cost_function.cc
-    gradient_problem_solver.cc
     implicit_schur_complement.cc
     inner_product_computer.cc
     is_close.cc
-    iteration_callback.cc
     iterative_refiner.cc
     iterative_schur_complement_solver.cc
     levenberg_marquardt_strategy.cc
