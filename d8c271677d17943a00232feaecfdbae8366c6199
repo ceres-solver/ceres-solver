@@ -1,0 +1,94 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be669f60_54c4606d",
+        "filename": "internal/ceres/dense_cholesky_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-07T13:11:53Z",
+      "side": 1,
+      "message": "Instead of adding a separate 2x2 Eigen-only test, we can test this across all backends (EIGEN, LAPACK, CUDA) and sizes in DenseCholeskyTest::FactorAndSolve above by zeroing out (or filling with garbage) the strictly upper triangle of column-major lhs right after Vector rhs \u003d lhs * x;: \n\nlhs.triangularView\u003cEigen::StrictlyUpper\u003e().setZero();\n\nPlease also do the equivalent in DenseIterativeRefinerTest in internal/ceres/iterative_refiner_test.cc (where lhs is a row-major ceres::Matrix, so lhs.triangularView\u003cEigen::StrictlyLower\u003e().setZero(); before calling refiner.Refine) so DenseIterativeRefiner is directly tested in its own unit test.",
+      "fixSuggestions": [
+        {
+          "fixId": "77d57a23_d846c7be",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/dense_cholesky_test.cc",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 1,
+                "endChar": 0
+              },
+              "replacement": "      lhs.triangularView\u003cEigen::StrictlyUpper\u003e().setZero();\n"
+            },
+            {
+              "path": "internal/ceres/dense_cholesky_test.cc",
+              "range": {
+                "startLine": 117,
+                "startChar": 0,
+                "endLine": 144,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "d8c271677d17943a00232feaecfdbae8366c6199",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62a150ac_af138851",
+        "filename": "internal/ceres/iterative_refiner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-07T13:11:53Z",
+      "side": 1,
+      "message": "DenseCholesky documents lhs as a column-major matrix with the lower triangle populated, and EigenDenseCholesky::Factorize maps it as Eigen::Map\u003cEigen::MatrixXd\u003e. Relying on ConstMatrixRef being row-major so that Eigen::Upper aliases the column-major lower triangle is subtle and easy to misread.\n \nPlease either map lhs_ptr as column-major (Eigen::Map\u003cconst Eigen::MatrixXd\u003e lhs(lhs_ptr, num_cols, num_cols);) and use lhs.selfadjointView\u003cEigen::Lower\u003e(), or add a comment here explaining why Eigen::Upper is used on ConstMatrixRef.\n\nI think the former is preferred.",
+      "fixSuggestions": [
+        {
+          "fixId": "70ff78d2_76c4933f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "internal/ceres/iterative_refiner.cc",
+              "range": {
+                "startLine": 89,
+                "startChar": 0,
+                "endLine": 90,
+                "endChar": 0
+              },
+              "replacement": "  Eigen::Map\u003cconst Eigen::MatrixXd\u003e lhs(lhs_ptr, num_cols, num_cols);\n"
+            },
+            {
+              "path": "internal/ceres/iterative_refiner.cc",
+              "range": {
+                "startLine": 94,
+                "startChar": 0,
+                "endLine": 95,
+                "endChar": 0
+              },
+              "replacement": "    residual_ \u003d rhs - lhs.selfadjointView\u003cEigen::Lower\u003e() * solution;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d8c271677d17943a00232feaecfdbae8366c6199",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
