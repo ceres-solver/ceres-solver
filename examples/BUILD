@@ -30,6 +30,8 @@
 
 
 
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_test")
+
 EXAMPLE_DEPS = [
     "//:ceres",
     "@eigen//:eigen",
@@ -48,6 +50,31 @@ cc_binary(
         "bal_problem.h",
         "bundle_adjuster.cc",
         "snavely_reprojection_error.h",
+    ],
+    deps = EXAMPLE_DEPS,
+)
+
+cc_test(
+    name = "bal_problem_test",
+    timeout = "short",
+    srcs = [
+        "bal_problem.cc",
+        "bal_problem.h",
+        "bal_problem_test.cc",
+    ],
+    copts = [
+        "-DCERES_TEST_DATA_DIR=\\\"data\\\"",
+    ],
+    data = ["//:data/problem-16-22106-pre.txt"],
+    deps = EXAMPLE_DEPS + [
+        "@googletest//:gtest_main",
+    ],
+)
+
+cc_binary(
+    name = "curve_fitting_c",
+    srcs = [
+        "curve_fitting.c",
     ],
     deps = EXAMPLE_DEPS,
 )
@@ -102,12 +129,16 @@ cc_binary(
     srcs = [example + ".cc"],
     deps = EXAMPLE_DEPS,
 ) for example in [
+    "bicubic_interpolation",
+    "bicubic_interpolation_analytic",
     "circle_fit",
     "curve_fitting",
     "ellipse_approximation",
+    "evaluation_callback_example",
     "helloworld",
     "helloworld_analytic_diff",
     "helloworld_numeric_diff",
+    "iteration_callback_example",
     "libmv_bundle_adjuster",
     "libmv_homography",
     "more_garbow_hillstrom",
@@ -115,6 +146,8 @@ cc_binary(
     "powell",
     "robust_curve_fitting",
     "rosenbrock",
+    "rosenbrock_analytic_diff",
+    "rosenbrock_numeric_diff",
     "sampled_function/sampled_function",
     "simple_bundle_adjuster",
 ]]

@@ -66,11 +66,13 @@ CERES_SRCS = ["internal/ceres/" + filename for filename in [
     "dogleg_strategy.cc",
     "dynamic_compressed_row_jacobian_writer.cc",
     "dynamic_compressed_row_sparse_matrix.cc",
+    "dynamic_cost_function_to_functor.cc",
     "dynamic_sparse_normal_cholesky_solver.cc",
     "eigensparse.cc",
     "evaluation_callback.cc",
     "evaluator.cc",
     "event_logger.cc",
+    "fake_bundle_adjustment_jacobian.cc",
     "file.cc",
     "first_order_function.cc",
     "function_sample.cc",
@@ -138,17 +140,11 @@ CERES_SRCS = ["internal/ceres/" + filename for filename in [
 ]]
 
 # TODO(rodrigoq): add support to configure Ceres into various permutations,
-# like SuiteSparse or not, threading or not, glog or not, and so on.
+# like SuiteSparse or not, and so on.
 # See https://github.com/ceres-solver/ceres-solver/issues/335.
 def ceres_library(
         name,
         restrict_schur_specializations = False):
-    # The path to internal/ depends on whether Ceres is the main workspace or
-    # an external repository.
-    if native.repository_name() != "@":
-        internal = "external/%s/internal" % native.repository_name().lstrip("@")
-    else:
-        internal = "internal"
 
     # The fixed-size Schur eliminator template instantiations incur a large
     # binary size penalty, and are slow to compile, so support disabling them.

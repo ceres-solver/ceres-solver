@@ -33,6 +33,8 @@
 load("//:bazel/ceres.bzl", "ceres_library")
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
 
+exports_files(["data/problem-16-22106-pre.txt"])
+
 ceres_library(
     name = "ceres",
     restrict_schur_specializations = False,
@@ -49,6 +51,9 @@ cc_library(
         "-Wno-sign-compare",
         "-DCERES_TEST_SRCDIR_SUFFIX=\\\"_main/data/\\\"",
     ],
+    defines = [
+        "CERES_HAS_GTEST",
+    ],
     includes = [
         "internal",
         "internal/ceres",
@@ -61,17 +66,19 @@ cc_library(
 
 CERES_TESTS = [
     "accurate_norm",
+    "array_selector",
     "array_utils",
-    "autodiff_cost_function",
-    "autodiff_manifold",
     "autodiff",
+    "autodiff_cost_function",
+    "autodiff_first_order_function",
+    "autodiff_manifold",
     "block_jacobi_preconditioner",
     "block_random_access_dense_matrix",
     "block_random_access_diagonal_matrix",
     "block_random_access_sparse_matrix",
     "block_sparse_matrix",
-    "canonical_views_clustering",
     "c_api",
+    "canonical_views_clustering",
     "compressed_col_sparse_matrix_utils",
     "compressed_row_sparse_matrix",
     "concurrent_queue",
@@ -83,6 +90,7 @@ CERES_TESTS = [
     "cubic_interpolation",
     "dense_cholesky",
     "dense_linear_solver",
+    "dense_qr",
     "dense_sparse_matrix",
     "detect_structure",
     "dogleg_strategy",
@@ -95,32 +103,38 @@ CERES_TESTS = [
     "evaluator",
     "gradient_checker",
     "gradient_checking_cost_function",
-    "gradient_problem_solver",
     "gradient_problem",
-    "graph_algorithms",
+    "gradient_problem_solver",
     "graph",
+    "graph_algorithms",
     "householder_vector",
     "implicit_schur_complement",
     "inner_product_computer",
+    "integer_sequence_algorithm",
     "invert_psd_matrix",
     "is_close",
     "iterative_refiner",
     "iterative_schur_complement_solver",
     "jet",
+    "jet_traits",
     "levenberg_marquardt_strategy",
     "line_search_minimizer",
     "line_search_preprocessor",
     "loss_function",
+    "manifold",
     "minimizer",
     "normal_prior",
     "numeric_diff_cost_function",
+    "numeric_diff_first_order_function",
     "ordered_groups",
     "parallel_for",
     "parallel_utils",
-    "parameter_block_ordering",
     "parameter_block",
+    "parameter_block_ordering",
+    "parameter_dims",
     "partitioned_matrix_view",
     "polynomial",
+    "power_series_expansion_preconditioner",
     "problem",
     "program",
     "reorder_program",
@@ -137,14 +151,14 @@ CERES_TESTS = [
     "subset_preconditioner",
     "system",
     "thread_pool",
+    "tiny_solver",
     "tiny_solver_autodiff_function",
     "tiny_solver_cost_function_adapter",
-    "tiny_solver",
     "triplet_sparse_matrix",
     "trust_region_minimizer",
     "trust_region_preprocessor",
-    "visibility_based_preconditioner",
     "visibility",
+    "visibility_based_preconditioner",
 ]
 
 TEST_DEPS = [
@@ -184,14 +198,25 @@ TEST_DEPS = [
     srcs = ["internal/ceres/" + benchmark_name + ".cc"],
     copts = ["-mllvm -inlinehint-threshold=1000000"],
     deps = TEST_DEPS + ["@google_benchmark//:benchmark"],
-
 ) for benchmark_name in [
+    "block_jacobi_preconditioner_benchmark",
+    "dense_linear_solver_benchmark",
     "evaluation_benchmark",
     "invert_psd_matrix_benchmark",
-    "schur_eliminator_benchmark",
     "jet_operator_benchmark",
-    "dense_linear_solver_benchmark",
+    "parallel_for_benchmark",
     "parallel_vector_operations_benchmark",
+    "schur_eliminator_benchmark",
     "small_blas_gemm_benchmark",
     "small_blas_gemv_benchmark",
+    "spmv_benchmark",
 ]]
+
+cc_binary(
+    name = "autodiff_benchmarks",
+    srcs = ["internal/ceres/autodiff_benchmarks/autodiff_benchmarks.cc"] + glob([
+        "internal/ceres/autodiff_benchmarks/*.h",
+    ]),
+    copts = ["-mllvm -inlinehint-threshold=1000000"],
+    deps = TEST_DEPS + ["@google_benchmark//:benchmark"],
+)
