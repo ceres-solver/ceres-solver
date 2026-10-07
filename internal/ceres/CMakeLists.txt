@@ -40,9 +40,17 @@ if(CMAKE_VERSION VERSION_LESS "3.24.0")
   list(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES  absl::log_flags)
 else()
   # Apply $<LINK_LIBRARY:...> generator expression only if the corresponding
-  # target is a static library. Otherwise link only to the target.
-  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES
-    $<IF:$<STREQUAL:$<TARGET_PROPERTY:absl::log_flags,TYPE>,STATIC_LIBRARY>,$<LINK_LIBRARY:WHOLE_ARCHIVE,absl::log_flags>,absl::log_flags>)
+  # target is a static library. Otherwise link only to the target. The library
+  # type is determined at configure time because SBOM generation does not
+  # support generator expressions in link libraries.
+  get_target_property(_Ceres_ABSL_LOG_FLAGS_TYPE absl::log_flags TYPE)
+  if (_Ceres_ABSL_LOG_FLAGS_TYPE STREQUAL STATIC_LIBRARY)
+    list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES
+      $<LINK_LIBRARY:WHOLE_ARCHIVE,absl::log_flags>)
+  else()
+    list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES absl::log_flags)
+  endif()
+  unset(_Ceres_ABSL_LOG_FLAGS_TYPE)
 endif()
 
 list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES absl::strings)

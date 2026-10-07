@@ -51,6 +51,11 @@ New Features
 #. Move C++17 Bessel functions availability checks from configuration time to
    inclusion time, with fallback to POSIX implementations on ``libc++``.
    (Sergiu Deitsch)
+#. Install a software bill of materials (SBOM) in the `SPDX
+   <https://spdx.dev/>`_ format describing the package, its license, and the
+   libraries it links against when using CMake 4.3 or later. The SBOM is not
+   generated if a static Abseil requires whole archive linkage. (Sergiu
+   Deitsch)
 
 
 Backward Incompatible API Changes
