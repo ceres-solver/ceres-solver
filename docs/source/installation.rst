@@ -896,7 +896,8 @@ The Ceres components which can be specified are:
 #. ``SchurSpecializations``: Ceres built with Schur specializations
    (``WITH_SCHUR_SPECIALIZATIONS=ON``).
 
-#. ``Multithreading``: Ceres built with multithreading support.
+#. ``Multithreading``: Ceres built with multithreading support, which is
+   always available.
 
 To specify one/multiple Ceres components use the ``COMPONENTS`` argument to
 `find_package()
