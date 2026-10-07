@@ -882,6 +882,9 @@ The Ceres components which can be specified are:
 #. ``EigenSparse``: Ceres built with Eigen's sparse Cholesky factorization
    support (``WITH_EIGENSPARSE=ON``).
 
+#. ``CUDA``: Ceres built with NVIDIA CUDA support for ``DENSE_QR``,
+   ``DENSE_NORMAL_CHOLESKY``, ``DENSE_SCHUR``, and ``CGNR`` (``WITH_CUDA``).
+
 #. ``cuDSS``: Ceres built with NVIDIA cuDSS sparse solver support
    (``WITH_CUDA`` and ``WITH_CUDSS=ON``).
 
