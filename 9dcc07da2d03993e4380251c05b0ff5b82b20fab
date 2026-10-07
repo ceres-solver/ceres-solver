@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae1462ba_4d6abc29",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-07T21:02:37Z",
+      "side": 1,
+      "message": "Hardens licensing by declaring every file\u0027s license per [REUSE](https://reuse.software).",
+      "revId": "9dcc07da2d03993e4380251c05b0ff5b82b20fab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
