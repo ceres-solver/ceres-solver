@@ -95,7 +95,9 @@ if (Sphinx_BUILD_EXECUTABLE)
       endif (NOT theme_component STREQUAL component)
 
       execute_process (
-        COMMAND ${Python_EXECUTABLE} -c "import ${theme_component}"
+        # Report only the reason of a failed import instead of a traceback.
+        COMMAND ${Python_EXECUTABLE} -c
+          "import sys\ntry:\n  import ${theme_component}\nexcept ImportError as e:\n  sys.exit(str(e))"
         ERROR_STRIP_TRAILING_WHITESPACE
         ERROR_VARIABLE _Sphinx_BUILD_ERROR
         OUTPUT_QUIET
@@ -104,8 +106,10 @@ if (Sphinx_BUILD_EXECUTABLE)
 
       if (_Sphinx_BUILD_RESULT EQUAL 0)
         set (Sphinx_${component}_FOUND TRUE)
-      elseif (_Sphinx_BUILD_RESULT EQUAL 0)
-        message (WARNING "Could not determine whether Sphinx component '${theme_component}' is available: ${_Sphinx_BUILD_ERROR}")
+      else (_Sphinx_BUILD_RESULT EQUAL 0)
+        if (NOT Sphinx_FIND_QUIETLY)
+          message (STATUS "Sphinx component '${theme_component}' is not available: ${_Sphinx_BUILD_ERROR}")
+        endif (NOT Sphinx_FIND_QUIETLY)
         set (Sphinx_${component}_FOUND FALSE)
       endif (_Sphinx_BUILD_RESULT EQUAL 0)
 
