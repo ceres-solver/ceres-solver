@@ -1462,21 +1462,21 @@ static double sample_matrices[][9] = {
 TEST(EulerAngles, RotationMatrixToEulerAnglesAtGimbalLockForJets) {
   using J = Jet<double, 9>;
   constexpr int kNumEntries = 9;
+  using Entries = std::array<double, kNumEntries>;
+  using Matrix = std::array<J, kNumEntries>;
   // The identity locks all proper Euler sequences.
-  constexpr double kIdentity[kNumEntries] = {1, 0, 0, 0, 1, 0, 0, 0, 1};
+  constexpr Entries kIdentity = {1, 0, 0, 0, 1, 0, 0, 0, 1};
   // A rotation about the Y axis by 90 degrees locks the ZYX sequence.
-  constexpr double kQuarterTurnAboutY[kNumEntries] = {
-      0, 0, 1, 0, 1, 0, -1, 0, 0};
+  constexpr Entries kQuarterTurnAboutY = {0, 0, 1, 0, 1, 0, -1, 0, 0};
 
   // Assigns every entry its own derivative direction.
-  const auto make_matrix = [](const double (&entries)[kNumEntries],
-                              J(&matrix)[kNumEntries]) {
-    for (int entry = 0; entry < kNumEntries; ++entry) {
+  const auto make_matrix = [](const Entries& entries, Matrix& matrix) {
+    for (int entry = 0; entry < static_cast<int>(entries.size()); ++entry) {
       matrix[entry] = J(entries[entry], entry);
     }
   };
 
-  J matrix[kNumEntries];
+  Matrix matrix;
   J angles[3];
 
   // At gimbal lock with the axes (i, j, k), the first angle of the sequence is
@@ -1484,7 +1484,7 @@ TEST(EulerAngles, RotationMatrixToEulerAnglesAtGimbalLockForJets) {
   // to R(j, k). Intrinsic sequences report this angle last. The other angles
   // are constant.
   make_matrix(kIdentity, matrix);
-  RotationMatrixToEulerAngles<IntrinsicZXZ>(matrix, angles);
+  RotationMatrixToEulerAngles<IntrinsicZXZ>(matrix.data(), angles);
   // The axes of the ZXZ sequence are (2, 0, 1), i.e., R(j, k) = R(0, 1).
   J expected_identity[3] = {J(0.0), J(0.0), J(0.0)};
   expected_identity[2].v[1] = -1.0;
@@ -1492,7 +1492,7 @@ TEST(EulerAngles, RotationMatrixToEulerAnglesAtGimbalLockForJets) {
               testing::Pointwise(JetClose(kTolerance), expected_identity));
 
   make_matrix(kQuarterTurnAboutY, matrix);
-  RotationMatrixToEulerAngles<IntrinsicZYX>(matrix, angles);
+  RotationMatrixToEulerAngles<IntrinsicZYX>(matrix.data(), angles);
   // The axes of the ZYX sequence are (0, 1, 2), i.e., R(j, k) = R(1, 2).
   J expected_quarter_turn[3] = {J(0.0), J(kPi / 2), J(0.0)};
   expected_quarter_turn[2].v[5] = -1.0;
