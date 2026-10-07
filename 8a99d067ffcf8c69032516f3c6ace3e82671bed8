@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c373c8ce_627996ce",
+        "filename": "LICENSE",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-07T21:26:55Z",
+      "side": 0,
+      "message": "what about this stuff?",
+      "revId": "8a99d067ffcf8c69032516f3c6ace3e82671bed8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
