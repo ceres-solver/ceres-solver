@@ -86,11 +86,11 @@ Why?
   application
 
 .. _best performing: https://groups.google.com/forum/#!topic/ceres-solver/UcicgMPgbXw
-.. _bundle adjustment: http://en.wikipedia.org/wiki/Bundle_adjustment
-.. _SuiteSparse: http://www.cise.ufl.edu/research/sparse/SuiteSparse/
-.. _Eigen: http://eigen.tuxfamily.org/
-.. _LAPACK: http://www.netlib.org/lapack/
-.. _automatic: http://en.wikipedia.org/wiki/Automatic_differentiation
-.. _numeric: http://en.wikipedia.org/wiki/Numerical_differentiation
-.. _CUDA : https://developer.nvidia.com/cuda-toolkit
-.. _Apple's Accelerate: https://developer.apple.com/documentation/accelerate/sparse_solvers
+.. _bundle adjustment: https://en.wikipedia.org/wiki/Bundle_adjustment
+.. _SuiteSparse: https://people.engr.tamu.edu/davis/suitesparse.html
+.. _Eigen: https://libeigen.gitlab.io/
+.. _LAPACK: https://www.netlib.org/lapack/
+.. _automatic: https://en.wikipedia.org/wiki/Automatic_differentiation
+.. _numeric: https://en.wikipedia.org/wiki/Numerical_differentiation
+.. _CUDA : https://developer.nvidia.com/cuda/toolkit
+.. _Apple's Accelerate: https://developer.apple.com/documentation/accelerate/sparse-solvers-library

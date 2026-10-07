@@ -486,7 +486,7 @@ You can use QR-decomposition by setting
 
 By default (``Solver::Options::dense_linear_algebra_library_type =
 EIGEN``) Ceres Solver will use `Eigen Householder QR factorization
-<https://eigen.tuxfamily.org/dox-devel/classEigen_1_1HouseholderQR.html>`_
+<https://libeigen.gitlab.io/eigen/docs-nightly/classEigen_1_1HouseholderQR.html>`_
 .
 
 If Ceres Solver has been built with an optimized LAPACK
@@ -497,7 +497,7 @@ implementation, then the user can also choose to use LAPACK's
 implementation this may perform better than using Eigen's Householder
 QR factorization.
 
-.. _DGEQRF: https://netlib.org/lapack/explore-html/df/dc5/group__variants_g_ecomputational_ga3766ea903391b5cf9008132f7440ec7b.html
+.. _DGEQRF: https://www.netlib.org/lapack/explore-html/d3/d69/dgeqrf_8f.html
 
 
 If an NVIDIA GPU is available and Ceres Solver has been built with
@@ -554,7 +554,7 @@ You can use dense Cholesky factorization by setting
 By default (``Solver::Options::dense_linear_algebra_library_type =
 EIGEN``) Ceres Solver will use `Eigen's LLT factorization`_ routine.
 
-.. _Eigen's LLT Factorization:  https://eigen.tuxfamily.org/dox/classEigen_1_1LLT.html
+.. _Eigen's LLT Factorization:  https://libeigen.gitlab.io/eigen/docs-nightly/classEigen_1_1LLT.html
 
 If Ceres Solver has been built with an optimized LAPACK
 implementation, then the user can also choose to use LAPACK's
@@ -564,7 +564,7 @@ implementation, then the user can also choose to use LAPACK's
 implementation this may perform better than using Eigen's Cholesky
 factorization.
 
-.. _DPOTRF: https://www.netlib.org/lapack/explore-html/d1/d7a/group__double_p_ocomputational_ga2f55f604a6003d03b5cd4a0adcfb74d6.html
+.. _DPOTRF: https://www.netlib.org/lapack/explore-html/d0/d8a/dpotrf_8f.html
 
 If an NVIDIA GPU is available and Ceres Solver has been built with
 CUDA support enabled, then the user can also choose to perform the
@@ -601,20 +601,22 @@ support for at least one of:
 
  1. `SuiteSparse <https://people.engr.tamu.edu/davis/suitesparse.html>`_ (``SUITE_SPARSE``).
  2. `Apple's Accelerate framework
-    <https://developer.apple.com/documentation/accelerate/sparse_solvers?language=objc>`_
+    <https://developer.apple.com/documentation/accelerate/sparse-solvers-library?language=objc>`_
     (``ACCELERATE_SPARSE``).
  3. `Eigen's sparse linear solvers
-    <https://eigen.tuxfamily.org/dox/group__SparseCholesky__Module.html>`_
+    <https://libeigen.gitlab.io/eigen/docs-nightly/group__SparseCholesky__Module.html>`_
     (``EIGEN_SPARSE``).
+ 4. `NVIDIA's cuDSS library
+    <https://developer.nvidia.com/cudss>`_
+    (``CUDA_SPARSE``).
 
-SuiteSparse and Accelerate offer high performance sparse Cholesky
-factorization routines as they level-3 BLAS routines
-internally. Eigen's sparse Cholesky routines are *simplicial* and do
+SuiteSparse, Accelerate, and cuDSS offer high performance sparse Cholesky
+factorization routines (using level-3 BLAS routines on the CPU or GPU
+acceleration via CUDA). Eigen's sparse Cholesky routines are *simplicial* and do
 not use dense linear algebra routines and as a result cannot compete
-with SuiteSparse and Accelerate, especially on large problems. As a
+with SuiteSparse, Accelerate, or cuDSS, especially on large problems. As a
 result to get the best performance out of SuiteSparse it should be
-linked to high quality BLAS and LAPACK implementations e.g. `ATLAS
-<https://math-atlas.sourceforge.net/>`_, `OpenBLAS
+linked to high quality BLAS and LAPACK implementations e.g. `OpenBLAS
 <https://www.openblas.net/>`_ or `Intel MKL
 <https://www.intel.com/content/www/us/en/developer/tools/oneapi/onemkl.html>`_.
 
@@ -1658,25 +1660,28 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    Default: The highest available according to: ``SUITE_SPARSE`` >
    ``ACCELERATE_SPARSE`` > ``EIGEN_SPARSE`` > ``NO_SPARSE``
 
-   Ceres supports the use of three sparse linear algebra libraries,
+   Ceres supports the use of four sparse linear algebra libraries:
    ``SuiteSparse``, which is enabled by setting this parameter to
-   ``SUITE_SPARSE``, ``Acclerate``, which can be selected by setting
-   this parameter to ``ACCELERATE_SPARSE`` and ``Eigen`` which is
-   enabled by setting this parameter to ``EIGEN_SPARSE``.  Lastly,
-   ``NO_SPARSE`` means that no sparse linear solver should be used;
-   note that this is irrespective of whether Ceres was compiled with
-   support for one.
+   ``SUITE_SPARSE``; Apple's ``Accelerate`` framework, which can be
+   selected by setting this parameter to ``ACCELERATE_SPARSE``;
+   ``Eigen``, which is enabled by setting this parameter to
+   ``EIGEN_SPARSE``; and NVIDIA's ``cuDSS``, which is enabled by
+   setting this parameter to ``CUDA_SPARSE``.  Lastly, ``NO_SPARSE``
+   means that no sparse linear solver should be used; note that this is
+   irrespective of whether Ceres was compiled with support for one.
 
    ``SuiteSparse`` is a sophisticated sparse linear algebra library
-   and should be used in general. On MacOS you may want to use the
-   ``Accelerate`` framework.
+   and should be used in general on the CPU. On macOS you may want to use the
+   ``Accelerate`` framework, and on systems with an NVIDIA GPU and ``cuDSS``
+   installed you can use ``CUDA_SPARSE`` for GPU-accelerated sparse
+   factorizations.
 
    If your needs/platforms prevent you from using ``SuiteSparse``,
    consider using the sparse linear algebra routines in ``Eigen``. The
    sparse Cholesky algorithms currently included with ``Eigen`` are
-   not as sophisticated as the ones in ``SuiteSparse`` and
-   ``Accelerate`` and as a result its performance is considerably
-   worse.
+   not as sophisticated as the ones in ``SuiteSparse``,
+   ``Accelerate``, and ``cuDSS``, and as a result its performance is
+   considerably worse.
 
 .. member:: LinearSolverOrderingType Solver::Options::linear_solver_ordering_type
 
