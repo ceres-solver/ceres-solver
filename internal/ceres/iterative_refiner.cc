@@ -91,7 +91,7 @@ void DenseIterativeRefiner::Refine(const int num_cols,
   VectorRef solution(solution_ptr, num_cols);
   std::string ignored_message;
   for (int i = 0; i < max_num_iterations_; ++i) {
-    residual_ = rhs - lhs * solution;
+    residual_ = rhs - lhs.selfadjointView<Eigen::Upper>() * solution;
     // solution += lhs^-1 residual
     cholesky->Solve(residual_.data(), correction_.data(), &ignored_message);
     solution += correction_;
