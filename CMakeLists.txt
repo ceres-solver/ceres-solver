@@ -231,12 +231,6 @@ if (EXISTS "${Ceres_SOURCE_DIR}/third_party/abseil-cpp/CMakeLists.txt")
   unset(CMAKE_CXX_STANDARD)
   unset(CMAKE_CXX_VISIBILITY_PRESET)
 
-  # Set the default symbol visibility to hidden to unify the behavior among
-  # the various compilers and to get smaller binaries
-  set(CMAKE_C_VISIBILITY_PRESET hidden)
-  set(CMAKE_CXX_VISIBILITY_PRESET hidden)
-  set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
-
   set(CERES_USE_SYSTEM_ABSL NO)
 else()
   if (NOT absl_VERSION)
@@ -249,6 +243,12 @@ else()
   endif()
   set(CERES_USE_SYSTEM_ABSL YES)
 endif()
+
+# Set the default symbol visibility to hidden to unify the behavior among
+# the various compilers and to get smaller binaries
+set(CMAKE_C_VISIBILITY_PRESET hidden)
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
 if (NOT absl_VERSION)
   install (CODE [=[message (FATAL_ERROR "Cannot generate CeresConfig.cmake due to missing Abseil version. Using resulting package configuration will likely result in integration errors. Set absl_VERSION manually to disable this error message.")]=])
 endif()
