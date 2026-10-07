@@ -359,7 +359,8 @@ if (BUILD_TESTING)
   target_include_directories(test_util PUBLIC ${Ceres_SOURCE_DIR}/internal)
   target_link_libraries (test_util PUBLIC GTest::gmock ceres_static)
   target_compile_definitions(test_util PUBLIC CERES_HAS_GTEST)
-  target_compile_definitions(test_util PRIVATE CERES_TEST_SRCDIR_SUFFIX="../../data")
+  target_compile_definitions(test_util PRIVATE
+    CERES_TEST_DATA_DIR="${Ceres_SOURCE_DIR}/data")
 
   # GoogleTest built as part of Ceres provides the definition only to consumers
   # of its installed package. Imported targets already provide it.
@@ -392,9 +393,6 @@ if (BUILD_TESTING)
     endif (TARGET SuiteSparse::SPQR)
 
     add_test(NAME ${NAME}_test COMMAND ${NAME}_test)
-    # Override testing::SrcDir to support multi-configuration builds, such as MSVC
-    # that write binaries into addtional configuration specific subdirectories.
-    set_tests_properties(${NAME}_test PROPERTIES ENVIRONMENT TEST_SRCDIR=${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
   endmacro (CERES_TEST)
 
   ceres_test(accurate_norm)
