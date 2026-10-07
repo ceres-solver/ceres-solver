@@ -190,10 +190,6 @@ set_property(GLOBAL PROPERTY FeatureSummary_PKG_TYPES
   REQUIRED RECOMMENDED OPTIONAL)
 
 check_cxx_compiler_flag(/bigobj HAVE_BIGOBJ)
-# Ceres C++ compiler flags can be too strict for an external library code
-# which we do not maintain.
-check_cxx_compiler_flag("-Wno-missing-declarations"
-  CHECK_CXX_FLAG_Wno_missing_declarations)
 # Older versions of Clang (<= 2.9) do not support the 'return-type-c-linkage'
 # option, so check for its presence before adding it to the default flags set.
 check_cxx_compiler_flag("-Wno-return-type-c-linkage"
