@@ -218,6 +218,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "37951696_d2b7b592",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-07T19:03:54Z",
+      "side": 1,
+      "message": "We now have [`AccuruteNorm`](/28200). Abandon?",
+      "revId": "1b4688708de4c64df535f9bc41beca4597577a51",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b55571f4_98537e98",
         "filename": "include/ceres/jet.h",
         "patchSetId": 2
