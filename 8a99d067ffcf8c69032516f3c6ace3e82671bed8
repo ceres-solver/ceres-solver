@@ -16,6 +16,24 @@
       "message": "what about this stuff?",
       "revId": "8a99d067ffcf8c69032516f3c6ace3e82671bed8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c901e8fe_aa2e6c8e",
+        "filename": "LICENSE",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-07T21:48:59Z",
+      "side": 0,
+      "message": "Referencing their license now.",
+      "parentUuid": "c373c8ce_627996ce",
+      "revId": "8a99d067ffcf8c69032516f3c6ace3e82671bed8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
