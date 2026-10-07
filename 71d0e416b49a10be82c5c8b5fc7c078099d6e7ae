@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be4bd080_44948886",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-07T22:10:16Z",
+      "side": 1,
+      "message": "can we swap the order with the if statement above and merge the if statements below?",
+      "range": {
+        "startLine": 806,
+        "startChar": 19,
+        "endLine": 806,
+        "endChar": 39
+      },
+      "revId": "71d0e416b49a10be82c5c8b5fc7c078099d6e7ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3663ca8a_a5a20c00",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-07T22:10:16Z",
+      "side": 1,
+      "message": "this and the next if statement can be merged no?",
+      "range": {
+        "startLine": 811,
+        "startChar": 16,
+        "endLine": 811,
+        "endChar": 37
+      },
+      "revId": "71d0e416b49a10be82c5c8b5fc7c078099d6e7ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
