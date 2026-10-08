@@ -34,15 +34,16 @@
 
 #include "ceres/test_util.h"
 
-#include <algorithm>
 #include <cmath>
+#include <limits>
+#include <ostream>
+#include <utility>
 
-#include "absl/log/check.h"
-#include "absl/log/log.h"
+#include "Eigen/Cholesky"
 #include "absl/strings/str_format.h"
 #include "ceres/file.h"
-#include "ceres/internal/port.h"
-#include "ceres/types.h"
+#include "ceres/is_close.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 
@@ -56,86 +57,116 @@
 namespace ceres {
 namespace internal {
 
-bool ExpectClose(double x, double y, double max_abs_relative_difference) {
-  if (std::isinf(x) && std::isinf(y)) {
-    EXPECT_EQ(std::signbit(x), std::signbit(y));
-    return true;
+double RelativeDifference(double x, double y) {
+  if (std::isnan(x) || std::isnan(y)) {
+    return std::isnan(x) && std::isnan(y)
+               ? 0.0
+               : std::numeric_limits<double>::quiet_NaN();
   }
 
-  if (std::isnan(x) && std::isnan(y)) {
-    return true;
+  if (std::isinf(x) || std::isinf(y)) {
+    return x == y ? 0.0 : std::numeric_limits<double>::infinity();
   }
 
-  double absolute_difference = fabs(x - y);
+  const FloatEnvironmentScope float_environment_scope;
   double relative_difference;
-  if (std::fpclassify(x) == FP_ZERO || std::fpclassify(y) == FP_ZERO) {
-    // If x or y is exactly zero, then relative difference doesn't have any
-    // meaning. Take the absolute difference instead.
-    relative_difference = absolute_difference;
+  IsClose(x, y, 0.0, &relative_difference, nullptr);
+  return relative_difference;
+}
+
+MatrixNearMatcher::MatrixNearMatcher(Matrix expected,
+                                     double tolerance,
+                                     bool relative)
+    : expected_(std::move(expected)),
+      tolerance_(tolerance),
+      relative_(relative) {}
+
+bool MatrixNearMatcher::MatchAndExplainMatrix(
+    const Matrix& actual, ::testing::MatchResultListener* listener) const {
+  if (actual.rows() != expected_.rows() || actual.cols() != expected_.cols()) {
+    *listener << absl::StrFormat(
+        "which has %d rows and %d columns instead of %d rows and %d columns",
+        actual.rows(),
+        actual.cols(),
+        expected_.rows(),
+        expected_.cols());
+    return false;
+  }
+
+  const Matrix difference = actual - expected_;
+  double distance = difference.norm();
+  if (relative_ && distance > 0) {
+    // Any difference from the zero matrix is infinitely large relative to it.
+    distance /= expected_.norm();
+  }
+
+  *listener << absl::StrFormat("which is at a %sdistance of %s",
+                               relative_ ? "relative " : "",
+                               ::testing::PrintToString(distance));
+  if (difference.size() > 0 && difference.cwiseAbs().maxCoeff() > 0) {
+    Eigen::Index row;
+    Eigen::Index col;
+    difference.cwiseAbs().maxCoeff(&row, &col);
+    *listener << absl::StrFormat(
+        " with the largest difference of %s at (%d, %d)",
+        ::testing::PrintToString(difference(row, col)),
+        row,
+        col);
+  }
+
+  return std::islessequal(distance, tolerance_);
+}
+
+void MatrixNearMatcher::DescribeTo(std::ostream* os) const {
+  Describe(os, /*negation=*/false);
+}
+
+void MatrixNearMatcher::DescribeNegationTo(std::ostream* os) const {
+  Describe(os, /*negation=*/true);
+}
+
+void MatrixNearMatcher::Describe(std::ostream* os, bool negation) const {
+  // Printing large matrices obscures the failure message.
+  constexpr Eigen::Index kMaxDescribedCoefficients = 64;
+  *os << absl::StrFormat("%s within a %sdistance of %s of",
+                         negation ? "isn't" : "is",
+                         relative_ ? "relative " : "",
+                         ::testing::PrintToString(tolerance_));
+  if (expected_.size() > kMaxDescribedCoefficients) {
+    *os << absl::StrFormat(
+        " the %dx%d expected matrix", expected_.rows(), expected_.cols());
   } else {
-    relative_difference =
-        absolute_difference / std::max(std::fabs(x), std::fabs(y));
-  }
-  if (relative_difference > max_abs_relative_difference) {
-    VLOG(1) << absl::StrFormat("x=%17g y=%17g abs=%17g rel=%17g",
-                               x,
-                               y,
-                               absolute_difference,
-                               relative_difference);
-  }
-
-  EXPECT_NEAR(relative_difference, 0.0, max_abs_relative_difference);
-  return relative_difference <= max_abs_relative_difference;
-}
-
-void ExpectArraysCloseUptoScale(int n,
-                                const double* p,
-                                const double* q,
-                                double tol) {
-  CHECK_GT(n, 0);
-  CHECK(p);
-  CHECK(q);
-
-  double p_max = 0;
-  double q_max = 0;
-  int p_i = 0;
-  int q_i = 0;
-
-  for (int i = 0; i < n; ++i) {
-    if (std::abs(p[i]) > p_max) {
-      p_max = std::abs(p[i]);
-      p_i = i;
-    }
-    if (std::abs(q[i]) > q_max) {
-      q_max = std::abs(q[i]);
-      q_i = i;
-    }
-  }
-
-  // If both arrays are all zeros, they are equal up to scale, but
-  // for testing purposes, that's more likely to be an error than
-  // a desired result.
-  CHECK_NE(p_max, 0.0);
-  CHECK_NE(q_max, 0.0);
-
-  for (int i = 0; i < n; ++i) {
-    double p_norm = p[i] / p[p_i];
-    double q_norm = q[i] / q[q_i];
-
-    EXPECT_NEAR(p_norm, q_norm, tol) << "i=" << i;
+    *os << "\n" << expected_;
   }
 }
 
-void ExpectArraysClose(int n, const double* p, const double* q, double tol) {
-  CHECK_GT(n, 0);
-  CHECK(p);
-  CHECK(q);
-
-  for (int i = 0; i < n; ++i) {
-    EXPECT_TRUE(ExpectClose(p[i], q[i], tol)) << "p[" << i << "]" << p[i] << " "
-                                              << "q[" << i << "]" << q[i] << " "
-                                              << "tol: " << tol;
+Matrix RightMultiplyByIdentity(const SparseMatrix& m) {
+  Matrix dense(m.num_rows(), m.num_cols());
+  for (int i = 0; i < m.num_cols(); ++i) {
+    const Vector x = Vector::Unit(m.num_cols(), i);
+    Vector y = Vector::Zero(m.num_rows());
+    m.RightMultiplyAndAccumulate(x.data(), y.data());
+    dense.col(i) = y;
   }
+  return dense;
+}
+
+bool SolveUsingDenseCholesky(const CompressedRowSparseMatrix& lhs,
+                             const Vector& rhs,
+                             Vector* solution) {
+  Matrix dense_triangular_lhs;
+  lhs.ToDenseMatrix(&dense_triangular_lhs);
+  const Matrix dense_lhs =
+      lhs.storage_type() ==
+              CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR
+          ? Matrix(dense_triangular_lhs.selfadjointView<Eigen::Upper>())
+          : Matrix(dense_triangular_lhs.selfadjointView<Eigen::Lower>());
+  const Eigen::LLT<Matrix> llt(dense_lhs);
+  if (llt.info() != Eigen::Success) {
+    return false;
+  }
+  *solution = llt.solve(rhs);
+  return llt.info() == Eigen::Success;
 }
 
 std::string TestFileAbsolutePath(const std::string& filename) {

@@ -60,6 +60,8 @@ cc_library(
     ],
     deps = [
         "//:ceres",
+        "@abseil-cpp//absl/strings:str_format",
+        "@abseil-cpp//absl/types:span",
         "@googletest//:gtest_main",
     ],
 )
@@ -150,6 +152,7 @@ CERES_TESTS = [
     "sparse_normal_cholesky_solver",
     "subset_preconditioner",
     "system",
+    "test_util",
     "thread_pool",
     "tiny_solver",
     "tiny_solver_autodiff_function",

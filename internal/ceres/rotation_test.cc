@@ -42,6 +42,7 @@
 #include "Eigen/Core"
 #include "absl/log/log.h"
 #include "absl/strings/str_format.h"
+#include "absl/types/span.h"
 #include "ceres/constants.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/euler_angles.h"
@@ -55,8 +56,11 @@
 namespace ceres {
 namespace internal {
 
+using ::testing::DoubleNear;
+using ::testing::ElementsAreArray;
+using ::testing::Pointwise;
+
 inline constexpr double kPi = constants::pi;
-const double kHalfSqrt2 = 0.707106781186547524401;
 
 // A tolerance value for floating-point comparisons.
 static double const kTolerance = std::numeric_limits<double>::epsilon() * 10;
@@ -257,7 +261,7 @@ TYPED_TEST(QuaternionTest, XRotationToQuaternion) {
   double axis_angle[3] = {kPi / 2, 0, 0};
   double quaternion[4];
   const std::array<double, 4> expected =
-      MakeQuaternion<Order>(kHalfSqrt2, kHalfSqrt2, 0.0, 0.0);
+      MakeQuaternion<Order>(kHalfSqrt2<double>, kHalfSqrt2<double>, 0.0, 0.0);
   AngleAxisToQuaternion<Order>(axis_angle, quaternion);
   EXPECT_THAT(quaternion, IsNormalizedQuaternion());
   EXPECT_THAT(quaternion, IsNearQuaternion(expected));
@@ -1748,11 +1752,15 @@ TYPED_TEST(QuaternionTest, RotatePointGivesSameAnswerAsRotationByMatrixCanned) {
   // Compute R from q and compare to known answer.
   double Rq[3][3];
   QuaternionToScaledRotation<Order>(q.data(), Rq[0]);
-  ExpectArraysClose(9, Q[0], Rq[0], kTolerance);
+  EXPECT_THAT(
+      absl::MakeConstSpan(Rq[0], 9),
+      Pointwise(RelativelyNear(kTolerance), absl::MakeConstSpan(Q[0], 9)));
 
   // Now do the same but compute R with normalization.
   QuaternionToRotation<Order>(q.data(), Rq[0]);
-  ExpectArraysClose(9, R[0], Rq[0], kTolerance);
+  EXPECT_THAT(
+      absl::MakeConstSpan(Rq[0], 9),
+      Pointwise(RelativelyNear(kTolerance), absl::MakeConstSpan(R[0], 9)));
 }
 
 TEST(Quaternion, RotatePointGivesSameAnswerForDifferentQuaternionOrders) {
@@ -1777,7 +1785,7 @@ TEST(Quaternion, RotatePointGivesSameAnswerForDifferentQuaternionOrders) {
   double result2[3];
   QuaternionRotatePoint<EigenQuaternionOrder>(q2.data(), p, result2);
 
-  ExpectArraysClose(3, result1, result2, kTolerance);
+  EXPECT_THAT(result1, Pointwise(RelativelyNear(kTolerance), result2));
 }
 
 TEST(Quaternion, RotatePointGivesSameAnswerForDifferentUnitQuaternionOrders) {
@@ -1802,7 +1810,7 @@ TEST(Quaternion, RotatePointGivesSameAnswerForDifferentUnitQuaternionOrders) {
   double result2[3];
   UnitQuaternionRotatePoint<EigenQuaternionOrder>(q2.data(), p, result2);
 
-  ExpectArraysClose(3, result1, result2, kTolerance);
+  EXPECT_THAT(result1, Pointwise(RelativelyNear(kTolerance), result2));
 }
 
 TYPED_TEST(QuaternionTest, RotatePointGivesSameAnswerAsRotationByMatrix) {
@@ -1826,7 +1834,7 @@ TYPED_TEST(QuaternionTest, RotatePointGivesSameAnswerAsRotationByMatrix) {
 
   double result2[3];
   VectorRef(result2, 3) = ConstMatrixRef(R, 3, 3) * ConstVectorRef(p, 3);
-  ExpectArraysClose(3, result1, result2, kTolerance);
+  EXPECT_THAT(result1, Pointwise(RelativelyNear(kTolerance), result2));
 }
 
 // Verify that (a * b) * c == a * (b * c).

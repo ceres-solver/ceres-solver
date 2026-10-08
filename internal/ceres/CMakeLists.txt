@@ -357,7 +357,8 @@ if (BUILD_TESTING)
               test_util.cc)
 
   target_include_directories(test_util PUBLIC ${Ceres_SOURCE_DIR}/internal)
-  target_link_libraries (test_util PUBLIC GTest::gmock ceres_static)
+  target_link_libraries (test_util PUBLIC GTest::gmock absl::span
+    absl::str_format ceres_static)
   target_compile_definitions(test_util PUBLIC CERES_HAS_GTEST)
   target_compile_definitions(test_util PRIVATE
     CERES_TEST_DATA_DIR="${Ceres_SOURCE_DIR}/data")
@@ -489,6 +490,7 @@ if (BUILD_TESTING)
   ceres_test(sparse_normal_cholesky_solver)
   ceres_test(subset_preconditioner)
   ceres_test(system)
+  ceres_test(test_util)
   ceres_test(tiny_solver)
   ceres_test(tiny_solver_autodiff_function)
   ceres_test(tiny_solver_cost_function_adapter)

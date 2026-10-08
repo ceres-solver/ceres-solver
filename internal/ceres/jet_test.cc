@@ -34,8 +34,10 @@
 #include <algorithm>
 #include <cfenv>
 #include <cmath>
+#include <string>
 
-#include "absl/log/log.h"
+#include "absl/strings/str_format.h"
+#include "absl/types/span.h"
 #include "ceres/test_util.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
@@ -58,6 +60,9 @@ namespace {
 
 constexpr double kE = 2.71828182845904523536;
 
+using ::testing::Each;
+using ::testing::IsNan;
+
 using J = Jet<double, 2>;
 // Don't care about the dual part for scalar part categorization and comparison
 // tests
@@ -76,54 +81,17 @@ J MakeJet(double a, double v0, double v1) {
 
 constexpr double kTolerance = 1e-13;
 
-// Stores the floating-point environment containing active floating-point
-// exceptions, rounding mode, etc., and restores it upon destruction.
-//
-// Useful for avoiding side-effects.
-class Fenv {
- public:
-  Fenv() { std::fegetenv(&e); }
-  ~Fenv() { std::fesetenv(&e); }
-
-  Fenv(const Fenv&) = delete;
-  Fenv& operator=(const Fenv&) = delete;
-
- private:
-  std::fenv_t e;
-};
-
-bool AreAlmostEqual(double x, double y, double max_abs_relative_difference) {
-  if (std::isnan(x) && std::isnan(y)) {
-    return true;
-  }
-
-  if (std::isinf(x) && std::isinf(y)) {
-    return (std::signbit(x) == std::signbit(y));
-  }
-
-  Fenv env;  // Do not leak floating-point exceptions to the caller
-  double absolute_difference = std::abs(x - y);
-  double relative_difference;
-
-  if (std::fpclassify(x) == FP_ZERO || std::fpclassify(y) == FP_ZERO) {
-    // If x or y is exactly zero, then relative difference doesn't have any
-    // meaning. Take the absolute difference instead.
-    relative_difference = absolute_difference;
-  } else {
-    relative_difference =
-        absolute_difference / std::max(std::abs(x), std::abs(y));
-  }
-  return std::islessequal(relative_difference, max_abs_relative_difference);
-}
-
 MATCHER_P2(IsAlmostEqualToWithTolerance,
            y,
            tolerance,
-           "is almost equal to " + testing::PrintToString(y) +
-               " with tolerance " + testing::PrintToString(tolerance)) {
-  const bool result = (AreAlmostEqual(arg.a, y.a, tolerance) &&
-                       AreAlmostEqual(arg.v[0], y.v[0], tolerance) &&
-                       AreAlmostEqual(arg.v[1], y.v[1], tolerance));
+           absl::StrFormat("is almost equal to %s with tolerance %s",
+                           testing::PrintToString(y),
+                           testing::PrintToString(tolerance))) {
+  const auto is_near = [tolerance = tolerance](double actual, double expected) {
+    return testing::Matches(RelativelyNear(expected, tolerance))(actual);
+  };
+  const bool result = is_near(arg.a, y.a) && is_near(arg.v[0], y.v[0]) &&
+                      is_near(arg.v[1], y.v[1]);
   if (!result) {
     *result_listener << "\nexpected - actual : " << y - arg;
   }
@@ -135,6 +103,15 @@ MATCHER_P(IsAlmostEqualTo, y, "") {
       IsAlmostEqualToWithTolerance(y, kTolerance), arg, result_listener);
 }
 
+// Describes the operands and the result of pow for tracing failures.
+template <typename Base, typename Exponent>
+std::string DescribePow(const Base& a, const Exponent& b, const J& c) {
+  return absl::StrFormat("\na: %s\nb: %s\na^b: %s",
+                         testing::PrintToString(a),
+                         testing::PrintToString(b),
+                         testing::PrintToString(c));
+}
+
 const double kStep = 1e-8;
 const double kNumericalTolerance = 1e-6;  // Numeric derivation is quite inexact
 
@@ -144,9 +121,8 @@ void NumericalTest(const char* name, const Function& f, const double x) {
   const double exact_dx = f(MakeJet(x, 1.0, 0.0)).v[0];
   const double estimated_dx =
       (f(J(x + kStep)).a - f(J(x - kStep)).a) / (2.0 * kStep);
-  VLOG(1) << name << "(" << x << "), exact dx: " << exact_dx
-          << ", estimated dx: " << estimated_dx;
-  ExpectClose(exact_dx, estimated_dx, kNumericalTolerance);
+  SCOPED_TRACE(absl::StrFormat("%s(%v)", name, x));
+  EXPECT_THAT(exact_dx, RelativelyNear(estimated_dx, kNumericalTolerance));
 }
 
 // Same as NumericalTest, but given a function taking two arguments.
@@ -155,6 +131,7 @@ void NumericalTest2(const char* name,
                     const Function& f,
                     const double x,
                     const double y) {
+  SCOPED_TRACE(absl::StrFormat("%s(%v, %v)", name, x, y));
   const J exact_delta = f(MakeJet(x, 1.0, 0.0), MakeJet(y, 0.0, 1.0));
   const double exact_dx = exact_delta.v[0];
   const double exact_dy = exact_delta.v[1];
@@ -169,12 +146,8 @@ void NumericalTest2(const char* name,
       (f(J(x + kStep), J(y)).a - f(J(x - kStep), J(y)).a) / (2.0 * kStep);
   const double estimated_dy =
       (f(J(x), J(y + kStep)).a - f(J(x), J(y - kStep)).a) / (2.0 * kStep);
-  VLOG(1) << name << "(" << x << ", " << y << "), exact dx: " << exact_dx
-          << ", estimated dx: " << estimated_dx;
-  ExpectClose(exact_dx, estimated_dx, kNumericalTolerance);
-  VLOG(1) << name << "(" << x << ", " << y << "), exact dy: " << exact_dy
-          << ", estimated dy: " << estimated_dy;
-  ExpectClose(exact_dy, estimated_dy, kNumericalTolerance);
+  EXPECT_THAT(exact_dx, RelativelyNear(estimated_dx, kNumericalTolerance));
+  EXPECT_THAT(exact_dy, RelativelyNear(estimated_dy, kNumericalTolerance));
 }
 
 }  // namespace
@@ -419,7 +392,7 @@ TEST(Jet, Log1p) {
                 IsAlmostEqualTo(MakeJet(9.9999999999999998e-17, 1e-8, 1e-4)));
     // log(1 + x) collapses to 0
     J v = log(J{1} + x);
-    EXPECT_TRUE(v.a == 0);
+    EXPECT_EQ(v.a, 0);
   }
 }
 
@@ -432,7 +405,7 @@ TEST(Jet, Expm1) {
     EXPECT_THAT(expm1(x), IsAlmostEqualTo(MakeJet(1e-16, 1e-8, 1e-4)));
     // exp(x) - 1 collapses to 0
     J v = exp(x) - J{1};
-    EXPECT_TRUE(v.a == 0);
+    EXPECT_EQ(v.a, 0);
   }
 }
 
@@ -492,23 +465,20 @@ TEST(Jet, Pow) {
       J a = MakeJet(0, 1, 2);
       J b = MakeJet(i * 0.1, 3, 4);  // b = 0.1 ... 0.9
       J c = pow(a, b);
-      EXPECT_EQ(c.a, 0.0) << "\na: " << a << "\nb: " << b << "\na^b: " << c;
-      EXPECT_FALSE(isfinite(c.v[0]))
-          << "\na: " << a << "\nb: " << b << "\na^b: " << c;
-      EXPECT_FALSE(isfinite(c.v[1]))
-          << "\na: " << a << "\nb: " << b << "\na^b: " << c;
+      SCOPED_TRACE(DescribePow(a, b, c));
+      EXPECT_EQ(c.a, 0.0);
+      EXPECT_FALSE(isfinite(c.v[0]));
+      EXPECT_FALSE(isfinite(c.v[1]));
     }
 
     for (int i = -10; i < 0; i++) {
       J a = MakeJet(0, 1, 2);
       J b = MakeJet(i * 0.1, 3, 4);  // b = -1,-0.9 ... -0.1
       J c = pow(a, b);
-      EXPECT_FALSE(isfinite(c.a))
-          << "\na: " << a << "\nb: " << b << "\na^b: " << c;
-      EXPECT_FALSE(isfinite(c.v[0]))
-          << "\na: " << a << "\nb: " << b << "\na^b: " << c;
-      EXPECT_FALSE(isfinite(c.v[1]))
-          << "\na: " << a << "\nb: " << b << "\na^b: " << c;
+      SCOPED_TRACE(DescribePow(a, b, c));
+      EXPECT_FALSE(isfinite(c.a));
+      EXPECT_FALSE(isfinite(c.v[0]));
+      EXPECT_FALSE(isfinite(c.v[1]));
     }
 
     // The special case of 0^0 = 1 defined by the C standard.
@@ -516,11 +486,10 @@ TEST(Jet, Pow) {
       J a = MakeJet(0, 1, 2);
       J b = MakeJet(0, 3, 4);
       J c = pow(a, b);
-      EXPECT_EQ(c.a, 1.0) << "\na: " << a << "\nb: " << b << "\na^b: " << c;
-      EXPECT_FALSE(isfinite(c.v[0]))
-          << "\na: " << a << "\nb: " << b << "\na^b: " << c;
-      EXPECT_FALSE(isfinite(c.v[1]))
-          << "\na: " << a << "\nb: " << b << "\na^b: " << c;
+      SCOPED_TRACE(DescribePow(a, b, c));
+      EXPECT_EQ(c.a, 1.0);
+      EXPECT_FALSE(isfinite(c.v[0]));
+      EXPECT_FALSE(isfinite(c.v[1]));
     }
   }
 
@@ -532,16 +501,13 @@ TEST(Jet, Pow) {
     for (int i = -10; i <= 10; i++) {
       J b = MakeJet(i, 0, 5);
       J c = pow(a, b);
+      SCOPED_TRACE(DescribePow(a, b, c));
 
-      EXPECT_TRUE(AreAlmostEqual(c.a, pow(-1.5, i), kTolerance))
-          << "\na: " << a << "\nb: " << b << "\na^b: " << c;
-      EXPECT_TRUE(isfinite(c.v[0]))
-          << "\na: " << a << "\nb: " << b << "\na^b: " << c;
-      EXPECT_FALSE(isfinite(c.v[1]))
-          << "\na: " << a << "\nb: " << b << "\na^b: " << c;
-      EXPECT_TRUE(
-          AreAlmostEqual(c.v[0], i * pow(-1.5, i - 1) * 3.0, kTolerance))
-          << "\na: " << a << "\nb: " << b << "\na^b: " << c;
+      EXPECT_THAT(c.a, RelativelyNear(pow(-1.5, i), kTolerance));
+      EXPECT_TRUE(isfinite(c.v[0]));
+      EXPECT_FALSE(isfinite(c.v[1]));
+      EXPECT_THAT(c.v[0],
+                  RelativelyNear(i * pow(-1.5, i - 1) * 3.0, kTolerance));
     }
   }
 
@@ -550,12 +516,10 @@ TEST(Jet, Pow) {
     J a = MakeJet(-1.5, 3, 4);
     J b = MakeJet(-2.5, 0, 5);
     J c = pow(a, b);
-    EXPECT_FALSE(isfinite(c.a))
-        << "\na: " << a << "\nb: " << b << "\na^b: " << c;
-    EXPECT_FALSE(isfinite(c.v[0]))
-        << "\na: " << a << "\nb: " << b << "\na^b: " << c;
-    EXPECT_FALSE(isfinite(c.v[1]))
-        << "\na: " << a << "\nb: " << b << "\na^b: " << c;
+    SCOPED_TRACE(DescribePow(a, b, c));
+    EXPECT_FALSE(isfinite(c.a));
+    EXPECT_FALSE(isfinite(c.v[0]));
+    EXPECT_FALSE(isfinite(c.v[1]));
   }
 
   // pow(0,y) == 0 for y == 2, with the second argument a Jet.
@@ -567,12 +531,11 @@ TEST(Jet, Pow) {
     for (int i = -10; i <= 10; i++) {
       J b = MakeJet(i, 3, 0);
       J c = pow(a, b);
-      ExpectClose(c.a, pow(-1.5, i), kTolerance);
-      EXPECT_FALSE(isfinite(c.v[0]))
-          << "\na: " << a << "\nb: " << b << "\na^b: " << c;
-      EXPECT_TRUE(isfinite(c.v[1]))
-          << "\na: " << a << "\nb: " << b << "\na^b: " << c;
-      ExpectClose(c.v[1], 0, kTolerance);
+      SCOPED_TRACE(DescribePow(a, b, c));
+      EXPECT_THAT(c.a, RelativelyNear(pow(-1.5, i), kTolerance));
+      EXPECT_FALSE(isfinite(c.v[0]));
+      EXPECT_TRUE(isfinite(c.v[1]));
+      EXPECT_THAT(c.v[1], RelativelyNear(0.0, kTolerance));
     }
   }
 
@@ -581,12 +544,10 @@ TEST(Jet, Pow) {
     double a = -1.5;
     J b = MakeJet(-3.14, 3, 0);
     J c = pow(a, b);
-    EXPECT_FALSE(isfinite(c.a))
-        << "\na: " << a << "\nb: " << b << "\na^b: " << c;
-    EXPECT_FALSE(isfinite(c.v[0]))
-        << "\na: " << a << "\nb: " << b << "\na^b: " << c;
-    EXPECT_FALSE(isfinite(c.v[1]))
-        << "\na: " << a << "\nb: " << b << "\na^b: " << c;
+    SCOPED_TRACE(DescribePow(a, b, c));
+    EXPECT_FALSE(isfinite(c.a));
+    EXPECT_FALSE(isfinite(c.v[0]));
+    EXPECT_FALSE(isfinite(c.v[1]));
   }
 }
 
@@ -806,7 +767,7 @@ TEST(Jet, Fma) {
 }
 
 TEST(Jet, FmaxJetWithJet) {
-  Fenv env;
+  const FloatEnvironmentScope float_environment_scope;
   // Clear all exceptions to ensure none are set by the following function
   // calls.
   std::feclearexcept(FE_ALL_EXCEPT);
@@ -831,7 +792,7 @@ TEST(Jet, FmaxJetWithJet) {
 }
 
 TEST(Jet, FmaxJetWithScalar) {
-  Fenv env;
+  const FloatEnvironmentScope float_environment_scope;
   // Clear all exceptions to ensure none are set by the following function
   // calls.
   std::feclearexcept(FE_ALL_EXCEPT);
@@ -861,7 +822,7 @@ TEST(Jet, FmaxJetWithScalar) {
 }
 
 TEST(Jet, FminJetWithJet) {
-  Fenv env;
+  const FloatEnvironmentScope float_environment_scope;
   // Clear all exceptions to ensure none are set by the following function
   // calls.
   std::feclearexcept(FE_ALL_EXCEPT);
@@ -886,7 +847,7 @@ TEST(Jet, FminJetWithJet) {
 }
 
 TEST(Jet, FminJetWithScalar) {
-  Fenv env;
+  const FloatEnvironmentScope float_environment_scope;
   // Clear all exceptions to ensure none are set by the following function
   // calls.
   std::feclearexcept(FE_ALL_EXCEPT);
@@ -916,7 +877,7 @@ TEST(Jet, FminJetWithScalar) {
 }
 
 TEST(Jet, Fdim) {
-  Fenv env;
+  const FloatEnvironmentScope float_environment_scope;
   // Clear all exceptions to ensure none are set by the following function
   // calls.
   std::feclearexcept(FE_ALL_EXCEPT);
@@ -999,26 +960,22 @@ TEST(Jet, CopySign) {
   {  // copysign(+0, +0)
     J z = copysign(MakeJet(+0, 1, 2), J{+0});
     EXPECT_FALSE(std::signbit(z.a)) << z;
-    EXPECT_TRUE(isnan(z.v[0])) << z;
-    EXPECT_TRUE(isnan(z.v[1])) << z;
+    EXPECT_THAT(absl::MakeConstSpan(z.v), Each(IsNan())) << z;
   }
   {  // copysign(+0, -0)
     J z = copysign(MakeJet(+0, 1, 2), J{-0});
     EXPECT_FALSE(std::signbit(z.a)) << z;
-    EXPECT_TRUE(isnan(z.v[0])) << z;
-    EXPECT_TRUE(isnan(z.v[1])) << z;
+    EXPECT_THAT(absl::MakeConstSpan(z.v), Each(IsNan())) << z;
   }
   {  // copysign(-0, +0)
     J z = copysign(MakeJet(-0, 1, 2), J{+0});
     EXPECT_FALSE(std::signbit(z.a)) << z;
-    EXPECT_TRUE(isnan(z.v[0])) << z;
-    EXPECT_TRUE(isnan(z.v[1])) << z;
+    EXPECT_THAT(absl::MakeConstSpan(z.v), Each(IsNan())) << z;
   }
   {  // copysign(-0, -0)
     J z = copysign(MakeJet(-0, 1, 2), J{-0});
     EXPECT_FALSE(std::signbit(z.a)) << z;
-    EXPECT_TRUE(isnan(z.v[0])) << z;
-    EXPECT_TRUE(isnan(z.v[1])) << z;
+    EXPECT_THAT(absl::MakeConstSpan(z.v), Each(IsNan())) << z;
   }
   {  // copysign(1, -nan)
     J z = copysign(MakeJet(1, 2, 3),
@@ -1380,17 +1337,17 @@ TEST(Jet, Nested3X) {
 
   JJJ y = x * x * x;
 
-  ExpectClose(y.a.a.a, 1, kTolerance);
-  ExpectClose(y.v[0].a.a, 3., kTolerance);
-  ExpectClose(y.v[0].v[0].a, 6., kTolerance);
-  ExpectClose(y.v[0].v[0].v[0], 6., kTolerance);
+  EXPECT_THAT(y.a.a.a, RelativelyNear(1.0, kTolerance));
+  EXPECT_THAT(y.v[0].a.a, RelativelyNear(3., kTolerance));
+  EXPECT_THAT(y.v[0].v[0].a, RelativelyNear(6., kTolerance));
+  EXPECT_THAT(y.v[0].v[0].v[0], RelativelyNear(6., kTolerance));
 
   JJJ e = exp(x);
 
-  ExpectClose(e.a.a.a, kE, kTolerance);
-  ExpectClose(e.v[0].a.a, kE, kTolerance);
-  ExpectClose(e.v[0].v[0].a, kE, kTolerance);
-  ExpectClose(e.v[0].v[0].v[0], kE, kTolerance);
+  EXPECT_THAT(e.a.a.a, RelativelyNear(kE, kTolerance));
+  EXPECT_THAT(e.v[0].a.a, RelativelyNear(kE, kTolerance));
+  EXPECT_THAT(e.v[0].v[0].a, RelativelyNear(kE, kTolerance));
+  EXPECT_THAT(e.v[0].v[0].v[0], RelativelyNear(kE, kTolerance));
 }
 
 #if GTEST_HAS_TYPED_TEST
