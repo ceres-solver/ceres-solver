@@ -53,6 +53,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e320a57_cb3f37f8",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-08T00:05:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10897ed9_946e6df9",
+      "revId": "be18e55955d6ae04845d3601812cbe5ccde5749e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "70d737d1_96ea9507",
