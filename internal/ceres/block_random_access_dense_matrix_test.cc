@@ -32,6 +32,7 @@
 
 #include <vector>
 
+#include "absl/strings/str_format.h"
 #include "ceres/internal/eigen.h"
 #include "gtest/gtest.h"
 
@@ -58,9 +59,10 @@ TEST(BlockRandomAccessDenseMatrix, GetCell) {
       int col;
       int row_stride;
       int col_stride;
+      SCOPED_TRACE(absl::StrFormat("cell (%d, %d)", i, j));
       CellInfo* cell = m.GetCell(i, j, &row, &col, &row_stride, &col_stride);
 
-      EXPECT_TRUE(cell != nullptr);
+      EXPECT_NE(cell, nullptr);
       EXPECT_EQ(row, row_idx);
       EXPECT_EQ(col, col_idx);
       EXPECT_EQ(row_stride, 3 + 4 + 5);
@@ -95,19 +97,17 @@ TEST(BlockRandomAccessDenseMatrix, WriteCell) {
     }
   }
 
-  // Check the values in the array are correct by going over the
-  // entries of each block manually.
+  // Check the values of each block in the array.
+  const ConstMatrixRef values(m.values(), num_rows, num_rows);
   for (int i = 0; i < blocks.size(); ++i) {
-    const int row_idx = blocks[i].position;
     for (int j = 0; j < blocks.size(); ++j) {
-      const int col_idx = blocks[j].position;
-      // Check the values of this block.
-      for (int r = 0; r < blocks[i].size; ++r) {
-        for (int c = 0; c < blocks[j].size; ++c) {
-          int pos = row_idx * num_rows + col_idx;
-          EXPECT_EQ(m.values()[pos], (i + 1) * (j + 1));
-        }
-      }
+      SCOPED_TRACE(absl::StrFormat("cell (%d, %d)", i, j));
+      EXPECT_EQ(
+          values.block(blocks[i].position,
+                       blocks[j].position,
+                       blocks[i].size,
+                       blocks[j].size),
+          Matrix::Constant(blocks[i].size, blocks[j].size, (i + 1) * (j + 1)));
     }
   }
 }
