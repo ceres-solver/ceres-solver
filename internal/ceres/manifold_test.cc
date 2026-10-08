@@ -43,6 +43,7 @@
 #include "ceres/line_manifold.h"
 #include "ceres/manifold_test_utils.h"
 #include "ceres/product_manifold.h"
+#include "ceres/quaternion_manifold_test_utils.h"
 #include "ceres/rotation.h"
 #include "ceres/sphere_manifold.h"
 #include "ceres/types.h"
@@ -535,112 +536,9 @@ TEST(ProductManifold, Pointers) {
   EXPECT_EQ(manifold1.TangentSize(), manifold2.TangentSize());
 }
 
-TEST(QuaternionManifold, PlusPiBy2) {
-  QuaternionManifold manifold;
-  Vector x = Vector::Zero(4);
-  x[0] = 1.0;
-
-  for (int i = 0; i < 3; ++i) {
-    Vector delta = Vector::Zero(3);
-    delta[i] = constants::pi / 2;
-    Vector x_plus_delta = Vector::Zero(4);
-    EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), x_plus_delta.data()));
-
-    // Expect that the element corresponding to pi/2 is +/- 1. All other
-    // elements should be zero.
-    for (int j = 0; j < 4; ++j) {
-      if (i == (j - 1)) {
-        EXPECT_LT(std::abs(x_plus_delta[j]) - 1,
-                  std::numeric_limits<double>::epsilon())
-            << "\ndelta = " << delta.transpose()
-            << "\nx_plus_delta = " << x_plus_delta.transpose()
-            << "\n expected the " << j
-            << "th element of x_plus_delta to be +/- 1.";
-      } else {
-        EXPECT_LT(std::abs(x_plus_delta[j]),
-                  std::numeric_limits<double>::epsilon())
-            << "\ndelta = " << delta.transpose()
-            << "\nx_plus_delta = " << x_plus_delta.transpose()
-            << "\n expected the " << j << "th element of x_plus_delta to be 0.";
-      }
-    }
-    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(
-        manifold, x, delta, x_plus_delta, kTolerance);
-  }
-}
-
-// Compute the expected value of QuaternionManifold::Plus via functions in
-// rotation.h and compares it to the one computed by QuaternionManifold::Plus.
-MATCHER_P2(QuaternionManifoldPlusIsCorrectAt, x, delta, "") {
-  // This multiplication by 2 is needed because AngleAxisToQuaternion uses
-  // |delta|/2 as the angle of rotation where as in the implementation of
-  // QuaternionManifold for historical reasons we use |delta|.
-  const Vector two_delta = delta * 2;
-  Vector delta_q(4);
-  AngleAxisToQuaternion(two_delta.data(), delta_q.data());
-
-  Vector expected(4);
-  QuaternionProduct(delta_q.data(), x.data(), expected.data());
-  Vector actual(4);
-  EXPECT_TRUE(arg.Plus(x.data(), delta.data(), actual.data()));
-
-  const double n = (actual - expected).norm();
-  const double d = expected.norm();
-  const double diffnorm = n / d;
-  if (diffnorm > kTolerance) {
-    *result_listener << "\nx: " << x.transpose()
-                     << "\ndelta: " << delta.transpose()
-                     << "\nexpected: " << expected.transpose()
-                     << "\nactual: " << actual.transpose()
-                     << "\ndiff: " << (expected - actual).transpose()
-                     << "\ndiffnorm : " << diffnorm;
-    return false;
-  }
-  return true;
-}
-
-static Vector RandomQuaternion() {
-  Vector x = Vector::Random(4);
-  x.normalize();
-  return x;
-}
-
-TEST(QuaternionManifold, GenericDelta) {
-  QuaternionManifold manifold;
-  for (int trial = 0; trial < kNumTrials; ++trial) {
-    const Vector x = RandomQuaternion();
-    const Vector y = RandomQuaternion();
-    Vector delta = Vector::Random(3);
-    EXPECT_THAT(manifold, QuaternionManifoldPlusIsCorrectAt(x, delta));
-    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
-  }
-}
-
-TEST(QuaternionManifold, SmallDelta) {
-  QuaternionManifold manifold;
-  for (int trial = 0; trial < kNumTrials; ++trial) {
-    const Vector x = RandomQuaternion();
-    const Vector y = RandomQuaternion();
-    Vector delta = Vector::Random(3);
-    delta.normalize();
-    delta *= 1e-6;
-    EXPECT_THAT(manifold, QuaternionManifoldPlusIsCorrectAt(x, delta));
-    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
-  }
-}
-
-TEST(QuaternionManifold, DeltaJustBelowPi) {
-  QuaternionManifold manifold;
-  for (int trial = 0; trial < kNumTrials; ++trial) {
-    const Vector x = RandomQuaternion();
-    const Vector y = RandomQuaternion();
-    Vector delta = Vector::Random(3);
-    delta.normalize();
-    delta *= (constants::pi - 1e-6);
-    EXPECT_THAT(manifold, QuaternionManifoldPlusIsCorrectAt(x, delta));
-    EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
-  }
-}
+INSTANTIATE_TYPED_TEST_SUITE_P(QuaternionManifold,
+                               QuaternionManifoldPlusTest,
+                               ::testing::Types<QuaternionManifold>);
 
 // Compute the expected value of EigenQuaternionManifold::Plus using Eigen and
 // compares it to the one computed by QuaternionManifold::Plus.
@@ -656,24 +554,16 @@ MATCHER_P2(EigenQuaternionManifoldPlusIsCorrectAt, x, delta, "") {
 
   Eigen::Map<const Eigen::Quaterniond> x_eigen_q(x.data());
 
-  Eigen::Quaterniond expected = delta_eigen_q * x_eigen_q;
-  double actual[4];
-  EXPECT_TRUE(arg.Plus(x.data(), delta.data(), actual));
-  Eigen::Map<Eigen::Quaterniond> actual_eigen_q(actual);
-
-  const double n = (actual_eigen_q.coeffs() - expected.coeffs()).norm();
-  const double d = expected.norm();
-  const double diffnorm = n / d;
-  if (diffnorm > kTolerance) {
-    *result_listener
-        << "\nx: " << x.transpose() << "\ndelta: " << delta.transpose()
-        << "\nexpected: " << expected.coeffs().transpose()
-        << "\nactual: " << actual_eigen_q.coeffs().transpose() << "\ndiff: "
-        << (expected.coeffs() - actual_eigen_q.coeffs()).transpose()
-        << "\ndiffnorm : " << diffnorm;
+  const Eigen::Quaterniond expected = delta_eigen_q * x_eigen_q;
+  Eigen::Vector4d actual;
+  if (!arg.Plus(x.data(), delta.data(), actual.data())) {
+    *result_listener << "whose Plus fails";
     return false;
   }
-  return true;
+
+  return ExplainMatchResult(MatrixRelativelyNear(expected.coeffs(), kTolerance),
+                            actual,
+                            result_listener);
 }
 
 TEST(EigenQuaternionManifold, GenericDelta) {
