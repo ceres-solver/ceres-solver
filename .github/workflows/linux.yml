@@ -18,8 +18,8 @@ jobs:
       fail-fast: true
       matrix:
         os:
-          - ubuntu:22.04
           - ubuntu:24.04
+          - ubuntu:26.04
         build_type:
           - Release
         lib:
@@ -28,6 +28,11 @@ jobs:
         gpu:
           - cuda
           - no-cuda
+        include:
+          - os: ubuntu:24.04
+            cudss: 0.3.0.9_cuda12
+          - os: ubuntu:26.04
+            cudss: 0.8.0.10_cuda13
 
     steps:
       - name: Setup Dependencies
@@ -51,41 +56,42 @@ jobs:
         with:
           submodules: recursive
 
-      # nvidia cuda toolkit + gcc combo shipped with 22.04LTS is broken
-      # and is not able to compile code that uses thrust
-      # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1006962
-      - name: Setup CUDA Toolkit Repositories (22.04)
-        if: matrix.gpu == 'cuda' && matrix.os == 'ubuntu:22.04'
-        run: |
-          wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.0-1_all.deb
-          dpkg -i cuda-keyring_1.0-1_all.deb
-
       - name: Setup CUDA Toolkit Repositories (24.04)
         if: matrix.gpu == 'cuda' && matrix.os == 'ubuntu:24.04'
         run: |
           wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb
           dpkg -i cuda-keyring_1.1-1_all.deb
 
-      - name: Setup CUDA Toolkit (<24.04)
-        if: matrix.gpu == 'cuda' && matrix.os != 'ubuntu:24.04'
+      - name: Setup CUDA Toolkit Repositories (26.04)
+        if: matrix.gpu == 'cuda' && matrix.os == 'ubuntu:26.04'
         run: |
-          apt-get update
-          apt-get install -y cuda
-          echo "CUDACXX=/usr/local/cuda/bin/nvcc" >> $GITHUB_ENV
+          wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2604/x86_64/cuda-keyring_1.1-1_all.deb
+          dpkg -i cuda-keyring_1.1-1_all.deb
 
-      - name: Setup CUDA Toolkit (>=24.04)
+      - name: Setup CUDA Toolkit (24.04)
         if: matrix.gpu == 'cuda' && matrix.os == 'ubuntu:24.04'
         run: |
           apt-get update
           apt-get install -y nvidia-cuda-toolkit
           echo "CUDACXX=/usr/lib/nvidia-cuda-toolkit/bin/nvcc" >> $GITHUB_ENV
 
+      - name: Setup CUDA Toolkit (26.04)
+        if: matrix.gpu == 'cuda' && matrix.os == 'ubuntu:26.04'
+        run: |
+          apt-get update
+          apt-get install -y \
+            cuda-minimal-build-13-3 \
+            libcublas-dev-13-3 \
+            libcusolver-dev-13-3 \
+            libcusparse-dev-13-3
+          echo "CUDACXX=/usr/local/cuda-13.3/bin/nvcc" >> $GITHUB_ENV
+
       - name: Setup cuDSS
         if: matrix.gpu == 'cuda'
         run: |
-          wget https://developer.download.nvidia.com/compute/cudss/redist/libcudss/linux-x86_64/libcudss-linux-x86_64-0.3.0.9_cuda12-archive.tar.xz
-          tar -xf libcudss-linux-x86_64-0.3.0.9_cuda12-archive.tar.xz
-          echo "cudss_DIR=${{github.workspace}}/libcudss-linux-x86_64-0.3.0.9_cuda12-archive/lib/cmake/cudss" >> $GITHUB_ENV
+          wget https://developer.download.nvidia.com/compute/cudss/redist/libcudss/linux-x86_64/libcudss-linux-x86_64-${{matrix.cudss}}-archive.tar.xz
+          tar -xf libcudss-linux-x86_64-${{matrix.cudss}}-archive.tar.xz
+          echo "cudss_DIR=${{github.workspace}}/libcudss-linux-x86_64-${{matrix.cudss}}-archive/lib/cmake/cudss" >> $GITHUB_ENV
 
       - name: Cache Mold
         id: cache-mold
