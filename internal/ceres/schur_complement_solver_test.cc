@@ -211,7 +211,7 @@ TEST_F(SchurComplementSolverTest, SparseSchurWithSuiteSparseLargeProblemAMD) {
       3, true, SPARSE_SCHUR, EIGEN, SUITE_SPARSE, OrderingType::AMD);
 }
 
-#ifndef CERES_NO_EIGEN_METIS
+#ifndef CERES_NO_CHOLMOD_PARTITION
 TEST_F(SchurComplementSolverTest,
        SparseSchurWithSuiteSparseSmallProblemNESDIS) {
   ComputeAndCompareSolutions(
@@ -226,7 +226,7 @@ TEST_F(SchurComplementSolverTest,
   ComputeAndCompareSolutions(
       3, true, SPARSE_SCHUR, EIGEN, SUITE_SPARSE, OrderingType::NESDIS);
 }
-#endif  // CERES_NO_EIGEN_METIS
+#endif  // CERES_NO_CHOLMOD_PARTITION
 #endif  // CERES_NO_SUITESPARSE
 
 #ifndef CERES_NO_ACCELERATE_SPARSE
