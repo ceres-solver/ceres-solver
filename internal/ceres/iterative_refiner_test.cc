@@ -45,8 +45,10 @@ namespace ceres::internal {
 
 // Macros to help us define virtual methods which we do not expect to
 // use/call in this test.
-#define DO_NOT_CALL \
-  { LOG(FATAL) << "DO NOT CALL"; }
+#define DO_NOT_CALL              \
+  {                              \
+    LOG(FATAL) << "DO NOT CALL"; \
+  }
 #define DO_NOT_CALL_WITH_RETURN(x) \
   {                                \
     LOG(FATAL) << "DO NOT CALL";   \
@@ -219,6 +221,7 @@ TEST_F(DenseIterativeRefinerTest,
        RandomSolutionWithExactFactorizationConverges) {
   Matrix lhs = lhs_;
   FakeDenseCholesky<double> dense_cholesky(lhs);
+  lhs.triangularView<Eigen::StrictlyLower>().setZero();
   DenseIterativeRefiner refiner(max_num_iterations_);
   Vector refined_solution(num_cols_);
   refined_solution.setRandom();
@@ -238,6 +241,7 @@ TEST_F(DenseIterativeRefinerTest,
   // Use a single precision Cholesky factorization of the double
   // precision matrix. This will give us an approximate factorization.
   FakeDenseCholesky<float> dense_cholesky(lhs_);
+  lhs.triangularView<Eigen::StrictlyLower>().setZero();
   DenseIterativeRefiner refiner(max_num_iterations_);
   Vector refined_solution(num_cols_);
   refined_solution.setRandom();

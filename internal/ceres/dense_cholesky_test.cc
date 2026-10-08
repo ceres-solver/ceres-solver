@@ -99,6 +99,7 @@ TEST_P(DenseCholeskyTest, FactorAndSolve) {
       lhs += VectorType::Ones(num_cols).asDiagonal();
       Vector x = VectorType::Random(num_cols);
       Vector rhs = lhs * x;
+      lhs.triangularView<Eigen::StrictlyUpper>().setZero();
       Vector actual = Vector::Random(num_cols);
 
       LinearSolver::Summary summary;
