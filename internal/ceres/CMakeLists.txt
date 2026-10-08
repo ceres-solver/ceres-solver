@@ -140,10 +140,15 @@ if (_Ceres_FEATURE_CUDA)
   set_source_files_properties(cuda_kernels_vector_ops.cu.cc PROPERTIES LANGUAGE CUDA)
   set_source_files_properties(cuda_kernels_bsm_to_crs.cu.cc PROPERTIES LANGUAGE CUDA)
   add_library(ceres_cuda_kernels STATIC cuda_kernels_vector_ops.cu.cc cuda_kernels_bsm_to_crs.cu.cc)
-  target_compile_features(ceres_cuda_kernels PRIVATE cxx_std_14)
+  # CUDA 13 Thrust headers require at least C++17.
+  target_compile_features(ceres_cuda_kernels PRIVATE cuda_std_17)
   target_compile_definitions(ceres_cuda_kernels PRIVATE CERES_STATIC_DEFINE)
   # Enable __host__ / __device__ annotations in lambda declarations
   target_compile_options(ceres_cuda_kernels PRIVATE --expt-extended-lambda)
+  if (MSVC AND CUDAToolkit_VERSION VERSION_GREATER_EQUAL "13.0")
+    # CUDA 13 CCCL headers require MSVC's standard conforming preprocessor.
+    target_compile_options(ceres_cuda_kernels PRIVATE -Xcompiler=/Zc:preprocessor)
+  endif (MSVC AND CUDAToolkit_VERSION VERSION_GREATER_EQUAL "13.0")
   target_include_directories(ceres_cuda_kernels PRIVATE  ${Ceres_SOURCE_DIR}/include  ${Ceres_SOURCE_DIR}/internal ${Ceres_BINARY_DIR}/${CMAKE_INSTALL_INCLUDEDIR})
   list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ceres_cuda_kernels)
 endif (_Ceres_FEATURE_CUDA)
