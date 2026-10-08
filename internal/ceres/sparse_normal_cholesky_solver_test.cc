@@ -32,6 +32,7 @@
 
 #include "Eigen/Cholesky"
 #include "absl/log/check.h"
+#include "absl/types/span.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/casts.h"
 #include "ceres/context_impl.h"
@@ -39,9 +40,13 @@
 #include "ceres/linear_solver.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
+
+using ::testing::DoubleNear;
+using ::testing::Pointwise;
 
 // TODO(sameeragarwal): These tests needs to be re-written, since
 // SparseNormalCholeskySolver is a composition of two classes now,
@@ -56,7 +61,7 @@ class SparseNormalCholeskySolverTest : public ::testing::Test {
     std::unique_ptr<LinearLeastSquaresProblem> problem =
         CreateLinearLeastSquaresProblemFromId(2);
 
-    ASSERT_TRUE(problem != nullptr);
+    ASSERT_NE(problem, nullptr);
     A_.reset(down_cast<BlockSparseMatrix*>(problem->A.release()));
     b_ = std::move(problem->b);
     D_ = std::move(problem->D);
@@ -89,11 +94,9 @@ class SparseNormalCholeskySolverTest : public ::testing::Test {
     EXPECT_EQ(summary.termination_type, LinearSolverTerminationType::SUCCESS);
 
     const double eps = options.use_mixed_precision_solves ? 2e-6 : 1e-8;
-    for (int i = 0; i < A_->num_cols(); ++i) {
-      EXPECT_NEAR(expected_solution(i), actual_solution(i), eps)
-          << "\nExpected: " << expected_solution.transpose()
-          << "\nActual: " << actual_solution.transpose();
-    }
+    EXPECT_THAT(
+        absl::MakeConstSpan(actual_solution),
+        Pointwise(DoubleNear(eps), absl::MakeConstSpan(expected_solution)));
   }
 
   void TestSolver(const LinearSolver::Options& options) {
@@ -188,7 +191,7 @@ TEST_F(SparseNormalCholeskySolverTest, SparseNormalCholeskyUsingCuDSSSingle) {
   ContextImpl context;
   options.context = &context;
   std::string error;
-  CHECK(context.InitCuda(&error)) << error;
+  ASSERT_TRUE(context.InitCuda(&error)) << error;
   TestSolver(options);
 }
 
@@ -200,7 +203,7 @@ TEST_F(SparseNormalCholeskySolverTest, SparseNormalCholeskyUsingCuDSSDouble) {
   ContextImpl context;
   options.context = &context;
   std::string error;
-  CHECK(context.InitCuda(&error)) << error;
+  ASSERT_TRUE(context.InitCuda(&error)) << error;
   TestSolver(options);
 }
 #endif  // CERES_USE_EIGEN_SPARSE

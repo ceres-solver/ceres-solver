@@ -34,6 +34,7 @@
 
 #include "absl/log/check.h"
 #include "absl/log/log.h"
+#include "absl/types/span.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
 #include "ceres/trust_region_strategy.h"
@@ -43,7 +44,9 @@
 using testing::_;
 using testing::AllOf;
 using testing::AnyNumber;
+using testing::DoubleNear;
 using testing::HasSubstr;
+using testing::Pointwise;
 
 namespace ceres {
 namespace internal {
@@ -64,10 +67,9 @@ class RegularizationCheckingLinearSolver : public DenseSparseMatrixSolver {
       const LinearSolver::PerSolveOptions& per_solve_options,
       double* x) final {
     CHECK(per_solve_options.D != nullptr);
-    for (int i = 0; i < num_cols_; ++i) {
-      EXPECT_NEAR(per_solve_options.D[i], diagonal_[i], kTolerance)
-          << i << " " << per_solve_options.D[i] << " " << diagonal_[i];
-    }
+    EXPECT_THAT(absl::MakeConstSpan(per_solve_options.D, num_cols_),
+                Pointwise(DoubleNear(kTolerance),
+                          absl::MakeConstSpan(diagonal_, num_cols_)));
     return {};
   }
 

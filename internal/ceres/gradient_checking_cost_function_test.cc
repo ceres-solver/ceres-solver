@@ -38,6 +38,7 @@
 
 #include "absl/log/check.h"
 #include "absl/log/log.h"
+#include "absl/types/span.h"
 #include "ceres/cost_function.h"
 #include "ceres/loss_function.h"
 #include "ceres/manifold.h"
@@ -55,6 +56,7 @@ namespace ceres::internal {
 using testing::_;
 using testing::AllOf;
 using testing::AnyNumber;
+using testing::ElementsAreArray;
 using testing::HasSubstr;
 
 // Pick a (non-quadratic) function whose derivative are easy:
@@ -172,16 +174,17 @@ TEST(GradientCheckingCostFunction, ResidualsAndJacobiansArePreservedTest) {
                                          kRelativePrecision,
                                          "Ignored.",
                                          &callback);
-  term.Evaluate(&parameters[0], &original_residual, &original_jacobians[0]);
+  ASSERT_TRUE(term.Evaluate(
+      &parameters[0], &original_residual, &original_jacobians[0]));
 
-  gradient_checking_cost_function->Evaluate(
-      &parameters[0], &residual, &jacobians[0]);
-  EXPECT_EQ(original_residual, residual);
+  ASSERT_TRUE(gradient_checking_cost_function->Evaluate(
+      &parameters[0], &residual, &jacobians[0]));
+  EXPECT_EQ(residual, original_residual);
 
   for (int j = 0; j < arity; j++) {
-    for (int k = 0; k < dim[j]; ++k) {
-      EXPECT_EQ(original_jacobians[j][k], jacobians[j][k]);
-    }
+    EXPECT_THAT(absl::MakeConstSpan(jacobians[j], dim[j]),
+                ElementsAreArray(original_jacobians[j], dim[j]))
+        << "jacobian " << j;
 
     delete[] parameters[j];
     delete[] jacobians[j];
@@ -232,9 +235,9 @@ TEST(GradientCheckingCostFunction, SmokeTest) {
     EXPECT_TRUE(gradient_checking_cost_function->Evaluate(
         &parameters[0], &residual, &jacobians[0]));
     EXPECT_TRUE(callback.gradient_error_detected());
-    EXPECT_TRUE(callback.error_log().find("Fuzzy banana") != std::string::npos);
-    EXPECT_TRUE(callback.error_log().find(
-                    "(1,0,2) Relative error worse than") != std::string::npos);
+    EXPECT_THAT(callback.error_log(),
+                AllOf(HasSubstr("Fuzzy banana"),
+                      HasSubstr("(1,0,2) Relative error worse than")));
   }
 
   // The gradient is correct, so no errors are reported.
@@ -251,7 +254,7 @@ TEST(GradientCheckingCostFunction, SmokeTest) {
                                            &callback);
     EXPECT_TRUE(gradient_checking_cost_function->Evaluate(
         &parameters[0], &residual, &jacobians[0]));
-    EXPECT_FALSE(callback.gradient_error_detected());
+    EXPECT_FALSE(callback.gradient_error_detected()) << callback.error_log();
   }
 
   for (int j = 0; j < arity; j++) {
@@ -329,10 +332,9 @@ class TernaryCostFunction : public CostFunction {
 // array and have the same Manifold objects.
 static void ParameterBlocksAreEquivalent(const ParameterBlock* left,
                                          const ParameterBlock* right) {
-  ASSERT_TRUE(left != nullptr);
-  ASSERT_TRUE(right != nullptr);
+  ASSERT_NE(left, nullptr);
+  ASSERT_NE(right, nullptr);
   EXPECT_EQ(left->user_state(), right->user_state());
-  EXPECT_EQ(left->Size(), right->Size());
   EXPECT_EQ(left->Size(), right->Size());
   EXPECT_EQ(left->TangentSize(), right->TangentSize());
   EXPECT_EQ(left->manifold(), right->manifold());

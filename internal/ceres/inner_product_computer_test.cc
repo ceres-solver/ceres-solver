@@ -33,48 +33,65 @@
 #include <memory>
 #include <numeric>
 #include <random>
+#include <string>
 
 #include "Eigen/SparseCore"
-#include "absl/log/log.h"
+#include "absl/strings/str_format.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/test_util.h"
 #include "ceres/triplet_sparse_matrix.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {
 
-#define COMPUTE_AND_COMPARE                                                   \
-  {                                                                           \
-    inner_product_computer->Compute();                                        \
-    CompressedRowSparseMatrix* actual_product_crsm =                          \
-        inner_product_computer->mutable_result();                             \
-    Matrix actual_inner_product =                                             \
-        Eigen::Map<Eigen::SparseMatrix<double, Eigen::ColMajor>>(             \
-            actual_product_crsm->num_rows(),                                  \
-            actual_product_crsm->num_rows(),                                  \
-            actual_product_crsm->num_nonzeros(),                              \
-            actual_product_crsm->mutable_rows(),                              \
-            actual_product_crsm->mutable_cols(),                              \
-            actual_product_crsm->mutable_values());                           \
-    EXPECT_EQ(actual_inner_product.rows(), actual_inner_product.cols());      \
-    EXPECT_EQ(expected_inner_product.rows(), expected_inner_product.cols());  \
-    EXPECT_EQ(actual_inner_product.rows(), expected_inner_product.rows());    \
-    Matrix expected_t, actual_t;                                              \
-    if (actual_product_crsm->storage_type() ==                                \
-        CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR) {           \
-      expected_t = expected_inner_product.triangularView<Eigen::Upper>();     \
-      actual_t = actual_inner_product.triangularView<Eigen::Upper>();         \
-    } else {                                                                  \
-      expected_t = expected_inner_product.triangularView<Eigen::Lower>();     \
-      actual_t = actual_inner_product.triangularView<Eigen::Lower>();         \
-    }                                                                         \
-    EXPECT_LE((expected_t - actual_t).norm(),                                 \
-              100 * std::numeric_limits<double>::epsilon() * actual_t.norm()) \
-        << "expected: \n"                                                     \
-        << expected_t << "\nactual: \n"                                       \
-        << actual_t;                                                          \
+// Computes the inner product and compares the triangular part it stores to
+// the corresponding part of the expected inner product.
+static void ExpectInnerProduct(InnerProductComputer& inner_product_computer,
+                               const Matrix& expected_inner_product) {
+  inner_product_computer.Compute();
+  CompressedRowSparseMatrix* actual_product_crsm =
+      inner_product_computer.mutable_result();
+  const Matrix actual_inner_product =
+      Eigen::Map<Eigen::SparseMatrix<double, Eigen::ColMajor>>(
+          actual_product_crsm->num_rows(),
+          actual_product_crsm->num_rows(),
+          actual_product_crsm->num_nonzeros(),
+          actual_product_crsm->mutable_rows(),
+          actual_product_crsm->mutable_cols(),
+          actual_product_crsm->mutable_values());
+  ASSERT_EQ(expected_inner_product.rows(), expected_inner_product.cols());
+  Matrix expected_t;
+  Matrix actual_t;
+  if (actual_product_crsm->storage_type() ==
+      CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR) {
+    expected_t = expected_inner_product.triangularView<Eigen::Upper>();
+    actual_t = actual_inner_product.triangularView<Eigen::Upper>();
+  } else {
+    expected_t = expected_inner_product.triangularView<Eigen::Lower>();
+    actual_t = actual_inner_product.triangularView<Eigen::Lower>();
   }
+  EXPECT_THAT(actual_t,
+              MatrixRelativelyNear(
+                  expected_t, 100 * std::numeric_limits<double>::epsilon()));
+}
+
+// Describes the options of a random matrix for tracing failures.
+static std::string DescribeRandomMatrixOptions(
+    const BlockSparseMatrix::RandomMatrixOptions& options) {
+  return absl::StrFormat(
+      "num row blocks: %d, num col blocks: %d, row block size: [%d, %d], "
+      "col block size: [%d, %d], block density: %v",
+      options.num_row_blocks,
+      options.num_col_blocks,
+      options.min_row_block_size,
+      options.max_row_block_size,
+      options.min_col_block_size,
+      options.max_col_block_size,
+      options.block_density);
+}
 
 TEST(InnerProductComputer, NormalOperation) {
   const int kMaxNumRowBlocks = 10;
@@ -100,13 +117,7 @@ TEST(InnerProductComputer, NormalOperation) {
         options.max_col_block_size = 10;
         options.block_density = distribution(prng);
 
-        VLOG(2) << "num row blocks: " << options.num_row_blocks;
-        VLOG(2) << "num col blocks: " << options.num_col_blocks;
-        VLOG(2) << "min row block size: " << options.min_row_block_size;
-        VLOG(2) << "max row block size: " << options.max_row_block_size;
-        VLOG(2) << "min col block size: " << options.min_col_block_size;
-        VLOG(2) << "max col block size: " << options.max_col_block_size;
-        VLOG(2) << "block density: " << options.block_density;
+        SCOPED_TRACE(DescribeRandomMatrixOptions(options));
 
         std::unique_ptr<BlockSparseMatrix> random_matrix(
             BlockSparseMatrix::CreateRandomMatrix(options, prng));
@@ -130,11 +141,19 @@ TEST(InnerProductComputer, NormalOperation) {
         inner_product_computer = InnerProductComputer::Create(
             *random_matrix,
             CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR);
-        COMPUTE_AND_COMPARE;
+
+        {
+          SCOPED_TRACE("lower triangular");
+
+          ExpectInnerProduct(*inner_product_computer, expected_inner_product);
+        }
         inner_product_computer = InnerProductComputer::Create(
             *random_matrix,
             CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR);
-        COMPUTE_AND_COMPARE;
+        {
+          SCOPED_TRACE("upper triangular");
+          ExpectInnerProduct(*inner_product_computer, expected_inner_product);
+        }
       }
     }
   }
@@ -160,13 +179,7 @@ TEST(InnerProductComputer, SubMatrix) {
     options.max_col_block_size = 10;
     options.block_density = distribution(prng);
 
-    VLOG(2) << "num row blocks: " << options.num_row_blocks;
-    VLOG(2) << "num col blocks: " << options.num_col_blocks;
-    VLOG(2) << "min row block size: " << options.min_row_block_size;
-    VLOG(2) << "max row block size: " << options.max_row_block_size;
-    VLOG(2) << "min col block size: " << options.min_col_block_size;
-    VLOG(2) << "max col block size: " << options.max_col_block_size;
-    VLOG(2) << "block density: " << options.block_density;
+    SCOPED_TRACE(DescribeRandomMatrixOptions(options));
 
     std::unique_ptr<BlockSparseMatrix> random_matrix(
         BlockSparseMatrix::CreateRandomMatrix(options, prng));
@@ -208,18 +221,23 @@ TEST(InnerProductComputer, SubMatrix) {
             start_row_block,
             end_row_block,
             CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR);
-        COMPUTE_AND_COMPARE;
+        {
+          SCOPED_TRACE("lower triangular");
+          ExpectInnerProduct(*inner_product_computer, expected_inner_product);
+        }
         inner_product_computer = InnerProductComputer::Create(
             *random_matrix,
             start_row_block,
             end_row_block,
             CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR);
-        COMPUTE_AND_COMPARE;
+        {
+          SCOPED_TRACE("upper triangular");
+          ExpectInnerProduct(*inner_product_computer, expected_inner_product);
+        }
       }
     }
   }
 }
 
-#undef COMPUTE_AND_COMPARE
 }  // namespace internal
 }  // namespace ceres

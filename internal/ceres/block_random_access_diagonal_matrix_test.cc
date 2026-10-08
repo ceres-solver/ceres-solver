@@ -39,6 +39,8 @@
 #include "ceres/block_structure.h"
 #include "ceres/context_impl.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/test_util.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
@@ -74,11 +76,11 @@ class BlockRandomAccessDiagonalMatrixTest : public ::testing::Test {
             row_block_id, col_block_id, &row, &col, &row_stride, &col_stride);
         // Off diagonal entries are not present.
         if (i != j) {
-          EXPECT_TRUE(cell == nullptr);
+          EXPECT_EQ(cell, nullptr);
           continue;
         }
 
-        EXPECT_TRUE(cell != nullptr);
+        ASSERT_NE(cell, nullptr);
         EXPECT_EQ(row, 0);
         EXPECT_EQ(col, 0);
         EXPECT_EQ(row_stride, blocks[row_block_id].size);
@@ -112,38 +114,20 @@ TEST_F(BlockRandomAccessDiagonalMatrixTest, MatrixContents) {
   Matrix dense;
   crsm->ToDenseMatrix(&dense);
 
-  double kTolerance = 1e-14;
+  constexpr double kTolerance = 1e-14;
 
-  // (0,0)
-  EXPECT_NEAR(
-      (dense.block(0, 0, 3, 3) - (Matrix::Ones(3, 3) + Matrix::Identity(3, 3)))
-          .norm(),
-      0.0,
-      kTolerance);
-
-  // (1,1)
-  EXPECT_NEAR((dense.block(3, 3, 4, 4) -
-               (2 * 2 * Matrix::Ones(4, 4) + Matrix::Identity(4, 4)))
-                  .norm(),
-              0.0,
-              kTolerance);
-
-  // (1,1)
-  EXPECT_NEAR((dense.block(7, 7, 5, 5) -
-               (3 * 3 * Matrix::Ones(5, 5) + Matrix::Identity(5, 5)))
-                  .norm(),
-              0.0,
-              kTolerance);
-
-  // There is nothing else in the matrix besides these four blocks.
-  EXPECT_NEAR(dense.norm(),
-              std::sqrt(6 * 1.0 + 3 * 4.0 + 12 * 16.0 + 4 * 25.0 + 20 * 81.0 +
-                        5 * 100.0),
-              kTolerance);
+  // The matrix contains nothing besides the diagonal blocks.
+  Matrix expected = Matrix::Zero(3 + 4 + 5, 3 + 4 + 5);
+  expected.block(0, 0, 3, 3) = Matrix::Ones(3, 3) + Matrix::Identity(3, 3);
+  expected.block(3, 3, 4, 4) =
+      2 * 2 * Matrix::Ones(4, 4) + Matrix::Identity(4, 4);
+  expected.block(7, 7, 5, 5) =
+      3 * 3 * Matrix::Ones(5, 5) + Matrix::Identity(5, 5);
+  EXPECT_THAT(dense, MatrixNear(expected, kTolerance));
 }
 
 TEST_F(BlockRandomAccessDiagonalMatrixTest, RightMultiplyAndAccumulate) {
-  double kTolerance = 1e-14;
+  constexpr double kTolerance = 1e-14;
   auto* crsm = m_->matrix();
   Matrix dense;
   crsm->ToDenseMatrix(&dense);
@@ -151,11 +135,11 @@ TEST_F(BlockRandomAccessDiagonalMatrixTest, RightMultiplyAndAccumulate) {
   Vector expected_y = dense * x;
   Vector actual_y = Vector::Zero(dense.rows());
   m_->RightMultiplyAndAccumulate(x.data(), actual_y.data());
-  EXPECT_NEAR((expected_y - actual_y).norm(), 0, kTolerance);
+  EXPECT_THAT(actual_y, MatrixNear(expected_y, kTolerance));
 }
 
 TEST_F(BlockRandomAccessDiagonalMatrixTest, Invert) {
-  double kTolerance = 1e-14;
+  constexpr double kTolerance = 1e-14;
   auto* crsm = m_->matrix();
   Matrix dense;
   crsm->ToDenseMatrix(&dense);
@@ -165,7 +149,7 @@ TEST_F(BlockRandomAccessDiagonalMatrixTest, Invert) {
   m_->Invert();
   crsm->ToDenseMatrix(&dense);
 
-  EXPECT_NEAR((expected_inverse - dense).norm(), 0.0, kTolerance);
+  EXPECT_THAT(dense, MatrixNear(expected_inverse, kTolerance));
 }
 
 }  // namespace ceres::internal

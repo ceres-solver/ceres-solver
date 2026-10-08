@@ -37,6 +37,7 @@
 #include <unordered_set>
 #include <vector>
 
+#include "absl/types/span.h"
 #include "ceres/internal/config.h"
 #include "ceres/ordered_groups.h"
 #include "ceres/parameter_block.h"
@@ -51,6 +52,21 @@
 
 namespace ceres {
 namespace internal {
+
+using ::testing::AnyOfArray;
+using ::testing::Each;
+using ::testing::ElementsAre;
+using ::testing::UnorderedElementsAreArray;
+
+// Returns the user states of the parameter blocks.
+static std::vector<const double*> UserStates(
+    const std::vector<ParameterBlock*>& parameter_blocks) {
+  std::vector<const double*> user_states;
+  for (const ParameterBlock* parameter_block : parameter_blocks) {
+    user_states.push_back(parameter_block->user_state());
+  }
+  return user_states;
+}
 
 // Templated base class for the CostFunction signatures.
 template <int kNumResiduals, int... Ns>
@@ -68,7 +84,7 @@ class UnaryCostFunction : public MockCostFunctionBase<2, 1> {};
 class BinaryCostFunction : public MockCostFunctionBase<2, 1, 1> {};
 class TernaryCostFunction : public MockCostFunctionBase<2, 1, 1, 1> {};
 
-TEST(_, ReorderResidualBlockNormalFunction) {
+TEST(ReorderProgram, ReorderResidualBlockNormalFunction) {
   ProblemImpl problem;
   double x;
   double y;
@@ -114,15 +130,13 @@ TEST(_, ReorderResidualBlockNormalFunction) {
   program->SetParameterOffsetsAndIndex();
 
   std::string message;
-  EXPECT_TRUE(LexicographicallyOrderResidualBlocks(
-      2, problem.mutable_program(), &message));
-  EXPECT_EQ(residual_blocks.size(), expected_residual_blocks.size());
-  for (int i = 0; i < expected_residual_blocks.size(); ++i) {
-    EXPECT_EQ(residual_blocks[i], expected_residual_blocks[i]);
-  }
+  ASSERT_TRUE(LexicographicallyOrderResidualBlocks(
+      2, problem.mutable_program(), &message))
+      << message;
+  EXPECT_EQ(residual_blocks, expected_residual_blocks);
 }
 
-TEST(_, ApplyOrderingOrderingTooSmall) {
+TEST(ReorderProgram, ApplyOrderingOrderingTooSmall) {
   ProblemImpl problem;
   double x;
   double y;
@@ -142,7 +156,7 @@ TEST(_, ApplyOrderingOrderingTooSmall) {
       problem.parameter_map(), linear_solver_ordering, &program, &message));
 }
 
-TEST(_, ApplyOrderingNormal) {
+TEST(ReorderProgram, ApplyOrderingNormal) {
   ProblemImpl problem;
   double x;
   double y;
@@ -160,22 +174,17 @@ TEST(_, ApplyOrderingNormal) {
   Program* program = problem.mutable_program();
   std::string message;
 
-  EXPECT_TRUE(ApplyOrdering(
-      problem.parameter_map(), linear_solver_ordering, program, &message));
-  const std::vector<ParameterBlock*>& parameter_blocks =
-      program->parameter_blocks();
-
-  EXPECT_EQ(parameter_blocks.size(), 3);
-  EXPECT_EQ(parameter_blocks[0]->user_state(), &x);
-  EXPECT_EQ(parameter_blocks[1]->user_state(), &z);
-  EXPECT_EQ(parameter_blocks[2]->user_state(), &y);
+  ASSERT_TRUE(ApplyOrdering(
+      problem.parameter_map(), linear_solver_ordering, program, &message))
+      << message;
+  EXPECT_THAT(UserStates(program->parameter_blocks()), ElementsAre(&x, &z, &y));
 }
 
 // Test that ApplyOrdering preserves the original program order within each
 // group. This is essential for deterministic behavior - without preserving
 // the original order, the ordering would depend on pointer addresses which
 // can vary between runs due to ASLR or different memory allocation patterns.
-TEST(_, ApplyOrderingPreservesOrderWithinGroups) {
+TEST(ReorderProgram, ApplyOrderingPreservesOrderWithinGroups) {
   // Use heap-allocated parameter blocks to ensure pointer addresses are
   // not in any predictable order (simulating what happens in real usage).
   std::vector<std::unique_ptr<double[]>> params;
@@ -213,29 +222,23 @@ TEST(_, ApplyOrderingPreservesOrderWithinGroups) {
   Program* program = problem.mutable_program();
   std::string message;
 
-  EXPECT_TRUE(ApplyOrdering(
-      problem.parameter_map(), linear_solver_ordering, program, &message));
+  ASSERT_TRUE(ApplyOrdering(
+      problem.parameter_map(), linear_solver_ordering, program, &message))
+      << message;
 
-  const std::vector<ParameterBlock*>& parameter_blocks =
-      program->parameter_blocks();
-
-  EXPECT_EQ(parameter_blocks.size(), kNumParams);
-
-  // Check that group 0 elements (evens) come first and
-  // maintain their original relative order.
-  EXPECT_EQ(parameter_blocks[0]->user_state(), param_ptrs[0]);
-  EXPECT_EQ(parameter_blocks[1]->user_state(), param_ptrs[2]);
-  EXPECT_EQ(parameter_blocks[2]->user_state(), param_ptrs[4]);
-  EXPECT_EQ(parameter_blocks[3]->user_state(), param_ptrs[6]);
-  EXPECT_EQ(parameter_blocks[4]->user_state(), param_ptrs[8]);
-
-  // Check that group 1 elements (odds) come second and
-  // maintain their original relative order.
-  EXPECT_EQ(parameter_blocks[5]->user_state(), param_ptrs[1]);
-  EXPECT_EQ(parameter_blocks[6]->user_state(), param_ptrs[3]);
-  EXPECT_EQ(parameter_blocks[7]->user_state(), param_ptrs[5]);
-  EXPECT_EQ(parameter_blocks[8]->user_state(), param_ptrs[7]);
-  EXPECT_EQ(parameter_blocks[9]->user_state(), param_ptrs[9]);
+  // Group 0 elements (evens) come first and group 1 elements (odds) come
+  // second. Both maintain their original relative order.
+  EXPECT_THAT(UserStates(program->parameter_blocks()),
+              ElementsAre(param_ptrs[0],
+                          param_ptrs[2],
+                          param_ptrs[4],
+                          param_ptrs[6],
+                          param_ptrs[8],
+                          param_ptrs[1],
+                          param_ptrs[3],
+                          param_ptrs[5],
+                          param_ptrs[7],
+                          param_ptrs[9]));
 }
 
 #ifndef CERES_NO_SUITESPARSE
@@ -258,19 +261,15 @@ class ReorderProgramForSparseCholeskyUsingSuiteSparseTest
         program->parameter_blocks();
 
     std::string error;
-    EXPECT_TRUE(ReorderProgramForSparseCholesky(ceres::SUITE_SPARSE,
+    ASSERT_TRUE(ReorderProgramForSparseCholesky(ceres::SUITE_SPARSE,
                                                 ceres::AMD,
                                                 linear_solver_ordering,
                                                 0, /* use all rows */
                                                 program,
-                                                &error));
-    const std::vector<ParameterBlock*>& ordered_parameter_blocks =
-        program->parameter_blocks();
-    EXPECT_EQ(ordered_parameter_blocks.size(),
-              unordered_parameter_blocks.size());
-
-    EXPECT_THAT(unordered_parameter_blocks,
-                ::testing::UnorderedElementsAreArray(ordered_parameter_blocks));
+                                                &error))
+        << error;
+    EXPECT_THAT(program->parameter_blocks(),
+                UnorderedElementsAreArray(unordered_parameter_blocks));
   }
 
   ProblemImpl problem_;
@@ -318,7 +317,7 @@ TEST_F(ReorderProgramForSparseCholeskyUsingSuiteSparseTest,
 }
 #endif  // CERES_NO_SUITESPARSE
 
-TEST(_, ReorderResidualBlocksbyPartition) {
+TEST(ReorderProgram, ReorderResidualBlocksbyPartition) {
   ProblemImpl problem;
   double x;
   double y;
@@ -350,11 +349,11 @@ TEST(_, ReorderResidualBlocksbyPartition) {
     std::vector<ResidualBlock*> actual_residual_blocks =
         problem.program().residual_blocks();
     EXPECT_THAT(actual_residual_blocks,
-                testing::UnorderedElementsAreArray(residual_blocks));
-    EXPECT_EQ(start_bottom, residual_blocks.size() - i);
-    for (int j = start_bottom; j < residual_blocks.size(); ++j) {
-      EXPECT_THAT(bottom, ::testing::Contains(actual_residual_blocks[j]));
-    }
+                UnorderedElementsAreArray(residual_blocks));
+    ASSERT_EQ(start_bottom, residual_blocks.size() - i);
+    EXPECT_THAT(
+        absl::MakeConstSpan(actual_residual_blocks).subspan(start_bottom),
+        Each(AnyOfArray(bottom.begin(), bottom.end())));
   }
 }
 

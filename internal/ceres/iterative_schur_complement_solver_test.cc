@@ -38,6 +38,7 @@
 #include <memory>
 
 #include "Eigen/Dense"
+#include "absl/strings/str_format.h"
 #include "ceres/block_random_access_dense_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/casts.h"
@@ -46,14 +47,15 @@
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/linear_solver.h"
 #include "ceres/schur_eliminator.h"
+#include "ceres/test_util.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {
 
-using testing::AssertionResult;
 
 const double kEpsilon = 1e-14;
 
@@ -63,7 +65,7 @@ class IterativeSchurComplementSolverTest : public ::testing::Test {
     std::unique_ptr<LinearLeastSquaresProblem> problem =
         CreateLinearLeastSquaresProblemFromId(problem_id);
 
-    ASSERT_TRUE(problem != nullptr);
+    ASSERT_NE(problem, nullptr);
     A_.reset(down_cast<BlockSparseMatrix*>(problem->A.release()));
     b_ = std::move(problem->b);
     D_ = std::move(problem->D);
@@ -73,9 +75,16 @@ class IterativeSchurComplementSolverTest : public ::testing::Test {
     num_eliminate_blocks_ = problem->num_eliminate_blocks;
   }
 
-  AssertionResult TestSolver(double* D,
-                             PreconditionerType preconditioner_type,
-                             bool use_spse_initialization) {
+  // Expects the iterative Schur complement solver to produce the solution of
+  // the dense QR solver.
+  void ExpectSolutionMatchesDenseQR(double* D,
+                                    PreconditionerType preconditioner_type,
+                                    bool use_spse_initialization) {
+    SCOPED_TRACE(
+        absl::StrFormat("%s regularization, %s, %s SPSE initialization",
+                        D == nullptr ? "without" : "with",
+                        PreconditionerTypeToString(preconditioner_type),
+                        use_spse_initialization ? "with" : "without"));
     TripletSparseMatrix triplet_A(
         A_->num_rows(), A_->num_cols(), A_->num_nonzeros());
     A_->ToTripletSparseMatrix(&triplet_A);
@@ -91,7 +100,11 @@ class IterativeSchurComplementSolverTest : public ::testing::Test {
     LinearSolver::PerSolveOptions per_solve_options;
     per_solve_options.D = D;
     Vector reference_solution(num_cols_);
-    qr->Solve(&dense_A, b_.get(), per_solve_options, reference_solution.data());
+    ASSERT_EQ(
+        qr->Solve(
+              &dense_A, b_.get(), per_solve_options, reference_solution.data())
+            .termination_type,
+        LinearSolverTerminationType::SUCCESS);
 
     options.elimination_groups.push_back(num_eliminate_blocks_);
     options.elimination_groups.push_back(0);
@@ -104,14 +117,7 @@ class IterativeSchurComplementSolverTest : public ::testing::Test {
     Vector isc_sol(num_cols_);
     per_solve_options.r_tolerance = 1e-12;
     isc.Solve(A_.get(), b_.get(), per_solve_options, isc_sol.data());
-    double diff = (isc_sol - reference_solution).norm();
-    if (diff < kEpsilon) {
-      return testing::AssertionSuccess();
-    } else {
-      return testing::AssertionFailure()
-             << "The reference solution differs from the ITERATIVE_SCHUR"
-             << " solution by " << diff << " which is more than " << kEpsilon;
-    }
+    EXPECT_THAT(isc_sol, MatrixNear(reference_solution, kEpsilon));
   }
 
   int num_rows_;
@@ -124,28 +130,28 @@ class IterativeSchurComplementSolverTest : public ::testing::Test {
 
 TEST_F(IterativeSchurComplementSolverTest, NormalProblemSchurJacobi) {
   SetUpProblem(2);
-  EXPECT_TRUE(TestSolver(nullptr, SCHUR_JACOBI, false));
-  EXPECT_TRUE(TestSolver(D_.get(), SCHUR_JACOBI, false));
+  ExpectSolutionMatchesDenseQR(nullptr, SCHUR_JACOBI, false);
+  ExpectSolutionMatchesDenseQR(D_.get(), SCHUR_JACOBI, false);
 }
 
 TEST_F(IterativeSchurComplementSolverTest,
        NormalProblemSchurJacobiWithPowerSeriesExpansionInitialization) {
   SetUpProblem(2);
-  EXPECT_TRUE(TestSolver(nullptr, SCHUR_JACOBI, true));
-  EXPECT_TRUE(TestSolver(D_.get(), SCHUR_JACOBI, true));
+  ExpectSolutionMatchesDenseQR(nullptr, SCHUR_JACOBI, true);
+  ExpectSolutionMatchesDenseQR(D_.get(), SCHUR_JACOBI, true);
 }
 
 TEST_F(IterativeSchurComplementSolverTest,
        NormalProblemPowerSeriesExpansionPreconditioner) {
   SetUpProblem(5);
-  EXPECT_TRUE(TestSolver(nullptr, SCHUR_POWER_SERIES_EXPANSION, false));
-  EXPECT_TRUE(TestSolver(D_.get(), SCHUR_POWER_SERIES_EXPANSION, false));
+  ExpectSolutionMatchesDenseQR(nullptr, SCHUR_POWER_SERIES_EXPANSION, false);
+  ExpectSolutionMatchesDenseQR(D_.get(), SCHUR_POWER_SERIES_EXPANSION, false);
 }
 
 TEST_F(IterativeSchurComplementSolverTest, ProblemWithNoFBlocks) {
   SetUpProblem(3);
-  EXPECT_TRUE(TestSolver(nullptr, SCHUR_JACOBI, false));
-  EXPECT_TRUE(TestSolver(D_.get(), SCHUR_JACOBI, false));
+  ExpectSolutionMatchesDenseQR(nullptr, SCHUR_JACOBI, false);
+  ExpectSolutionMatchesDenseQR(D_.get(), SCHUR_JACOBI, false);
 }
 
 }  // namespace internal

@@ -36,6 +36,7 @@
 #include <vector>
 
 #include "absl/log/check.h"
+#include "absl/strings/str_format.h"
 #include "ceres/autodiff_cost_function.h"
 #include "ceres/casts.h"
 #include "ceres/cost_function.h"
@@ -49,11 +50,18 @@
 #include "ceres/program.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/sparse_matrix.h"
+#include "ceres/test_util.h"
 #include "ceres/types.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
+
+using ::testing::Contains;
+using ::testing::ElementsAre;
+using ::testing::SizeIs;
+using ::testing::UnorderedElementsAre;
+using ::testing::UnorderedElementsAreArray;
 
 // The following three classes are for the purposes of defining
 // function signatures. They have dummy Evaluate functions.
@@ -336,8 +344,7 @@ TEST(Problem, GetCostFunctionForResidualBlock) {
       problem.AddResidualBlock(cost_function, nullptr, x);
   EXPECT_EQ(problem.GetCostFunctionForResidualBlock(residual_block),
             cost_function);
-  EXPECT_TRUE(problem.GetLossFunctionForResidualBlock(residual_block) ==
-              nullptr);
+  EXPECT_EQ(problem.GetLossFunctionForResidualBlock(residual_block), nullptr);
 }
 
 TEST(Problem, GetLossFunctionForResidualBlock) {
@@ -428,14 +435,14 @@ struct DynamicProblem : public ::testing::TestWithParam<bool> {
       double* values, ResidualBlock* residual_block) {
     ParameterBlock* parameter_block =
         FindOrDie(problem->parameter_map(), values);
-    EXPECT_TRUE(ContainsKey(*(parameter_block->mutable_residual_blocks()),
-                            residual_block));
+    EXPECT_THAT(*(parameter_block->mutable_residual_blocks()),
+                Contains(residual_block));
   }
 
   void ExpectSize(double* values, int size) {
     ParameterBlock* parameter_block =
         FindOrDie(problem->parameter_map(), values);
-    EXPECT_EQ(size, parameter_block->mutable_residual_blocks()->size());
+    EXPECT_THAT(*(parameter_block->mutable_residual_blocks()), SizeIs(size));
   }
 
   // Degenerate case.
@@ -570,7 +577,7 @@ TEST(Problem, GetManifold) {
   Manifold* manifold = new EuclideanManifold<3>;
   problem.SetManifold(x, manifold);
   EXPECT_EQ(problem.GetManifold(x), manifold);
-  EXPECT_TRUE(problem.GetManifold(y) == nullptr);
+  EXPECT_EQ(problem.GetManifold(y), nullptr);
 }
 
 TEST(Problem, HasManifold) {
@@ -634,17 +641,13 @@ TEST(Problem, ParameterBlockQueryTestUsingManifold) {
 
   std::vector<double*> parameter_blocks;
   problem.GetParameterBlocks(&parameter_blocks);
-  EXPECT_EQ(parameter_blocks.size(), 2);
-  EXPECT_NE(parameter_blocks[0], parameter_blocks[1]);
-  EXPECT_TRUE(parameter_blocks[0] == x || parameter_blocks[0] == y);
-  EXPECT_TRUE(parameter_blocks[1] == x || parameter_blocks[1] == y);
+  EXPECT_THAT(parameter_blocks, UnorderedElementsAre(x, y));
 
   EXPECT_TRUE(problem.HasParameterBlock(x));
   problem.RemoveParameterBlock(x);
   EXPECT_FALSE(problem.HasParameterBlock(x));
   problem.GetParameterBlocks(&parameter_blocks);
-  EXPECT_EQ(parameter_blocks.size(), 1);
-  EXPECT_TRUE(parameter_blocks[0] == y);
+  EXPECT_THAT(parameter_blocks, ElementsAre(y));
 }
 
 TEST(Problem, ParameterBlockQueryTest) {
@@ -663,17 +666,13 @@ TEST(Problem, ParameterBlockQueryTest) {
 
   std::vector<double*> parameter_blocks;
   problem.GetParameterBlocks(&parameter_blocks);
-  EXPECT_EQ(parameter_blocks.size(), 2);
-  EXPECT_NE(parameter_blocks[0], parameter_blocks[1]);
-  EXPECT_TRUE(parameter_blocks[0] == x || parameter_blocks[0] == y);
-  EXPECT_TRUE(parameter_blocks[1] == x || parameter_blocks[1] == y);
+  EXPECT_THAT(parameter_blocks, UnorderedElementsAre(x, y));
 
   EXPECT_TRUE(problem.HasParameterBlock(x));
   problem.RemoveParameterBlock(x);
   EXPECT_FALSE(problem.HasParameterBlock(x));
   problem.GetParameterBlocks(&parameter_blocks);
-  EXPECT_EQ(parameter_blocks.size(), 1);
-  EXPECT_TRUE(parameter_blocks[0] == y);
+  EXPECT_THAT(parameter_blocks, ElementsAre(y));
 }
 
 TEST_P(DynamicProblem, RemoveParameterBlockWithNoResiduals) {
@@ -831,9 +830,9 @@ TEST_P(DynamicProblem, RemoveResidualBlock) {
     ExpectParameterBlockContains(w, r_yzw, r_yw, r_zw, r_w);
   } else {
     // Otherwise, nothing.
-    EXPECT_TRUE(GetParameterBlock(0)->mutable_residual_blocks() == nullptr);
-    EXPECT_TRUE(GetParameterBlock(1)->mutable_residual_blocks() == nullptr);
-    EXPECT_TRUE(GetParameterBlock(2)->mutable_residual_blocks() == nullptr);
+    EXPECT_EQ(GetParameterBlock(0)->mutable_residual_blocks(), nullptr);
+    EXPECT_EQ(GetParameterBlock(1)->mutable_residual_blocks(), nullptr);
+    EXPECT_EQ(GetParameterBlock(2)->mutable_residual_blocks(), nullptr);
   }
   EXPECT_EQ(3, problem->NumParameterBlocks());
   EXPECT_EQ(7, NumResidualBlocks());
@@ -977,37 +976,11 @@ TEST_P(DynamicProblem, RemoveInvalidResidualBlockDies) {
   problem->RemoveResidualBlock(r_y);
 }
 
-// Check that a null-terminated array, a, has the same elements as b.
-template <typename T>
-void ExpectVectorContainsUnordered(const T* a, const std::vector<T>& b) {
-  // Compute the size of a.
-  int size = 0;
-  while (a[size]) {
-    ++size;
-  }
-  ASSERT_EQ(size, b.size());
-
-  // Sort a.
-  std::vector<T> a_sorted(size);
-  copy(a, a + size, a_sorted.begin());
-  sort(a_sorted.begin(), a_sorted.end());
-
-  // Sort b.
-  std::vector<T> b_sorted(b);
-  sort(b_sorted.begin(), b_sorted.end());
-
-  // Compare.
-  for (int i = 0; i < size; ++i) {
-    EXPECT_EQ(a_sorted[i], b_sorted[i]);
-  }
-}
-
-static void ExpectProblemHasResidualBlocks(
-    const ProblemImpl& problem,
-    const ResidualBlockId* expected_residual_blocks) {
+static std::vector<ResidualBlockId> GetResidualBlocks(
+    const ProblemImpl& problem) {
   std::vector<ResidualBlockId> residual_blocks;
   problem.GetResidualBlocks(&residual_blocks);
-  ExpectVectorContainsUnordered(expected_residual_blocks, residual_blocks);
+  return residual_blocks;
 }
 
 TEST_P(DynamicProblem, GetXXXBlocksForYYYBlock) {
@@ -1027,44 +1000,26 @@ TEST_P(DynamicProblem, GetXXXBlocksForYYYBlock) {
   CostFunction* cost_w   = new UnaryCostFunction  (1, 3);
 
   ResidualBlock* r_yzw = problem->AddResidualBlock(cost_yzw, nullptr, y, z, w);
-  {
-    ResidualBlockId expected_residuals[] = {r_yzw, nullptr};
-    ExpectProblemHasResidualBlocks(*problem, expected_residuals);
-  }
+  EXPECT_THAT(GetResidualBlocks(*problem),
+              UnorderedElementsAre(r_yzw));
   ResidualBlock* r_yz  = problem->AddResidualBlock(cost_yz,  nullptr, y, z);
-  {
-    ResidualBlockId expected_residuals[] = {r_yzw, r_yz, nullptr};
-    ExpectProblemHasResidualBlocks(*problem, expected_residuals);
-  }
+  EXPECT_THAT(GetResidualBlocks(*problem),
+              UnorderedElementsAre(r_yzw, r_yz));
   ResidualBlock* r_yw  = problem->AddResidualBlock(cost_yw,  nullptr, y, w);
-  {
-    ResidualBlock *expected_residuals[] = {r_yzw, r_yz, r_yw, nullptr};
-    ExpectProblemHasResidualBlocks(*problem, expected_residuals);
-  }
+  EXPECT_THAT(GetResidualBlocks(*problem),
+              UnorderedElementsAre(r_yzw, r_yz, r_yw));
   ResidualBlock* r_zw  = problem->AddResidualBlock(cost_zw,  nullptr, z, w);
-  {
-    ResidualBlock *expected_residuals[] = {r_yzw, r_yz, r_yw, r_zw, nullptr};
-    ExpectProblemHasResidualBlocks(*problem, expected_residuals);
-  }
+  EXPECT_THAT(GetResidualBlocks(*problem),
+              UnorderedElementsAre(r_yzw, r_yz, r_yw, r_zw));
   ResidualBlock* r_y   = problem->AddResidualBlock(cost_y,   nullptr, y);
-  {
-    ResidualBlock *expected_residuals[] = {r_yzw, r_yz, r_yw, r_zw, r_y, nullptr};
-    ExpectProblemHasResidualBlocks(*problem, expected_residuals);
-  }
+  EXPECT_THAT(GetResidualBlocks(*problem),
+              UnorderedElementsAre(r_yzw, r_yz, r_yw, r_zw, r_y));
   ResidualBlock* r_z   = problem->AddResidualBlock(cost_z,   nullptr, z);
-  {
-    ResidualBlock *expected_residuals[] = {
-      r_yzw, r_yz, r_yw, r_zw, r_y, r_z, nullptr
-    };
-    ExpectProblemHasResidualBlocks(*problem, expected_residuals);
-  }
+  EXPECT_THAT(GetResidualBlocks(*problem),
+              UnorderedElementsAre(r_yzw, r_yz, r_yw, r_zw, r_y, r_z));
   ResidualBlock* r_w   = problem->AddResidualBlock(cost_w,   nullptr, w);
-  {
-    ResidualBlock *expected_residuals[] = {
-      r_yzw, r_yz, r_yw, r_zw, r_y, r_z, r_w, nullptr
-    };
-    ExpectProblemHasResidualBlocks(*problem, expected_residuals);
-  }
+  EXPECT_THAT(GetResidualBlocks(*problem),
+              UnorderedElementsAre(r_yzw, r_yz, r_yw, r_zw, r_y, r_z, r_w));
 
   std::vector<double*> parameter_blocks;
   std::vector<ResidualBlockId> residual_blocks;
@@ -1072,45 +1027,39 @@ TEST_P(DynamicProblem, GetXXXBlocksForYYYBlock) {
   // Check GetResidualBlocksForParameterBlock() for all parameter blocks.
   struct GetResidualBlocksForParameterBlockTestCase {
     double* parameter_block;
-    ResidualBlockId expected_residual_blocks[10];
+    std::vector<ResidualBlockId> expected_residual_blocks;
   };
-  GetResidualBlocksForParameterBlockTestCase get_residual_blocks_cases[] = {
-    { y, { r_yzw, r_yz, r_yw, r_y, nullptr} },
-    { z, { r_yzw, r_yz, r_zw, r_z, nullptr} },
-    { w, { r_yzw, r_yw, r_zw, r_w, nullptr} },
-    { nullptr, { nullptr } }
+  const GetResidualBlocksForParameterBlockTestCase get_residual_blocks_cases[] = {
+    { y, { r_yzw, r_yz, r_yw, r_y } },
+    { z, { r_yzw, r_yz, r_zw, r_z } },
+    { w, { r_yzw, r_yw, r_zw, r_w } },
   };
-  for (int i = 0; get_residual_blocks_cases[i].parameter_block; ++i) {
-    problem->GetResidualBlocksForParameterBlock(
-        get_residual_blocks_cases[i].parameter_block,
-        &residual_blocks);
-    ExpectVectorContainsUnordered(
-        get_residual_blocks_cases[i].expected_residual_blocks,
-        residual_blocks);
+  for (const auto& test_case : get_residual_blocks_cases) {
+    problem->GetResidualBlocksForParameterBlock(test_case.parameter_block,
+                                                &residual_blocks);
+    EXPECT_THAT(residual_blocks,
+                UnorderedElementsAreArray(test_case.expected_residual_blocks));
   }
 
   // Check GetParameterBlocksForResidualBlock() for all residual blocks.
   struct GetParameterBlocksForResidualBlockTestCase {
     ResidualBlockId residual_block;
-    double* expected_parameter_blocks[10];
+    std::vector<double*> expected_parameter_blocks;
   };
-  GetParameterBlocksForResidualBlockTestCase get_parameter_blocks_cases[] = {
-    { r_yzw, { y, z, w, nullptr } },
-    { r_yz , { y, z, nullptr } },
-    { r_yw , { y, w, nullptr } },
-    { r_zw , { z, w, nullptr } },
-    { r_y  , { y, nullptr } },
-    { r_z  , { z, nullptr } },
-    { r_w  , { w, nullptr } },
-    { nullptr, { nullptr } }
+  const GetParameterBlocksForResidualBlockTestCase get_parameter_blocks_cases[] = {
+    { r_yzw, { y, z, w } },
+    { r_yz , { y, z } },
+    { r_yw , { y, w } },
+    { r_zw , { z, w } },
+    { r_y  , { y } },
+    { r_z  , { z } },
+    { r_w  , { w } },
   };
-  for (int i = 0; get_parameter_blocks_cases[i].residual_block; ++i) {
-    problem->GetParameterBlocksForResidualBlock(
-        get_parameter_blocks_cases[i].residual_block,
-        &parameter_blocks);
-    ExpectVectorContainsUnordered(
-        get_parameter_blocks_cases[i].expected_parameter_blocks,
-        parameter_blocks);
+  for (const auto& test_case : get_parameter_blocks_cases) {
+    problem->GetParameterBlocksForResidualBlock(test_case.residual_block,
+                                                &parameter_blocks);
+    EXPECT_THAT(parameter_blocks,
+                UnorderedElementsAreArray(test_case.expected_parameter_blocks));
   }
 
   // clang-format on
@@ -1125,10 +1074,11 @@ INSTANTIATE_TEST_SUITE_P(OptionsInstantiation,
 // r_i = i - (j + 1) * x_ij^2
 template <int kNumResiduals, int kNumParameterBlocks>
 class QuadraticCostFunction : public CostFunction {
+  static_assert(kNumResiduals > 0);
+  static_assert(kNumParameterBlocks > 0);
+
  public:
   QuadraticCostFunction() {
-    CHECK_GT(kNumResiduals, 0);
-    CHECK_GT(kNumParameterBlocks, 0);
     set_num_residuals(kNumResiduals);
     for (int i = 0; i < kNumParameterBlocks; ++i) {
       mutable_parameter_block_sizes()->push_back(kNumResiduals);
@@ -1163,7 +1113,7 @@ class QuadraticCostFunction : public CostFunction {
 
 // Convert a CRSMatrix to a dense Eigen matrix.
 static void CRSToDenseMatrix(const CRSMatrix& input, Matrix* output) {
-  ASSERT_TRUE(output != nullptr);
+  ASSERT_NE(output, nullptr);
   Matrix& m = *output;
   m.resize(input.num_rows, input.num_cols);
   m.setZero();
@@ -1213,7 +1163,7 @@ class ProblemEvaluateTest : public ::testing::Test {
     std::vector<double> gradient;
     CRSMatrix jacobian;
 
-    EXPECT_TRUE(
+    ASSERT_TRUE(
         problem_.Evaluate(options,
                           &cost,
                           expected_residuals != nullptr ? &residuals : nullptr,
@@ -1221,11 +1171,11 @@ class ProblemEvaluateTest : public ::testing::Test {
                           expected_jacobian != nullptr ? &jacobian : nullptr));
 
     if (expected_residuals != nullptr) {
-      EXPECT_EQ(residuals.size(), expected_num_rows);
+      ASSERT_THAT(residuals, SizeIs(expected_num_rows));
     }
 
     if (expected_gradient != nullptr) {
-      EXPECT_EQ(gradient.size(), expected_num_cols);
+      ASSERT_THAT(gradient, SizeIs(expected_num_cols));
     }
 
     if (expected_jacobian != nullptr) {
@@ -1253,6 +1203,10 @@ class ProblemEvaluateTest : public ::testing::Test {
   void CheckAllEvaluationCombinations(const Problem::EvaluateOptions& options,
                                       const ExpectedEvaluation& expected) {
     for (int i = 0; i < 8; ++i) {
+      SCOPED_TRACE(absl::StrFormat("residuals %d, gradient %d, jacobian %d",
+                                   i & 1,
+                                   (i & 2) >> 1,
+                                   (i & 4) >> 2));
       EvaluateAndCompare(options,
                          expected.num_rows,
                          expected.num_cols,
@@ -1661,17 +1615,17 @@ TEST_F(ProblemEvaluateResidualBlockTest,
               0,
               std::numeric_limits<double>::epsilon())
       << actual_cost;
-  EXPECT_NEAR((expected_f - actual_f).norm() / actual_f.norm(),
-              0,
-              std::numeric_limits<double>::epsilon())
+  EXPECT_THAT(
+      expected_f,
+      MatrixRelativelyNear(actual_f, std::numeric_limits<double>::epsilon()))
       << actual_f;
-  EXPECT_NEAR((expected_dfdx - actual_dfdx).norm() / actual_dfdx.norm(),
-              0,
-              std::numeric_limits<double>::epsilon())
+  EXPECT_THAT(
+      expected_dfdx,
+      MatrixRelativelyNear(actual_dfdx, std::numeric_limits<double>::epsilon()))
       << actual_dfdx;
-  EXPECT_NEAR((expected_dfdy - actual_dfdy).norm() / actual_dfdy.norm(),
-              0,
-              std::numeric_limits<double>::epsilon())
+  EXPECT_THAT(
+      expected_dfdy,
+      MatrixRelativelyNear(actual_dfdy, std::numeric_limits<double>::epsilon()))
       << actual_dfdy;
 }
 
@@ -1729,9 +1683,9 @@ TEST_F(ProblemEvaluateResidualBlockTest,
               0,
               std::numeric_limits<double>::epsilon())
       << actual_cost;
-  EXPECT_NEAR((expected_f - actual_f).norm() / actual_f.norm(),
-              0,
-              std::numeric_limits<double>::epsilon())
+  EXPECT_THAT(
+      expected_f,
+      MatrixRelativelyNear(actual_f, std::numeric_limits<double>::epsilon()))
       << actual_f;
 }
 
@@ -1760,13 +1714,13 @@ TEST_F(ProblemEvaluateResidualBlockTest,
               0,
               std::numeric_limits<double>::epsilon())
       << actual_cost;
-  EXPECT_NEAR((expected_f - actual_f).norm() / actual_f.norm(),
-              0,
-              std::numeric_limits<double>::epsilon())
+  EXPECT_THAT(
+      expected_f,
+      MatrixRelativelyNear(actual_f, std::numeric_limits<double>::epsilon()))
       << actual_f;
-  EXPECT_NEAR((expected_dfdx - actual_dfdx).norm() / actual_dfdx.norm(),
-              0,
-              std::numeric_limits<double>::epsilon())
+  EXPECT_THAT(
+      expected_dfdx,
+      MatrixRelativelyNear(actual_dfdx, std::numeric_limits<double>::epsilon()))
       << actual_dfdx;
 }
 
@@ -1784,9 +1738,9 @@ TEST_F(ProblemEvaluateResidualBlockTest,
                                              actual_f.data(),
                                              nullptr));
 
-  EXPECT_NEAR((expected_f - actual_f).norm() / actual_f.norm(),
-              0,
-              std::numeric_limits<double>::epsilon())
+  EXPECT_THAT(
+      expected_f,
+      MatrixRelativelyNear(actual_f, std::numeric_limits<double>::epsilon()))
       << actual_f;
 }
 
@@ -1823,17 +1777,17 @@ TEST_F(ProblemEvaluateResidualBlockTest, OneResidualBlockWithLossFunction) {
               0,
               std::numeric_limits<double>::epsilon())
       << actual_cost;
-  EXPECT_NEAR((expected_f - actual_f).norm() / actual_f.norm(),
-              0,
-              std::numeric_limits<double>::epsilon())
+  EXPECT_THAT(
+      expected_f,
+      MatrixRelativelyNear(actual_f, std::numeric_limits<double>::epsilon()))
       << actual_f;
-  EXPECT_NEAR((expected_dfdx - actual_dfdx).norm() / actual_dfdx.norm(),
-              0,
-              std::numeric_limits<double>::epsilon())
+  EXPECT_THAT(
+      expected_dfdx,
+      MatrixRelativelyNear(actual_dfdx, std::numeric_limits<double>::epsilon()))
       << actual_dfdx;
-  EXPECT_NEAR((expected_dfdy - actual_dfdy).norm() / actual_dfdy.norm(),
-              0,
-              std::numeric_limits<double>::epsilon())
+  EXPECT_THAT(
+      expected_dfdy,
+      MatrixRelativelyNear(actual_dfdy, std::numeric_limits<double>::epsilon()))
       << actual_dfdy;
 }
 
@@ -1868,17 +1822,17 @@ TEST_F(ProblemEvaluateResidualBlockTest,
               0,
               std::numeric_limits<double>::epsilon())
       << actual_cost;
-  EXPECT_NEAR((expected_f - actual_f).norm() / actual_f.norm(),
-              0,
-              std::numeric_limits<double>::epsilon())
+  EXPECT_THAT(
+      expected_f,
+      MatrixRelativelyNear(actual_f, std::numeric_limits<double>::epsilon()))
       << actual_f;
-  EXPECT_NEAR((expected_dfdx - actual_dfdx).norm() / actual_dfdx.norm(),
-              0,
-              std::numeric_limits<double>::epsilon())
+  EXPECT_THAT(
+      expected_dfdx,
+      MatrixRelativelyNear(actual_dfdx, std::numeric_limits<double>::epsilon()))
       << actual_dfdx;
-  EXPECT_NEAR((expected_dfdy - actual_dfdy).norm() / actual_dfdy.norm(),
-              0,
-              std::numeric_limits<double>::epsilon())
+  EXPECT_THAT(
+      expected_dfdy,
+      MatrixRelativelyNear(actual_dfdy, std::numeric_limits<double>::epsilon()))
       << actual_dfdy;
 }
 
@@ -1911,17 +1865,17 @@ TEST_F(ProblemEvaluateResidualBlockTest, OneResidualBlockWithOneManifold) {
               0,
               std::numeric_limits<double>::epsilon())
       << actual_cost;
-  EXPECT_NEAR((expected_f - actual_f).norm() / actual_f.norm(),
-              0,
-              std::numeric_limits<double>::epsilon())
+  EXPECT_THAT(
+      expected_f,
+      MatrixRelativelyNear(actual_f, std::numeric_limits<double>::epsilon()))
       << actual_f;
-  EXPECT_NEAR((expected_dfdx - actual_dfdx).norm() / actual_dfdx.norm(),
-              0,
-              std::numeric_limits<double>::epsilon())
+  EXPECT_THAT(
+      expected_dfdx,
+      MatrixRelativelyNear(actual_dfdx, std::numeric_limits<double>::epsilon()))
       << actual_dfdx;
-  EXPECT_NEAR((expected_dfdy - actual_dfdy).norm() / actual_dfdy.norm(),
-              0,
-              std::numeric_limits<double>::epsilon())
+  EXPECT_THAT(
+      expected_dfdy,
+      MatrixRelativelyNear(actual_dfdy, std::numeric_limits<double>::epsilon()))
       << actual_dfdy;
 }
 
@@ -1955,17 +1909,17 @@ TEST_F(ProblemEvaluateResidualBlockTest, OneResidualBlockWithTwoManifolds) {
               0,
               std::numeric_limits<double>::epsilon())
       << actual_cost;
-  EXPECT_NEAR((expected_f - actual_f).norm() / actual_f.norm(),
-              0,
-              std::numeric_limits<double>::epsilon())
+  EXPECT_THAT(
+      expected_f,
+      MatrixRelativelyNear(actual_f, std::numeric_limits<double>::epsilon()))
       << actual_f;
-  EXPECT_NEAR((expected_dfdx - actual_dfdx).norm() / actual_dfdx.norm(),
-              0,
-              std::numeric_limits<double>::epsilon())
+  EXPECT_THAT(
+      expected_dfdx,
+      MatrixRelativelyNear(actual_dfdx, std::numeric_limits<double>::epsilon()))
       << actual_dfdx;
-  EXPECT_NEAR((expected_dfdy - actual_dfdy).norm() / actual_dfdy.norm(),
-              0,
-              std::numeric_limits<double>::epsilon())
+  EXPECT_THAT(
+      expected_dfdy,
+      MatrixRelativelyNear(actual_dfdy, std::numeric_limits<double>::epsilon()))
       << actual_dfdy;
 }
 
@@ -2007,13 +1961,13 @@ TEST_F(ProblemEvaluateResidualBlockTest,
               0,
               std::numeric_limits<double>::epsilon())
       << actual_cost;
-  EXPECT_NEAR((expected_f - actual_f).norm() / actual_f.norm(),
-              0,
-              std::numeric_limits<double>::epsilon())
+  EXPECT_THAT(
+      expected_f,
+      MatrixRelativelyNear(actual_f, std::numeric_limits<double>::epsilon()))
       << actual_f;
-  EXPECT_NEAR((expected_dfdy - actual_dfdy).norm() / actual_dfdy.norm(),
-              0,
-              std::numeric_limits<double>::epsilon())
+  EXPECT_THAT(
+      expected_dfdy,
+      MatrixRelativelyNear(actual_dfdy, std::numeric_limits<double>::epsilon()))
       << actual_dfdy;
 }
 
@@ -2061,9 +2015,9 @@ TEST_F(ProblemEvaluateResidualBlockTest,
               0,
               std::numeric_limits<double>::epsilon())
       << actual_cost;
-  EXPECT_NEAR((expected_f - actual_f).norm() / actual_f.norm(),
-              0,
-              std::numeric_limits<double>::epsilon())
+  EXPECT_THAT(
+      expected_f,
+      MatrixRelativelyNear(actual_f, std::numeric_limits<double>::epsilon()))
       << actual_f;
 }
 
@@ -2106,13 +2060,13 @@ TEST_F(ProblemEvaluateResidualBlockTest,
               0,
               std::numeric_limits<double>::epsilon())
       << actual_cost;
-  EXPECT_NEAR((expected_f - actual_f).norm() / actual_f.norm(),
-              0,
-              std::numeric_limits<double>::epsilon())
+  EXPECT_THAT(
+      expected_f,
+      MatrixRelativelyNear(actual_f, std::numeric_limits<double>::epsilon()))
       << actual_f;
-  EXPECT_NEAR((expected_dfdy - actual_dfdy).norm() / actual_dfdy.norm(),
-              0,
-              std::numeric_limits<double>::epsilon())
+  EXPECT_THAT(
+      expected_dfdy,
+      MatrixRelativelyNear(actual_dfdy, std::numeric_limits<double>::epsilon()))
       << actual_dfdy;
 }
 

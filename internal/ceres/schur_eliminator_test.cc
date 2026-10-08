@@ -47,6 +47,7 @@
 #include "ceres/test_util.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 // TODO(sameeragarwal): Reduce the size of these tests and redo the
@@ -58,7 +59,7 @@ class SchurEliminatorTest : public ::testing::Test {
  protected:
   void SetUpFromId(int id) {
     auto problem = CreateLinearLeastSquaresProblemFromId(id);
-    ASSERT_TRUE(problem != nullptr);
+    ASSERT_NE(problem, nullptr);
     SetupHelper(problem.get());
   }
 
@@ -165,15 +166,13 @@ class SchurEliminatorTest : public ::testing::Test {
                                reduced_sol.data(),
                                sol.data());
 
-    Matrix delta = (lhs_ref - lhs_expected).selfadjointView<Eigen::Upper>();
-    double diff = delta.norm();
-    EXPECT_NEAR(diff / lhs_expected.norm(), 0.0, relative_tolerance);
-    EXPECT_NEAR((rhs - rhs_expected).norm() / rhs_expected.norm(),
-                0.0,
-                relative_tolerance);
-    EXPECT_NEAR((sol - sol_expected).norm() / sol_expected.norm(),
-                0.0,
-                relative_tolerance);
+    const Matrix symmetric_lhs = lhs_ref.selfadjointView<Eigen::Upper>();
+    EXPECT_THAT(symmetric_lhs,
+                MatrixRelativelyNear(
+                    Matrix(lhs_expected.selfadjointView<Eigen::Upper>()),
+                    relative_tolerance));
+    EXPECT_THAT(rhs, MatrixRelativelyNear(rhs_expected, relative_tolerance));
+    EXPECT_THAT(sol, MatrixRelativelyNear(sol_expected, relative_tolerance));
   }
 
   ContextImpl context_;
@@ -348,25 +347,11 @@ TEST(SchurEliminatorForOneFBlock, MatchesSchurEliminator) {
   ConstMatrixRef expected_lhsref(
       expected_lhs.values(), actual_lhs.num_cols(), actual_lhs.num_cols());
 
-  EXPECT_NEAR((actual_lhsref - expected_lhsref).norm() / expected_lhsref.norm(),
-              0.0,
-              1e-12)
-      << "expected: \n"
-      << expected_lhsref << "\nactual: \n"
-      << actual_lhsref;
+  EXPECT_THAT(actual_lhsref, MatrixRelativelyNear(expected_lhsref, 1e-12));
 
-  EXPECT_NEAR(
-      (actual_rhs - expected_rhs).norm() / expected_rhs.norm(), 0.0, 1e-12)
-      << "expected: \n"
-      << expected_rhs << "\nactual: \n"
-      << actual_rhs;
+  EXPECT_THAT(actual_rhs, MatrixRelativelyNear(expected_rhs, 1e-12));
 
-  EXPECT_NEAR((actual_e_sol - expected_e_sol).norm() / expected_e_sol.norm(),
-              0.0,
-              1e-12)
-      << "expected: \n"
-      << expected_e_sol << "\nactual: \n"
-      << actual_e_sol;
+  EXPECT_THAT(actual_e_sol, MatrixRelativelyNear(expected_e_sol, 1e-12));
 }
 
 }  // namespace ceres::internal

@@ -32,10 +32,17 @@
 
 #include <memory>
 
+#include "absl/strings/str_format.h"
 #include "ceres/jet.h"
+#include "ceres/test_util.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
+
+using ::testing::DoubleNear;
+using ::testing::ElementsAre;
+using ::testing::Pointwise;
 
 static constexpr double kTolerance = 1e-12;
 
@@ -74,8 +81,7 @@ TEST(Grid1D, TwoDataDimensionIntegerDataInterleaved) {
   for (int i = 0; i < 3; ++i) {
     double value[2];
     grid.GetValue(i, value);
-    EXPECT_EQ(value[0], static_cast<double>(i + 1));
-    EXPECT_EQ(value[1], static_cast<double>(i + 5));
+    EXPECT_THAT(value, ElementsAre(i + 1, i + 5)) << "i = " << i;
   }
 }
 
@@ -89,8 +95,7 @@ TEST(Grid1D, TwoDataDimensionIntegerDataStacked) {
   for (int i = 0; i < 3; ++i) {
     double value[2];
     grid.GetValue(i, value);
-    EXPECT_EQ(value[0], static_cast<double>(i + 1));
-    EXPECT_EQ(value[1], static_cast<double>(i + 5));
+    EXPECT_THAT(value, ElementsAre(i + 1, i + 5)) << "i = " << i;
   }
 }
 
@@ -109,8 +114,7 @@ TEST(Grid1D, JetSupport) {
   for (int i = 0; i < 3; ++i) {
     ceres::Jet<double, 1> value[2];
     grid.GetValue(i, value);
-    EXPECT_EQ(value[0], static_cast<double>(i + 1));
-    EXPECT_EQ(value[1], static_cast<double>(i + 5));
+    EXPECT_THAT(value, ElementsAre(i + 1, i + 5)) << "i = " << i;
   }
 }
 
@@ -176,8 +180,8 @@ TEST(Grid2D, TwoDataDimensionRowMajorInterleaved) {
     for (int c = 0; c < 3; ++c) {
       double value[2];
       grid.GetValue(r, c, value);
-      EXPECT_EQ(value[0], static_cast<double>(r + c + 1));
-      EXPECT_EQ(value[1], static_cast<double>(4 * (r + c + 1)));
+      EXPECT_THAT(value, ElementsAre(r + c + 1, 4 * (r + c + 1)))
+          << "r = " << r << ", c = " << c;
     }
   }
 }
@@ -194,8 +198,8 @@ TEST(Grid2D, TwoDataDimensionRowMajorStacked) {
     for (int c = 0; c < 3; ++c) {
       double value[2];
       grid.GetValue(r, c, value);
-      EXPECT_EQ(value[0], static_cast<double>(r + c + 1));
-      EXPECT_EQ(value[1], static_cast<double>(4 * (r + c + 1)));
+      EXPECT_THAT(value, ElementsAre(r + c + 1, 4 * (r + c + 1)))
+          << "r = " << r << ", c = " << c;
     }
   }
 }
@@ -211,8 +215,8 @@ TEST(Grid2D, TwoDataDimensionColMajorInterleaved) {
     for (int c = 0; c < 3; ++c) {
       double value[2];
       grid.GetValue(r, c, value);
-      EXPECT_EQ(value[0], static_cast<double>(r + c + 1));
-      EXPECT_EQ(value[1], static_cast<double>(4 * (r + c + 1)));
+      EXPECT_THAT(value, ElementsAre(r + c + 1, 4 * (r + c + 1)))
+          << "r = " << r << ", c = " << c;
     }
   }
 }
@@ -231,8 +235,8 @@ TEST(Grid2D, TwoDataDimensionColMajorStacked) {
     for (int c = 0; c < 3; ++c) {
       double value[2];
       grid.GetValue(r, c, value);
-      EXPECT_EQ(value[0], static_cast<double>(r + c + 1));
-      EXPECT_EQ(value[1], static_cast<double>(4 * (r + c + 1)));
+      EXPECT_THAT(value, ElementsAre(r + c + 1, 4 * (r + c + 1)))
+          << "r = " << r << ", c = " << c;
     }
   }
 }
@@ -258,8 +262,8 @@ TEST(Grid2D, JetSupport) {
     for (int c = 0; c < 3; ++c) {
       ceres::Jet<double, 1> value[2];
       grid.GetValue(r, c, value);
-      EXPECT_EQ(value[0], static_cast<double>(r + c + 1));
-      EXPECT_EQ(value[1], static_cast<double>(4 * (r + c + 1)));
+      EXPECT_THAT(value, ElementsAre(r + c + 1, 4 * (r + c + 1)))
+          << "r = " << r << ", c = " << c;
     }
   }
 }
@@ -292,8 +296,10 @@ class CubicInterpolatorTest : public ::testing::Test {
     // function values and its derivatives not to match.
     for (int j = 0; j < kNumTestSamples; ++j) {
       const double x = 1.0 + 7.0 / (kNumTestSamples - 1) * j;
-      double expected_f[kDataDimension], expected_dfdx[kDataDimension];
-      double f[kDataDimension], dfdx[kDataDimension];
+      double expected_f[kDataDimension];
+      double expected_dfdx[kDataDimension];
+      double f[kDataDimension];
+      double dfdx[kDataDimension];
 
       for (int dim = 0; dim < kDataDimension; ++dim) {
         expected_f[dim] =
@@ -303,16 +309,10 @@ class CubicInterpolatorTest : public ::testing::Test {
       }
 
       interpolator.Evaluate(x, f, dfdx);
-      for (int dim = 0; dim < kDataDimension; ++dim) {
-        EXPECT_NEAR(f[dim], expected_f[dim], kTolerance)
-            << "x: " << x << " dim: " << dim
-            << " actual f(x): " << expected_f[dim]
-            << " estimated f(x): " << f[dim];
-        EXPECT_NEAR(dfdx[dim], expected_dfdx[dim], kTolerance)
-            << "x: " << x << " dim: " << dim
-            << " actual df(x)/dx: " << expected_dfdx[dim]
-            << " estimated df(x)/dx: " << dfdx[dim];
-      }
+      EXPECT_THAT(f, Pointwise(DoubleNear(kTolerance), expected_f))
+          << "x: " << x;
+      EXPECT_THAT(dfdx, Pointwise(DoubleNear(kTolerance), expected_dfdx))
+          << "x: " << x;
     }
   }
 
@@ -368,8 +368,8 @@ TEST(CubicInterpolator, JetEvaluation) {
 
   // Check that the derivative part of the Jet is dfdx * x_jet.v
   // by the chain rule.
-  EXPECT_NEAR((f_jets[0].v - dfdx[0] * x_jet.v).norm(), 0.0, kTolerance);
-  EXPECT_NEAR((f_jets[1].v - dfdx[1] * x_jet.v).norm(), 0.0, kTolerance);
+  EXPECT_THAT(f_jets[0].v, MatrixNear(dfdx[0] * x_jet.v, kTolerance));
+  EXPECT_THAT(f_jets[1].v, MatrixNear(dfdx[1] * x_jet.v, kTolerance));
 }
 
 class BiCubicInterpolatorTest : public ::testing::Test {
@@ -399,15 +399,22 @@ class BiCubicInterpolatorTest : public ::testing::Test {
       const double r = 1.0 + 7.0 / (kNumRowSamples - 1) * j;
       for (int k = 0; k < kNumColSamples; ++k) {
         const double c = 1.0 + 7.0 / (kNumColSamples - 1) * k;
-        double f[kDataDimension], dfdr[kDataDimension], dfdc[kDataDimension];
+        SCOPED_TRACE(absl::StrFormat("r = %v, c = %v", r, c));
+        double f[kDataDimension];
+        double dfdr[kDataDimension];
+        double dfdc[kDataDimension];
+        double expected_f[kDataDimension];
+        double expected_dfdr[kDataDimension];
+        double expected_dfdc[kDataDimension];
         interpolator.Evaluate(r, c, f, dfdr, dfdc);
         for (int dim = 0; dim < kDataDimension; ++dim) {
-          EXPECT_NEAR(f[dim], (dim * dim + 1) * EvaluateF(r, c), kTolerance);
-          EXPECT_NEAR(
-              dfdr[dim], (dim * dim + 1) * EvaluatedFdr(r, c), kTolerance);
-          EXPECT_NEAR(
-              dfdc[dim], (dim * dim + 1) * EvaluatedFdc(r, c), kTolerance);
+          expected_f[dim] = (dim * dim + 1) * EvaluateF(r, c);
+          expected_dfdr[dim] = (dim * dim + 1) * EvaluatedFdr(r, c);
+          expected_dfdc[dim] = (dim * dim + 1) * EvaluatedFdc(r, c);
         }
+        EXPECT_THAT(f, Pointwise(DoubleNear(kTolerance), expected_f));
+        EXPECT_THAT(dfdr, Pointwise(DoubleNear(kTolerance), expected_dfdr));
+        EXPECT_THAT(dfdc, Pointwise(DoubleNear(kTolerance), expected_dfdc));
       }
     }
   }
@@ -567,12 +574,10 @@ TEST(BiCubicInterpolator, JetEvaluation) {
   interpolator.Evaluate(r_jet, c_jet, f_jets);
   EXPECT_EQ(f_jets[0].a, f[0]);
   EXPECT_EQ(f_jets[1].a, f[1]);
-  EXPECT_NEAR((f_jets[0].v - dfdr[0] * r_jet.v - dfdc[0] * c_jet.v).norm(),
-              0.0,
-              kTolerance);
-  EXPECT_NEAR((f_jets[1].v - dfdr[1] * r_jet.v - dfdc[1] * c_jet.v).norm(),
-              0.0,
-              kTolerance);
+  EXPECT_THAT(f_jets[0].v,
+              MatrixNear(dfdr[0] * r_jet.v + dfdc[0] * c_jet.v, kTolerance));
+  EXPECT_THAT(f_jets[1].v,
+              MatrixNear(dfdr[1] * r_jet.v + dfdc[1] * c_jet.v, kTolerance));
 }
 
 }  // namespace ceres::internal

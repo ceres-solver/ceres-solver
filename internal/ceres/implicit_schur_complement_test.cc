@@ -42,13 +42,14 @@
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/linear_solver.h"
 #include "ceres/schur_eliminator.h"
+#include "ceres/test_util.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
 
-using testing::AssertionResult;
 
 const double kEpsilon = 1e-14;
 
@@ -57,7 +58,7 @@ class ImplicitSchurComplementTest : public ::testing::Test {
   void SetUp() final {
     auto problem = CreateLinearLeastSquaresProblemFromId(2);
 
-    ASSERT_TRUE(problem != nullptr);
+    ASSERT_NE(problem, nullptr);
     A_.reset(down_cast<BlockSparseMatrix*>(problem->A.release()));
     b_ = std::move(problem->b);
     D_ = std::move(problem->D);
@@ -85,7 +86,7 @@ class ImplicitSchurComplementTest : public ::testing::Test {
 
     std::unique_ptr<SchurEliminatorBase> eliminator =
         SchurEliminatorBase::Create(options);
-    ASSERT_TRUE(eliminator != nullptr);
+    ASSERT_NE(eliminator, nullptr);
     const bool kFullRankETE = true;
     eliminator->Init(num_eliminate_blocks_, kFullRankETE, bs);
 
@@ -116,7 +117,7 @@ class ImplicitSchurComplementTest : public ::testing::Test {
                                solution->data());
   }
 
-  AssertionResult TestImplicitSchurComplement(double* D) {
+  void ExpectImplicitSchurComplementMatchesExplicitOne(double* D) {
     Matrix lhs;
     Vector rhs;
     Vector reference_solution;
@@ -165,12 +166,8 @@ class ImplicitSchurComplementTest : public ::testing::Test {
 
       // The i^th column of the implicit schur complement is the same as
       // the explicit schur complement.
-      if ((y - z).norm() > kEpsilon) {
-        return testing::AssertionFailure()
-               << "Explicit and Implicit SchurComplements differ in "
-               << "column " << i << ". explicit: " << y.transpose()
-               << " implicit: " << z.transpose();
-      }
+      EXPECT_THAT(z, MatrixNear(y, kEpsilon))
+          << "Schur complement column " << i;
 
       y.setZero();
       y = Z_reference * x;
@@ -178,24 +175,14 @@ class ImplicitSchurComplementTest : public ::testing::Test {
       isc.InversePowerSeriesOperatorRightMultiplyAccumulate(x.data(), z.data());
 
       // The i^th column of operator Z stored implicitly is the same as its
-      // explicit version.
-      if ((y - z).norm() > kEpsilon) {
-        return testing::AssertionFailure()
-               << "Explicit and Implicit operators used to approximate the "
-                  "inversion of schur complement via power series expansion "
-                  "differ in column "
-               << i << ". explicit: " << y.transpose()
-               << " implicit: " << z.transpose();
-      }
+      // explicit version used to approximate the inversion of the Schur
+      // complement via power series expansion.
+      EXPECT_THAT(z, MatrixNear(y, kEpsilon))
+          << "power series operator column " << i;
     }
 
     // Compare the rhs of the reduced linear system
-    if ((isc.rhs() - rhs).norm() > kEpsilon) {
-      return testing::AssertionFailure()
-             << "Explicit and Implicit SchurComplements differ in "
-             << "rhs. explicit: " << rhs.transpose()
-             << " implicit: " << isc.rhs().transpose();
-    }
+    EXPECT_THAT(isc.rhs(), MatrixNear(rhs, kEpsilon));
 
     // Reference solution to the f_block.
     const Vector reference_f_sol =
@@ -205,14 +192,7 @@ class ImplicitSchurComplementTest : public ::testing::Test {
     // reference solution to the f_block.
     Vector sol(num_cols_);
     isc.BackSubstitute(reference_f_sol.data(), sol.data());
-    if ((sol - reference_solution).norm() > kEpsilon) {
-      return testing::AssertionFailure()
-             << "Explicit and Implicit SchurComplements solutions differ. "
-             << "explicit: " << reference_solution.transpose()
-             << " implicit: " << sol.transpose();
-    }
-
-    return testing::AssertionSuccess();
+    EXPECT_THAT(sol, MatrixNear(reference_solution, kEpsilon));
   }
 
   ContextImpl context_;
@@ -232,8 +212,14 @@ class ImplicitSchurComplementTest : public ::testing::Test {
 // We do this with and without regularization to check that the
 // support for the LM diagonal is correct.
 TEST_F(ImplicitSchurComplementTest, SchurMatrixValuesTest) {
-  EXPECT_TRUE(TestImplicitSchurComplement(nullptr));
-  EXPECT_TRUE(TestImplicitSchurComplement(D_.get()));
+  {
+    SCOPED_TRACE("without regularization");
+    ExpectImplicitSchurComplementMatchesExplicitOne(nullptr);
+  }
+  {
+    SCOPED_TRACE("with regularization");
+    ExpectImplicitSchurComplementMatchesExplicitOne(D_.get());
+  }
 }
 
 }  // namespace ceres::internal

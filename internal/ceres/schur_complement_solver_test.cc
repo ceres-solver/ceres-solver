@@ -40,8 +40,10 @@
 #include "ceres/detect_structure.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/linear_solver.h"
+#include "ceres/test_util.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
@@ -52,7 +54,7 @@ class SchurComplementSolverTest : public ::testing::Test {
     std::unique_ptr<LinearLeastSquaresProblem> problem =
         CreateLinearLeastSquaresProblemFromId(problem_id);
 
-    ASSERT_TRUE(problem != nullptr);
+    ASSERT_NE(problem, nullptr);
     A.reset(down_cast<BlockSparseMatrix*>(problem->A.release()));
     b = std::move(problem->b);
     D = std::move(problem->D);
@@ -123,15 +125,10 @@ class SchurComplementSolverTest : public ::testing::Test {
     summary = solver->Solve(A.get(), b.get(), per_solve_options, x.data());
     EXPECT_EQ(summary.termination_type, LinearSolverTerminationType::SUCCESS);
 
-    if (regularization) {
-      ASSERT_NEAR((sol_d - x).norm() / num_cols, 0, 1e-10)
-          << "Regularized Expected solution: " << sol_d.transpose()
-          << " Actual solution: " << x.transpose();
-    } else {
-      ASSERT_NEAR((sol - x).norm() / num_cols, 0, 1e-10)
-          << "Unregularized Expected solution: " << sol.transpose()
-          << " Actual solution: " << x.transpose();
-    }
+    // The tolerance applies to the norm of the difference divided by the
+    // number of columns.
+    ASSERT_THAT(x, MatrixNear(regularization ? sol_d : sol, 1e-10 * num_cols))
+        << (regularization ? "regularized" : "unregularized");
   }
 
   int num_rows;

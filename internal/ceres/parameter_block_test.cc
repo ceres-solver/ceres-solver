@@ -32,10 +32,14 @@
 
 #include "absl/log/log.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/test_util.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {
+
+using ::testing::ElementsAre;
 
 TEST(ParameterBlock, SetManifoldDiesOnSizeMismatch) {
   double x[3] = {1.0, 2.0, 3.0};
@@ -94,20 +98,15 @@ TEST(ParameterBlock, SetManifoldAndNormalOperation) {
 
   // Ensure the manifold plus jacobian result is correctly computed.
   ConstMatrixRef manifold_jacobian(parameter_block.PlusJacobian(), 3, 2);
-  ASSERT_EQ(1.0, manifold_jacobian(0, 0));
-  ASSERT_EQ(0.0, manifold_jacobian(0, 1));
-  ASSERT_EQ(0.0, manifold_jacobian(1, 0));
-  ASSERT_EQ(0.0, manifold_jacobian(1, 1));
-  ASSERT_EQ(0.0, manifold_jacobian(2, 0));
-  ASSERT_EQ(1.0, manifold_jacobian(2, 1));
+  Matrix expected_jacobian(3, 2);
+  expected_jacobian << 1.0, 0.0, 0.0, 0.0, 0.0, 1.0;
+  EXPECT_THAT(manifold_jacobian, MatrixNear(expected_jacobian, 0.0));
 
   // Check that updating works as expected.
   double x_plus_delta[3];
   double delta[2] = {0.5, 0.3};
-  parameter_block.Plus(x, delta, x_plus_delta);
-  ASSERT_EQ(1.5, x_plus_delta[0]);
-  ASSERT_EQ(2.0, x_plus_delta[1]);
-  ASSERT_EQ(3.3, x_plus_delta[2]);
+  ASSERT_TRUE(parameter_block.Plus(x, delta, x_plus_delta));
+  EXPECT_THAT(x_plus_delta, ElementsAre(1.5, 2.0, 3.3));
 }
 
 struct TestManifold : public Manifold {
@@ -156,9 +155,8 @@ TEST(ParameterBlock, PlusWithNoManifold) {
 
   double delta[2] = {0.2, 0.3};
   double x_plus_delta[2];
-  parameter_block.Plus(x, delta, x_plus_delta);
-  EXPECT_EQ(1.2, x_plus_delta[0]);
-  EXPECT_EQ(2.3, x_plus_delta[1]);
+  ASSERT_TRUE(parameter_block.Plus(x, delta, x_plus_delta));
+  EXPECT_THAT(x_plus_delta, ElementsAre(1.2, 2.3));
 }
 
 // Stops computing the plus_jacobian after the first time.
@@ -241,9 +239,8 @@ TEST(ParameterBlock, PlusWithBoundsConstraints) {
   parameter_block.SetUpperBound(0, 2.0);
   parameter_block.SetLowerBound(1, -1.0);
   double x_plus_delta[2];
-  parameter_block.Plus(x, delta, x_plus_delta);
-  EXPECT_EQ(x_plus_delta[0], 2.0);
-  EXPECT_EQ(x_plus_delta[1], -1.0);
+  ASSERT_TRUE(parameter_block.Plus(x, delta, x_plus_delta));
+  EXPECT_THAT(x_plus_delta, ElementsAre(2.0, -1.0));
 }
 
 TEST(ParameterBlock, ResetManifoldToNull) {

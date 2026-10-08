@@ -41,15 +41,22 @@
 #include <vector>
 
 #include "absl/log/log.h"
+#include "absl/strings/str_format.h"
+#include "absl/types/span.h"
 #include "ceres/context_impl.h"
 #include "ceres/internal/config.h"
 #include "ceres/parallel_vector_ops.h"
+#include "ceres/test_util.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
 
+using testing::AllOf;
+using testing::Each;
 using testing::ElementsAreArray;
+using testing::Ge;
+using testing::Lt;
 using testing::UnorderedElementsAreArray;
 
 // Tests the parallel for loop computes the correct result for various number of
@@ -114,7 +121,7 @@ TEST(ParallelForWithRange, MinimalSize) {
           if (end - start < kMinBlockSize) failed = true;
         },
         kMinBlockSize);
-    EXPECT_EQ(failed, false);
+    EXPECT_FALSE(failed);
   }
 }
 
@@ -325,8 +332,7 @@ TEST(GuidedParallelFor, MaxPartitionCostIsFeasibleRandomized) {
         for (int j = 0; j < num_partitions; ++j) {
           int total = 0;
           for (int k = partition[j]; k < partition[j + 1]; ++k) {
-            EXPECT_LT(k, end);
-            EXPECT_GE(k, start);
+            EXPECT_THAT(k, AllOf(Ge(start), Lt(end)));
             total += costs[k];
           }
           EXPECT_LE(total, threshold);
@@ -389,8 +395,7 @@ TEST(GuidedParallelFor, PartitionRangeForParallelFor) {
     for (int j = 0; j < num_partitions; ++j) {
       int total = 0;
       for (int k = partition[j]; k < partition[j + 1]; ++k) {
-        EXPECT_LT(k, end);
-        EXPECT_GE(k, start);
+        EXPECT_THAT(k, AllOf(Ge(start), Lt(end)));
         total += costs[k];
       }
       EXPECT_LE(total, first_admissible);
@@ -465,6 +470,7 @@ TEST(ParallelAssign, D2MulX) {
   context.EnsureMinimumThreads(kMaxNumThreads);
 
   for (int num_threads = 1; num_threads <= kMaxNumThreads; ++num_threads) {
+    SCOPED_TRACE(absl::StrFormat("%d threads", num_threads));
     Vector y_observed(kVectorSize);
     ParallelAssign(
         &context, num_threads, y_observed, D.array().square() * x.array());
@@ -472,9 +478,8 @@ TEST(ParallelAssign, D2MulX) {
     // We might get non-bit-exact result due to different precision in scalar
     // and vector code. For example, in x86 mode mingw might emit x87
     // instructions for scalar code, thus making bit-exact check fail
-    EXPECT_NEAR((y_expected - y_observed).squaredNorm(),
-                0.,
-                kEpsilon * y_expected.squaredNorm());
+    EXPECT_THAT(y_observed,
+                MatrixRelativelyNear(y_expected, std::sqrt(kEpsilon)));
   }
 }
 
@@ -489,7 +494,7 @@ TEST(ParallelAssign, SetZero) {
     Vector x = Vector::Random(kVectorSize);
     ParallelSetZero(&context, num_threads, x);
 
-    ASSERT_EQ(x.squaredNorm(), 0.);
+    ASSERT_THAT(absl::MakeConstSpan(x), Each(0.0)) << num_threads << " threads";
   }
 }
 

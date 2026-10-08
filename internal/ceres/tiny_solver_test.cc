@@ -132,8 +132,15 @@ void TestHelper(const Function& f, const Vector& x0) {
   Vec2 expected_residuals;
   Eigen::Matrix<double, 2, 3> expected_jacobian;
   f(x.data(), expected_residuals.data(), expected_jacobian.data());
-  EXPECT_TRUE(expected_residuals.isApprox(solver.Residuals()));
-  EXPECT_TRUE(expected_jacobian.isApprox(solver.Jacobian()));
+  // The comparison must not allocate since the tests forbid heap allocations.
+  // The failure message is only evaluated if the comparison fails.
+  EXPECT_TRUE(expected_residuals.isApprox(solver.Residuals()))
+      << "expected: " << expected_residuals.transpose()
+      << "\nactual: " << solver.Residuals().transpose();
+  EXPECT_TRUE(expected_jacobian.isApprox(solver.Jacobian()))
+      << "expected:\n"
+      << expected_jacobian << "\nactual:\n"
+      << solver.Jacobian();
 }
 
 // A test case for when the cost function is statically sized.

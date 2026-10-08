@@ -37,9 +37,14 @@
 
 #include "absl/container/btree_set.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/test_util.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
+
+using ::testing::AllOf;
+using ::testing::Gt;
 
 TEST(BlockRandomAccessSparseMatrix, GetCell) {
   ContextImpl context;
@@ -77,7 +82,7 @@ TEST(BlockRandomAccessSparseMatrix, GetCell) {
     int col_stride;
     CellInfo* cell = m.GetCell(
         row_block_id, col_block_id, &row, &col, &row_stride, &col_stride);
-    EXPECT_TRUE(cell != nullptr);
+    ASSERT_NE(cell, nullptr);
     EXPECT_EQ(row, 0);
     EXPECT_EQ(col, 0);
     EXPECT_EQ(row_stride, blocks[row_block_id].size);
@@ -96,27 +101,15 @@ TEST(BlockRandomAccessSparseMatrix, GetCell) {
   Matrix dense;
   bsm->ToDenseMatrix(&dense);
 
-  double kTolerance = 1e-14;
+  constexpr double kTolerance = 1e-14;
 
-  // (0, 0)
-  EXPECT_NEAR(
-      (dense.block(0, 0, 3, 3) - Matrix::Ones(3, 3)).norm(), 0.0, kTolerance);
-  // (1, 1)
-  EXPECT_NEAR((dense.block(3, 3, 4, 4) - 2 * 2 * Matrix::Ones(4, 4)).norm(),
-              0.0,
-              kTolerance);
-  // (1, 2)
-  EXPECT_NEAR((dense.block(3, 3 + 4, 4, 5) - 2 * 3 * Matrix::Ones(4, 5)).norm(),
-              0.0,
-              kTolerance);
-  // (0, 2)
-  EXPECT_NEAR((dense.block(0, 3 + 4, 3, 5) - 3 * 1 * Matrix::Ones(3, 5)).norm(),
-              0.0,
-              kTolerance);
-
-  // There is nothing else in the matrix besides these four blocks.
-  EXPECT_NEAR(
-      dense.norm(), sqrt(9. + 16. * 16. + 36. * 20. + 9. * 15.), kTolerance);
+  // The matrix contains nothing besides these four blocks.
+  Matrix expected = Matrix::Zero(num_rows, num_rows);
+  expected.block(0, 0, 3, 3) = Matrix::Ones(3, 3);
+  expected.block(3, 3, 4, 4) = 2 * 2 * Matrix::Ones(4, 4);
+  expected.block(3, 3 + 4, 4, 5) = 2 * 3 * Matrix::Ones(4, 5);
+  expected.block(0, 3 + 4, 3, 5) = 3 * 1 * Matrix::Ones(3, 5);
+  EXPECT_THAT(dense, MatrixNear(expected, kTolerance));
 
   Vector x = Vector::Ones(dense.rows());
   Vector actual_y = Vector::Zero(dense.rows());
@@ -124,9 +117,8 @@ TEST(BlockRandomAccessSparseMatrix, GetCell) {
 
   expected_y += dense.selfadjointView<Eigen::Upper>() * x;
   m.SymmetricRightMultiplyAndAccumulate(x.data(), actual_y.data());
-  EXPECT_NEAR((expected_y - actual_y).norm(), 0.0, kTolerance)
-      << "actual: " << actual_y.transpose() << "\n"
-      << "expected: " << expected_y.transpose() << "matrix: \n " << dense;
+  EXPECT_THAT(actual_y, MatrixNear(expected_y, kTolerance)) << "matrix:\n"
+                                                            << dense;
 }
 
 // IntPairToInt64 is private, thus this fixture is needed to access and
@@ -143,10 +135,9 @@ class BlockRandomAccessSparseMatrixTest : public ::testing::Test {
   }
 
   void CheckIntPairToInt64(int a, int b) {
-    int64_t value = m_->IntPairToInt64(a, b);
-    EXPECT_GT(value, 0) << "Overflow a = " << a << " b = " << b;
-    EXPECT_GT(value, a) << "Overflow a = " << a << " b = " << b;
-    EXPECT_GT(value, b) << "Overflow a = " << a << " b = " << b;
+    const int64_t value = m_->IntPairToInt64(a, b);
+    EXPECT_THAT(value, AllOf(Gt(int64_t{0}), Gt(int64_t{a}), Gt(int64_t{b})))
+        << "Overflow a = " << a << " b = " << b;
   }
 
   void CheckInt64ToIntPair() {
@@ -157,8 +148,8 @@ class BlockRandomAccessSparseMatrixTest : public ::testing::Test {
         int col_computed;
         m_->Int64ToIntPair(
             m_->IntPairToInt64(row, col), &row_computed, &col_computed);
-        EXPECT_EQ(row, row_computed);
-        EXPECT_EQ(col, col_computed);
+        EXPECT_EQ(std::make_pair(row_computed, col_computed),
+                  std::make_pair(row, col));
       }
     }
   }

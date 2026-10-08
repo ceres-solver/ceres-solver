@@ -34,9 +34,13 @@
 
 #include "Eigen/Dense"
 #include "ceres/linear_least_squares_problems.h"
+#include "ceres/test_util.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
+
+using ::testing::Not;
 
 const double kEpsilon = 1e-14;
 
@@ -96,7 +100,7 @@ TEST_F(PowerSeriesExpansionPreconditionerTest,
 
     y.setZero();
     preconditioner.RightMultiplyAndAccumulate(x.data(), y.data());
-    EXPECT_LT((y - sc_inverse_expected_.col(i)).norm(), kEpsilon)
+    EXPECT_THAT(y, MatrixNear(sc_inverse_expected_.col(i), kEpsilon))
         << "Reference Schur complement inverse and its estimate via "
            "PowerSeriesExpansionPreconditioner differs in "
         << i
@@ -120,7 +124,7 @@ TEST_F(PowerSeriesExpansionPreconditionerTest,
     y.setZero();
     preconditioner_fixed_n_iterations.RightMultiplyAndAccumulate(x.data(),
                                                                  y.data());
-    EXPECT_LT((y - sc_inverse_expected_.col(i)).norm(), kEpsilon)
+    EXPECT_THAT(y, MatrixNear(sc_inverse_expected_.col(i), kEpsilon))
         << "Reference Schur complement inverse and its estimate via "
            "PowerSeriesExpansionPreconditioner differs in "
         << i
@@ -143,7 +147,7 @@ TEST_F(PowerSeriesExpansionPreconditionerTest,
 
     y.setZero();
     preconditioner_bad_tolerance.RightMultiplyAndAccumulate(x.data(), y.data());
-    EXPECT_GT((y - sc_inverse_expected_.col(i)).norm(), kEpsilon)
+    EXPECT_THAT(y, Not(MatrixNear(sc_inverse_expected_.col(i), kEpsilon)))
         << "Reference Schur complement inverse and its estimate via "
            "PowerSeriesExpansionPreconditioner are too similar, tolerance "
            "stopping criteria failed.";
@@ -165,7 +169,7 @@ TEST_F(PowerSeriesExpansionPreconditionerTest,
     y.setZero();
     preconditioner_bad_iterations_limit.RightMultiplyAndAccumulate(x.data(),
                                                                    y.data());
-    EXPECT_GT((y - sc_inverse_expected_.col(i)).norm(), kEpsilon)
+    EXPECT_THAT(y, Not(MatrixNear(sc_inverse_expected_.col(i), kEpsilon)))
         << "Reference Schur complement inverse and its estimate via "
            "PowerSeriesExpansionPreconditioner are too similar, maximum "
            "iterations stopping criteria failed.";

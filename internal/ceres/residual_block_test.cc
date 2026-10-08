@@ -34,13 +34,19 @@
 #include <string>
 #include <vector>
 
+#include "absl/types/span.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/manifold.h"
 #include "ceres/parameter_block.h"
 #include "ceres/sized_cost_function.h"
+#include "ceres/test_util.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
+
+using ::testing::Each;
+using ::testing::ElementsAre;
 
 // Trivial cost function that accepts three arguments.
 class TernaryCostFunction : public CostFunction {
@@ -107,16 +113,15 @@ TEST(ResidualBlock, EvaluateWithNoLossFunctionOrManifolds) {
 
   // Verify cost-only evaluation.
   double cost;
-  residual_block.Evaluate(true, &cost, nullptr, nullptr, scratch);
-  EXPECT_EQ(0.5 * (0 * 0 + 1 * 1 + 2 * 2), cost);
+  ASSERT_TRUE(residual_block.Evaluate(true, &cost, nullptr, nullptr, scratch));
+  EXPECT_EQ(cost, 0.5 * (0 * 0 + 1 * 1 + 2 * 2));
 
   // Verify cost and residual evaluation.
   double residuals[3];
-  residual_block.Evaluate(true, &cost, residuals, nullptr, scratch);
-  EXPECT_EQ(0.5 * (0 * 0 + 1 * 1 + 2 * 2), cost);
-  EXPECT_EQ(0.0, residuals[0]);
-  EXPECT_EQ(1.0, residuals[1]);
-  EXPECT_EQ(2.0, residuals[2]);
+  ASSERT_TRUE(
+      residual_block.Evaluate(true, &cost, residuals, nullptr, scratch));
+  EXPECT_EQ(cost, 0.5 * (0 * 0 + 1 * 1 + 2 * 2));
+  EXPECT_THAT(residuals, ElementsAre(0.0, 1.0, 2.0));
 
   // Verify cost, residual, and jacobian evaluation.
   cost = 0.0;
@@ -133,15 +138,14 @@ TEST(ResidualBlock, EvaluateWithNoLossFunctionOrManifolds) {
   double* jacobian_ptrs[3] = {
       jacobian_rx.data(), jacobian_ry.data(), jacobian_rz.data()};
 
-  residual_block.Evaluate(true, &cost, residuals, jacobian_ptrs, scratch);
-  EXPECT_EQ(0.5 * (0 * 0 + 1 * 1 + 2 * 2), cost);
-  EXPECT_EQ(0.0, residuals[0]);
-  EXPECT_EQ(1.0, residuals[1]);
-  EXPECT_EQ(2.0, residuals[2]);
+  ASSERT_TRUE(
+      residual_block.Evaluate(true, &cost, residuals, jacobian_ptrs, scratch));
+  EXPECT_EQ(cost, 0.5 * (0 * 0 + 1 * 1 + 2 * 2));
+  EXPECT_THAT(residuals, ElementsAre(0.0, 1.0, 2.0));
 
-  EXPECT_TRUE((jacobian_rx.array() == 0.0).all()) << "\n" << jacobian_rx;
-  EXPECT_TRUE((jacobian_ry.array() == 1.0).all()) << "\n" << jacobian_ry;
-  EXPECT_TRUE((jacobian_rz.array() == 2.0).all()) << "\n" << jacobian_rz;
+  EXPECT_THAT(absl::MakeConstSpan(jacobian_rx), Each(0.0));
+  EXPECT_THAT(absl::MakeConstSpan(jacobian_ry), Each(1.0));
+  EXPECT_THAT(absl::MakeConstSpan(jacobian_rz), Each(2.0));
 
   // Verify cost, residual, and partial jacobian evaluation.
   cost = 0.0;
@@ -152,16 +156,15 @@ TEST(ResidualBlock, EvaluateWithNoLossFunctionOrManifolds) {
 
   jacobian_ptrs[1] = nullptr;  // Don't compute the jacobian for y.
 
-  residual_block.Evaluate(true, &cost, residuals, jacobian_ptrs, scratch);
-  EXPECT_EQ(0.5 * (0 * 0 + 1 * 1 + 2 * 2), cost);
-  EXPECT_EQ(0.0, residuals[0]);
-  EXPECT_EQ(1.0, residuals[1]);
-  EXPECT_EQ(2.0, residuals[2]);
+  ASSERT_TRUE(
+      residual_block.Evaluate(true, &cost, residuals, jacobian_ptrs, scratch));
+  EXPECT_EQ(cost, 0.5 * (0 * 0 + 1 * 1 + 2 * 2));
+  EXPECT_THAT(residuals, ElementsAre(0.0, 1.0, 2.0));
 
   // clang-format off
-  EXPECT_TRUE((jacobian_rx.array() ==  0.0).all()) << "\n" << jacobian_rx;
-  EXPECT_TRUE((jacobian_ry.array() == -1.0).all()) << "\n" << jacobian_ry;
-  EXPECT_TRUE((jacobian_rz.array() ==  2.0).all()) << "\n" << jacobian_rz;
+  EXPECT_THAT(absl::MakeConstSpan(jacobian_rx), Each(0.0));
+  EXPECT_THAT(absl::MakeConstSpan(jacobian_ry), Each(-1.0));
+  EXPECT_THAT(absl::MakeConstSpan(jacobian_rz), Each(2.0));
   // clang-format on
 }
 
@@ -244,16 +247,15 @@ TEST(ResidualBlock, EvaluateWithManifolds) {
 
   // Verify cost-only evaluation.
   double cost;
-  residual_block.Evaluate(true, &cost, nullptr, nullptr, scratch);
-  EXPECT_EQ(0.5 * (0 * 0 + 1 * 1 + 2 * 2), cost);
+  ASSERT_TRUE(residual_block.Evaluate(true, &cost, nullptr, nullptr, scratch));
+  EXPECT_EQ(cost, 0.5 * (0 * 0 + 1 * 1 + 2 * 2));
 
   // Verify cost and residual evaluation.
   double residuals[3];
-  residual_block.Evaluate(true, &cost, residuals, nullptr, scratch);
-  EXPECT_EQ(0.5 * (0 * 0 + 1 * 1 + 2 * 2), cost);
-  EXPECT_EQ(0.0, residuals[0]);
-  EXPECT_EQ(1.0, residuals[1]);
-  EXPECT_EQ(2.0, residuals[2]);
+  ASSERT_TRUE(
+      residual_block.Evaluate(true, &cost, residuals, nullptr, scratch));
+  EXPECT_EQ(cost, 0.5 * (0 * 0 + 1 * 1 + 2 * 2));
+  EXPECT_THAT(residuals, ElementsAre(0.0, 1.0, 2.0));
 
   // Verify cost, residual, and jacobian evaluation.
   cost = 0.0;
@@ -270,11 +272,10 @@ TEST(ResidualBlock, EvaluateWithManifolds) {
   double* jacobian_ptrs[3] = {
       jacobian_rx.data(), jacobian_ry.data(), jacobian_rz.data()};
 
-  residual_block.Evaluate(true, &cost, residuals, jacobian_ptrs, scratch);
-  EXPECT_EQ(0.5 * (0 * 0 + 1 * 1 + 2 * 2), cost);
-  EXPECT_EQ(0.0, residuals[0]);
-  EXPECT_EQ(1.0, residuals[1]);
-  EXPECT_EQ(2.0, residuals[2]);
+  ASSERT_TRUE(
+      residual_block.Evaluate(true, &cost, residuals, jacobian_ptrs, scratch));
+  EXPECT_EQ(cost, 0.5 * (0 * 0 + 1 * 1 + 2 * 2));
+  EXPECT_THAT(residuals, ElementsAre(0.0, 1.0, 2.0));
 
   // clang-format off
 
@@ -291,15 +292,9 @@ TEST(ResidualBlock, EvaluateWithManifolds) {
                           0.0, 1.0, /* 2.0, */ 3.0,
                           0.0, 1.0, /* 2.0, */ 3.0;
 
-  EXPECT_EQ(expected_jacobian_rx, jacobian_rx)
-      << "\nExpected:\n" << expected_jacobian_rx
-      << "\nActual:\n"   << jacobian_rx;
-  EXPECT_EQ(expected_jacobian_ry, jacobian_ry)
-      << "\nExpected:\n" << expected_jacobian_ry
-      << "\nActual:\n"   << jacobian_ry;
-  EXPECT_EQ(expected_jacobian_rz, jacobian_rz)
-      << "\nExpected:\n " << expected_jacobian_rz
-      << "\nActual:\n"   << jacobian_rz;
+  EXPECT_THAT(jacobian_rx, MatrixNear(expected_jacobian_rx, 0.0));
+  EXPECT_THAT(jacobian_ry, MatrixNear(expected_jacobian_ry, 0.0));
+  EXPECT_THAT(jacobian_rz, MatrixNear(expected_jacobian_rz, 0.0));
 
   // clang-format on
 
@@ -312,15 +307,14 @@ TEST(ResidualBlock, EvaluateWithManifolds) {
 
   jacobian_ptrs[1] = nullptr;  // Don't compute the jacobian for y.
 
-  residual_block.Evaluate(true, &cost, residuals, jacobian_ptrs, scratch);
-  EXPECT_EQ(0.5 * (0 * 0 + 1 * 1 + 2 * 2), cost);
-  EXPECT_EQ(0.0, residuals[0]);
-  EXPECT_EQ(1.0, residuals[1]);
-  EXPECT_EQ(2.0, residuals[2]);
+  ASSERT_TRUE(
+      residual_block.Evaluate(true, &cost, residuals, jacobian_ptrs, scratch));
+  EXPECT_EQ(cost, 0.5 * (0 * 0 + 1 * 1 + 2 * 2));
+  EXPECT_THAT(residuals, ElementsAre(0.0, 1.0, 2.0));
 
-  EXPECT_EQ(expected_jacobian_rx, jacobian_rx);
-  EXPECT_TRUE((jacobian_ry.array() == -1.0).all()) << "\n" << jacobian_ry;
-  EXPECT_EQ(expected_jacobian_rz, jacobian_rz);
+  EXPECT_THAT(jacobian_rx, MatrixNear(expected_jacobian_rx, 0.0));
+  EXPECT_THAT(absl::MakeConstSpan(jacobian_ry), Each(-1.0));
+  EXPECT_THAT(jacobian_rz, MatrixNear(expected_jacobian_rz, 0.0));
 }
 
 }  // namespace ceres::internal

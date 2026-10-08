@@ -32,9 +32,12 @@
 
 #include "ceres/iteration_callback.h"
 #include "ceres/solver.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
+
+using ::testing::ElementsAre;
 
 class FakeIterationCallback : public IterationCallback {
  public:
@@ -52,10 +55,7 @@ TEST(Minimizer, InitializationCopiesCallbacks) {
   solver_options.callbacks.push_back(&callback1);
 
   Minimizer::Options minimizer_options(solver_options);
-  ASSERT_EQ(2, minimizer_options.callbacks.size());
-
-  EXPECT_EQ(minimizer_options.callbacks[0], &callback0);
-  EXPECT_EQ(minimizer_options.callbacks[1], &callback1);
+  EXPECT_THAT(minimizer_options.callbacks, ElementsAre(&callback0, &callback1));
 }
 
 class AbortingIterationCallback : public IterationCallback {

@@ -43,9 +43,13 @@
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"
 #include "ceres/sized_cost_function.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
+
+using ::testing::Each;
+using ::testing::IsEmpty;
 
 TEST(SolverOptions, DefaultTrustRegionOptionsAreValid) {
   Solver::Options options;
@@ -116,9 +120,7 @@ TEST(Solver, UpdateStateEveryIterationOptionNoEvaluationCallback) {
   num_iterations =
       summary.num_successful_steps + summary.num_unsuccessful_steps;
   EXPECT_GT(num_iterations, 1);
-  for (double value : callback.x_values) {
-    EXPECT_EQ(50.0, value);
-  }
+  EXPECT_THAT(callback.x_values, Each(50.0));
 
   // Second: update_state_every_iteration=true, evaluation_callback=nullptr.
   x = 50.0;
@@ -128,8 +130,9 @@ TEST(Solver, UpdateStateEveryIterationOptionNoEvaluationCallback) {
   num_iterations =
       summary.num_successful_steps + summary.num_unsuccessful_steps;
   EXPECT_GT(num_iterations, 1);
-  EXPECT_EQ(original_x, callback.x_values[0]);
-  EXPECT_NE(original_x, callback.x_values[1]);
+  ASSERT_GE(callback.x_values.size(), 2);
+  EXPECT_EQ(callback.x_values[0], original_x);
+  EXPECT_NE(callback.x_values[1], original_x);
 }
 
 TEST(Solver, UpdateStateEveryIterationOptionWithEvaluationCallback) {
@@ -160,8 +163,9 @@ TEST(Solver, UpdateStateEveryIterationOptionWithEvaluationCallback) {
   num_iterations =
       summary.num_successful_steps + summary.num_unsuccessful_steps;
   EXPECT_GT(num_iterations, 1);
-  EXPECT_EQ(original_x, callback.x_values[0]);
-  EXPECT_NE(original_x, callback.x_values[1]);
+  ASSERT_GE(callback.x_values.size(), 2);
+  EXPECT_EQ(callback.x_values[0], original_x);
+  EXPECT_NE(callback.x_values[1], original_x);
 
   // Second: update_state_every_iteration=false, evaluation_callback=!nullptr.
   x = 50.0;
@@ -171,8 +175,9 @@ TEST(Solver, UpdateStateEveryIterationOptionWithEvaluationCallback) {
   num_iterations =
       summary.num_successful_steps + summary.num_unsuccessful_steps;
   EXPECT_GT(num_iterations, 1);
-  EXPECT_EQ(original_x, callback.x_values[0]);
-  EXPECT_NE(original_x, callback.x_values[1]);
+  ASSERT_GE(callback.x_values.size(), 2);
+  EXPECT_EQ(callback.x_values[0], original_x);
+  EXPECT_NE(callback.x_values[1], original_x);
 }
 
 TEST(Solver, CantMixEvaluationCallbackWithInnerIterations) {
@@ -335,11 +340,11 @@ TEST(Solver, FixedCostForConstantProblem) {
   Solver::Options options;
   Solver::Summary summary;
   Solve(options, &problem, &summary);
-  EXPECT_TRUE(summary.IsSolutionUsable());
+  EXPECT_TRUE(summary.IsSolutionUsable()) << summary.message;
   EXPECT_EQ(summary.fixed_cost, expected_cost);
   EXPECT_EQ(summary.initial_cost, expected_cost);
   EXPECT_EQ(summary.final_cost, expected_cost);
-  EXPECT_EQ(summary.iterations.size(), 0);
+  EXPECT_THAT(summary.iterations, IsEmpty());
 }
 
 struct LinearCostFunction {
@@ -470,22 +475,22 @@ TEST(Solver, DenseNormalCholeskyOptions) {
   std::string message;
   Solver::Options options;
   options.linear_solver_type = DENSE_NORMAL_CHOLESKY;
-  EXPECT_TRUE(options.IsValid(&message));
+  EXPECT_TRUE(options.IsValid(&message)) << message;
 
   options.dense_linear_algebra_library_type = EIGEN;
   options.use_mixed_precision_solves = false;
-  EXPECT_TRUE(options.IsValid(&message));
+  EXPECT_TRUE(options.IsValid(&message)) << message;
 
   options.use_mixed_precision_solves = true;
-  EXPECT_TRUE(options.IsValid(&message));
+  EXPECT_TRUE(options.IsValid(&message)) << message;
 
   if (IsDenseLinearAlgebraLibraryTypeAvailable(LAPACK)) {
     options.use_mixed_precision_solves = false;
     options.dense_linear_algebra_library_type = LAPACK;
 
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
     options.use_mixed_precision_solves = true;
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
   } else {
     options.use_mixed_precision_solves = false;
     options.dense_linear_algebra_library_type = LAPACK;
@@ -500,7 +505,7 @@ TEST(Solver, DenseQrOptions) {
 
   options.use_mixed_precision_solves = false;
   options.dense_linear_algebra_library_type = EIGEN;
-  EXPECT_TRUE(options.IsValid(&message));
+  EXPECT_TRUE(options.IsValid(&message)) << message;
 
   options.use_mixed_precision_solves = true;
   EXPECT_FALSE(options.IsValid(&message));
@@ -508,7 +513,7 @@ TEST(Solver, DenseQrOptions) {
   if (IsDenseLinearAlgebraLibraryTypeAvailable(LAPACK)) {
     options.use_mixed_precision_solves = false;
     options.dense_linear_algebra_library_type = LAPACK;
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
     options.use_mixed_precision_solves = true;
     EXPECT_FALSE(options.IsValid(&message));
   } else {
@@ -536,7 +541,7 @@ TEST(Solver, SparseNormalCholeskyOptionsEigenSparse) {
   options.use_mixed_precision_solves = false;
   options.dynamic_sparsity = false;
   if (IsSparseLinearAlgebraLibraryTypeAvailable(EIGEN_SPARSE)) {
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
   } else {
     EXPECT_FALSE(options.IsValid(&message));
   }
@@ -544,15 +549,15 @@ TEST(Solver, SparseNormalCholeskyOptionsEigenSparse) {
   if (IsSparseLinearAlgebraLibraryTypeAvailable(EIGEN_SPARSE)) {
     options.use_mixed_precision_solves = true;
     options.dynamic_sparsity = false;
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
 
     options.use_mixed_precision_solves = false;
     options.dynamic_sparsity = true;
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
 
     options.use_mixed_precision_solves = true;
     options.dynamic_sparsity = true;
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
   }
 
 #ifndef CERES_NO_EIGEN_METIS
@@ -560,19 +565,19 @@ TEST(Solver, SparseNormalCholeskyOptionsEigenSparse) {
   if (IsSparseLinearAlgebraLibraryTypeAvailable(EIGEN_SPARSE)) {
     options.use_mixed_precision_solves = false;
     options.dynamic_sparsity = false;
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
 
     options.use_mixed_precision_solves = true;
     options.dynamic_sparsity = false;
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
 
     options.use_mixed_precision_solves = false;
     options.dynamic_sparsity = true;
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
 
     options.use_mixed_precision_solves = true;
     options.dynamic_sparsity = true;
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
   }
 #else
   options.linear_solver_ordering_type = NESDIS;
@@ -593,7 +598,7 @@ TEST(Solver, SparseNormalCholeskyOptionsSuiteSparse) {
   options.dynamic_sparsity = false;
   if (IsSparseLinearAlgebraLibraryTypeAvailable(
           options.sparse_linear_algebra_library_type)) {
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
   } else {
     EXPECT_FALSE(options.IsValid(&message));
   }
@@ -605,19 +610,19 @@ TEST(Solver, SparseNormalCholeskyOptionsSuiteSparse) {
 #ifdef CERES_NO_CHOLMOD_FLOAT
     EXPECT_FALSE(options.IsValid(&message));
 #else
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
 #endif
 
     options.use_mixed_precision_solves = false;
     options.dynamic_sparsity = true;
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
 
     options.use_mixed_precision_solves = true;
     options.dynamic_sparsity = true;
 #ifdef CERES_NO_CHOLMOD_FLOAT
     EXPECT_FALSE(options.IsValid(&message));
 #else
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
 #endif
   }
 
@@ -627,26 +632,26 @@ TEST(Solver, SparseNormalCholeskyOptionsSuiteSparse) {
           options.sparse_linear_algebra_library_type)) {
     options.use_mixed_precision_solves = false;
     options.dynamic_sparsity = false;
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
 
     options.use_mixed_precision_solves = true;
     options.dynamic_sparsity = false;
 #ifdef CERES_NO_CHOLMOD_FLOAT
     EXPECT_FALSE(options.IsValid(&message));
 #else
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
 #endif
 
     options.use_mixed_precision_solves = false;
     options.dynamic_sparsity = true;
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
 
     options.use_mixed_precision_solves = true;
     options.dynamic_sparsity = true;
 #ifdef CERES_NO_CHOLMOD_FLOAT
     EXPECT_FALSE(options.IsValid(&message));
 #else
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
 #endif
   }
 #else
@@ -668,7 +673,7 @@ TEST(Solver, SparseNormalCholeskyOptionsAccelerateSparse) {
   options.dynamic_sparsity = false;
   if (IsSparseLinearAlgebraLibraryTypeAvailable(
           options.sparse_linear_algebra_library_type)) {
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
   } else {
     EXPECT_FALSE(options.IsValid(&message));
   }
@@ -677,7 +682,7 @@ TEST(Solver, SparseNormalCholeskyOptionsAccelerateSparse) {
           options.sparse_linear_algebra_library_type)) {
     options.use_mixed_precision_solves = true;
     options.dynamic_sparsity = false;
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
 
     options.use_mixed_precision_solves = false;
     options.dynamic_sparsity = true;
@@ -693,11 +698,11 @@ TEST(Solver, SparseNormalCholeskyOptionsAccelerateSparse) {
           options.sparse_linear_algebra_library_type)) {
     options.use_mixed_precision_solves = false;
     options.dynamic_sparsity = false;
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
 
     options.use_mixed_precision_solves = true;
     options.dynamic_sparsity = false;
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
 
     options.use_mixed_precision_solves = false;
     options.dynamic_sparsity = true;
@@ -717,11 +722,11 @@ TEST(Solver, DenseSchurOptions) {
 
   options.use_mixed_precision_solves = false;
   options.dynamic_sparsity = false;
-  EXPECT_TRUE(options.IsValid(&message));
+  EXPECT_TRUE(options.IsValid(&message)) << message;
 
   options.use_mixed_precision_solves = true;
   options.dynamic_sparsity = false;
-  EXPECT_TRUE(options.IsValid(&message));
+  EXPECT_TRUE(options.IsValid(&message)) << message;
 
   options.use_mixed_precision_solves = true;
   options.dynamic_sparsity = true;
@@ -736,11 +741,11 @@ TEST(Solver, DenseSchurOptions) {
           options.dense_linear_algebra_library_type)) {
     options.use_mixed_precision_solves = false;
     options.dynamic_sparsity = false;
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
 
     options.use_mixed_precision_solves = true;
     options.dynamic_sparsity = false;
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
 
     options.use_mixed_precision_solves = true;
     options.dynamic_sparsity = true;
@@ -770,7 +775,7 @@ TEST(Solver, SparseSchurOptionsEigenSparse) {
   options.use_mixed_precision_solves = false;
   options.dynamic_sparsity = false;
   if (IsSparseLinearAlgebraLibraryTypeAvailable(EIGEN_SPARSE)) {
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
   } else {
     EXPECT_FALSE(options.IsValid(&message));
   }
@@ -778,7 +783,7 @@ TEST(Solver, SparseSchurOptionsEigenSparse) {
   if (IsSparseLinearAlgebraLibraryTypeAvailable(EIGEN_SPARSE)) {
     options.use_mixed_precision_solves = true;
     options.dynamic_sparsity = false;
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
 
     options.use_mixed_precision_solves = false;
     options.dynamic_sparsity = true;
@@ -794,11 +799,11 @@ TEST(Solver, SparseSchurOptionsEigenSparse) {
   if (IsSparseLinearAlgebraLibraryTypeAvailable(EIGEN_SPARSE)) {
     options.use_mixed_precision_solves = false;
     options.dynamic_sparsity = false;
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
 
     options.use_mixed_precision_solves = true;
     options.dynamic_sparsity = false;
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
 
     options.use_mixed_precision_solves = false;
     options.dynamic_sparsity = true;
@@ -827,7 +832,7 @@ TEST(Solver, SparseSchurOptionsSuiteSparse) {
   options.dynamic_sparsity = false;
   if (IsSparseLinearAlgebraLibraryTypeAvailable(
           options.sparse_linear_algebra_library_type)) {
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
   } else {
     EXPECT_FALSE(options.IsValid(&message));
   }
@@ -839,7 +844,7 @@ TEST(Solver, SparseSchurOptionsSuiteSparse) {
 #ifdef CERES_NO_CHOLMOD_FLOAT
     EXPECT_FALSE(options.IsValid(&message));
 #else
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
 #endif
 
     options.use_mixed_precision_solves = false;
@@ -857,14 +862,14 @@ TEST(Solver, SparseSchurOptionsSuiteSparse) {
           options.sparse_linear_algebra_library_type)) {
     options.use_mixed_precision_solves = false;
     options.dynamic_sparsity = false;
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
 
     options.use_mixed_precision_solves = true;
     options.dynamic_sparsity = false;
 #ifdef CERES_NO_CHOLMOD_FLOAT
     EXPECT_FALSE(options.IsValid(&message));
 #else
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
 #endif
 
     options.use_mixed_precision_solves = false;
@@ -894,7 +899,7 @@ TEST(Solver, SparseSchurOptionsAccelerateSparse) {
   options.dynamic_sparsity = false;
   if (IsSparseLinearAlgebraLibraryTypeAvailable(
           options.sparse_linear_algebra_library_type)) {
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
   } else {
     EXPECT_FALSE(options.IsValid(&message));
   }
@@ -903,7 +908,7 @@ TEST(Solver, SparseSchurOptionsAccelerateSparse) {
           options.sparse_linear_algebra_library_type)) {
     options.use_mixed_precision_solves = true;
     options.dynamic_sparsity = false;
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
 
     options.use_mixed_precision_solves = false;
     options.dynamic_sparsity = true;
@@ -919,11 +924,11 @@ TEST(Solver, SparseSchurOptionsAccelerateSparse) {
           options.sparse_linear_algebra_library_type)) {
     options.use_mixed_precision_solves = false;
     options.dynamic_sparsity = false;
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
 
     options.use_mixed_precision_solves = true;
     options.dynamic_sparsity = false;
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
 
     options.use_mixed_precision_solves = false;
     options.dynamic_sparsity = true;
@@ -944,7 +949,7 @@ TEST(Solver, CgnrOptionsIdentityPreconditioner) {
 
   options.dynamic_sparsity = false;
   options.use_mixed_precision_solves = false;
-  EXPECT_TRUE(options.IsValid(&message));
+  EXPECT_TRUE(options.IsValid(&message)) << message;
 
   options.dynamic_sparsity = true;
   options.use_mixed_precision_solves = false;
@@ -957,7 +962,7 @@ TEST(Solver, CgnrOptionsIdentityPreconditioner) {
   options.sparse_linear_algebra_library_type = EIGEN_SPARSE;
   options.dynamic_sparsity = false;
   options.use_mixed_precision_solves = false;
-  EXPECT_TRUE(options.IsValid(&message));
+  EXPECT_TRUE(options.IsValid(&message)) << message;
 
   options.dynamic_sparsity = true;
   options.use_mixed_precision_solves = false;
@@ -970,7 +975,7 @@ TEST(Solver, CgnrOptionsIdentityPreconditioner) {
   options.sparse_linear_algebra_library_type = SUITE_SPARSE;
   options.dynamic_sparsity = false;
   options.use_mixed_precision_solves = false;
-  EXPECT_TRUE(options.IsValid(&message));
+  EXPECT_TRUE(options.IsValid(&message)) << message;
 
   options.dynamic_sparsity = true;
   options.use_mixed_precision_solves = false;
@@ -983,7 +988,7 @@ TEST(Solver, CgnrOptionsIdentityPreconditioner) {
   options.sparse_linear_algebra_library_type = ACCELERATE_SPARSE;
   options.dynamic_sparsity = false;
   options.use_mixed_precision_solves = false;
-  EXPECT_TRUE(options.IsValid(&message));
+  EXPECT_TRUE(options.IsValid(&message)) << message;
 
   options.dynamic_sparsity = true;
   options.use_mixed_precision_solves = false;
@@ -1017,7 +1022,7 @@ TEST(Solver, CgnrOptionsJacobiPreconditioner) {
 
   options.dynamic_sparsity = false;
   options.use_mixed_precision_solves = false;
-  EXPECT_TRUE(options.IsValid(&message));
+  EXPECT_TRUE(options.IsValid(&message)) << message;
 
   options.dynamic_sparsity = true;
   options.use_mixed_precision_solves = false;
@@ -1031,7 +1036,7 @@ TEST(Solver, CgnrOptionsJacobiPreconditioner) {
 
   options.dynamic_sparsity = false;
   options.use_mixed_precision_solves = false;
-  EXPECT_TRUE(options.IsValid(&message));
+  EXPECT_TRUE(options.IsValid(&message)) << message;
 
   options.dynamic_sparsity = true;
   options.use_mixed_precision_solves = false;
@@ -1045,7 +1050,7 @@ TEST(Solver, CgnrOptionsJacobiPreconditioner) {
 
   options.dynamic_sparsity = false;
   options.use_mixed_precision_solves = false;
-  EXPECT_TRUE(options.IsValid(&message));
+  EXPECT_TRUE(options.IsValid(&message)) << message;
 
   options.dynamic_sparsity = true;
   options.use_mixed_precision_solves = false;
@@ -1059,7 +1064,7 @@ TEST(Solver, CgnrOptionsJacobiPreconditioner) {
 
   options.dynamic_sparsity = false;
   options.use_mixed_precision_solves = false;
-  EXPECT_TRUE(options.IsValid(&message));
+  EXPECT_TRUE(options.IsValid(&message)) << message;
 
   options.dynamic_sparsity = true;
   options.use_mixed_precision_solves = false;
@@ -1113,7 +1118,7 @@ TEST(Solver, CgnrOptionsSubsetPreconditioner) {
           options.sparse_linear_algebra_library_type)) {
     options.dynamic_sparsity = false;
     options.use_mixed_precision_solves = false;
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
 
     options.dynamic_sparsity = true;
     options.use_mixed_precision_solves = false;
@@ -1129,7 +1134,7 @@ TEST(Solver, CgnrOptionsSubsetPreconditioner) {
           options.sparse_linear_algebra_library_type)) {
     options.dynamic_sparsity = false;
     options.use_mixed_precision_solves = false;
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
 
     options.dynamic_sparsity = true;
     options.use_mixed_precision_solves = false;
@@ -1145,7 +1150,7 @@ TEST(Solver, CgnrOptionsSubsetPreconditioner) {
           options.sparse_linear_algebra_library_type)) {
     options.dynamic_sparsity = false;
     options.use_mixed_precision_solves = false;
-    EXPECT_TRUE(options.IsValid(&message));
+    EXPECT_TRUE(options.IsValid(&message)) << message;
 
     options.dynamic_sparsity = true;
     options.use_mixed_precision_solves = false;
@@ -1188,11 +1193,11 @@ TEST(Solver, IterativeSchurOptionsNoSparse) {
   options.linear_solver_type = ITERATIVE_SCHUR;
   options.sparse_linear_algebra_library_type = NO_SPARSE;
   options.preconditioner_type = IDENTITY;
-  EXPECT_TRUE(options.IsValid(&message));
+  EXPECT_TRUE(options.IsValid(&message)) << message;
   options.preconditioner_type = JACOBI;
-  EXPECT_TRUE(options.IsValid(&message));
+  EXPECT_TRUE(options.IsValid(&message)) << message;
   options.preconditioner_type = SCHUR_JACOBI;
-  EXPECT_TRUE(options.IsValid(&message));
+  EXPECT_TRUE(options.IsValid(&message)) << message;
   options.preconditioner_type = CLUSTER_JACOBI;
   EXPECT_FALSE(options.IsValid(&message));
   options.preconditioner_type = CLUSTER_TRIDIAGONAL;
@@ -1206,7 +1211,7 @@ TEST(Solver, IterativeSchurOptionsNoSparse) {
   options.preconditioner_type = JACOBI;
   EXPECT_FALSE(options.IsValid(&message));
   options.preconditioner_type = SCHUR_JACOBI;
-  EXPECT_TRUE(options.IsValid(&message));
+  EXPECT_TRUE(options.IsValid(&message)) << message;
   options.preconditioner_type = CLUSTER_JACOBI;
   EXPECT_FALSE(options.IsValid(&message));
   options.preconditioner_type = CLUSTER_TRIDIAGONAL;
@@ -1219,11 +1224,11 @@ TEST(Solver, IterativeSchurOptionsEigenSparse) {
   options.linear_solver_type = ITERATIVE_SCHUR;
   options.sparse_linear_algebra_library_type = EIGEN_SPARSE;
   options.preconditioner_type = IDENTITY;
-  EXPECT_TRUE(options.IsValid(&message));
+  EXPECT_TRUE(options.IsValid(&message)) << message;
   options.preconditioner_type = JACOBI;
-  EXPECT_TRUE(options.IsValid(&message));
+  EXPECT_TRUE(options.IsValid(&message)) << message;
   options.preconditioner_type = SCHUR_JACOBI;
-  EXPECT_TRUE(options.IsValid(&message));
+  EXPECT_TRUE(options.IsValid(&message)) << message;
   options.preconditioner_type = CLUSTER_JACOBI;
   EXPECT_EQ(options.IsValid(&message),
             IsSparseLinearAlgebraLibraryTypeAvailable(
@@ -1241,7 +1246,7 @@ TEST(Solver, IterativeSchurOptionsEigenSparse) {
   options.preconditioner_type = JACOBI;
   EXPECT_FALSE(options.IsValid(&message));
   options.preconditioner_type = SCHUR_JACOBI;
-  EXPECT_TRUE(options.IsValid(&message));
+  EXPECT_TRUE(options.IsValid(&message)) << message;
   options.preconditioner_type = CLUSTER_JACOBI;
   EXPECT_FALSE(options.IsValid(&message));
   options.preconditioner_type = CLUSTER_TRIDIAGONAL;
@@ -1254,11 +1259,11 @@ TEST(Solver, IterativeSchurOptionsSuiteSparse) {
   options.linear_solver_type = ITERATIVE_SCHUR;
   options.sparse_linear_algebra_library_type = SUITE_SPARSE;
   options.preconditioner_type = IDENTITY;
-  EXPECT_TRUE(options.IsValid(&message));
+  EXPECT_TRUE(options.IsValid(&message)) << message;
   options.preconditioner_type = JACOBI;
-  EXPECT_TRUE(options.IsValid(&message));
+  EXPECT_TRUE(options.IsValid(&message)) << message;
   options.preconditioner_type = SCHUR_JACOBI;
-  EXPECT_TRUE(options.IsValid(&message));
+  EXPECT_TRUE(options.IsValid(&message)) << message;
   options.preconditioner_type = CLUSTER_JACOBI;
   EXPECT_EQ(options.IsValid(&message),
             IsSparseLinearAlgebraLibraryTypeAvailable(
@@ -1276,7 +1281,7 @@ TEST(Solver, IterativeSchurOptionsSuiteSparse) {
   options.preconditioner_type = JACOBI;
   EXPECT_FALSE(options.IsValid(&message));
   options.preconditioner_type = SCHUR_JACOBI;
-  EXPECT_TRUE(options.IsValid(&message));
+  EXPECT_TRUE(options.IsValid(&message)) << message;
   options.preconditioner_type = CLUSTER_JACOBI;
   EXPECT_FALSE(options.IsValid(&message));
   options.preconditioner_type = CLUSTER_TRIDIAGONAL;
@@ -1289,11 +1294,11 @@ TEST(Solver, IterativeSchurOptionsAccelerateSparse) {
   options.linear_solver_type = ITERATIVE_SCHUR;
   options.sparse_linear_algebra_library_type = ACCELERATE_SPARSE;
   options.preconditioner_type = IDENTITY;
-  EXPECT_TRUE(options.IsValid(&message));
+  EXPECT_TRUE(options.IsValid(&message)) << message;
   options.preconditioner_type = JACOBI;
-  EXPECT_TRUE(options.IsValid(&message));
+  EXPECT_TRUE(options.IsValid(&message)) << message;
   options.preconditioner_type = SCHUR_JACOBI;
-  EXPECT_TRUE(options.IsValid(&message));
+  EXPECT_TRUE(options.IsValid(&message)) << message;
   options.preconditioner_type = CLUSTER_JACOBI;
   EXPECT_EQ(options.IsValid(&message),
             IsSparseLinearAlgebraLibraryTypeAvailable(
@@ -1311,7 +1316,7 @@ TEST(Solver, IterativeSchurOptionsAccelerateSparse) {
   options.preconditioner_type = JACOBI;
   EXPECT_FALSE(options.IsValid(&message));
   options.preconditioner_type = SCHUR_JACOBI;
-  EXPECT_TRUE(options.IsValid(&message));
+  EXPECT_TRUE(options.IsValid(&message)) << message;
   options.preconditioner_type = CLUSTER_JACOBI;
   EXPECT_FALSE(options.IsValid(&message));
   options.preconditioner_type = CLUSTER_TRIDIAGONAL;

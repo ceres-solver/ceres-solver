@@ -34,18 +34,19 @@
 #include <memory>
 #include <vector>
 
-#include "absl/container/flat_hash_set.h"
 #include "ceres/cost_function.h"
 #include "ceres/graph.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/stl_util.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
 
-using VertexSet = absl::flat_hash_set<ParameterBlock*>;
+using ::testing::IsEmpty;
+using ::testing::UnorderedElementsAre;
 
 template <int M, int... Ns>
 class DummyCostFunction : public SizedCostFunction<M, Ns...> {
@@ -85,40 +86,25 @@ TEST_F(SchurOrderingTest, NoFixed) {
       program.parameter_blocks();
   auto graph = CreateHessianGraph(program);
 
-  const VertexSet& vertices = graph->vertices();
-  EXPECT_EQ(vertices.size(), 4);
+  EXPECT_THAT(graph->vertices(),
+              UnorderedElementsAre(parameter_blocks[0],
+                                   parameter_blocks[1],
+                                   parameter_blocks[2],
+                                   parameter_blocks[3]));
 
-  for (int i = 0; i < 4; ++i) {
-    EXPECT_TRUE(vertices.find(parameter_blocks[i]) != vertices.end());
-  }
+  EXPECT_THAT(graph->Neighbors(parameter_blocks[0]),
+              UnorderedElementsAre(parameter_blocks[2], parameter_blocks[3]));
 
-  {
-    const VertexSet& neighbors = graph->Neighbors(parameter_blocks[0]);
-    EXPECT_EQ(neighbors.size(), 2);
-    EXPECT_TRUE(neighbors.find(parameter_blocks[2]) != neighbors.end());
-    EXPECT_TRUE(neighbors.find(parameter_blocks[3]) != neighbors.end());
-  }
+  EXPECT_THAT(graph->Neighbors(parameter_blocks[1]),
+              UnorderedElementsAre(parameter_blocks[2]));
 
-  {
-    const VertexSet& neighbors = graph->Neighbors(parameter_blocks[1]);
-    EXPECT_EQ(neighbors.size(), 1);
-    EXPECT_TRUE(neighbors.find(parameter_blocks[2]) != neighbors.end());
-  }
+  EXPECT_THAT(
+      graph->Neighbors(parameter_blocks[2]),
+      UnorderedElementsAre(
+          parameter_blocks[0], parameter_blocks[1], parameter_blocks[3]));
 
-  {
-    const VertexSet& neighbors = graph->Neighbors(parameter_blocks[2]);
-    EXPECT_EQ(neighbors.size(), 3);
-    EXPECT_TRUE(neighbors.find(parameter_blocks[0]) != neighbors.end());
-    EXPECT_TRUE(neighbors.find(parameter_blocks[1]) != neighbors.end());
-    EXPECT_TRUE(neighbors.find(parameter_blocks[3]) != neighbors.end());
-  }
-
-  {
-    const VertexSet& neighbors = graph->Neighbors(parameter_blocks[3]);
-    EXPECT_EQ(neighbors.size(), 2);
-    EXPECT_TRUE(neighbors.find(parameter_blocks[0]) != neighbors.end());
-    EXPECT_TRUE(neighbors.find(parameter_blocks[2]) != neighbors.end());
-  }
+  EXPECT_THAT(graph->Neighbors(parameter_blocks[3]),
+              UnorderedElementsAre(parameter_blocks[0], parameter_blocks[2]));
 }
 
 TEST_F(SchurOrderingTest, AllFixed) {
@@ -129,7 +115,7 @@ TEST_F(SchurOrderingTest, AllFixed) {
 
   const Program& program = problem_.program();
   auto graph = CreateHessianGraph(program);
-  EXPECT_EQ(graph->vertices().size(), 0);
+  EXPECT_THAT(graph->vertices(), IsEmpty());
 }
 
 TEST_F(SchurOrderingTest, OneFixed) {
@@ -140,33 +126,19 @@ TEST_F(SchurOrderingTest, OneFixed) {
       program.parameter_blocks();
   auto graph = CreateHessianGraph(program);
 
-  const VertexSet& vertices = graph->vertices();
+  EXPECT_THAT(
+      graph->vertices(),
+      UnorderedElementsAre(
+          parameter_blocks[1], parameter_blocks[2], parameter_blocks[3]));
 
-  EXPECT_EQ(vertices.size(), 3);
-  EXPECT_TRUE(vertices.find(parameter_blocks[0]) == vertices.end());
+  EXPECT_THAT(graph->Neighbors(parameter_blocks[1]),
+              UnorderedElementsAre(parameter_blocks[2]));
 
-  for (int i = 1; i < 3; ++i) {
-    EXPECT_TRUE(vertices.find(parameter_blocks[i]) != vertices.end());
-  }
+  EXPECT_THAT(graph->Neighbors(parameter_blocks[2]),
+              UnorderedElementsAre(parameter_blocks[1], parameter_blocks[3]));
 
-  {
-    const VertexSet& neighbors = graph->Neighbors(parameter_blocks[1]);
-    EXPECT_EQ(neighbors.size(), 1);
-    EXPECT_TRUE(neighbors.find(parameter_blocks[2]) != neighbors.end());
-  }
-
-  {
-    const VertexSet& neighbors = graph->Neighbors(parameter_blocks[2]);
-    EXPECT_EQ(neighbors.size(), 2);
-    EXPECT_TRUE(neighbors.find(parameter_blocks[1]) != neighbors.end());
-    EXPECT_TRUE(neighbors.find(parameter_blocks[3]) != neighbors.end());
-  }
-
-  {
-    const VertexSet& neighbors = graph->Neighbors(parameter_blocks[3]);
-    EXPECT_EQ(neighbors.size(), 1);
-    EXPECT_TRUE(neighbors.find(parameter_blocks[2]) != neighbors.end());
-  }
+  EXPECT_THAT(graph->Neighbors(parameter_blocks[3]),
+              UnorderedElementsAre(parameter_blocks[2]));
 
   // The constant parameter block is at the end.
   std::vector<ParameterBlock*> ordering;

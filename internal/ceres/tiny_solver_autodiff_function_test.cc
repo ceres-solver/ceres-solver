@@ -34,11 +34,16 @@
 #include <limits>
 
 #include "Eigen/Core"
+#include "absl/types/span.h"
 #include "ceres/tiny_solver.h"
 #include "ceres/tiny_solver_test_util.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
+
+using ::testing::DoubleNear;
+using ::testing::Pointwise;
 
 struct AutoDiffTestFunctor {
   template <typename T>
@@ -69,29 +74,29 @@ TEST(TinySolverAutoDiffFunction, SimpleFunction) {
 
   // Check the case with cost-only evaluation.
   residuals.setConstant(555);  // Arbitrary.
-  EXPECT_TRUE(f(&x(0), &residuals(0), nullptr));
-  EXPECT_NEAR(3.0, residuals(0), kTolerance);
-  EXPECT_NEAR(2.0, residuals(1), kTolerance);
+  ASSERT_TRUE(f(&x(0), &residuals(0), nullptr));
+  EXPECT_THAT(absl::MakeConstSpan(residuals),
+              Pointwise(DoubleNear(kTolerance), {3.0, 2.0}));
 
   // Check the case with cost and Jacobian evaluation.
   Eigen::Matrix<double, 2, 3> jacobian;
   residuals.setConstant(555);  // Arbitrary.
   jacobian.setConstant(555);
-  EXPECT_TRUE(f(&x(0), &residuals(0), &jacobian(0, 0)));
+  ASSERT_TRUE(f(&x(0), &residuals(0), &jacobian(0, 0)));
 
   // Verify cost.
-  EXPECT_NEAR(3.0, residuals(0), kTolerance);
-  EXPECT_NEAR(2.0, residuals(1), kTolerance);
+  EXPECT_THAT(absl::MakeConstSpan(residuals),
+              Pointwise(DoubleNear(kTolerance), {3.0, 2.0}));
 
-  // Verify Jacobian Row 1.
-  EXPECT_NEAR(2.0, jacobian(0, 0), kTolerance);
-  EXPECT_NEAR(0.0, jacobian(0, 1), kTolerance);
-  EXPECT_NEAR(1.0, jacobian(0, 2), kTolerance);
-
-  // Verify Jacobian row 2.
-  EXPECT_NEAR(0.0, jacobian(1, 0), kTolerance);
-  EXPECT_NEAR(4.0, jacobian(1, 1), kTolerance);
-  EXPECT_NEAR(6.0, jacobian(1, 2), kTolerance);
+  // Verify Jacobian.
+  Eigen::Matrix<double, 2, 3> expected_jacobian;
+  // clang-format off
+  expected_jacobian << 2.0, 0.0, 1.0,
+                       0.0, 4.0, 6.0;
+  // clang-format on
+  EXPECT_THAT(absl::MakeConstSpan(jacobian),
+              Pointwise(DoubleNear(kTolerance),
+                        absl::MakeConstSpan(expected_jacobian)));
 }
 
 class DynamicResidualsFunctor {

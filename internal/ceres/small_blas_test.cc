@@ -34,6 +34,8 @@
 #include <string>
 
 #include "ceres/internal/eigen.h"
+#include "ceres/test_util.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -156,16 +158,12 @@ struct TestMatrixFunctions {
                                                                  row_stride_c,
                                                                  col_stride_c);
 
-            EXPECT_NEAR((C_plus_ref - C_plus).norm(), 0.0, kTolerance)
+            EXPECT_THAT(C_plus, MatrixNear(C_plus_ref, kTolerance))
                 << "C += A * B \n"
                 << "row_stride_c : " << row_stride_c << "\n"
                 << "col_stride_c : " << col_stride_c << "\n"
                 << "start_row_c  : " << start_row_c << "\n"
-                << "start_col_c  : " << start_col_c << "\n"
-                << "Cref : \n"
-                << C_plus_ref << "\n"
-                << "C: \n"
-                << C_plus;
+                << "start_col_c  : " << start_col_c;
 
             C_minus_ref.block(start_row_c, start_col_c, kRowA, kColB) -= A * B;
             FunctorTy<kRowA, kColA, kRowB, kColB, -1, kDimType>()(
@@ -181,16 +179,12 @@ struct TestMatrixFunctions {
                 row_stride_c,
                 col_stride_c);
 
-            EXPECT_NEAR((C_minus_ref - C_minus).norm(), 0.0, kTolerance)
+            EXPECT_THAT(C_minus, MatrixNear(C_minus_ref, kTolerance))
                 << "C -= A * B \n"
                 << "row_stride_c : " << row_stride_c << "\n"
                 << "col_stride_c : " << col_stride_c << "\n"
                 << "start_row_c  : " << start_row_c << "\n"
-                << "start_col_c  : " << start_col_c << "\n"
-                << "Cref : \n"
-                << C_minus_ref << "\n"
-                << "C: \n"
-                << C_minus;
+                << "start_col_c  : " << start_col_c;
 
             C_assign_ref.block(start_row_c, start_col_c, kRowA, kColB) = A * B;
 
@@ -207,16 +201,12 @@ struct TestMatrixFunctions {
                 row_stride_c,
                 col_stride_c);
 
-            EXPECT_NEAR((C_assign_ref - C_assign).norm(), 0.0, kTolerance)
+            EXPECT_THAT(C_assign, MatrixNear(C_assign_ref, kTolerance))
                 << "C = A * B \n"
                 << "row_stride_c : " << row_stride_c << "\n"
                 << "col_stride_c : " << col_stride_c << "\n"
                 << "start_row_c  : " << start_row_c << "\n"
-                << "start_col_c  : " << start_col_c << "\n"
-                << "Cref : \n"
-                << C_assign_ref << "\n"
-                << "C: \n"
-                << C_assign;
+                << "start_col_c  : " << start_col_c;
           }
         }
       }
@@ -269,16 +259,12 @@ struct TestMatrixTransposeFunctions {
                                                                  row_stride_c,
                                                                  col_stride_c);
 
-            EXPECT_NEAR((C_plus_ref - C_plus).norm(), 0.0, kTolerance)
+            EXPECT_THAT(C_plus, MatrixNear(C_plus_ref, kTolerance))
                 << "C += A' * B \n"
                 << "row_stride_c : " << row_stride_c << "\n"
                 << "col_stride_c : " << col_stride_c << "\n"
                 << "start_row_c  : " << start_row_c << "\n"
-                << "start_col_c  : " << start_col_c << "\n"
-                << "Cref : \n"
-                << C_plus_ref << "\n"
-                << "C: \n"
-                << C_plus;
+                << "start_col_c  : " << start_col_c;
 
             C_minus_ref.block(start_row_c, start_col_c, kColA, kColB) -=
                 A.transpose() * B;
@@ -296,16 +282,12 @@ struct TestMatrixTransposeFunctions {
                 row_stride_c,
                 col_stride_c);
 
-            EXPECT_NEAR((C_minus_ref - C_minus).norm(), 0.0, kTolerance)
+            EXPECT_THAT(C_minus, MatrixNear(C_minus_ref, kTolerance))
                 << "C -= A' * B \n"
                 << "row_stride_c : " << row_stride_c << "\n"
                 << "col_stride_c : " << col_stride_c << "\n"
                 << "start_row_c  : " << start_row_c << "\n"
-                << "start_col_c  : " << start_col_c << "\n"
-                << "Cref : \n"
-                << C_minus_ref << "\n"
-                << "C: \n"
-                << C_minus;
+                << "start_col_c  : " << start_col_c;
 
             C_assign_ref.block(start_row_c, start_col_c, kColA, kColB) =
                 A.transpose() * B;
@@ -323,16 +305,12 @@ struct TestMatrixTransposeFunctions {
                 row_stride_c,
                 col_stride_c);
 
-            EXPECT_NEAR((C_assign_ref - C_assign).norm(), 0.0, kTolerance)
+            EXPECT_THAT(C_assign, MatrixNear(C_assign_ref, kTolerance))
                 << "C = A' * B \n"
                 << "row_stride_c : " << row_stride_c << "\n"
                 << "col_stride_c : " << col_stride_c << "\n"
                 << "start_row_c  : " << start_row_c << "\n"
-                << "start_col_c  : " << start_col_c << "\n"
-                << "Cref : \n"
-                << C_assign_ref << "\n"
-                << "C: \n"
-                << C_assign;
+                << "start_col_c  : " << start_col_c;
           }
         }
       }
@@ -534,30 +512,24 @@ TEST(BLAS, MatrixVectorMultiply) {
           A.data(), num_rows_a, num_cols_a,
           b.data(),
           c_plus.data());
-      EXPECT_NEAR((c_plus_ref - c_plus).norm(), 0.0, kTolerance)
-          << "c += A * b \n"
-          << "c_ref : \n" << c_plus_ref << "\n"
-          << "c: \n" << c_plus;
+      EXPECT_THAT(c_plus, MatrixNear(c_plus_ref, kTolerance))
+          << "c += A * b \n";
 
       c_minus_ref -= A * b;
       MatrixVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, -1>(
           A.data(), num_rows_a, num_cols_a,
           b.data(),
           c_minus.data());
-      EXPECT_NEAR((c_minus_ref - c_minus).norm(), 0.0, kTolerance)
-          << "c -= A * b \n"
-          << "c_ref : \n" << c_minus_ref << "\n"
-          << "c: \n" << c_minus;
+      EXPECT_THAT(c_minus, MatrixNear(c_minus_ref, kTolerance))
+          << "c -= A * b \n";
 
       c_assign_ref = A * b;
       MatrixVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 0>(
           A.data(), num_rows_a, num_cols_a,
           b.data(),
           c_assign.data());
-      EXPECT_NEAR((c_assign_ref - c_assign).norm(), 0.0, kTolerance)
-          << "c = A * b \n"
-          << "c_ref : \n" << c_assign_ref << "\n"
-          << "c: \n" << c_assign;
+      EXPECT_THAT(c_assign, MatrixNear(c_assign_ref, kTolerance))
+          << "c = A * b \n";
       // clang-format on
     }
   }
@@ -589,30 +561,24 @@ TEST(BLAS, MatrixTransposeVectorMultiply) {
           A.data(), num_rows_a, num_cols_a,
           b.data(),
           c_plus.data());
-      EXPECT_NEAR((c_plus_ref - c_plus).norm(), 0.0, kTolerance)
-          << "c += A' * b \n"
-          << "c_ref : \n" << c_plus_ref << "\n"
-          << "c: \n" << c_plus;
+      EXPECT_THAT(c_plus, MatrixNear(c_plus_ref, kTolerance))
+          << "c += A' * b \n";
 
       c_minus_ref -= A.transpose() * b;
       MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, -1>(
           A.data(), num_rows_a, num_cols_a,
           b.data(),
           c_minus.data());
-      EXPECT_NEAR((c_minus_ref - c_minus).norm(), 0.0, kTolerance)
-          << "c -= A' * b \n"
-          << "c_ref : \n" << c_minus_ref << "\n"
-          << "c: \n" << c_minus;
+      EXPECT_THAT(c_minus, MatrixNear(c_minus_ref, kTolerance))
+          << "c -= A' * b \n";
 
       c_assign_ref = A.transpose() * b;
       MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 0>(
           A.data(), num_rows_a, num_cols_a,
           b.data(),
           c_assign.data());
-      EXPECT_NEAR((c_assign_ref - c_assign).norm(), 0.0, kTolerance)
-          << "c = A' * b \n"
-          << "c_ref : \n" << c_assign_ref << "\n"
-          << "c: \n" << c_assign;
+      EXPECT_THAT(c_assign, MatrixNear(c_assign_ref, kTolerance))
+          << "c = A' * b \n";
       // clang-format on
     }
   }

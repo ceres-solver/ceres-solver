@@ -34,10 +34,13 @@
 
 #include "ceres/array_utils.h"
 #include "ceres/first_order_function.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {
+
+using ::testing::ElementsAre;
 
 class QuadraticCostFunctor {
  public:
@@ -61,16 +64,15 @@ TEST(AutoDiffFirstOrderFunction, BilinearDifferentiationTest) {
   double gradient[4];
   double cost;
 
-  function->Evaluate(parameters, &cost, nullptr);
+  ASSERT_TRUE(function->Evaluate(parameters, &cost, nullptr));
   EXPECT_EQ(cost, 13.0);
 
   cost = -1.0;
-  function->Evaluate(parameters, &cost, gradient);
+  ASSERT_TRUE(function->Evaluate(parameters, &cost, gradient));
   EXPECT_EQ(cost, 13.0);
-  EXPECT_EQ(gradient[0], parameters[1]);
-  EXPECT_EQ(gradient[1], parameters[0]);
-  EXPECT_EQ(gradient[2], parameters[3]);
-  EXPECT_EQ(gradient[3], parameters[2]);
+  EXPECT_THAT(
+      gradient,
+      ElementsAre(parameters[1], parameters[0], parameters[3], parameters[2]));
 }
 
 TEST(AutoDiffFirstOrderFunction, OwnershipTest) {
@@ -80,7 +82,7 @@ TEST(AutoDiffFirstOrderFunction, OwnershipTest) {
         &functor, DO_NOT_TAKE_OWNERSHIP);
     double parameters[4] = {1.0, 2.0, 3.0, 4.0};
     double cost;
-    function.Evaluate(parameters, &cost, nullptr);
+    ASSERT_TRUE(function.Evaluate(parameters, &cost, nullptr));
     EXPECT_EQ(cost, 13.0);
   }
   // If ownership was taken, this would be a use-after-free or double-free

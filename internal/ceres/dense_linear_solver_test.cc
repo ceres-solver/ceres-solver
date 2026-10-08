@@ -32,6 +32,7 @@
 #include <memory>
 #include <sstream>
 #include <string>
+#include <tuple>
 
 #include "ceres/casts.h"
 #include "ceres/context_impl.h"
@@ -40,8 +41,10 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/linear_solver.h"
+#include "ceres/test_util.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
@@ -52,21 +55,21 @@ using Param = ::testing::
 static std::string ParamInfoToString(testing::TestParamInfo<Param> info) {
   Param param = info.param;
   std::stringstream ss;
-  ss << LinearSolverTypeToString(::testing::get<0>(param)) << "_"
-     << DenseLinearAlgebraLibraryTypeToString(::testing::get<1>(param)) << "_"
-     << (::testing::get<2>(param) ? "Regularized" : "Unregularized") << "_"
-     << ::testing::get<3>(param);
+  ss << LinearSolverTypeToString(std::get<0>(param)) << "_"
+     << DenseLinearAlgebraLibraryTypeToString(std::get<1>(param)) << "_"
+     << (std::get<2>(param) ? "Regularized" : "Unregularized") << "_"
+     << std::get<3>(param);
   return ss.str();
 }
 
 class DenseLinearSolverTest : public ::testing::TestWithParam<Param> {};
 
-TEST_P(DenseLinearSolverTest, _) {
+TEST_P(DenseLinearSolverTest, SolvesNormalEquations) {
   Param param = GetParam();
-  const bool regularized = testing::get<2>(param);
+  const bool regularized = std::get<2>(param);
 
   std::unique_ptr<LinearLeastSquaresProblem> problem =
-      CreateLinearLeastSquaresProblemFromId(testing::get<3>(param));
+      CreateLinearLeastSquaresProblemFromId(std::get<3>(param));
   DenseSparseMatrix lhs(*down_cast<TripletSparseMatrix*>(problem->A.get()));
 
   const int num_cols = lhs.num_cols();
@@ -76,8 +79,8 @@ TEST_P(DenseLinearSolverTest, _) {
   rhs.head(num_rows) = ConstVectorRef(problem->b.get(), num_rows);
 
   LinearSolver::Options options;
-  options.type = ::testing::get<0>(param);
-  options.dense_linear_algebra_library_type = ::testing::get<1>(param);
+  options.type = std::get<0>(param);
+  options.dense_linear_algebra_library_type = std::get<1>(param);
   ContextImpl context;
   options.context = &context;
   std::unique_ptr<LinearSolver> solver(LinearSolver::Create(options));
@@ -100,15 +103,10 @@ TEST_P(DenseLinearSolverTest, _) {
     normal_lhs += diagonal.array().square().matrix().asDiagonal();
   }
 
-  Vector actual_normal_rhs = normal_lhs * solution;
-
-  const double normalized_residual =
-      (normal_rhs - actual_normal_rhs).norm() / normal_rhs.norm();
-
-  EXPECT_NEAR(
-      normalized_residual, 0.0, 10 * std::numeric_limits<double>::epsilon())
-      << "\nexpected: " << normal_rhs.transpose()
-      << "\nactual: " << actual_normal_rhs.transpose();
+  const Vector actual_normal_rhs = normal_lhs * solution;
+  EXPECT_THAT(actual_normal_rhs,
+              MatrixRelativelyNear(
+                  normal_rhs, 10 * std::numeric_limits<double>::epsilon()));
 }
 
 namespace {

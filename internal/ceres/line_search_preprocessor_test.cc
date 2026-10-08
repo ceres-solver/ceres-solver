@@ -47,7 +47,7 @@ TEST(LineSearchPreprocessor, ZeroProblem) {
   options.minimizer_type = LINE_SEARCH;
   LineSearchPreprocessor preprocessor;
   PreprocessedProblem pp;
-  EXPECT_TRUE(preprocessor.Preprocess(options, &problem, &pp));
+  EXPECT_TRUE(preprocessor.Preprocess(options, &problem, &pp)) << pp.error;
 }
 
 TEST(LineSearchPreprocessor, ProblemWithInvalidParameterBlock) {
@@ -104,7 +104,7 @@ TEST(LineSearchPreprocessor, RemoveParameterBlocksSucceeds) {
 
   LineSearchPreprocessor preprocessor;
   PreprocessedProblem pp;
-  EXPECT_TRUE(preprocessor.Preprocess(options, &problem, &pp));
+  EXPECT_TRUE(preprocessor.Preprocess(options, &problem, &pp)) << pp.error;
 }
 
 template <int kNumResiduals, int... Ns>
@@ -130,9 +130,9 @@ TEST(LineSearchPreprocessor, NormalOperation) {
 
   LineSearchPreprocessor preprocessor;
   PreprocessedProblem pp;
-  EXPECT_TRUE(preprocessor.Preprocess(options, &problem, &pp));
+  EXPECT_TRUE(preprocessor.Preprocess(options, &problem, &pp)) << pp.error;
   EXPECT_EQ(pp.evaluator_options.linear_solver_type, CGNR);
-  EXPECT_TRUE(pp.evaluator.get() != nullptr);
+  EXPECT_NE(pp.evaluator.get(), nullptr);
 }
 
 }  // namespace ceres::internal

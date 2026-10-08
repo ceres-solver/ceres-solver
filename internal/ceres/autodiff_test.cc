@@ -35,9 +35,17 @@
 #include <random>
 
 #include "absl/container/fixed_array.h"
+#include "absl/strings/str_format.h"
+#include "absl/types/span.h"
+#include "ceres/internal/eigen.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
+
+using ::testing::DoubleNear;
+using ::testing::ElementsAreArray;
+using ::testing::Pointwise;
 
 template <typename T>
 inline T& RowMajorAccess(T* base, int rows, int cols, int i, int j) {
@@ -194,9 +202,7 @@ TEST(AutoDiff, ProjectiveCameraModel) {
   ASSERT_TRUE(
       (SymmetricDiff<Projective, double, 2, 12 + 4>(b, PX, del, fd_x, fd_J)));
 
-  for (int i = 0; i < 2; ++i) {
-    ASSERT_NEAR(fd_x[i], b_x[i], tol);
-  }
+  ASSERT_THAT(fd_x, Pointwise(DoubleNear(tol), b_x));
 
   // Use automatic differentiation to compute the Jacobian.
   double ad_x1[2];
@@ -207,9 +213,7 @@ TEST(AutoDiff, ProjectiveCameraModel) {
     ASSERT_TRUE((AutoDifferentiate<2, StaticParameterDims<12 + 4>>(
         b, parameters, 2, ad_x1, jacobians)));
 
-    for (int i = 0; i < 2; ++i) {
-      ASSERT_NEAR(ad_x1[i], b_x[i], tol);
-    }
+    ASSERT_THAT(ad_x1, Pointwise(DoubleNear(tol), b_x));
   }
 
   // Use automatic differentiation (again), with two arguments.
@@ -222,23 +226,18 @@ TEST(AutoDiff, ProjectiveCameraModel) {
     ASSERT_TRUE((AutoDifferentiate<2, StaticParameterDims<12, 4>>(
         b, parameters, 2, ad_x2, jacobians)));
 
-    for (int i = 0; i < 2; ++i) {
-      ASSERT_NEAR(ad_x2[i], b_x[i], tol);
-    }
+    ASSERT_THAT(ad_x2, Pointwise(DoubleNear(tol), b_x));
 
     // Now compare the jacobians we got.
-    for (int i = 0; i < 2; ++i) {
-      for (int j = 0; j < 12 + 4; ++j) {
-        ASSERT_NEAR(J_PX[(12 + 4) * i + j], fd_J[(12 + 4) * i + j], err);
-      }
+    EXPECT_THAT(J_PX, Pointwise(DoubleNear(err), fd_J));
 
-      for (int j = 0; j < 12; ++j) {
-        ASSERT_NEAR(J_PX[(12 + 4) * i + j], J_P[12 * i + j], tol);
-      }
-      for (int j = 0; j < 4; ++j) {
-        ASSERT_NEAR(J_PX[(12 + 4) * i + 12 + j], J_X[4 * i + j], tol);
-      }
-    }
+    const ConstMatrixRef jacobian(J_PX, 2, 12 + 4);
+    const Matrix jacobian_P = jacobian.leftCols(12);
+    const Matrix jacobian_X = jacobian.rightCols(4);
+    EXPECT_THAT(absl::MakeConstSpan(jacobian_P),
+                Pointwise(DoubleNear(tol), J_P));
+    EXPECT_THAT(absl::MakeConstSpan(jacobian_X),
+                Pointwise(DoubleNear(tol), J_X));
   }
 }
 
@@ -317,9 +316,7 @@ TEST(AutoDiff, Metric) {
   ASSERT_TRUE(
       (SymmetricDiff<Metric, double, 2, 4 + 3 + 3>(b, qcX, del, fd_x, fd_J)));
 
-  for (int i = 0; i < 2; ++i) {
-    ASSERT_NEAR(fd_x[i], b_x[i], tol);
-  }
+  ASSERT_THAT(fd_x, Pointwise(DoubleNear(tol), b_x));
 
   // Automatic differentiation.
   double ad_x[2];
@@ -331,22 +328,19 @@ TEST(AutoDiff, Metric) {
   ASSERT_TRUE((AutoDifferentiate<2, StaticParameterDims<4, 3, 3>>(
       b, parameters, 2, ad_x, jacobians)));
 
-  for (int i = 0; i < 2; ++i) {
-    ASSERT_NEAR(ad_x[i], b_x[i], tol);
-  }
+  ASSERT_THAT(ad_x, Pointwise(DoubleNear(tol), b_x));
 
   // Compare the pieces.
-  for (int i = 0; i < 2; ++i) {
-    for (int j = 0; j < 4; ++j) {
-      ASSERT_NEAR(J_q[4 * i + j], fd_J[(4 + 3 + 3) * i + j], err);
-    }
-    for (int j = 0; j < 3; ++j) {
-      ASSERT_NEAR(J_c[3 * i + j], fd_J[(4 + 3 + 3) * i + j + 4], err);
-    }
-    for (int j = 0; j < 3; ++j) {
-      ASSERT_NEAR(J_X[3 * i + j], fd_J[(4 + 3 + 3) * i + j + 4 + 3], err);
-    }
-  }
+  const ConstMatrixRef fd_jacobian(fd_J, 2, 4 + 3 + 3);
+  const Matrix fd_jacobian_q = fd_jacobian.leftCols(4);
+  const Matrix fd_jacobian_c = fd_jacobian.middleCols(4, 3);
+  const Matrix fd_jacobian_X = fd_jacobian.rightCols(3);
+  EXPECT_THAT(J_q,
+              Pointwise(DoubleNear(err), absl::MakeConstSpan(fd_jacobian_q)));
+  EXPECT_THAT(J_c,
+              Pointwise(DoubleNear(err), absl::MakeConstSpan(fd_jacobian_c)));
+  EXPECT_THAT(J_X,
+              Pointwise(DoubleNear(err), absl::MakeConstSpan(fd_jacobian_X)));
 }
 
 struct VaryingResidualFunctor {
@@ -374,6 +368,7 @@ TEST(AutoDiff, VaryingNumberOfResidualsForOneCostFunctorType) {
   VaryingResidualFunctor functor;
 
   for (int num_residuals = 1; num_residuals < kMaxResiduals; ++num_residuals) {
+    SCOPED_TRACE(absl::StrFormat("%d residuals", num_residuals));
     // Tweak the number of residuals to produce.
     functor.num_residuals = num_residuals;
 
@@ -521,131 +516,52 @@ struct Residual10Param {
   }
 };
 
-TEST(AutoDiff, VariadicAutoDiff) {
-  double x[10];
-  double residual = 0;
-  double* parameters[10];
-  double jacobian_values[10];
-  double* jacobians[10];
+// Expects the derivatives of the functor computing
+//
+//   y = x_0 + x_1^2 + ... + x_{n-1}^n
+//
+// at x_i = 2 for scalar parameter blocks described by ParameterDims.
+template <typename ParameterDims, typename Functor>
+void ExpectPowerSumDerivatives(const Functor& functor) {
+  constexpr int kNumVariables = ParameterDims::kNumParameterBlocks;
+  SCOPED_TRACE(absl::StrFormat("%d variables", kNumVariables));
 
-  for (int i = 0; i < 10; ++i) {
+  double x[kNumVariables];
+  double* parameters[kNumVariables];
+  double jacobian_values[kNumVariables];
+  double* jacobians[kNumVariables];
+  double expected_jacobian[kNumVariables];
+  for (int i = 0; i < kNumVariables; ++i) {
     x[i] = 2.0;
     parameters[i] = x + i;
     jacobians[i] = jacobian_values + i;
+    expected_jacobian[i] = (i + 1) * pow(2, i);
   }
 
-  {
-    Residual1Param functor;
-    int num_variables = 1;
-    EXPECT_TRUE((AutoDifferentiate<1, StaticParameterDims<1>>(
-        functor, parameters, 1, &residual, jacobians)));
-    EXPECT_EQ(residual, pow(2, num_variables + 1) - 2);
-    for (int i = 0; i < num_variables; ++i) {
-      EXPECT_EQ(jacobian_values[i], (i + 1) * pow(2, i));
-    }
-  }
+  double residual = 0;
+  ASSERT_TRUE((AutoDifferentiate<1, ParameterDims>(
+      functor, parameters, 1, &residual, jacobians)));
+  EXPECT_EQ(residual, pow(2, kNumVariables + 1) - 2);
+  EXPECT_THAT(jacobian_values, ElementsAreArray(expected_jacobian));
+}
 
-  {
-    Residual2Param functor;
-    int num_variables = 2;
-    EXPECT_TRUE((AutoDifferentiate<1, StaticParameterDims<1, 1>>(
-        functor, parameters, 1, &residual, jacobians)));
-    EXPECT_EQ(residual, pow(2, num_variables + 1) - 2);
-    for (int i = 0; i < num_variables; ++i) {
-      EXPECT_EQ(jacobian_values[i], (i + 1) * pow(2, i));
-    }
-  }
-
-  {
-    Residual3Param functor;
-    int num_variables = 3;
-    EXPECT_TRUE((AutoDifferentiate<1, StaticParameterDims<1, 1, 1>>(
-        functor, parameters, 1, &residual, jacobians)));
-    EXPECT_EQ(residual, pow(2, num_variables + 1) - 2);
-    for (int i = 0; i < num_variables; ++i) {
-      EXPECT_EQ(jacobian_values[i], (i + 1) * pow(2, i));
-    }
-  }
-
-  {
-    Residual4Param functor;
-    int num_variables = 4;
-    EXPECT_TRUE((AutoDifferentiate<1, StaticParameterDims<1, 1, 1, 1>>(
-        functor, parameters, 1, &residual, jacobians)));
-    EXPECT_EQ(residual, pow(2, num_variables + 1) - 2);
-    for (int i = 0; i < num_variables; ++i) {
-      EXPECT_EQ(jacobian_values[i], (i + 1) * pow(2, i));
-    }
-  }
-
-  {
-    Residual5Param functor;
-    int num_variables = 5;
-    EXPECT_TRUE((AutoDifferentiate<1, StaticParameterDims<1, 1, 1, 1, 1>>(
-        functor, parameters, 1, &residual, jacobians)));
-    EXPECT_EQ(residual, pow(2, num_variables + 1) - 2);
-    for (int i = 0; i < num_variables; ++i) {
-      EXPECT_EQ(jacobian_values[i], (i + 1) * pow(2, i));
-    }
-  }
-
-  {
-    Residual6Param functor;
-    int num_variables = 6;
-    EXPECT_TRUE((AutoDifferentiate<1, StaticParameterDims<1, 1, 1, 1, 1, 1>>(
-        functor, parameters, 1, &residual, jacobians)));
-    EXPECT_EQ(residual, pow(2, num_variables + 1) - 2);
-    for (int i = 0; i < num_variables; ++i) {
-      EXPECT_EQ(jacobian_values[i], (i + 1) * pow(2, i));
-    }
-  }
-
-  {
-    Residual7Param functor;
-    int num_variables = 7;
-    EXPECT_TRUE((AutoDifferentiate<1, StaticParameterDims<1, 1, 1, 1, 1, 1, 1>>(
-        functor, parameters, 1, &residual, jacobians)));
-    EXPECT_EQ(residual, pow(2, num_variables + 1) - 2);
-    for (int i = 0; i < num_variables; ++i) {
-      EXPECT_EQ(jacobian_values[i], (i + 1) * pow(2, i));
-    }
-  }
-
-  {
-    Residual8Param functor;
-    int num_variables = 8;
-    EXPECT_TRUE(
-        (AutoDifferentiate<1, StaticParameterDims<1, 1, 1, 1, 1, 1, 1, 1>>(
-            functor, parameters, 1, &residual, jacobians)));
-    EXPECT_EQ(residual, pow(2, num_variables + 1) - 2);
-    for (int i = 0; i < num_variables; ++i) {
-      EXPECT_EQ(jacobian_values[i], (i + 1) * pow(2, i));
-    }
-  }
-
-  {
-    Residual9Param functor;
-    int num_variables = 9;
-    EXPECT_TRUE(
-        (AutoDifferentiate<1, StaticParameterDims<1, 1, 1, 1, 1, 1, 1, 1, 1>>(
-            functor, parameters, 1, &residual, jacobians)));
-    EXPECT_EQ(residual, pow(2, num_variables + 1) - 2);
-    for (int i = 0; i < num_variables; ++i) {
-      EXPECT_EQ(jacobian_values[i], (i + 1) * pow(2, i));
-    }
-  }
-
-  {
-    Residual10Param functor;
-    int num_variables = 10;
-    EXPECT_TRUE((
-        AutoDifferentiate<1, StaticParameterDims<1, 1, 1, 1, 1, 1, 1, 1, 1, 1>>(
-            functor, parameters, 1, &residual, jacobians)));
-    EXPECT_EQ(residual, pow(2, num_variables + 1) - 2);
-    for (int i = 0; i < num_variables; ++i) {
-      EXPECT_EQ(jacobian_values[i], (i + 1) * pow(2, i));
-    }
-  }
+TEST(AutoDiff, VariadicAutoDiff) {
+  ExpectPowerSumDerivatives<StaticParameterDims<1>>(Residual1Param{});
+  ExpectPowerSumDerivatives<StaticParameterDims<1, 1>>(Residual2Param{});
+  ExpectPowerSumDerivatives<StaticParameterDims<1, 1, 1>>(Residual3Param{});
+  ExpectPowerSumDerivatives<StaticParameterDims<1, 1, 1, 1>>(Residual4Param{});
+  ExpectPowerSumDerivatives<StaticParameterDims<1, 1, 1, 1, 1>>(
+      Residual5Param{});
+  ExpectPowerSumDerivatives<StaticParameterDims<1, 1, 1, 1, 1, 1>>(
+      Residual6Param{});
+  ExpectPowerSumDerivatives<StaticParameterDims<1, 1, 1, 1, 1, 1, 1>>(
+      Residual7Param{});
+  ExpectPowerSumDerivatives<StaticParameterDims<1, 1, 1, 1, 1, 1, 1, 1>>(
+      Residual8Param{});
+  ExpectPowerSumDerivatives<StaticParameterDims<1, 1, 1, 1, 1, 1, 1, 1, 1>>(
+      Residual9Param{});
+  ExpectPowerSumDerivatives<StaticParameterDims<1, 1, 1, 1, 1, 1, 1, 1, 1, 1>>(
+      Residual10Param{});
 }
 
 // This is fragile test that triggers the alignment bug on

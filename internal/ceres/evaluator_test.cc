@@ -50,11 +50,15 @@
 #include "ceres/program.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/sparse_matrix.h"
+#include "ceres/test_util.h"
 #include "ceres/types.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {
+
+using ::testing::ElementsAre;
 
 // TODO(keir): Consider pushing this into a common test utils file.
 template <int kFactor, int kNumResiduals, int... Ns>
@@ -640,7 +644,7 @@ TEST(Evaluator, EvaluatorRespectsParameterChanges) {
   {
     double cost = -1;
     ASSERT_TRUE(evaluator->Evaluate(state, &cost, nullptr, nullptr, nullptr));
-    EXPECT_EQ(48.5, cost);
+    EXPECT_EQ(cost, 48.5);
   }
 
   // Cost and residuals, no jacobian.
@@ -648,9 +652,8 @@ TEST(Evaluator, EvaluatorRespectsParameterChanges) {
     double cost = -1;
     double residuals[2] = {-2, -2};
     ASSERT_TRUE(evaluator->Evaluate(state, &cost, residuals, nullptr, nullptr));
-    EXPECT_EQ(48.5, cost);
-    EXPECT_EQ(4, residuals[0]);
-    EXPECT_EQ(9, residuals[1]);
+    EXPECT_EQ(cost, 48.5);
+    EXPECT_THAT(residuals, ElementsAre(4, 9));
   }
 
   // Cost, residuals, and jacobian.
@@ -660,19 +663,15 @@ TEST(Evaluator, EvaluatorRespectsParameterChanges) {
     SetSparseMatrixConstant(jacobian.get(), -1);
     ASSERT_TRUE(
         evaluator->Evaluate(state, &cost, residuals, nullptr, jacobian.get()));
-    EXPECT_EQ(48.5, cost);
-    EXPECT_EQ(4, residuals[0]);
-    EXPECT_EQ(9, residuals[1]);
+    EXPECT_EQ(cost, 48.5);
+    EXPECT_THAT(residuals, ElementsAre(4, 9));
     Matrix actual_jacobian;
     jacobian->ToDenseMatrix(&actual_jacobian);
 
     Matrix expected_jacobian(2, 2);
     expected_jacobian << 2 * state[0], 0, 0, 2 * state[1];
 
-    EXPECT_TRUE((actual_jacobian.array() == expected_jacobian.array()).all())
-        << "Actual:\n"
-        << actual_jacobian << "\nExpected:\n"
-        << expected_jacobian;
+    EXPECT_THAT(actual_jacobian, MatrixNear(expected_jacobian, 0.0));
   }
 }
 

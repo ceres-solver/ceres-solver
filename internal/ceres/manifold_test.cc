@@ -46,6 +46,7 @@
 #include "ceres/quaternion_manifold_test_utils.h"
 #include "ceres/rotation.h"
 #include "ceres/sphere_manifold.h"
+#include "ceres/test_util.h"
 #include "ceres/types.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
@@ -105,10 +106,8 @@ TEST(EuclideanManifold, StaticNormalFunctionTest) {
     Vector delta = Vector::Random(manifold.TangentSize());
     Vector x_plus_delta = Vector::Zero(manifold.AmbientSize());
 
-    manifold.Plus(x.data(), delta.data(), x_plus_delta.data());
-    EXPECT_NEAR((x_plus_delta - x - delta).norm() / (x + delta).norm(),
-                0.0,
-                kTolerance);
+    ASSERT_TRUE(manifold.Plus(x.data(), delta.data(), x_plus_delta.data()));
+    EXPECT_THAT(x_plus_delta, MatrixRelativelyNear(x + delta, kTolerance));
 
     EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
   }
@@ -126,10 +125,8 @@ TEST(EuclideanManifold, DynamicNormalFunctionTest) {
     Vector delta = Vector::Random(manifold.TangentSize());
     Vector x_plus_delta = Vector::Zero(manifold.AmbientSize());
 
-    manifold.Plus(x.data(), delta.data(), x_plus_delta.data());
-    EXPECT_NEAR((x_plus_delta - x - delta).norm() / (x + delta).norm(),
-                0.0,
-                kTolerance);
+    ASSERT_TRUE(manifold.Plus(x.data(), delta.data(), x_plus_delta.data()));
+    EXPECT_THAT(x_plus_delta, MatrixRelativelyNear(x + delta, kTolerance));
 
     EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
   }
@@ -143,10 +140,8 @@ TEST(SubsetManifold, EmptyConstantParameters) {
     Vector delta = Vector::Random(3);
     Vector x_plus_delta = Vector::Zero(3);
 
-    manifold.Plus(x.data(), delta.data(), x_plus_delta.data());
-    EXPECT_NEAR((x_plus_delta - x - delta).norm() / (x + delta).norm(),
-                0.0,
-                kTolerance);
+    ASSERT_TRUE(manifold.Plus(x.data(), delta.data(), x_plus_delta.data()));
+    EXPECT_THAT(x_plus_delta, MatrixRelativelyNear(x + delta, kTolerance));
     EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
   }
 }
@@ -179,17 +174,16 @@ TEST(SubsetManifold, NormalFunctionTest) {
       Vector delta = Vector::Random(kTangentSize);
       Vector x_plus_delta = Vector::Zero(kAmbientSize);
 
-      x_plus_delta.setZero();
-      manifold_with_ith_parameter_constant.Plus(
-          x.data(), delta.data(), x_plus_delta.data());
-      int k = 0;
-      for (int j = 0; j < kAmbientSize; ++j) {
-        if (j == i) {
-          EXPECT_EQ(x_plus_delta[j], x[j]);
-        } else {
-          EXPECT_EQ(x_plus_delta[j], x[j] + delta[k++]);
+      ASSERT_TRUE(manifold_with_ith_parameter_constant.Plus(
+          x.data(), delta.data(), x_plus_delta.data()));
+      Vector expected_x_plus_delta = x;
+      for (int j = 0, k = 0; j < kAmbientSize; ++j) {
+        if (j != i) {
+          expected_x_plus_delta[j] += delta[k++];
         }
       }
+      EXPECT_THAT(x_plus_delta, MatrixNear(expected_x_plus_delta, 0.0))
+          << "constant parameter " << i;
 
       EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(
           manifold_with_ith_parameter_constant, x, delta, y, kTolerance);
@@ -292,9 +286,7 @@ TEST(ProductManifold, NormalFunctionTest) {
     ambient_cursor += manifold4.AmbientSize();
     tangent_cursor += manifold4.TangentSize();
 
-    for (int i = 0; i < x.size(); ++i) {
-      EXPECT_EQ(x_plus_delta[i], x_plus_delta_expected[i]);
-    }
+    EXPECT_THAT(x_plus_delta, MatrixNear(x_plus_delta_expected, 0.0));
 
     EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(
         manifold, x, delta, x_plus_delta, kTolerance);
@@ -318,9 +310,10 @@ TEST(ProductManifold, ZeroTangentSizeAndEuclidean) {
 
     EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), x_plus_delta.data()));
 
-    EXPECT_EQ(x_plus_delta[0], x[0]);
-    EXPECT_EQ(x_plus_delta[1], x[1] + delta[0]);
-    EXPECT_EQ(x_plus_delta[2], x[2] + delta[1]);
+    EXPECT_THAT(
+        x_plus_delta,
+        MatrixNear(Eigen::Vector3d(x[0], x[1] + delta[0], x[2] + delta[1]),
+                   0.0));
 
     EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
   }
@@ -342,9 +335,10 @@ TEST(ProductManifold, EuclideanAndZeroTangentSize) {
     Vector x_plus_delta = Vector::Zero(3);
 
     EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), x_plus_delta.data()));
-    EXPECT_EQ(x_plus_delta[0], x[0] + delta[0]);
-    EXPECT_EQ(x_plus_delta[1], x[1] + delta[1]);
-    EXPECT_EQ(x_plus_delta[2], x[2]);
+    EXPECT_THAT(
+        x_plus_delta,
+        MatrixNear(Eigen::Vector3d(x[0] + delta[0], x[1] + delta[1], x[2]),
+                   0.0));
     EXPECT_THAT_MANIFOLD_INVARIANTS_HOLD(manifold, x, delta, y, kTolerance);
   }
 }
@@ -647,8 +641,8 @@ TEST(SphereManifold, Plus2DTest) {
     double delta[1]{constants::pi / 4};
     Eigen::Vector2d y = Eigen::Vector2d::Zero();
     EXPECT_TRUE(manifold.Plus(x.data(), delta, y.data()));
-    const Eigen::Vector2d gtY(std::sqrt(2.0) / 2.0, std::sqrt(2.0) / 2.0);
-    EXPECT_LT((y - gtY).norm(), kTolerance);
+    const Eigen::Vector2d gtY(kHalfSqrt2, kHalfSqrt2);
+    EXPECT_THAT(y, MatrixNear(gtY, kTolerance));
   }
 
   {
@@ -656,7 +650,7 @@ TEST(SphereManifold, Plus2DTest) {
     Eigen::Vector2d y = Eigen::Vector2d::Zero();
     EXPECT_TRUE(manifold.Plus(x.data(), delta, y.data()));
     const Eigen::Vector2d gtY = Eigen::Vector2d::UnitX();
-    EXPECT_LT((y - gtY).norm(), kTolerance);
+    EXPECT_THAT(y, MatrixNear(gtY, kTolerance));
   }
 
   {
@@ -664,7 +658,7 @@ TEST(SphereManifold, Plus2DTest) {
     Eigen::Vector2d y = Eigen::Vector2d::Zero();
     EXPECT_TRUE(manifold.Plus(x.data(), delta, y.data()));
     const Eigen::Vector2d gtY = -Eigen::Vector2d::UnitY();
-    EXPECT_LT((y - gtY).norm(), kTolerance);
+    EXPECT_THAT(y, MatrixNear(gtY, kTolerance));
   }
 
   {
@@ -672,7 +666,7 @@ TEST(SphereManifold, Plus2DTest) {
     Eigen::Vector2d y = Eigen::Vector2d::Zero();
     EXPECT_TRUE(manifold.Plus(x.data(), delta, y.data()));
     const Eigen::Vector2d gtY = Eigen::Vector2d::UnitY();
-    EXPECT_LT((y - gtY).norm(), kTolerance);
+    EXPECT_THAT(y, MatrixNear(gtY, kTolerance));
   }
 }
 
@@ -685,7 +679,7 @@ TEST(SphereManifold, Plus3DTest) {
     Eigen::Vector3d y = Eigen::Vector3d::Zero();
     EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
     const Eigen::Vector3d gtY = Eigen::Vector3d::UnitX();
-    EXPECT_LT((y - gtY).norm(), kTolerance);
+    EXPECT_THAT(y, MatrixNear(gtY, kTolerance));
   }
 
   {
@@ -693,7 +687,7 @@ TEST(SphereManifold, Plus3DTest) {
     Eigen::Vector3d y = Eigen::Vector3d::Zero();
     EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
     const Eigen::Vector3d gtY = -Eigen::Vector3d::UnitZ();
-    EXPECT_LT((y - gtY).norm(), kTolerance);
+    EXPECT_THAT(y, MatrixNear(gtY, kTolerance));
   }
 
   {
@@ -701,7 +695,7 @@ TEST(SphereManifold, Plus3DTest) {
     Eigen::Vector3d y = Eigen::Vector3d::Zero();
     EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
     const Eigen::Vector3d gtY = Eigen::Vector3d::UnitZ();
-    EXPECT_LT((y - gtY).norm(), kTolerance);
+    EXPECT_THAT(y, MatrixNear(gtY, kTolerance));
   }
 
   {
@@ -709,7 +703,7 @@ TEST(SphereManifold, Plus3DTest) {
     Eigen::Vector3d y = Eigen::Vector3d::Zero();
     EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
     const Eigen::Vector3d gtY = Eigen::Vector3d::UnitY();
-    EXPECT_LT((y - gtY).norm(), kTolerance);
+    EXPECT_THAT(y, MatrixNear(gtY, kTolerance));
   }
 
   {
@@ -717,7 +711,7 @@ TEST(SphereManifold, Plus3DTest) {
     Eigen::Vector3d y = Eigen::Vector3d::Zero();
     EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
     const Eigen::Vector3d gtY = -Eigen::Vector3d::UnitZ();
-    EXPECT_LT((y - gtY).norm(), kTolerance);
+    EXPECT_THAT(y, MatrixNear(gtY, kTolerance));
   }
 
   {
@@ -725,7 +719,7 @@ TEST(SphereManifold, Plus3DTest) {
     Eigen::Vector3d y = Eigen::Vector3d::Zero();
     EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
     const Eigen::Vector3d gtY = Eigen::Vector3d::UnitZ();
-    EXPECT_LT((y - gtY).norm(), kTolerance);
+    EXPECT_THAT(y, MatrixNear(gtY, kTolerance));
   }
 
   {
@@ -733,8 +727,8 @@ TEST(SphereManifold, Plus3DTest) {
         Eigen::Vector2d(1, 1).normalized() * constants::pi / 2;
     Eigen::Vector3d y = Eigen::Vector3d::Zero();
     EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
-    const Eigen::Vector3d gtY(std::sqrt(2.0) / 2.0, std::sqrt(2.0) / 2.0, 0.0);
-    EXPECT_LT((y - gtY).norm(), kTolerance);
+    const Eigen::Vector3d gtY(kHalfSqrt2, kHalfSqrt2, 0.0);
+    EXPECT_THAT(y, MatrixNear(gtY, kTolerance));
   }
 
   {
@@ -742,7 +736,7 @@ TEST(SphereManifold, Plus3DTest) {
     Eigen::Vector3d y = Eigen::Vector3d::Zero();
     EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
     const Eigen::Vector3d gtY = -Eigen::Vector3d::UnitZ();
-    EXPECT_LT((y - gtY).norm(), kTolerance);
+    EXPECT_THAT(y, MatrixNear(gtY, kTolerance));
   }
 }
 
@@ -752,10 +746,10 @@ TEST(SphereManifold, Minus2DTest) {
 
   {
     double delta[1];
-    const Eigen::Vector2d y(std::sqrt(2.0) / 2.0, std::sqrt(2.0) / 2.0);
+    const Eigen::Vector2d y(kHalfSqrt2, kHalfSqrt2);
     const double gtDelta{constants::pi / 4};
     EXPECT_TRUE(manifold.Minus(y.data(), x.data(), delta));
-    EXPECT_LT(std::abs(delta[0] - gtDelta), kTolerance);
+    EXPECT_NEAR(delta[0], gtDelta, kTolerance);
   }
 
   {
@@ -763,7 +757,7 @@ TEST(SphereManifold, Minus2DTest) {
     const Eigen::Vector2d y(-1, 0);
     const double gtDelta{constants::pi};
     EXPECT_TRUE(manifold.Minus(y.data(), x.data(), delta));
-    EXPECT_LT(std::abs(delta[0] - gtDelta), kTolerance);
+    EXPECT_NEAR(delta[0], gtDelta, kTolerance);
   }
 }
 
@@ -773,10 +767,10 @@ TEST(SphereManifold, Minus3DTest) {
 
   {
     Eigen::Vector2d delta;
-    const Eigen::Vector3d y(std::sqrt(2.0) / 2.0, 0.0, std::sqrt(2.0) / 2.0);
+    const Eigen::Vector3d y(kHalfSqrt2, 0.0, kHalfSqrt2);
     const Eigen::Vector2d gtDelta(constants::pi / 4, 0.0);
     EXPECT_TRUE(manifold.Minus(y.data(), x.data(), delta.data()));
-    EXPECT_LT((delta - gtDelta).norm(), kTolerance);
+    EXPECT_THAT(delta, MatrixNear(gtDelta, kTolerance));
   }
 
   {
@@ -784,7 +778,7 @@ TEST(SphereManifold, Minus3DTest) {
     const Eigen::Vector3d y(-1, 0, 0);
     const Eigen::Vector2d gtDelta(0.0, constants::pi);
     EXPECT_TRUE(manifold.Minus(y.data(), x.data(), delta.data()));
-    EXPECT_LT((delta - gtDelta).norm(), kTolerance);
+    EXPECT_THAT(delta, MatrixNear(gtDelta, kTolerance));
   }
 }
 
@@ -910,7 +904,7 @@ TEST(LineManifold, Plus) {
     EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
     Vector6d gtY;
     gtY << 2.0 * Vector3d::UnitY(), Vector3d::UnitX();
-    EXPECT_LT((y - gtY).norm(), kTolerance);
+    EXPECT_THAT(y, MatrixNear(gtY, kTolerance));
   }
 
   {
@@ -919,7 +913,7 @@ TEST(LineManifold, Plus) {
     EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
     Vector6d gtY;
     gtY << 3.0 * Vector3d::UnitX(), Vector3d::UnitY();
-    EXPECT_LT((y - gtY).norm(), kTolerance);
+    EXPECT_THAT(y, MatrixNear(gtY, kTolerance));
   }
 
   {
@@ -929,9 +923,8 @@ TEST(LineManifold, Plus) {
     Vector6d y = Vector6d::Zero();
     EXPECT_TRUE(manifold.Plus(x.data(), delta.data(), y.data()));
     Vector6d gtY;
-    gtY << Vector3d(1.0, 2.0, 0.0),
-        Vector3d(std::sqrt(2.0) / 2.0, std::sqrt(2.0) / 2.0, 0.0);
-    EXPECT_LT((y - gtY).norm(), kTolerance);
+    gtY << Vector3d(1.0, 2.0, 0.0), Vector3d(kHalfSqrt2, kHalfSqrt2, 0.0);
+    EXPECT_THAT(y, MatrixNear(gtY, kTolerance));
   }
 }
 

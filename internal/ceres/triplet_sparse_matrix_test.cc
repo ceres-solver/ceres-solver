@@ -31,11 +31,46 @@
 #include "ceres/triplet_sparse_matrix.h"
 
 #include <memory>
+#include <vector>
 
+#include "absl/types/span.h"
 #include "ceres/crs_matrix.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
+
+using ::testing::DoubleEq;
+using ::testing::ElementsAre;
+using ::testing::ElementsAreArray;
+using ::testing::Pointwise;
+using ::testing::ResultOf;
+
+// Matches a TripletSparseMatrix whose nonzero entries are given by the row
+// indices, column indices and values.
+static auto TripletsAre(const std::vector<int>& rows,
+                        const std::vector<int>& cols,
+                        const std::vector<double>& values) {
+  return ::testing::AllOf(
+      ResultOf(
+          "row indices",
+          [](const TripletSparseMatrix& m) {
+            return absl::MakeConstSpan(m.rows(), m.num_nonzeros());
+          },
+          ElementsAreArray(rows)),
+      ResultOf(
+          "column indices",
+          [](const TripletSparseMatrix& m) {
+            return absl::MakeConstSpan(m.cols(), m.num_nonzeros());
+          },
+          ElementsAreArray(cols)),
+      ResultOf(
+          "values",
+          [](const TripletSparseMatrix& m) {
+            return absl::MakeConstSpan(m.values(), m.num_nonzeros());
+          },
+          Pointwise(DoubleEq(), values)));
+}
 
 TEST(TripletSparseMatrix, DefaultConstructorReturnsEmptyObject) {
   TripletSparseMatrix m;
@@ -76,14 +111,7 @@ TEST(TripletSparseMatrix, SimpleConstructorAndBasicOperations) {
   m.Reserve(3);
   EXPECT_EQ(m.max_num_nonzeros(), 50);  // The space is already reserved.
 
-  EXPECT_EQ(m.rows()[0], 0);
-  EXPECT_EQ(m.rows()[1], 1);
-
-  EXPECT_EQ(m.cols()[0], 1);
-  EXPECT_EQ(m.cols()[1], 4);
-
-  EXPECT_DOUBLE_EQ(m.values()[0], 2.5);
-  EXPECT_DOUBLE_EQ(m.values()[1], 5.2);
+  EXPECT_THAT(m, TripletsAre({0, 1}, {1, 4}, {2.5, 5.2}));
 
   // Bounds check should fail
   m.mutable_rows()[0] = 10;
@@ -117,14 +145,7 @@ TEST(TripletSparseMatrix, CopyConstructor) {
   ASSERT_EQ(cpy.num_nonzeros(), 2);
   EXPECT_EQ(cpy.max_num_nonzeros(), 4);
 
-  EXPECT_EQ(cpy.rows()[0], 0);
-  EXPECT_EQ(cpy.rows()[1], 1);
-
-  EXPECT_EQ(cpy.cols()[0], 1);
-  EXPECT_EQ(cpy.cols()[1], 4);
-
-  EXPECT_DOUBLE_EQ(cpy.values()[0], 2.5);
-  EXPECT_DOUBLE_EQ(cpy.values()[1], 5.2);
+  EXPECT_THAT(cpy, TripletsAre({0, 1}, {1, 4}, {2.5, 5.2}));
 }
 
 TEST(TripletSparseMatrix, AssignmentOperator) {
@@ -163,14 +184,7 @@ TEST(TripletSparseMatrix, AssignmentOperator) {
   ASSERT_EQ(cpy.num_nonzeros(), 2);
   EXPECT_EQ(cpy.max_num_nonzeros(), 4);
 
-  EXPECT_EQ(cpy.rows()[0], 0);
-  EXPECT_EQ(cpy.rows()[1], 1);
-
-  EXPECT_EQ(cpy.cols()[0], 1);
-  EXPECT_EQ(cpy.cols()[1], 4);
-
-  EXPECT_DOUBLE_EQ(cpy.values()[0], 2.5);
-  EXPECT_DOUBLE_EQ(cpy.values()[1], 5.2);
+  EXPECT_THAT(cpy, TripletsAre({0, 1}, {1, 4}, {2.5, 5.2}));
 }
 
 TEST(TripletSparseMatrix, AssignmentOperatorSelfAssignment) {
@@ -192,14 +206,7 @@ TEST(TripletSparseMatrix, AssignmentOperatorSelfAssignment) {
   ASSERT_EQ(orig.num_nonzeros(), 2);
   EXPECT_EQ(orig.max_num_nonzeros(), 4);
 
-  EXPECT_EQ(orig.rows()[0], 0);
-  EXPECT_EQ(orig.rows()[1], 1);
-
-  EXPECT_EQ(orig.cols()[0], 1);
-  EXPECT_EQ(orig.cols()[1], 4);
-
-  EXPECT_DOUBLE_EQ(orig.values()[0], 2.5);
-  EXPECT_DOUBLE_EQ(orig.values()[1], 5.2);
+  EXPECT_THAT(orig, TripletsAre({0, 1}, {1, 4}, {2.5, 5.2}));
 }
 
 TEST(TripletSparseMatrix, AppendRows) {
@@ -236,23 +243,9 @@ TEST(TripletSparseMatrix, AppendRows) {
   EXPECT_EQ(m.num_cols(), 5);
   ASSERT_EQ(m.num_nonzeros(), 5);
 
-  EXPECT_EQ(m.values()[0], 2.5);
-  EXPECT_EQ(m.values()[1], 5.2);
-  EXPECT_EQ(m.values()[2], 3.5);
-  EXPECT_EQ(m.values()[3], 6.2);
-  EXPECT_EQ(m.values()[4], 1);
-
-  EXPECT_EQ(m.rows()[0], 0);
-  EXPECT_EQ(m.rows()[1], 1);
-  EXPECT_EQ(m.rows()[2], 2);
-  EXPECT_EQ(m.rows()[3], 3);
-  EXPECT_EQ(m.rows()[4], 11);
-
-  EXPECT_EQ(m.cols()[0], 1);
-  EXPECT_EQ(m.cols()[1], 4);
-  EXPECT_EQ(m.cols()[2], 1);
-  EXPECT_EQ(m.cols()[3], 4);
-  EXPECT_EQ(m.cols()[4], 5);
+  EXPECT_THAT(
+      m,
+      TripletsAre({0, 1, 2, 3, 11}, {1, 4, 1, 4, 5}, {2.5, 5.2, 3.5, 6.2, 1}));
 }
 
 TEST(TripletSparseMatrix, AppendCols) {
@@ -289,23 +282,9 @@ TEST(TripletSparseMatrix, AppendCols) {
   EXPECT_EQ(m.num_cols(), 20);
   ASSERT_EQ(m.num_nonzeros(), 5);
 
-  EXPECT_EQ(m.values()[0], 2.5);
-  EXPECT_EQ(m.values()[1], 5.2);
-  EXPECT_EQ(m.values()[2], 3.5);
-  EXPECT_EQ(m.values()[3], 6.2);
-  EXPECT_EQ(m.values()[4], 1);
-
-  EXPECT_EQ(m.rows()[0], 0);
-  EXPECT_EQ(m.rows()[1], 1);
-  EXPECT_EQ(m.rows()[2], 0);
-  EXPECT_EQ(m.rows()[3], 1);
-  EXPECT_EQ(m.rows()[4], 0);
-
-  EXPECT_EQ(m.cols()[0], 1);
-  EXPECT_EQ(m.cols()[1], 4);
-  EXPECT_EQ(m.cols()[2], 6);
-  EXPECT_EQ(m.cols()[3], 9);
-  EXPECT_EQ(m.cols()[4], 15);
+  EXPECT_THAT(
+      m,
+      TripletsAre({0, 1, 0, 1, 0}, {1, 4, 6, 9, 15}, {2.5, 5.2, 3.5, 6.2, 1}));
 }
 
 TEST(TripletSparseMatrix, CreateDiagonalMatrix) {
@@ -317,11 +296,10 @@ TEST(TripletSparseMatrix, CreateDiagonalMatrix) {
   EXPECT_EQ(m->num_rows(), 10);
   EXPECT_EQ(m->num_cols(), 10);
   ASSERT_EQ(m->num_nonzeros(), 10);
-  for (int i = 0; i < 10; ++i) {
-    EXPECT_EQ(m->rows()[i], i);
-    EXPECT_EQ(m->cols()[i], i);
-    EXPECT_EQ(m->values()[i], i);
-  }
+  EXPECT_THAT(*m,
+              TripletsAre({0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+                          {0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+                          {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}));
 }
 
 TEST(TripletSparseMatrix, Resize) {
@@ -340,7 +318,7 @@ TEST(TripletSparseMatrix, Resize) {
   EXPECT_EQ(m.num_cols(), 6);
   ASSERT_EQ(m.num_nonzeros(), 30);
   for (int i = 0; i < 30; ++i) {
-    EXPECT_EQ(m.values()[i], m.rows()[i] + m.cols()[i]);
+    EXPECT_EQ(m.values()[i], m.rows()[i] + m.cols()[i]) << "triplet " << i;
   }
 }
 
@@ -359,27 +337,9 @@ TEST(TripletSparseMatrix, ToCRSMatrix) {
   EXPECT_EQ(m_crs.num_rows, 3);
   EXPECT_EQ(m_crs.num_cols, 6);
 
-  EXPECT_EQ(m_crs.rows.size(), 4);
-  EXPECT_EQ(m_crs.rows[0], 0);
-  EXPECT_EQ(m_crs.rows[1], 4);
-  EXPECT_EQ(m_crs.rows[2], 8);
-  EXPECT_EQ(m_crs.rows[3], 9);
-
-  EXPECT_EQ(m_crs.cols.size(), 9);
-  EXPECT_EQ(m_crs.cols[0], 0);
-  EXPECT_EQ(m_crs.cols[1], 1);
-  EXPECT_EQ(m_crs.cols[2], 3);
-  EXPECT_EQ(m_crs.cols[3], 4);
-  EXPECT_EQ(m_crs.cols[4], 0);
-  EXPECT_EQ(m_crs.cols[5], 1);
-  EXPECT_EQ(m_crs.cols[6], 3);
-  EXPECT_EQ(m_crs.cols[7], 4);
-  EXPECT_EQ(m_crs.cols[8], 2);
-
-  EXPECT_EQ(m_crs.values.size(), 9);
-  for (int i = 0; i < 9; ++i) {
-    EXPECT_EQ(m_crs.values[i], i + 1);
-  }
+  EXPECT_THAT(m_crs.rows, ElementsAre(0, 4, 8, 9));
+  EXPECT_THAT(m_crs.cols, ElementsAre(0, 1, 3, 4, 0, 1, 3, 4, 2));
+  EXPECT_THAT(m_crs.values, ElementsAre(1, 2, 3, 4, 5, 6, 7, 8, 9));
 }
 
 }  // namespace ceres::internal

@@ -33,9 +33,14 @@
 
 #include "absl/container/flat_hash_map.h"
 #include "ceres/graph.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
+
+using ::testing::ElementsAre;
+using ::testing::Pair;
+using ::testing::UnorderedElementsAre;
 
 const int kVertexIds[] = {0, 1, 2, 3};
 class CanonicalViewsTest : public ::testing::Test {
@@ -84,15 +89,14 @@ TEST_F(CanonicalViewsTest, ComputeCanonicalViewsTest) {
   ComputeClustering();
 
   // 2 canonical views.
-  EXPECT_EQ(centers_.size(), 2);
-  EXPECT_EQ(centers_[0], kVertexIds[1]);
-  EXPECT_EQ(centers_[1], kVertexIds[3]);
+  EXPECT_THAT(centers_, ElementsAre(kVertexIds[1], kVertexIds[3]));
 
   // Check cluster membership.
-  EXPECT_EQ(FindOrDie(membership_, kVertexIds[0]), 0);
-  EXPECT_EQ(FindOrDie(membership_, kVertexIds[1]), 0);
-  EXPECT_EQ(FindOrDie(membership_, kVertexIds[2]), 0);
-  EXPECT_EQ(FindOrDie(membership_, kVertexIds[3]), 1);
+  EXPECT_THAT(membership_,
+              UnorderedElementsAre(Pair(kVertexIds[0], 0),
+                                   Pair(kVertexIds[1], 0),
+                                   Pair(kVertexIds[2], 0),
+                                   Pair(kVertexIds[3], 1)));
 }
 
 // Increases size penalty so the second canonical view won't be
@@ -105,8 +109,7 @@ TEST_F(CanonicalViewsTest, SizePenaltyTest) {
   ComputeClustering();
 
   // 1 canonical view.
-  EXPECT_EQ(centers_.size(), 1);
-  EXPECT_EQ(centers_[0], kVertexIds[1]);
+  EXPECT_THAT(centers_, ElementsAre(kVertexIds[1]));
 }
 
 // Increases view score weight so vertex 2 will be chosen.
@@ -118,9 +121,7 @@ TEST_F(CanonicalViewsTest, ViewScoreTest) {
   ComputeClustering();
 
   // 2 canonical views.
-  EXPECT_EQ(centers_.size(), 2);
-  EXPECT_EQ(centers_[0], kVertexIds[1]);
-  EXPECT_EQ(centers_[1], kVertexIds[2]);
+  EXPECT_THAT(centers_, ElementsAre(kVertexIds[1], kVertexIds[2]));
 }
 
 // Increases similarity penalty so vertex 2 won't be chosen despite
@@ -132,9 +133,8 @@ TEST_F(CanonicalViewsTest, SimilarityPenaltyTest) {
   options_.view_score_weight = 1.0;
   ComputeClustering();
 
-  // 2 canonical views.
-  EXPECT_EQ(centers_.size(), 1);
-  EXPECT_EQ(centers_[0], kVertexIds[1]);
+  // 1 canonical view.
+  EXPECT_THAT(centers_, ElementsAre(kVertexIds[1]));
 }
 
 }  // namespace ceres::internal

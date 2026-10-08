@@ -48,7 +48,7 @@ TEST(TrustRegionPreprocessor, ZeroProblem) {
   Solver::Options options;
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
-  EXPECT_TRUE(preprocessor.Preprocess(options, &problem, &pp));
+  EXPECT_TRUE(preprocessor.Preprocess(options, &problem, &pp)) << pp.error;
 }
 
 TEST(TrustRegionPreprocessor, ProblemWithInvalidParameterBlock) {
@@ -113,7 +113,7 @@ TEST(TrustRegionPreprocessor, RemoveParameterBlocksSucceeds) {
   Solver::Options options;
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
-  EXPECT_TRUE(preprocessor.Preprocess(options, &problem, &pp));
+  EXPECT_TRUE(preprocessor.Preprocess(options, &problem, &pp)) << pp.error;
 }
 
 template <int kNumResiduals, int... Ns>
@@ -161,12 +161,12 @@ class LinearSolverAndEvaluatorCreationTest : public ::testing::Test {
     options.linear_solver_type = linear_solver_type;
     TrustRegionPreprocessor preprocessor;
     PreprocessedProblem pp;
-    EXPECT_TRUE(preprocessor.Preprocess(options, &problem_, &pp));
+    EXPECT_TRUE(preprocessor.Preprocess(options, &problem_, &pp)) << pp.error;
     EXPECT_EQ(pp.options.linear_solver_type, linear_solver_type);
     EXPECT_EQ(pp.linear_solver_options.type, linear_solver_type);
     EXPECT_EQ(pp.evaluator_options.linear_solver_type, linear_solver_type);
-    EXPECT_TRUE(pp.linear_solver.get() != nullptr);
-    EXPECT_TRUE(pp.evaluator.get() != nullptr);
+    EXPECT_NE(pp.linear_solver.get(), nullptr);
+    EXPECT_NE(pp.evaluator.get(), nullptr);
   }
 
  protected:
@@ -213,13 +213,13 @@ TEST_F(LinearSolverAndEvaluatorCreationTest, MinimizerIsAwareOfBounds) {
   Solver::Options options;
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
-  EXPECT_TRUE(preprocessor.Preprocess(options, &problem_, &pp));
+  EXPECT_TRUE(preprocessor.Preprocess(options, &problem_, &pp)) << pp.error;
   EXPECT_EQ(pp.options.linear_solver_type, options.linear_solver_type);
   EXPECT_EQ(pp.linear_solver_options.type, options.linear_solver_type);
   EXPECT_EQ(pp.evaluator_options.linear_solver_type,
             options.linear_solver_type);
-  EXPECT_TRUE(pp.linear_solver.get() != nullptr);
-  EXPECT_TRUE(pp.evaluator.get() != nullptr);
+  EXPECT_NE(pp.linear_solver.get(), nullptr);
+  EXPECT_NE(pp.evaluator.get(), nullptr);
   EXPECT_TRUE(pp.minimizer_options.is_constrained);
 }
 
@@ -246,12 +246,12 @@ TEST_F(LinearSolverAndEvaluatorCreationTest, SchurTypeSolverWithGoodOrdering) {
 
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
-  EXPECT_TRUE(preprocessor.Preprocess(options, &problem_, &pp));
+  EXPECT_TRUE(preprocessor.Preprocess(options, &problem_, &pp)) << pp.error;
   EXPECT_EQ(pp.options.linear_solver_type, DENSE_SCHUR);
   EXPECT_EQ(pp.linear_solver_options.type, DENSE_SCHUR);
   EXPECT_EQ(pp.evaluator_options.linear_solver_type, DENSE_SCHUR);
-  EXPECT_TRUE(pp.linear_solver.get() != nullptr);
-  EXPECT_TRUE(pp.evaluator.get() != nullptr);
+  EXPECT_NE(pp.linear_solver.get(), nullptr);
+  EXPECT_NE(pp.evaluator.get(), nullptr);
 }
 
 TEST_F(LinearSolverAndEvaluatorCreationTest,
@@ -268,12 +268,12 @@ TEST_F(LinearSolverAndEvaluatorCreationTest,
 
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
-  EXPECT_TRUE(preprocessor.Preprocess(options, &problem_, &pp));
+  EXPECT_TRUE(preprocessor.Preprocess(options, &problem_, &pp)) << pp.error;
   EXPECT_EQ(pp.options.linear_solver_type, DENSE_QR);
   EXPECT_EQ(pp.linear_solver_options.type, DENSE_QR);
   EXPECT_EQ(pp.evaluator_options.linear_solver_type, DENSE_QR);
-  EXPECT_TRUE(pp.linear_solver.get() != nullptr);
-  EXPECT_TRUE(pp.evaluator.get() != nullptr);
+  EXPECT_NE(pp.linear_solver.get(), nullptr);
+  EXPECT_NE(pp.evaluator.get(), nullptr);
 }
 
 TEST_F(LinearSolverAndEvaluatorCreationTest,
@@ -289,12 +289,12 @@ TEST_F(LinearSolverAndEvaluatorCreationTest,
 
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
-  EXPECT_TRUE(preprocessor.Preprocess(options, &problem_, &pp));
+  EXPECT_TRUE(preprocessor.Preprocess(options, &problem_, &pp)) << pp.error;
   EXPECT_EQ(pp.options.linear_solver_type, DENSE_SCHUR);
   EXPECT_EQ(pp.linear_solver_options.type, DENSE_SCHUR);
   EXPECT_EQ(pp.evaluator_options.linear_solver_type, DENSE_SCHUR);
-  EXPECT_TRUE(pp.linear_solver.get() != nullptr);
-  EXPECT_TRUE(pp.evaluator.get() != nullptr);
+  EXPECT_NE(pp.linear_solver.get(), nullptr);
+  EXPECT_NE(pp.evaluator.get(), nullptr);
 }
 
 TEST(TrustRegionPreprocessorTest, InnerIterationsWithOneParameterBlock) {
@@ -307,10 +307,10 @@ TEST(TrustRegionPreprocessorTest, InnerIterationsWithOneParameterBlock) {
 
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
-  EXPECT_TRUE(preprocessor.Preprocess(options, &problem, &pp));
-  EXPECT_TRUE(pp.linear_solver.get() != nullptr);
-  EXPECT_TRUE(pp.evaluator.get() != nullptr);
-  EXPECT_TRUE(pp.inner_iteration_minimizer.get() == nullptr);
+  EXPECT_TRUE(preprocessor.Preprocess(options, &problem, &pp)) << pp.error;
+  EXPECT_NE(pp.linear_solver.get(), nullptr);
+  EXPECT_NE(pp.evaluator.get(), nullptr);
+  EXPECT_EQ(pp.inner_iteration_minimizer.get(), nullptr);
 }
 
 TEST_F(LinearSolverAndEvaluatorCreationTest,
@@ -320,10 +320,10 @@ TEST_F(LinearSolverAndEvaluatorCreationTest,
 
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
-  EXPECT_TRUE(preprocessor.Preprocess(options, &problem_, &pp));
-  EXPECT_TRUE(pp.linear_solver.get() != nullptr);
-  EXPECT_TRUE(pp.evaluator.get() != nullptr);
-  EXPECT_TRUE(pp.inner_iteration_minimizer.get() != nullptr);
+  EXPECT_TRUE(preprocessor.Preprocess(options, &problem_, &pp)) << pp.error;
+  EXPECT_NE(pp.linear_solver.get(), nullptr);
+  EXPECT_NE(pp.evaluator.get(), nullptr);
+  EXPECT_NE(pp.inner_iteration_minimizer.get(), nullptr);
 }
 
 TEST_F(LinearSolverAndEvaluatorCreationTest, InvalidInnerIterationsOrdering) {
@@ -349,10 +349,10 @@ TEST_F(LinearSolverAndEvaluatorCreationTest, ValidInnerIterationsOrdering) {
 
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
-  EXPECT_TRUE(preprocessor.Preprocess(options, &problem_, &pp));
-  EXPECT_TRUE(pp.linear_solver.get() != nullptr);
-  EXPECT_TRUE(pp.evaluator.get() != nullptr);
-  EXPECT_TRUE(pp.inner_iteration_minimizer.get() != nullptr);
+  EXPECT_TRUE(preprocessor.Preprocess(options, &problem_, &pp)) << pp.error;
+  EXPECT_NE(pp.linear_solver.get(), nullptr);
+  EXPECT_NE(pp.evaluator.get(), nullptr);
+  EXPECT_NE(pp.inner_iteration_minimizer.get(), nullptr);
 }
 
 }  // namespace internal

@@ -41,11 +41,18 @@
 #include "ceres/problem_impl.h"
 #include "ceres/residual_block.h"
 #include "ceres/sized_cost_function.h"
+#include "ceres/test_util.h"
 #include "ceres/triplet_sparse_matrix.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {
+
+using ::testing::ElementsAre;
+using ::testing::HasSubstr;
+using ::testing::IsEmpty;
+using ::testing::SizeIs;
 
 // A cost function that simply returns its argument.
 class UnaryIdentityCostFunction : public SizedCostFunction<1, 1> {
@@ -103,7 +110,7 @@ TEST(Program, RemoveFixedBlocksNothingConstant) {
 
   EXPECT_EQ(reduced_program->NumParameterBlocks(), 3);
   EXPECT_EQ(reduced_program->NumResidualBlocks(), 3);
-  EXPECT_EQ(removed_parameter_blocks.size(), 0);
+  EXPECT_THAT(removed_parameter_blocks, IsEmpty());
   EXPECT_EQ(fixed_cost, 0.0);
 }
 
@@ -124,8 +131,7 @@ TEST(Program, RemoveFixedBlocksAllParameterBlocksConstant) {
 
   EXPECT_EQ(reduced_program->NumParameterBlocks(), 0);
   EXPECT_EQ(reduced_program->NumResidualBlocks(), 0);
-  EXPECT_EQ(removed_parameter_blocks.size(), 1);
-  EXPECT_EQ(removed_parameter_blocks[0], &x);
+  EXPECT_THAT(removed_parameter_blocks, ElementsAre(&x));
   EXPECT_EQ(fixed_cost, 9.0);
 }
 
@@ -147,7 +153,7 @@ TEST(Program, RemoveFixedBlocksNoResidualBlocks) {
           &removed_parameter_blocks, &fixed_cost, &message));
   EXPECT_EQ(reduced_program->NumParameterBlocks(), 0);
   EXPECT_EQ(reduced_program->NumResidualBlocks(), 0);
-  EXPECT_EQ(removed_parameter_blocks.size(), 3);
+  EXPECT_THAT(removed_parameter_blocks, SizeIs(3));
   EXPECT_EQ(fixed_cost, 0.0);
 }
 
@@ -312,9 +318,7 @@ TEST_P(BlockJacobianTest, CreateJacobianBlockSparsityTranspose) {
 
   Matrix actual_dense_jacobian;
   actual_block_sparse_jacobian->ToDenseMatrix(&actual_dense_jacobian);
-  EXPECT_EQ(expected_dense_jacobian.rows(), actual_dense_jacobian.rows());
-  EXPECT_EQ(expected_dense_jacobian.cols(), actual_dense_jacobian.cols());
-  EXPECT_EQ((expected_dense_jacobian - actual_dense_jacobian).norm(), 0.0);
+  EXPECT_THAT(actual_dense_jacobian, MatrixNear(expected_dense_jacobian, 0.0));
 }
 
 INSTANTIATE_TEST_SUITE_P(AllColumns, BlockJacobianTest, ::testing::Range(0, 7));
@@ -381,7 +385,7 @@ TEST(Program, ReallocationInCreateJacobianBlockSparsityTranspose) {
 
   Matrix actual_dense_jacobian;
   actual_block_sparse_jacobian->ToDenseMatrix(&actual_dense_jacobian);
-  EXPECT_EQ((expected_dense_jacobian - actual_dense_jacobian).norm(), 0.0);
+  EXPECT_THAT(actual_dense_jacobian, MatrixNear(expected_dense_jacobian, 0.0));
 }
 
 TEST(Program, ProblemHasNanParameterBlocks) {
@@ -392,8 +396,7 @@ TEST(Program, ProblemHasNanParameterBlocks) {
   problem.AddResidualBlock(new MockCostFunctionBase<1, 2>(), nullptr, x);
   std::string error;
   EXPECT_FALSE(problem.program().ParameterBlocksAreFinite(&error));
-  EXPECT_NE(error.find("has at least one invalid value"), std::string::npos)
-      << error;
+  EXPECT_THAT(error, HasSubstr("has at least one invalid value")) << error;
 }
 
 TEST(Program, InfeasibleParameterBlock) {
@@ -404,7 +407,7 @@ TEST(Program, InfeasibleParameterBlock) {
   problem.SetParameterUpperBound(x, 0, 1.0);
   std::string error;
   EXPECT_FALSE(problem.program().IsFeasible(&error));
-  EXPECT_NE(error.find("infeasible bound"), std::string::npos) << error;
+  EXPECT_THAT(error, HasSubstr("infeasible bound")) << error;
 }
 
 TEST(Program, InfeasibleConstantParameterBlock) {
@@ -416,7 +419,7 @@ TEST(Program, InfeasibleConstantParameterBlock) {
   problem.SetParameterBlockConstant(x);
   std::string error;
   EXPECT_FALSE(problem.program().IsFeasible(&error));
-  EXPECT_NE(error.find("infeasible value"), std::string::npos) << error;
+  EXPECT_THAT(error, HasSubstr("infeasible value")) << error;
 }
 
 }  // namespace internal

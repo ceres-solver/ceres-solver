@@ -33,11 +33,14 @@
 #include <memory>
 #include <vector>
 
+#include "absl/types/span.h"
 #include "ceres/casts.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
+#include "ceres/test_util.h"
 #include "ceres/triplet_sparse_matrix.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -101,12 +104,12 @@ class DynamicCompressedRowSparseMatrixTest : public ::testing::Test {
 
     Matrix dense_from_tsm;
     tsm->ToDenseMatrix(&dense_from_tsm);
-    ASSERT_TRUE((dense.array() == dense_from_tsm.array()).all());
+    ASSERT_THAT(dense_from_tsm, MatrixNear(dense, 0.0));
 
     crsm = CompressedRowSparseMatrix::FromTripletSparseMatrix(*tsm);
     Matrix dense_from_crsm;
     crsm->ToDenseMatrix(&dense_from_crsm);
-    ASSERT_TRUE((dense.array() == dense_from_crsm.array()).all());
+    ASSERT_THAT(dense_from_crsm, MatrixNear(dense, 0.0));
   }
 
   void InsertNonZeroEntriesFromDenseReference() {
@@ -127,31 +130,22 @@ class DynamicCompressedRowSparseMatrixTest : public ::testing::Test {
 
     Matrix dense_from_dcrsm;
     dcrsm->ToDenseMatrix(&dense_from_dcrsm);
-    EXPECT_EQ(dense_from_dcrsm.rows(), num_rows);
-    EXPECT_EQ(dense_from_dcrsm.cols(), num_cols);
-    EXPECT_TRUE((dense_from_dcrsm.array() == 0.0).all());
+    EXPECT_THAT(dense_from_dcrsm,
+                MatrixNear(Matrix::Zero(num_rows, num_cols), 0.0));
   }
 
   void ExpectEqualToDenseReference() {
     Matrix dense_from_dcrsm;
     dcrsm->ToDenseMatrix(&dense_from_dcrsm);
-    EXPECT_TRUE((dense.array() == dense_from_dcrsm.array()).all());
+    EXPECT_THAT(dense_from_dcrsm, MatrixNear(dense, 0.0));
   }
 
   void ExpectEqualToCompressedRowSparseMatrixReference() {
-    using ConstIntVectorRef = Eigen::Map<const Eigen::VectorXi>;
-
-    ConstIntVectorRef crsm_rows(crsm->rows(), crsm->num_rows() + 1);
-    ConstIntVectorRef dcrsm_rows(dcrsm->rows(), dcrsm->num_rows() + 1);
-    EXPECT_TRUE((crsm_rows.array() == dcrsm_rows.array()).all());
-
-    ConstIntVectorRef crsm_cols(crsm->cols(), crsm->num_nonzeros());
-    ConstIntVectorRef dcrsm_cols(dcrsm->cols(), dcrsm->num_nonzeros());
-    EXPECT_TRUE((crsm_cols.array() == dcrsm_cols.array()).all());
-
-    ConstVectorRef crsm_values(crsm->values(), crsm->num_nonzeros());
-    ConstVectorRef dcrsm_values(dcrsm->values(), dcrsm->num_nonzeros());
-    EXPECT_TRUE((crsm_values.array() == dcrsm_values.array()).all());
+    EXPECT_THAT(*dcrsm,
+                CompressedRowsAre(
+                    absl::MakeConstSpan(crsm->rows(), crsm->num_rows() + 1),
+                    absl::MakeConstSpan(crsm->cols(), crsm->num_nonzeros()),
+                    absl::MakeConstSpan(crsm->values(), crsm->num_nonzeros())));
   }
 
   int num_rows;

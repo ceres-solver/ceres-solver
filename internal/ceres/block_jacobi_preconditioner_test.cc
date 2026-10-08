@@ -35,14 +35,17 @@
 #include <vector>
 
 #include "Eigen/Dense"
+#include "absl/strings/str_format.h"
 #include "ceres/block_random_access_diagonal_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/linear_least_squares_problems.h"
+#include "ceres/test_util.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
 
-TEST(BlockSparseJacobiPreconditioner, _) {
+TEST(BlockSparseJacobiPreconditioner, InvertsDiagonalBlocksOfHessian) {
   constexpr int kNumtrials = 10;
   BlockSparseMatrix::RandomMatrixOptions options;
   options.num_col_blocks = 3;
@@ -60,6 +63,7 @@ TEST(BlockSparseJacobiPreconditioner, _) {
   preconditioner_options.context = &context;
 
   for (int trial = 0; trial < kNumtrials; ++trial) {
+    SCOPED_TRACE(absl::StrFormat("trial %d", trial));
     auto jacobian = BlockSparseMatrix::CreateRandomMatrix(options, prng);
     Vector diagonal = Vector::Ones(jacobian->num_cols());
     Matrix dense_jacobian;
@@ -85,17 +89,16 @@ TEST(BlockSparseJacobiPreconditioner, _) {
               .block(r, c, block_size, block_size);
       Matrix expected_block = hessian.block(
           bs->cols[i].position, bs->cols[i].position, block_size, block_size);
-      const double residual = (actual_block_inverse * expected_block -
-                               Matrix::Identity(block_size, block_size))
-                                  .norm();
-      EXPECT_NEAR(residual, 0.0, 1e-12) << "Block: " << i;
+      EXPECT_THAT(actual_block_inverse * expected_block,
+                  MatrixNear(Matrix::Identity(block_size, block_size), 1e-12))
+          << "Block: " << i;
     }
     options.num_col_blocks++;
     options.num_row_blocks++;
   }
 }
 
-TEST(CompressedRowSparseJacobiPreconditioner, _) {
+TEST(CompressedRowSparseJacobiPreconditioner, InvertsDiagonalBlocksOfHessian) {
   constexpr int kNumtrials = 10;
   CompressedRowSparseMatrix::RandomMatrixOptions options;
   options.num_col_blocks = 3;
@@ -113,6 +116,7 @@ TEST(CompressedRowSparseJacobiPreconditioner, _) {
   preconditioner_options.context = &context;
 
   for (int trial = 0; trial < kNumtrials; ++trial) {
+    SCOPED_TRACE(absl::StrFormat("trial %d", trial));
     auto jacobian =
         CompressedRowSparseMatrix::CreateRandomMatrix(options, prng);
     Vector diagonal = Vector::Ones(jacobian->num_cols());
@@ -143,10 +147,9 @@ TEST(CompressedRowSparseJacobiPreconditioner, _) {
       ConstMatrixRef actual_block_inverse(
           m.values() + m.rows()[col], block_size, block_size);
       Matrix expected_block = hessian.block(col, col, block_size, block_size);
-      const double residual = (actual_block_inverse * expected_block -
-                               Matrix::Identity(block_size, block_size))
-                                  .norm();
-      EXPECT_NEAR(residual, 0.0, 1e-12) << "Block: " << i;
+      EXPECT_THAT(actual_block_inverse * expected_block,
+                  MatrixNear(Matrix::Identity(block_size, block_size), 1e-12))
+          << "Block: " << i;
       col += block_size;
     }
     options.num_col_blocks++;

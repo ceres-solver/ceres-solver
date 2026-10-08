@@ -33,13 +33,20 @@
 #include <limits>
 #include <memory>
 
+#include "absl/types/span.h"
 #include "ceres/dense_qr_solver.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
+#include "ceres/test_util.h"
 #include "ceres/trust_region_strategy.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
+
+using ::testing::DoubleNear;
+using ::testing::Each;
+using ::testing::ElementsAre;
 namespace {
 
 class Fixture : public testing::Test {
@@ -181,12 +188,7 @@ TEST_F(DoglegStrategyFixtureEllipse, CorrectGaussNewtonStep) {
       strategy.ComputeStep(pso, jacobian_.get(), residual_.data(), x_.data());
 
   EXPECT_NE(summary.termination_type, LinearSolverTerminationType::FAILURE);
-  EXPECT_NEAR(x_(0), 1.0, kToleranceLoose);
-  EXPECT_NEAR(x_(1), 1.0, kToleranceLoose);
-  EXPECT_NEAR(x_(2), 1.0, kToleranceLoose);
-  EXPECT_NEAR(x_(3), 1.0, kToleranceLoose);
-  EXPECT_NEAR(x_(4), 1.0, kToleranceLoose);
-  EXPECT_NEAR(x_(5), 1.0, kToleranceLoose);
+  EXPECT_THAT(absl::MakeConstSpan(x_), Each(DoubleNear(1.0, kToleranceLoose)));
 }
 
 // Test if the subspace basis is a valid orthonormal basis of the space spanned
@@ -206,19 +208,17 @@ TEST_F(DoglegStrategyFixtureEllipse, ValidSubspaceBasis) {
 
   // Check if the basis is orthonormal.
   const Matrix basis = strategy.subspace_basis();
-  EXPECT_NEAR(basis.col(0).norm(), 1.0, kTolerance);
-  EXPECT_NEAR(basis.col(1).norm(), 1.0, kTolerance);
-  EXPECT_NEAR(basis.col(0).dot(basis.col(1)), 0.0, kTolerance);
+  EXPECT_THAT(basis.transpose() * basis,
+              MatrixNear(Matrix::Identity(2, 2), kTolerance));
 
   // Check if the gradient projects onto itself.
   const Vector gradient = strategy.gradient();
-  EXPECT_NEAR((gradient - basis * (basis.transpose() * gradient)).norm(),
-              0.0,
-              kTolerance);
+  EXPECT_THAT(gradient,
+              MatrixNear(basis * (basis.transpose() * gradient), kTolerance));
 
   // Check if the Gauss-Newton point projects onto itself.
   const Vector gn = strategy.gauss_newton_step();
-  EXPECT_NEAR((gn - basis * (basis.transpose() * gn)).norm(), 0.0, kTolerance);
+  EXPECT_THAT(gn, MatrixNear(basis * (basis.transpose() * gn), kTolerance));
 }
 
 // Test if the step is correct if the gradient and the Gauss-Newton step point
@@ -239,12 +239,13 @@ TEST_F(DoglegStrategyFixtureValley, CorrectStepLocalOptimumAlongGradient) {
       strategy.ComputeStep(pso, jacobian_.get(), residual_.data(), x_.data());
 
   EXPECT_NE(summary.termination_type, LinearSolverTerminationType::FAILURE);
-  EXPECT_NEAR(x_(0), 0.0, kToleranceLoose);
-  EXPECT_NEAR(x_(1), 0.0, kToleranceLoose);
-  EXPECT_NEAR(x_(2), options_.initial_radius, kToleranceLoose);
-  EXPECT_NEAR(x_(3), 0.0, kToleranceLoose);
-  EXPECT_NEAR(x_(4), 0.0, kToleranceLoose);
-  EXPECT_NEAR(x_(5), 0.0, kToleranceLoose);
+  EXPECT_THAT(absl::MakeConstSpan(x_),
+              ElementsAre(DoubleNear(0.0, kToleranceLoose),
+                          DoubleNear(0.0, kToleranceLoose),
+                          DoubleNear(options_.initial_radius, kToleranceLoose),
+                          DoubleNear(0.0, kToleranceLoose),
+                          DoubleNear(0.0, kToleranceLoose),
+                          DoubleNear(0.0, kToleranceLoose)));
 }
 
 // Test if the step is correct if the gradient and the Gauss-Newton step point
@@ -265,12 +266,13 @@ TEST_F(DoglegStrategyFixtureValley, CorrectStepGlobalOptimumAlongGradient) {
       strategy.ComputeStep(pso, jacobian_.get(), residual_.data(), x_.data());
 
   EXPECT_NE(summary.termination_type, LinearSolverTerminationType::FAILURE);
-  EXPECT_NEAR(x_(0), 0.0, kToleranceLoose);
-  EXPECT_NEAR(x_(1), 0.0, kToleranceLoose);
-  EXPECT_NEAR(x_(2), 1.0, kToleranceLoose);
-  EXPECT_NEAR(x_(3), 0.0, kToleranceLoose);
-  EXPECT_NEAR(x_(4), 0.0, kToleranceLoose);
-  EXPECT_NEAR(x_(5), 0.0, kToleranceLoose);
+  EXPECT_THAT(absl::MakeConstSpan(x_),
+              ElementsAre(DoubleNear(0.0, kToleranceLoose),
+                          DoubleNear(0.0, kToleranceLoose),
+                          DoubleNear(1.0, kToleranceLoose),
+                          DoubleNear(0.0, kToleranceLoose),
+                          DoubleNear(0.0, kToleranceLoose),
+                          DoubleNear(0.0, kToleranceLoose)));
 }
 
 }  // namespace ceres::internal

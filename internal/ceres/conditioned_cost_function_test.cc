@@ -32,13 +32,18 @@
 
 #include "ceres/conditioned_cost_function.h"
 
+#include "absl/types/span.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/normal_prior.h"
 #include "ceres/types.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {
+
+using ::testing::DoubleEq;
+using ::testing::Pointwise;
 
 // The size of the cost functions we build.
 static constexpr int kTestCostFunctionSize = 3;
@@ -104,21 +109,19 @@ TEST(ConditionedCostFunction, NormalOperation) {
   double* jacs[1];
   jacs[0] = jac;
 
-  conditioned_cost_function.Evaluate(parameters, result, jacs);
+  ASSERT_TRUE(conditioned_cost_function.Evaluate(parameters, result, jacs));
+
+  double expected_result[kTestCostFunctionSize];
+  Matrix expected_jacobian =
+      Matrix::Zero(kTestCostFunctionSize, kTestCostFunctionSize);
   for (int i = 0; i < kTestCostFunctionSize; i++) {
-    EXPECT_DOUBLE_EQ((i + 2) * (v1[i] - v2[i]) + i * 7, result[i]);
+    expected_result[i] = (i + 2) * (v1[i] - v2[i]) + i * 7;
+    expected_jacobian(i, i) = i + 2;
   }
 
-  for (int i = 0; i < kTestCostFunctionSize; i++) {
-    for (int j = 0; j < kTestCostFunctionSize; j++) {
-      double actual = jac[i * kTestCostFunctionSize + j];
-      if (i != j) {
-        EXPECT_DOUBLE_EQ(0, actual);
-      } else {
-        EXPECT_DOUBLE_EQ(i + 2, actual);
-      }
-    }
-  }
+  EXPECT_THAT(result, Pointwise(DoubleEq(), expected_result));
+  EXPECT_THAT(jac,
+              Pointwise(DoubleEq(), absl::MakeConstSpan(expected_jacobian)));
 }
 
 TEST(ConditionedCostFunction, SharedConditionersDoNotTriggerDoubleFree) {

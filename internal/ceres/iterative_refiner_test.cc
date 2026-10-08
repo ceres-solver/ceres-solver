@@ -39,6 +39,8 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/sparse_cholesky.h"
 #include "ceres/sparse_matrix.h"
+#include "ceres/test_util.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
@@ -177,9 +179,8 @@ TEST_F(SparseIterativeRefinerTest,
   Vector refined_solution(num_cols_);
   refined_solution.setRandom();
   refiner.Refine(lhs, rhs_.data(), &sparse_cholesky, refined_solution.data());
-  EXPECT_NEAR((lhs_ * refined_solution - rhs_).norm(),
-              0.0,
-              std::numeric_limits<double>::epsilon() * 10);
+  EXPECT_THAT(lhs_ * refined_solution,
+              MatrixNear(rhs_, std::numeric_limits<double>::epsilon() * 10));
 }
 
 TEST_F(SparseIterativeRefinerTest,
@@ -192,9 +193,8 @@ TEST_F(SparseIterativeRefinerTest,
   Vector refined_solution(num_cols_);
   refined_solution.setRandom();
   refiner.Refine(lhs, rhs_.data(), &sparse_cholesky, refined_solution.data());
-  EXPECT_NEAR((lhs_ * refined_solution - rhs_).norm(),
-              0.0,
-              std::numeric_limits<double>::epsilon() * 10);
+  EXPECT_THAT(lhs_ * refined_solution,
+              MatrixNear(rhs_, std::numeric_limits<double>::epsilon() * 10));
 }
 
 class DenseIterativeRefinerTest : public ::testing::Test {
@@ -230,9 +230,8 @@ TEST_F(DenseIterativeRefinerTest,
                  rhs_.data(),
                  &dense_cholesky,
                  refined_solution.data());
-  EXPECT_NEAR((lhs_ * refined_solution - rhs_).norm(),
-              0.0,
-              std::numeric_limits<double>::epsilon() * 10);
+  EXPECT_THAT(lhs_ * refined_solution,
+              MatrixNear(rhs_, std::numeric_limits<double>::epsilon() * 10));
 }
 
 TEST_F(DenseIterativeRefinerTest,
@@ -250,9 +249,8 @@ TEST_F(DenseIterativeRefinerTest,
                  rhs_.data(),
                  &dense_cholesky,
                  refined_solution.data());
-  EXPECT_NEAR((lhs_ * refined_solution - rhs_).norm(),
-              0.0,
-              std::numeric_limits<double>::epsilon() * 10);
+  EXPECT_THAT(lhs_ * refined_solution,
+              MatrixNear(rhs_, std::numeric_limits<double>::epsilon() * 10));
 }
 
 }  // namespace ceres::internal

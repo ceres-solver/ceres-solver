@@ -34,6 +34,8 @@
 #include "ceres/evaluator_test_utils.h"
 
 #include "ceres/internal/eigen.h"
+#include "ceres/test_util.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
@@ -48,18 +50,14 @@ void CompareEvaluations(int expected_num_rows,
                         const double* actual_residuals,
                         const double* actual_gradient,
                         const double* actual_jacobian) {
-  EXPECT_EQ(expected_cost, actual_cost);
+  EXPECT_EQ(actual_cost, expected_cost);
 
   if (expected_residuals != nullptr) {
     ConstVectorRef expected_residuals_vector(expected_residuals,
                                              expected_num_rows);
     ConstVectorRef actual_residuals_vector(actual_residuals, expected_num_rows);
-    EXPECT_TRUE(
-        (actual_residuals_vector.array() == expected_residuals_vector.array())
-            .all())
-        << "Actual:\n"
-        << actual_residuals_vector << "\nExpected:\n"
-        << expected_residuals_vector;
+    EXPECT_THAT(actual_residuals_vector,
+                MatrixNear(expected_residuals_vector, 0.0));
   }
 
   if (expected_gradient != nullptr) {
@@ -67,12 +65,8 @@ void CompareEvaluations(int expected_num_rows,
                                             expected_num_cols);
     ConstVectorRef actual_gradient_vector(actual_gradient, expected_num_cols);
 
-    EXPECT_TRUE(
-        (actual_gradient_vector.array() == expected_gradient_vector.array())
-            .all())
-        << "Actual:\n"
-        << actual_gradient_vector.transpose() << "\nExpected:\n"
-        << expected_gradient_vector.transpose();
+    EXPECT_THAT(actual_gradient_vector,
+                MatrixNear(expected_gradient_vector, 0.0));
   }
 
   if (expected_jacobian != nullptr) {
@@ -80,12 +74,8 @@ void CompareEvaluations(int expected_num_rows,
         expected_jacobian, expected_num_rows, expected_num_cols);
     ConstMatrixRef actual_jacobian_matrix(
         actual_jacobian, expected_num_rows, expected_num_cols);
-    EXPECT_TRUE(
-        (actual_jacobian_matrix.array() == expected_jacobian_matrix.array())
-            .all())
-        << "Actual:\n"
-        << actual_jacobian_matrix << "\nExpected:\n"
-        << expected_jacobian_matrix;
+    EXPECT_THAT(actual_jacobian_matrix,
+                MatrixNear(expected_jacobian_matrix, 0.0));
   }
 }
 

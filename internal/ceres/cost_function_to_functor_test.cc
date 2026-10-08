@@ -32,6 +32,7 @@
 
 #include <cstdint>
 #include <memory>
+#include <numeric>
 #include <utility>
 #include <vector>
 
@@ -40,83 +41,63 @@
 #include "ceres/dynamic_autodiff_cost_function.h"
 #include "ceres/dynamic_cost_function_to_functor.h"
 #include "ceres/types.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
+
+using ::testing::DoubleNear;
+using ::testing::Pointwise;
 
 const double kTolerance = 1e-18;
 
 static void ExpectCostFunctionsAreEqual(
     const CostFunction& cost_function,
     const CostFunction& actual_cost_function) {
-  EXPECT_EQ(cost_function.num_residuals(),
-            actual_cost_function.num_residuals());
+  ASSERT_EQ(actual_cost_function.num_residuals(),
+            cost_function.num_residuals());
+  ASSERT_EQ(actual_cost_function.parameter_block_sizes(),
+            cost_function.parameter_block_sizes());
+
   const int num_residuals = cost_function.num_residuals();
   const std::vector<int32_t>& parameter_block_sizes =
       cost_function.parameter_block_sizes();
-  const std::vector<int32_t>& actual_parameter_block_sizes =
-      actual_cost_function.parameter_block_sizes();
-  EXPECT_EQ(parameter_block_sizes.size(), actual_parameter_block_sizes.size());
+  const int num_parameters = std::accumulate(
+      parameter_block_sizes.begin(), parameter_block_sizes.end(), 0);
 
-  int num_parameters = 0;
-  for (int i = 0; i < parameter_block_sizes.size(); ++i) {
-    EXPECT_EQ(parameter_block_sizes[i], actual_parameter_block_sizes[i]);
-    num_parameters += parameter_block_sizes[i];
+  std::vector<double> parameters(num_parameters);
+  std::iota(parameters.begin(), parameters.end(), 1.0);
+
+  std::vector<double> residuals(num_residuals);
+  std::vector<double> jacobians(num_parameters * num_residuals);
+  std::vector<double> actual_residuals(num_residuals);
+  std::vector<double> actual_jacobians(num_parameters * num_residuals);
+
+  std::vector<double*> parameter_blocks;
+  std::vector<double*> jacobian_blocks;
+  std::vector<double*> actual_jacobian_blocks;
+  int offset = 0;
+  for (const int32_t parameter_block_size : parameter_block_sizes) {
+    parameter_blocks.push_back(parameters.data() + offset);
+    jacobian_blocks.push_back(jacobians.data() + offset * num_residuals);
+    actual_jacobian_blocks.push_back(actual_jacobians.data() +
+                                     offset * num_residuals);
+    offset += parameter_block_size;
   }
 
-  std::unique_ptr<double[]> parameters(new double[num_parameters]);
-  for (int i = 0; i < num_parameters; ++i) {
-    parameters[i] = static_cast<double>(i) + 1.0;
-  }
+  ASSERT_TRUE(cost_function.Evaluate(
+      parameter_blocks.data(), residuals.data(), nullptr));
+  ASSERT_TRUE(actual_cost_function.Evaluate(
+      parameter_blocks.data(), actual_residuals.data(), nullptr));
+  EXPECT_THAT(actual_residuals, Pointwise(DoubleNear(kTolerance), residuals));
 
-  std::unique_ptr<double[]> residuals(new double[num_residuals]);
-  std::unique_ptr<double[]> jacobians(
-      new double[num_parameters * num_residuals]);
-
-  std::unique_ptr<double[]> actual_residuals(new double[num_residuals]);
-  std::unique_ptr<double[]> actual_jacobians(
-      new double[num_parameters * num_residuals]);
-
-  std::unique_ptr<double*[]> parameter_blocks(
-      new double*[parameter_block_sizes.size()]);
-  std::unique_ptr<double*[]> jacobian_blocks(
-      new double*[parameter_block_sizes.size()]);
-  std::unique_ptr<double*[]> actual_jacobian_blocks(
-      new double*[parameter_block_sizes.size()]);
-
-  num_parameters = 0;
-  for (int i = 0; i < parameter_block_sizes.size(); ++i) {
-    parameter_blocks[i] = parameters.get() + num_parameters;
-    jacobian_blocks[i] = jacobians.get() + num_parameters * num_residuals;
-    actual_jacobian_blocks[i] =
-        actual_jacobians.get() + num_parameters * num_residuals;
-    num_parameters += parameter_block_sizes[i];
-  }
-
-  EXPECT_TRUE(
-      cost_function.Evaluate(parameter_blocks.get(), residuals.get(), nullptr));
-  EXPECT_TRUE(actual_cost_function.Evaluate(
-      parameter_blocks.get(), actual_residuals.get(), nullptr));
-  for (int i = 0; i < num_residuals; ++i) {
-    EXPECT_NEAR(residuals[i], actual_residuals[i], kTolerance)
-        << "residual id: " << i;
-  }
-
-  EXPECT_TRUE(cost_function.Evaluate(
-      parameter_blocks.get(), residuals.get(), jacobian_blocks.get()));
-  EXPECT_TRUE(actual_cost_function.Evaluate(parameter_blocks.get(),
-                                            actual_residuals.get(),
-                                            actual_jacobian_blocks.get()));
-  for (int i = 0; i < num_residuals; ++i) {
-    EXPECT_NEAR(residuals[i], actual_residuals[i], kTolerance)
-        << "residual : " << i;
-  }
-
-  for (int i = 0; i < num_residuals * num_parameters; ++i) {
-    EXPECT_NEAR(jacobians[i], actual_jacobians[i], kTolerance)
-        << "jacobian : " << i << " " << jacobians[i] << " "
-        << actual_jacobians[i];
-  }
+  ASSERT_TRUE(cost_function.Evaluate(
+      parameter_blocks.data(), residuals.data(), jacobian_blocks.data()));
+  ASSERT_TRUE(actual_cost_function.Evaluate(parameter_blocks.data(),
+                                            actual_residuals.data(),
+                                            actual_jacobian_blocks.data()));
+  EXPECT_THAT(actual_residuals, Pointwise(DoubleNear(kTolerance), residuals));
+  EXPECT_THAT(actual_jacobians, Pointwise(DoubleNear(kTolerance), jacobians));
 }
 
 struct OneParameterBlockFunctor {

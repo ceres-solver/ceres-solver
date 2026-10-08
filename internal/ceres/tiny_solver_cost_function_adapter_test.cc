@@ -36,9 +36,13 @@
 #include "Eigen/Core"
 #include "ceres/cost_function.h"
 #include "ceres/sized_cost_function.h"
+#include "ceres/test_util.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
+
+using internal::MatrixRelativelyNear;
 
 class CostFunction2x3 : public SizedCostFunction<2, 3> {
   bool Evaluate(double const* const* parameters,
@@ -74,13 +78,14 @@ void TestHelper() {
       TinySolverCostFunctionAdapter<kNumResiduals, kNumParameters,
                                     kMaxResiduals, kMaxParameters>;
   CostFunctionAdapter cfa(*cost_function);
-  EXPECT_EQ(CostFunctionAdapter::NUM_RESIDUALS, kNumResiduals);
-  EXPECT_EQ(CostFunctionAdapter::NUM_PARAMETERS, kNumParameters);
+  static_assert(CostFunctionAdapter::NUM_RESIDUALS == kNumResiduals);
+  static_assert(CostFunctionAdapter::NUM_PARAMETERS == kNumParameters);
 
   EXPECT_EQ(cfa.NumResiduals(), 2);
   EXPECT_EQ(cfa.NumParameters(), 3);
 
-  Eigen::Matrix<double, 2, 1> actual_residuals, expected_residuals;
+  Eigen::Matrix<double, 2, 1> actual_residuals;
+  Eigen::Matrix<double, 2, 1> expected_residuals;
   Eigen::Matrix<double, 2, 3, Eigen::ColMajor> actual_jacobian;
   Eigen::Matrix<double, 2, 3, Eigen::RowMajor> expected_jacobian;
 
@@ -88,33 +93,26 @@ void TestHelper() {
   double* parameters[1] = {xyz};
 
   // Check that residual only evaluation works.
-  cost_function->Evaluate(parameters, expected_residuals.data(), nullptr);
+  ASSERT_TRUE(
+      cost_function->Evaluate(parameters, expected_residuals.data(), nullptr));
   cfa(xyz, actual_residuals.data(), nullptr);
-  EXPECT_NEAR(
-      (expected_residuals - actual_residuals).norm() / actual_residuals.norm(),
-      0.0,
-      std::numeric_limits<double>::epsilon())
-      << "\nExpected residuals: " << expected_residuals.transpose()
-      << "\nActual residuals: " << actual_residuals.transpose();
+  EXPECT_THAT(actual_residuals,
+              MatrixRelativelyNear(expected_residuals,
+                                   std::numeric_limits<double>::epsilon()));
 
   // Check that residual and jacobian evaluation works.
   double* jacobians[1] = {expected_jacobian.data()};
-  cost_function->Evaluate(parameters, expected_residuals.data(), jacobians);
+  ASSERT_TRUE(cost_function->Evaluate(
+      parameters, expected_residuals.data(), jacobians));
   cfa(xyz, actual_residuals.data(), actual_jacobian.data());
 
-  EXPECT_NEAR(
-      (expected_residuals - actual_residuals).norm() / actual_residuals.norm(),
-      0.0,
-      std::numeric_limits<double>::epsilon())
-      << "\nExpected residuals: " << expected_residuals.transpose()
-      << "\nActual residuals: " << actual_residuals.transpose();
+  EXPECT_THAT(actual_residuals,
+              MatrixRelativelyNear(expected_residuals,
+                                   std::numeric_limits<double>::epsilon()));
 
-  EXPECT_NEAR(
-      (expected_jacobian - actual_jacobian).norm() / actual_jacobian.norm(),
-      0.0,
-      std::numeric_limits<double>::epsilon())
-      << "\nExpected jacobian: " << expected_jacobian.transpose()
-      << "\nActual jacobian: " << actual_jacobian.transpose();
+  EXPECT_THAT(actual_jacobian,
+              MatrixRelativelyNear(expected_jacobian,
+                                   std::numeric_limits<double>::epsilon()));
 }
 
 TEST(TinySolverCostFunctionAdapter, StaticResidualsStaticParameterBlock) {

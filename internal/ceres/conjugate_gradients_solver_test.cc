@@ -35,14 +35,19 @@
 
 #include <memory>
 
+#include "absl/types/span.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
 #include "ceres/preconditioner.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
+
+using ::testing::DoubleEq;
+using ::testing::ElementsAre;
 
 TEST(ConjugateGradientTest, Solves3x3IdentitySystem) {
   double diagonal[] = {1.0, 1.0, 1.0};
@@ -82,12 +87,11 @@ TEST(ConjugateGradientTest, Solves3x3IdentitySystem) {
   EXPECT_EQ(summary.termination_type, LinearSolverTerminationType::SUCCESS);
   ASSERT_EQ(summary.num_iterations, 1);
 
-  ASSERT_DOUBLE_EQ(1, x(0));
-  ASSERT_DOUBLE_EQ(2, x(1));
-  ASSERT_DOUBLE_EQ(3, x(2));
+  EXPECT_THAT(absl::MakeConstSpan(x),
+              ElementsAre(DoubleEq(1), DoubleEq(2), DoubleEq(3)));
 }
 
-TEST(ConjuateGradientTest, Solves3x3SymmetricSystem) {
+TEST(ConjugateGradientTest, Solves3x3SymmetricSystem) {
   std::unique_ptr<TripletSparseMatrix> A(new TripletSparseMatrix(3, 3, 9));
   Vector b(3);
   Vector x(3);
@@ -147,9 +151,8 @@ TEST(ConjuateGradientTest, Solves3x3SymmetricSystem) {
 
   EXPECT_EQ(summary.termination_type, LinearSolverTerminationType::SUCCESS);
 
-  ASSERT_DOUBLE_EQ(0, x(0));
-  ASSERT_DOUBLE_EQ(1, x(1));
-  ASSERT_DOUBLE_EQ(2, x(2));
+  EXPECT_THAT(absl::MakeConstSpan(x),
+              ElementsAre(DoubleEq(0), DoubleEq(1), DoubleEq(2)));
 }
 
 }  // namespace ceres::internal

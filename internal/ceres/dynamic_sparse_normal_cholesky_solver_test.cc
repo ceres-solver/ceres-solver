@@ -32,6 +32,7 @@
 #include <utility>
 
 #include "Eigen/Cholesky"
+#include "absl/types/span.h"
 #include "ceres/casts.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/context_impl.h"
@@ -41,10 +42,14 @@
 #include "ceres/linear_solver.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {
+
+using ::testing::DoubleNear;
+using ::testing::Pointwise;
 
 // TODO(sameeragarwal): These tests needs to be re-written to be more
 // thorough, they do not really test the dynamic nature of the
@@ -86,11 +91,9 @@ class DynamicSparseNormalCholeskySolverTest : public ::testing::Test {
 
     EXPECT_EQ(summary.termination_type, LinearSolverTerminationType::SUCCESS);
 
-    for (int i = 0; i < A_->num_cols(); ++i) {
-      EXPECT_NEAR(expected_solution(i), actual_solution(i), 1e-8)
-          << "\nExpected: " << expected_solution.transpose()
-          << "\nActual: " << actual_solution.transpose();
-    }
+    EXPECT_THAT(
+        absl::MakeConstSpan(actual_solution),
+        Pointwise(DoubleNear(1e-8), absl::MakeConstSpan(expected_solution)));
   }
 
   void TestSolver(

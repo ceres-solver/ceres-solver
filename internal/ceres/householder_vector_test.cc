@@ -30,10 +30,15 @@
 
 #include "ceres/internal/householder_vector.h"
 
+#include "absl/types/span.h"
 #include "ceres/internal/eigen.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
+
+using ::testing::DoubleNear;
+using ::testing::Pointwise;
 
 static void HouseholderTestHelper(const Vector& x) {
   const double kTolerance = 1e-14;
@@ -53,9 +58,9 @@ static void HouseholderTestHelper(const Vector& x) {
   expected_result(x.rows() - 1) = 1;
   expected_result *= x.norm();
 
-  for (int i = 0; i < x.rows(); ++i) {
-    EXPECT_NEAR(expected_result[i], result[i], kTolerance);
-  }
+  EXPECT_THAT(
+      absl::MakeConstSpan(result),
+      Pointwise(DoubleNear(kTolerance), absl::MakeConstSpan(expected_result)));
 }
 
 TEST(HouseholderVector, ZeroPositive) {

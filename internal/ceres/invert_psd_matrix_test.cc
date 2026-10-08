@@ -31,6 +31,8 @@
 #include "ceres/invert_psd_matrix.h"
 
 #include "ceres/internal/eigen.h"
+#include "ceres/test_util.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
@@ -53,9 +55,8 @@ typename EigenTypes<kSize, kSize>::Matrix RandomPSDMatrixWithEigenValues(
 TEST(InvertPSDMatrix, Identity3x3) {
   const Matrix m = Matrix::Identity(3, 3);
   const Matrix inverse_m = InvertPSDMatrix<3>(kFullRank, m);
-  EXPECT_NEAR((inverse_m - m).norm() / m.norm(),
-              0.0,
-              std::numeric_limits<double>::epsilon());
+  EXPECT_THAT(inverse_m,
+              MatrixRelativelyNear(m, std::numeric_limits<double>::epsilon()));
 }
 
 TEST(InvertPSDMatrix, FullRank5x5) {
@@ -64,9 +65,11 @@ TEST(InvertPSDMatrix, FullRank5x5) {
   eigenvalues = eigenvalues.array().abs().matrix();
   const Matrix m = RandomPSDMatrixWithEigenValues<5>(eigenvalues);
   const Matrix inverse_m = InvertPSDMatrix<5>(kFullRank, m);
-  EXPECT_NEAR((m * inverse_m - Matrix::Identity(5, 5)).norm() / 5.0,
-              0.0,
-              10 * std::numeric_limits<double>::epsilon());
+  // The tolerance applies to the norm of the difference divided by the
+  // dimension.
+  EXPECT_THAT(m * inverse_m,
+              MatrixNear(Matrix::Identity(5, 5),
+                         5 * 10 * std::numeric_limits<double>::epsilon()));
 }
 
 TEST(InvertPSDMatrix, RankDeficient5x5) {
@@ -76,11 +79,9 @@ TEST(InvertPSDMatrix, RankDeficient5x5) {
   eigenvalues(3) = 0.0;
   const Matrix m = RandomPSDMatrixWithEigenValues<5>(eigenvalues);
   const Matrix inverse_m = InvertPSDMatrix<5>(kRankDeficient, m);
-  Matrix pseudo_identity = Matrix::Identity(5, 5);
-  pseudo_identity(3, 3) = 0.0;
-  EXPECT_NEAR((m * inverse_m * m - m).norm() / m.norm(),
-              0.0,
-              10 * std::numeric_limits<double>::epsilon());
+  EXPECT_THAT(
+      m * inverse_m * m,
+      MatrixRelativelyNear(m, 10 * std::numeric_limits<double>::epsilon()));
 }
 
 TEST(InvertPSDMatrix, DynamicFullRank5x5) {
@@ -89,9 +90,11 @@ TEST(InvertPSDMatrix, DynamicFullRank5x5) {
   eigenvalues = eigenvalues.array().abs().matrix();
   const Matrix m = RandomPSDMatrixWithEigenValues<Eigen::Dynamic>(eigenvalues);
   const Matrix inverse_m = InvertPSDMatrix<Eigen::Dynamic>(kFullRank, m);
-  EXPECT_NEAR((m * inverse_m - Matrix::Identity(5, 5)).norm() / 5.0,
-              0.0,
-              10 * std::numeric_limits<double>::epsilon());
+  // The tolerance applies to the norm of the difference divided by the
+  // dimension.
+  EXPECT_THAT(m * inverse_m,
+              MatrixNear(Matrix::Identity(5, 5),
+                         5 * 10 * std::numeric_limits<double>::epsilon()));
 }
 
 TEST(InvertPSDMatrix, DynamicRankDeficient5x5) {
@@ -101,11 +104,9 @@ TEST(InvertPSDMatrix, DynamicRankDeficient5x5) {
   eigenvalues(3) = 0.0;
   const Matrix m = RandomPSDMatrixWithEigenValues<Eigen::Dynamic>(eigenvalues);
   const Matrix inverse_m = InvertPSDMatrix<Eigen::Dynamic>(kRankDeficient, m);
-  Matrix pseudo_identity = Matrix::Identity(5, 5);
-  pseudo_identity(3, 3) = 0.0;
-  EXPECT_NEAR((m * inverse_m * m - m).norm() / m.norm(),
-              0.0,
-              10 * std::numeric_limits<double>::epsilon());
+  EXPECT_THAT(
+      m * inverse_m * m,
+      MatrixRelativelyNear(m, 10 * std::numeric_limits<double>::epsilon()));
 }
 
 }  // namespace ceres::internal

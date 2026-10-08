@@ -43,9 +43,13 @@
 #include "ceres/numeric_diff_test_utils.h"
 #include "ceres/test_util.h"
 #include "ceres/types.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
+
+using ::testing::DoubleEq;
+using ::testing::Pointwise;
 
 TEST(NumericDiffCostFunction, EasyCaseFunctorCentralDifferences) {
   auto cost_function =
@@ -417,9 +421,7 @@ TEST(NumericDiffCostFunction, ParameterBlockConstant) {
     ASSERT_TRUE(cost_function->Evaluate(
         parameter_blocks.data(), residuals.data(), jacobian.data()));
 
-    for (int i = 0; i < kNumResiduals * kX2; ++i) {
-      EXPECT_DOUBLE_EQ(jacobian_full_vect[1][i], jacobian_vect[i]);
-    }
+    EXPECT_THAT(jacobian_vect, Pointwise(DoubleEq(), jacobian_full_vect[1]));
   }
 
   // Evaluate and check jacobian when second parameter block is constant.
@@ -430,9 +432,7 @@ TEST(NumericDiffCostFunction, ParameterBlockConstant) {
     ASSERT_TRUE(cost_function->Evaluate(
         parameter_blocks.data(), residuals.data(), jacobian.data()));
 
-    for (int i = 0; i < kNumResiduals * kX1; ++i) {
-      EXPECT_DOUBLE_EQ(jacobian_full_vect[0][i], jacobian_vect[i]);
-    }
+    EXPECT_THAT(jacobian_vect, Pointwise(DoubleEq(), jacobian_full_vect[0]));
   }
 }
 
