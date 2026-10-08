@@ -42,15 +42,15 @@ namespace ceres {
 namespace internal {
 
 // If rho[1] is zero, the Corrector constructor should crash.
-TEST(Corrector, ZeroGradientDeathTest) {
+TEST(CorrectorDeathTest, ZeroGradient) {
   const double kRho[] = {0.0, 0.0, 1.0};
-  EXPECT_DEATH_IF_SUPPORTED({ Corrector c(1.0, kRho); }, ".*");
+  EXPECT_DEATH_IF_SUPPORTED({ Corrector c(1.0, kRho); }, "rho\\[1\\] > 0");
 }
 
 // If rho[1] is negative, the Corrector constructor should crash.
-TEST(Corrector, NegativeGradientDeathTest) {
+TEST(CorrectorDeathTest, NegativeGradient) {
   const double kRho[] = {0.0, -0.1, 1.0};
-  EXPECT_DEATH_IF_SUPPORTED({ Corrector c(1.0, kRho); }, ".*");
+  EXPECT_DEATH_IF_SUPPORTED({ Corrector c(1.0, kRho); }, "rho\\[1\\] > 0");
 }
 
 TEST(Corrector, ScalarCorrection) {
