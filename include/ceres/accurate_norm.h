@@ -65,8 +65,6 @@
 #include <type_traits>
 #include <utility>
 
-#include "ceres/internal/compensated_math.h"
-
 namespace ceres {
 
 namespace internal {
@@ -211,6 +209,18 @@ inline T MaximumMagnitude(T x, Args... args) noexcept {
   T maximum = fabs(x);
   ((maximum = fmax(maximum, T(fabs(args)))), ...);
   return maximum;
+}
+
+// Similar to Fast2Sum, but without requiring ordering or a specific radix.
+template <typename T>
+constexpr std::pair<T, T> TwoSum(T a, T b) noexcept {
+  const T s = a + b;
+  const T a_prime = s - b;
+  const T b_prime = s - a_prime;
+  const T delta_a = a - a_prime;
+  const T delta_b = b - b_prime;
+  const T t = delta_a + delta_b;
+  return std::make_pair(s, t);
 }
 
 // Computes the sum of squares x^2 + y^2 + ... as the rounded sum and its
