@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "466de5dd_53f8b1ae",
+        "filename": "internal/ceres/schur_complement_solver_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-08T23:39:43Z",
+      "side": 1,
+      "message": "don\u0027t we need eigen_metis guard also?",
+      "range": {
+        "startLine": 214,
+        "startChar": 8,
+        "endLine": 214,
+        "endChar": 34
+      },
+      "revId": "c5e5aa40be7a168ed50302726a20f0d2f7be6555",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
