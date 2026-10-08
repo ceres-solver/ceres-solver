@@ -99,42 +99,68 @@ jobs:
         build_type:
           - Release
         msvc:
-          - VS-17-2022
+          - VS-18-2026
         lib:
           - shared
         gpu:
           - cuda
           - no-cuda
         include:
-          - msvc: VS-17-2022
-            os: windows-2022
-            generator: 'Visual Studio 17 2022'
-            marker: vc17
+          - msvc: VS-18-2026
+            os: windows-2025-vs2026
+            generator: 'Visual Studio 18 2026'
+            marker: vc18
 
     steps:
       - uses: actions/checkout@v4
         with:
           submodules: recursive
 
+      - name: Cache CUDA toolkit
+        if: matrix.gpu == 'cuda'
+        id: cache-cuda
+        uses: actions/cache@v4
+        with:
+          path: |
+            C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3
+            C:/Program Files/Microsoft Visual Studio/18/Enterprise/MSBuild/Microsoft/VC/v180/BuildCustomizations
+          key: ${{runner.os}}-${{matrix.msvc}}-cuda-13.3.0-v1
+
       - name: Download and install CUDA toolkit
+        if: matrix.gpu == 'cuda' && steps.cache-cuda.outputs.cache-hit != 'true'
+        run: |
+          Invoke-WebRequest https://developer.download.nvidia.com/compute/cuda/13.3.0/network_installers/cuda_13.3.0_windows_network.exe -OutFile cuda_toolkit_windows.exe
+          Start-Process -Wait -FilePath .\cuda_toolkit_windows.exe -ArgumentList "-s crt_13.3 cusolver_dev_13.3 cusparse_dev_13.3 cublas_dev_13.3 thrust_13.3 nvcc_13.3 nvvm_13.3 cudart_13.3 nvrtc_dev_13.3 visual_studio_integration_13.3"
+          Remove-Item .\cuda_toolkit_windows.exe
+
+      - name: Setup CUDA environment
         if: matrix.gpu == 'cuda'
         run: |
-          Invoke-WebRequest https://developer.download.nvidia.com/compute/cuda/12.5.1/network_installers/cuda_12.5.1_windows_network.exe -OutFile cuda_toolkit_windows.exe
-          Start-Process -Wait -FilePath .\cuda_toolkit_windows.exe -ArgumentList "-s cusolver_dev_12.5 cusparse_dev_12.5 cublas_dev_12.5 thrust_12.5 nvcc_12.5 cudart_12.5 nvrtc_dev_12.5 visual_studio_integration_12.5"
-          Remove-Item .\cuda_toolkit_windows.exe
-          $CUDA_PATH = "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.5"
+          $CUDA_PATH = "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.3"
           echo "CUDA_PATH=$CUDA_PATH" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          echo "CUDA_PATH_V12_5=$CUDA_PATH" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "CUDA_PATH_V13_3=$CUDA_PATH" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           echo "$CUDA_PATH/bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
-      - name: Setup cuDSS
+      - name: Cache cuDSS
+        if: matrix.gpu == 'cuda'
+        id: cache-cudss
+        uses: actions/cache@v4
+        with:
+          path: ${{github.workspace}}/libcudss-windows-x86_64-0.8.0.10_cuda13-archive
+          key: ${{runner.os}}-${{matrix.msvc}}-cudss-0.8.0.10-cuda13-v1
+
+      - name: Download and extract cuDSS
+        if: matrix.gpu == 'cuda' && steps.cache-cudss.outputs.cache-hit != 'true'
+        run: |
+          $CUDSS_ARCHIVE = "${{github.workspace}}/libcudss-windows-x86_64-0.8.0.10_cuda13-archive.zip"
+          Invoke-WebRequest https://developer.download.nvidia.com/compute/cudss/redist/libcudss/windows-x86_64/libcudss-windows-x86_64-0.8.0.10_cuda13-archive.zip -OutFile $CUDSS_ARCHIVE
+          Expand-Archive -Path $CUDSS_ARCHIVE -DestinationPath "${{github.workspace}}"
+          Remove-Item $CUDSS_ARCHIVE
+
+      - name: Setup cuDSS environment
         if: matrix.gpu == 'cuda'
         run: |
-          Invoke-WebRequest https://developer.download.nvidia.com/compute/cudss/redist/libcudss/windows-x86_64/libcudss-windows-x86_64-0.3.0.9_cuda12-archive.zip -OutFile libcudss-windows-x86_64-0.3.0.9_cuda12-archive.zip
-          Expand-Archive -Path .\libcudss-windows-x86_64-0.3.0.9_cuda12-archive.zip -DestinationPath "C:/"
-          Remove-Item .\libcudss-windows-x86_64-0.3.0.9_cuda12-archive.zip
-          $CUDSS_PATH = "C:/libcudss-windows-x86_64-0.3.0.9_cuda12-archive/"
-          $CUDSS_CMAKE_CONFIG = "$CUDSS_PATH/lib/cmake/cudss/cudss-config.cmake"
+          $CUDSS_PATH = "${{github.workspace}}/libcudss-windows-x86_64-0.8.0.10_cuda13-archive/"
           echo "cudss_DIR=$CUDSS_PATH/lib/cmake/cudss" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           echo "$CUDSS_PATH/bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
@@ -143,12 +169,12 @@ jobs:
         uses: actions/cache@v4
         with:
           path: suitesparse/
-          key: ${{matrix.msvc}}-suitesparse-5.13.0-cmake.3-${{matrix.arch}}-${{matrix.build_type}}-${{matrix.lib}}
+          key: ${{matrix.msvc}}-suitesparse-5.13.0-cmake.5-${{matrix.arch}}-${{matrix.build_type}}-${{matrix.lib}}
 
       - name: Download SuiteSparse
         if: steps.cache-suitesparse.outputs.cache-hit != 'true'
         run: |
-          (New-Object System.Net.WebClient).DownloadFile("https://github.com/sergiud/SuiteSparse/releases/download/5.13.0-cmake.3/SuiteSparse-5.13.0-cmake.3-${{matrix.marker}}-Win64-${{matrix.build_type}}-${{matrix.lib}}-gpl-metis.zip", "suitesparse.zip");
+          (New-Object System.Net.WebClient).DownloadFile("https://github.com/sergiud/SuiteSparse/releases/download/5.13.0-cmake.5/SuiteSparse-5.13.0-cmake.5-${{matrix.marker}}-Win64-${{matrix.build_type}}-${{matrix.lib}}-gpl-metis.zip", "suitesparse.zip");
           Expand-Archive -Path suitesparse.zip -DestinationPath ${{github.workspace}}/suitesparse;
 
       - name: Cache Eigen
