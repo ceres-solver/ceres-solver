@@ -71,29 +71,15 @@ namespace ceres {
 
 namespace internal {
 
-// Helper trait to promote integral types to double and keep floating-point
-// types unchanged.
-template <typename T, typename Enable = void>
-struct Promote {};
-
-template <typename T>
-struct Promote<T, std::enable_if_t<std::is_integral_v<T>>> {
-  // The canonical floating-point type for integral inputs.
-  using type = double;
-};
-
-template <typename T>
-struct Promote<T, std::enable_if_t<std::is_floating_point_v<T>>> {
-  // Identity mapping.
-  using type = T;
-};
+// Promotes integral types to double and keeps floating-point types unchanged.
+template <typename T, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
+using Promote = std::conditional_t<std::is_integral_v<T>, double, T>;
 
 // The type of the sum of the promoted arguments, e.g., double if any argument
 // is integral and float if all arguments are float. References and
 // cv-qualifiers of the argument types are ignored.
 template <typename... Ts>
-using Promote_t =
-    decltype((typename Promote<std::decay_t<Ts>>::type(0) + ... + 0));
+using Promote_t = decltype((Promote<std::decay_t<Ts>>(0) + ... + 0));
 
 // Computes 2^exponent exactly. Unlike std::scalbn, the function can be
 // evaluated in constant expressions which avoids runtime library calls for
@@ -132,13 +118,10 @@ constexpr int CeilLog2(int n) noexcept {
   return result;
 }
 
-// The second template parameter allows this trait to be customized using
-// SFINAE.
-//
 // In the following, p denotes the precision of T, and e_min and e_max denote
 // its minimum and maximum exponent as defined by IEEE 754, i.e.,
 // std::numeric_limits<T>::min_exponent − 1 and max_exponent − 1, respectively.
-template <typename T, typename Enable = void>
+template <typename T>
 struct AccurateNormTraits {
   // Smallest magnitude x whose square has an exactly representable rounding
   // error. The error is a multiple of ulp(x)² = 𝛽^(2(e−p+1)) for
@@ -209,7 +192,7 @@ inline T MaximumMagnitude(T x, Args... args) noexcept {
   }
 
   T maximum = fabs(x);
-  ((maximum = fmax(maximum, T(fabs(args)))), ...);
+  ((maximum = fmax(maximum, fabs(args))), ...);
   return maximum;
 }
 
@@ -313,7 +296,6 @@ inline auto AccurateNorm(T a, T b, Args... args)
     -> std::enable_if_t<std::is_floating_point_v<T> &&
                             (std::is_same_v<T, Args> && ...),
                         T> {
-  using std::fpclassify;
   using std::isfinite;
 
   const T maximum = internal::MaximumMagnitude(a, b, args...);
@@ -322,7 +304,7 @@ inline auto AccurateNorm(T a, T b, Args... args)
     return maximum;
   }
 
-  if (fpclassify(maximum) == FP_ZERO) {
+  if (maximum == 0) {
     return 0;
   }
 
@@ -371,7 +353,6 @@ inline auto AccurateRNorm(T a, T b, Args... args)
     -> std::enable_if_t<std::is_floating_point_v<T> &&
                             (std::is_same_v<T, Args> && ...),
                         T> {
-  using std::fpclassify;
   using std::isinf;
   using std::isnan;
 
@@ -385,7 +366,7 @@ inline auto AccurateRNorm(T a, T b, Args... args)
     return maximum;
   }
 
-  if (fpclassify(maximum) == FP_ZERO) {
+  if (maximum == 0) {
     return std::numeric_limits<T>::quiet_NaN();
   }
 
@@ -407,15 +388,15 @@ inline auto AccurateRNorm(T a, T b, Args... args)
     return UnscaledAccurateRNorm(a * down, b * down, args * down...) * down;
   }
 
+  if (maximum < AccurateNormTraits<T>::Tiny()) {
+    return UnscaledAccurateRNorm(a * up, b * up, args * up...) * up;
+  }
+
+  // A largest magnitude in [Tiny(), UnscaledMinimum()) only needs to be scaled
+  // by 𝛽^p to reach UnscaledMinimum(); scaling it by `up` could exceed
+  // ReciprocalUnscaledMaximum().
   if (maximum < AccurateNormTraits<T>::UnscaledMinimum()) {
-    // Only a largest magnitude below Tiny() requires the larger power to make
-    // the rounding errors of the squares of subnormal arguments exact. Scaling
-    // a larger magnitude by that power could exceed
-    // ReciprocalUnscaledMaximum(). Scaling by 𝛽^p instead suffices to reach
-    // UnscaledMinimum().
-    const T scale = maximum < AccurateNormTraits<T>::Tiny()
-                        ? up
-                        : PowerOfTwo<T>(std::numeric_limits<T>::digits);
+    constexpr T scale = PowerOfTwo<T>(std::numeric_limits<T>::digits);
     return UnscaledAccurateRNorm(a * scale, b * scale, args * scale...) * scale;
   }
 
