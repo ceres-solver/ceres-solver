@@ -32,6 +32,7 @@
 
 #include <memory>
 #include <random>
+#include <tuple>
 
 #include "Eigen/Dense"
 #include "Eigen/SparseCore"
@@ -40,49 +41,21 @@
 #include "ceres/inner_product_computer.h"
 #include "ceres/internal/config.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/test_util.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
 
 namespace {
 
-// TODO(sameeragarwal): Refactor the following two functions out of
-// here and sparse_cholesky_test.cc into a more suitable place.
-template <int UpLoType>
-bool SolveLinearSystemUsingEigen(const Matrix& lhs,
-                                 const Vector rhs,
-                                 Vector* solution) {
-  Eigen::LLT<Matrix, UpLoType> llt = lhs.selfadjointView<UpLoType>().llt();
-  if (llt.info() != Eigen::Success) {
-    return false;
-  }
-  *solution = llt.solve(rhs);
-  return (llt.info() == Eigen::Success);
-}
-
-// Use Eigen's Dense Cholesky solver to compute the solution to a
-// sparse linear system.
-bool ComputeExpectedSolution(const CompressedRowSparseMatrix& lhs,
-                             const Vector& rhs,
-                             Vector* solution) {
-  Matrix dense_triangular_lhs;
-  lhs.ToDenseMatrix(&dense_triangular_lhs);
-  if (lhs.storage_type() ==
-      CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR) {
-    Matrix full_lhs = dense_triangular_lhs.selfadjointView<Eigen::Upper>();
-    return SolveLinearSystemUsingEigen<Eigen::Upper>(full_lhs, rhs, solution);
-  }
-  return SolveLinearSystemUsingEigen<Eigen::Lower>(
-      dense_triangular_lhs, rhs, solution);
-}
-
-using Param = ::testing::tuple<SparseLinearAlgebraLibraryType, bool>;
+using Param = std::tuple<SparseLinearAlgebraLibraryType, bool>;
 
 std::string ParamInfoToString(testing::TestParamInfo<Param> info) {
   Param param = info.param;
   std::stringstream ss;
-  ss << SparseLinearAlgebraLibraryTypeToString(::testing::get<0>(param)) << "_"
-     << (::testing::get<1>(param) ? "Diagonal" : "NoDiagonal");
+  ss << SparseLinearAlgebraLibraryTypeToString(std::get<0>(param)) << "_"
+     << (std::get<1>(param) ? "Diagonal" : "NoDiagonal");
   return ss.str();
 }
 
@@ -139,10 +112,10 @@ TEST_P(SubsetPreconditionerTest, foo) {
   Param param = GetParam();
   Preconditioner::Options options;
   options.subset_preconditioner_start_row_block = start_row_block_;
-  options.sparse_linear_algebra_library_type = ::testing::get<0>(param);
+  options.sparse_linear_algebra_library_type = std::get<0>(param);
   preconditioner_ = std::make_unique<SubsetPreconditioner>(options, *m_);
 
-  const bool with_diagonal = ::testing::get<1>(param);
+  const bool with_diagonal = std::get<1>(param);
   if (!with_diagonal) {
     m_->AppendRows(*block_diagonal_);
   }
@@ -157,20 +130,18 @@ TEST_P(SubsetPreconditionerTest, foo) {
     CompressedRowSparseMatrix* lhs = inner_product_computer_->mutable_result();
     Vector rhs = Vector::Random(lhs->num_rows());
     Vector expected(lhs->num_rows());
-    EXPECT_TRUE(ComputeExpectedSolution(*lhs, rhs, &expected));
+    ASSERT_TRUE(SolveUsingDenseCholesky(*lhs, rhs, &expected));
 
     Vector actual(lhs->num_rows());
     preconditioner_->RightMultiplyAndAccumulate(rhs.data(), actual.data());
 
     Matrix eigen_lhs;
     lhs->ToDenseMatrix(&eigen_lhs);
-    EXPECT_NEAR((actual - expected).norm() / actual.norm(),
-                0.0,
-                std::numeric_limits<double>::epsilon() * 10)
-        << "\n"
-        << eigen_lhs << "\n"
-        << expected.transpose() << "\n"
-        << actual.transpose();
+    EXPECT_THAT(actual,
+                MatrixRelativelyNear(
+                    expected, std::numeric_limits<double>::epsilon() * 10))
+        << "lhs:\n"
+        << eigen_lhs;
   }
 }
 

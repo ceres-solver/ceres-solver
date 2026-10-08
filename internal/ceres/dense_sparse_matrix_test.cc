@@ -39,31 +39,12 @@
 #include "ceres/casts.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
+#include "ceres/test_util.h"
 #include "ceres/triplet_sparse_matrix.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
-
-static void CompareMatrices(const SparseMatrix* a, const SparseMatrix* b) {
-  EXPECT_EQ(a->num_rows(), b->num_rows());
-  EXPECT_EQ(a->num_cols(), b->num_cols());
-
-  int num_rows = a->num_rows();
-  int num_cols = a->num_cols();
-
-  for (int i = 0; i < num_cols; ++i) {
-    Vector x = Vector::Zero(num_cols);
-    x(i) = 1.0;
-
-    Vector y_a = Vector::Zero(num_rows);
-    Vector y_b = Vector::Zero(num_rows);
-
-    a->RightMultiplyAndAccumulate(x.data(), y_a.data());
-    b->RightMultiplyAndAccumulate(x.data(), y_b.data());
-
-    EXPECT_EQ((y_a - y_b).norm(), 0);
-  }
-}
 
 class DenseSparseMatrixTest : public ::testing::Test {
  protected:
@@ -71,7 +52,7 @@ class DenseSparseMatrixTest : public ::testing::Test {
     std::unique_ptr<LinearLeastSquaresProblem> problem =
         CreateLinearLeastSquaresProblemFromId(1);
 
-    ASSERT_TRUE(problem != nullptr);
+    ASSERT_NE(problem, nullptr);
 
     tsm.reset(down_cast<TripletSparseMatrix*>(problem->A.release()));
     dsm = std::make_unique<DenseSparseMatrix>(*tsm);
@@ -88,7 +69,8 @@ class DenseSparseMatrixTest : public ::testing::Test {
 };
 
 TEST_F(DenseSparseMatrixTest, RightMultiplyAndAccumulate) {
-  CompareMatrices(tsm.get(), dsm.get());
+  EXPECT_THAT(RightMultiplyByIdentity(*dsm),
+              MatrixNear(RightMultiplyByIdentity(*tsm), 0.0));
 
   // Try with a not entirely zero vector to verify column interactions, which
   // could be masked by a subtle bug when using the elementary vectors.
@@ -102,7 +84,7 @@ TEST_F(DenseSparseMatrixTest, RightMultiplyAndAccumulate) {
   tsm->RightMultiplyAndAccumulate(a.data(), b1.data());
   dsm->RightMultiplyAndAccumulate(a.data(), b2.data());
 
-  EXPECT_EQ((b1 - b2).norm(), 0);
+  EXPECT_THAT(b1, MatrixNear(b2, 0.0));
 }
 
 TEST_F(DenseSparseMatrixTest, LeftMultiplyAndAccumulate) {
@@ -116,7 +98,7 @@ TEST_F(DenseSparseMatrixTest, LeftMultiplyAndAccumulate) {
     tsm->LeftMultiplyAndAccumulate(a.data(), b1.data());
     dsm->LeftMultiplyAndAccumulate(a.data(), b2.data());
 
-    EXPECT_EQ((b1 - b2).norm(), 0);
+    EXPECT_THAT(b1, MatrixNear(b2, 0.0));
   }
 
   // Try with a not entirely zero vector to verify column interactions, which
@@ -131,7 +113,7 @@ TEST_F(DenseSparseMatrixTest, LeftMultiplyAndAccumulate) {
   tsm->LeftMultiplyAndAccumulate(a.data(), b1.data());
   dsm->LeftMultiplyAndAccumulate(a.data(), b2.data());
 
-  EXPECT_EQ((b1 - b2).norm(), 0);
+  EXPECT_THAT(b1, MatrixNear(b2, 0.0));
 }
 
 TEST_F(DenseSparseMatrixTest, ColumnNorm) {
@@ -141,7 +123,7 @@ TEST_F(DenseSparseMatrixTest, ColumnNorm) {
   tsm->SquaredColumnNorm(b1.data());
   dsm->SquaredColumnNorm(b2.data());
 
-  EXPECT_EQ((b1 - b2).norm(), 0);
+  EXPECT_THAT(b1, MatrixNear(b2, 0.0));
 }
 
 TEST_F(DenseSparseMatrixTest, Scale) {
@@ -151,7 +133,8 @@ TEST_F(DenseSparseMatrixTest, Scale) {
   }
   tsm->ScaleColumns(scale.data());
   dsm->ScaleColumns(scale.data());
-  CompareMatrices(tsm.get(), dsm.get());
+  EXPECT_THAT(RightMultiplyByIdentity(*dsm),
+              MatrixNear(RightMultiplyByIdentity(*tsm), 0.0));
 }
 
 TEST_F(DenseSparseMatrixTest, ToDenseMatrix) {
@@ -161,7 +144,7 @@ TEST_F(DenseSparseMatrixTest, ToDenseMatrix) {
   tsm->ToDenseMatrix(&tsm_dense);
   dsm->ToDenseMatrix(&dsm_dense);
 
-  EXPECT_EQ((tsm_dense - dsm_dense).norm(), 0.0);
+  EXPECT_THAT(tsm_dense, MatrixNear(dsm_dense, 0.0));
 }
 
 }  // namespace ceres::internal

@@ -38,42 +38,29 @@
 #include <vector>
 
 #include "Eigen/SparseCore"
+#include "absl/strings/str_format.h"
 #include "ceres/casts.h"
 #include "ceres/context_impl.h"
 #include "ceres/crs_matrix.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
+#include "ceres/test_util.h"
 #include "ceres/triplet_sparse_matrix.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
 
-static void CompareMatrices(const SparseMatrix* a, const SparseMatrix* b) {
-  EXPECT_EQ(a->num_rows(), b->num_rows());
-  EXPECT_EQ(a->num_cols(), b->num_cols());
-
-  int num_rows = a->num_rows();
-  int num_cols = a->num_cols();
-
-  for (int i = 0; i < num_cols; ++i) {
-    Vector x = Vector::Zero(num_cols);
-    x(i) = 1.0;
-
-    Vector y_a = Vector::Zero(num_rows);
-    Vector y_b = Vector::Zero(num_rows);
-
-    a->RightMultiplyAndAccumulate(x.data(), y_a.data());
-    b->RightMultiplyAndAccumulate(x.data(), y_b.data());
-    EXPECT_EQ((y_a - y_b).norm(), 0);
-  }
-}
+constexpr int kMinNumBlocks = 1;
+constexpr int kMaxNumBlocks = 10;
+constexpr int kNumTrials = 10;
 
 class CompressedRowSparseMatrixTest : public ::testing::Test {
  protected:
   void SetUp() final {
     auto problem = CreateLinearLeastSquaresProblemFromId(1);
 
-    ASSERT_TRUE(problem != nullptr);
+    ASSERT_NE(problem, nullptr);
 
     tsm.reset(down_cast<TripletSparseMatrix*>(problem->A.release()));
     crsm = CompressedRowSparseMatrix::FromTripletSparseMatrix(*tsm);
@@ -108,7 +95,8 @@ TEST_F(CompressedRowSparseMatrixTest, Scale) {
 
   tsm->ScaleColumns(scale.data());
   crsm->ScaleColumns(scale.data());
-  CompareMatrices(tsm.get(), crsm.get());
+  EXPECT_THAT(RightMultiplyByIdentity(*crsm),
+              MatrixNear(RightMultiplyByIdentity(*tsm), 0.0));
 }
 
 TEST_F(CompressedRowSparseMatrixTest, DeleteRows) {
@@ -119,7 +107,8 @@ TEST_F(CompressedRowSparseMatrixTest, DeleteRows) {
   for (int i = 0; i < num_rows; ++i) {
     tsm->Resize(num_rows - i, num_cols);
     crsm->DeleteRows(crsm->num_rows() - tsm->num_rows());
-    CompareMatrices(tsm.get(), crsm.get());
+    EXPECT_THAT(RightMultiplyByIdentity(*crsm),
+                MatrixNear(RightMultiplyByIdentity(*tsm), 0.0));
   }
 }
 
@@ -137,7 +126,8 @@ TEST_F(CompressedRowSparseMatrixTest, AppendRows) {
         CompressedRowSparseMatrix::FromTripletSparseMatrix(tsm_appendage);
 
     crsm->AppendRows(*crsm_appendage);
-    CompareMatrices(tsm.get(), crsm.get());
+    EXPECT_THAT(RightMultiplyByIdentity(*crsm),
+                MatrixNear(RightMultiplyByIdentity(*tsm), 0.0));
   }
 }
 
@@ -187,7 +177,7 @@ TEST_F(CompressedRowSparseMatrixTest, ToDenseMatrix) {
   tsm->ToDenseMatrix(&tsm_dense);
   crsm->ToDenseMatrix(&crsm_dense);
 
-  EXPECT_EQ((tsm_dense - crsm_dense).norm(), 0.0);
+  EXPECT_THAT(tsm_dense, MatrixNear(crsm_dense, 0.0));
 }
 
 TEST_F(CompressedRowSparseMatrixTest, ToCRSMatrix) {
@@ -195,18 +185,9 @@ TEST_F(CompressedRowSparseMatrixTest, ToCRSMatrix) {
   crsm->ToCRSMatrix(&crs_matrix);
   EXPECT_EQ(crsm->num_rows(), crs_matrix.num_rows);
   EXPECT_EQ(crsm->num_cols(), crs_matrix.num_cols);
-  EXPECT_EQ(crsm->num_rows() + 1, crs_matrix.rows.size());
-  EXPECT_EQ(crsm->num_nonzeros(), crs_matrix.cols.size());
-  EXPECT_EQ(crsm->num_nonzeros(), crs_matrix.values.size());
-
-  for (int i = 0; i < crsm->num_rows() + 1; ++i) {
-    EXPECT_EQ(crsm->rows()[i], crs_matrix.rows[i]);
-  }
-
-  for (int i = 0; i < crsm->num_nonzeros(); ++i) {
-    EXPECT_EQ(crsm->cols()[i], crs_matrix.cols[i]);
-    EXPECT_EQ(crsm->values()[i], crs_matrix.values[i]);
-  }
+  EXPECT_THAT(
+      *crsm,
+      CompressedRowsAre(crs_matrix.rows, crs_matrix.cols, crs_matrix.values));
 }
 
 TEST(CompressedRowSparseMatrix, CreateBlockDiagonalMatrix) {
@@ -235,19 +216,15 @@ TEST(CompressedRowSparseMatrix, CreateBlockDiagonalMatrix) {
   x.setOnes();
   y.setZero();
   matrix->RightMultiplyAndAccumulate(x.data(), y.data());
-  for (int i = 0; i < diagonal.size(); ++i) {
-    EXPECT_EQ(y[i], diagonal[i]);
-  }
+  EXPECT_THAT(y, MatrixNear(diagonal, 0.0));
 
   y.setZero();
   matrix->LeftMultiplyAndAccumulate(x.data(), y.data());
-  for (int i = 0; i < diagonal.size(); ++i) {
-    EXPECT_EQ(y[i], diagonal[i]);
-  }
+  EXPECT_THAT(y, MatrixNear(diagonal, 0.0));
 
   Matrix dense;
   matrix->ToDenseMatrix(&dense);
-  EXPECT_EQ((dense.diagonal() - diagonal).norm(), 0.0);
+  EXPECT_THAT(dense.diagonal(), MatrixNear(diagonal, 0.0));
 }
 
 TEST(CompressedRowSparseMatrix, Transpose) {
@@ -306,22 +283,15 @@ TEST(CompressedRowSparseMatrix, Transpose) {
 
   auto transpose = matrix.Transpose();
 
-  ASSERT_EQ(transpose->row_blocks().size(), matrix.col_blocks().size());
-  for (int i = 0; i < transpose->row_blocks().size(); ++i) {
-    EXPECT_EQ(transpose->row_blocks()[i], matrix.col_blocks()[i]);
-  }
-
-  ASSERT_EQ(transpose->col_blocks().size(), matrix.row_blocks().size());
-  for (int i = 0; i < transpose->col_blocks().size(); ++i) {
-    EXPECT_EQ(transpose->col_blocks()[i], matrix.row_blocks()[i]);
-  }
+  EXPECT_EQ(transpose->row_blocks(), matrix.col_blocks());
+  EXPECT_EQ(transpose->col_blocks(), matrix.row_blocks());
 
   Matrix dense_matrix;
   matrix.ToDenseMatrix(&dense_matrix);
 
   Matrix dense_transpose;
   transpose->ToDenseMatrix(&dense_transpose);
-  EXPECT_NEAR((dense_matrix - dense_transpose.transpose()).norm(), 0.0, 1e-14);
+  EXPECT_THAT(dense_transpose, MatrixNear(dense_matrix.transpose(), 1e-14));
 }
 
 TEST(CompressedRowSparseMatrix, FromTripletSparseMatrix) {
@@ -331,8 +301,8 @@ TEST(CompressedRowSparseMatrix, FromTripletSparseMatrix) {
   options.num_cols = 7;
   options.density = 0.5;
 
-  const int kNumTrials = 10;
   for (int i = 0; i < kNumTrials; ++i) {
+    SCOPED_TRACE(absl::StrFormat("trial %d", i));
     auto tsm = TripletSparseMatrix::CreateRandomMatrix(options, prng);
     auto crsm = CompressedRowSparseMatrix::FromTripletSparseMatrix(*tsm);
 
@@ -340,12 +310,9 @@ TEST(CompressedRowSparseMatrix, FromTripletSparseMatrix) {
     tsm->ToDenseMatrix(&expected);
     Matrix actual;
     crsm->ToDenseMatrix(&actual);
-    EXPECT_NEAR((expected - actual).norm() / actual.norm(),
-                0.0,
-                std::numeric_limits<double>::epsilon())
-        << "\nexpected: \n"
-        << expected << "\nactual: \n"
-        << actual;
+    EXPECT_THAT(
+        actual,
+        MatrixRelativelyNear(expected, std::numeric_limits<double>::epsilon()));
   }
 }
 
@@ -356,8 +323,8 @@ TEST(CompressedRowSparseMatrix, FromTripletSparseMatrixTransposed) {
   options.num_cols = 7;
   options.density = 0.5;
 
-  const int kNumTrials = 10;
   for (int i = 0; i < kNumTrials; ++i) {
+    SCOPED_TRACE(absl::StrFormat("trial %d", i));
     auto tsm = TripletSparseMatrix::CreateRandomMatrix(options, prng);
     auto crsm =
         CompressedRowSparseMatrix::FromTripletSparseMatrixTransposed(*tsm);
@@ -367,237 +334,154 @@ TEST(CompressedRowSparseMatrix, FromTripletSparseMatrixTransposed) {
     Matrix expected = tmp.transpose();
     Matrix actual;
     crsm->ToDenseMatrix(&actual);
-    EXPECT_NEAR((expected - actual).norm() / actual.norm(),
-                0.0,
-                std::numeric_limits<double>::epsilon())
-        << "\nexpected: \n"
-        << expected << "\nactual: \n"
-        << actual;
+    EXPECT_THAT(
+        actual,
+        MatrixRelativelyNear(expected, std::numeric_limits<double>::epsilon()));
   }
 }
 
-using Param = ::testing::tuple<CompressedRowSparseMatrix::StorageType>;
+using StorageType = CompressedRowSparseMatrix::StorageType;
 
-static std::string ParamInfoToString(testing::TestParamInfo<Param> info) {
-  if (::testing::get<0>(info.param) ==
-      CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR) {
-    return "UPPER";
+static std::string ParamInfoToString(
+    const testing::TestParamInfo<StorageType>& info) {
+  switch (info.param) {
+    case StorageType::UPPER_TRIANGULAR:
+      return "UPPER";
+    case StorageType::LOWER_TRIANGULAR:
+      return "LOWER";
+    case StorageType::UNSYMMETRIC:
+      return "UNSYMMETRIC";
   }
-
-  if (::testing::get<0>(info.param) ==
-      CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR) {
-    return "LOWER";
-  }
-
-  return "UNSYMMETRIC";
+  return "UNKNOWN";
 }
 
-class RightMultiplyAndAccumulateTest : public ::testing::TestWithParam<Param> {
-};
-
-TEST_P(RightMultiplyAndAccumulateTest, _) {
-  const int kMinNumBlocks = 1;
-  const int kMaxNumBlocks = 10;
-  const int kMinBlockSize = 1;
-  const int kMaxBlockSize = 5;
-  const int kNumTrials = 10;
-  std::mt19937 prng;
+// Creates a random block matrix with twice as many row blocks as column
+// blocks.
+static std::unique_ptr<CompressedRowSparseMatrix> CreateRandomMatrix(
+    int num_blocks, StorageType storage_type, std::mt19937& prng) {
+  constexpr int kMinBlockSize = 1;
+  constexpr int kMaxBlockSize = 5;
   std::uniform_real_distribution<double> uniform(0.5, 1.0);
+  CompressedRowSparseMatrix::RandomMatrixOptions options;
+  options.num_col_blocks = num_blocks;
+  options.min_col_block_size = kMinBlockSize;
+  options.max_col_block_size = kMaxBlockSize;
+  options.num_row_blocks = 2 * num_blocks;
+  options.min_row_block_size = kMinBlockSize;
+  options.max_row_block_size = kMaxBlockSize;
+  options.block_density = uniform(prng);
+  options.storage_type = storage_type;
+  return CompressedRowSparseMatrix::CreateRandomMatrix(options, prng);
+}
+
+// Returns the dense matrix represented by the matrix with the given storage
+// type.
+static Matrix ToFullDenseMatrix(const CompressedRowSparseMatrix& matrix) {
+  Matrix dense;
+  matrix.ToDenseMatrix(&dense);
+  switch (matrix.storage_type()) {
+    case StorageType::UPPER_TRIANGULAR:
+      return dense.selfadjointView<Eigen::Upper>();
+    case StorageType::LOWER_TRIANGULAR:
+      return dense.selfadjointView<Eigen::Lower>();
+    case StorageType::UNSYMMETRIC:
+      return dense;
+  }
+  return dense;
+}
+
+class RightMultiplyAndAccumulateTest
+    : public ::testing::TestWithParam<StorageType> {};
+
+TEST_P(RightMultiplyAndAccumulateTest, MatchesDenseProduct) {
+  constexpr double kTolerance = std::numeric_limits<double>::epsilon() * 10;
+  std::mt19937 prng;
   for (int num_blocks = kMinNumBlocks; num_blocks < kMaxNumBlocks;
        ++num_blocks) {
     for (int trial = 0; trial < kNumTrials; ++trial) {
-      Param param = GetParam();
-      CompressedRowSparseMatrix::RandomMatrixOptions options;
-      options.num_col_blocks = num_blocks;
-      options.min_col_block_size = kMinBlockSize;
-      options.max_col_block_size = kMaxBlockSize;
-      options.num_row_blocks = 2 * num_blocks;
-      options.min_row_block_size = kMinBlockSize;
-      options.max_row_block_size = kMaxBlockSize;
-      options.block_density = uniform(prng);
-      options.storage_type = ::testing::get<0>(param);
-      auto matrix =
-          CompressedRowSparseMatrix::CreateRandomMatrix(options, prng);
-      const int num_rows = matrix->num_rows();
-      const int num_cols = matrix->num_cols();
+      SCOPED_TRACE(absl::StrFormat("%d blocks, trial %d", num_blocks, trial));
+      auto matrix = CreateRandomMatrix(num_blocks, GetParam(), prng);
+      const Vector x = Vector::Random(matrix->num_cols());
 
-      Vector x(num_cols);
-      x.setRandom();
-
-      Vector actual_y(num_rows);
-      actual_y.setZero();
+      Vector actual_y = Vector::Zero(matrix->num_rows());
       matrix->RightMultiplyAndAccumulate(x.data(), actual_y.data());
 
-      Matrix dense;
-      matrix->ToDenseMatrix(&dense);
-      Vector expected_y;
-      if (::testing::get<0>(param) ==
-          CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR) {
-        expected_y = dense.selfadjointView<Eigen::Upper>() * x;
-      } else if (::testing::get<0>(param) ==
-                 CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR) {
-        expected_y = dense.selfadjointView<Eigen::Lower>() * x;
-      } else {
-        expected_y = dense * x;
-      }
-
-      ASSERT_NEAR((expected_y - actual_y).norm() / actual_y.norm(),
-                  0.0,
-                  std::numeric_limits<double>::epsilon() * 10)
-          << "\n"
-          << dense << "x:\n"
-          << x.transpose() << "\n"
-          << "expected: \n"
-          << expected_y.transpose() << "\n"
-          << "actual: \n"
-          << actual_y.transpose();
+      const Matrix dense = ToFullDenseMatrix(*matrix);
+      ASSERT_THAT(actual_y, MatrixRelativelyNear(dense * x, kTolerance))
+          << "matrix:\n"
+          << dense << "\nx: " << x.transpose();
     }
   }
 }
 
-INSTANTIATE_TEST_SUITE_P(
-    CompressedRowSparseMatrix,
-    RightMultiplyAndAccumulateTest,
-    ::testing::Values(CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR,
-                      CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR,
-                      CompressedRowSparseMatrix::StorageType::UNSYMMETRIC),
-    ParamInfoToString);
+INSTANTIATE_TEST_SUITE_P(CompressedRowSparseMatrix,
+                         RightMultiplyAndAccumulateTest,
+                         ::testing::Values(StorageType::LOWER_TRIANGULAR,
+                                           StorageType::UPPER_TRIANGULAR,
+                                           StorageType::UNSYMMETRIC),
+                         ParamInfoToString);
 
-class LeftMultiplyAndAccumulateTest : public ::testing::TestWithParam<Param> {};
+class LeftMultiplyAndAccumulateTest
+    : public ::testing::TestWithParam<StorageType> {};
 
-TEST_P(LeftMultiplyAndAccumulateTest, _) {
-  const int kMinNumBlocks = 1;
-  const int kMaxNumBlocks = 10;
-  const int kMinBlockSize = 1;
-  const int kMaxBlockSize = 5;
-  const int kNumTrials = 10;
+TEST_P(LeftMultiplyAndAccumulateTest, MatchesDenseProduct) {
+  constexpr double kTolerance = std::numeric_limits<double>::epsilon() * 10;
   std::mt19937 prng;
-  std::uniform_real_distribution<double> uniform(0.5, 1.0);
   for (int num_blocks = kMinNumBlocks; num_blocks < kMaxNumBlocks;
        ++num_blocks) {
     for (int trial = 0; trial < kNumTrials; ++trial) {
-      Param param = GetParam();
-      CompressedRowSparseMatrix::RandomMatrixOptions options;
-      options.num_col_blocks = num_blocks;
-      options.min_col_block_size = kMinBlockSize;
-      options.max_col_block_size = kMaxBlockSize;
-      options.num_row_blocks = 2 * num_blocks;
-      options.min_row_block_size = kMinBlockSize;
-      options.max_row_block_size = kMaxBlockSize;
-      options.block_density = uniform(prng);
-      options.storage_type = ::testing::get<0>(param);
-      auto matrix =
-          CompressedRowSparseMatrix::CreateRandomMatrix(options, prng);
-      const int num_rows = matrix->num_rows();
-      const int num_cols = matrix->num_cols();
+      SCOPED_TRACE(absl::StrFormat("%d blocks, trial %d", num_blocks, trial));
+      auto matrix = CreateRandomMatrix(num_blocks, GetParam(), prng);
+      const Vector x = Vector::Random(matrix->num_rows());
 
-      Vector x(num_rows);
-      x.setRandom();
-
-      Vector actual_y(num_cols);
-      actual_y.setZero();
+      Vector actual_y = Vector::Zero(matrix->num_cols());
       matrix->LeftMultiplyAndAccumulate(x.data(), actual_y.data());
 
-      Matrix dense;
-      matrix->ToDenseMatrix(&dense);
-      Vector expected_y;
-      if (::testing::get<0>(param) ==
-          CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR) {
-        expected_y = dense.selfadjointView<Eigen::Upper>() * x;
-      } else if (::testing::get<0>(param) ==
-                 CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR) {
-        expected_y = dense.selfadjointView<Eigen::Lower>() * x;
-      } else {
-        expected_y = dense.transpose() * x;
-      }
-
-      ASSERT_NEAR((expected_y - actual_y).norm() / actual_y.norm(),
-                  0.0,
-                  std::numeric_limits<double>::epsilon() * 10)
-          << "\n"
-          << dense << "x\n"
-          << x.transpose() << "\n"
-          << "expected: \n"
-          << expected_y.transpose() << "\n"
-          << "actual: \n"
-          << actual_y.transpose();
+      const Matrix dense = ToFullDenseMatrix(*matrix);
+      ASSERT_THAT(actual_y,
+                  MatrixRelativelyNear(dense.transpose() * x, kTolerance))
+          << "matrix:\n"
+          << dense << "\nx: " << x.transpose();
     }
   }
 }
 
-INSTANTIATE_TEST_SUITE_P(
-    CompressedRowSparseMatrix,
-    LeftMultiplyAndAccumulateTest,
-    ::testing::Values(CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR,
-                      CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR,
-                      CompressedRowSparseMatrix::StorageType::UNSYMMETRIC),
-    ParamInfoToString);
+INSTANTIATE_TEST_SUITE_P(CompressedRowSparseMatrix,
+                         LeftMultiplyAndAccumulateTest,
+                         ::testing::Values(StorageType::LOWER_TRIANGULAR,
+                                           StorageType::UPPER_TRIANGULAR,
+                                           StorageType::UNSYMMETRIC),
+                         ParamInfoToString);
 
-class SquaredColumnNormTest : public ::testing::TestWithParam<Param> {};
+class SquaredColumnNormTest : public ::testing::TestWithParam<StorageType> {};
 
-TEST_P(SquaredColumnNormTest, _) {
-  const int kMinNumBlocks = 1;
-  const int kMaxNumBlocks = 10;
-  const int kMinBlockSize = 1;
-  const int kMaxBlockSize = 5;
-  const int kNumTrials = 10;
+TEST_P(SquaredColumnNormTest, MatchesDenseSquaredColumnNorm) {
+  constexpr double kTolerance = std::numeric_limits<double>::epsilon() * 10;
   std::mt19937 prng;
-  std::uniform_real_distribution<double> uniform(0.5, 1.0);
   for (int num_blocks = kMinNumBlocks; num_blocks < kMaxNumBlocks;
        ++num_blocks) {
     for (int trial = 0; trial < kNumTrials; ++trial) {
-      Param param = GetParam();
-      CompressedRowSparseMatrix::RandomMatrixOptions options;
-      options.num_col_blocks = num_blocks;
-      options.min_col_block_size = kMinBlockSize;
-      options.max_col_block_size = kMaxBlockSize;
-      options.num_row_blocks = 2 * num_blocks;
-      options.min_row_block_size = kMinBlockSize;
-      options.max_row_block_size = kMaxBlockSize;
-      options.block_density = uniform(prng);
-      options.storage_type = ::testing::get<0>(param);
-      auto matrix =
-          CompressedRowSparseMatrix::CreateRandomMatrix(options, prng);
-      const int num_cols = matrix->num_cols();
+      SCOPED_TRACE(absl::StrFormat("%d blocks, trial %d", num_blocks, trial));
+      auto matrix = CreateRandomMatrix(num_blocks, GetParam(), prng);
 
-      Vector actual(num_cols);
-      actual.setZero();
+      Vector actual = Vector::Zero(matrix->num_cols());
       matrix->SquaredColumnNorm(actual.data());
 
-      Matrix dense;
-      matrix->ToDenseMatrix(&dense);
-      Vector expected;
-      if (::testing::get<0>(param) ==
-          CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR) {
-        const Matrix full = dense.selfadjointView<Eigen::Upper>();
-        expected = full.colwise().squaredNorm();
-      } else if (::testing::get<0>(param) ==
-                 CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR) {
-        const Matrix full = dense.selfadjointView<Eigen::Lower>();
-        expected = full.colwise().squaredNorm();
-      } else {
-        expected = dense.colwise().squaredNorm();
-      }
-
-      ASSERT_NEAR((expected - actual).norm() / actual.norm(),
-                  0.0,
-                  std::numeric_limits<double>::epsilon() * 10)
-          << "\n"
-          << dense << "expected: \n"
-          << expected.transpose() << "\n"
-          << "actual: \n"
-          << actual.transpose();
+      const Matrix dense = ToFullDenseMatrix(*matrix);
+      const Vector expected = dense.colwise().squaredNorm();
+      ASSERT_THAT(actual, MatrixRelativelyNear(expected, kTolerance))
+          << "matrix:\n"
+          << dense;
     }
   }
 }
 
-INSTANTIATE_TEST_SUITE_P(
-    CompressedRowSparseMatrix,
-    SquaredColumnNormTest,
-    ::testing::Values(CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR,
-                      CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR,
-                      CompressedRowSparseMatrix::StorageType::UNSYMMETRIC),
-    ParamInfoToString);
+INSTANTIATE_TEST_SUITE_P(CompressedRowSparseMatrix,
+                         SquaredColumnNormTest,
+                         ::testing::Values(StorageType::LOWER_TRIANGULAR,
+                                           StorageType::UPPER_TRIANGULAR,
+                                           StorageType::UNSYMMETRIC),
+                         ParamInfoToString);
 
 const int kMaxNumThreads = 8;
 class CompressedRowSparseMatrixParallelTest
@@ -610,54 +494,26 @@ class CompressedRowSparseMatrixParallelTest
 
 TEST_P(CompressedRowSparseMatrixParallelTest,
        RightMultiplyAndAccumulateUnsymmetric) {
-  const int kMinNumBlocks = 1;
-  const int kMaxNumBlocks = 10;
-  const int kMinBlockSize = 1;
-  const int kMaxBlockSize = 5;
-  const int kNumTrials = 10;
+  constexpr double kTolerance = std::numeric_limits<double>::epsilon() * 10;
   const int kNumThreads = GetParam();
   std::mt19937 prng;
-  std::uniform_real_distribution<double> uniform(0.5, 1.0);
   for (int num_blocks = kMinNumBlocks; num_blocks < kMaxNumBlocks;
        ++num_blocks) {
     for (int trial = 0; trial < kNumTrials; ++trial) {
-      CompressedRowSparseMatrix::RandomMatrixOptions options;
-      options.num_col_blocks = num_blocks;
-      options.min_col_block_size = kMinBlockSize;
-      options.max_col_block_size = kMaxBlockSize;
-      options.num_row_blocks = 2 * num_blocks;
-      options.min_row_block_size = kMinBlockSize;
-      options.max_row_block_size = kMaxBlockSize;
-      options.block_density = uniform(prng);
-      options.storage_type =
-          CompressedRowSparseMatrix::StorageType::UNSYMMETRIC;
+      SCOPED_TRACE(absl::StrFormat("%d blocks, trial %d", num_blocks, trial));
       auto matrix =
-          CompressedRowSparseMatrix::CreateRandomMatrix(options, prng);
-      const int num_rows = matrix->num_rows();
-      const int num_cols = matrix->num_cols();
+          CreateRandomMatrix(num_blocks, StorageType::UNSYMMETRIC, prng);
+      const Vector x = Vector::Random(matrix->num_cols());
 
-      Vector x(num_cols);
-      x.setRandom();
-
-      Vector actual_y(num_rows);
-      actual_y.setZero();
+      Vector actual_y = Vector::Zero(matrix->num_rows());
       matrix->RightMultiplyAndAccumulate(
           x.data(), actual_y.data(), &context_, kNumThreads);
 
       Matrix dense;
       matrix->ToDenseMatrix(&dense);
-      Vector expected_y = dense * x;
-
-      ASSERT_NEAR((expected_y - actual_y).norm() / actual_y.norm(),
-                  0.0,
-                  std::numeric_limits<double>::epsilon() * 10)
-          << "\n"
-          << dense << "x:\n"
-          << x.transpose() << "\n"
-          << "expected: \n"
-          << expected_y.transpose() << "\n"
-          << "actual: \n"
-          << actual_y.transpose();
+      ASSERT_THAT(actual_y, MatrixRelativelyNear(dense * x, kTolerance))
+          << "matrix:\n"
+          << dense << "\nx: " << x.transpose();
     }
   }
 }
