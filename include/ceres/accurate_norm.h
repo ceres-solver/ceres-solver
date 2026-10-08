@@ -209,7 +209,7 @@ inline T MaximumMagnitude(T x, Args... args) noexcept {
   }
 
   T maximum = fabs(x);
-  ((maximum = fmax(maximum, T(fabs(args)))), ...);
+  ((maximum = fmax(maximum, fabs(args))), ...);
   return maximum;
 }
 
@@ -313,7 +313,6 @@ inline auto AccurateNorm(T a, T b, Args... args)
     -> std::enable_if_t<std::is_floating_point_v<T> &&
                             (std::is_same_v<T, Args> && ...),
                         T> {
-  using std::fpclassify;
   using std::isfinite;
 
   const T maximum = internal::MaximumMagnitude(a, b, args...);
@@ -322,7 +321,7 @@ inline auto AccurateNorm(T a, T b, Args... args)
     return maximum;
   }
 
-  if (fpclassify(maximum) == FP_ZERO) {
+  if (maximum == 0) {
     return 0;
   }
 
@@ -331,10 +330,6 @@ inline auto AccurateNorm(T a, T b, Args... args)
   using internal::UnscaledAccurateNorm;
 
   constexpr int num_arguments = 2 + sizeof...(Args);
-  // Multiplying by a radix power rounds exactly as std::scalbn does.
-  constexpr int exponent = AccurateNormTraits<T>::ScaleExponent();
-  constexpr T down = PowerOfTwo<T>(exponent);
-  constexpr T up = PowerOfTwo<T>(-exponent);
 
   // Rescale only if the largest magnitude is outside the range where rescaling
   // cannot change the result. Rescaling moves the largest magnitude into that
@@ -342,15 +337,21 @@ inline auto AccurateNorm(T a, T b, Args... args)
   // errors after scaling down are negligible compared to the largest one.
   // Scaling up makes the rounding errors of all squares exact, including those
   // of subnormal arguments.
-  if (maximum > AccurateNormTraits<T>::UnscaledMaximum(num_arguments)) {
-    return UnscaledAccurateNorm(a * down, b * down, args * down...) * up;
+  if (maximum >= AccurateNormTraits<T>::UnscaledMinimum() &&
+      maximum <= AccurateNormTraits<T>::UnscaledMaximum(num_arguments)) {
+    return UnscaledAccurateNorm(a, b, args...);
   }
 
-  if (maximum < AccurateNormTraits<T>::UnscaledMinimum()) {
-    return UnscaledAccurateNorm(a * up, b * up, args * up...) * down;
-  }
-
-  return UnscaledAccurateNorm(a, b, args...);
+  // Multiplying by a radix power rounds exactly as std::scalbn does.
+  constexpr int exponent = AccurateNormTraits<T>::ScaleExponent();
+  constexpr T down = PowerOfTwo<T>(exponent);
+  constexpr T up = PowerOfTwo<T>(-exponent);
+  const bool scale_down =
+      maximum > AccurateNormTraits<T>::UnscaledMaximum(num_arguments);
+  const T scale = scale_down ? down : up;
+  const T inv_scale = scale_down ? up : down;
+  return UnscaledAccurateNorm(a * scale, b * scale, args * scale...) *
+         inv_scale;
 }
 
 // Computes the Euclidean norm of two or more arithmetic values after promoting
@@ -371,7 +372,6 @@ inline auto AccurateRNorm(T a, T b, Args... args)
     -> std::enable_if_t<std::is_floating_point_v<T> &&
                             (std::is_same_v<T, Args> && ...),
                         T> {
-  using std::fpclassify;
   using std::isinf;
   using std::isnan;
 
@@ -385,7 +385,7 @@ inline auto AccurateRNorm(T a, T b, Args... args)
     return maximum;
   }
 
-  if (fpclassify(maximum) == FP_ZERO) {
+  if (maximum == 0) {
     return std::numeric_limits<T>::quiet_NaN();
   }
 
@@ -394,6 +394,13 @@ inline auto AccurateRNorm(T a, T b, Args... args)
   using internal::UnscaledAccurateRNorm;
 
   constexpr int num_arguments = 2 + sizeof...(Args);
+
+  if (maximum >= AccurateNormTraits<T>::UnscaledMinimum() &&
+      maximum <=
+          AccurateNormTraits<T>::ReciprocalUnscaledMaximum(num_arguments)) {
+    return UnscaledAccurateRNorm(a, b, args...);
+  }
+
   // Multiplying by a radix power rounds exactly as std::scalbn does.
   constexpr int exponent = AccurateNormTraits<T>::ScaleExponent();
   constexpr T down = PowerOfTwo<T>(exponent);
@@ -401,25 +408,18 @@ inline auto AccurateRNorm(T a, T b, Args... args)
 
   // Rescale as in AccurateNorm, but apply the scale to the reciprocal instead
   // of its inverse. The reciprocal of the rescaled arguments cannot overflow or
-  // underflow because the rescaled largest magnitude is bounded.
-  if (maximum >
-      AccurateNormTraits<T>::ReciprocalUnscaledMaximum(num_arguments)) {
-    return UnscaledAccurateRNorm(a * down, b * down, args * down...) * down;
-  }
-
-  if (maximum < AccurateNormTraits<T>::UnscaledMinimum()) {
-    // Only a largest magnitude below Tiny() requires the larger power to make
-    // the rounding errors of the squares of subnormal arguments exact. Scaling
-    // a larger magnitude by that power could exceed
-    // ReciprocalUnscaledMaximum(). Scaling by 𝛽^p instead suffices to reach
-    // UnscaledMinimum().
-    const T scale = maximum < AccurateNormTraits<T>::Tiny()
-                        ? up
-                        : PowerOfTwo<T>(std::numeric_limits<T>::digits);
-    return UnscaledAccurateRNorm(a * scale, b * scale, args * scale...) * scale;
-  }
-
-  return UnscaledAccurateRNorm(a, b, args...);
+  // underflow because the rescaled largest magnitude is bounded. Only a largest
+  // magnitude below Tiny() requires the larger power to make the rounding
+  // errors of the squares of subnormal arguments exact; scaling a larger
+  // magnitude by that power could exceed ReciprocalUnscaledMaximum(), whereas
+  // scaling by 𝛽^p suffices to reach UnscaledMinimum().
+  const T scale =
+      maximum > AccurateNormTraits<T>::ReciprocalUnscaledMaximum(num_arguments)
+          ? down
+          : (maximum < AccurateNormTraits<T>::Tiny()
+                 ? up
+                 : PowerOfTwo<T>(std::numeric_limits<T>::digits));
+  return UnscaledAccurateRNorm(a * scale, b * scale, args * scale...) * scale;
 }
 
 // Computes the reciprocal of the Euclidean norm of two or more arithmetic
