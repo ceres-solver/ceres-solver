@@ -22,6 +22,30 @@
       },
       "revId": "07bb14855873bef892a99df97dc857adfe968c7e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38a0f015_74a131d6",
+        "filename": "include/ceres/constants.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-08T22:37:04Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "4f42f845_d48320cc",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 20
+      },
+      "revId": "07bb14855873bef892a99df97dc857adfe968c7e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
