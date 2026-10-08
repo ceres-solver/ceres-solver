@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "cf4544ae_69188f16",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5202271
+      },
+      "writtenOn": "2026-10-08T09:49:55Z",
+      "side": 1,
+      "message": "The generator now reuses both backend lists with two refinement iterations. Mixed cases use _MixedPrecision and _mixed_test.cc. SuiteSparse mixed tests include the CERES_NO_CHOLMOD_FLOAT guard. Regeneration preserves all 88 existing configurations.",
+      "parentUuid": "b714eeb0_1248ee4d",
+      "revId": "94faf5e723f9a9caf60e5dad3f0ca5781691e196",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "20e968d8_b5af54d8",
         "filename": "internal/ceres/test_util.h",
         "patchSetId": 1
@@ -31,6 +49,24 @@
       "writtenOn": "2026-10-07T13:42:56Z",
       "side": 1,
       "message": "`SolveAndEvaluateFinalResiduals` already receives `const Solver::Options\u0026 options`, so we do not need the extra `bool expect_mixed_precision \u003d false` parameter on `RunSolverForConfigAndExpectResidualsMatch` and `SolveAndEvaluateFinalResiduals` (or `mixed_precision_expectation` in the Python script). You can simply check:\n\n```cpp\nEXPECT_EQ(summary.mixed_precision_solves_used,\n          options.use_mixed_precision_solves);\n```\n\nunconditionally inside `SolveAndEvaluateFinalResiduals`.",
+      "revId": "94faf5e723f9a9caf60e5dad3f0ca5781691e196",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2dc729fb_32c9b7ea",
+        "filename": "internal/ceres/test_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5202271
+      },
+      "writtenOn": "2026-10-08T09:49:55Z",
+      "side": 1,
+      "message": "Removed the extra expectation argument. The helper now compares summary.mixed_precision_solves_used directly with options.use_mixed_precision_solves.",
+      "parentUuid": "20e968d8_b5af54d8",
       "revId": "94faf5e723f9a9caf60e5dad3f0ca5781691e196",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
