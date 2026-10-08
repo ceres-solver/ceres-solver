@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87c5fb92_f0001537",
+        "filename": "internal/ceres/gradient_checker_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-08T23:37:02Z",
+      "side": 0,
+      "message": "should Expectmatricesclose should be turned into a matcher?",
+      "range": {
+        "startLine": 435,
+        "startChar": 2,
+        "endLine": 435,
+        "endChar": 21
+      },
+      "revId": "bd13246e67a0b7ea2b63cbb91024515735aab41f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}

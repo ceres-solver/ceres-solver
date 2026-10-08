@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f181df67_172fa512",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-08T23:37:02Z",
+      "side": 1,
+      "message": "I am wondering if this CL is better served with some matchers introduced globally and used in each file? for eigen matrices and doing the kind of comparisons relative+absolute that we like to do in ceres?",
+      "revId": "e899df356789ab51e7de7bffd3bb056ed3d4c11f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97744c54_c0c680ce",
+        "filename": "internal/ceres/gradient_checker_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-08T23:37:02Z",
+      "side": 1,
+      "message": "this is oddly named, and should be more general no? since this is about entire matrices?\nalso should we think about introducing some helpers for matrix/vector comparisons in general?\nand should it be in a more central place that you can use it elsewhere?",
+      "range": {
+        "startLine": 364,
+        "startChar": 11,
+        "endLine": 364,
+        "endChar": 37
+      },
+      "revId": "e899df356789ab51e7de7bffd3bb056ed3d4c11f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78ae8a16_8623f935",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-08T23:37:02Z",
+      "side": 1,
+      "message": "we should have composable matcher for relative and absolute tolerance and use it here no? instead of defining this lambda and doing this here? this seems odd to me.",
+      "range": {
+        "startLine": 84,
+        "startChar": 11,
+        "endLine": 84,
+        "endChar": 39
+      },
+      "revId": "e899df356789ab51e7de7bffd3bb056ed3d4c11f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
