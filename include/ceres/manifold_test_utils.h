@@ -105,7 +105,10 @@ MATCHER_P2(XPlusZeroIsXAt, x, tolerance, "") {
 
   Vector actual = Vector::Zero(ambient_size);
   Vector zero = Vector::Zero(tangent_size);
-  EXPECT_TRUE(arg.Plus(x.data(), zero.data(), actual.data()));
+  if (!arg.Plus(x.data(), zero.data(), actual.data())) {
+    *result_listener << "\nPlus() returned false";
+    return false;
+  }
   const double n = (actual - Vector{x}).norm();
   const double d = x.norm();
   const double diffnorm = (d == 0.0) ? n : (n / d);
@@ -122,7 +125,10 @@ MATCHER_P2(XPlusZeroIsXAt, x, tolerance, "") {
 MATCHER_P2(XMinusXIsZeroAt, x, tolerance, "") {
   const int tangent_size = arg.TangentSize();
   Vector actual = Vector::Zero(tangent_size);
-  EXPECT_TRUE(arg.Minus(x.data(), x.data(), actual.data()));
+  if (!arg.Minus(x.data(), x.data(), actual.data())) {
+    *result_listener << "\nMinus() returned false";
+    return false;
+  }
   const double diffnorm = actual.norm();
   if (diffnorm > tolerance) {
     *result_listener << "\nx: " << x.transpose()  //
@@ -168,11 +174,16 @@ MATCHER_P2(HasCorrectPlusJacobianAt, x, tolerance, "") {
   Matrix expected = Matrix::Zero(ambient_size, tangent_size);
   double* jacobians[1] = {expected.data()};
 
-  EXPECT_TRUE(
-      cost_function.Evaluate(parameters, x_plus_zero.data(), jacobians));
+  if (!cost_function.Evaluate(parameters, x_plus_zero.data(), jacobians)) {
+    *result_listener << "\ncost_function.Evaluate() returned false";
+    return false;
+  }
 
   Matrix actual = Matrix::Random(ambient_size, tangent_size);
-  EXPECT_TRUE(arg.PlusJacobian(x.data(), actual.data()));
+  if (!arg.PlusJacobian(x.data(), actual.data())) {
+    *result_listener << "\nPlusJacobian() returned false";
+    return false;
+  }
 
   const double n = (actual - expected).norm();
   const double d = expected.norm();
@@ -192,9 +203,15 @@ MATCHER_P3(MinusPlusIsIdentityAt, x, delta, tolerance, "") {
   const int ambient_size = arg.AmbientSize();
   const int tangent_size = arg.TangentSize();
   Vector x_plus_delta = Vector::Zero(ambient_size);
-  EXPECT_TRUE(arg.Plus(x.data(), delta.data(), x_plus_delta.data()));
+  if (!arg.Plus(x.data(), delta.data(), x_plus_delta.data())) {
+    *result_listener << "\nPlus() returned false";
+    return false;
+  }
   Vector actual = Vector::Zero(tangent_size);
-  EXPECT_TRUE(arg.Minus(x_plus_delta.data(), x.data(), actual.data()));
+  if (!arg.Minus(x_plus_delta.data(), x.data(), actual.data())) {
+    *result_listener << "\nMinus() returned false";
+    return false;
+  }
 
   const double n = (actual - Vector{delta}).norm();
   const double d = delta.norm();
@@ -216,10 +233,16 @@ MATCHER_P3(PlusMinusIsIdentityAt, x, y, tolerance, "") {
   const int tangent_size = arg.TangentSize();
 
   Vector y_minus_x = Vector::Zero(tangent_size);
-  EXPECT_TRUE(arg.Minus(y.data(), x.data(), y_minus_x.data()));
+  if (!arg.Minus(y.data(), x.data(), y_minus_x.data())) {
+    *result_listener << "\nMinus() returned false";
+    return false;
+  }
 
   Vector actual = Vector::Zero(ambient_size);
-  EXPECT_TRUE(arg.Plus(x.data(), y_minus_x.data(), actual.data()));
+  if (!arg.Plus(x.data(), y_minus_x.data(), actual.data())) {
+    *result_listener << "\nPlus() returned false";
+    return false;
+  }
 
   using ManifoldType = std::decay_t<decltype(arg)>;
 
@@ -306,10 +329,16 @@ MATCHER_P2(HasCorrectMinusJacobianAt, x, tolerance, "") {
   Matrix expected = Matrix::Zero(tangent_size, ambient_size);
   double* jacobians[1] = {expected.data()};
 
-  EXPECT_TRUE(cost_function.Evaluate(parameters, y_minus_x.data(), jacobians));
+  if (!cost_function.Evaluate(parameters, y_minus_x.data(), jacobians)) {
+    *result_listener << "\ncost_function.Evaluate() returned false";
+    return false;
+  }
 
   Matrix actual = Matrix::Random(tangent_size, ambient_size);
-  EXPECT_TRUE(arg.MinusJacobian(x.data(), actual.data()));
+  if (!arg.MinusJacobian(x.data(), actual.data())) {
+    *result_listener << "\nMinusJacobian() returned false";
+    return false;
+  }
 
   const double n = (actual - expected).norm();
   const double d = expected.norm();
@@ -331,9 +360,15 @@ MATCHER_P2(MinusPlusJacobianIsIdentityAt, x, tolerance, "") {
   const int tangent_size = arg.TangentSize();
 
   Matrix plus_jacobian(ambient_size, tangent_size);
-  EXPECT_TRUE(arg.PlusJacobian(x.data(), plus_jacobian.data()));
+  if (!arg.PlusJacobian(x.data(), plus_jacobian.data())) {
+    *result_listener << "\nPlusJacobian() returned false";
+    return false;
+  }
   Matrix minus_jacobian(tangent_size, ambient_size);
-  EXPECT_TRUE(arg.MinusJacobian(x.data(), minus_jacobian.data()));
+  if (!arg.MinusJacobian(x.data(), minus_jacobian.data())) {
+    *result_listener << "\nMinusJacobian() returned false";
+    return false;
+  }
 
   const Matrix actual = minus_jacobian * plus_jacobian;
   const Matrix expected = Matrix::Identity(tangent_size, tangent_size);
@@ -362,14 +397,20 @@ MATCHER_P2(HasCorrectRightMultiplyByPlusJacobianAt, x, tolerance, "") {
   constexpr int kMaxNumRows = 3;
   for (int num_rows = kMinNumRows; num_rows <= kMaxNumRows; ++num_rows) {
     Matrix plus_jacobian = Matrix::Random(ambient_size, tangent_size);
-    EXPECT_TRUE(arg.PlusJacobian(x.data(), plus_jacobian.data()));
+    if (!arg.PlusJacobian(x.data(), plus_jacobian.data())) {
+      *result_listener << "\nPlusJacobian() returned false";
+      return false;
+    }
 
     Matrix ambient_matrix = Matrix::Random(num_rows, ambient_size);
     Matrix expected = ambient_matrix * plus_jacobian;
 
     Matrix actual = Matrix::Random(num_rows, tangent_size);
-    EXPECT_TRUE(arg.RightMultiplyByPlusJacobian(
-        x.data(), num_rows, ambient_matrix.data(), actual.data()));
+    if (!arg.RightMultiplyByPlusJacobian(
+            x.data(), num_rows, ambient_matrix.data(), actual.data())) {
+      *result_listener << "\nRightMultiplyByPlusJacobian() returned false";
+      return false;
+    }
     const double n = (actual - expected).norm();
     const double d = expected.norm();
     const double diffnorm = (d == 0.0) ? n : (n / d);
