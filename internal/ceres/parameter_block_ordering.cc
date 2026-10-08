@@ -102,7 +102,7 @@ void ComputeRecursiveIndependentSetOrdering(const Program& program,
                                             ParameterBlockOrdering* ordering) {
   CHECK(ordering != nullptr);
   ordering->Clear();
-  const std::vector<ParameterBlock*> parameter_blocks =
+  const std::vector<ParameterBlock*>& parameter_blocks =
       program.parameter_blocks();
   auto graph = CreateHessianGraph(program);
 
