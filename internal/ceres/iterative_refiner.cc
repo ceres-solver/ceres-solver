@@ -86,12 +86,12 @@ void DenseIterativeRefiner::Refine(const int num_cols,
                                    DenseCholesky* cholesky,
                                    double* solution_ptr) {
   Allocate(num_cols);
-  ConstMatrixRef lhs(lhs_ptr, num_cols, num_cols);
+  Eigen::Map<const Eigen::MatrixXd> lhs(lhs_ptr, num_cols, num_cols);
   ConstVectorRef rhs(rhs_ptr, num_cols);
   VectorRef solution(solution_ptr, num_cols);
   std::string ignored_message;
   for (int i = 0; i < max_num_iterations_; ++i) {
-    residual_ = rhs - lhs * solution;
+    residual_ = rhs - lhs.selfadjointView<Eigen::Lower>() * solution;
     // solution += lhs^-1 residual
     cholesky->Solve(residual_.data(), correction_.data(), &ignored_message);
     solution += correction_;
