@@ -48,6 +48,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6db09e90_2836e7e0",
+        "filename": "internal/ceres/dense_cholesky_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5202271
+      },
+      "writtenOn": "2026-10-08T09:49:24Z",
+      "side": 1,
+      "message": "The existing parameterized test now computes rhs before zeroing the column-major upper triangle. Both dense refiner tests zero the row-major lower triangle after constructing the fake Cholesky solver. Tolerances remain unchanged.",
+      "parentUuid": "be669f60_54c4606d",
+      "revId": "d8c271677d17943a00232feaecfdbae8366c6199",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "62a150ac_af138851",
         "filename": "internal/ceres/iterative_refiner.cc",
         "patchSetId": 2
@@ -87,6 +105,24 @@
           ]
         }
       ],
+      "revId": "d8c271677d17943a00232feaecfdbae8366c6199",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edb0855d_4fc2d5a2",
+        "filename": "internal/ceres/iterative_refiner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 5202271
+      },
+      "writtenOn": "2026-10-08T09:49:24Z",
+      "side": 1,
+      "message": "The residual now uses Eigen::Map\u003cconst Eigen::MatrixXd\u003e and selfadjointView\u003cEigen::Lower\u003e().",
+      "parentUuid": "62a150ac_af138851",
       "revId": "d8c271677d17943a00232feaecfdbae8366c6199",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
