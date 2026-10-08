@@ -28,6 +28,9 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
+#ifndef CERES_PUBLIC_MANIFOLD_TEST_UTILS_H_
+#define CERES_PUBLIC_MANIFOLD_TEST_UTILS_H_
+
 #include <algorithm>
 #include <cmath>
 #include <limits>
@@ -384,3 +387,5 @@ MATCHER_P2(HasCorrectRightMultiplyByPlusJacobianAt, x, tolerance, "") {
 }
 
 }  // namespace ceres
+
+#endif  // CERES_PUBLIC_MANIFOLD_TEST_UTILS_H_
