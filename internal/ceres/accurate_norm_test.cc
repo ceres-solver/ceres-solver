@@ -36,9 +36,20 @@
 #include <limits>
 #include <type_traits>
 
-#include "ceres/constants.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
+
+// The constant is computed using mpmath by the following shell command:
+//
+// python3 - <<EOF
+// from mpmath import mp
+// mp.dps = 64
+// print(mp.sqrt(3))
+// EOF
+// √3
+template <typename T>
+inline constexpr T kSqrt3(
+    1.732050807568877293527446341505872366942805253810380628055806979L);
 
 // Matches if the argument is at most n floating-point values away from the
 // expected value.
@@ -180,10 +191,8 @@ TYPED_TEST(AccurateNormTest, RNorm) {
               MaxNumUlp(1 / (std::sqrt(Scalar{2}) * this->kTiny), 1));
 
   const auto tiny3 = std::sqrt(this->kTiny) / Scalar{3};
-  EXPECT_THAT(
-      ceres::AccurateRNorm(tiny3, tiny3, tiny3),
-      MaxNumUlp(ceres::constants::sqrt_3_v<Scalar> / std::sqrt(this->kTiny),
-                1));
+  EXPECT_THAT(ceres::AccurateRNorm(tiny3, tiny3, tiny3),
+              MaxNumUlp(kSqrt3<Scalar> / std::sqrt(this->kTiny), 1));
 
   const auto tiny4 = std::sqrt(this->kTiny) / Scalar{4};
   EXPECT_THAT(ceres::AccurateRNorm(tiny4, tiny4, tiny4, tiny4),
@@ -335,7 +344,7 @@ TEST(AccurateNorm, VariadicReciprocalNormOfMixedSigns) {
 
 TEST(AccurateNorm, VariadicNormAccuracy) {
   EXPECT_THAT(ceres::AccurateNorm(1.0, 1.0, 1.0),
-              MaxNumUlp(ceres::constants::sqrt_3, 0));
+              MaxNumUlp(kSqrt3<double>, 0));
 
   // Combination exposing a difference of at least two ULPs in inaccurate
   // implementations found by random search.

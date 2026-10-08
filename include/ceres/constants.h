@@ -34,13 +34,12 @@
 // TODO(HSHelson): This header should no longer be necessary once C++20's
 // <numbers> (e.g. std::numbers::pi_v) becomes usable
 
-// The constants are computed using mpmath by the following shell command:
+// The constant is computed using mpmath by the following shell command:
 //
 // python3 - <<EOF
 // from mpmath import mp
 // mp.dps = 64
 // print(mp.pi)
-// print(mp.sqrt(3))
 // EOF
 namespace ceres::constants {
 // π
@@ -48,11 +47,6 @@ template <typename T>
 inline constexpr T pi_v(
     3.141592653589793238462643383279502884197169399375105820974944592L);
 inline constexpr double pi = pi_v<double>;
-// √3
-template <typename T>
-inline constexpr T sqrt_3_v(
-    1.732050807568877293527446341505872366942805253810380628055806979L);
-inline constexpr double sqrt_3 = sqrt_3_v<double>;
 }  // namespace ceres::constants
 
 #endif  // CERES_PUBLIC_CONSTANTS_H_
