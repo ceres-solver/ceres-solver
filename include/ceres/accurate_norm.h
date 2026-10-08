@@ -65,35 +65,32 @@
 #include <type_traits>
 #include <utility>
 
-#include "ceres/internal/compensated_math.h"
-
 namespace ceres {
 
 namespace internal {
 
-// Helper trait to promote integral types to double and keep floating-point
-// types unchanged.
-template <typename T, typename Enable = void>
-struct Promote {};
-
+// Similar to Fast2Sum, but without requiring ordering or a specific radix.
 template <typename T>
-struct Promote<T, std::enable_if_t<std::is_integral_v<T>>> {
-  // The canonical floating-point type for integral inputs.
-  using type = double;
-};
-
-template <typename T>
-struct Promote<T, std::enable_if_t<std::is_floating_point_v<T>>> {
-  // Identity mapping.
-  using type = T;
-};
+constexpr std::pair<T, T> TwoSum(T a, T b) noexcept {
+  const T s = a + b;
+  const T a_prime = s - b;
+  const T b_prime = s - a_prime;
+  const T delta_a = a - a_prime;
+  const T delta_b = b - b_prime;
+  const T t = delta_a + delta_b;
+  return std::make_pair(s, t);
+}
 
 // The type of the sum of the promoted arguments, e.g., double if any argument
 // is integral and float if all arguments are float. References and
 // cv-qualifiers of the argument types are ignored.
 template <typename... Ts>
-using Promote_t =
-    decltype((typename Promote<std::decay_t<Ts>>::type(0) + ... + 0));
+using Promote_t = std::enable_if_t<
+    (std::is_arithmetic_v<std::decay_t<Ts>> && ...),
+    decltype((std::conditional_t<std::is_integral_v<std::decay_t<Ts>>,
+                                 double,
+                                 std::decay_t<Ts>>(0) +
+              ... + 0))>;
 
 // Computes 2^exponent exactly. Unlike std::scalbn, the function can be
 // evaluated in constant expressions which avoids runtime library calls for
@@ -132,13 +129,10 @@ constexpr int CeilLog2(int n) noexcept {
   return result;
 }
 
-// The second template parameter allows this trait to be customized using
-// SFINAE.
-//
 // In the following, p denotes the precision of T, and e_min and e_max denote
 // its minimum and maximum exponent as defined by IEEE 754, i.e.,
 // std::numeric_limits<T>::min_exponent − 1 and max_exponent − 1, respectively.
-template <typename T, typename Enable = void>
+template <typename T>
 struct AccurateNormTraits {
   // Smallest magnitude x whose square has an exactly representable rounding
   // error. The error is a multiple of ulp(x)² = 𝛽^(2(e−p+1)) for
