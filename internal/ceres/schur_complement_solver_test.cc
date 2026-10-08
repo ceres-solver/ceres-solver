@@ -31,6 +31,7 @@
 #include "ceres/schur_complement_solver.h"
 
 #include <cstddef>
+#include <initializer_list>
 #include <memory>
 
 #include "ceres/block_sparse_matrix.h"
@@ -78,12 +79,17 @@ class SchurComplementSolverTest : public ::testing::Test {
 
     // Gold standard solutions using dense QR factorization.
     DenseSparseMatrix dense_A(triplet_A);
-    qr->Solve(&dense_A, b.get(), LinearSolver::PerSolveOptions(), sol.data());
+    LinearSolver::Summary summary = qr->Solve(
+        &dense_A, b.get(), LinearSolver::PerSolveOptions(), sol.data());
+    ASSERT_EQ(summary.termination_type, LinearSolverTerminationType::SUCCESS);
+    ASSERT_TRUE(sol.allFinite());
 
     // Gold standard solution with appended diagonal.
     LinearSolver::PerSolveOptions per_solve_options;
     per_solve_options.D = D.get();
-    qr->Solve(&dense_A, b.get(), per_solve_options, sol_d.data());
+    summary = qr->Solve(&dense_A, b.get(), per_solve_options, sol_d.data());
+    ASSERT_EQ(summary.termination_type, LinearSolverTerminationType::SUCCESS);
+    ASSERT_TRUE(sol_d.allFinite());
   }
 
   void ComputeAndCompareSolutions(
@@ -134,6 +140,56 @@ class SchurComplementSolverTest : public ::testing::Test {
     }
   }
 
+  void ComputeAndCompareExplicitAndImplicitSolutions(int problem_id,
+                                                     bool regularization) {
+    SetUpFromProblemId(problem_id);
+
+    LinearSolver::Options options;
+    options.type = ITERATIVE_SCHUR;
+    options.preconditioner_type = SCHUR_JACOBI;
+    options.sparse_linear_algebra_library_type = NO_SPARSE;
+    options.max_num_iterations = num_cols + 2;
+    options.elimination_groups.push_back(num_eliminate_blocks);
+    options.elimination_groups.push_back(A->block_structure()->cols.size() -
+                                         num_eliminate_blocks);
+
+    ContextImpl context;
+    options.context = &context;
+    DetectStructure(*A->block_structure(),
+                    num_eliminate_blocks,
+                    &options.row_block_size,
+                    &options.e_block_size,
+                    &options.f_block_size);
+
+    LinearSolver::PerSolveOptions per_solve_options;
+    per_solve_options.D = regularization ? D.get() : nullptr;
+    per_solve_options.r_tolerance = 1e-12;
+    per_solve_options.q_tolerance = 0;
+
+    Vector explicit_solution(num_cols);
+    Vector implicit_solution(num_cols);
+    for (const bool use_explicit_schur_complement : {true, false}) {
+      options.use_explicit_schur_complement = use_explicit_schur_complement;
+      std::unique_ptr<LinearSolver> solver(LinearSolver::Create(options));
+      Vector& solution =
+          use_explicit_schur_complement ? explicit_solution : implicit_solution;
+      solution.setZero();
+      LinearSolver::Summary summary =
+          solver->Solve(A.get(), b.get(), per_solve_options, solution.data());
+      ASSERT_EQ(summary.termination_type, LinearSolverTerminationType::SUCCESS);
+      ASSERT_TRUE(solution.allFinite());
+
+      const Vector& reference = regularization ? sol_d : sol;
+      ASSERT_LE((reference - solution).norm() / num_cols, 1e-10)
+          << "Expected solution: " << reference.transpose()
+          << " Actual solution: " << solution.transpose();
+    }
+
+    ASSERT_LE((explicit_solution - implicit_solution).norm() / num_cols, 1e-10)
+        << "Explicit solution: " << explicit_solution.transpose()
+        << " Implicit solution: " << implicit_solution.transpose();
+  }
+
   int num_rows;
   int num_cols;
   int num_eliminate_blocks;
@@ -165,6 +221,17 @@ TEST_F(SchurComplementSolverTest, DenseSchurWithEigenLargeProblem) {
 TEST_F(SchurComplementSolverTest, DenseSchurWithEigenVaryingFBlockSize) {
   ComputeAndCompareSolutions(
       4, true, DENSE_SCHUR, EIGEN, SUITE_SPARSE, OrderingType::NATURAL);
+}
+
+TEST_F(SchurComplementSolverTest, ExplicitAndImplicitSchurWithRetainedBlocks) {
+  ComputeAndCompareExplicitAndImplicitSolutions(2, false);
+  ComputeAndCompareExplicitAndImplicitSolutions(2, true);
+}
+
+TEST_F(SchurComplementSolverTest,
+       ExplicitAndImplicitSchurWithoutRetainedBlocks) {
+  ComputeAndCompareExplicitAndImplicitSolutions(3, false);
+  ComputeAndCompareExplicitAndImplicitSolutions(3, true);
 }
 
 #ifndef CERES_NO_LAPACK
