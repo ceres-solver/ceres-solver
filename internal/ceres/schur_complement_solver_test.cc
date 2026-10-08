@@ -78,12 +78,15 @@ class SchurComplementSolverTest : public ::testing::Test {
 
     // Gold standard solutions using dense QR factorization.
     DenseSparseMatrix dense_A(triplet_A);
-    qr->Solve(&dense_A, b.get(), LinearSolver::PerSolveOptions(), sol.data());
+    LinearSolver::Summary summary = qr->Solve(
+        &dense_A, b.get(), LinearSolver::PerSolveOptions(), sol.data());
+    ASSERT_EQ(summary.termination_type, LinearSolverTerminationType::SUCCESS);
 
     // Gold standard solution with appended diagonal.
     LinearSolver::PerSolveOptions per_solve_options;
     per_solve_options.D = D.get();
-    qr->Solve(&dense_A, b.get(), per_solve_options, sol_d.data());
+    summary = qr->Solve(&dense_A, b.get(), per_solve_options, sol_d.data());
+    ASSERT_EQ(summary.termination_type, LinearSolverTerminationType::SUCCESS);
   }
 
   void ComputeAndCompareSolutions(
@@ -104,6 +107,9 @@ class SchurComplementSolverTest : public ::testing::Test {
     options.sparse_linear_algebra_library_type =
         sparse_linear_algebra_library_type;
     options.ordering_type = ordering_type;
+    options.use_explicit_schur_complement = true;
+    options.preconditioner_type = SCHUR_JACOBI;
+    options.max_num_iterations = num_cols;
     ContextImpl context;
     options.context = &context;
     DetectStructure(*A->block_structure(),
@@ -115,6 +121,7 @@ class SchurComplementSolverTest : public ::testing::Test {
     std::unique_ptr<LinearSolver> solver(LinearSolver::Create(options));
 
     LinearSolver::PerSolveOptions per_solve_options;
+    per_solve_options.r_tolerance = 1e-12;
     LinearSolver::Summary summary;
     if (regularization) {
       per_solve_options.D = D.get();
@@ -165,6 +172,25 @@ TEST_F(SchurComplementSolverTest, DenseSchurWithEigenLargeProblem) {
 TEST_F(SchurComplementSolverTest, DenseSchurWithEigenVaryingFBlockSize) {
   ComputeAndCompareSolutions(
       4, true, DENSE_SCHUR, EIGEN, SUITE_SPARSE, OrderingType::NATURAL);
+}
+
+TEST_F(SchurComplementSolverTest, ExplicitSchurSmallProblem) {
+  ComputeAndCompareSolutions(
+      2, false, ITERATIVE_SCHUR, EIGEN, NO_SPARSE, OrderingType::NATURAL);
+  ComputeAndCompareSolutions(
+      2, true, ITERATIVE_SCHUR, EIGEN, NO_SPARSE, OrderingType::NATURAL);
+}
+
+TEST_F(SchurComplementSolverTest, ExplicitSchurLargeProblem) {
+  ComputeAndCompareSolutions(
+      3, false, ITERATIVE_SCHUR, EIGEN, NO_SPARSE, OrderingType::NATURAL);
+  ComputeAndCompareSolutions(
+      3, true, ITERATIVE_SCHUR, EIGEN, NO_SPARSE, OrderingType::NATURAL);
+}
+
+TEST_F(SchurComplementSolverTest, ExplicitSchurVaryingFBlockSize) {
+  ComputeAndCompareSolutions(
+      4, true, ITERATIVE_SCHUR, EIGEN, NO_SPARSE, OrderingType::NATURAL);
 }
 
 #ifndef CERES_NO_LAPACK
