@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e09fad9_89747a79",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-08T17:31:41Z",
+      "side": 1,
+      "message": "This code seems pretty unreadable as a consequence of the refactoring, let me take another pass at it.",
+      "revId": "3e2e3498d7e269c0a3476955fa9ce46d400c95cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
