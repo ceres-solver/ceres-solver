@@ -51,8 +51,46 @@
 
 namespace ceres::internal {
 
+using ::testing::Not;
+
 constexpr int kNumTrials = 1000;
 constexpr double kTolerance = 1e-9;
+
+// A one-dimensional manifold whose operations fail.
+class FailingManifold final : public Manifold {
+ public:
+  int AmbientSize() const final { return 1; }
+  int TangentSize() const final { return 1; }
+  bool Plus(const double* x,
+            const double* delta,
+            double* x_plus_delta) const final {
+    return false;
+  }
+  bool PlusJacobian(const double* x, double* jacobian) const final {
+    return false;
+  }
+  bool Minus(const double* y, const double* x, double* y_minus_x) const final {
+    return false;
+  }
+  bool MinusJacobian(const double* x, double* jacobian) const final {
+    return false;
+  }
+};
+
+TEST(ManifoldTestUtils, MatchersRejectFailingOperations) {
+  const FailingManifold manifold;
+  const Vector x = Vector::Zero(1);
+  const Vector delta = Vector::Zero(1);
+  EXPECT_THAT(manifold, Not(XPlusZeroIsXAt(x, kTolerance)));
+  EXPECT_THAT(manifold, Not(XMinusXIsZeroAt(x, kTolerance)));
+  EXPECT_THAT(manifold, Not(MinusPlusIsIdentityAt(x, delta, kTolerance)));
+  EXPECT_THAT(manifold, Not(PlusMinusIsIdentityAt(x, x, kTolerance)));
+  EXPECT_THAT(manifold, Not(HasCorrectPlusJacobianAt(x, kTolerance)));
+  EXPECT_THAT(manifold, Not(HasCorrectMinusJacobianAt(x, kTolerance)));
+  EXPECT_THAT(manifold, Not(MinusPlusJacobianIsIdentityAt(x, kTolerance)));
+  EXPECT_THAT(manifold,
+              Not(HasCorrectRightMultiplyByPlusJacobianAt(x, kTolerance)));
+}
 
 TEST(EuclideanManifold, StaticNormalFunctionTest) {
   EuclideanManifold<3> manifold;
