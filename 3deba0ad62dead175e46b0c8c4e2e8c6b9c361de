@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3689ecd5_fee4966f",
+        "filename": "include/ceres/manifold_test_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-08T23:29:10Z",
+      "side": 1,
+      "message": "whoa, how did this happen??",
+      "revId": "3deba0ad62dead175e46b0c8c4e2e8c6b9c361de",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
