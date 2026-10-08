@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "693d6fbe_7ebd9dc4",
+        "filename": "internal/ceres/schur_complement_solver_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-08T18:01:09Z",
+      "side": 1,
+      "message": "Unnecessary include once `ComputeAndCompareSolutions` is reused below.",
+      "revId": "6d09208877353fcfa1665a62727db08499c26693",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbd2bfe8_b6c0fa0b",
+        "filename": "internal/ceres/schur_complement_solver_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-08T18:01:09Z",
+      "side": 1,
+      "message": "`ASSERT_TRUE(sol.allFinite())` (and `sol_d.allFinite()` below) is redundant since `ASSERT_NEAR` on the norm difference with `x` will already fail if `sol` or `x` is non-finite.",
+      "revId": "6d09208877353fcfa1665a62727db08499c26693",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b80f32c_2e89e44c",
+        "filename": "internal/ceres/schur_complement_solver_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-08T18:01:09Z",
+      "side": 1,
+      "message": "Instead of adding a separate 50-line helper that duplicates `ComputeAndCompareSolutions` and re-tests implicit `ITERATIVE_SCHUR` (which is already covered on problems 2 and 3 in `iterative_schur_complement_solver_test.cc`), please just set:\n\n```cpp\noptions.use_explicit_schur_complement \u003d true;\noptions.preconditioner_type \u003d SCHUR_JACOBI;\noptions.max_num_iterations \u003d num_cols;\n```\n\nand `per_solve_options.r_tolerance \u003d 1e-12;` inside `ComputeAndCompareSolutions` (all of which are ignored by `DENSE_SCHUR` and `SPARSE_SCHUR`).\n\nThen the tests below can simply call `ComputeAndCompareSolutions(..., ITERATIVE_SCHUR, EIGEN, NO_SPARSE, OrderingType::NATURAL)` on problems 2, 3, and 4 (matching `DenseSchurWithEigenSmallProblem`, `DenseSchurWithEigenLargeProblem`, and `DenseSchurWithEigenVaryingFBlockSize`).",
+      "revId": "6d09208877353fcfa1665a62727db08499c26693",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
