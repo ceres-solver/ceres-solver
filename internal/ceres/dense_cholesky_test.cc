@@ -140,25 +140,27 @@ INSTANTIATE_TEST_SUITE_P(CudaCholesky,
 
 class MockDenseCholesky : public DenseCholesky {
  public:
-  MOCK_METHOD3(Factorize,
-               LinearSolverTerminationType(int num_cols,
-                                           double* lhs,
-                                           std::string* message));
-  MOCK_METHOD3(Solve,
-               LinearSolverTerminationType(const double* rhs,
-                                           double* solution,
-                                           std::string* message));
+  MOCK_METHOD(LinearSolverTerminationType,
+              Factorize,
+              (int num_cols, double* lhs, std::string* message),
+              (override));
+  MOCK_METHOD(LinearSolverTerminationType,
+              Solve,
+              (const double* rhs, double* solution, std::string* message),
+              (override));
 };
 
 class MockDenseIterativeRefiner : public DenseIterativeRefiner {
  public:
   MockDenseIterativeRefiner() : DenseIterativeRefiner(1) {}
-  MOCK_METHOD5(Refine,
-               void(int num_cols,
-                    const double* lhs,
-                    const double* rhs,
-                    DenseCholesky* dense_cholesky,
-                    double* solution));
+  MOCK_METHOD(void,
+              Refine,
+              (int num_cols,
+               const double* lhs,
+               const double* rhs,
+               DenseCholesky* dense_cholesky,
+               double* solution),
+              (override));
 };
 
 using testing::_;
@@ -168,8 +170,7 @@ TEST(RefinedDenseCholesky, Factorize) {
   auto dense_cholesky = std::make_unique<MockDenseCholesky>();
   auto iterative_refiner = std::make_unique<MockDenseIterativeRefiner>();
   EXPECT_CALL(*dense_cholesky, Factorize(_, _, _))
-      .Times(1)
-      .WillRepeatedly(Return(LinearSolverTerminationType::SUCCESS));
+      .WillOnce(Return(LinearSolverTerminationType::SUCCESS));
   EXPECT_CALL(*iterative_refiner, Refine(_, _, _, _, _)).Times(0);
   RefinedDenseCholesky refined_dense_cholesky(std::move(dense_cholesky),
                                               std::move(iterative_refiner));
@@ -177,14 +178,13 @@ TEST(RefinedDenseCholesky, Factorize) {
   std::string message;
   EXPECT_EQ(refined_dense_cholesky.Factorize(1, &lhs, &message),
             LinearSolverTerminationType::SUCCESS);
-};
+}
 
 TEST(RefinedDenseCholesky, FactorAndSolveWithUnsuccessfulFactorization) {
   auto dense_cholesky = std::make_unique<MockDenseCholesky>();
   auto iterative_refiner = std::make_unique<MockDenseIterativeRefiner>();
   EXPECT_CALL(*dense_cholesky, Factorize(_, _, _))
-      .Times(1)
-      .WillRepeatedly(Return(LinearSolverTerminationType::FAILURE));
+      .WillOnce(Return(LinearSolverTerminationType::FAILURE));
   EXPECT_CALL(*dense_cholesky, Solve(_, _, _)).Times(0);
   EXPECT_CALL(*iterative_refiner, Refine(_, _, _, _, _)).Times(0);
   RefinedDenseCholesky refined_dense_cholesky(std::move(dense_cholesky),
@@ -196,17 +196,15 @@ TEST(RefinedDenseCholesky, FactorAndSolveWithUnsuccessfulFactorization) {
   EXPECT_EQ(
       refined_dense_cholesky.FactorAndSolve(1, &lhs, &rhs, &solution, &message),
       LinearSolverTerminationType::FAILURE);
-};
+}
 
 TEST(RefinedDenseCholesky, FactorAndSolveWithSuccess) {
   auto dense_cholesky = std::make_unique<MockDenseCholesky>();
   auto iterative_refiner = std::make_unique<MockDenseIterativeRefiner>();
   EXPECT_CALL(*dense_cholesky, Factorize(_, _, _))
-      .Times(1)
-      .WillRepeatedly(Return(LinearSolverTerminationType::SUCCESS));
+      .WillOnce(Return(LinearSolverTerminationType::SUCCESS));
   EXPECT_CALL(*dense_cholesky, Solve(_, _, _))
-      .Times(1)
-      .WillRepeatedly(Return(LinearSolverTerminationType::SUCCESS));
+      .WillOnce(Return(LinearSolverTerminationType::SUCCESS));
   EXPECT_CALL(*iterative_refiner, Refine(_, _, _, _, _)).Times(1);
 
   RefinedDenseCholesky refined_dense_cholesky(std::move(dense_cholesky),
@@ -218,6 +216,6 @@ TEST(RefinedDenseCholesky, FactorAndSolveWithSuccess) {
   EXPECT_EQ(
       refined_dense_cholesky.FactorAndSolve(1, &lhs, &rhs, &solution, &message),
       LinearSolverTerminationType::SUCCESS);
-};
+}
 
 }  // namespace ceres::internal

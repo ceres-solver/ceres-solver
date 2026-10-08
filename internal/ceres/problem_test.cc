@@ -2208,7 +2208,10 @@ TEST(Solver, ZeroTangentSizedManifoldMeansParameterBlockIsConstant) {
 
 class MockEvaluationCallback : public EvaluationCallback {
  public:
-  MOCK_METHOD2(PrepareForEvaluation, void(bool, bool));
+  MOCK_METHOD(void,
+              PrepareForEvaluation,
+              (bool evaluate_jacobians, bool new_evaluation_point),
+              (override));
 };
 
 TEST(ProblemEvaluate, CallsEvaluationCallbackWithoutJacobian) {
