@@ -117,7 +117,7 @@ bool BlockSparseJacobiPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
 BlockCRSJacobiPreconditioner::BlockCRSJacobiPreconditioner(
     Preconditioner::Options options, const CompressedRowSparseMatrix& A)
     : options_(std::move(options)), locks_(A.col_blocks().size()) {
-  auto& col_blocks = A.col_blocks();
+  const std::vector<Block>& col_blocks = A.col_blocks();
 
   // Compute the number of non-zeros in the preconditioner. This is needed so
   // that we can construct the CompressedRowSparseMatrix.
@@ -136,7 +136,7 @@ BlockCRSJacobiPreconditioner::BlockCRSJacobiPreconditioner(
     // Not that the because of the way the CompressedRowSparseMatrix format
     // works, the entire diagonal block is laid out contiguously in memory as a
     // row-major matrix. We will use this when updating the block.
-    auto& block = col_blocks[i];
+    const Block& block = col_blocks[i];
     for (int j = 0; j < block.size; ++j) {
       for (int k = 0; k < block.size; ++k, ++idx) {
         m_cols[idx] = block.position + k;
@@ -158,8 +158,8 @@ BlockCRSJacobiPreconditioner::~BlockCRSJacobiPreconditioner() = default;
 
 bool BlockCRSJacobiPreconditioner::UpdateImpl(
     const CompressedRowSparseMatrix& A, const double* D) {
-  const auto& col_blocks = A.col_blocks();
-  const auto& row_blocks = A.row_blocks();
+  const std::vector<Block>& col_blocks = A.col_blocks();
+  const std::vector<Block>& row_blocks = A.row_blocks();
   const int num_col_blocks = col_blocks.size();
   const int num_row_blocks = row_blocks.size();
 
@@ -176,7 +176,7 @@ bool BlockCRSJacobiPreconditioner::UpdateImpl(
       0,
       num_row_blocks,
       options_.num_threads,
-      [this, row_blocks, a_rows, a_cols, a_values, m_values, m_rows](int i) {
+      [this, &row_blocks, a_rows, a_cols, a_values, m_values, m_rows](int i) {
         const int row = row_blocks[i].position;
         const int row_block_size = row_blocks[i].size;
         const int row_nnz = a_rows[row + 1] - a_rows[row];
@@ -206,7 +206,7 @@ bool BlockCRSJacobiPreconditioner::UpdateImpl(
       0,
       num_col_blocks,
       options_.num_threads,
-      [col_blocks, m_rows, m_values, D](int i) {
+      [&col_blocks, m_rows, m_values, D](int i) {
         const int col = col_blocks[i].position;
         const int col_block_size = col_blocks[i].size;
         MatrixRef m(m_values + m_rows[col], col_block_size, col_block_size);
