@@ -88,6 +88,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "59ef2ca3_b6e45409",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-08T00:04:26Z",
+      "side": 1,
+      "message": "1. That\u0027s intentional for use in math notation. The relation to variables is explained.\n2. In previous CL we kept h and tau. Renaming would introduce inconsistency.\n3. `UnscaledAccurateNorm` only uses multiplication by reciprocal because 0.5 is a (standalone) `std::fma` operand. In general true division is preferred because it avoids unnecessary loss of precision.",
+      "parentUuid": "70d737d1_96ea9507",
+      "revId": "be18e55955d6ae04845d3601812cbe5ccde5749e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dc829762_1811ea37",
@@ -113,6 +131,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9a052f81_2e8920b4",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-08T00:04:26Z",
+      "side": 1,
+      "message": "We never dropped the payload in the parent CL. This is actually an important part to keep.",
+      "parentUuid": "dc829762_1811ea37",
+      "range": {
+        "startLine": 366,
+        "startChar": 44,
+        "endLine": 366,
+        "endChar": 48
+      },
+      "revId": "be18e55955d6ae04845d3601812cbe5ccde5749e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c2da8959_4e6db70c",
         "filename": "internal/ceres/jet_test.cc",
         "patchSetId": 11
@@ -124,6 +166,24 @@
       "writtenOn": "2026-10-06T00:48:16Z",
       "side": 1,
       "message": "In the 3-argument test here, z \u003d MakeJet(12.0, 0.0, 0.0) has zero derivatives, so the variadic fold expression for args.v in AccurateRNorm(Jet...) multiplies by zero and is never actually tested for non-zero derivatives.\n  \nPlease move this next to TEST(Jet, AccurateNorm) as TEST(Jet, AccurateRNorm) and structure it the same way: test 2, 3, and 4 arguments with non-zero derivatives on all arguments, test zero scalar values with non-zero derivatives, and check AccurateRNorm against 1.0 / hypot(x, y) and 1.0 / hypot(x, y, z).",
+      "revId": "be18e55955d6ae04845d3601812cbe5ccde5749e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15dba25d_69e98a65",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1449,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-08T00:04:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2da8959_4e6db70c",
       "revId": "be18e55955d6ae04845d3601812cbe5ccde5749e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
