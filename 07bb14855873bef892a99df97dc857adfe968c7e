@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81c38ce2_a4459442",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-08T18:16:57Z",
+      "side": 0,
+      "message": "This prevents partial specialization. Why would we want this?",
+      "range": {
+        "startLine": 141,
+        "startChar": 20,
+        "endLine": 141,
+        "endChar": 45
+      },
+      "revId": "07bb14855873bef892a99df97dc857adfe968c7e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30c53f2b_49bf607e",
+        "filename": "include/ceres/accurate_norm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-08T18:16:57Z",
+      "side": 0,
+      "message": "Keep.",
+      "range": {
+        "startLine": 388,
+        "startChar": 6,
+        "endLine": 388,
+        "endChar": 16
+      },
+      "revId": "07bb14855873bef892a99df97dc857adfe968c7e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
