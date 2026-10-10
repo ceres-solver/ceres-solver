@@ -32,13 +32,6 @@
 #ifndef CERES_INTERNAL_AUTODIFF_BENCHMARKS_CONSTANT_COST_FUNCTIONS_H_
 #define CERES_INTERNAL_AUTODIFF_BENCHMARKS_CONSTANT_COST_FUNCTIONS_H_
 
-#include <array>
-#include <memory>
-#include <numeric>
-
-#include "benchmark/benchmark.h"
-#include "ceres/autodiff_benchmarks/cost_function_benchmark_utils.h"
-
 namespace ceres {
 
 template <int kParameterBlockSize>
@@ -49,42 +42,6 @@ struct ConstantCostFunction {
     return true;
   }
 };
-
-template <int kParameterBlockSize, DiffType kDiffType>
-static void BM_Constant(benchmark::State& state) {
-  constexpr int kNumResiduals = 1;
-  std::array<double, kParameterBlockSize> parameters_values;
-  std::iota(parameters_values.begin(), parameters_values.end(), 0);
-  double* parameters[] = {parameters_values.data()};
-
-  std::array<double, kNumResiduals> residuals{};
-  std::array<double, kNumResiduals * kParameterBlockSize> jacobian_values{};
-  double* jacobians[] = {jacobian_values.data()};
-
-  std::unique_ptr<CostFunction> cost_function = CostFunctionFactory<
-      kDiffType>::template Create<ConstantCostFunction<kParameterBlockSize>,
-                                  1,
-                                  kParameterBlockSize>();
-
-  for (auto _ : state) {
-    benchmark::DoNotOptimize(
-        cost_function->Evaluate(parameters, residuals.data(), jacobians));
-  }
-}
-
-#define REGISTER_CONSTANT_BENCHMARKS(N)          \
-  BENCHMARK_TEMPLATE(BM_Constant, N, kAutoDiff); \
-  BENCHMARK_TEMPLATE(BM_Constant, N, kDynamicAutoDiff)
-
-REGISTER_CONSTANT_BENCHMARKS(1);
-REGISTER_CONSTANT_BENCHMARKS(10);
-REGISTER_CONSTANT_BENCHMARKS(20);
-REGISTER_CONSTANT_BENCHMARKS(30);
-REGISTER_CONSTANT_BENCHMARKS(40);
-REGISTER_CONSTANT_BENCHMARKS(50);
-REGISTER_CONSTANT_BENCHMARKS(60);
-
-#undef REGISTER_CONSTANT_BENCHMARKS
 
 }  // namespace ceres
 

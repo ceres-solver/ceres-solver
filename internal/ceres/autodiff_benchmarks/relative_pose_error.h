@@ -33,11 +33,8 @@
 #define CERES_INTERNAL_AUTODIFF_BENCHMARK_RELATIVE_POSE_ERROR_H_
 
 #include <Eigen/Dense>
-#include <memory>
 #include <utility>
 
-#include "benchmark/benchmark.h"
-#include "ceres/autodiff_benchmarks/cost_function_benchmark_utils.h"
 #include "ceres/rotation.h"
 
 namespace ceres {
@@ -86,48 +83,6 @@ struct RelativePoseError {
   Eigen::Quaterniond meas_q_i_j_;
   Eigen::Vector3d meas_t_i_j_;
 };
-
-template <DiffType kDiffType, EvaluationType kEvalType>
-static void BM_RelativePose(benchmark::State& state) {
-  using FunctorType = RelativePoseError;
-
-  double parameter_block1[] = {1., 2., 3., 4., 5., 6., 7.};
-  double parameter_block2[] = {1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1};
-  double* parameters[] = {parameter_block1, parameter_block2};
-
-  Eigen::Map<Eigen::Quaterniond>(parameter_block1).normalize();
-  Eigen::Map<Eigen::Quaterniond>(parameter_block2).normalize();
-
-  double jacobian1[6 * 7];
-  double jacobian2[6 * 7];
-  double residuals[6];
-  double* jacobians[] = {jacobian1, jacobian2};
-  double** jacobians_ptr =
-      (kEvalType == kResidualsAndJacobians) ? jacobians : nullptr;
-
-  Eigen::Quaterniond q_i_j = Eigen::Quaterniond(1, 2, 3, 4).normalized();
-  Eigen::Vector3d t_i_j(1, 2, 3);
-
-  std::unique_ptr<CostFunction> cost_function =
-      CostFunctionFactory<kDiffType>::template Create<FunctorType, 6, 7, 7>(
-          q_i_j, t_i_j);
-
-  for (auto _ : state) {
-    benchmark::DoNotOptimize(
-        cost_function->Evaluate(parameters, residuals, jacobians_ptr));
-  }
-}
-
-BENCHMARK_TEMPLATE(BM_RelativePose, kAutoDiff, kResidualsOnly);
-BENCHMARK_TEMPLATE(BM_RelativePose, kAutoDiff, kResidualsAndJacobians);
-BENCHMARK_TEMPLATE(BM_RelativePose, kDynamicAutoDiff, kResidualsOnly);
-BENCHMARK_TEMPLATE(BM_RelativePose, kDynamicAutoDiff, kResidualsAndJacobians);
-BENCHMARK_TEMPLATE(BM_RelativePose, kNumericCentral, kResidualsOnly);
-BENCHMARK_TEMPLATE(BM_RelativePose, kNumericCentral, kResidualsAndJacobians);
-BENCHMARK_TEMPLATE(BM_RelativePose, kDynamicNumericCentral, kResidualsOnly);
-BENCHMARK_TEMPLATE(BM_RelativePose,
-                   kDynamicNumericCentral,
-                   kResidualsAndJacobians);
 
 }  // namespace ceres
 #endif  // CERES_INTERNAL_AUTODIFF_BENCHMARK_RELATIVE_POSE_ERROR_H_

@@ -34,11 +34,7 @@
 
 #include <Eigen/Dense>
 #include <cstdint>
-#include <memory>
-#include <random>
 
-#include "benchmark/benchmark.h"
-#include "ceres/autodiff_benchmarks/cost_function_benchmark_utils.h"
 #include "ceres/cubic_interpolation.h"
 
 namespace ceres {
@@ -191,71 +187,6 @@ struct PhotometricError {
   const Interpolator& image_target_;
   const Intrinsics& intrinsics_;
 };
-
-template <DiffType kDiffType, EvaluationType kEvalType>
-static void BM_Photometric(benchmark::State& state) {
-  constexpr int PATCH_SIZE = 8;
-
-  using FunctorType = PhotometricError<PATCH_SIZE>;
-  using ImageType = Eigen::Matrix<uint8_t, 128, 128, Eigen::RowMajor>;
-
-  double parameter_block1[] = {1., 2., 3., 4., 5., 6., 7.};
-  double parameter_block2[] = {1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1};
-  double parameter_block3[] = {1.};
-  double* parameters[] = {parameter_block1, parameter_block2, parameter_block3};
-
-  Eigen::Map<Eigen::Quaterniond>(parameter_block1).normalize();
-  Eigen::Map<Eigen::Quaterniond>(parameter_block2).normalize();
-
-  double jacobian1[FunctorType::PATCH_SIZE * FunctorType::POSE_SIZE];
-  double jacobian2[FunctorType::PATCH_SIZE * FunctorType::POSE_SIZE];
-  double jacobian3[FunctorType::PATCH_SIZE * FunctorType::POINT_SIZE];
-  double residuals[FunctorType::PATCH_SIZE];
-  double* jacobians[] = {jacobian1, jacobian2, jacobian3};
-  double** jacobians_ptr =
-      (kEvalType == kResidualsAndJacobians) ? jacobians : nullptr;
-
-  std::mt19937::result_type seed = 42;
-  std::mt19937 gen(seed);
-  std::uniform_real_distribution<double> uniform01(0.0, 1.0);
-  std::uniform_int_distribution<unsigned int> uniform0255(0, 255);
-
-  FunctorType::Patch<double> intensities_host =
-      FunctorType::Patch<double>::NullaryExpr(
-          [&]() { return uniform0255(gen); });
-
-  FunctorType::PatchVectors<double> bearings_host =
-      FunctorType::PatchVectors<double>::NullaryExpr(
-          [&]() { return uniform01(gen); });
-  bearings_host.row(2).array() = 1;
-  bearings_host.colwise().normalize();
-
-  ImageType image = ImageType::NullaryExpr(
-      [&]() { return static_cast<uint8_t>(uniform0255(gen)); });
-  FunctorType::Grid grid(image.data(), 0, image.rows(), 0, image.cols());
-  FunctorType::Interpolator image_target(grid);
-
-  FunctorType::Intrinsics intrinsics;
-  intrinsics << 128, 128, 1, -1, 0.5, 0.5;
-
-  std::unique_ptr<CostFunction> cost_function =
-      CostFunctionFactory<kDiffType>::template Create<FunctorType,
-                                                      FunctorType::PATCH_SIZE,
-                                                      FunctorType::POSE_SIZE,
-                                                      FunctorType::POSE_SIZE,
-                                                      FunctorType::POINT_SIZE>(
-          intensities_host, bearings_host, image_target, intrinsics);
-
-  for (auto _ : state) {
-    benchmark::DoNotOptimize(
-        cost_function->Evaluate(parameters, residuals, jacobians_ptr));
-  }
-}
-
-BENCHMARK_TEMPLATE(BM_Photometric, kAutoDiff, kResidualsOnly);
-BENCHMARK_TEMPLATE(BM_Photometric, kAutoDiff, kResidualsAndJacobians);
-BENCHMARK_TEMPLATE(BM_Photometric, kDynamicAutoDiff, kResidualsOnly);
-BENCHMARK_TEMPLATE(BM_Photometric, kDynamicAutoDiff, kResidualsAndJacobians);
 
 }  // namespace ceres
 #endif  // CERES_INTERNAL_AUTODIFF_BENCHMARK_PHOTOMETRIC_ERROR_H_

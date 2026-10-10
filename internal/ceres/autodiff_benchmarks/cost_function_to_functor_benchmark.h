@@ -34,7 +34,6 @@
 #include <memory>
 #include <type_traits>
 
-#include "benchmark/benchmark.h"
 #include "ceres/autodiff_benchmarks/cost_function_benchmark_utils.h"
 #include "ceres/ceres.h"
 #include "ceres/rotation.h"
@@ -73,7 +72,8 @@ namespace ceres {
 //       p_cam = AngleAxisRotatePoint(rotation, point) + translation
 //     and then invokes the inner CostFunction via either:
 //       * `CostFunctionToFunctor<2, 3, 3>` (when `kDiffType == kAutoDiff`), or
-//       * `DynamicCostFunctionToFunctor`   (when `kDiffType == kDynamicAutoDiff`).
+//       * `DynamicCostFunctionToFunctor`   (when `kDiffType ==
+//       kDynamicAutoDiff`).
 //
 //   - Benchmark (`BM_CostFunctionToFunctor`): Wraps `OuterProjectionFunctor`
 //     in an outer `AutoDiffCostFunction<..., 2, 3, 3, 3, 3>` and measures its
@@ -130,36 +130,6 @@ struct OuterProjectionFunctor {
                      DynamicCostFunctionToFunctor>
       inner_;
 };
-
-template <DiffType kDiffType, EvaluationType kEvalType>
-static void BM_CostFunctionToFunctor(benchmark::State& state) {
-  std::unique_ptr<CostFunction> cost_function = std::make_unique<
-      AutoDiffCostFunction<OuterProjectionFunctor<kDiffType>, 2, 3, 3, 3, 3>>(
-      std::make_unique<OuterProjectionFunctor<kDiffType>>());
-  double rot[3] = {0.1, -0.2, 0.05};
-  double trans[3] = {0.5, -0.1, 2.0};
-  double intr[3] = {500.0, -0.01, 0.001};
-  double pt[3] = {0.3, -0.4, 5.0};
-  const double* params[4] = {rot, trans, intr, pt};
-  double residuals[2];
-  double jacobian[4 * 2 * 3];
-  double* jacobians[4] = {
-      jacobian + 0, jacobian + 6, jacobian + 12, jacobian + 18};
-  double** jacobians_ptr =
-      (kEvalType == kResidualsAndJacobians) ? jacobians : nullptr;
-
-  for (auto _ : state) {
-    benchmark::DoNotOptimize(
-        cost_function->Evaluate(params, residuals, jacobians_ptr));
-  }
-}
-
-BENCHMARK_TEMPLATE(BM_CostFunctionToFunctor, kAutoDiff, kResidualsOnly);
-BENCHMARK_TEMPLATE(BM_CostFunctionToFunctor, kAutoDiff, kResidualsAndJacobians);
-BENCHMARK_TEMPLATE(BM_CostFunctionToFunctor, kDynamicAutoDiff, kResidualsOnly);
-BENCHMARK_TEMPLATE(BM_CostFunctionToFunctor,
-                   kDynamicAutoDiff,
-                   kResidualsAndJacobians);
 
 }  // namespace ceres
 

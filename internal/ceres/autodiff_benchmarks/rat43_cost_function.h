@@ -33,10 +33,6 @@
 #define CERES_INTERNAL_AUTODIFF_BENCHMARKS_RAT43_COST_FUNCTION_H_
 
 #include <cmath>
-#include <memory>
-
-#include "benchmark/benchmark.h"
-#include "ceres/autodiff_benchmarks/cost_function_benchmark_utils.h"
 
 namespace ceres {
 
@@ -58,44 +54,6 @@ struct Rat43CostFunctor {
   const double x_;
   const double y_;
 };
-
-template <DiffType kDiffType, EvaluationType kEvalType>
-static void BM_Rat43(benchmark::State& state) {
-  double parameter_block1[] = {1., 2., 3., 4.};
-  double* parameters[] = {parameter_block1};
-
-  double jacobian1[] = {0.0, 0.0, 0.0, 0.0};
-  double residuals = 0.0;
-  double* jacobians[] = {jacobian1};
-  double** jacobians_ptr =
-      (kEvalType == kResidualsAndJacobians) ? jacobians : nullptr;
-
-  const double x = 0.2;
-  const double y = 0.3;
-  std::unique_ptr<CostFunction> cost_function =
-      CostFunctionFactory<kDiffType>::template Create<Rat43CostFunctor, 1, 4>(
-          x, y);
-
-  for (auto _ : state) {
-    benchmark::DoNotOptimize(
-        cost_function->Evaluate(parameters, &residuals, jacobians_ptr));
-  }
-}
-
-#define REGISTER_RAT43_BENCHMARKS(Diff)                        \
-  BENCHMARK_TEMPLATE(BM_Rat43, Diff, kResidualsOnly);          \
-  BENCHMARK_TEMPLATE(BM_Rat43, Diff, kResidualsAndJacobians)
-
-REGISTER_RAT43_BENCHMARKS(kAutoDiff);
-REGISTER_RAT43_BENCHMARKS(kDynamicAutoDiff);
-REGISTER_RAT43_BENCHMARKS(kNumericForward);
-REGISTER_RAT43_BENCHMARKS(kDynamicNumericForward);
-REGISTER_RAT43_BENCHMARKS(kNumericCentral);
-REGISTER_RAT43_BENCHMARKS(kDynamicNumericCentral);
-REGISTER_RAT43_BENCHMARKS(kNumericRidders);
-REGISTER_RAT43_BENCHMARKS(kDynamicNumericRidders);
-
-#undef REGISTER_RAT43_BENCHMARKS
 
 }  // namespace ceres
 

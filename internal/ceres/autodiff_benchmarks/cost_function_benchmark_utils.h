@@ -32,10 +32,12 @@
 #ifndef CERES_INTERNAL_AUTODIFF_BENCHMARKS_COST_FUNCTION_BENCHMARK_UTILS_H_
 #define CERES_INTERNAL_AUTODIFF_BENCHMARKS_COST_FUNCTION_BENCHMARK_UTILS_H_
 
+#include <array>
 #include <memory>
 #include <type_traits>
 #include <utility>
 
+#include "benchmark/benchmark.h"
 #include "ceres/ceres.h"
 
 namespace ceres {
@@ -74,16 +76,17 @@ class ToDynamic {
       : cost_function_(std::forward<Args>(args)...) {}
 
   template <typename T>
-  bool operator()(const T* const* parameters, T* residuals) const {
+  EIGEN_STRONG_INLINE bool operator()(const T* const* parameters,
+                                      T* residuals) const {
     return Apply(
         parameters, residuals, std::make_index_sequence<kNumParameterBlocks>());
   }
 
  private:
   template <typename T, size_t... Indices>
-  bool Apply(const T* const* parameters,
-             T* residuals,
-             std::index_sequence<Indices...>) const {
+  EIGEN_STRONG_INLINE bool Apply(const T* const* parameters,
+                                 T* residuals,
+                                 std::index_sequence<Indices...>) const {
     return cost_function_(parameters[Indices]..., residuals);
   }
 
@@ -155,6 +158,43 @@ struct CostFunctionFactory {
     }
   }
 };
+
+// Allocates residual and Jacobian buffers on the stack and benchmarks
+// `cost_function.Evaluate(parameters.data(), residuals, jacobians_ptr)`.
+// When `kEvalType == kResidualsAndPointJacobian`, only
+// `jacobians[kPointBlockIdx]` is non-null.
+template <EvaluationType kEvalType,
+          int kPointBlockIdx,
+          int kNumResiduals,
+          int... Ns>
+void RunCostFunctionBenchmark(
+    benchmark::State& state,
+    const CostFunction& cost_function,
+    const std::array<const double*, sizeof...(Ns)>& parameters) {
+  constexpr int kNumParameterBlocks = sizeof...(Ns);
+  constexpr int kTotalParameters = (Ns + ...);
+  double residuals[kNumResiduals] = {};
+  double jacobian_storage[kNumResiduals * kTotalParameters] = {};
+  double* jacobians[kNumParameterBlocks];
+
+  constexpr int kBlockSizes[kNumParameterBlocks] = {Ns...};
+  double* cursor = jacobian_storage;
+  for (int i = 0; i < kNumParameterBlocks; ++i) {
+    if (kEvalType == kResidualsAndJacobians ||
+        (kEvalType == kResidualsAndPointJacobian && i == kPointBlockIdx)) {
+      jacobians[i] = cursor;
+    } else {
+      jacobians[i] = nullptr;
+    }
+    cursor += kNumResiduals * kBlockSizes[i];
+  }
+  double** jacobians_ptr = (kEvalType == kResidualsOnly) ? nullptr : jacobians;
+
+  for (auto _ : state) {
+    benchmark::DoNotOptimize(
+        cost_function.Evaluate(parameters.data(), residuals, jacobians_ptr));
+  }
+}
 
 }  // namespace ceres
 
