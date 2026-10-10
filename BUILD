@@ -43,6 +43,7 @@ ceres_library(
 cc_library(
     name = "test_util",
     srcs = ["internal/ceres/" + x for x in [
+        "benchmark_cost_functions.cc",
         "evaluator_test_utils.cc",
         "numeric_diff_test_utils.cc",
         "test_util.cc",
@@ -213,10 +214,11 @@ TEST_DEPS = [
 ]]
 
 cc_binary(
-    name = "autodiff_benchmarks",
-    srcs = ["internal/ceres/autodiff_benchmarks/autodiff_benchmarks.cc"] + glob([
-        "internal/ceres/autodiff_benchmarks/*.h",
-    ]),
+    name = "cost_function_differentiation_benchmark",
+    srcs = [
+        "internal/ceres/benchmark_cost_functions.h",
+        "internal/ceres/cost_function_differentiation_benchmark.cc",
+    ],
     copts = ["-mllvm -inlinehint-threshold=1000000"],
     deps = TEST_DEPS + ["@google_benchmark//:benchmark"],
 )
