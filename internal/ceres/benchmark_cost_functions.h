@@ -114,8 +114,7 @@ class DynamicCostFunctorAdapter {
 };
 
 // Base class declaring the residual count and parameter block dimensions of a
-// benchmark cost functor, along with CostFunction, Manifold, and LossFunction
-// factories.
+// benchmark cost functor, along with CostFunction factories.
 template <int kResiduals, int... Ns>
 struct BenchmarkCostFunctor {
   static constexpr int kNumResiduals = kResiduals;
@@ -171,12 +170,6 @@ struct BenchmarkCostFunctor {
     cost_function->SetNumResiduals(kNumResiduals);
     return cost_function;
   }
-
-  static std::unique_ptr<Manifold> MakeManifold(int /*block_index*/) {
-    return nullptr;
-  }
-
-  static std::unique_ptr<LossFunction> MakeLossFunction() { return nullptr; }
 };
 
 inline std::array<double, 3> NormalizedVector3(double x, double y, double z) {
@@ -204,21 +197,6 @@ inline std::array<double, 7> NormalizedPose(double qx,
   std::array pose{qx, qy, qz, qw, tx, ty, tz};
   Eigen::Map<Eigen::Quaterniond>(pose.data()).normalize();
   return pose;
-}
-
-// Converts the angle-axis rotation and translation prefix of a 9-parameter BAL
-// camera `[rx, ry, rz, tx, ty, tz, ...]` into a 7-parameter pose `[qx, qy, qz,
-// qw, tx, ty, tz]` with an Eigen-convention quaternion.
-inline std::array<double, 7> PoseFromBALCamera(const double* bal_camera) {
-  double q_wxyz[4];
-  AngleAxisToQuaternion(bal_camera, q_wxyz);
-  return {q_wxyz[1],
-          q_wxyz[2],
-          q_wxyz[3],
-          q_wxyz[0],
-          bal_camera[3],
-          bal_camera[4],
-          bal_camera[5]};
 }
 
 template <int kParameterBlockSize>
@@ -291,15 +269,6 @@ struct SnavelyReprojectionError : BenchmarkCostFunctor<2, 9, 3> {
 
   static ParameterBlocks MakeParameters() {
     return ParameterBlocks({1., 2., 3., 4., 5., 6., 7., 8., 9.}, {1., 2., 3.});
-  }
-
-  static ParameterBlocks MakeParametersFromBAL(const double* bal_camera,
-                                               const double* bal_point) {
-    std::array<double, 9> camera{};
-    std::array<double, 3> point{};
-    std::copy_n(bal_camera, 9, camera.data());
-    std::copy_n(bal_point, 3, point.data());
-    return ParameterBlocks(camera, point);
   }
 
   template <typename T>
@@ -870,36 +839,6 @@ struct ColmapOpenCVReprojectionError : BenchmarkCostFunctor<2, 3, 7, 8> {
         {1000.0, 1000.0, 640.0, 360.0, -0.05, 0.01, 1e-4, -1e-4});
   }
 
-  static ParameterBlocks MakeParametersFromBAL(const double* bal_camera,
-                                               const double* bal_point) {
-    // BAL cameras look down -Z with focal length bal_camera[6] and radial
-    // distortion (bal_camera[7], bal_camera[8]); negate focal length so
-    // projection matches COLMAP's +Z camera convention.
-    std::array<double, 8> intrinsics = {-bal_camera[6],
-                                        -bal_camera[6],
-                                        0.0,
-                                        0.0,
-                                        bal_camera[7],
-                                        bal_camera[8],
-                                        1e-4,
-                                        1e-4};
-    return ParameterBlocks({bal_point[0], bal_point[1], bal_point[2]},
-                           PoseFromBALCamera(bal_camera),
-                           intrinsics);
-  }
-
-  static std::unique_ptr<Manifold> MakeManifold(int block_index) {
-    if (block_index == 1) {
-      return std::make_unique<
-          ProductManifold<EigenQuaternionManifold, EuclideanManifold<3>>>();
-    }
-    return nullptr;
-  }
-
-  static std::unique_ptr<LossFunction> MakeLossFunction() {
-    return std::make_unique<HuberLoss>(1.0);
-  }
-
   template <typename T>
   inline bool operator()(const T* const point3D_in_world,
                          const T* const cam_from_world,
@@ -1225,30 +1164,6 @@ struct LibmvBrownReprojectionError : BenchmarkCostFunctor<2, 9, 6, 3> {
         {1000.0, 640.0, 360.0, -0.05, 0.01, -0.002, 0.0005, 1e-4, -1e-4},
         {0.02, -0.03, 0.01, 0.1, -0.2, 0.5},
         {0.5, -0.3, 4.2});
-  }
-
-  static ParameterBlocks MakeParametersFromBAL(const double* bal_camera,
-                                               const double* bal_point) {
-    std::array<double, 9> intrinsics = {-bal_camera[6],
-                                        0.0,
-                                        0.0,
-                                        bal_camera[7],
-                                        bal_camera[8],
-                                        0.0,
-                                        0.0,
-                                        1e-4,
-                                        1e-4};
-    std::array<double, 6> pose{};
-    std::copy_n(bal_camera, 6, pose.data());
-    return ParameterBlocks(
-        intrinsics, pose, {bal_point[0], bal_point[1], bal_point[2]});
-  }
-
-  static std::unique_ptr<Manifold> MakeManifold(int block_index) {
-    if (block_index == 0) {
-      return std::make_unique<SubsetManifold>(9, std::vector<int>{1, 2, 5, 6});
-    }
-    return nullptr;
   }
 
   template <typename T>

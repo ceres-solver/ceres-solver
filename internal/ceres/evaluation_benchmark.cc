@@ -239,13 +239,21 @@ struct BALData {
   std::unique_ptr<ImplicitSchurComplement> implicit_schur_complement_diag;
 };
 
-static void Residuals(benchmark::State& state,
-                      BALData* data,
-                      ContextImpl* context) {
+static void RunEvaluatorBenchmark(benchmark::State& state,
+                                  BALData* data,
+                                  ContextImpl* context,
+                                  bool evaluate_gradient,
+                                  bool evaluate_jacobian,
+                                  bool crs_jacobian) {
   const int num_threads = static_cast<int>(state.range(0));
 
   Evaluator::Options options;
-  options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+  if (crs_jacobian) {
+    options.linear_solver_type = CGNR;
+    options.sparse_linear_algebra_library_type = CUDA_SPARSE;
+  } else {
+    options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+  }
   options.num_threads = num_threads;
   options.context = context;
   options.num_eliminate_blocks = 0;
@@ -255,10 +263,12 @@ static void Residuals(benchmark::State& state,
   auto program = data->preprocessed_problem->reduced_program.get();
   CHECK(program != nullptr);
   auto evaluator = Evaluator::Create(options, program, &error);
-  CHECK(evaluator != nullptr);
+  CHECK(evaluator != nullptr) << error;
 
   double cost = 0.;
   Vector residuals = Vector::Zero(program->NumResiduals());
+  Vector gradient = Vector::Zero(program->NumEffectiveParameters());
+  auto jacobian = evaluate_jacobian ? evaluator->CreateJacobian() : nullptr;
 
   Evaluator::EvaluateOptions eval_options;
   for (auto _ : state) {
@@ -266,42 +276,53 @@ static void Residuals(benchmark::State& state,
                               data->parameters.data(),
                               &cost,
                               residuals.data(),
-                              nullptr,
-                              nullptr));
+                              evaluate_gradient ? gradient.data() : nullptr,
+                              jacobian.get()));
   }
+}
+
+static void Residuals(benchmark::State& state,
+                      BALData* data,
+                      ContextImpl* context) {
+  RunEvaluatorBenchmark(state,
+                        data,
+                        context,
+                        /*evaluate_gradient=*/false,
+                        /*evaluate_jacobian=*/false,
+                        /*crs_jacobian=*/false);
 }
 
 static void ResidualsAndJacobian(benchmark::State& state,
                                  BALData* data,
                                  ContextImpl* context) {
-  const int num_threads = static_cast<int>(state.range(0));
+  RunEvaluatorBenchmark(state,
+                        data,
+                        context,
+                        /*evaluate_gradient=*/false,
+                        /*evaluate_jacobian=*/true,
+                        /*crs_jacobian=*/false);
+}
 
-  Evaluator::Options options;
-  options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
-  options.num_threads = num_threads;
-  options.context = context;
-  options.num_eliminate_blocks = 0;
+static void ResidualsAndJacobianCRS(benchmark::State& state,
+                                    BALData* data,
+                                    ContextImpl* context) {
+  RunEvaluatorBenchmark(state,
+                        data,
+                        context,
+                        /*evaluate_gradient=*/false,
+                        /*evaluate_jacobian=*/true,
+                        /*crs_jacobian=*/true);
+}
 
-  std::string error;
-  CHECK(data->preprocessed_problem != nullptr);
-  auto program = data->preprocessed_problem->reduced_program.get();
-  CHECK(program != nullptr);
-  auto evaluator = Evaluator::Create(options, program, &error);
-  CHECK(evaluator != nullptr);
-
-  double cost = 0.;
-  Vector residuals = Vector::Zero(program->NumResiduals());
-  auto jacobian = evaluator->CreateJacobian();
-
-  Evaluator::EvaluateOptions eval_options;
-  for (auto _ : state) {
-    CHECK(evaluator->Evaluate(eval_options,
-                              data->parameters.data(),
-                              &cost,
-                              residuals.data(),
-                              nullptr,
-                              jacobian.get()));
-  }
+static void ResidualsGradientAndJacobian(benchmark::State& state,
+                                         BALData* data,
+                                         ContextImpl* context) {
+  RunEvaluatorBenchmark(state,
+                        data,
+                        context,
+                        /*evaluate_gradient=*/true,
+                        /*evaluate_jacobian=*/true,
+                        /*crs_jacobian=*/false);
 }
 
 static void Plus(benchmark::State& state, BALData* data, ContextImpl* context) {
@@ -807,10 +828,11 @@ int main(int argc, char** argv) {
 
   for (int i = 1; i < argc; ++i) {
     const std::string path(argv[i]);
-    const std::string name_residuals = "Residuals<" + path + ">";
     benchmark_data.emplace_back(
         std::make_unique<ceres::internal::BALData>(path));
     auto data = benchmark_data.back().get();
+
+    const std::string name_residuals = "Residuals<" + path + ">";
     ::benchmark::RegisterBenchmark(
         name_residuals.c_str(), ceres::internal::Residuals, data, &context)
         ->Arg(1)
@@ -824,6 +846,31 @@ int main(int argc, char** argv) {
                                    ceres::internal::ResidualsAndJacobian,
                                    data,
                                    &context)
+        ->Arg(1)
+        ->Arg(2)
+        ->Arg(4)
+        ->Arg(8)
+        ->Arg(16);
+
+    const std::string name_jacobians_crs =
+        "ResidualsAndJacobianCRS<" + path + ">";
+    ::benchmark::RegisterBenchmark(name_jacobians_crs.c_str(),
+                                   ceres::internal::ResidualsAndJacobianCRS,
+                                   data,
+                                   &context)
+        ->Arg(1)
+        ->Arg(2)
+        ->Arg(4)
+        ->Arg(8)
+        ->Arg(16);
+
+    const std::string name_gradient_and_jacobians =
+        "ResidualsGradientAndJacobian<" + path + ">";
+    ::benchmark::RegisterBenchmark(
+        name_gradient_and_jacobians.c_str(),
+        ceres::internal::ResidualsGradientAndJacobian,
+        data,
+        &context)
         ->Arg(1)
         ->Arg(2)
         ->Arg(4)
