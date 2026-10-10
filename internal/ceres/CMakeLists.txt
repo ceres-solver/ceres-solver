@@ -517,6 +517,12 @@ macro(add_dependencies_to_benchmark BENCHMARK_TARGET)
   target_link_libraries(${BENCHMARK_TARGET}
     PRIVATE ceres_static benchmark::benchmark
             ${CERES_LIBRARY_PRIVATE_DEPENDENCIES})
+  if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    # Honor EIGEN_STRONG_INLINE across deep Jet/Eigen expression templates and
+    # disable MachineOutliner so hot inner loops are not outlined into calls.
+    target_compile_options(${BENCHMARK_TARGET} PRIVATE
+      "-mllvm" "-inlinehint-threshold=1000000" "-mno-outline")
+  endif()
 endmacro()
 
 if (_Ceres_FEATURE_BENCHMARKS)
