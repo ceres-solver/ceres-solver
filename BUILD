@@ -200,6 +200,7 @@ TEST_DEPS = [
     deps = TEST_DEPS + ["@google_benchmark//:benchmark"],
 ) for benchmark_name in [
     "block_jacobi_preconditioner_benchmark",
+    "cost_function_differentiation_benchmark",
     "dense_linear_solver_benchmark",
     "evaluation_benchmark",
     "invert_psd_matrix_benchmark",
@@ -212,11 +213,3 @@ TEST_DEPS = [
     "spmv_benchmark",
 ]]
 
-cc_binary(
-    name = "autodiff_benchmarks",
-    srcs = ["internal/ceres/autodiff_benchmarks/autodiff_benchmarks.cc"] + glob([
-        "internal/ceres/autodiff_benchmarks/*.h",
-    ]),
-    copts = ["-mllvm -inlinehint-threshold=1000000"],
-    deps = TEST_DEPS + ["@google_benchmark//:benchmark"],
-)
