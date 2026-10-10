@@ -440,6 +440,169 @@ BENCHMARK_TEMPLATE(BM_CostFunctionToFunctor,
                    kDynamicAutoDiff,
                    kResidualsAndJacobians);
 
+template <DiffType kDiffType, EvaluationType kEvalType>
+static void BM_ColmapOpenCVReproj(benchmark::State& state) {
+  const double point[] = {0.5, -0.3, 4.2};
+  double pose[] = {0.01, 0.02, -0.01, 0.9997, 0.1, -0.2, 0.5};
+  Eigen::Map<Eigen::Quaterniond>(pose).normalize();
+  const double intrinsics[] = {
+      1000.0, 1000.0, 640.0, 360.0, -0.05, 0.01, 1e-4, -1e-4};
+  auto cf = CostFunctionFactory<kDiffType>::
+      template Create<ColmapOpenCVReprojectionError, 2, 3, 7, 8>(650.0, 350.0);
+  RunCostFunctionBenchmark<kEvalType, 0, 2, 3, 7, 8>(
+      state, *cf, {point, pose, intrinsics});
+}
+
+template <DiffType kDiffType, EvaluationType kEvalType>
+static void BM_ColmapFullOpenCVReproj(benchmark::State& state) {
+  const double point[] = {0.5, -0.3, 4.2};
+  double pose[] = {0.01, 0.02, -0.01, 0.9997, 0.1, -0.2, 0.5};
+  Eigen::Map<Eigen::Quaterniond>(pose).normalize();
+  const double intrinsics[] = {1000.0,
+                               1000.0,
+                               640.0,
+                               360.0,
+                               -0.05,
+                               0.01,
+                               1e-4,
+                               -1e-4,
+                               0.002,
+                               0.01,
+                               -0.005,
+                               0.001};
+  auto cf = CostFunctionFactory<kDiffType>::
+      template Create<ColmapFullOpenCVReprojectionError, 2, 3, 7, 12>(650.0,
+                                                                      350.0);
+  RunCostFunctionBenchmark<kEvalType, 0, 2, 3, 7, 12>(
+      state, *cf, {point, pose, intrinsics});
+}
+
+template <DiffType kDiffType, EvaluationType kEvalType>
+static void BM_ColmapRigReproj(benchmark::State& state) {
+  const double point[] = {0.5, -0.3, 4.2};
+  double cam_from_rig[] = {0.01, -0.01, 0.02, 0.9997, 0.05, 0.0, 0.0};
+  double rig_from_world[] = {0.02, 0.01, -0.02, 0.9995, 0.1, -0.2, 0.5};
+  Eigen::Map<Eigen::Quaterniond>(cam_from_rig).normalize();
+  Eigen::Map<Eigen::Quaterniond>(rig_from_world).normalize();
+  const double intrinsics[] = {
+      1000.0, 1000.0, 640.0, 360.0, -0.05, 0.01, 1e-4, -1e-4};
+  auto cf = CostFunctionFactory<kDiffType>::
+      template Create<ColmapRigReprojectionError, 2, 3, 7, 7, 8>(650.0, 350.0);
+  RunCostFunctionBenchmark<kEvalType, 0, 2, 3, 7, 7, 8>(
+      state, *cf, {point, cam_from_rig, rig_from_world, intrinsics});
+}
+
+template <DiffType kDiffType, EvaluationType kEvalType>
+static void BM_ColmapSampson(benchmark::State& state) {
+  double rel_pose[] = {0.01, 0.02, -0.01, 0.9997, 0.8, 0.4, 0.4472};
+  Eigen::Map<Eigen::Quaterniond>(rel_pose).normalize();
+  auto cf =
+      CostFunctionFactory<kDiffType>::template Create<ColmapSampsonError, 1, 7>(
+          Eigen::Vector2d(0.1, -0.2), Eigen::Vector2d(0.15, -0.18));
+  RunCostFunctionBenchmark<kEvalType, -1, 1, 7>(state, *cf, {rel_pose});
+}
+
+template <DiffType kDiffType, EvaluationType kEvalType>
+static void BM_ColmapFisheyeReproj(benchmark::State& state) {
+  const double point[] = {0.5, -0.3, 4.2};
+  double pose[] = {0.01, 0.02, -0.01, 0.9997, 0.1, -0.2, 0.5};
+  Eigen::Map<Eigen::Quaterniond>(pose).normalize();
+  const double intrinsics[] = {
+      800.0, 800.0, 640.0, 360.0, -0.02, 0.005, -0.001, 0.0002};
+  auto cf = CostFunctionFactory<kDiffType>::
+      template Create<ColmapFisheyeReprojectionError, 2, 3, 7, 8>(650.0, 350.0);
+  RunCostFunctionBenchmark<kEvalType, 0, 2, 3, 7, 8>(
+      state, *cf, {point, pose, intrinsics});
+}
+
+template <DiffType kDiffType, EvaluationType kEvalType>
+static void BM_ColmapSphericalReproj(benchmark::State& state) {
+  const double point[] = {0.5, -0.3, 4.2};
+  double pose[] = {0.01, 0.02, -0.01, 0.9997, 0.1, -0.2, 0.5};
+  Eigen::Map<Eigen::Quaterniond>(pose).normalize();
+  auto cf = CostFunctionFactory<kDiffType>::
+      template Create<ColmapSphericalReprojectionError, 2, 3, 7>(650.0, 350.0);
+  RunCostFunctionBenchmark<kEvalType, 0, 2, 3, 7>(state, *cf, {point, pose});
+}
+
+template <DiffType kDiffType, EvaluationType kEvalType>
+static void BM_LibmvBrownReproj(benchmark::State& state) {
+  const double intrinsics[] = {
+      1000.0, 640.0, 360.0, -0.05, 0.01, -0.002, 0.0005, 1e-4, -1e-4};
+  const double rt[] = {0.02, -0.03, 0.01, 0.1, -0.2, 0.5};
+  const double point[] = {0.5, -0.3, 4.2};
+  auto cf = CostFunctionFactory<kDiffType>::
+      template Create<LibmvBrownReprojectionError, 2, 9, 6, 3>(650.0, 350.0);
+  RunCostFunctionBenchmark<kEvalType, 2, 2, 9, 6, 3>(
+      state, *cf, {intrinsics, rt, point});
+}
+
+template <DiffType kDiffType, EvaluationType kEvalType>
+static void BM_LibmvNukeInvertReproj(benchmark::State& state) {
+  const double intrinsics[] = {
+      1000.0, 640.0, 360.0, -0.05, 0.01, 1e-4, -1e-4, 1.0};
+  const double rt[] = {0.02, -0.03, 0.01, 0.1, -0.2, 0.5};
+  const double point[] = {0.5, -0.3, 4.2};
+  auto cf = CostFunctionFactory<kDiffType>::
+      template Create<LibmvNukeInvertReprojectionError, 2, 8, 6, 3>(650.0,
+                                                                    350.0);
+  RunCostFunctionBenchmark<kEvalType, 2, 2, 8, 6, 3>(
+      state, *cf, {intrinsics, rt, point});
+}
+
+template <DiffType kDiffType, EvaluationType kEvalType>
+static void BM_PoseGraph3dError(benchmark::State& state) {
+  const double p_a[] = {1.0, 2.0, 3.0};
+  double q_a[] = {0.01, 0.02, -0.01, 0.9997};
+  const double p_b[] = {2.1, 3.2, 4.3};
+  double q_b[] = {0.03, -0.01, 0.02, 0.9993};
+  Eigen::Map<Eigen::Quaterniond>(q_a).normalize();
+  Eigen::Map<Eigen::Quaterniond>(q_b).normalize();
+
+  const Eigen::Matrix<double, 6, 6> sqrt_info =
+      Eigen::Matrix<double, 6, 6>::Identity();
+  auto cf = CostFunctionFactory<kDiffType>::
+      template Create<PoseGraph3dError, 6, 3, 4, 3, 4>(
+          Eigen::Vector3d(1.0, 1.0, 1.0),
+          Eigen::Quaterniond::Identity(),
+          sqrt_info);
+  RunCostFunctionBenchmark<kEvalType, -1, 6, 3, 4, 3, 4>(
+      state, *cf, {p_a, q_a, p_b, q_b});
+}
+
+#define REGISTER_REAL_WORLD_BM(Fn)                                  \
+  BENCHMARK_TEMPLATE(Fn, kAutoDiff, kResidualsOnly);                \
+  BENCHMARK_TEMPLATE(Fn, kAutoDiff, kResidualsAndJacobians);        \
+  BENCHMARK_TEMPLATE(Fn, kDynamicAutoDiff, kResidualsOnly);         \
+  BENCHMARK_TEMPLATE(Fn, kDynamicAutoDiff, kResidualsAndJacobians); \
+  BENCHMARK_TEMPLATE(Fn, kNumericCentral, kResidualsAndJacobians);  \
+  BENCHMARK_TEMPLATE(Fn, kDynamicNumericCentral, kResidualsAndJacobians)
+
+#define REGISTER_REAL_WORLD_POINT_JAC_BM(Fn)                            \
+  BENCHMARK_TEMPLATE(Fn, kAutoDiff, kResidualsAndPointJacobian);        \
+  BENCHMARK_TEMPLATE(Fn, kDynamicAutoDiff, kResidualsAndPointJacobian); \
+  BENCHMARK_TEMPLATE(Fn, kNumericCentral, kResidualsAndPointJacobian)
+
+REGISTER_REAL_WORLD_BM(BM_ColmapOpenCVReproj);
+REGISTER_REAL_WORLD_POINT_JAC_BM(BM_ColmapOpenCVReproj);
+REGISTER_REAL_WORLD_BM(BM_ColmapFullOpenCVReproj);
+REGISTER_REAL_WORLD_POINT_JAC_BM(BM_ColmapFullOpenCVReproj);
+REGISTER_REAL_WORLD_BM(BM_ColmapRigReproj);
+REGISTER_REAL_WORLD_POINT_JAC_BM(BM_ColmapRigReproj);
+REGISTER_REAL_WORLD_BM(BM_ColmapSampson);
+REGISTER_REAL_WORLD_BM(BM_ColmapFisheyeReproj);
+REGISTER_REAL_WORLD_POINT_JAC_BM(BM_ColmapFisheyeReproj);
+REGISTER_REAL_WORLD_BM(BM_ColmapSphericalReproj);
+REGISTER_REAL_WORLD_POINT_JAC_BM(BM_ColmapSphericalReproj);
+REGISTER_REAL_WORLD_BM(BM_LibmvBrownReproj);
+REGISTER_REAL_WORLD_POINT_JAC_BM(BM_LibmvBrownReproj);
+REGISTER_REAL_WORLD_BM(BM_LibmvNukeInvertReproj);
+REGISTER_REAL_WORLD_POINT_JAC_BM(BM_LibmvNukeInvertReproj);
+REGISTER_REAL_WORLD_BM(BM_PoseGraph3dError);
+
+#undef REGISTER_REAL_WORLD_POINT_JAC_BM
+#undef REGISTER_REAL_WORLD_BM
+
 }  // namespace ceres
 
 BENCHMARK_MAIN();

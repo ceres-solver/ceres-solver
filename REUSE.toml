@@ -39,6 +39,17 @@ SPDX-FileCopyrightText = [
 ]
 SPDX-License-Identifier = "BSD-3-Clause AND MIT"
 
+[[annotations]]
+path = "internal/ceres/benchmark_cost_functions.h"
+precedence = "closest"
+SPDX-FileCopyrightText = [
+  "2026 Google Inc. All rights reserved.",
+  "2016 ETH Zurich and UNC Chapel Hill",
+  "2016-2026 The COLMAP Contributors",
+  "2011-2013 libmv authors",
+]
+SPDX-License-Identifier = "BSD-3-Clause AND MIT"
+
 # Fields of Experts filter coefficients by Stefan Roth, released under a BSD
 # license as described in data/README.foe.
 [[annotations]]
