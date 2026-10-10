@@ -32,8 +32,6 @@
 #ifndef CERES_INTERNAL_AUTODIFF_BENCHMARKS_LINEAR_COST_FUNCTIONS_H_
 #define CERES_INTERNAL_AUTODIFF_BENCHMARKS_LINEAR_COST_FUNCTIONS_H_
 
-#include "ceres/rotation.h"
-
 namespace ceres {
 
 struct Linear1CostFunction {
@@ -53,6 +51,7 @@ struct Linear10CostFunction {
     return true;
   }
 };
+
 }  // namespace ceres
 
 #endif  // CERES_INTERNAL_AUTODIFF_BENCHMARKS_LINEAR_COST_FUNCTIONS_H_

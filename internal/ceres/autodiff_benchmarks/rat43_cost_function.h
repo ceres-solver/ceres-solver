@@ -26,23 +26,35 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: darius.rueckert@fau.de (Darius Rueckert)
-//
-//
-#ifndef CERES_INTERNAL_AUTODIFF_BENCHMARKS_CONSTANT_COST_FUNCTIONS_H_
-#define CERES_INTERNAL_AUTODIFF_BENCHMARKS_CONSTANT_COST_FUNCTIONS_H_
+// Authors: darius.rueckert@fau.de (Darius Rueckert)
+//          sameeragarwal@google.com (Sameer Agarwal)
+
+#ifndef CERES_INTERNAL_AUTODIFF_BENCHMARKS_RAT43_COST_FUNCTION_H_
+#define CERES_INTERNAL_AUTODIFF_BENCHMARKS_RAT43_COST_FUNCTION_H_
+
+#include <cmath>
 
 namespace ceres {
 
-template <int kParameterBlockSize>
-struct ConstantCostFunction {
+// From the NIST problem collection.
+struct Rat43CostFunctor {
+  Rat43CostFunctor(const double x, const double y) : x_(x), y_(y) {}
+
   template <typename T>
-  inline bool operator()(const T* const x, T* residuals) const {
-    residuals[0] = T(5);
+  inline bool operator()(const T* parameters, T* residuals) const {
+    const T& b1 = parameters[0];
+    const T& b2 = parameters[1];
+    const T& b3 = parameters[2];
+    const T& b4 = parameters[3];
+    residuals[0] = b1 * pow(1.0 + exp(b2 - b3 * x_), -1.0 / b4) - y_;
     return true;
   }
+
+ private:
+  const double x_;
+  const double y_;
 };
 
 }  // namespace ceres
 
-#endif  // CERES_INTERNAL_AUTODIFF_BENCHMARKS_CONSTANT_COST_FUNCTIONS_H_
+#endif  // CERES_INTERNAL_AUTODIFF_BENCHMARKS_RAT43_COST_FUNCTION_H_

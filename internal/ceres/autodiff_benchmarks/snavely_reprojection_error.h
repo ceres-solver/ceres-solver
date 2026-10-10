@@ -82,5 +82,6 @@ struct SnavelyReprojectionError {
   double observed_x;
   double observed_y;
 };
+
 }  // namespace ceres
 #endif  // CERES_INTERNAL_AUTODIFF_BENCHMARK_SNAVELY_REPROJECTION_ERROR_H_

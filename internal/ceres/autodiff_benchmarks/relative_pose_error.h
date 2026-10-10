@@ -83,5 +83,6 @@ struct RelativePoseError {
   Eigen::Quaterniond meas_q_i_j_;
   Eigen::Vector3d meas_t_i_j_;
 };
+
 }  // namespace ceres
 #endif  // CERES_INTERNAL_AUTODIFF_BENCHMARK_RELATIVE_POSE_ERROR_H_

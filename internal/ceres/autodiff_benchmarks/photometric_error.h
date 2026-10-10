@@ -33,6 +33,7 @@
 #define CERES_INTERNAL_AUTODIFF_BENCHMARK_PHOTOMETRIC_ERROR_H_
 
 #include <Eigen/Dense>
+#include <cstdint>
 
 #include "ceres/cubic_interpolation.h"
 
@@ -186,5 +187,6 @@ struct PhotometricError {
   const Interpolator& image_target_;
   const Intrinsics& intrinsics_;
 };
+
 }  // namespace ceres
 #endif  // CERES_INTERNAL_AUTODIFF_BENCHMARK_PHOTOMETRIC_ERROR_H_
