@@ -34,7 +34,10 @@
 
 #include <Eigen/Core>
 #include <cmath>
+#include <memory>
 
+#include "benchmark/benchmark.h"
+#include "ceres/autodiff_benchmarks/cost_function_factory.h"
 #include "ceres/constants.h"
 
 namespace ceres {
@@ -217,6 +220,47 @@ struct Brdf {
     return x * x;
   }
 };
+
+template <DiffType kDiffType, EvaluationType kEvalType>
+static void BM_Brdf(benchmark::State& state) {
+  using FunctorType = Brdf;
+
+  double material[] = {1., 2., 3., 4., 5., 6., 7., 8., 9., 10.};
+  auto c = Eigen::Vector3d(0.1, 0.2, 0.3);
+  auto n = Eigen::Vector3d(-0.1, 0.5, 0.2).normalized();
+  auto v = Eigen::Vector3d(0.5, -0.2, 0.9).normalized();
+  auto l = Eigen::Vector3d(-0.3, 0.4, -0.3).normalized();
+  auto x = Eigen::Vector3d(0.5, 0.7, -0.1).normalized();
+  auto y = Eigen::Vector3d(0.2, -0.2, -0.2).normalized();
+
+  double* parameters[7] = {
+      material, c.data(), n.data(), v.data(), l.data(), x.data(), y.data()};
+
+  double jacobian[(10 + 6 * 3) * 3];
+  double residuals[3];
+  // clang-format off
+  double* jacobians[7] = {
+      jacobian + 0,      jacobian + 10 * 3, jacobian + 13 * 3,
+      jacobian + 16 * 3, jacobian + 19 * 3, jacobian + 22 * 3,
+      jacobian + 25 * 3,
+  };
+  // clang-format on
+  double** jacobians_ptr =
+      (kEvalType == kResidualsAndJacobians) ? jacobians : nullptr;
+
+  std::unique_ptr<CostFunction> cost_function = CostFunctionFactory<
+      kDiffType>::template Create<FunctorType, 3, 10, 3, 3, 3, 3, 3, 3>();
+
+  for (auto _ : state) {
+    benchmark::DoNotOptimize(
+        cost_function->Evaluate(parameters, residuals, jacobians_ptr));
+  }
+}
+
+BENCHMARK_TEMPLATE(BM_Brdf, kAutoDiff, kResidualsOnly);
+BENCHMARK_TEMPLATE(BM_Brdf, kAutoDiff, kResidualsAndJacobians);
+BENCHMARK_TEMPLATE(BM_Brdf, kDynamicAutoDiff, kResidualsOnly);
+BENCHMARK_TEMPLATE(BM_Brdf, kDynamicAutoDiff, kResidualsAndJacobians);
 
 }  // namespace ceres
 

@@ -32,6 +32,10 @@
 #ifndef CERES_INTERNAL_AUTODIFF_BENCHMARKS_LINEAR_COST_FUNCTIONS_H_
 #define CERES_INTERNAL_AUTODIFF_BENCHMARKS_LINEAR_COST_FUNCTIONS_H_
 
+#include <memory>
+
+#include "benchmark/benchmark.h"
+#include "ceres/autodiff_benchmarks/cost_function_factory.h"
 #include "ceres/rotation.h"
 
 namespace ceres {
@@ -44,6 +48,33 @@ struct Linear1CostFunction {
   }
 };
 
+template <DiffType kDiffType, EvaluationType kEvalType>
+static void BM_Linear1(benchmark::State& state) {
+  double parameter_block1[] = {1.};
+  double* parameters[] = {parameter_block1};
+
+  double jacobian1[1];
+  double residuals[1];
+  double* jacobians[] = {jacobian1};
+  double** jacobians_ptr =
+      (kEvalType == kResidualsAndJacobians) ? jacobians : nullptr;
+
+  std::unique_ptr<CostFunction> cost_function =
+      CostFunctionFactory<kDiffType>::template Create<Linear1CostFunction,
+                                                      1,
+                                                      1>();
+
+  for (auto _ : state) {
+    benchmark::DoNotOptimize(
+        cost_function->Evaluate(parameters, residuals, jacobians_ptr));
+  }
+}
+
+BENCHMARK_TEMPLATE(BM_Linear1, kAutoDiff, kResidualsOnly);
+BENCHMARK_TEMPLATE(BM_Linear1, kAutoDiff, kResidualsAndJacobians);
+BENCHMARK_TEMPLATE(BM_Linear1, kDynamicAutoDiff, kResidualsOnly);
+BENCHMARK_TEMPLATE(BM_Linear1, kDynamicAutoDiff, kResidualsAndJacobians);
+
 struct Linear10CostFunction {
   template <typename T>
   inline bool operator()(const T* const x, T* residuals) const {
@@ -53,6 +84,34 @@ struct Linear10CostFunction {
     return true;
   }
 };
+
+template <DiffType kDiffType, EvaluationType kEvalType>
+static void BM_Linear10(benchmark::State& state) {
+  double parameter_block1[] = {1., 2., 3., 4., 5., 6., 7., 8., 9., 10.};
+  double* parameters[] = {parameter_block1};
+
+  double jacobian1[10 * 10];
+  double residuals[10];
+  double* jacobians[] = {jacobian1};
+  double** jacobians_ptr =
+      (kEvalType == kResidualsAndJacobians) ? jacobians : nullptr;
+
+  std::unique_ptr<CostFunction> cost_function =
+      CostFunctionFactory<kDiffType>::template Create<Linear10CostFunction,
+                                                      10,
+                                                      10>();
+
+  for (auto _ : state) {
+    benchmark::DoNotOptimize(
+        cost_function->Evaluate(parameters, residuals, jacobians_ptr));
+  }
+}
+
+BENCHMARK_TEMPLATE(BM_Linear10, kAutoDiff, kResidualsOnly);
+BENCHMARK_TEMPLATE(BM_Linear10, kAutoDiff, kResidualsAndJacobians);
+BENCHMARK_TEMPLATE(BM_Linear10, kDynamicAutoDiff, kResidualsOnly);
+BENCHMARK_TEMPLATE(BM_Linear10, kDynamicAutoDiff, kResidualsAndJacobians);
+
 }  // namespace ceres
 
 #endif  // CERES_INTERNAL_AUTODIFF_BENCHMARKS_LINEAR_COST_FUNCTIONS_H_

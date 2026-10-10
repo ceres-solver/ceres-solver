@@ -32,6 +32,10 @@
 #ifndef CERES_INTERNAL_AUTODIFF_BENCHMARK_SNAVELY_REPROJECTION_ERROR_H_
 #define CERES_INTERNAL_AUTODIFF_BENCHMARK_SNAVELY_REPROJECTION_ERROR_H_
 
+#include <memory>
+
+#include "benchmark/benchmark.h"
+#include "ceres/autodiff_benchmarks/cost_function_factory.h"
 #include "ceres/rotation.h"
 
 namespace ceres {
@@ -82,5 +86,63 @@ struct SnavelyReprojectionError {
   double observed_x;
   double observed_y;
 };
+
+template <DiffType kDiffType, EvaluationType kEvalType>
+static void BM_SnavelyReprojection(benchmark::State& state) {
+  double parameter_block1[] = {1., 2., 3., 4., 5., 6., 7., 8., 9.};
+  double parameter_block2[] = {1., 2., 3.};
+  double* parameters[] = {parameter_block1, parameter_block2};
+
+  double jacobian1[2 * 9];
+  double jacobian2[2 * 3];
+  double residuals[2];
+  double* jacobians[] = {
+      (kEvalType == kResidualsAndJacobians) ? jacobian1 : nullptr,
+      (kEvalType != kResidualsOnly) ? jacobian2 : nullptr,
+  };
+  double** jacobians_ptr =
+      (kEvalType == kResidualsOnly) ? nullptr : jacobians;
+
+  const double x = 0.2;
+  const double y = 0.3;
+  std::unique_ptr<CostFunction> cost_function = CostFunctionFactory<
+      kDiffType>::template Create<SnavelyReprojectionError, 2, 9, 3>(x, y);
+
+  for (auto _ : state) {
+    benchmark::DoNotOptimize(
+        cost_function->Evaluate(parameters, residuals, jacobians_ptr));
+  }
+}
+
+#define REGISTER_SNAVELY_ALL_MODES(Diff)                                      \
+  BENCHMARK_TEMPLATE(BM_SnavelyReprojection, Diff, kResidualsOnly);           \
+  BENCHMARK_TEMPLATE(BM_SnavelyReprojection, Diff, kResidualsAndJacobians);   \
+  BENCHMARK_TEMPLATE(BM_SnavelyReprojection, Diff, kResidualsAndPointJacobian)
+
+REGISTER_SNAVELY_ALL_MODES(kAutoDiff);
+REGISTER_SNAVELY_ALL_MODES(kDynamicAutoDiff);
+BENCHMARK_TEMPLATE(BM_SnavelyReprojection,
+                   kAutoDiffDynamicResiduals,
+                   kResidualsOnly);
+BENCHMARK_TEMPLATE(BM_SnavelyReprojection,
+                   kAutoDiffDynamicResiduals,
+                   kResidualsAndJacobians);
+REGISTER_SNAVELY_ALL_MODES(kNumericForward);
+REGISTER_SNAVELY_ALL_MODES(kDynamicNumericForward);
+REGISTER_SNAVELY_ALL_MODES(kNumericCentral);
+REGISTER_SNAVELY_ALL_MODES(kDynamicNumericCentral);
+BENCHMARK_TEMPLATE(BM_SnavelyReprojection, kNumericRidders, kResidualsOnly);
+BENCHMARK_TEMPLATE(BM_SnavelyReprojection,
+                   kNumericRidders,
+                   kResidualsAndJacobians);
+BENCHMARK_TEMPLATE(BM_SnavelyReprojection,
+                   kDynamicNumericRidders,
+                   kResidualsOnly);
+BENCHMARK_TEMPLATE(BM_SnavelyReprojection,
+                   kDynamicNumericRidders,
+                   kResidualsAndJacobians);
+
+#undef REGISTER_SNAVELY_ALL_MODES
+
 }  // namespace ceres
 #endif  // CERES_INTERNAL_AUTODIFF_BENCHMARK_SNAVELY_REPROJECTION_ERROR_H_
