@@ -560,7 +560,14 @@ if (_Ceres_FEATURE_BENCHMARKS)
     block_jacobi_preconditioner_benchmark.cc)
   add_dependencies_to_benchmark(block_jacobi_preconditioner_benchmark)
 
+  add_executable(autodiff_manifold_benchmark autodiff_manifold_benchmark.cc)
+  add_dependencies_to_benchmark(autodiff_manifold_benchmark)
+
   add_executable(cost_function_differentiation_benchmark
     cost_function_differentiation_benchmark.cc)
   add_dependencies_to_benchmark(cost_function_differentiation_benchmark)
+
+  add_executable(first_order_function_differentiation_benchmark
+    first_order_function_differentiation_benchmark.cc)
+  add_dependencies_to_benchmark(first_order_function_differentiation_benchmark)
 endif (_Ceres_FEATURE_BENCHMARKS)
