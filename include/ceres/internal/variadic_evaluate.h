@@ -35,14 +35,11 @@
 
 // IWYU pragma: private
 
-#include <algorithm>
-#include <array>
 #include <cstddef>
-#include <functional>
-#include <tuple>
 #include <type_traits>
 #include <utility>
 
+#include "Eigen/Core"
 #include "ceres/cost_function.h"
 #include "ceres/internal/parameter_dims.h"
 
@@ -61,34 +58,39 @@ namespace ceres::internal {
 // parameter blocks. The signature of the functor must have the following
 // signature:
 // 'bool()(const T* i_1, const T* i_2, ... const T* i_n, T* output)'.
+template <typename Functor, typename T, std::size_t... Is>
+EIGEN_STRONG_INLINE bool VariadicEvaluateImpl(const Functor& functor,
+                                              T const* const* input,
+                                              T* output,
+                                              std::index_sequence<Is...>) {
+  static_assert(
+      std::is_invocable_v<const Functor&,
+                          decltype((void(Is), std::declval<const T*>()))...,
+                          T*>,
+      "The provided Functor's operator() signature does not match "
+      "the expected number of parameter blocks defined in "
+      "ParameterDims.");
+  return functor(input[Is]..., output);
+}
+
 template <typename ParameterDims, typename Functor, typename T>
-inline bool VariadicEvaluate(const Functor& functor,
-                             T const* const* input,
-                             T* output) {
+EIGEN_STRONG_INLINE bool VariadicEvaluate(const Functor& functor,
+                                          T const* const* input,
+                                          T* output) {
   if constexpr (std::is_base_of_v<CostFunction, Functor>) {
     return functor.Evaluate(input, output, nullptr);
+  } else if constexpr (ParameterDims::kIsDynamic) {
+    return functor(input, output);
   } else {
-    if constexpr (ParameterDims::kIsDynamic) {
-      return functor(input, output);
-    } else {
-      constexpr int kNumParameterBlocks = ParameterDims::kNumParameterBlocks;
-      static_assert(kNumParameterBlocks > 0,
-                    "Invalid number of parameter blocks. At least one "
-                    "parameter block must be specified.");
-
-      std::array<const T*, kNumParameterBlocks> parameter_blocks;
-      std::copy_n(input, kNumParameterBlocks, parameter_blocks.begin());
-      return std::apply(
-          [&functor, output](auto const*... blocks) {
-            static_assert(
-                std::is_invocable_v<const Functor&, decltype(blocks)..., T*>,
-                "The provided Functor's operator() signature does not match "
-                "the expected number of parameter blocks defined in "
-                "ParameterDims.");
-            return std::invoke(functor, blocks..., output);
-          },
-          parameter_blocks);
-    }
+    constexpr int kNumParameterBlocks = ParameterDims::kNumParameterBlocks;
+    static_assert(kNumParameterBlocks > 0,
+                  "Invalid number of parameter blocks. At least one "
+                  "parameter block must be specified.");
+    return VariadicEvaluateImpl(
+        functor,
+        input,
+        output,
+        std::make_index_sequence<kNumParameterBlocks>{});
   }
 }
 

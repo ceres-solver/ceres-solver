@@ -36,6 +36,7 @@
 #include <array>
 #include <utility>
 
+#include "Eigen/Core"
 #include "ceres/internal/integer_sequence_algorithm.h"
 
 namespace ceres::internal {
@@ -74,16 +75,16 @@ class ParameterDims {
   // If one has all parameters packed into a single array, this function unpacks
   // the parameters into an array of pointers.
   template <typename T>
-  static inline std::array<T*, kNumParameterBlocks> GetUnpackedParameters(
-      T* ptr) {
+  static constexpr EIGEN_STRONG_INLINE std::array<T*, kNumParameterBlocks>
+  GetUnpackedParameters(T* ptr) {
     using Offsets = ExclusiveScan<Parameters>;
     return GetUnpackedParameters(ptr, Offsets());
   }
 
  private:
   template <typename T, int... Indices>
-  static inline std::array<T*, kNumParameterBlocks> GetUnpackedParameters(
-      T* ptr, std::integer_sequence<int, Indices...>) {
+  static constexpr EIGEN_STRONG_INLINE std::array<T*, kNumParameterBlocks>
+  GetUnpackedParameters(T* ptr, std::integer_sequence<int, Indices...>) {
     return std::array<T*, kNumParameterBlocks>{{ptr + Indices...}};
   }
 

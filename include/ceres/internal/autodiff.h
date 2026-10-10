@@ -180,13 +180,16 @@ namespace ceres::internal {
 //   dst[2]  [ * | . . | 0 0 1 | . . . ]
 //
 // is what would get put in dst if N was 3, offset was 3, and the jet type JetT
-// was 8-dimensional.
+// was 8-dimensional. The infinitesimal part dst[i].v must be zero-initialized
+// on entry (as guaranteed by Jet's default constructor).
 template <int N, int Offset, typename T, typename JetT>
-inline void Make1stOrderPerturbation(const T* src, JetT* dst) {
+EIGEN_STRONG_INLINE void Make1stOrderPerturbation(const T* src, JetT* dst) {
   DCHECK(src);
   DCHECK(dst);
   for (int i = 0; i < N; ++i) {
-    dst[i] = JetT(src[i], i + Offset);
+    DCHECK(dst[i].v.isZero());
+    dst[i].a = src[i];
+    dst[i].v[i + Offset] = T(1.0);
   }
 }
 
@@ -196,7 +199,7 @@ template <int... Ns,
           std::size_t... BlockIdx,
           typename T,
           typename JetT>
-inline void Make1stOrderPerturbationsImpl(
+EIGEN_STRONG_INLINE void Make1stOrderPerturbationsImpl(
     T const* const* parameters,
     JetT* x,
     std::integer_sequence<int, Ns...>,
@@ -209,7 +212,7 @@ inline void Make1stOrderPerturbationsImpl(
 // Takes the 0th order part of src, assumed to be a Jet type, and puts it in
 // dst. This is used to pick out the "vector" part of the extended y.
 template <typename JetT, typename T>
-inline void Take0thOrderPart(int M, const JetT* src, T* dst) {
+EIGEN_STRONG_INLINE void Take0thOrderPart(int M, const JetT* src, T* dst) {
   DCHECK(src);
   for (int i = 0; i < M; ++i) {
     dst[i] = src[i].a;
@@ -219,7 +222,9 @@ inline void Take0thOrderPart(int M, const JetT* src, T* dst) {
 // Takes N 1st order parts, starting at index N0, and puts them in the M x N
 // matrix 'dst'. This is used to pick out the "matrix" parts of the extended y.
 template <int N0, int N, typename JetT, typename T>
-inline void Take1stOrderPart(const int M, const JetT* src, T* dst) {
+EIGEN_STRONG_INLINE void Take1stOrderPart(const int M,
+                                          const JetT* src,
+                                          T* dst) {
   DCHECK(src);
   DCHECK(dst);
   for (int i = 0; i < M; ++i) {
@@ -234,12 +239,13 @@ template <int... Ns,
           std::size_t... BlockIdx,
           typename JetT,
           typename T>
-inline void Take1stOrderPartsImpl(int num_outputs,
-                                  JetT* output,
-                                  T** jacobians,
-                                  std::integer_sequence<int, Ns...>,
-                                  std::integer_sequence<int, Offsets...>,
-                                  std::index_sequence<BlockIdx...>) {
+EIGEN_STRONG_INLINE void Take1stOrderPartsImpl(
+    int num_outputs,
+    const JetT* output,
+    T** jacobians,
+    std::integer_sequence<int, Ns...>,
+    std::integer_sequence<int, Offsets...>,
+    std::index_sequence<BlockIdx...>) {
   ((void)(jacobians[BlockIdx] != nullptr &&
           (Take1stOrderPart<Offsets, Ns>(
                num_outputs, output, jacobians[BlockIdx]),
@@ -251,15 +257,15 @@ template <int kNumResiduals,
           typename ParameterDims,
           typename Functor,
           typename T>
-inline bool AutoDifferentiate(const Functor& functor,
-                              T const* const* parameters,
-                              int dynamic_num_outputs,
-                              T* function_value,
-                              T** jacobians) {
+EIGEN_STRONG_INLINE bool AutoDifferentiate(const Functor& functor,
+                                           T const* const* parameters,
+                                           int dynamic_num_outputs,
+                                           T* function_value,
+                                           T** jacobians) {
   using JetT = Jet<T, ParameterDims::kNumParameters>;
   using Parameters = typename ParameterDims::Parameters;
 
-  if (kNumResiduals != DYNAMIC) {
+  if constexpr (kNumResiduals != DYNAMIC) {
     DCHECK_EQ(kNumResiduals, dynamic_num_outputs);
   }
 
@@ -281,12 +287,10 @@ inline bool AutoDifferentiate(const Functor& functor,
   DCHECK_GT(num_outputs, 0);
 
   ArraySelector<JetT, kNumResiduals, CERES_AUTODIFF_MAX_RESIDUALS_ON_STACK>
-      residuals_as_jets(num_outputs);
-
-  for (int i = 0; i < num_outputs; ++i) {
-    residuals_as_jets[i].a = kImpossibleValue;
-    residuals_as_jets[i].v.setConstant(kImpossibleValue);
-  }
+      residuals_as_jets(
+          num_outputs,
+          JetT(T(kImpossibleValue),
+               decltype(JetT::v)::Constant(T(kImpossibleValue))));
 
   using Offsets = ExclusiveScan<Parameters>;
   Make1stOrderPerturbationsImpl(

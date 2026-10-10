@@ -36,9 +36,9 @@
 #include <utility>
 
 #include "Eigen/Core"
-#include "absl/container/fixed_array.h"
 #include "ceres/eigen.h"
 #include "ceres/first_order_function.h"
+#include "ceres/internal/autodiff.h"
 #include "ceres/jet.h"
 #include "ceres/types.h"
 
@@ -156,12 +156,12 @@ class AutoDiffFirstOrderFunction final : public FirstOrderFunction {
     }
 
     using JetT = Jet<double, kNumParameters>;
-    absl::FixedArray<JetT, (256 * 7) / sizeof(JetT)> x(kNumParameters);
-    for (int i = 0; i < kNumParameters; ++i) {
-      x[i].a = parameters[i];
-      x[i].v.setZero();
-      x[i].v[i] = 1.0;
-    }
+    internal::ArraySelector<JetT,
+                            kNumParameters,
+                            CERES_AUTODIFF_MAX_PARAMETERS_ON_STACK>
+        x(kNumParameters);
+    internal::Make1stOrderPerturbation<kNumParameters, 0>(parameters,
+                                                          x.data());
 
     JetT output;
     output.a = kImpossibleValue;
@@ -172,7 +172,8 @@ class AutoDiffFirstOrderFunction final : public FirstOrderFunction {
     }
 
     *cost = output.a;
-    VectorRef(gradient, kNumParameters) = output.v;
+    Eigen::Map<Eigen::Matrix<double, kNumParameters, 1>>(
+        gradient, kNumParameters) = output.v;
     return true;
   }
 
