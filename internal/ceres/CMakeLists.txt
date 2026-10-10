@@ -560,5 +560,7 @@ if (_Ceres_FEATURE_BENCHMARKS)
     block_jacobi_preconditioner_benchmark.cc)
   add_dependencies_to_benchmark(block_jacobi_preconditioner_benchmark)
 
-  add_subdirectory(autodiff_benchmarks)
+  add_executable(cost_function_differentiation_benchmark
+    cost_function_differentiation_benchmark.cc)
+  add_dependencies_to_benchmark(cost_function_differentiation_benchmark)
 endif (_Ceres_FEATURE_BENCHMARKS)
