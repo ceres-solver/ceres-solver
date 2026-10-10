@@ -199,9 +199,11 @@ TEST_DEPS = [
     copts = ["-mllvm -inlinehint-threshold=1000000"],
     deps = TEST_DEPS + ["@google_benchmark//:benchmark"],
 ) for benchmark_name in [
+    "autodiff_manifold_benchmark",
     "block_jacobi_preconditioner_benchmark",
     "dense_linear_solver_benchmark",
     "evaluation_benchmark",
+    "first_order_function_differentiation_benchmark",
     "invert_psd_matrix_benchmark",
     "jet_operator_benchmark",
     "parallel_for_benchmark",
