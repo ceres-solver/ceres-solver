@@ -213,8 +213,8 @@ TEST_DEPS = [
 ]]
 
 cc_binary(
-    name = "autodiff_benchmarks",
-    srcs = ["internal/ceres/autodiff_benchmarks/autodiff_benchmarks.cc"] + glob([
+    name = "cost_function_differentiation_benchmark",
+    srcs = ["internal/ceres/cost_function_differentiation_benchmark.cc"] + glob([
         "internal/ceres/autodiff_benchmarks/*.h",
     ]),
     copts = ["-mllvm -inlinehint-threshold=1000000"],
