@@ -28,28 +28,39 @@
 //
 // Authors: dmitriy.korchemkin@gmail.com (Dmitriy Korchemkin)
 
+#include <algorithm>
+#include <array>
 #include <memory>
 #include <random>
 #include <string>
+#include <tuple>
 #include <vector>
 
 #include "absl/log/check.h"
 #include "absl/log/log.h"
 #include "benchmark/benchmark.h"
+#include "ceres/benchmark_cost_functions.h"
+#include "ceres/block_evaluate_preparer.h"
+#include "ceres/block_jacobian_writer.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/bundle_adjustment_test_util.h"
+#include "ceres/compressed_row_jacobian_writer.h"
 #include "ceres/cuda_block_sparse_crs_view.h"
 #include "ceres/cuda_partitioned_block_sparse_crs_view.h"
 #include "ceres/cuda_sparse_matrix.h"
 #include "ceres/cuda_vector.h"
 #include "ceres/evaluator.h"
 #include "ceres/implicit_schur_complement.h"
+#include "ceres/loss_function.h"
+#include "ceres/manifold.h"
 #include "ceres/partitioned_matrix_view.h"
 #include "ceres/power_series_expansion_preconditioner.h"
 #include "ceres/preprocessor.h"
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
+#include "ceres/program_evaluator.h"
+#include "ceres/scratch_evaluate_preparer.h"
 #include "ceres/sparse_matrix.h"
 
 namespace ceres::internal {
@@ -59,29 +70,137 @@ std::unique_ptr<Derived> downcast_unique_ptr(std::unique_ptr<Base>& base) {
   return std::unique_ptr<Derived>(dynamic_cast<Derived*>(base.release()));
 }
 
+// Builds and preprocesses a bundle adjustment Problem from a BAL dataset for
+// any reprojection `CostFunctor` in benchmark_cost_functions.h.
+//
+// Using `CostFunctor::ParameterDims`, `CostFunctor::kPointBlockIndex`,
+// `CostFunctor::MakeParametersFromBAL`, `CostFunctor::MakeManifold`, and
+// `CostFunctor::MakeLossFunction`, this template:
+//   1. Allocates `num_points` blocks for `b == CostFunctor::kPointBlockIndex`
+//      and `num_cameras` blocks for all other camera block indices `b`,
+//      initializing their values from the BAL cameras and 3D points.
+//   2. Connects the point and camera blocks along the BAL bipartite edges
+//      `(camera_index[i], point_index[i])` with `AutoDiffCostFunction` and
+//      `CostFunctor::MakeLossFunction()`.
+//   3. Attaches `CostFunctor::MakeManifold(b)` to each block at index `b`,
+//      places points in Schur elimination group 0 and camera blocks in group 1,
+//      and runs `Preprocessor::Preprocess`.
+template <typename CostFunctor>
+struct EvaluatorTestProblem {
+  static constexpr int kNumBlocks = CostFunctor::kNumParameterBlocks;
+  static constexpr auto kBlockSizes = CostFunctor::kBlockSizes;
+
+  explicit EvaluatorTestProblem(BundleAdjustmentProblem& bal_problem)
+      : problem(MakeProblemOptions()),
+        loss_function(CostFunctor::MakeLossFunction()) {
+    const int num_cams = bal_problem.num_cameras();
+    const int num_pts = bal_problem.num_points();
+    const int num_obs = bal_problem.num_observations();
+    const double* orig_cams = bal_problem.mutable_cameras();
+    const double* orig_pts = bal_problem.mutable_points();
+    const int* cam_idx = bal_problem.camera_index();
+    const int* pt_idx = bal_problem.point_index();
+    const double* obs = bal_problem.observations();
+
+    std::array<double*, kNumBlocks> block_bases{};
+    for (int b = 0; b < kNumBlocks; ++b) {
+      const int count =
+          (b == CostFunctor::kPointBlockIndex) ? num_pts : num_cams;
+      block_storage[b].resize(count * kBlockSizes[b], 0.0);
+      block_bases[b] = block_storage[b].data();
+      manifolds[b] = CostFunctor::MakeManifold(b);
+    }
+
+    for (int p = 0; p < num_pts; ++p) {
+      const auto params =
+          CostFunctor::MakeParametersFromBAL(orig_cams, orig_pts + 3 * p);
+      const auto ptrs = params.Pointers();
+      constexpr int b = CostFunctor::kPointBlockIndex;
+      std::copy_n(
+          ptrs[b], kBlockSizes[b], block_bases[b] + p * kBlockSizes[b]);
+    }
+
+    for (int c = 0; c < num_cams; ++c) {
+      const auto params =
+          CostFunctor::MakeParametersFromBAL(orig_cams + 9 * c, orig_pts);
+      const auto ptrs = params.Pointers();
+      for (int b = 0; b < kNumBlocks; ++b) {
+        if (b != CostFunctor::kPointBlockIndex) {
+          std::copy_n(
+              ptrs[b], kBlockSizes[b], block_bases[b] + c * kBlockSizes[b]);
+        }
+      }
+    }
+
+    std::array<double*, kNumBlocks> residual_blocks{};
+    for (int i = 0; i < num_obs; ++i) {
+      for (int b = 0; b < kNumBlocks; ++b) {
+        const int idx =
+            (b == CostFunctor::kPointBlockIndex) ? pt_idx[i] : cam_idx[i];
+        residual_blocks[b] = block_bases[b] + idx * kBlockSizes[b];
+      }
+      problem.AddResidualBlock(
+          CostFunctor::template CreateAutoDiff<CostFunctor>(obs[2 * i + 0],
+                                                            obs[2 * i + 1])
+              .release(),
+          loss_function.get(),
+          residual_blocks.data(),
+          kNumBlocks);
+    }
+
+    Solver::Options options = bal_problem.options();
+    options.linear_solver_type = ITERATIVE_SCHUR;
+    options.linear_solver_ordering =
+        std::make_shared<ParameterBlockOrdering>();
+    for (int b = 0; b < kNumBlocks; ++b) {
+      const int count =
+          (b == CostFunctor::kPointBlockIndex) ? num_pts : num_cams;
+      const int group = (b == CostFunctor::kPointBlockIndex) ? 0 : 1;
+      for (int idx = 0; idx < count; ++idx) {
+        double* block_ptr = block_bases[b] + idx * kBlockSizes[b];
+        if (manifolds[b] != nullptr) {
+          problem.SetManifold(block_ptr, manifolds[b].get());
+        }
+        options.linear_solver_ordering->AddElementToGroup(block_ptr, group);
+      }
+    }
+
+    auto preprocessor = Preprocessor::Create(MinimizerType::TRUST_REGION);
+    preprocessed_problem = std::make_unique<PreprocessedProblem>();
+    CHECK(preprocessor->Preprocess(
+        options, problem.mutable_impl(), preprocessed_problem.get()));
+    auto* program = preprocessed_problem->reduced_program.get();
+    parameters.resize(program->NumParameters());
+    program->ParameterBlocksToStateVector(parameters.data());
+  }
+
+  static Problem::Options MakeProblemOptions() {
+    Problem::Options options;
+    options.loss_function_ownership = DO_NOT_TAKE_OWNERSHIP;
+    options.manifold_ownership = DO_NOT_TAKE_OWNERSHIP;
+    return options;
+  }
+
+  Problem problem;
+  std::unique_ptr<LossFunction> loss_function;
+  std::array<std::unique_ptr<Manifold>, kNumBlocks> manifolds;
+  std::array<std::vector<double>, kNumBlocks> block_storage;
+  std::unique_ptr<PreprocessedProblem> preprocessed_problem;
+  Vector parameters;
+};
+
 // Benchmark library might invoke benchmark function multiple times.
 // In order to save time required to parse BAL data, we ensure that
 // each dataset is being loaded at most once.
-// Each type of jacobians is also cached after first creation
+// Each type of jacobians is also cached after first creation.
 struct BALData {
   using PartitionedView = PartitionedMatrixView<2, 3, 9>;
   explicit BALData(const std::string& path) {
     bal_problem = std::make_unique<BundleAdjustmentProblem>(path);
     CHECK(bal_problem != nullptr);
 
-    auto problem_impl = bal_problem->mutable_problem()->mutable_impl();
-    auto preprocessor = Preprocessor::Create(MinimizerType::TRUST_REGION);
-
-    preprocessed_problem = std::make_unique<PreprocessedProblem>();
-    Solver::Options options = bal_problem->options();
-    options.linear_solver_type = ITERATIVE_SCHUR;
-    CHECK(preprocessor->Preprocess(
-        options, problem_impl, preprocessed_problem.get()));
-
-    auto program = preprocessed_problem->reduced_program.get();
-
-    parameters.resize(program->NumParameters());
-    program->ParameterBlocksToStateVector(parameters.data());
+    auto* program = ProblemFor<SnavelyReprojectionError>()
+                        ->preprocessed_problem->reduced_program.get();
 
     const int num_residuals = program->NumResiduals();
     b.resize(num_residuals);
@@ -99,12 +218,19 @@ struct BALData {
     }
   }
 
+  template <typename CostFunctor>
+  EvaluatorTestProblem<CostFunctor>* ProblemFor() {
+    auto& slot =
+        std::get<std::unique_ptr<EvaluatorTestProblem<CostFunctor>>>(
+            test_problems);
+    if (!slot) {
+      slot = std::make_unique<EvaluatorTestProblem<CostFunctor>>(*bal_problem);
+    }
+    return slot.get();
+  }
+
   std::unique_ptr<BlockSparseMatrix> CreateBlockSparseJacobian(
       ContextImpl* context, bool sequential) {
-    auto problem = bal_problem->mutable_problem();
-    auto problem_impl = problem->mutable_impl();
-    CHECK(problem_impl != nullptr);
-
     Evaluator::Options options;
     options.linear_solver_type = ITERATIVE_SCHUR;
     options.num_threads = 1;
@@ -112,7 +238,8 @@ struct BALData {
     options.num_eliminate_blocks = bal_problem->num_points();
 
     std::string error;
-    auto program = preprocessed_problem->reduced_program.get();
+    auto* program = ProblemFor<SnavelyReprojectionError>()
+                        ->preprocessed_problem->reduced_program.get();
     auto evaluator = Evaluator::Create(options, program, &error);
     CHECK(evaluator != nullptr);
 
@@ -155,12 +282,6 @@ struct BALData {
     return block_sparse;
   }
 
-  std::unique_ptr<CompressedRowSparseMatrix> CreateCompressedRowSparseJacobian(
-      ContextImpl* context) {
-    auto block_sparse = BlockSparseJacobian(context);
-    return block_sparse->ToCompressedRowSparseMatrix();
-  }
-
   const BlockSparseMatrix* BlockSparseJacobian(ContextImpl* context) {
     if (!block_sparse_jacobian) {
       block_sparse_jacobian = CreateBlockSparseJacobian(context, true);
@@ -180,7 +301,8 @@ struct BALData {
   const CompressedRowSparseMatrix* CompressedRowSparseJacobian(
       ContextImpl* context) {
     if (!crs_jacobian) {
-      crs_jacobian = CreateCompressedRowSparseJacobian(context);
+      crs_jacobian =
+          BlockSparseJacobian(context)->ToCompressedRowSparseMatrix();
     }
     return crs_jacobian.get();
   }
@@ -225,11 +347,9 @@ struct BALData {
     return implicit_schur_complement_diag.get();
   }
 
-  Vector parameters;
   Vector D;
   Vector b;
   std::unique_ptr<BundleAdjustmentProblem> bal_problem;
-  std::unique_ptr<PreprocessedProblem> preprocessed_problem;
   std::unique_ptr<BlockSparseMatrix> block_sparse_jacobian_partitioned;
   std::unique_ptr<BlockSparseMatrix> block_sparse_jacobian;
   std::unique_ptr<CompressedRowSparseMatrix> crs_jacobian;
@@ -237,98 +357,129 @@ struct BALData {
   std::unique_ptr<BlockSparseMatrix> block_diagonal_ftf;
   std::unique_ptr<ImplicitSchurComplement> implicit_schur_complement;
   std::unique_ptr<ImplicitSchurComplement> implicit_schur_complement_diag;
+  std::tuple<
+      std::unique_ptr<EvaluatorTestProblem<SnavelyReprojectionError>>,
+      std::unique_ptr<EvaluatorTestProblem<ColmapOpenCVReprojectionError>>,
+      std::unique_ptr<EvaluatorTestProblem<LibmvBrownReprojectionError>>>
+      test_problems;
 };
 
-static void Residuals(benchmark::State& state,
-                      BALData* data,
-                      ContextImpl* context) {
-  const int num_threads = static_cast<int>(state.range(0));
+// Outputs requested from `Evaluator::Evaluate`:
+//   - kResidualsOnly:                cost + residuals
+//   - kResidualsAndJacobian:         cost + residuals + Jacobian
+//   - kResidualsGradientAndJacobian: cost + residuals + gradient + Jacobian
+enum class EvaluationOutputs {
+  kResidualsOnly,
+  kResidualsAndJacobian,
+  kResidualsGradientAndJacobian,
+};
+
+// Sparse matrix representation written by `ProgramEvaluator`:
+//   - kNone:          no Jacobian (residuals only)
+//   - kBlockSparse:   BlockEvaluatePreparer + BlockJacobianWriter
+//                     (used by Schur and SparseNormalCholesky solvers)
+//   - kCompressedRow: ScratchEvaluatePreparer + CompressedRowJacobianWriter
+//                     (used by Problem::Evaluate and CUDA CGNR)
+enum class JacobianFormat {
+  kNone,
+  kBlockSparse,
+  kCompressedRow,
+};
+
+// Benchmarks whole-problem `Evaluator::Evaluate` for `CostFunctor` across
+// output combinations, sparse Jacobian storage formats, and thread counts.
+template <typename CostFunctor,
+          EvaluationOutputs kOutputs,
+          JacobianFormat kJacobianFormat>
+static void EvaluateProgram(benchmark::State& state,
+                            BALData* data,
+                            ContextImpl* context) {
+  auto* test_problem = data->ProblemFor<CostFunctor>();
+  Program* program = test_problem->preprocessed_problem->reduced_program.get();
+  const double* parameters = test_problem->parameters.data();
 
   Evaluator::Options options;
-  options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
-  options.num_threads = num_threads;
+  options.num_threads = static_cast<int>(state.range(0));
   options.context = context;
-  options.num_eliminate_blocks = 0;
+  options.linear_solver_type = ITERATIVE_SCHUR;
+  options.num_eliminate_blocks = data->bal_problem->num_points();
 
-  std::string error;
-  CHECK(data->preprocessed_problem != nullptr);
-  auto program = data->preprocessed_problem->reduced_program.get();
-  CHECK(program != nullptr);
-  auto evaluator = Evaluator::Create(options, program, &error);
-  CHECK(evaluator != nullptr);
-
-  double cost = 0.;
-  Vector residuals = Vector::Zero(program->NumResiduals());
-
-  Evaluator::EvaluateOptions eval_options;
-  for (auto _ : state) {
-    CHECK(evaluator->Evaluate(eval_options,
-                              data->parameters.data(),
-                              &cost,
-                              residuals.data(),
-                              nullptr,
-                              nullptr));
+  std::unique_ptr<Evaluator> evaluator;
+  if constexpr (kJacobianFormat == JacobianFormat::kCompressedRow) {
+    evaluator = std::make_unique<
+        ProgramEvaluator<ScratchEvaluatePreparer, CompressedRowJacobianWriter>>(
+        options, program);
+  } else {
+    evaluator = std::make_unique<
+        ProgramEvaluator<BlockEvaluatePreparer, BlockJacobianWriter>>(
+        options, program);
   }
-}
-
-static void ResidualsAndJacobian(benchmark::State& state,
-                                 BALData* data,
-                                 ContextImpl* context) {
-  const int num_threads = static_cast<int>(state.range(0));
-
-  Evaluator::Options options;
-  options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
-  options.num_threads = num_threads;
-  options.context = context;
-  options.num_eliminate_blocks = 0;
-
-  std::string error;
-  CHECK(data->preprocessed_problem != nullptr);
-  auto program = data->preprocessed_problem->reduced_program.get();
-  CHECK(program != nullptr);
-  auto evaluator = Evaluator::Create(options, program, &error);
-  CHECK(evaluator != nullptr);
 
   double cost = 0.;
   Vector residuals = Vector::Zero(program->NumResiduals());
-  auto jacobian = evaluator->CreateJacobian();
+  Vector gradient;
+  double* gradient_ptr = nullptr;
+  if constexpr (kOutputs == EvaluationOutputs::kResidualsGradientAndJacobian) {
+    gradient = Vector::Zero(program->NumEffectiveParameters());
+    gradient_ptr = gradient.data();
+  }
+
+  std::unique_ptr<SparseMatrix> jacobian;
+  SparseMatrix* jacobian_ptr = nullptr;
+  if constexpr (kOutputs != EvaluationOutputs::kResidualsOnly) {
+    jacobian = evaluator->CreateJacobian();
+    jacobian_ptr = jacobian.get();
+  }
 
   Evaluator::EvaluateOptions eval_options;
+  CHECK(evaluator->Evaluate(eval_options,
+                            parameters,
+                            &cost,
+                            residuals.data(),
+                            gradient_ptr,
+                            jacobian_ptr));
+
   for (auto _ : state) {
-    CHECK(evaluator->Evaluate(eval_options,
-                              data->parameters.data(),
-                              &cost,
-                              residuals.data(),
-                              nullptr,
-                              jacobian.get()));
+    benchmark::DoNotOptimize(evaluator->Evaluate(eval_options,
+                                                 parameters,
+                                                 &cost,
+                                                 residuals.data(),
+                                                 gradient_ptr,
+                                                 jacobian_ptr));
+    benchmark::DoNotOptimize(cost);
+    benchmark::DoNotOptimize(residuals.data());
   }
 }
 
 static void Plus(benchmark::State& state, BALData* data, ContextImpl* context) {
-  const int num_threads = static_cast<int>(state.range(0));
-
   Evaluator::Options options;
   options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
-  options.num_threads = num_threads;
+  options.num_threads = static_cast<int>(state.range(0));
   options.context = context;
   options.num_eliminate_blocks = 0;
 
-  std::string error;
-  CHECK(data->preprocessed_problem != nullptr);
-  auto program = data->preprocessed_problem->reduced_program.get();
-  CHECK(program != nullptr);
-  auto evaluator = Evaluator::Create(options, program, &error);
-  CHECK(evaluator != nullptr);
+  auto* test_problem = data->ProblemFor<SnavelyReprojectionError>();
+  Program* program = test_problem->preprocessed_problem->reduced_program.get();
+  ProgramEvaluator<BlockEvaluatePreparer, BlockJacobianWriter> evaluator(
+      options, program);
 
   Vector state_plus_delta = Vector::Zero(program->NumParameters());
   Vector delta = Vector::Random(program->NumEffectiveParameters());
 
+  CHECK(evaluator.Plus(
+      test_problem->parameters.data(), delta.data(), state_plus_delta.data()));
+
   for (auto _ : state) {
-    CHECK(evaluator->Plus(
-        data->parameters.data(), delta.data(), state_plus_delta.data()));
+    benchmark::DoNotOptimize(evaluator.Plus(test_problem->parameters.data(),
+                                            delta.data(),
+                                            state_plus_delta.data()));
+    benchmark::DoNotOptimize(state_plus_delta.data());
   }
   CHECK_GT(state_plus_delta.squaredNorm(), 0.);
 }
+
+enum class Submatrix { kE, kF };
+enum class MultiplyDirection { kRight, kLeft };
 
 static void PSEPreconditioner(benchmark::State& state,
                               BALData* data,
@@ -353,134 +504,74 @@ static void PSEPreconditioner(benchmark::State& state,
   CHECK_GT(y.squaredNorm(), 0.);
 }
 
-static void PMVRightMultiplyAndAccumulateF(benchmark::State& state,
-                                           BALData* data,
-                                           ContextImpl* context) {
+template <Submatrix kSubmatrix, MultiplyDirection kDirection>
+static void PMVMultiply(benchmark::State& state,
+                        BALData* data,
+                        ContextImpl* context) {
   LinearSolver::Options options;
   options.num_threads = static_cast<int>(state.range(0));
   options.elimination_groups.push_back(data->bal_problem->num_points());
   options.context = context;
   auto jacobian = data->PartitionedMatrixViewJacobian(options);
 
-  Vector y = Vector::Zero(jacobian->num_rows());
-  Vector x = Vector::Random(jacobian->num_cols_f());
+  const int num_cols = (kSubmatrix == Submatrix::kF) ? jacobian->num_cols_f()
+                                                     : jacobian->num_cols_e();
+  const int num_rows = jacobian->num_rows();
+  Vector y = Vector::Zero(
+      (kDirection == MultiplyDirection::kRight) ? num_rows : num_cols);
+  Vector x = Vector::Random(
+      (kDirection == MultiplyDirection::kRight) ? num_cols : num_rows);
 
   for (auto _ : state) {
-    jacobian->RightMultiplyAndAccumulateF(x.data(), y.data());
+    if constexpr (kSubmatrix == Submatrix::kF &&
+                  kDirection == MultiplyDirection::kRight) {
+      jacobian->RightMultiplyAndAccumulateF(x.data(), y.data());
+    } else if constexpr (kSubmatrix == Submatrix::kF &&
+                         kDirection == MultiplyDirection::kLeft) {
+      jacobian->LeftMultiplyAndAccumulateF(x.data(), y.data());
+    } else if constexpr (kSubmatrix == Submatrix::kE &&
+                         kDirection == MultiplyDirection::kRight) {
+      jacobian->RightMultiplyAndAccumulateE(x.data(), y.data());
+    } else {
+      jacobian->LeftMultiplyAndAccumulateE(x.data(), y.data());
+    }
   }
   CHECK_GT(y.squaredNorm(), 0.);
 }
 
-static void PMVLeftMultiplyAndAccumulateF(benchmark::State& state,
-                                          BALData* data,
-                                          ContextImpl* context) {
-  LinearSolver::Options options;
-  options.num_threads = static_cast<int>(state.range(0));
-  options.elimination_groups.push_back(data->bal_problem->num_points());
-  options.context = context;
-  auto jacobian = data->PartitionedMatrixViewJacobian(options);
-
-  Vector y = Vector::Zero(jacobian->num_cols_f());
-  Vector x = Vector::Random(jacobian->num_rows());
-
-  for (auto _ : state) {
-    jacobian->LeftMultiplyAndAccumulateF(x.data(), y.data());
-  }
-  CHECK_GT(y.squaredNorm(), 0.);
-}
-
-static void PMVRightMultiplyAndAccumulateE(benchmark::State& state,
-                                           BALData* data,
-                                           ContextImpl* context) {
-  LinearSolver::Options options;
-  options.num_threads = static_cast<int>(state.range(0));
-  options.elimination_groups.push_back(data->bal_problem->num_points());
-  options.context = context;
-  auto jacobian = data->PartitionedMatrixViewJacobian(options);
-
-  Vector y = Vector::Zero(jacobian->num_rows());
-  Vector x = Vector::Random(jacobian->num_cols_e());
-
-  for (auto _ : state) {
-    jacobian->RightMultiplyAndAccumulateE(x.data(), y.data());
-  }
-  CHECK_GT(y.squaredNorm(), 0.);
-}
-
-static void PMVLeftMultiplyAndAccumulateE(benchmark::State& state,
-                                          BALData* data,
-                                          ContextImpl* context) {
-  LinearSolver::Options options;
-  options.num_threads = static_cast<int>(state.range(0));
-  options.elimination_groups.push_back(data->bal_problem->num_points());
-  options.context = context;
-  auto jacobian = data->PartitionedMatrixViewJacobian(options);
-
-  Vector y = Vector::Zero(jacobian->num_cols_e());
-  Vector x = Vector::Random(jacobian->num_rows());
-
-  for (auto _ : state) {
-    jacobian->LeftMultiplyAndAccumulateE(x.data(), y.data());
-  }
-  CHECK_GT(y.squaredNorm(), 0.);
-}
-
-static void PMVUpdateBlockDiagonalEtE(benchmark::State& state,
-                                      BALData* data,
-                                      ContextImpl* context) {
-  LinearSolver::Options options;
-  options.num_threads = static_cast<int>(state.range(0));
-  options.elimination_groups.push_back(data->bal_problem->num_points());
-  options.context = context;
-  auto jacobian = data->PartitionedMatrixViewJacobian(options);
-  auto block_diagonal_ete = data->BlockDiagonalEtE(options);
-
-  for (auto _ : state) {
-    jacobian->UpdateBlockDiagonalEtE(block_diagonal_ete);
-  }
-}
-
-static void PMVUpdateBlockDiagonalFtF(benchmark::State& state,
-                                      BALData* data,
-                                      ContextImpl* context) {
-  LinearSolver::Options options;
-  options.num_threads = static_cast<int>(state.range(0));
-  options.elimination_groups.push_back(data->bal_problem->num_points());
-  options.context = context;
-  auto jacobian = data->PartitionedMatrixViewJacobian(options);
-  auto block_diagonal_ftf = data->BlockDiagonalFtF(options);
-
-  for (auto _ : state) {
-    jacobian->UpdateBlockDiagonalFtF(block_diagonal_ftf);
-  }
-}
-
-static void ISCRightMultiplyNoDiag(benchmark::State& state,
+template <Submatrix kSubmatrix>
+static void PMVUpdateBlockDiagonal(benchmark::State& state,
                                    BALData* data,
                                    ContextImpl* context) {
   LinearSolver::Options options;
   options.num_threads = static_cast<int>(state.range(0));
   options.elimination_groups.push_back(data->bal_problem->num_points());
   options.context = context;
-  auto jacobian = data->ImplicitSchurComplementWithoutDiagonal(options);
+  auto jacobian = data->PartitionedMatrixViewJacobian(options);
+  auto* block_diagonal = (kSubmatrix == Submatrix::kE)
+                             ? data->BlockDiagonalEtE(options)
+                             : data->BlockDiagonalFtF(options);
 
-  Vector y = Vector::Zero(jacobian->num_rows());
-  Vector x = Vector::Random(jacobian->num_cols());
   for (auto _ : state) {
-    jacobian->RightMultiplyAndAccumulate(x.data(), y.data());
+    if constexpr (kSubmatrix == Submatrix::kE) {
+      jacobian->UpdateBlockDiagonalEtE(block_diagonal);
+    } else {
+      jacobian->UpdateBlockDiagonalFtF(block_diagonal);
+    }
   }
-  CHECK_GT(y.squaredNorm(), 0.);
 }
 
-static void ISCRightMultiplyDiag(benchmark::State& state,
-                                 BALData* data,
-                                 ContextImpl* context) {
+template <bool kUseDiagonal>
+static void ISCRightMultiply(benchmark::State& state,
+                             BALData* data,
+                             ContextImpl* context) {
   LinearSolver::Options options;
   options.num_threads = static_cast<int>(state.range(0));
   options.elimination_groups.push_back(data->bal_problem->num_points());
   options.context = context;
-
-  auto jacobian = data->ImplicitSchurComplementWithDiagonal(options);
+  const auto* jacobian =
+      kUseDiagonal ? data->ImplicitSchurComplementWithDiagonal(options)
+                   : data->ImplicitSchurComplementWithoutDiagonal(options);
 
   Vector y = Vector::Zero(jacobian->num_rows());
   Vector x = Vector::Random(jacobian->num_cols());
@@ -503,9 +594,10 @@ static void JacobianToCRS(benchmark::State& state,
 }
 
 #ifndef CERES_NO_CUDA
-static void PMVRightMultiplyAndAccumulateFCuda(benchmark::State& state,
-                                               BALData* data,
-                                               ContextImpl* context) {
+template <Submatrix kSubmatrix, MultiplyDirection kDirection>
+static void PMVMultiplyCuda(benchmark::State& state,
+                            BALData* data,
+                            ContextImpl* context) {
   LinearSolver::Options options;
   options.elimination_groups.push_back(data->bal_problem->num_points());
   options.context = context;
@@ -515,100 +607,32 @@ static void PMVRightMultiplyAndAccumulateFCuda(benchmark::State& state,
   CudaPartitionedBlockSparseCRSView view(
       *underlying_matrix, jacobian->num_col_blocks_e(), context);
 
-  Vector x = Vector::Random(jacobian->num_cols_f());
+  const int num_cols = (kSubmatrix == Submatrix::kF) ? jacobian->num_cols_f()
+                                                     : jacobian->num_cols_e();
+  const int num_rows = jacobian->num_rows();
+  Vector x = Vector::Random(
+      (kDirection == MultiplyDirection::kRight) ? num_cols : num_rows);
   CudaVector cuda_x(context, x.size());
-  CudaVector cuda_y(context, jacobian->num_rows());
+  CudaVector cuda_y(
+      context, (kDirection == MultiplyDirection::kRight) ? num_rows : num_cols);
 
   cuda_x.CopyFromCpu(x);
   cuda_y.SetZero();
 
-  auto matrix = view.matrix_f();
+  const auto* matrix =
+      (kSubmatrix == Submatrix::kF) ? view.matrix_f() : view.matrix_e();
   for (auto _ : state) {
-    matrix->RightMultiplyAndAccumulate(cuda_x, &cuda_y);
-  }
-  CHECK_GT(cuda_y.Norm(), 0.);
-}
-
-static void PMVLeftMultiplyAndAccumulateFCuda(benchmark::State& state,
-                                              BALData* data,
-                                              ContextImpl* context) {
-  LinearSolver::Options options;
-  options.elimination_groups.push_back(data->bal_problem->num_points());
-  options.context = context;
-  options.num_threads = 1;
-  auto jacobian = data->PartitionedMatrixViewJacobian(options);
-  auto underlying_matrix = data->BlockSparseJacobianPartitioned(context);
-  CudaPartitionedBlockSparseCRSView view(
-      *underlying_matrix, jacobian->num_col_blocks_e(), context);
-
-  Vector x = Vector::Random(jacobian->num_rows());
-  CudaVector cuda_x(context, x.size());
-  CudaVector cuda_y(context, jacobian->num_cols_f());
-
-  cuda_x.CopyFromCpu(x);
-  cuda_y.SetZero();
-
-  auto matrix = view.matrix_f();
-  for (auto _ : state) {
-    matrix->LeftMultiplyAndAccumulate(cuda_x, &cuda_y);
-  }
-  CHECK_GT(cuda_y.Norm(), 0.);
-}
-
-static void PMVRightMultiplyAndAccumulateECuda(benchmark::State& state,
-                                               BALData* data,
-                                               ContextImpl* context) {
-  LinearSolver::Options options;
-  options.elimination_groups.push_back(data->bal_problem->num_points());
-  options.context = context;
-  options.num_threads = 1;
-  auto jacobian = data->PartitionedMatrixViewJacobian(options);
-  auto underlying_matrix = data->BlockSparseJacobianPartitioned(context);
-  CudaPartitionedBlockSparseCRSView view(
-      *underlying_matrix, jacobian->num_col_blocks_e(), context);
-
-  Vector x = Vector::Random(jacobian->num_cols_e());
-  CudaVector cuda_x(context, x.size());
-  CudaVector cuda_y(context, jacobian->num_rows());
-
-  cuda_x.CopyFromCpu(x);
-  cuda_y.SetZero();
-
-  auto matrix = view.matrix_e();
-  for (auto _ : state) {
-    matrix->RightMultiplyAndAccumulate(cuda_x, &cuda_y);
-  }
-  CHECK_GT(cuda_y.Norm(), 0.);
-}
-
-static void PMVLeftMultiplyAndAccumulateECuda(benchmark::State& state,
-                                              BALData* data,
-                                              ContextImpl* context) {
-  LinearSolver::Options options;
-  options.elimination_groups.push_back(data->bal_problem->num_points());
-  options.context = context;
-  options.num_threads = 1;
-  auto jacobian = data->PartitionedMatrixViewJacobian(options);
-  auto underlying_matrix = data->BlockSparseJacobianPartitioned(context);
-  CudaPartitionedBlockSparseCRSView view(
-      *underlying_matrix, jacobian->num_col_blocks_e(), context);
-
-  Vector x = Vector::Random(jacobian->num_rows());
-  CudaVector cuda_x(context, x.size());
-  CudaVector cuda_y(context, jacobian->num_cols_e());
-
-  cuda_x.CopyFromCpu(x);
-  cuda_y.SetZero();
-
-  auto matrix = view.matrix_e();
-  for (auto _ : state) {
-    matrix->LeftMultiplyAndAccumulate(cuda_x, &cuda_y);
+    if constexpr (kDirection == MultiplyDirection::kRight) {
+      matrix->RightMultiplyAndAccumulate(cuda_x, &cuda_y);
+    } else {
+      matrix->LeftMultiplyAndAccumulate(cuda_x, &cuda_y);
+    }
   }
   CHECK_GT(cuda_y.Norm(), 0.);
 }
 
 // We want CudaBlockSparseCRSView to be not slower than explicit conversion to
-// CRS on CPU
+// CRS on CPU.
 static void JacobianToCRSView(benchmark::State& state,
                               BALData* data,
                               ContextImpl* context) {
@@ -620,6 +644,7 @@ static void JacobianToCRSView(benchmark::State& state,
   }
   CHECK(matrix != nullptr);
 }
+
 static void JacobianToCRSMatrix(benchmark::State& state,
                                 BALData* data,
                                 ContextImpl* context) {
@@ -633,9 +658,10 @@ static void JacobianToCRSMatrix(benchmark::State& state,
   }
   CHECK(matrix != nullptr);
 }
+
 // Updating values in CudaBlockSparseCRSView should be +- as fast as just
 // copying values (time spent in value permutation has to be hidden by PCIe
-// transfer)
+// transfer).
 static void JacobianToCRSViewUpdate(benchmark::State& state,
                                     BALData* data,
                                     ContextImpl* context) {
@@ -646,6 +672,7 @@ static void JacobianToCRSViewUpdate(benchmark::State& state,
     matrix.UpdateValues(*jacobian);
   }
 }
+
 static void JacobianToCRSMatrixUpdate(benchmark::State& state,
                                       BALData* data,
                                       ContextImpl* context) {
@@ -667,9 +694,7 @@ static void JacobianSquaredColumnNorm(benchmark::State& state,
                                       BALData* data,
                                       ContextImpl* context) {
   const int num_threads = static_cast<int>(state.range(0));
-
   auto jacobian = data->BlockSparseJacobian(context);
-
   Vector x = Vector::Zero(jacobian->num_cols());
 
   for (auto _ : state) {
@@ -682,10 +707,8 @@ static void JacobianScaleColumns(benchmark::State& state,
                                  BALData* data,
                                  ContextImpl* context) {
   const int num_threads = static_cast<int>(state.range(0));
-
   auto jacobian_const = data->BlockSparseJacobian(context);
   auto jacobian = const_cast<BlockSparseMatrix*>(jacobian_const);
-
   Vector x = Vector::Ones(jacobian->num_cols());
 
   for (auto _ : state) {
@@ -693,51 +716,46 @@ static void JacobianScaleColumns(benchmark::State& state,
   }
 }
 
-static void JacobianRightMultiplyAndAccumulate(benchmark::State& state,
-                                               BALData* data,
-                                               ContextImpl* context) {
+template <MultiplyDirection kDirection>
+static void JacobianMultiply(benchmark::State& state,
+                             BALData* data,
+                             ContextImpl* context) {
   const int num_threads = static_cast<int>(state.range(0));
-
   auto jacobian = data->BlockSparseJacobian(context);
 
-  Vector y = Vector::Zero(jacobian->num_rows());
-  Vector x = Vector::Random(jacobian->num_cols());
+  const int num_rows = jacobian->num_rows();
+  const int num_cols = jacobian->num_cols();
+  Vector y = Vector::Zero(
+      (kDirection == MultiplyDirection::kRight) ? num_rows : num_cols);
+  Vector x = Vector::Random(
+      (kDirection == MultiplyDirection::kRight) ? num_cols : num_rows);
 
   for (auto _ : state) {
-    jacobian->RightMultiplyAndAccumulate(
-        x.data(), y.data(), context, num_threads);
-  }
-  CHECK_GT(y.squaredNorm(), 0.);
-}
-
-static void JacobianLeftMultiplyAndAccumulate(benchmark::State& state,
-                                              BALData* data,
-                                              ContextImpl* context) {
-  const int num_threads = static_cast<int>(state.range(0));
-
-  auto jacobian = data->BlockSparseJacobian(context);
-
-  Vector y = Vector::Zero(jacobian->num_cols());
-  Vector x = Vector::Random(jacobian->num_rows());
-
-  for (auto _ : state) {
-    jacobian->LeftMultiplyAndAccumulate(
-        x.data(), y.data(), context, num_threads);
+    if constexpr (kDirection == MultiplyDirection::kRight) {
+      jacobian->RightMultiplyAndAccumulate(
+          x.data(), y.data(), context, num_threads);
+    } else {
+      jacobian->LeftMultiplyAndAccumulate(
+          x.data(), y.data(), context, num_threads);
+    }
   }
   CHECK_GT(y.squaredNorm(), 0.);
 }
 
 #ifndef CERES_NO_CUDA
-static void JacobianRightMultiplyAndAccumulateCuda(benchmark::State& state,
-                                                   BALData* data,
-                                                   ContextImpl* context) {
+template <MultiplyDirection kDirection>
+static void JacobianMultiplyCuda(benchmark::State& state,
+                                 BALData* data,
+                                 ContextImpl* context) {
   auto crs_jacobian = data->CompressedRowSparseJacobian(context);
   CudaSparseMatrix cuda_jacobian(context, *crs_jacobian);
   CudaVector cuda_x(context, 0);
   CudaVector cuda_y(context, 0);
 
-  Vector x(crs_jacobian->num_cols());
-  Vector y(crs_jacobian->num_rows());
+  const int num_rows = crs_jacobian->num_rows();
+  const int num_cols = crs_jacobian->num_cols();
+  Vector x((kDirection == MultiplyDirection::kRight) ? num_cols : num_rows);
+  Vector y((kDirection == MultiplyDirection::kRight) ? num_rows : num_cols);
   x.setRandom();
   y.setRandom();
 
@@ -745,31 +763,11 @@ static void JacobianRightMultiplyAndAccumulateCuda(benchmark::State& state,
   cuda_y.CopyFromCpu(y);
   double sum = 0;
   for (auto _ : state) {
-    cuda_jacobian.RightMultiplyAndAccumulate(cuda_x, &cuda_y);
-    sum += cuda_y.Norm();
-    CHECK_EQ(cudaDeviceSynchronize(), cudaSuccess);
-  }
-  CHECK_NE(sum, 0.0);
-}
-
-static void JacobianLeftMultiplyAndAccumulateCuda(benchmark::State& state,
-                                                  BALData* data,
-                                                  ContextImpl* context) {
-  auto crs_jacobian = data->CompressedRowSparseJacobian(context);
-  CudaSparseMatrix cuda_jacobian(context, *crs_jacobian);
-  CudaVector cuda_x(context, 0);
-  CudaVector cuda_y(context, 0);
-
-  Vector x(crs_jacobian->num_rows());
-  Vector y(crs_jacobian->num_cols());
-  x.setRandom();
-  y.setRandom();
-
-  cuda_x.CopyFromCpu(x);
-  cuda_y.CopyFromCpu(y);
-  double sum = 0;
-  for (auto _ : state) {
-    cuda_jacobian.LeftMultiplyAndAccumulate(cuda_x, &cuda_y);
+    if constexpr (kDirection == MultiplyDirection::kRight) {
+      cuda_jacobian.RightMultiplyAndAccumulate(cuda_x, &cuda_y);
+    } else {
+      cuda_jacobian.LeftMultiplyAndAccumulate(cuda_x, &cuda_y);
+    }
     sum += cuda_y.Norm();
     CHECK_EQ(cudaDeviceSynchronize(), cudaSuccess);
   }
@@ -790,12 +788,16 @@ void Shutdown(Args... args) {}
 int main(int argc, char** argv) {
   ::benchmark::Initialize(&argc, argv);
 
-  std::vector<std::unique_ptr<ceres::internal::BALData>> benchmark_data;
   if (argc == 1) {
     LOG(FATAL) << "No input datasets specified. Usage: " << argv[0]
                << " [benchmark flags] path_to_BAL_data_1.txt ... "
                   "path_to_BAL_data_N.txt";
     return -1;
+  }
+
+  std::vector<std::string> paths;
+  for (int i = 1; i < argc; ++i) {
+    paths.emplace_back(argv[i]);
   }
 
   ceres::internal::ContextImpl context;
@@ -805,286 +807,148 @@ int main(int argc, char** argv) {
   context.InitCuda(&message);
 #endif
 
-  for (int i = 1; i < argc; ++i) {
-    const std::string path(argv[i]);
-    const std::string name_residuals = "Residuals<" + path + ">";
+  using ceres::internal::ColmapOpenCVReprojectionError;
+  using ceres::internal::EvaluationOutputs;
+  using ceres::internal::JacobianFormat;
+  using ceres::internal::LibmvBrownReprojectionError;
+  using ceres::internal::MultiplyDirection;
+  using ceres::internal::SnavelyReprojectionError;
+  using ceres::internal::Submatrix;
+
+  std::vector<std::unique_ptr<ceres::internal::BALData>> benchmark_data;
+  for (const std::string& path : paths) {
     benchmark_data.emplace_back(
         std::make_unique<ceres::internal::BALData>(path));
-    auto data = benchmark_data.back().get();
-    ::benchmark::RegisterBenchmark(
-        name_residuals.c_str(), ceres::internal::Residuals, data, &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
+    auto* data = benchmark_data.back().get();
 
-    const std::string name_jacobians = "ResidualsAndJacobian<" + path + ">";
-    ::benchmark::RegisterBenchmark(name_jacobians.c_str(),
-                                   ceres::internal::ResidualsAndJacobian,
-                                   data,
-                                   &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
+    auto register_threaded = [&](const std::string& prefix, auto fn) {
+      const std::string name = prefix + "<" + path + ">";
+      ::benchmark::RegisterBenchmark(name.c_str(), fn, data, &context)
+          ->Arg(1)
+          ->Arg(2)
+          ->Arg(4)
+          ->Arg(8)
+          ->Arg(16);
+    };
+    auto register_unthreaded = [&](const std::string& prefix, auto fn) {
+      const std::string name = prefix + "<" + path + ">";
+      return ::benchmark::RegisterBenchmark(name.c_str(), fn, data, &context);
+    };
+    auto register_evaluator_suite = [&](const std::string& prefix,
+                                        auto functor) {
+      using Functor = decltype(functor);
+      register_threaded(
+          prefix + "Residuals",
+          ceres::internal::EvaluateProgram<Functor,
+                                           EvaluationOutputs::kResidualsOnly,
+                                           JacobianFormat::kNone>);
+      register_threaded(
+          prefix + "ResidualsAndJacobian",
+          ceres::internal::EvaluateProgram<
+              Functor,
+              EvaluationOutputs::kResidualsAndJacobian,
+              JacobianFormat::kBlockSparse>);
+      register_threaded(
+          prefix + "ResidualsAndJacobianCRS",
+          ceres::internal::EvaluateProgram<
+              Functor,
+              EvaluationOutputs::kResidualsAndJacobian,
+              JacobianFormat::kCompressedRow>);
+      register_threaded(
+          prefix + "ResidualsGradientAndJacobian",
+          ceres::internal::EvaluateProgram<
+              Functor,
+              EvaluationOutputs::kResidualsGradientAndJacobian,
+              JacobianFormat::kBlockSparse>);
+    };
 
-    const std::string name_plus = "Plus<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_plus.c_str(), ceres::internal::Plus, data, &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
+    // 1. Whole-problem ProgramEvaluator::Evaluate benchmarks across problem
+    //    formulations (2-block Snavely Bundler, 3-block COLMAP OpenCV with
+    //    EigenQuaternionManifold and HuberLoss, and 3-block libmv Brown-Conrady
+    //    with SubsetManifold), outputs, and sparse Jacobian formats.
+    register_evaluator_suite("", SnavelyReprojectionError{});
+    register_evaluator_suite("Colmap", ColmapOpenCVReprojectionError{});
+    register_evaluator_suite("Libmv", LibmvBrownReprojectionError{});
+    register_threaded("Plus", ceres::internal::Plus);
 
-    const std::string name_right_product =
-        "JacobianRightMultiplyAndAccumulate<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_right_product.c_str(),
-        ceres::internal::JacobianRightMultiplyAndAccumulate,
-        data,
-        &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
-
-    const std::string name_right_product_partitioned_f =
-        "PMVRightMultiplyAndAccumulateF<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_right_product_partitioned_f.c_str(),
-        ceres::internal::PMVRightMultiplyAndAccumulateF,
-        data,
-        &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
-
+    // 2. Sparse matrix-vector product, PartitionedMatrixView, and Schur
+    //    complement preconditioner benchmarks on the BAL Jacobian.
+    register_threaded(
+        "JacobianRightMultiplyAndAccumulate",
+        ceres::internal::JacobianMultiply<MultiplyDirection::kRight>);
+    register_threaded("PMVRightMultiplyAndAccumulateF",
+                      ceres::internal::PMVMultiply<Submatrix::kF,
+                                                   MultiplyDirection::kRight>);
 #ifndef CERES_NO_CUDA
-    const std::string name_right_product_partitioned_f_cuda =
-        "PMVRightMultiplyAndAccumulateFCuda<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_right_product_partitioned_f_cuda.c_str(),
-        ceres::internal::PMVRightMultiplyAndAccumulateFCuda,
-        data,
-        &context);
+    register_unthreaded(
+        "PMVRightMultiplyAndAccumulateFCuda",
+        ceres::internal::PMVMultiplyCuda<Submatrix::kF,
+                                         MultiplyDirection::kRight>);
 #endif
-
-    const std::string name_right_product_partitioned_e =
-        "PMVRightMultiplyAndAccumulateE<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_right_product_partitioned_e.c_str(),
-        ceres::internal::PMVRightMultiplyAndAccumulateE,
-        data,
-        &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
-
+    register_threaded("PMVRightMultiplyAndAccumulateE",
+                      ceres::internal::PMVMultiply<Submatrix::kE,
+                                                   MultiplyDirection::kRight>);
 #ifndef CERES_NO_CUDA
-    const std::string name_right_product_partitioned_e_cuda =
-        "PMVRightMultiplyAndAccumulateECuda<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_right_product_partitioned_e_cuda.c_str(),
-        ceres::internal::PMVRightMultiplyAndAccumulateECuda,
-        data,
-        &context);
+    register_unthreaded(
+        "PMVRightMultiplyAndAccumulateECuda",
+        ceres::internal::PMVMultiplyCuda<Submatrix::kE,
+                                         MultiplyDirection::kRight>);
 #endif
-
-    const std::string name_update_block_diagonal_ftf =
-        "PMVUpdateBlockDiagonalFtF<" + path + ">";
-    ::benchmark::RegisterBenchmark(name_update_block_diagonal_ftf.c_str(),
-                                   ceres::internal::PMVUpdateBlockDiagonalFtF,
-                                   data,
-                                   &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
-
-    const std::string name_pse =
-        "PSEPreconditionerRightMultiplyAndAccumulate<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_pse.c_str(), ceres::internal::PSEPreconditioner, data, &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
-
-    const std::string name_isc_no_diag =
-        "ISCRightMultiplyAndAccumulate<" + path + ">";
-    ::benchmark::RegisterBenchmark(name_isc_no_diag.c_str(),
-                                   ceres::internal::ISCRightMultiplyNoDiag,
-                                   data,
-                                   &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
-
-    const std::string name_update_block_diagonal_ete =
-        "PMVUpdateBlockDiagonalEtE<" + path + ">";
-    ::benchmark::RegisterBenchmark(name_update_block_diagonal_ete.c_str(),
-                                   ceres::internal::PMVUpdateBlockDiagonalEtE,
-                                   data,
-                                   &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
-    const std::string name_isc_diag =
-        "ISCRightMultiplyAndAccumulateDiag<" + path + ">";
-    ::benchmark::RegisterBenchmark(name_isc_diag.c_str(),
-                                   ceres::internal::ISCRightMultiplyDiag,
-                                   data,
-                                   &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
-
+    register_threaded("PMVUpdateBlockDiagonalFtF",
+                      ceres::internal::PMVUpdateBlockDiagonal<Submatrix::kF>);
+    register_threaded("PSEPreconditionerRightMultiplyAndAccumulate",
+                      ceres::internal::PSEPreconditioner);
+    register_threaded("ISCRightMultiplyAndAccumulate",
+                      ceres::internal::ISCRightMultiply<false>);
+    register_threaded("PMVUpdateBlockDiagonalEtE",
+                      ceres::internal::PMVUpdateBlockDiagonal<Submatrix::kE>);
+    register_threaded("ISCRightMultiplyAndAccumulateDiag",
+                      ceres::internal::ISCRightMultiply<true>);
 #ifndef CERES_NO_CUDA
-    const std::string name_right_product_cuda =
-        "JacobianRightMultiplyAndAccumulateCuda<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_right_product_cuda.c_str(),
-        ceres::internal::JacobianRightMultiplyAndAccumulateCuda,
-        data,
-        &context)
+    register_unthreaded(
+        "JacobianRightMultiplyAndAccumulateCuda",
+        ceres::internal::JacobianMultiplyCuda<MultiplyDirection::kRight>)
         ->Arg(1);
 #endif
-
-    const std::string name_left_product =
-        "JacobianLeftMultiplyAndAccumulate<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_left_product.c_str(),
-        ceres::internal::JacobianLeftMultiplyAndAccumulate,
-        data,
-        &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
-
-    const std::string name_left_product_partitioned_f =
-        "PMVLeftMultiplyAndAccumulateF<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_left_product_partitioned_f.c_str(),
-        ceres::internal::PMVLeftMultiplyAndAccumulateF,
-        data,
-        &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
-
+    register_threaded(
+        "JacobianLeftMultiplyAndAccumulate",
+        ceres::internal::JacobianMultiply<MultiplyDirection::kLeft>);
+    register_threaded(
+        "PMVLeftMultiplyAndAccumulateF",
+        ceres::internal::PMVMultiply<Submatrix::kF, MultiplyDirection::kLeft>);
 #ifndef CERES_NO_CUDA
-    const std::string name_left_product_partitioned_f_cuda =
-        "PMVLeftMultiplyAndAccumulateFCuda<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_left_product_partitioned_f_cuda.c_str(),
-        ceres::internal::PMVLeftMultiplyAndAccumulateFCuda,
-        data,
-        &context);
+    register_unthreaded(
+        "PMVLeftMultiplyAndAccumulateFCuda",
+        ceres::internal::PMVMultiplyCuda<Submatrix::kF,
+                                         MultiplyDirection::kLeft>);
 #endif
-
-    const std::string name_left_product_partitioned_e =
-        "PMVLeftMultiplyAndAccumulateE<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_left_product_partitioned_e.c_str(),
-        ceres::internal::PMVLeftMultiplyAndAccumulateE,
-        data,
-        &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
-
+    register_threaded(
+        "PMVLeftMultiplyAndAccumulateE",
+        ceres::internal::PMVMultiply<Submatrix::kE, MultiplyDirection::kLeft>);
 #ifndef CERES_NO_CUDA
-    const std::string name_left_product_partitioned_e_cuda =
-        "PMVLeftMultiplyAndAccumulateECuda<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_left_product_partitioned_e_cuda.c_str(),
-        ceres::internal::PMVLeftMultiplyAndAccumulateECuda,
-        data,
-        &context);
-#endif
-
-#ifndef CERES_NO_CUDA
-    const std::string name_left_product_cuda =
-        "JacobianLeftMultiplyAndAccumulateCuda<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_left_product_cuda.c_str(),
-        ceres::internal::JacobianLeftMultiplyAndAccumulateCuda,
-        data,
-        &context)
+    register_unthreaded(
+        "PMVLeftMultiplyAndAccumulateECuda",
+        ceres::internal::PMVMultiplyCuda<Submatrix::kE,
+                                         MultiplyDirection::kLeft>);
+    register_unthreaded(
+        "JacobianLeftMultiplyAndAccumulateCuda",
+        ceres::internal::JacobianMultiplyCuda<MultiplyDirection::kLeft>)
         ->Arg(1);
 #endif
-
-    const std::string name_squared_column_norm =
-        "JacobianSquaredColumnNorm<" + path + ">";
-    ::benchmark::RegisterBenchmark(name_squared_column_norm.c_str(),
-                                   ceres::internal::JacobianSquaredColumnNorm,
-                                   data,
-                                   &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
-
-    const std::string name_scale_columns = "JacobianScaleColumns<" + path + ">";
-    ::benchmark::RegisterBenchmark(name_scale_columns.c_str(),
-                                   ceres::internal::JacobianScaleColumns,
-                                   data,
-                                   &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
-
-    const std::string name_to_crs = "JacobianToCRS<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_to_crs.c_str(), ceres::internal::JacobianToCRS, data, &context);
+    register_threaded("JacobianSquaredColumnNorm",
+                      ceres::internal::JacobianSquaredColumnNorm);
+    register_threaded("JacobianScaleColumns",
+                      ceres::internal::JacobianScaleColumns);
+    register_unthreaded("JacobianToCRS", ceres::internal::JacobianToCRS);
 #ifndef CERES_NO_CUDA
-    const std::string name_to_crs_view = "JacobianToCRSView<" + path + ">";
-    ::benchmark::RegisterBenchmark(name_to_crs_view.c_str(),
-                                   ceres::internal::JacobianToCRSView,
-                                   data,
-                                   &context);
-    const std::string name_to_crs_matrix = "JacobianToCRSMatrix<" + path + ">";
-    ::benchmark::RegisterBenchmark(name_to_crs_matrix.c_str(),
-                                   ceres::internal::JacobianToCRSMatrix,
-                                   data,
-                                   &context);
-    const std::string name_to_crs_view_update =
-        "JacobianToCRSViewUpdate<" + path + ">";
-    ::benchmark::RegisterBenchmark(name_to_crs_view_update.c_str(),
-                                   ceres::internal::JacobianToCRSViewUpdate,
-                                   data,
-                                   &context);
-    const std::string name_to_crs_matrix_update =
-        "JacobianToCRSMatrixUpdate<" + path + ">";
-    ::benchmark::RegisterBenchmark(name_to_crs_matrix_update.c_str(),
-                                   ceres::internal::JacobianToCRSMatrixUpdate,
-                                   data,
-                                   &context);
+    register_unthreaded("JacobianToCRSView",
+                        ceres::internal::JacobianToCRSView);
+    register_unthreaded("JacobianToCRSMatrix",
+                        ceres::internal::JacobianToCRSMatrix);
+    register_unthreaded("JacobianToCRSViewUpdate",
+                        ceres::internal::JacobianToCRSViewUpdate);
+    register_unthreaded("JacobianToCRSMatrixUpdate",
+                        ceres::internal::JacobianToCRSMatrixUpdate);
 #endif
   }
   ::benchmark::RunSpecifiedBenchmarks();
