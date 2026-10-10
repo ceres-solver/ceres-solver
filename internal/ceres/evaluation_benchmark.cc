@@ -36,20 +36,27 @@
 #include "absl/log/check.h"
 #include "absl/log/log.h"
 #include "benchmark/benchmark.h"
+#include "ceres/autodiff_benchmarks/real_world_cost_functions.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/bundle_adjustment_test_util.h"
+#include "ceres/compressed_row_jacobian_writer.h"
 #include "ceres/cuda_block_sparse_crs_view.h"
 #include "ceres/cuda_partitioned_block_sparse_crs_view.h"
 #include "ceres/cuda_sparse_matrix.h"
 #include "ceres/cuda_vector.h"
 #include "ceres/evaluator.h"
 #include "ceres/implicit_schur_complement.h"
+#include "ceres/loss_function.h"
+#include "ceres/manifold.h"
 #include "ceres/partitioned_matrix_view.h"
 #include "ceres/power_series_expansion_preconditioner.h"
 #include "ceres/preprocessor.h"
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"
+#include "ceres/product_manifold.h"
 #include "ceres/program.h"
+#include "ceres/program_evaluator.h"
+#include "ceres/scratch_evaluate_preparer.h"
 #include "ceres/sparse_matrix.h"
 
 namespace ceres::internal {
@@ -234,9 +241,195 @@ struct BALData {
   std::unique_ptr<BlockSparseMatrix> block_sparse_jacobian;
   std::unique_ptr<CompressedRowSparseMatrix> crs_jacobian;
   std::unique_ptr<BlockSparseMatrix> block_diagonal_ete;
+  struct SubProblem {
+    Problem problem;
+    std::unique_ptr<PreprocessedProblem> preprocessed_problem;
+    Vector parameters;
+    std::vector<double> storage;
+  };
+
+  SubProblem* ColmapProblem() {
+    if (!colmap_subproblem) {
+      colmap_subproblem = std::make_unique<SubProblem>();
+      const int num_cams = bal_problem->num_cameras();
+      const int num_pts = bal_problem->num_points();
+      const int num_obs = bal_problem->num_observations();
+      const double* orig_cams = bal_problem->mutable_cameras();
+      const double* orig_pts = bal_problem->mutable_points();
+      const int* cam_idx = bal_problem->camera_index();
+      const int* pt_idx = bal_problem->point_index();
+      const double* obs = bal_problem->observations();
+
+      // Layout: points (3 * num_pts), poses (7 * num_cams), intrinsics (8 *
+      // num_cams)
+      colmap_subproblem->storage.resize(3 * num_pts + 15 * num_cams, 0.0);
+      double* pts = colmap_subproblem->storage.data();
+      double* poses = pts + 3 * num_pts;
+      double* intrinsics = poses + 7 * num_cams;
+
+      std::copy_n(orig_pts, 3 * num_pts, pts);
+      for (int i = 0; i < num_cams; ++i) {
+        const double* c = orig_cams + 9 * i;
+        double q_wxyz[4];
+        AngleAxisToQuaternion(c, q_wxyz);
+        // Eigen::Quaterniond layout is [qx, qy, qz, qw]
+        poses[7 * i + 0] = q_wxyz[1];
+        poses[7 * i + 1] = q_wxyz[2];
+        poses[7 * i + 2] = q_wxyz[3];
+        poses[7 * i + 3] = q_wxyz[0];
+        poses[7 * i + 4] = c[3];
+        poses[7 * i + 5] = c[4];
+        poses[7 * i + 6] = c[5];
+
+        intrinsics[8 * i + 0] = -c[6];
+        intrinsics[8 * i + 1] = -c[6];
+        intrinsics[8 * i + 2] = 0.0;
+        intrinsics[8 * i + 3] = 0.0;
+        intrinsics[8 * i + 4] = c[7];
+        intrinsics[8 * i + 5] = c[8];
+        intrinsics[8 * i + 6] = 1e-4;
+        intrinsics[8 * i + 7] = 1e-4;
+      }
+
+      for (int i = 0; i < num_obs; ++i) {
+        CostFunction* cost_function =
+            new AutoDiffCostFunction<ColmapOpenCVReprojectionError, 2, 3, 7, 8>(
+                new ColmapOpenCVReprojectionError(obs[2 * i + 0],
+                                                  obs[2 * i + 1]));
+        LossFunction* loss = (i == 0) ? new HuberLoss(1.0) : nullptr;
+        // Share a single HuberLoss across all blocks by not taking ownership on
+        // i > 0, or allocate per block. Here we allocate a new HuberLoss(1.0)
+        // per block.
+        if (i > 0) loss = new HuberLoss(1.0);
+        colmap_subproblem->problem.AddResidualBlock(
+            cost_function,
+            loss,
+            pts + 3 * pt_idx[i],
+            poses + 7 * cam_idx[i],
+            intrinsics + 8 * cam_idx[i]);
+      }
+
+      for (int i = 0; i < num_cams; ++i) {
+        colmap_subproblem->problem.SetManifold(
+            poses + 7 * i,
+            new ProductManifold<EigenQuaternionManifold,
+                                EuclideanManifold<3>>());
+      }
+
+      Solver::Options options = bal_problem->options();
+      options.linear_solver_type = ITERATIVE_SCHUR;
+      options.linear_solver_ordering =
+          std::make_shared<ParameterBlockOrdering>();
+      for (int i = 0; i < num_pts; ++i) {
+        options.linear_solver_ordering->AddElementToGroup(pts + 3 * i, 0);
+      }
+      for (int i = 0; i < num_cams; ++i) {
+        options.linear_solver_ordering->AddElementToGroup(poses + 7 * i, 1);
+        options.linear_solver_ordering->AddElementToGroup(intrinsics + 8 * i,
+                                                          1);
+      }
+
+      auto preprocessor = Preprocessor::Create(MinimizerType::TRUST_REGION);
+      colmap_subproblem->preprocessed_problem =
+          std::make_unique<PreprocessedProblem>();
+      CHECK(preprocessor->Preprocess(
+          options,
+          colmap_subproblem->problem.mutable_impl(),
+          colmap_subproblem->preprocessed_problem.get()));
+      auto program =
+          colmap_subproblem->preprocessed_problem->reduced_program.get();
+      colmap_subproblem->parameters.resize(program->NumParameters());
+      program->ParameterBlocksToStateVector(
+          colmap_subproblem->parameters.data());
+    }
+    return colmap_subproblem.get();
+  }
+
+  SubProblem* LibmvProblem() {
+    if (!libmv_subproblem) {
+      libmv_subproblem = std::make_unique<SubProblem>();
+      const int num_cams = bal_problem->num_cameras();
+      const int num_pts = bal_problem->num_points();
+      const int num_obs = bal_problem->num_observations();
+      const double* orig_cams = bal_problem->mutable_cameras();
+      const double* orig_pts = bal_problem->mutable_points();
+      const int* cam_idx = bal_problem->camera_index();
+      const int* pt_idx = bal_problem->point_index();
+      const double* obs = bal_problem->observations();
+
+      // Layout: points (3 * num_pts), poses (6 * num_cams), intrinsics (9 *
+      // num_cams)
+      libmv_subproblem->storage.resize(3 * num_pts + 15 * num_cams, 0.0);
+      double* pts = libmv_subproblem->storage.data();
+      double* poses = pts + 3 * num_pts;
+      double* intrinsics = poses + 6 * num_cams;
+
+      std::copy_n(orig_pts, 3 * num_pts, pts);
+      for (int i = 0; i < num_cams; ++i) {
+        const double* c = orig_cams + 9 * i;
+        std::copy_n(c, 6, poses + 6 * i);
+        intrinsics[9 * i + 0] = -c[6];
+        intrinsics[9 * i + 1] = 0.0;
+        intrinsics[9 * i + 2] = 0.0;
+        intrinsics[9 * i + 3] = c[7];
+        intrinsics[9 * i + 4] = c[8];
+        intrinsics[9 * i + 5] = 0.0;
+        intrinsics[9 * i + 6] = 0.0;
+        intrinsics[9 * i + 7] = 1e-4;
+        intrinsics[9 * i + 8] = 1e-4;
+      }
+
+      for (int i = 0; i < num_obs; ++i) {
+        CostFunction* cost_function =
+            new AutoDiffCostFunction<LibmvBrownReprojectionError, 2, 9, 6, 3>(
+                new LibmvBrownReprojectionError(obs[2 * i + 0],
+                                                obs[2 * i + 1]));
+        libmv_subproblem->problem.AddResidualBlock(cost_function,
+                                                   nullptr,
+                                                   intrinsics + 9 * cam_idx[i],
+                                                   poses + 6 * cam_idx[i],
+                                                   pts + 3 * pt_idx[i]);
+      }
+
+      for (int i = 0; i < num_cams; ++i) {
+        libmv_subproblem->problem.SetManifold(
+            intrinsics + 9 * i, new SubsetManifold(9, {1, 2, 5, 6}));
+      }
+
+      Solver::Options options = bal_problem->options();
+      options.linear_solver_type = ITERATIVE_SCHUR;
+      options.linear_solver_ordering =
+          std::make_shared<ParameterBlockOrdering>();
+      for (int i = 0; i < num_pts; ++i) {
+        options.linear_solver_ordering->AddElementToGroup(pts + 3 * i, 0);
+      }
+      for (int i = 0; i < num_cams; ++i) {
+        options.linear_solver_ordering->AddElementToGroup(intrinsics + 9 * i,
+                                                          1);
+        options.linear_solver_ordering->AddElementToGroup(poses + 6 * i, 1);
+      }
+
+      auto preprocessor = Preprocessor::Create(MinimizerType::TRUST_REGION);
+      libmv_subproblem->preprocessed_problem =
+          std::make_unique<PreprocessedProblem>();
+      CHECK(preprocessor->Preprocess(
+          options,
+          libmv_subproblem->problem.mutable_impl(),
+          libmv_subproblem->preprocessed_problem.get()));
+      auto program =
+          libmv_subproblem->preprocessed_problem->reduced_program.get();
+      libmv_subproblem->parameters.resize(program->NumParameters());
+      program->ParameterBlocksToStateVector(
+          libmv_subproblem->parameters.data());
+    }
+    return libmv_subproblem.get();
+  }
+
   std::unique_ptr<BlockSparseMatrix> block_diagonal_ftf;
   std::unique_ptr<ImplicitSchurComplement> implicit_schur_complement;
   std::unique_ptr<ImplicitSchurComplement> implicit_schur_complement_diag;
+  std::unique_ptr<SubProblem> colmap_subproblem;
+  std::unique_ptr<SubProblem> libmv_subproblem;
 };
 
 static void Residuals(benchmark::State& state,
@@ -297,6 +490,200 @@ static void ResidualsAndJacobian(benchmark::State& state,
   for (auto _ : state) {
     CHECK(evaluator->Evaluate(eval_options,
                               data->parameters.data(),
+                              &cost,
+                              residuals.data(),
+                              nullptr,
+                              jacobian.get()));
+  }
+}
+
+static void ResidualsAndJacobianCRS(benchmark::State& state,
+                                    BALData* data,
+                                    ContextImpl* context) {
+  const int num_threads = static_cast<int>(state.range(0));
+
+  Evaluator::Options options;
+  options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+  options.num_threads = num_threads;
+  options.context = context;
+  options.num_eliminate_blocks = 0;
+
+  CHECK(data->preprocessed_problem != nullptr);
+  auto program = data->preprocessed_problem->reduced_program.get();
+  CHECK(program != nullptr);
+  auto evaluator = std::make_unique<
+      ProgramEvaluator<ScratchEvaluatePreparer, CompressedRowJacobianWriter>>(
+      options, program);
+
+  double cost = 0.;
+  Vector residuals = Vector::Zero(program->NumResiduals());
+  auto jacobian = evaluator->CreateJacobian();
+
+  Evaluator::EvaluateOptions eval_options;
+  for (auto _ : state) {
+    CHECK(evaluator->Evaluate(eval_options,
+                              data->parameters.data(),
+                              &cost,
+                              residuals.data(),
+                              nullptr,
+                              jacobian.get()));
+  }
+}
+
+static void ResidualsGradientAndJacobian(benchmark::State& state,
+                                         BALData* data,
+                                         ContextImpl* context) {
+  const int num_threads = static_cast<int>(state.range(0));
+
+  Evaluator::Options options;
+  options.linear_solver_type = ITERATIVE_SCHUR;
+  options.num_threads = num_threads;
+  options.context = context;
+  options.num_eliminate_blocks = data->bal_problem->num_points();
+
+  std::string error;
+  CHECK(data->preprocessed_problem != nullptr);
+  auto program = data->preprocessed_problem->reduced_program.get();
+  CHECK(program != nullptr);
+  auto evaluator = Evaluator::Create(options, program, &error);
+  CHECK(evaluator != nullptr);
+
+  double cost = 0.;
+  Vector residuals = Vector::Zero(program->NumResiduals());
+  Vector gradient = Vector::Zero(program->NumEffectiveParameters());
+  auto jacobian = evaluator->CreateJacobian();
+
+  Evaluator::EvaluateOptions eval_options;
+  for (auto _ : state) {
+    CHECK(evaluator->Evaluate(eval_options,
+                              data->parameters.data(),
+                              &cost,
+                              residuals.data(),
+                              gradient.data(),
+                              jacobian.get()));
+  }
+}
+
+static void ColmapResiduals(benchmark::State& state,
+                            BALData* data,
+                            ContextImpl* context) {
+  const int num_threads = static_cast<int>(state.range(0));
+  auto* sub = data->ColmapProblem();
+
+  Evaluator::Options options;
+  options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+  options.num_threads = num_threads;
+  options.context = context;
+  options.num_eliminate_blocks = 0;
+
+  std::string error;
+  auto program = sub->preprocessed_problem->reduced_program.get();
+  auto evaluator = Evaluator::Create(options, program, &error);
+  CHECK(evaluator != nullptr);
+
+  double cost = 0.;
+  Vector residuals = Vector::Zero(program->NumResiduals());
+
+  Evaluator::EvaluateOptions eval_options;
+  for (auto _ : state) {
+    CHECK(evaluator->Evaluate(eval_options,
+                              sub->parameters.data(),
+                              &cost,
+                              residuals.data(),
+                              nullptr,
+                              nullptr));
+  }
+}
+
+static void ColmapResidualsAndJacobianCRS(benchmark::State& state,
+                                          BALData* data,
+                                          ContextImpl* context) {
+  const int num_threads = static_cast<int>(state.range(0));
+  auto* sub = data->ColmapProblem();
+
+  Evaluator::Options options;
+  options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+  options.num_threads = num_threads;
+  options.context = context;
+  options.num_eliminate_blocks = 0;
+
+  auto program = sub->preprocessed_problem->reduced_program.get();
+  auto evaluator = std::make_unique<
+      ProgramEvaluator<ScratchEvaluatePreparer, CompressedRowJacobianWriter>>(
+      options, program);
+
+  double cost = 0.;
+  Vector residuals = Vector::Zero(program->NumResiduals());
+  auto jacobian = evaluator->CreateJacobian();
+
+  Evaluator::EvaluateOptions eval_options;
+  for (auto _ : state) {
+    CHECK(evaluator->Evaluate(eval_options,
+                              sub->parameters.data(),
+                              &cost,
+                              residuals.data(),
+                              nullptr,
+                              jacobian.get()));
+  }
+}
+
+static void ColmapResidualsGradientAndJacobianBlockSparse(
+    benchmark::State& state, BALData* data, ContextImpl* context) {
+  const int num_threads = static_cast<int>(state.range(0));
+  auto* sub = data->ColmapProblem();
+
+  Evaluator::Options options;
+  options.linear_solver_type = ITERATIVE_SCHUR;
+  options.num_threads = num_threads;
+  options.context = context;
+  options.num_eliminate_blocks = data->bal_problem->num_points();
+
+  std::string error;
+  auto program = sub->preprocessed_problem->reduced_program.get();
+  auto evaluator = Evaluator::Create(options, program, &error);
+  CHECK(evaluator != nullptr);
+
+  double cost = 0.;
+  Vector residuals = Vector::Zero(program->NumResiduals());
+  Vector gradient = Vector::Zero(program->NumEffectiveParameters());
+  auto jacobian = evaluator->CreateJacobian();
+
+  Evaluator::EvaluateOptions eval_options;
+  for (auto _ : state) {
+    CHECK(evaluator->Evaluate(eval_options,
+                              sub->parameters.data(),
+                              &cost,
+                              residuals.data(),
+                              gradient.data(),
+                              jacobian.get()));
+  }
+}
+
+static void LibmvResidualsAndJacobianBlockSparse(benchmark::State& state,
+                                                 BALData* data,
+                                                 ContextImpl* context) {
+  const int num_threads = static_cast<int>(state.range(0));
+  auto* sub = data->LibmvProblem();
+
+  Evaluator::Options options;
+  options.linear_solver_type = ITERATIVE_SCHUR;
+  options.num_threads = num_threads;
+  options.context = context;
+  options.num_eliminate_blocks = data->bal_problem->num_points();
+
+  std::string error;
+  auto program = sub->preprocessed_problem->reduced_program.get();
+  auto evaluator = Evaluator::Create(options, program, &error);
+  CHECK(evaluator != nullptr);
+
+  double cost = 0.;
+  Vector residuals = Vector::Zero(program->NumResiduals());
+  auto jacobian = evaluator->CreateJacobian();
+
+  Evaluator::EvaluateOptions eval_options;
+  for (auto _ : state) {
+    CHECK(evaluator->Evaluate(eval_options,
+                              sub->parameters.data(),
                               &cost,
                               residuals.data(),
                               nullptr,
@@ -824,6 +1211,81 @@ int main(int argc, char** argv) {
                                    ceres::internal::ResidualsAndJacobian,
                                    data,
                                    &context)
+        ->Arg(1)
+        ->Arg(2)
+        ->Arg(4)
+        ->Arg(8)
+        ->Arg(16);
+
+    const std::string name_jacobians_crs =
+        "ResidualsAndJacobianCRS<" + path + ">";
+    ::benchmark::RegisterBenchmark(name_jacobians_crs.c_str(),
+                                   ceres::internal::ResidualsAndJacobianCRS,
+                                   data,
+                                   &context)
+        ->Arg(1)
+        ->Arg(2)
+        ->Arg(4)
+        ->Arg(8)
+        ->Arg(16);
+
+    const std::string name_grad_jac =
+        "ResidualsGradientAndJacobian<" + path + ">";
+    ::benchmark::RegisterBenchmark(
+        name_grad_jac.c_str(),
+        ceres::internal::ResidualsGradientAndJacobian,
+        data,
+        &context)
+        ->Arg(1)
+        ->Arg(2)
+        ->Arg(4)
+        ->Arg(8)
+        ->Arg(16);
+
+    const std::string name_colmap_res = "ColmapResiduals<" + path + ">";
+    ::benchmark::RegisterBenchmark(name_colmap_res.c_str(),
+                                   ceres::internal::ColmapResiduals,
+                                   data,
+                                   &context)
+        ->Arg(1)
+        ->Arg(2)
+        ->Arg(4)
+        ->Arg(8)
+        ->Arg(16);
+
+    const std::string name_colmap_crs =
+        "ColmapResidualsAndJacobianCRS<" + path + ">";
+    ::benchmark::RegisterBenchmark(
+        name_colmap_crs.c_str(),
+        ceres::internal::ColmapResidualsAndJacobianCRS,
+        data,
+        &context)
+        ->Arg(1)
+        ->Arg(2)
+        ->Arg(4)
+        ->Arg(8)
+        ->Arg(16);
+
+    const std::string name_colmap_grad_bs =
+        "ColmapResidualsGradientAndJacobianBlockSparse<" + path + ">";
+    ::benchmark::RegisterBenchmark(
+        name_colmap_grad_bs.c_str(),
+        ceres::internal::ColmapResidualsGradientAndJacobianBlockSparse,
+        data,
+        &context)
+        ->Arg(1)
+        ->Arg(2)
+        ->Arg(4)
+        ->Arg(8)
+        ->Arg(16);
+
+    const std::string name_libmv_bs =
+        "LibmvResidualsAndJacobianBlockSparse<" + path + ">";
+    ::benchmark::RegisterBenchmark(
+        name_libmv_bs.c_str(),
+        ceres::internal::LibmvResidualsAndJacobianBlockSparse,
+        data,
+        &context)
         ->Arg(1)
         ->Arg(2)
         ->Arg(4)
