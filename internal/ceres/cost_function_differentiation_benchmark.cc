@@ -328,6 +328,49 @@ BENCHMARK_TEMPLATE(BM_CostFunction,
                    kAutoDiff,
                    kResidualsAndJacobians);
 
+#define REGISTER_REAL_WORLD_BM(Functor)              \
+  REGISTER_AUTODIFF_BENCHMARKS(Functor);             \
+  BENCHMARK_TEMPLATE(BM_CostFunction,                \
+                     Functor,                        \
+                     kNumericCentral,                \
+                     kResidualsAndJacobians);        \
+  BENCHMARK_TEMPLATE(BM_CostFunction,                \
+                     Functor,                        \
+                     kDynamicNumericCentral,         \
+                     kResidualsAndJacobians)
+
+#define REGISTER_REAL_WORLD_POINT_JAC_BM(Functor)         \
+  BENCHMARK_TEMPLATE(BM_CostFunction,                     \
+                     Functor,                             \
+                     kAutoDiff,                           \
+                     kResidualsAndPointJacobian);         \
+  BENCHMARK_TEMPLATE(BM_CostFunction,                     \
+                     Functor,                             \
+                     kDynamicAutoDiff,                    \
+                     kResidualsAndPointJacobian);         \
+  BENCHMARK_TEMPLATE(BM_CostFunction,                     \
+                     Functor,                             \
+                     kNumericCentral,                     \
+                     kResidualsAndPointJacobian)
+
+REGISTER_REAL_WORLD_BM(ColmapOpenCVReprojectionError);
+REGISTER_REAL_WORLD_POINT_JAC_BM(ColmapOpenCVReprojectionError);
+REGISTER_REAL_WORLD_BM(ColmapFullOpenCVReprojectionError);
+REGISTER_REAL_WORLD_POINT_JAC_BM(ColmapFullOpenCVReprojectionError);
+REGISTER_REAL_WORLD_BM(ColmapRigReprojectionError);
+REGISTER_REAL_WORLD_POINT_JAC_BM(ColmapRigReprojectionError);
+REGISTER_REAL_WORLD_BM(ColmapSampsonError);
+REGISTER_REAL_WORLD_BM(ColmapFisheyeReprojectionError);
+REGISTER_REAL_WORLD_POINT_JAC_BM(ColmapFisheyeReprojectionError);
+REGISTER_REAL_WORLD_BM(ColmapSphericalReprojectionError);
+REGISTER_REAL_WORLD_POINT_JAC_BM(ColmapSphericalReprojectionError);
+REGISTER_REAL_WORLD_BM(LibmvBrownReprojectionError);
+REGISTER_REAL_WORLD_POINT_JAC_BM(LibmvBrownReprojectionError);
+REGISTER_REAL_WORLD_BM(LibmvNukeInvertReprojectionError);
+REGISTER_REAL_WORLD_POINT_JAC_BM(LibmvNukeInvertReprojectionError);
+REGISTER_REAL_WORLD_BM(PoseGraph3dError);
+
+#undef REGISTER_REAL_WORLD_POINT_JAC_BM
 #undef REGISTER_REAL_WORLD_BM
 #undef REGISTER_AUTODIFF_BENCHMARKS
 
