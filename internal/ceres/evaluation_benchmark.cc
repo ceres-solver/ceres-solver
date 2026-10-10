@@ -36,20 +36,27 @@
 #include "absl/log/check.h"
 #include "absl/log/log.h"
 #include "benchmark/benchmark.h"
+#include "ceres/autodiff_benchmarks/real_world_cost_functions.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/bundle_adjustment_test_util.h"
+#include "ceres/compressed_row_jacobian_writer.h"
 #include "ceres/cuda_block_sparse_crs_view.h"
 #include "ceres/cuda_partitioned_block_sparse_crs_view.h"
 #include "ceres/cuda_sparse_matrix.h"
 #include "ceres/cuda_vector.h"
 #include "ceres/evaluator.h"
 #include "ceres/implicit_schur_complement.h"
+#include "ceres/loss_function.h"
+#include "ceres/manifold.h"
 #include "ceres/partitioned_matrix_view.h"
 #include "ceres/power_series_expansion_preconditioner.h"
 #include "ceres/preprocessor.h"
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"
+#include "ceres/product_manifold.h"
 #include "ceres/program.h"
+#include "ceres/program_evaluator.h"
+#include "ceres/scratch_evaluate_preparer.h"
 #include "ceres/sparse_matrix.h"
 
 namespace ceres::internal {
@@ -234,73 +241,334 @@ struct BALData {
   std::unique_ptr<BlockSparseMatrix> block_sparse_jacobian;
   std::unique_ptr<CompressedRowSparseMatrix> crs_jacobian;
   std::unique_ptr<BlockSparseMatrix> block_diagonal_ete;
+  // Holds a self-contained bundle adjustment Problem, its preprocessed
+  // reduced_program, and its initial state vector for ProgramEvaluator
+  // benchmarks.
+  struct EvaluatorTestProblem {
+    EvaluatorTestProblem() : problem(MakeProblemOptions()) {}
+
+    static Problem::Options MakeProblemOptions() {
+      Problem::Options options;
+      options.loss_function_ownership = DO_NOT_TAKE_OWNERSHIP;
+      return options;
+    }
+
+    Problem problem;
+    HuberLoss huber_loss{1.0};
+    std::unique_ptr<PreprocessedProblem> preprocessed_problem;
+    Vector parameters;
+    std::vector<double> parameter_storage;
+  };
+
+  // Builds a 3-block bundle adjustment problem from the BAL dataset using
+  // COLMAP's OpenCVCameraModel reprojection functor
+  // (`ColmapOpenCVReprojectionError`, <2, 3, 7, 8>):
+  //   - Block 0: 3D world point [X, Y, Z] (size 3, Euclidean)
+  //   - Block 1: Camera-from-world pose [qx, qy, qz, qw, tx, ty, tz] (size 7,
+  //     tangent size 6 via ProductManifold<EigenQuaternionManifold,
+  //     EuclideanManifold<3>>)
+  //   - Block 2: Camera intrinsics [fx, fy, cx, cy, k1, k2, p1, p2] (size 8,
+  //     Euclidean)
+  // Each residual block also uses a HuberLoss(1.0) to exercise LossFunction
+  // residual/Jacobian rescaling and ambient-to-tangent Manifold::PlusJacobian
+  // multiplication inside ResidualBlock::Evaluate and ProgramEvaluator.
+  EvaluatorTestProblem* ColmapOpenCVProblem() {
+    if (!colmap_problem) {
+      colmap_problem = std::make_unique<EvaluatorTestProblem>();
+      const int num_cams = bal_problem->num_cameras();
+      const int num_pts = bal_problem->num_points();
+      const int num_obs = bal_problem->num_observations();
+      const double* orig_cams = bal_problem->mutable_cameras();
+      const double* orig_pts = bal_problem->mutable_points();
+      const int* cam_idx = bal_problem->camera_index();
+      const int* pt_idx = bal_problem->point_index();
+      const double* obs = bal_problem->observations();
+
+      colmap_problem->parameter_storage.resize(3 * num_pts + 15 * num_cams,
+                                               0.0);
+      double* pts = colmap_problem->parameter_storage.data();
+      double* poses = pts + 3 * num_pts;
+      double* intrinsics = poses + 7 * num_cams;
+
+      std::copy_n(orig_pts, 3 * num_pts, pts);
+      for (int i = 0; i < num_cams; ++i) {
+        const double* c = orig_cams + 9 * i;
+        double q_wxyz[4];
+        AngleAxisToQuaternion(c, q_wxyz);
+        // Convert Ceres [w, x, y, z] quaternion to Eigen [qx, qy, qz, qw].
+        poses[7 * i + 0] = q_wxyz[1];
+        poses[7 * i + 1] = q_wxyz[2];
+        poses[7 * i + 2] = q_wxyz[3];
+        poses[7 * i + 3] = q_wxyz[0];
+        poses[7 * i + 4] = c[3];
+        poses[7 * i + 5] = c[4];
+        poses[7 * i + 6] = c[5];
+
+        // BAL cameras look down -Z with focal length c[6] and radial
+        // distortion (c[7], c[8]); negate focal length so projection matches
+        // COLMAP's +Z camera convention.
+        intrinsics[8 * i + 0] = -c[6];
+        intrinsics[8 * i + 1] = -c[6];
+        intrinsics[8 * i + 2] = 0.0;
+        intrinsics[8 * i + 3] = 0.0;
+        intrinsics[8 * i + 4] = c[7];
+        intrinsics[8 * i + 5] = c[8];
+        intrinsics[8 * i + 6] = 1e-4;
+        intrinsics[8 * i + 7] = 1e-4;
+      }
+
+      for (int i = 0; i < num_obs; ++i) {
+        CostFunction* cost_function =
+            new AutoDiffCostFunction<ColmapOpenCVReprojectionError, 2, 3, 7, 8>(
+                new ColmapOpenCVReprojectionError(obs[2 * i + 0],
+                                                  obs[2 * i + 1]));
+        colmap_problem->problem.AddResidualBlock(cost_function,
+                                                 &colmap_problem->huber_loss,
+                                                 pts + 3 * pt_idx[i],
+                                                 poses + 7 * cam_idx[i],
+                                                 intrinsics + 8 * cam_idx[i]);
+      }
+
+      for (int i = 0; i < num_cams; ++i) {
+        colmap_problem->problem.SetManifold(
+            poses + 7 * i,
+            new ProductManifold<EigenQuaternionManifold,
+                                EuclideanManifold<3>>());
+      }
+
+      Solver::Options options = bal_problem->options();
+      options.linear_solver_type = ITERATIVE_SCHUR;
+      options.linear_solver_ordering =
+          std::make_shared<ParameterBlockOrdering>();
+      for (int i = 0; i < num_pts; ++i) {
+        options.linear_solver_ordering->AddElementToGroup(pts + 3 * i, 0);
+      }
+      for (int i = 0; i < num_cams; ++i) {
+        options.linear_solver_ordering->AddElementToGroup(poses + 7 * i, 1);
+        options.linear_solver_ordering->AddElementToGroup(intrinsics + 8 * i,
+                                                          1);
+      }
+
+      auto preprocessor = Preprocessor::Create(MinimizerType::TRUST_REGION);
+      colmap_problem->preprocessed_problem =
+          std::make_unique<PreprocessedProblem>();
+      CHECK(
+          preprocessor->Preprocess(options,
+                                   colmap_problem->problem.mutable_impl(),
+                                   colmap_problem->preprocessed_problem.get()));
+      auto* program =
+          colmap_problem->preprocessed_problem->reduced_program.get();
+      colmap_problem->parameters.resize(program->NumParameters());
+      program->ParameterBlocksToStateVector(colmap_problem->parameters.data());
+    }
+    return colmap_problem.get();
+  }
+
+  // Builds a 3-block bundle adjustment problem from the BAL dataset using
+  // Blender libmv's Brown-Conrady camera model (`LibmvBrownReprojectionError`,
+  // <2, 9, 6, 3>):
+  //   - Block 0: Camera intrinsics [f, px, py, k1, k2, k3, k4, p1, p2] (size 9,
+  //     tangent size 5 via SubsetManifold(9, {1, 2, 5, 6}) holding principal
+  //     point (px, py) and higher-order radial terms (k3, k4) constant)
+  //   - Block 1: Camera extrinsics [rx, ry, rz, tx, ty, tz] (size 6, Euclidean)
+  //   - Block 2: 3D world point [X, Y, Z] (size 3, Euclidean)
+  // This exercises SubsetManifold Jacobian column projection and 3-block
+  // angle-axis rotation evaluation across the whole problem.
+  EvaluatorTestProblem* LibmvBrownProblem() {
+    if (!libmv_problem) {
+      libmv_problem = std::make_unique<EvaluatorTestProblem>();
+      const int num_cams = bal_problem->num_cameras();
+      const int num_pts = bal_problem->num_points();
+      const int num_obs = bal_problem->num_observations();
+      const double* orig_cams = bal_problem->mutable_cameras();
+      const double* orig_pts = bal_problem->mutable_points();
+      const int* cam_idx = bal_problem->camera_index();
+      const int* pt_idx = bal_problem->point_index();
+      const double* obs = bal_problem->observations();
+
+      libmv_problem->parameter_storage.resize(3 * num_pts + 15 * num_cams, 0.0);
+      double* pts = libmv_problem->parameter_storage.data();
+      double* poses = pts + 3 * num_pts;
+      double* intrinsics = poses + 6 * num_cams;
+
+      std::copy_n(orig_pts, 3 * num_pts, pts);
+      for (int i = 0; i < num_cams; ++i) {
+        const double* c = orig_cams + 9 * i;
+        std::copy_n(c, 6, poses + 6 * i);
+        intrinsics[9 * i + 0] = -c[6];
+        intrinsics[9 * i + 1] = 0.0;
+        intrinsics[9 * i + 2] = 0.0;
+        intrinsics[9 * i + 3] = c[7];
+        intrinsics[9 * i + 4] = c[8];
+        intrinsics[9 * i + 5] = 0.0;
+        intrinsics[9 * i + 6] = 0.0;
+        intrinsics[9 * i + 7] = 1e-4;
+        intrinsics[9 * i + 8] = 1e-4;
+      }
+
+      for (int i = 0; i < num_obs; ++i) {
+        CostFunction* cost_function =
+            new AutoDiffCostFunction<LibmvBrownReprojectionError, 2, 9, 6, 3>(
+                new LibmvBrownReprojectionError(obs[2 * i + 0],
+                                                obs[2 * i + 1]));
+        libmv_problem->problem.AddResidualBlock(cost_function,
+                                                nullptr,
+                                                intrinsics + 9 * cam_idx[i],
+                                                poses + 6 * cam_idx[i],
+                                                pts + 3 * pt_idx[i]);
+      }
+
+      for (int i = 0; i < num_cams; ++i) {
+        libmv_problem->problem.SetManifold(intrinsics + 9 * i,
+                                           new SubsetManifold(9, {1, 2, 5, 6}));
+      }
+
+      Solver::Options options = bal_problem->options();
+      options.linear_solver_type = ITERATIVE_SCHUR;
+      options.linear_solver_ordering =
+          std::make_shared<ParameterBlockOrdering>();
+      for (int i = 0; i < num_pts; ++i) {
+        options.linear_solver_ordering->AddElementToGroup(pts + 3 * i, 0);
+      }
+      for (int i = 0; i < num_cams; ++i) {
+        options.linear_solver_ordering->AddElementToGroup(intrinsics + 9 * i,
+                                                          1);
+        options.linear_solver_ordering->AddElementToGroup(poses + 6 * i, 1);
+      }
+
+      auto preprocessor = Preprocessor::Create(MinimizerType::TRUST_REGION);
+      libmv_problem->preprocessed_problem =
+          std::make_unique<PreprocessedProblem>();
+      CHECK(
+          preprocessor->Preprocess(options,
+                                   libmv_problem->problem.mutable_impl(),
+                                   libmv_problem->preprocessed_problem.get()));
+      auto* program =
+          libmv_problem->preprocessed_problem->reduced_program.get();
+      libmv_problem->parameters.resize(program->NumParameters());
+      program->ParameterBlocksToStateVector(libmv_problem->parameters.data());
+    }
+    return libmv_problem.get();
+  }
+
   std::unique_ptr<BlockSparseMatrix> block_diagonal_ftf;
   std::unique_ptr<ImplicitSchurComplement> implicit_schur_complement;
   std::unique_ptr<ImplicitSchurComplement> implicit_schur_complement_diag;
+  std::unique_ptr<EvaluatorTestProblem> colmap_problem;
+  std::unique_ptr<EvaluatorTestProblem> libmv_problem;
 };
 
-static void Residuals(benchmark::State& state,
-                      BALData* data,
-                      ContextImpl* context) {
+// Problem formulation used by `EvaluateProgram`:
+//   - kBundler:      2-block Snavely BundlerResidual (<2, 9, 3>), Euclidean
+//                    parameters, no LossFunction.
+//   - kColmapOpenCV: 3-block ColmapOpenCVReprojectionError (<2, 3, 7, 8>),
+//                    EigenQuaternionManifold x EuclideanManifold<3> on pose,
+//                    HuberLoss(1.0) on every residual block.
+//   - kLibmvBrown:   3-block LibmvBrownReprojectionError (<2, 9, 6, 3>),
+//                    SubsetManifold(9, {1, 2, 5, 6}) on intrinsics.
+enum class ProblemVariant {
+  kBundler,
+  kColmapOpenCV,
+  kLibmvBrown,
+};
+
+// Outputs requested from `Evaluator::Evaluate`:
+//   - kResidualsOnly:                cost + residuals
+//   - kResidualsAndJacobian:         cost + residuals + Jacobian
+//   - kResidualsGradientAndJacobian: cost + residuals + gradient + Jacobian
+enum class EvaluationOutputs {
+  kResidualsOnly,
+  kResidualsAndJacobian,
+  kResidualsGradientAndJacobian,
+};
+
+// Sparse matrix representation written by `ProgramEvaluator`:
+//   - kNone:          no Jacobian (residuals only)
+//   - kBlockSparse:   BlockEvaluatePreparer + BlockJacobianWriter
+//                     (used by Schur and SparseNormalCholesky solvers)
+//   - kCompressedRow: ScratchEvaluatePreparer + CompressedRowJacobianWriter
+//                     (used by Problem::Evaluate and CUDA CGNR)
+enum class JacobianFormat {
+  kNone,
+  kBlockSparse,
+  kCompressedRow,
+};
+
+// Benchmarks whole-problem `Evaluator::Evaluate` across problem formulations,
+// output combinations, sparse Jacobian storage formats, and thread counts.
+template <ProblemVariant kVariant,
+          EvaluationOutputs kOutputs,
+          JacobianFormat kJacobianFormat>
+static void EvaluateProgram(benchmark::State& state,
+                            BALData* data,
+                            ContextImpl* context) {
   const int num_threads = static_cast<int>(state.range(0));
 
-  Evaluator::Options options;
-  options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
-  options.num_threads = num_threads;
-  options.context = context;
-  options.num_eliminate_blocks = 0;
-
-  std::string error;
-  CHECK(data->preprocessed_problem != nullptr);
-  auto program = data->preprocessed_problem->reduced_program.get();
-  CHECK(program != nullptr);
-  auto evaluator = Evaluator::Create(options, program, &error);
-  CHECK(evaluator != nullptr);
-
-  double cost = 0.;
-  Vector residuals = Vector::Zero(program->NumResiduals());
-
-  Evaluator::EvaluateOptions eval_options;
-  for (auto _ : state) {
-    CHECK(evaluator->Evaluate(eval_options,
-                              data->parameters.data(),
-                              &cost,
-                              residuals.data(),
-                              nullptr,
-                              nullptr));
+  Program* program = nullptr;
+  const double* parameters = nullptr;
+  if constexpr (kVariant == ProblemVariant::kBundler) {
+    CHECK(data->preprocessed_problem != nullptr);
+    program = data->preprocessed_problem->reduced_program.get();
+    parameters = data->parameters.data();
+  } else if constexpr (kVariant == ProblemVariant::kColmapOpenCV) {
+    auto* sub = data->ColmapOpenCVProblem();
+    program = sub->preprocessed_problem->reduced_program.get();
+    parameters = sub->parameters.data();
+  } else if constexpr (kVariant == ProblemVariant::kLibmvBrown) {
+    auto* sub = data->LibmvBrownProblem();
+    program = sub->preprocessed_problem->reduced_program.get();
+    parameters = sub->parameters.data();
   }
-}
-
-static void ResidualsAndJacobian(benchmark::State& state,
-                                 BALData* data,
-                                 ContextImpl* context) {
-  const int num_threads = static_cast<int>(state.range(0));
+  CHECK(program != nullptr);
 
   Evaluator::Options options;
-  options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
   options.num_threads = num_threads;
   options.context = context;
-  options.num_eliminate_blocks = 0;
+  if constexpr (kJacobianFormat == JacobianFormat::kBlockSparse &&
+                (kOutputs == EvaluationOutputs::kResidualsGradientAndJacobian ||
+                 kVariant != ProblemVariant::kBundler)) {
+    options.linear_solver_type = ITERATIVE_SCHUR;
+    options.num_eliminate_blocks = data->bal_problem->num_points();
+  } else {
+    options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+    options.num_eliminate_blocks = 0;
+  }
 
-  std::string error;
-  CHECK(data->preprocessed_problem != nullptr);
-  auto program = data->preprocessed_problem->reduced_program.get();
-  CHECK(program != nullptr);
-  auto evaluator = Evaluator::Create(options, program, &error);
-  CHECK(evaluator != nullptr);
+  std::unique_ptr<Evaluator> evaluator;
+  if constexpr (kJacobianFormat == JacobianFormat::kCompressedRow) {
+    evaluator = std::make_unique<
+        ProgramEvaluator<ScratchEvaluatePreparer, CompressedRowJacobianWriter>>(
+        options, program);
+  } else {
+    std::string error;
+    evaluator = Evaluator::Create(options, program, &error);
+    CHECK(evaluator != nullptr) << error;
+  }
 
   double cost = 0.;
   Vector residuals = Vector::Zero(program->NumResiduals());
-  auto jacobian = evaluator->CreateJacobian();
+  Vector gradient;
+  double* gradient_ptr = nullptr;
+  if constexpr (kOutputs == EvaluationOutputs::kResidualsGradientAndJacobian) {
+    gradient = Vector::Zero(program->NumEffectiveParameters());
+    gradient_ptr = gradient.data();
+  }
+
+  std::unique_ptr<SparseMatrix> jacobian;
+  SparseMatrix* jacobian_ptr = nullptr;
+  if constexpr (kOutputs != EvaluationOutputs::kResidualsOnly) {
+    jacobian = evaluator->CreateJacobian();
+    jacobian_ptr = jacobian.get();
+  }
 
   Evaluator::EvaluateOptions eval_options;
   for (auto _ : state) {
     CHECK(evaluator->Evaluate(eval_options,
-                              data->parameters.data(),
+                              parameters,
                               &cost,
                               residuals.data(),
-                              nullptr,
-                              jacobian.get()));
+                              gradient_ptr,
+                              jacobian_ptr));
   }
 }
 
@@ -805,286 +1073,139 @@ int main(int argc, char** argv) {
   context.InitCuda(&message);
 #endif
 
+  using ceres::internal::EvaluationOutputs;
+  using ceres::internal::JacobianFormat;
+  using ceres::internal::ProblemVariant;
+
   for (int i = 1; i < argc; ++i) {
     const std::string path(argv[i]);
-    const std::string name_residuals = "Residuals<" + path + ">";
     benchmark_data.emplace_back(
         std::make_unique<ceres::internal::BALData>(path));
-    auto data = benchmark_data.back().get();
-    ::benchmark::RegisterBenchmark(
-        name_residuals.c_str(), ceres::internal::Residuals, data, &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
+    auto* data = benchmark_data.back().get();
 
-    const std::string name_jacobians = "ResidualsAndJacobian<" + path + ">";
-    ::benchmark::RegisterBenchmark(name_jacobians.c_str(),
-                                   ceres::internal::ResidualsAndJacobian,
-                                   data,
-                                   &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
+    auto register_threaded = [&](const std::string& prefix, auto fn) {
+      const std::string name = prefix + "<" + path + ">";
+      ::benchmark::RegisterBenchmark(name.c_str(), fn, data, &context)
+          ->Arg(1)
+          ->Arg(2)
+          ->Arg(4)
+          ->Arg(8)
+          ->Arg(16);
+    };
+    auto register_unthreaded = [&](const std::string& prefix, auto fn) {
+      const std::string name = prefix + "<" + path + ">";
+      return ::benchmark::RegisterBenchmark(name.c_str(), fn, data, &context);
+    };
 
-    const std::string name_plus = "Plus<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_plus.c_str(), ceres::internal::Plus, data, &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
+    // 1. Whole-problem ProgramEvaluator::Evaluate benchmarks across problem
+    //    formulations (Bundler, COLMAP OpenCV with EigenQuaternionManifold and
+    //    HuberLoss, and libmv Brown-Conrady with SubsetManifold), outputs, and
+    //    sparse Jacobian formats (BlockSparseMatrix vs
+    //    CompressedRowSparseMatrix).
+    register_threaded(
+        "Residuals",
+        ceres::internal::EvaluateProgram<ProblemVariant::kBundler,
+                                         EvaluationOutputs::kResidualsOnly,
+                                         JacobianFormat::kNone>);
+    register_threaded("ResidualsAndJacobian",
+                      ceres::internal::EvaluateProgram<
+                          ProblemVariant::kBundler,
+                          EvaluationOutputs::kResidualsAndJacobian,
+                          JacobianFormat::kBlockSparse>);
+    register_threaded("ResidualsAndJacobianCRS",
+                      ceres::internal::EvaluateProgram<
+                          ProblemVariant::kBundler,
+                          EvaluationOutputs::kResidualsAndJacobian,
+                          JacobianFormat::kCompressedRow>);
+    register_threaded("ResidualsGradientAndJacobian",
+                      ceres::internal::EvaluateProgram<
+                          ProblemVariant::kBundler,
+                          EvaluationOutputs::kResidualsGradientAndJacobian,
+                          JacobianFormat::kBlockSparse>);
+    register_threaded(
+        "ColmapResiduals",
+        ceres::internal::EvaluateProgram<ProblemVariant::kColmapOpenCV,
+                                         EvaluationOutputs::kResidualsOnly,
+                                         JacobianFormat::kNone>);
+    register_threaded("ColmapResidualsAndJacobianCRS",
+                      ceres::internal::EvaluateProgram<
+                          ProblemVariant::kColmapOpenCV,
+                          EvaluationOutputs::kResidualsAndJacobian,
+                          JacobianFormat::kCompressedRow>);
+    register_threaded("ColmapResidualsGradientAndJacobianBlockSparse",
+                      ceres::internal::EvaluateProgram<
+                          ProblemVariant::kColmapOpenCV,
+                          EvaluationOutputs::kResidualsGradientAndJacobian,
+                          JacobianFormat::kBlockSparse>);
+    register_threaded("LibmvResidualsAndJacobianBlockSparse",
+                      ceres::internal::EvaluateProgram<
+                          ProblemVariant::kLibmvBrown,
+                          EvaluationOutputs::kResidualsAndJacobian,
+                          JacobianFormat::kBlockSparse>);
+    register_threaded("Plus", ceres::internal::Plus);
 
-    const std::string name_right_product =
-        "JacobianRightMultiplyAndAccumulate<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_right_product.c_str(),
-        ceres::internal::JacobianRightMultiplyAndAccumulate,
-        data,
-        &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
-
-    const std::string name_right_product_partitioned_f =
-        "PMVRightMultiplyAndAccumulateF<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_right_product_partitioned_f.c_str(),
-        ceres::internal::PMVRightMultiplyAndAccumulateF,
-        data,
-        &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
-
+    // 2. Sparse matrix-vector product, PartitionedMatrixView, and Schur
+    //    complement preconditioner benchmarks on the BAL Jacobian.
+    register_threaded("JacobianRightMultiplyAndAccumulate",
+                      ceres::internal::JacobianRightMultiplyAndAccumulate);
+    register_threaded("PMVRightMultiplyAndAccumulateF",
+                      ceres::internal::PMVRightMultiplyAndAccumulateF);
 #ifndef CERES_NO_CUDA
-    const std::string name_right_product_partitioned_f_cuda =
-        "PMVRightMultiplyAndAccumulateFCuda<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_right_product_partitioned_f_cuda.c_str(),
-        ceres::internal::PMVRightMultiplyAndAccumulateFCuda,
-        data,
-        &context);
+    register_unthreaded("PMVRightMultiplyAndAccumulateFCuda",
+                        ceres::internal::PMVRightMultiplyAndAccumulateFCuda);
 #endif
-
-    const std::string name_right_product_partitioned_e =
-        "PMVRightMultiplyAndAccumulateE<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_right_product_partitioned_e.c_str(),
-        ceres::internal::PMVRightMultiplyAndAccumulateE,
-        data,
-        &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
-
+    register_threaded("PMVRightMultiplyAndAccumulateE",
+                      ceres::internal::PMVRightMultiplyAndAccumulateE);
 #ifndef CERES_NO_CUDA
-    const std::string name_right_product_partitioned_e_cuda =
-        "PMVRightMultiplyAndAccumulateECuda<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_right_product_partitioned_e_cuda.c_str(),
-        ceres::internal::PMVRightMultiplyAndAccumulateECuda,
-        data,
-        &context);
+    register_unthreaded("PMVRightMultiplyAndAccumulateECuda",
+                        ceres::internal::PMVRightMultiplyAndAccumulateECuda);
 #endif
-
-    const std::string name_update_block_diagonal_ftf =
-        "PMVUpdateBlockDiagonalFtF<" + path + ">";
-    ::benchmark::RegisterBenchmark(name_update_block_diagonal_ftf.c_str(),
-                                   ceres::internal::PMVUpdateBlockDiagonalFtF,
-                                   data,
-                                   &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
-
-    const std::string name_pse =
-        "PSEPreconditionerRightMultiplyAndAccumulate<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_pse.c_str(), ceres::internal::PSEPreconditioner, data, &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
-
-    const std::string name_isc_no_diag =
-        "ISCRightMultiplyAndAccumulate<" + path + ">";
-    ::benchmark::RegisterBenchmark(name_isc_no_diag.c_str(),
-                                   ceres::internal::ISCRightMultiplyNoDiag,
-                                   data,
-                                   &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
-
-    const std::string name_update_block_diagonal_ete =
-        "PMVUpdateBlockDiagonalEtE<" + path + ">";
-    ::benchmark::RegisterBenchmark(name_update_block_diagonal_ete.c_str(),
-                                   ceres::internal::PMVUpdateBlockDiagonalEtE,
-                                   data,
-                                   &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
-    const std::string name_isc_diag =
-        "ISCRightMultiplyAndAccumulateDiag<" + path + ">";
-    ::benchmark::RegisterBenchmark(name_isc_diag.c_str(),
-                                   ceres::internal::ISCRightMultiplyDiag,
-                                   data,
-                                   &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
-
+    register_threaded("PMVUpdateBlockDiagonalFtF",
+                      ceres::internal::PMVUpdateBlockDiagonalFtF);
+    register_threaded("PSEPreconditionerRightMultiplyAndAccumulate",
+                      ceres::internal::PSEPreconditioner);
+    register_threaded("ISCRightMultiplyAndAccumulate",
+                      ceres::internal::ISCRightMultiplyNoDiag);
+    register_threaded("PMVUpdateBlockDiagonalEtE",
+                      ceres::internal::PMVUpdateBlockDiagonalEtE);
+    register_threaded("ISCRightMultiplyAndAccumulateDiag",
+                      ceres::internal::ISCRightMultiplyDiag);
 #ifndef CERES_NO_CUDA
-    const std::string name_right_product_cuda =
-        "JacobianRightMultiplyAndAccumulateCuda<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_right_product_cuda.c_str(),
-        ceres::internal::JacobianRightMultiplyAndAccumulateCuda,
-        data,
-        &context)
+    register_unthreaded("JacobianRightMultiplyAndAccumulateCuda",
+                        ceres::internal::JacobianRightMultiplyAndAccumulateCuda)
         ->Arg(1);
 #endif
-
-    const std::string name_left_product =
-        "JacobianLeftMultiplyAndAccumulate<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_left_product.c_str(),
-        ceres::internal::JacobianLeftMultiplyAndAccumulate,
-        data,
-        &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
-
-    const std::string name_left_product_partitioned_f =
-        "PMVLeftMultiplyAndAccumulateF<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_left_product_partitioned_f.c_str(),
-        ceres::internal::PMVLeftMultiplyAndAccumulateF,
-        data,
-        &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
-
+    register_threaded("JacobianLeftMultiplyAndAccumulate",
+                      ceres::internal::JacobianLeftMultiplyAndAccumulate);
+    register_threaded("PMVLeftMultiplyAndAccumulateF",
+                      ceres::internal::PMVLeftMultiplyAndAccumulateF);
 #ifndef CERES_NO_CUDA
-    const std::string name_left_product_partitioned_f_cuda =
-        "PMVLeftMultiplyAndAccumulateFCuda<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_left_product_partitioned_f_cuda.c_str(),
-        ceres::internal::PMVLeftMultiplyAndAccumulateFCuda,
-        data,
-        &context);
+    register_unthreaded("PMVLeftMultiplyAndAccumulateFCuda",
+                        ceres::internal::PMVLeftMultiplyAndAccumulateFCuda);
 #endif
-
-    const std::string name_left_product_partitioned_e =
-        "PMVLeftMultiplyAndAccumulateE<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_left_product_partitioned_e.c_str(),
-        ceres::internal::PMVLeftMultiplyAndAccumulateE,
-        data,
-        &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
-
+    register_threaded("PMVLeftMultiplyAndAccumulateE",
+                      ceres::internal::PMVLeftMultiplyAndAccumulateE);
 #ifndef CERES_NO_CUDA
-    const std::string name_left_product_partitioned_e_cuda =
-        "PMVLeftMultiplyAndAccumulateECuda<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_left_product_partitioned_e_cuda.c_str(),
-        ceres::internal::PMVLeftMultiplyAndAccumulateECuda,
-        data,
-        &context);
-#endif
-
-#ifndef CERES_NO_CUDA
-    const std::string name_left_product_cuda =
-        "JacobianLeftMultiplyAndAccumulateCuda<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_left_product_cuda.c_str(),
-        ceres::internal::JacobianLeftMultiplyAndAccumulateCuda,
-        data,
-        &context)
+    register_unthreaded("PMVLeftMultiplyAndAccumulateECuda",
+                        ceres::internal::PMVLeftMultiplyAndAccumulateECuda);
+    register_unthreaded("JacobianLeftMultiplyAndAccumulateCuda",
+                        ceres::internal::JacobianLeftMultiplyAndAccumulateCuda)
         ->Arg(1);
 #endif
-
-    const std::string name_squared_column_norm =
-        "JacobianSquaredColumnNorm<" + path + ">";
-    ::benchmark::RegisterBenchmark(name_squared_column_norm.c_str(),
-                                   ceres::internal::JacobianSquaredColumnNorm,
-                                   data,
-                                   &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
-
-    const std::string name_scale_columns = "JacobianScaleColumns<" + path + ">";
-    ::benchmark::RegisterBenchmark(name_scale_columns.c_str(),
-                                   ceres::internal::JacobianScaleColumns,
-                                   data,
-                                   &context)
-        ->Arg(1)
-        ->Arg(2)
-        ->Arg(4)
-        ->Arg(8)
-        ->Arg(16);
-
-    const std::string name_to_crs = "JacobianToCRS<" + path + ">";
-    ::benchmark::RegisterBenchmark(
-        name_to_crs.c_str(), ceres::internal::JacobianToCRS, data, &context);
+    register_threaded("JacobianSquaredColumnNorm",
+                      ceres::internal::JacobianSquaredColumnNorm);
+    register_threaded("JacobianScaleColumns",
+                      ceres::internal::JacobianScaleColumns);
+    register_unthreaded("JacobianToCRS", ceres::internal::JacobianToCRS);
 #ifndef CERES_NO_CUDA
-    const std::string name_to_crs_view = "JacobianToCRSView<" + path + ">";
-    ::benchmark::RegisterBenchmark(name_to_crs_view.c_str(),
-                                   ceres::internal::JacobianToCRSView,
-                                   data,
-                                   &context);
-    const std::string name_to_crs_matrix = "JacobianToCRSMatrix<" + path + ">";
-    ::benchmark::RegisterBenchmark(name_to_crs_matrix.c_str(),
-                                   ceres::internal::JacobianToCRSMatrix,
-                                   data,
-                                   &context);
-    const std::string name_to_crs_view_update =
-        "JacobianToCRSViewUpdate<" + path + ">";
-    ::benchmark::RegisterBenchmark(name_to_crs_view_update.c_str(),
-                                   ceres::internal::JacobianToCRSViewUpdate,
-                                   data,
-                                   &context);
-    const std::string name_to_crs_matrix_update =
-        "JacobianToCRSMatrixUpdate<" + path + ">";
-    ::benchmark::RegisterBenchmark(name_to_crs_matrix_update.c_str(),
-                                   ceres::internal::JacobianToCRSMatrixUpdate,
-                                   data,
-                                   &context);
+    register_unthreaded("JacobianToCRSView",
+                        ceres::internal::JacobianToCRSView);
+    register_unthreaded("JacobianToCRSMatrix",
+                        ceres::internal::JacobianToCRSMatrix);
+    register_unthreaded("JacobianToCRSViewUpdate",
+                        ceres::internal::JacobianToCRSViewUpdate);
+    register_unthreaded("JacobianToCRSMatrixUpdate",
+                        ceres::internal::JacobianToCRSMatrixUpdate);
 #endif
   }
   ::benchmark::RunSpecifiedBenchmarks();
