@@ -517,6 +517,10 @@ macro(add_dependencies_to_benchmark BENCHMARK_TARGET)
   target_link_libraries(${BENCHMARK_TARGET}
     PRIVATE ceres_static benchmark::benchmark
             ${CERES_LIBRARY_PRIVATE_DEPENDENCIES})
+  if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    target_compile_options(${BENCHMARK_TARGET}
+      PRIVATE "-mllvm" "-inlinehint-threshold=1000000")
+  endif()
 endmacro()
 
 if (_Ceres_FEATURE_BENCHMARKS)
@@ -554,5 +558,14 @@ if (_Ceres_FEATURE_BENCHMARKS)
     block_jacobi_preconditioner_benchmark.cc)
   add_dependencies_to_benchmark(block_jacobi_preconditioner_benchmark)
 
-  add_subdirectory(autodiff_benchmarks)
+  add_executable(autodiff_manifold_benchmark autodiff_manifold_benchmark.cc)
+  add_dependencies_to_benchmark(autodiff_manifold_benchmark)
+
+  add_executable(cost_function_differentiation_benchmark
+    cost_function_differentiation_benchmark.cc)
+  add_dependencies_to_benchmark(cost_function_differentiation_benchmark)
+
+  add_executable(first_order_function_differentiation_benchmark
+    first_order_function_differentiation_benchmark.cc)
+  add_dependencies_to_benchmark(first_order_function_differentiation_benchmark)
 endif (_Ceres_FEATURE_BENCHMARKS)
