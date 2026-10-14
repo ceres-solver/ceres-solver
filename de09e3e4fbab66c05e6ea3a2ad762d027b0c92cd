@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5336860_fbb3034a",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-14T22:54:46Z",
+      "side": 1,
+      "message": "shouldnt this be max(num_rows, num_cols) - null_space_rank instead of num_cols - null_space_rank?",
+      "range": {
+        "startLine": 752,
+        "startChar": 41,
+        "endLine": 752,
+        "endChar": 49
+      },
+      "revId": "de09e3e4fbab66c05e6ea3a2ad762d027b0c92cd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
