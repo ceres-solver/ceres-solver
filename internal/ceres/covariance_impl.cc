@@ -747,8 +747,16 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingDenseSVD() {
       sqrt(options_.min_reciprocal_condition_number);
 
   const bool automatic_truncation = (options_.null_space_rank < 0);
+  // The covariance is the pseudo-inverse of J'J, which is num_cols x
+  // num_cols, so null_space_rank counts its zero modes out of num_cols.
+  // For a wide Jacobian the thin SVD returns only num_rows singular
+  // values, and the other num_cols - num_rows modes of J'J are exactly
+  // zero and never inverted. Keeping at most num_cols - null_space_rank
+  // of the computed modes therefore drops at least null_space_rank modes
+  // in total. For square and tall Jacobians, num_singular_values ==
+  // num_cols, so this is num_singular_values - null_space_rank.
   const int max_rank = std::min(num_singular_values,
-                                num_singular_values - options_.null_space_rank);
+                                jacobian.num_cols - options_.null_space_rank);
 
   // Compute the squared inverse of the singular values. Truncate the
   // computation based on min_singular_value_ratio and
