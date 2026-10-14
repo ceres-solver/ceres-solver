@@ -982,6 +982,27 @@ TEST_F(CovarianceTest, TruncatedRank) {
   }
 }
 
+TEST(Covariance, TruncatedRankWithWideJacobian) {
+  double x[2] = {0.0, 0.0};
+  const double jacobian[] = {1.0, 1.0};
+  Problem problem;
+  problem.AddResidualBlock(new UnaryCostFunction(1, 2, jacobian), nullptr, x);
+
+  Covariance::Options options;
+  options.algorithm_type = DENSE_SVD;
+  options.null_space_rank = 1;
+  Covariance covariance(options);
+  ASSERT_TRUE(covariance.Compute(std::vector<const double*>{x}, &problem));
+
+  // J'J has eigenvalues 2 and 0. Dropping the zero mode leaves a covariance
+  // matrix with 1/4 in each entry.
+  double covariance_block[4];
+  ASSERT_TRUE(covariance.GetCovarianceBlock(x, x, covariance_block));
+  for (double value : covariance_block) {
+    EXPECT_NEAR(value, 0.25, 1e-14);
+  }
+}
+
 TEST_F(CovarianceTest, DenseCovarianceMatrixFromSetOfParameters) {
   Covariance::Options options;
   Covariance covariance(options);
