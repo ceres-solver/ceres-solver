@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3d603fef_eb5aabc8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5202271
+      },
+      "writtenOn": "2026-10-14T13:40:41Z",
+      "side": 1,
+      "message": "Updated the fixture to initialize offsets, state, and metadata before minimizer initialization. Assertions remain in the test bodies. Both corrected metadata tests optimize block 1 and check its restored metadata. The isolated test binary discovers and passes all eight cases. Codex used.",
+      "parentUuid": "79046494_2a32bc10",
+      "revId": "d351f55910fc2b11471405c6ed2a99fde0cbbe89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "235e67be_5c9b11f7",
         "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
         "patchSetId": 2
@@ -31,6 +49,24 @@
       "writtenOn": "2026-10-09T19:54:29Z",
       "side": 1,
       "message": "Remove unused #include \u003calgorithm\u003e.",
+      "revId": "d351f55910fc2b11471405c6ed2a99fde0cbbe89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d187093_db9daabd",
+        "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5202271
+      },
+      "writtenOn": "2026-10-14T13:40:41Z",
+      "side": 1,
+      "message": "Removed the unused algorithm and memory includes.",
+      "parentUuid": "235e67be_5c9b11f7",
       "revId": "d351f55910fc2b11471405c6ed2a99fde0cbbe89",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -54,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7c6ec16b_25db13d2",
+        "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5202271
+      },
+      "writtenOn": "2026-10-14T13:40:41Z",
+      "side": 1,
+      "message": "Added using ::testing::ElementsAre and used the unqualified matcher name in the tests.",
+      "parentUuid": "9c635a9b_e2cfb5e3",
+      "revId": "d351f55910fc2b11471405c6ed2a99fde0cbbe89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0ce9b7b3_6bb3231b",
         "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
         "patchSetId": 2
@@ -65,6 +119,30 @@
       "writtenOn": "2026-10-09T19:54:29Z",
       "side": 1,
       "message": "Refactor CoordinateDescentMinimizerTest so that SetParameterOffsetsAndIndex() is called before minimizer_.Init(...), state_ is populated automatically from the program\u0027s parameter blocks via ParameterBlocksToStateVector, and metadata_ and minimizer_ are stored as fixture members:\n\nclass CoordinateDescentMinimizerTest : public ::testing::Test {\n protected:\n  bool InitMinimizer(const ParameterBlockOrdering\u0026 ordering) {\n    problem_.mutable_program()-\u003eSetParameterOffsetsAndIndex();\n    state_.resize(problem_.program().NumParameters());\n    problem_.program().ParameterBlocksToStateVector(state_.data());\n    initial_state_ \u003d state_;\n    metadata_.clear();\n    for (ParameterBlock* block : problem_.program().parameter_blocks()) {\n      metadata_.push_back({block-\u003eindex(),\n                           block-\u003estate_offset(),\n                           block-\u003edelta_offset(),\n                           block-\u003eIsConstant()});\n    }\n    return minimizer_.Init(\n        problem_.program(), problem_.parameter_map(), ordering, \u0026error_);\n  }\n\n  void ResetState() { state_ \u003d initial_state_; }\n\n  void Minimize(int num_threads \u003d 1) {\n    Minimizer::Options options;\n    options.num_threads \u003d num_threads;\n    problem_.context()-\u003eEnsureMinimumThreads(num_threads);\n    Solver::Summary summary;\n    minimizer_.Minimize(options, state_.data(), \u0026summary);\n  }\n\n  double x_ \u003d 0.0;\n  double y_ \u003d 0.0;\n  double z_ \u003d 0.0;\n  std::vector\u003cdouble\u003e state_;\n  std::vector\u003cdouble\u003e initial_state_;\n  std::vector\u003cBlockMetadata\u003e metadata_;\n  std::string error_;\n  ProblemImpl problem_;\n  CoordinateDescentMinimizer minimizer_{problem_.context()};\n};",
+      "range": {
+        "startLine": 133,
+        "startChar": 0,
+        "endLine": 171,
+        "endChar": 2
+      },
+      "revId": "d351f55910fc2b11471405c6ed2a99fde0cbbe89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f490b6f9_cfaafa75",
+        "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 5202271
+      },
+      "writtenOn": "2026-10-14T13:40:41Z",
+      "side": 1,
+      "message": "Applied the shared fixture initialization. InitMinimizer sizes state with Program::NumParameters() and copies values through ParameterBlocksToStateVector. The fixture retains metadata, initial state, and the minimizer. ResetState restores the saved values.",
+      "parentUuid": "0ce9b7b3_6bb3231b",
       "range": {
         "startLine": 133,
         "startChar": 0,
@@ -100,6 +178,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e394150d_b155b5d9",
+        "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 5202271
+      },
+      "writtenOn": "2026-10-14T13:40:41Z",
+      "side": 1,
+      "message": "Replaced the manual count with the ordering APIs. The test checks group sizes 1 and 2 from MinNonZeroGroup(). Reverse() preserves the greatest original group ID, so the reversed groups do not start at zero.",
+      "parentUuid": "74b96959_c46cfe59",
+      "range": {
+        "startLine": 220,
+        "startChar": 0,
+        "endLine": 225,
+        "endChar": 49
+      },
+      "revId": "d351f55910fc2b11471405c6ed2a99fde0cbbe89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "743bde29_35d3f4cd",
         "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
         "patchSetId": 2
@@ -111,6 +213,30 @@
       "writtenOn": "2026-10-09T19:54:29Z",
       "side": 1,
       "message": "1. Rename this test to IndependentBlocksAreOptimized.\n2. Replace the 8-line setup block with ASSERT_TRUE(InitMinimizer(ordering)) \u003c\u003c error_; and use ResetState(); inside the loop:\n\nTEST_F(CoordinateDescentMinimizerTest, IndependentBlocksAreOptimized) {\n  problem_.AddResidualBlock(new UnaryResidual(2.0), nullptr, \u0026x_);\n  problem_.AddResidualBlock(new UnaryResidual(-3.0), nullptr, \u0026y_);\n  ParameterBlockOrdering ordering;\n  ordering.AddElementToGroup(\u0026x_, 0);\n  ordering.AddElementToGroup(\u0026y_, 0);\n  ASSERT_TRUE(InitMinimizer(ordering)) \u003c\u003c error_;\n\n  // Minimize requests up to one thread per problem in an independent group.\n  for (int num_threads : {1, 2}) {\n    ResetState();\n    Minimize(num_threads);\n    EXPECT_THAT(problem_.program().parameter_blocks(),\n                ElementsAre(RestoresBlockMetadata(metadata_[0], state_.data()),\n                            RestoresBlockMetadata(metadata_[1], state_.data())));\n    EXPECT_NEAR(2.0, state_[0], kStateTolerance);\n    EXPECT_NEAR(-3.0, state_[1], kStateTolerance);\n  }\n}",
+      "range": {
+        "startLine": 231,
+        "startChar": 0,
+        "endLine": 259,
+        "endChar": 1
+      },
+      "revId": "d351f55910fc2b11471405c6ed2a99fde0cbbe89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18a4e326_b368cfda",
+        "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 5202271
+      },
+      "writtenOn": "2026-10-14T13:40:41Z",
+      "side": 1,
+      "message": "Renamed the test to IndependentBlocksAreOptimized. It uses InitMinimizer and resets state before each solve with one or two requested threads.",
+      "parentUuid": "743bde29_35d3f4cd",
       "range": {
         "startLine": 231,
         "startChar": 0,
@@ -146,6 +272,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2ef85b14_ec45c09c",
+        "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 5202271
+      },
+      "writtenOn": "2026-10-14T13:40:41Z",
+      "side": 1,
+      "message": "Both coupled-order tests now use InitMinimizer and Minimize directly. Their endpoint and metadata checks remain unchanged.",
+      "parentUuid": "51703752_32309c8e",
+      "range": {
+        "startLine": 261,
+        "startChar": 0,
+        "endLine": 311,
+        "endChar": 1
+      },
+      "revId": "d351f55910fc2b11471405c6ed2a99fde0cbbe89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9917ae94_9d84c250",
         "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
         "patchSetId": 2
@@ -169,6 +319,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2839629b_35e1561a",
+        "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 5202271
+      },
+      "writtenOn": "2026-10-14T13:40:41Z",
+      "side": 1,
+      "message": "Added y with target -3 in the second group. The test asserts nonzero metadata before solving. It checks both solutions and restored metadata after each solve, including the solve after resetting state.",
+      "parentUuid": "9917ae94_9d84c250",
+      "range": {
+        "startLine": 313,
+        "startChar": 0,
+        "endLine": 341,
+        "endChar": 1
+      },
+      "revId": "d351f55910fc2b11471405c6ed2a99fde0cbbe89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "81822565_d80e7c85",
         "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
         "patchSetId": 2
@@ -180,6 +354,30 @@
       "writtenOn": "2026-10-09T19:54:29Z",
       "side": 1,
       "message": "Exclude the first parameter block (x_ at state_offset \u003d 0) and optimize the second parameter block (z_ at state_offset \u003d 1) instead of the other way around. That way the active block being solved has a non-zero state_offset, exercising parameters + old_state_offset and restoring non-zero metadata:\n\nTEST_F(CoordinateDescentMinimizerTest, KeepsExcludedParameterBlockFixed) {\n  x_ \u003d 1.0;\n  problem_.AddResidualBlock(new BinaryResidual(5.0), nullptr, \u0026x_, \u0026z_);\n  ParameterBlockOrdering ordering;\n  ordering.AddElementToGroup(\u0026z_, 0);\n  ASSERT_TRUE(InitMinimizer(ordering)) \u003c\u003c error_;\n\n  Minimize();\n  EXPECT_THAT(problem_.program().parameter_blocks(),\n              ElementsAre(RestoresBlockMetadata(metadata_[0], state_.data()),\n                          RestoresBlockMetadata(metadata_[1], state_.data())));\n  EXPECT_DOUBLE_EQ(1.0, state_[0]);\n  EXPECT_NEAR(4.0, state_[1], kStateTolerance);\n}",
+      "range": {
+        "startLine": 343,
+        "startChar": 0,
+        "endLine": 365,
+        "endChar": 1
+      },
+      "revId": "d351f55910fc2b11471405c6ed2a99fde0cbbe89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12df500b_121eb47d",
+        "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 5202271
+      },
+      "writtenOn": "2026-10-14T13:40:41Z",
+      "side": 1,
+      "message": "The test now fixes x at 1 and orders only z. It asserts that the active block has nonzero metadata. After solving, it checks x exactly, z near 4, and both metadata records.",
+      "parentUuid": "81822565_d80e7c85",
       "range": {
         "startLine": 343,
         "startChar": 0,
