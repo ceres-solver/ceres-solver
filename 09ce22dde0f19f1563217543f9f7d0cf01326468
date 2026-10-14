@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "852ece73_a7579122",
+        "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5202271
+      },
+      "writtenOn": "2026-10-14T14:22:57Z",
+      "side": 1,
+      "message": "Replaced the distributed setup with CoordinateDescentMinimizerTest. InitMinimizer now owns state initialization, offsets, metadata, and minimizer setup.",
+      "parentUuid": "83af99a1_49654af9",
+      "revId": "09ce22dde0f19f1563217543f9f7d0cf01326468",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4808a9c6_04a96acf",
         "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
         "patchSetId": 1
@@ -66,6 +84,30 @@
       "writtenOn": "2026-10-03T17:16:56Z",
       "side": 1,
       "message": "this should be a gmock  matcher not a function.",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 28
+      },
+      "revId": "09ce22dde0f19f1563217543f9f7d0cf01326468",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6cf37b08_ad9896fc",
+        "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 5202271
+      },
+      "writtenOn": "2026-10-14T14:22:57Z",
+      "side": 1,
+      "message": "Replaced the helper with the RestoresBlockMetadata GoogleMock matcher.",
+      "parentUuid": "4808a9c6_04a96acf",
       "range": {
         "startLine": 107,
         "startChar": 0,
@@ -119,6 +161,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "22072ae6_e57ffdfb",
+        "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5202271
+      },
+      "writtenOn": "2026-10-14T14:22:57Z",
+      "side": 1,
+      "message": "Removed the helper’s EXPECT statements. Each solve test now uses EXPECT_THAT directly. The matcher reports mismatched metadata and state pointers.",
+      "parentUuid": "f6c8f507_d85cafbd",
+      "range": {
+        "startLine": 117,
+        "startChar": 5,
+        "endLine": 117,
+        "endChar": 21
+      },
+      "revId": "09ce22dde0f19f1563217543f9f7d0cf01326468",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4f4ecf7a_4561296d",
         "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
         "patchSetId": 1
@@ -154,6 +220,30 @@
           ]
         }
       ],
+      "revId": "09ce22dde0f19f1563217543f9f7d0cf01326468",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab80ceea_5229cbb1",
+        "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 5202271
+      },
+      "writtenOn": "2026-10-14T14:22:57Z",
+      "side": 1,
+      "message": "Renamed the tests to describe the expected optimization and metadata-restoration behavior.",
+      "parentUuid": "4f4ecf7a_4561296d",
+      "range": {
+        "startLine": 147,
+        "startChar": 33,
+        "endLine": 147,
+        "endChar": 70
+      },
       "revId": "09ce22dde0f19f1563217543f9f7d0cf01326468",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
@@ -211,6 +301,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "362c5deb_e06f1914",
+        "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 5202271
+      },
+      "writtenOn": "2026-10-14T14:22:57Z",
+      "side": 1,
+      "message": "The independent-block test now solves two blocks in one group with one and two requested threads. It checks both solutions and restored metadata. These checks do not establish simultaneous execution.",
+      "parentUuid": "9b1e675e_deece008",
+      "range": {
+        "startLine": 148,
+        "startChar": 11,
+        "endLine": 148,
+        "endChar": 22
+      },
+      "revId": "09ce22dde0f19f1563217543f9f7d0cf01326468",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bbae4037_f5155f4d",
         "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
         "patchSetId": 1
@@ -222,6 +336,30 @@
       "writtenOn": "2026-10-03T17:16:56Z",
       "side": 1,
       "message": "do not bury magic tolerances as literals, define a global constant and use it.",
+      "range": {
+        "startLine": 161,
+        "startChar": 35,
+        "endLine": 161,
+        "endChar": 36
+      },
+      "revId": "09ce22dde0f19f1563217543f9f7d0cf01326468",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5ba1b87_7b6ee2d4",
+        "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 5202271
+      },
+      "writtenOn": "2026-10-14T14:22:57Z",
+      "side": 1,
+      "message": "Replaced repeated tolerance literals with named tolerance constants.",
+      "parentUuid": "bbae4037_f5155f4d",
       "range": {
         "startLine": 161,
         "startChar": 35,
@@ -257,6 +395,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "16ae7be7_f66262fb",
+        "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5202271
+      },
+      "writtenOn": "2026-10-14T14:22:57Z",
+      "side": 1,
+      "message": "Separated the coupled-order cases into UsesUpdatedXWhenMinimizingY and UsesUpdatedYWhenMinimizingX.",
+      "parentUuid": "2d9ef1f8_532c7871",
+      "range": {
+        "startLine": 165,
+        "startChar": 33,
+        "endLine": 165,
+        "endChar": 62
+      },
+      "revId": "09ce22dde0f19f1563217543f9f7d0cf01326468",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "333f99c2_4224d108",
         "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
         "patchSetId": 1
@@ -268,6 +430,30 @@
       "writtenOn": "2026-10-03T17:16:56Z",
       "side": 1,
       "message": "the combination of loop and the ternary makes this test hard to read.",
+      "range": {
+        "startLine": 166,
+        "startChar": 22,
+        "endLine": 166,
+        "endChar": 23
+      },
+      "revId": "09ce22dde0f19f1563217543f9f7d0cf01326468",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6bdfa7a1_e368cd37",
+        "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5202271
+      },
+      "writtenOn": "2026-10-14T14:22:57Z",
+      "side": 1,
+      "message": "Replaced the loop and ternary with two direct tests. Each test states its ordering and expected solution explicitly.",
+      "parentUuid": "333f99c2_4224d108",
       "range": {
         "startLine": 166,
         "startChar": 22,
@@ -303,6 +489,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "92bd460c_eb1de6c2",
+        "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 5202271
+      },
+      "writtenOn": "2026-10-14T14:22:57Z",
+      "side": 1,
+      "message": "Moved all three ordering tests before the solve tests.",
+      "parentUuid": "7a9738af_c1bf9f98",
+      "range": {
+        "startLine": 197,
+        "startChar": 33,
+        "endLine": 197,
+        "endChar": 59
+      },
+      "revId": "09ce22dde0f19f1563217543f9f7d0cf01326468",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f25b79f8_660060ab",
         "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
         "patchSetId": 1
@@ -314,6 +524,30 @@
       "writtenOn": "2026-10-03T17:16:56Z",
       "side": 1,
       "message": "not sure what this test name says and what this test is doing.",
+      "range": {
+        "startLine": 216,
+        "startChar": 33,
+        "endLine": 216,
+        "endChar": 75
+      },
+      "revId": "09ce22dde0f19f1563217543f9f7d0cf01326468",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c41a3fb1_d625f8f4",
+        "filename": "internal/ceres/coordinate_descent_minimizer_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 5202271
+      },
+      "writtenOn": "2026-10-14T14:22:57Z",
+      "side": 1,
+      "message": "Renamed the test to KeepsExcludedParameterBlockFixed. It fixes x at 1 and optimizes z near 4. The active block has nonzero offsets, and both metadata records are checked.",
+      "parentUuid": "f25b79f8_660060ab",
       "range": {
         "startLine": 216,
         "startChar": 33,
