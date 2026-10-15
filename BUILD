@@ -61,6 +61,7 @@ cc_library(
     deps = [
         "//:ceres",
         "@abseil-cpp//absl/strings:str_format",
+        "@abseil-cpp//absl/types:span",
         "@googletest//:gtest_main",
     ],
 )

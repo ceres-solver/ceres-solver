@@ -42,6 +42,7 @@
 #include <string>
 #include <utility>
 
+#include "Eigen/Cholesky"
 #include "absl/log/check.h"
 #include "absl/log/log.h"
 #include "absl/strings/str_format.h"
@@ -311,6 +312,35 @@ void MatrixPointwiseMatcher::DescribeNegationTo(std::ostream* os) const {
           ? PrintCoefficients(expected_) + "\n"
           : std::string(" the expected matrix "));
   tuple_matcher_.DescribeNegationTo(os);
+}
+
+Matrix RightMultiplyByIdentity(const SparseMatrix& m) {
+  Matrix dense(m.num_rows(), m.num_cols());
+  for (int i = 0; i < m.num_cols(); ++i) {
+    const Vector x = Vector::Unit(m.num_cols(), i);
+    Vector y = Vector::Zero(m.num_rows());
+    m.RightMultiplyAndAccumulate(x.data(), y.data());
+    dense.col(i) = y;
+  }
+  return dense;
+}
+
+bool SolveUsingDenseCholesky(const CompressedRowSparseMatrix& lhs,
+                             const Vector& rhs,
+                             Vector* solution) {
+  Matrix dense_triangular_lhs;
+  lhs.ToDenseMatrix(&dense_triangular_lhs);
+  const Matrix dense_lhs =
+      lhs.storage_type() ==
+              CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR
+          ? Matrix(dense_triangular_lhs.selfadjointView<Eigen::Upper>())
+          : Matrix(dense_triangular_lhs.selfadjointView<Eigen::Lower>());
+  const Eigen::LLT<Matrix> llt(dense_lhs);
+  if (llt.info() != Eigen::Success) {
+    return false;
+  }
+  *solution = llt.solve(rhs);
+  return llt.info() == Eigen::Success;
 }
 
 std::string TestFileAbsolutePath(const std::string& filename) {

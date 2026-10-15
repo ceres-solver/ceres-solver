@@ -35,6 +35,7 @@
 #include <random>
 #include <sstream>
 #include <string>
+#include <tuple>
 #include <utility>
 #include <vector>
 
@@ -50,6 +51,7 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/iterative_refiner.h"
 #include "ceres/linear_solver.h"
+#include "ceres/test_util.h"
 #include "ceres/types.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
@@ -84,33 +86,6 @@ std::unique_ptr<BlockSparseMatrix> CreateRandomFullRankMatrix(
   return random_matrix;
 }
 
-bool ComputeExpectedSolution(const CompressedRowSparseMatrix& lhs,
-                             const Vector& rhs,
-                             Vector* solution) {
-  Matrix eigen_lhs;
-  lhs.ToDenseMatrix(&eigen_lhs);
-  if (lhs.storage_type() ==
-      CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR) {
-    Matrix full_lhs = eigen_lhs.selfadjointView<Eigen::Upper>();
-    Eigen::LLT<Matrix, Eigen::Upper> llt =
-        eigen_lhs.selfadjointView<Eigen::Upper>().llt();
-    if (llt.info() != Eigen::Success) {
-      return false;
-    }
-    *solution = llt.solve(rhs);
-    return (llt.info() == Eigen::Success);
-  }
-
-  Matrix full_lhs = eigen_lhs.selfadjointView<Eigen::Lower>();
-  Eigen::LLT<Matrix, Eigen::Lower> llt =
-      eigen_lhs.selfadjointView<Eigen::Lower>().llt();
-  if (llt.info() != Eigen::Success) {
-    return false;
-  }
-  *solution = llt.solve(rhs);
-  return (llt.info() == Eigen::Success);
-}
-
 void SparseCholeskySolverUnitTest(
     const SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
     const bool use_single_precision,
@@ -126,7 +101,7 @@ void SparseCholeskySolverUnitTest(
   ContextImpl context;
   sparse_cholesky_options.context = &context;
   std::string error;
-  CHECK(context.InitCuda(&error)) << error;
+  ASSERT_TRUE(context.InitCuda(&error)) << error;
 #endif  // CERES_NO_CUDSS
 
   sparse_cholesky_options.sparse_linear_algebra_library_type =
@@ -154,11 +129,12 @@ void SparseCholeskySolverUnitTest(
   Vector expected(lhs->num_rows());
   Vector actual(lhs->num_rows());
 
-  EXPECT_TRUE(ComputeExpectedSolution(*lhs, rhs, &expected));
+  ASSERT_TRUE(SolveUsingDenseCholesky(*lhs, rhs, &expected));
   std::string message;
-  EXPECT_EQ(
+  ASSERT_EQ(
       sparse_cholesky->FactorAndSolve(lhs, rhs.data(), actual.data(), &message),
-      LinearSolverTerminationType::SUCCESS);
+      LinearSolverTerminationType::SUCCESS)
+      << message;
   Matrix eigen_lhs;
   lhs->ToDenseMatrix(&eigen_lhs);
   const double kTolerance =
@@ -166,9 +142,8 @@ void SparseCholeskySolverUnitTest(
                             : std::numeric_limits<double>::epsilon()) *
       20;
 
-  EXPECT_NEAR((actual - expected).norm() / actual.norm(), 0.0, kTolerance)
-      << "\n"
-      << eigen_lhs;
+  EXPECT_THAT(actual, MatrixRelativelyNear(expected, kTolerance)) << "lhs:\n"
+                                                                  << eigen_lhs;
 }
 
 // SparseLinearAlgebraLibraryType
@@ -176,15 +151,14 @@ void SparseCholeskySolverUnitTest(
 // OrderingType
 // BlockStructure
 using Param =
-    ::testing::tuple<SparseLinearAlgebraLibraryType, bool, OrderingType, bool>;
+    std::tuple<SparseLinearAlgebraLibraryType, bool, OrderingType, bool>;
 
 std::string ParamInfoToString(testing::TestParamInfo<Param> info) {
   Param param = info.param;
   std::stringstream ss;
-  ss << SparseLinearAlgebraLibraryTypeToString(::testing::get<0>(param)) << "_"
-     << (::testing::get<1>(param) ? "FLOAT" : "DOUBLE") << "_"
-     << ::testing::get<2>(param) << "_"
-     << (::testing::get<3>(param) ? "UseBlockStructure" : "NoBlockStructure");
+  ss << SparseLinearAlgebraLibraryTypeToString(std::get<0>(param)) << "_"
+     << (std::get<1>(param) ? "FLOAT" : "DOUBLE") << "_" << std::get<2>(param)
+     << "_" << (std::get<3>(param) ? "UseBlockStructure" : "NoBlockStructure");
   return ss.str();
 }
 
@@ -208,10 +182,10 @@ TEST_P(SparseCholeskyTest, FactorAndSolve) {
        ++num_blocks) {
     for (int trial = 0; trial < kNumTrials; ++trial) {
       const double block_density = distribution(prng);
-      SparseCholeskySolverUnitTest(::testing::get<0>(param),
-                                   ::testing::get<1>(param),
-                                   ::testing::get<2>(param),
-                                   ::testing::get<3>(param),
+      SparseCholeskySolverUnitTest(std::get<0>(param),
+                                   std::get<1>(param),
+                                   std::get<2>(param),
+                                   std::get<3>(param),
                                    num_blocks,
                                    kMinBlockSize,
                                    kMaxBlockSize,

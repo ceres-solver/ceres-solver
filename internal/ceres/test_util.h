@@ -42,12 +42,16 @@
 
 #include "absl/log/check.h"
 #include "absl/strings/str_format.h"
+#include "absl/types/span.h"
+#include "ceres/block_structure.h"
+#include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/jet.h"
 #include "ceres/problem.h"
 #include "ceres/solver.h"
+#include "ceres/sparse_matrix.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
@@ -272,6 +276,51 @@ MATCHER_P(JetIsClose,
   return ::testing::ExplainMatchResult(JetIsClose(std::get<1>(arg), tolerance),
                                        std::get<0>(arg),
                                        result_listener);
+}
+
+// Returns the dense matrix whose columns are the products of m and the
+// columns of the identity matrix computed by RightMultiplyAndAccumulate.
+CERES_NO_EXPORT Matrix RightMultiplyByIdentity(const SparseMatrix& m);
+
+// Solves the linear system whose symmetric matrix is given by the triangular
+// part stored in lhs using a dense Cholesky factorization. Returns false if
+// the factorization fails.
+CERES_NO_EXPORT bool SolveUsingDenseCholesky(
+    const CompressedRowSparseMatrix& lhs, const Vector& rhs, Vector* solution);
+
+// Prints a Block in assertion failure messages.
+inline void PrintTo(const Block& block, std::ostream* os) {
+  *os << absl::StrFormat(
+      "Block(size=%d, position=%d)", block.size, block.position);
+}
+
+// Matches a CompressedRowSparseMatrix whose row offsets, column indices and
+// values are equal to the given containers.
+template <typename Rows, typename Cols, typename Values>
+auto CompressedRowsAre(const Rows& rows,
+                       const Cols& cols,
+                       const Values& values) {
+  using ::testing::ElementsAreArray;
+  using ::testing::ResultOf;
+  return ::testing::AllOf(
+      ResultOf(
+          "row offsets",
+          [](const CompressedRowSparseMatrix& m) {
+            return absl::MakeConstSpan(m.rows(), m.num_rows() + 1);
+          },
+          ElementsAreArray(rows)),
+      ResultOf(
+          "column indices",
+          [](const CompressedRowSparseMatrix& m) {
+            return absl::MakeConstSpan(m.cols(), m.num_nonzeros());
+          },
+          ElementsAreArray(cols)),
+      ResultOf(
+          "values",
+          [](const CompressedRowSparseMatrix& m) {
+            return absl::MakeConstSpan(m.values(), m.num_nonzeros());
+          },
+          ElementsAreArray(values)));
 }
 
 // Construct a fully qualified path for the test file depending on the

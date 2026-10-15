@@ -362,8 +362,8 @@ if (BUILD_TESTING)
               test_util.cc)
 
   target_include_directories(test_util PUBLIC ${Ceres_SOURCE_DIR}/internal)
-  target_link_libraries (test_util PUBLIC GTest::gmock absl::str_format
-    ceres_static)
+  target_link_libraries (test_util PUBLIC GTest::gmock absl::span
+    absl::str_format ceres_static)
   target_compile_definitions(test_util PUBLIC CERES_HAS_GTEST)
   target_compile_definitions(test_util PRIVATE
     CERES_TEST_DATA_DIR="${Ceres_SOURCE_DIR}/data")

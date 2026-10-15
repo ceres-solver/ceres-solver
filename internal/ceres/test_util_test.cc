@@ -28,15 +28,21 @@
 
 #include "ceres/test_util.h"
 
+#include <algorithm>
 #include <cfenv>
+#include <iterator>
 #include <limits>
+#include <memory>
 #include <string>
 #include <tuple>
 #include <type_traits>
 #include <vector>
 
+#include "ceres/block_structure.h"
+#include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/jet.h"
+#include "ceres/triplet_sparse_matrix.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
@@ -365,6 +371,109 @@ TEST(kHalfSqrt2, IsADoubleConstantWithAVariableTemplate) {
   static_assert(std::is_same_v<decltype(kHalfSqrt2_v<float>), const float>);
   static_assert(kHalfSqrt2 == kHalfSqrt2_v<double>);
   EXPECT_DOUBLE_EQ(2.0 * kHalfSqrt2 * kHalfSqrt2, 1.0);
+}
+
+TEST(RightMultiplyByIdentity, ReconstructsTheDenseMatrix) {
+  TripletSparseMatrix m(2, 3, 2);
+  m.mutable_rows()[0] = 0;
+  m.mutable_cols()[0] = 2;
+  m.mutable_values()[0] = 4.0;
+  m.mutable_rows()[1] = 1;
+  m.mutable_cols()[1] = 0;
+  m.mutable_values()[1] = 5.0;
+  m.set_num_nonzeros(2);
+
+  Matrix expected(2, 3);
+  expected << 0.0, 0.0, 4.0, 5.0, 0.0, 0.0;
+  EXPECT_THAT(RightMultiplyByIdentity(m), MatrixEq(expected));
+}
+
+// Creates the symmetric positive definite matrix
+//
+//   [ 4 2 ]
+//   [ 2 3 ]
+//
+// storing only the given triangular part.
+std::unique_ptr<CompressedRowSparseMatrix> CreateSymmetricMatrix(
+    CompressedRowSparseMatrix::StorageType storage_type) {
+  auto m = std::make_unique<CompressedRowSparseMatrix>(2, 2, 3);
+  m->set_storage_type(storage_type);
+  const bool upper =
+      storage_type == CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR;
+  const int rows[] = {0, upper ? 2 : 1, 3};
+  const int upper_cols[] = {0, 1, 1};
+  const int lower_cols[] = {0, 0, 1};
+  const double values[] = {4.0, 2.0, 3.0};
+  std::copy(std::begin(rows), std::end(rows), m->mutable_rows());
+  std::copy(std::begin(upper ? upper_cols : lower_cols),
+            std::end(upper ? upper_cols : lower_cols),
+            m->mutable_cols());
+  std::copy(std::begin(values), std::end(values), m->mutable_values());
+  return m;
+}
+
+TEST(SolveUsingDenseCholesky, SolvesSystemsStoredInEitherTriangle) {
+  const Eigen::Vector2d expected(1.0, -2.0);
+  const Eigen::Vector2d rhs(4.0 * 1.0 + 2.0 * -2.0, 2.0 * 1.0 + 3.0 * -2.0);
+  for (const auto storage_type :
+       {CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR,
+        CompressedRowSparseMatrix::StorageType::LOWER_TRIANGULAR}) {
+    const auto lhs = CreateSymmetricMatrix(storage_type);
+    Vector solution;
+    ASSERT_TRUE(SolveUsingDenseCholesky(*lhs, rhs, &solution));
+    EXPECT_THAT(solution, MatrixNear(expected, kTolerance));
+  }
+}
+
+TEST(SolveUsingDenseCholesky, FailsForIndefiniteMatrices) {
+  auto lhs = CreateSymmetricMatrix(
+      CompressedRowSparseMatrix::StorageType::UPPER_TRIANGULAR);
+  lhs->mutable_values()[0] = -4.0;
+  Vector solution;
+  EXPECT_FALSE(SolveUsingDenseCholesky(*lhs, Vector::Ones(2), &solution));
+}
+
+TEST(PrintTo, PrintsTheSizeAndThePositionOfABlock) {
+  EXPECT_EQ(::testing::PrintToString(Block(2, 3)), "Block(size=2, position=3)");
+}
+
+// Creates the matrix
+//
+//   [ 1 0 2 ]
+//   [ 0 3 0 ]
+std::unique_ptr<CompressedRowSparseMatrix> CreateCompressedRowSparseMatrix() {
+  auto m = std::make_unique<CompressedRowSparseMatrix>(2, 3, 3);
+  const int rows[] = {0, 2, 3};
+  const int cols[] = {0, 2, 1};
+  const double values[] = {1.0, 2.0, 3.0};
+  std::copy(std::begin(rows), std::end(rows), m->mutable_rows());
+  std::copy(std::begin(cols), std::end(cols), m->mutable_cols());
+  std::copy(std::begin(values), std::end(values), m->mutable_values());
+  return m;
+}
+
+TEST(CompressedRowsAre, MatchesTheCompressedRowArrays) {
+  const auto m = CreateCompressedRowSparseMatrix();
+  EXPECT_THAT(*m,
+              CompressedRowsAre(std::vector{0, 2, 3},
+                                std::vector{0, 2, 1},
+                                std::vector{1.0, 2.0, 3.0}));
+}
+
+TEST(CompressedRowsAre, ExplainsMismatchingColumnIndices) {
+  const auto m = CreateCompressedRowSparseMatrix();
+  const auto matcher = CompressedRowsAre(
+      std::vector{0, 2, 3}, std::vector{0, 1, 1}, std::vector{1.0, 2.0, 3.0});
+  EXPECT_THAT(*m, Not(matcher));
+  EXPECT_THAT(Explain(matcher, *m), HasSubstr("column indices"));
+}
+
+TEST(CompressedRowsAre, RejectsAdditionalRows) {
+  const auto m = CreateCompressedRowSparseMatrix();
+  EXPECT_THAT(*m,
+              Not(CompressedRowsAre(std::vector{0, 2, 3, 3},
+                                    std::vector{0, 2, 1},
+                                    std::vector{1.0, 2.0, 3.0})));
 }
 
 }  // namespace
