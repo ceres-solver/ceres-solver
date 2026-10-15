@@ -36,12 +36,17 @@
 #include <algorithm>
 #include <cmath>
 
+#include "absl/strings/str_format.h"
 #include "ceres/cost_function.h"
 #include "ceres/test_util.h"
 #include "ceres/types.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
+
+using ::testing::ElementsAreArray;
+using ::testing::Pointwise;
 
 bool EasyFunctor::operator()(const double* x1,
                              const double* x2,
@@ -76,9 +81,7 @@ void EasyFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
   double expected_residuals[3];
   EasyFunctor functor;
   functor(x1, x2, expected_residuals);
-  EXPECT_EQ(expected_residuals[0], residuals[0]);
-  EXPECT_EQ(expected_residuals[1], residuals[1]);
-  EXPECT_EQ(expected_residuals[2], residuals[2]);
+  EXPECT_THAT(residuals, ElementsAreArray(expected_residuals));
 
   double tolerance = 0.0;
   switch (method) {
@@ -96,16 +99,21 @@ void EasyFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
       break;
   }
 
+  double expected_dydx1[15];
+  double expected_dydx2[15];
   for (int i = 0; i < 5; ++i) {
     // clang-format off
-    ExpectClose(x2[i],                    dydx1[5 * 0 + i], tolerance);  // y1
-    ExpectClose(x1[i],                    dydx2[5 * 0 + i], tolerance);
-    ExpectClose(2 * x2[i] * residuals[0], dydx1[5 * 1 + i], tolerance);  // y2
-    ExpectClose(2 * x1[i] * residuals[0], dydx2[5 * 1 + i], tolerance);
-    ExpectClose(0.0,                      dydx1[5 * 2 + i], tolerance);  // y3
-    ExpectClose(2 * x2[i],                dydx2[5 * 2 + i], tolerance);
+    expected_dydx1[5 * 0 + i] = x2[i];                     // y1
+    expected_dydx2[5 * 0 + i] = x1[i];
+    expected_dydx1[5 * 1 + i] = 2 * x2[i] * residuals[0];  // y2
+    expected_dydx2[5 * 1 + i] = 2 * x1[i] * residuals[0];
+    expected_dydx1[5 * 2 + i] = 0.0;                       // y3
+    expected_dydx2[5 * 2 + i] = 2 * x2[i];
     // clang-format on
   }
+
+  EXPECT_THAT(dydx1, Pointwise(RelativelyNear(tolerance), expected_dydx1));
+  EXPECT_THAT(dydx2, Pointwise(RelativelyNear(tolerance), expected_dydx2));
 }
 
 bool TranscendentalFunctor::operator()(const double* x1,
@@ -151,6 +159,9 @@ void TranscendentalFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
   // clang-format on
 
   for (auto& test : kTests) {
+    SCOPED_TRACE(absl::StrFormat("x1 = %s, x2 = %s",
+                                 ::testing::PrintToString(test.x1),
+                                 ::testing::PrintToString(test.x2)));
     double* x1 = &(test.x1[0]);
     double* x2 = &(test.x2[0]);
     double* parameters[] = {x1, x2};
@@ -184,14 +195,19 @@ void TranscendentalFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
         break;
     }
 
+    double expected_dydx1[10];
+    double expected_dydx2[10];
     for (int i = 0; i < 5; ++i) {
       // clang-format off
-      ExpectClose( x2[i] * cos(x1x2),              dydx1[5 * 0 + i], tolerance);
-      ExpectClose( x1[i] * cos(x1x2),              dydx2[5 * 0 + i], tolerance);
-      ExpectClose(-x2[i] * exp(-x1x2 / 10.) / 10., dydx1[5 * 1 + i], tolerance);
-      ExpectClose(-x1[i] * exp(-x1x2 / 10.) / 10., dydx2[5 * 1 + i], tolerance);
+      expected_dydx1[5 * 0 + i] =  x2[i] * cos(x1x2);
+      expected_dydx2[5 * 0 + i] =  x1[i] * cos(x1x2);
+      expected_dydx1[5 * 1 + i] = -x2[i] * exp(-x1x2 / 10.) / 10.;
+      expected_dydx2[5 * 1 + i] = -x1[i] * exp(-x1x2 / 10.) / 10.;
       // clang-format on
     }
+
+    EXPECT_THAT(dydx1, Pointwise(RelativelyNear(tolerance), expected_dydx1));
+    EXPECT_THAT(dydx2, Pointwise(RelativelyNear(tolerance), expected_dydx2));
   }
 }
 
@@ -209,6 +225,7 @@ void ExponentialFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
   const double kTolerance = 2e-14;
 
   for (double& test : kTests) {
+    SCOPED_TRACE(absl::StrFormat("x = %v", test));
     double* parameters[] = {&test};
     double dydx;
     double* jacobians[1] = {&dydx};
@@ -220,10 +237,10 @@ void ExponentialFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
     double expected_result = exp(test);
 
     // Expect residual to be close to exp(x).
-    ExpectClose(residual, expected_result, kTolerance);
+    EXPECT_THAT(residual, RelativelyNear(expected_result, kTolerance));
 
     // Check evaluated differences. dydx should also be close to exp(x).
-    ExpectClose(dydx, expected_result, kTolerance);
+    EXPECT_THAT(dydx, RelativelyNear(expected_result, kTolerance));
   }
 }
 
@@ -240,6 +257,7 @@ void RandomizedFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
   const double kTolerance = 2e-4;
 
   for (double& test : kTests) {
+    SCOPED_TRACE(absl::StrFormat("x = %v", test));
     double* parameters[] = {&test};
     double dydx;
     double* jacobians[1] = {&dydx};
@@ -249,10 +267,10 @@ void RandomizedFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
         cost_function.Evaluate(&parameters[0], &residual, &jacobians[0]));
 
     // Expect residual to be close to x^2 w.r.t. noise factor.
-    ExpectClose(residual, test * test, noise_factor_);
+    EXPECT_THAT(residual, RelativelyNear(test * test, noise_factor_));
 
     // Check evaluated differences. (dy/dx = ~2x)
-    ExpectClose(dydx, 2 * test, kTolerance);
+    EXPECT_THAT(dydx, RelativelyNear(2 * test, kTolerance));
   }
 }
 

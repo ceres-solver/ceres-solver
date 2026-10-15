@@ -33,6 +33,7 @@
 #include "ceres/gradient_checker.h"
 
 #include <cmath>
+#include <limits>
 #include <random>
 #include <utility>
 #include <vector>
@@ -40,15 +41,22 @@
 #include "absl/container/fixed_array.h"
 #include "absl/log/check.h"
 #include "absl/log/log.h"
+#include "absl/types/span.h"
 #include "ceres/cost_function.h"
 #include "ceres/problem.h"
 #include "ceres/solver.h"
 #include "ceres/test_util.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
 
+using ::testing::Each;
+using ::testing::IsEmpty;
+using ::testing::Not;
+
 const double kTolerance = 1e-12;
+constexpr double kEpsilon = std::numeric_limits<double>::epsilon();
 
 // We pick a (non-quadratic) function whose derivative are easy:
 //
@@ -233,11 +241,11 @@ TEST(GradientChecker, SmokeTest) {
       << results.error_log;
 
   // Check that results contain sensible data.
-  ASSERT_EQ(results.return_value, true);
+  ASSERT_TRUE(results.return_value);
   ASSERT_EQ(results.residuals.size(), 1);
   CheckDimensions(results, parameter_sizes, parameter_sizes, 1);
   EXPECT_GE(results.maximum_relative_error, 0.0);
-  EXPECT_TRUE(results.error_log.empty());
+  EXPECT_THAT(results.error_log, IsEmpty());
 
   // Test that if the cost function return false, Probe should return false.
   good_term.SetReturnValue(false);
@@ -248,15 +256,16 @@ TEST(GradientChecker, SmokeTest) {
       << results.error_log;
 
   // Check that results contain sensible data.
-  ASSERT_EQ(results.return_value, false);
+  ASSERT_FALSE(results.return_value);
   ASSERT_EQ(results.residuals.size(), 1);
   CheckDimensions(results, parameter_sizes, parameter_sizes, 1);
   for (int i = 0; i < num_parameters; ++i) {
-    EXPECT_EQ(results.local_jacobians.at(i).norm(), 0);
-    EXPECT_EQ(results.local_numeric_jacobians.at(i).norm(), 0);
+    EXPECT_THAT(absl::MakeConstSpan(results.local_jacobians.at(i)), Each(0.0));
+    EXPECT_THAT(absl::MakeConstSpan(results.local_numeric_jacobians.at(i)),
+                Each(0.0));
   }
   EXPECT_EQ(results.maximum_relative_error, 0.0);
-  EXPECT_FALSE(results.error_log.empty());
+  EXPECT_THAT(results.error_log, Not(IsEmpty()));
 
   // Test that Probe returns false for incorrect Jacobians.
   BadTestTerm bad_term(num_parameters, parameter_sizes.data(), randu);
@@ -268,21 +277,21 @@ TEST(GradientChecker, SmokeTest) {
       bad_gradient_checker.Probe(parameters.data(), kTolerance, &results));
 
   // Check that results contain sensible data.
-  ASSERT_EQ(results.return_value, true);
+  ASSERT_TRUE(results.return_value);
   ASSERT_EQ(results.residuals.size(), 1);
   CheckDimensions(results, parameter_sizes, parameter_sizes, 1);
   EXPECT_GT(results.maximum_relative_error, kTolerance);
-  EXPECT_FALSE(results.error_log.empty());
+  EXPECT_THAT(results.error_log, Not(IsEmpty()));
 
   // Setting a high threshold should make the test pass.
   EXPECT_TRUE(bad_gradient_checker.Probe(parameters.data(), 1.0, &results));
 
   // Check that results contain sensible data.
-  ASSERT_EQ(results.return_value, true);
+  ASSERT_TRUE(results.return_value);
   ASSERT_EQ(results.residuals.size(), 1);
   CheckDimensions(results, parameter_sizes, parameter_sizes, 1);
   EXPECT_GT(results.maximum_relative_error, 0.0);
-  EXPECT_TRUE(results.error_log.empty());
+  EXPECT_THAT(results.error_log, IsEmpty());
 
   for (int j = 0; j < num_parameters; j++) {
     delete[] parameters[j];
@@ -350,13 +359,6 @@ class LinearCostFunction : public CostFunction {
   std::map<int, Matrix> jacobian_offsets_;
   Vector residuals_offset_;
 };
-
-// Helper function to compare two Eigen matrices (used in the test below).
-static void ExpectMatricesClose(Matrix p, Matrix q, double tolerance) {
-  ASSERT_EQ(p.rows(), q.rows());
-  ASSERT_EQ(p.cols(), q.cols());
-  ExpectArraysClose(p.size(), p.data(), q.data(), tolerance);
-}
 
 // Helper manifold that multiplies the delta vector by the given
 // jacobian and adds it to the parameter.
@@ -432,9 +434,10 @@ TEST(GradientChecker, TestCorrectnessWithManifolds) {
 
   Matrix residual_expected = residual_offset + j0 * param0 + j1 * param1;
 
-  ExpectMatricesClose(j1_out, j0, std::numeric_limits<double>::epsilon());
-  ExpectMatricesClose(j2_out, j1, std::numeric_limits<double>::epsilon());
-  ExpectMatricesClose(residual, residual_expected, kTolerance);
+  EXPECT_THAT(j1_out, MatrixPointwise(RelativelyNear(kEpsilon), j0));
+  EXPECT_THAT(j2_out, MatrixPointwise(RelativelyNear(kEpsilon), j1));
+  EXPECT_THAT(residual,
+              MatrixPointwise(RelativelyNear(kTolerance), residual_expected));
 
   // Create manifold.
   Eigen::Matrix<double, 3, 2, Eigen::RowMajor> global_to_local;
@@ -451,14 +454,15 @@ TEST(GradientChecker, TestCorrectnessWithManifolds) {
 
   Eigen::Matrix<double, 3, 2, Eigen::RowMajor> global_to_local_out;
   manifold.PlusJacobian(x.data(), global_to_local_out.data());
-  ExpectMatricesClose(global_to_local_out,
-                      global_to_local,
-                      std::numeric_limits<double>::epsilon());
+  EXPECT_THAT(global_to_local_out,
+              MatrixPointwise(RelativelyNear(kEpsilon), global_to_local));
 
   Eigen::Vector3d x_plus_delta;
   manifold.Plus(x.data(), delta.data(), x_plus_delta.data());
   Eigen::Vector3d x_plus_delta_expected = x + (global_to_local * delta);
-  ExpectMatricesClose(x_plus_delta, x_plus_delta_expected, kTolerance);
+  EXPECT_THAT(
+      x_plus_delta,
+      MatrixPointwise(RelativelyNear(kTolerance), x_plus_delta_expected));
 
   // Now test GradientChecker.
   std::vector<const Manifold*> manifolds(2);
@@ -486,26 +490,30 @@ TEST(GradientChecker, TestCorrectnessWithManifolds) {
       << results.error_log;
 
   // Check that results contain correct data.
-  ASSERT_EQ(results.return_value, true);
-  ExpectMatricesClose(
-      results.residuals, residual, std::numeric_limits<double>::epsilon());
+  ASSERT_TRUE(results.return_value);
+  EXPECT_THAT(results.residuals,
+              MatrixPointwise(RelativelyNear(kEpsilon), residual));
   CheckDimensions(results, parameter_sizes, tangent_sizes, 3);
-  ExpectMatricesClose(
-      results.local_jacobians.at(0), j0 * global_to_local, kTolerance);
-  ExpectMatricesClose(results.local_jacobians.at(1),
-                      j1,
-                      std::numeric_limits<double>::epsilon());
-  ExpectMatricesClose(
-      results.local_numeric_jacobians.at(0), j0 * global_to_local, kTolerance);
-  ExpectMatricesClose(results.local_numeric_jacobians.at(1), j1, kTolerance);
-  ExpectMatricesClose(
-      results.jacobians.at(0), j0, std::numeric_limits<double>::epsilon());
-  ExpectMatricesClose(
-      results.jacobians.at(1), j1, std::numeric_limits<double>::epsilon());
-  ExpectMatricesClose(results.numeric_jacobians.at(0), j0, kTolerance);
-  ExpectMatricesClose(results.numeric_jacobians.at(1), j1, kTolerance);
+  EXPECT_THAT(
+      results.local_jacobians.at(0),
+      MatrixPointwise(RelativelyNear(kTolerance), j0 * global_to_local));
+  EXPECT_THAT(results.local_jacobians.at(1),
+              MatrixPointwise(RelativelyNear(kEpsilon), j1));
+  EXPECT_THAT(
+      results.local_numeric_jacobians.at(0),
+      MatrixPointwise(RelativelyNear(kTolerance), j0 * global_to_local));
+  EXPECT_THAT(results.local_numeric_jacobians.at(1),
+              MatrixPointwise(RelativelyNear(kTolerance), j1));
+  EXPECT_THAT(results.jacobians.at(0),
+              MatrixPointwise(RelativelyNear(kEpsilon), j0));
+  EXPECT_THAT(results.jacobians.at(1),
+              MatrixPointwise(RelativelyNear(kEpsilon), j1));
+  EXPECT_THAT(results.numeric_jacobians.at(0),
+              MatrixPointwise(RelativelyNear(kTolerance), j0));
+  EXPECT_THAT(results.numeric_jacobians.at(1),
+              MatrixPointwise(RelativelyNear(kTolerance), j1));
   EXPECT_GE(results.maximum_relative_error, 0.0);
-  EXPECT_TRUE(results.error_log.empty());
+  EXPECT_THAT(results.error_log, IsEmpty());
 
   // Test interaction with the 'check_gradients' option in Solver.
   Solver::Options solver_options;
@@ -532,28 +540,32 @@ TEST(GradientChecker, TestCorrectnessWithManifolds) {
       << results.error_log;
 
   // Check that results contain correct data.
-  ASSERT_EQ(results.return_value, true);
-  ExpectMatricesClose(
-      results.residuals, residual, std::numeric_limits<double>::epsilon());
+  ASSERT_TRUE(results.return_value);
+  EXPECT_THAT(results.residuals,
+              MatrixPointwise(RelativelyNear(kEpsilon), residual));
   CheckDimensions(results, parameter_sizes, tangent_sizes, 3);
   ASSERT_EQ(results.local_jacobians.size(), 2);
   ASSERT_EQ(results.local_numeric_jacobians.size(), 2);
-  ExpectMatricesClose(results.local_jacobians.at(0),
-                      (j0 + j0_offset) * global_to_local,
-                      kTolerance);
-  ExpectMatricesClose(results.local_jacobians.at(1),
-                      j1,
-                      std::numeric_limits<double>::epsilon());
-  ExpectMatricesClose(
-      results.local_numeric_jacobians.at(0), j0 * global_to_local, kTolerance);
-  ExpectMatricesClose(results.local_numeric_jacobians.at(1), j1, kTolerance);
-  ExpectMatricesClose(results.jacobians.at(0), j0 + j0_offset, kTolerance);
-  ExpectMatricesClose(
-      results.jacobians.at(1), j1, std::numeric_limits<double>::epsilon());
-  ExpectMatricesClose(results.numeric_jacobians.at(0), j0, kTolerance);
-  ExpectMatricesClose(results.numeric_jacobians.at(1), j1, kTolerance);
+  EXPECT_THAT(results.local_jacobians.at(0),
+              MatrixPointwise(RelativelyNear(kTolerance),
+                              (j0 + j0_offset) * global_to_local));
+  EXPECT_THAT(results.local_jacobians.at(1),
+              MatrixPointwise(RelativelyNear(kEpsilon), j1));
+  EXPECT_THAT(
+      results.local_numeric_jacobians.at(0),
+      MatrixPointwise(RelativelyNear(kTolerance), j0 * global_to_local));
+  EXPECT_THAT(results.local_numeric_jacobians.at(1),
+              MatrixPointwise(RelativelyNear(kTolerance), j1));
+  EXPECT_THAT(results.jacobians.at(0),
+              MatrixPointwise(RelativelyNear(kTolerance), j0 + j0_offset));
+  EXPECT_THAT(results.jacobians.at(1),
+              MatrixPointwise(RelativelyNear(kEpsilon), j1));
+  EXPECT_THAT(results.numeric_jacobians.at(0),
+              MatrixPointwise(RelativelyNear(kTolerance), j0));
+  EXPECT_THAT(results.numeric_jacobians.at(1),
+              MatrixPointwise(RelativelyNear(kTolerance), j1));
   EXPECT_GT(results.maximum_relative_error, 0.0);
-  EXPECT_FALSE(results.error_log.empty());
+  EXPECT_THAT(results.error_log, Not(IsEmpty()));
 
   // Test interaction with the 'check_gradients' option in Solver.
   param0_solver = param0;
@@ -571,29 +583,32 @@ TEST(GradientChecker, TestCorrectnessWithManifolds) {
       << results.error_log;
 
   // Check that results contain correct data.
-  ASSERT_EQ(results.return_value, true);
-  ExpectMatricesClose(
-      results.residuals, residual, std::numeric_limits<double>::epsilon());
+  ASSERT_TRUE(results.return_value);
+  EXPECT_THAT(results.residuals,
+              MatrixPointwise(RelativelyNear(kEpsilon), residual));
   CheckDimensions(results, parameter_sizes, tangent_sizes, 3);
   ASSERT_EQ(results.local_jacobians.size(), 2);
   ASSERT_EQ(results.local_numeric_jacobians.size(), 2);
-  ExpectMatricesClose(results.local_jacobians.at(0),
-                      (j0 + j0_offset) * manifold.global_to_local_,
-                      kTolerance);
-  ExpectMatricesClose(results.local_jacobians.at(1),
-                      j1,
-                      std::numeric_limits<double>::epsilon());
-  ExpectMatricesClose(results.local_numeric_jacobians.at(0),
-                      j0 * manifold.global_to_local_,
-                      kTolerance);
-  ExpectMatricesClose(results.local_numeric_jacobians.at(1), j1, kTolerance);
-  ExpectMatricesClose(results.jacobians.at(0), j0 + j0_offset, kTolerance);
-  ExpectMatricesClose(
-      results.jacobians.at(1), j1, std::numeric_limits<double>::epsilon());
-  ExpectMatricesClose(results.numeric_jacobians.at(0), j0, kTolerance);
-  ExpectMatricesClose(results.numeric_jacobians.at(1), j1, kTolerance);
+  EXPECT_THAT(results.local_jacobians.at(0),
+              MatrixPointwise(RelativelyNear(kTolerance),
+                              (j0 + j0_offset) * manifold.global_to_local_));
+  EXPECT_THAT(results.local_jacobians.at(1),
+              MatrixPointwise(RelativelyNear(kEpsilon), j1));
+  EXPECT_THAT(results.local_numeric_jacobians.at(0),
+              MatrixPointwise(RelativelyNear(kTolerance),
+                              j0 * manifold.global_to_local_));
+  EXPECT_THAT(results.local_numeric_jacobians.at(1),
+              MatrixPointwise(RelativelyNear(kTolerance), j1));
+  EXPECT_THAT(results.jacobians.at(0),
+              MatrixPointwise(RelativelyNear(kTolerance), j0 + j0_offset));
+  EXPECT_THAT(results.jacobians.at(1),
+              MatrixPointwise(RelativelyNear(kEpsilon), j1));
+  EXPECT_THAT(results.numeric_jacobians.at(0),
+              MatrixPointwise(RelativelyNear(kTolerance), j0));
+  EXPECT_THAT(results.numeric_jacobians.at(1),
+              MatrixPointwise(RelativelyNear(kTolerance), j1));
   EXPECT_GE(results.maximum_relative_error, 0.0);
-  EXPECT_TRUE(results.error_log.empty());
+  EXPECT_THAT(results.error_log, IsEmpty());
 
   // Test interaction with the 'check_gradients' option in Solver.
   param0_solver = param0;

@@ -37,13 +37,17 @@
 #include <limits>
 #include <vector>
 
+#include "absl/types/span.h"
 #include "ceres/function_sample.h"
 #include "ceres/test_util.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
 
 namespace {
+
+using ::testing::UnorderedElementsAre;
 
 // For IEEE-754 doubles, machine precision is about 2e-16.
 const double kEpsilon = 1e-13;
@@ -102,18 +106,17 @@ void RunPolynomialTestRealRoots(const double (&real_roots)[N],
   }
   Vector* const real_ptr = use_real ? &real : nullptr;
   Vector* const imaginary_ptr = use_imaginary ? &imaginary : nullptr;
-  bool success = FindPolynomialRoots(poly, real_ptr, imaginary_ptr);
+  ASSERT_TRUE(FindPolynomialRoots(poly, real_ptr, imaginary_ptr));
 
-  EXPECT_EQ(success, true);
   if (use_real) {
-    EXPECT_EQ(real.size(), N);
     real = SortVector(real);
-    ExpectArraysClose(N, real.data(), real_roots, epsilon);
+    EXPECT_THAT(real,
+                MatrixPointwise(RelativelyNear(epsilon),
+                                ConstVectorRef(real_roots, N)));
   }
   if (use_imaginary) {
-    EXPECT_EQ(imaginary.size(), N);
-    const Vector zeros = Vector::Zero(N);
-    ExpectArraysClose(N, imaginary.data(), zeros.data(), epsilon);
+    EXPECT_THAT(imaginary,
+                MatrixPointwise(RelativelyNear(epsilon), Vector::Zero(N)));
   }
 }
 }  // namespace
@@ -124,18 +127,15 @@ TEST(Polynomial, InvalidPolynomialOfZeroLengthIsRejected) {
   Vector poly(0, 1);
   Vector real;
   Vector imag;
-  bool success = FindPolynomialRoots(poly, &real, &imag);
-
-  EXPECT_EQ(success, false);
+  EXPECT_FALSE(FindPolynomialRoots(poly, &real, &imag));
 }
 
 TEST(Polynomial, ConstantPolynomialReturnsNoRoots) {
   Vector poly = ConstantPolynomial(1.23);
   Vector real;
   Vector imag;
-  bool success = FindPolynomialRoots(poly, &real, &imag);
+  ASSERT_TRUE(FindPolynomialRoots(poly, &real, &imag));
 
-  EXPECT_EQ(success, true);
   EXPECT_EQ(real.size(), 0);
   EXPECT_EQ(imag.size(), 0);
 }
@@ -176,16 +176,15 @@ TEST(Polynomial, QuadraticPolynomialWithComplexRootsWorks) {
 
   Vector poly = ConstantPolynomial(1.23);
   poly = AddComplexRootPair(poly, 42.42, 4.2);
-  bool success = FindPolynomialRoots(poly, &real, &imag);
+  ASSERT_TRUE(FindPolynomialRoots(poly, &real, &imag));
 
-  EXPECT_EQ(success, true);
-  EXPECT_EQ(real.size(), 2);
-  EXPECT_EQ(imag.size(), 2);
-  ExpectClose(real(0), 42.42, kEpsilon);
-  ExpectClose(real(1), 42.42, kEpsilon);
-  ExpectClose(std::abs(imag(0)), 4.2, kEpsilon);
-  ExpectClose(std::abs(imag(1)), 4.2, kEpsilon);
-  ExpectClose(std::abs(imag(0) + imag(1)), 0.0, kEpsilon);
+  EXPECT_THAT(
+      real,
+      MatrixPointwise(RelativelyNear(kEpsilon), Eigen::Vector2d(42.42, 42.42)));
+  // The complex roots form a conjugate pair.
+  EXPECT_THAT(absl::MakeConstSpan(imag),
+              UnorderedElementsAre(RelativelyNear(4.2, kEpsilon),
+                                   RelativelyNear(-4.2, kEpsilon)));
 }
 
 TEST(Polynomial, QuarticPolynomialWorks) {
@@ -234,8 +233,7 @@ TEST(Polynomial, DifferentiateConstantPolynomial) {
   Vector polynomial(1);
   polynomial(0) = 1.0;
   const Vector derivative = DifferentiatePolynomial(polynomial);
-  EXPECT_EQ(derivative.rows(), 1);
-  EXPECT_EQ(derivative(0), 0);
+  EXPECT_THAT(derivative, MatrixEq(Vector::Zero(1)));
 }
 
 TEST(Polynomial, DifferentiateQuadraticPolynomial) {
@@ -246,9 +244,7 @@ TEST(Polynomial, DifferentiateQuadraticPolynomial) {
   polynomial(2) = 3.0;
 
   const Vector derivative = DifferentiatePolynomial(polynomial);
-  EXPECT_EQ(derivative.rows(), 2);
-  EXPECT_EQ(derivative(0), 2.0);
-  EXPECT_EQ(derivative(1), 2.0);
+  EXPECT_THAT(derivative, MatrixEq(Eigen::Vector2d(2.0, 2.0)));
 }
 
 TEST(Polynomial, MinimizeConstantPolynomial) {
@@ -314,7 +310,7 @@ TEST(Polynomial, MinimizeQuadraticPolynomial) {
   EXPECT_EQ(optimal_value, 0.0);
 }
 
-TEST(Polymomial, ConstantInterpolatingPolynomial) {
+TEST(Polynomial, ConstantInterpolatingPolynomial) {
   // p(x) = 1.0
   Vector true_polynomial(1);
   true_polynomial << 1.0;
@@ -327,7 +323,7 @@ TEST(Polymomial, ConstantInterpolatingPolynomial) {
   samples.push_back(sample);
 
   const Vector polynomial = FindInterpolatingPolynomial(samples);
-  EXPECT_NEAR((true_polynomial - polynomial).norm(), 0.0, 1e-15);
+  EXPECT_THAT(polynomial, MatrixNear(true_polynomial, 1e-15));
 }
 
 TEST(Polynomial, LinearInterpolatingPolynomial) {
@@ -345,7 +341,7 @@ TEST(Polynomial, LinearInterpolatingPolynomial) {
   samples.push_back(sample);
 
   const Vector polynomial = FindInterpolatingPolynomial(samples);
-  EXPECT_NEAR((true_polynomial - polynomial).norm(), 0.0, 1e-15);
+  EXPECT_THAT(polynomial, MatrixNear(true_polynomial, 1e-15));
 }
 
 TEST(Polynomial, QuadraticInterpolatingPolynomial) {
@@ -373,7 +369,7 @@ TEST(Polynomial, QuadraticInterpolatingPolynomial) {
   }
 
   Vector polynomial = FindInterpolatingPolynomial(samples);
-  EXPECT_NEAR((true_polynomial - polynomial).norm(), 0.0, 1e-15);
+  EXPECT_THAT(polynomial, MatrixNear(true_polynomial, 1e-15));
 }
 
 TEST(Polynomial, DeficientCubicInterpolatingPolynomial) {
@@ -403,7 +399,7 @@ TEST(Polynomial, DeficientCubicInterpolatingPolynomial) {
   }
 
   const Vector polynomial = FindInterpolatingPolynomial(samples);
-  EXPECT_NEAR((true_polynomial - polynomial).norm(), 0.0, 1e-14);
+  EXPECT_THAT(polynomial, MatrixNear(true_polynomial, 1e-14));
 }
 
 TEST(Polynomial, CubicInterpolatingPolynomialFromValues) {
@@ -445,7 +441,7 @@ TEST(Polynomial, CubicInterpolatingPolynomialFromValues) {
   }
 
   const Vector polynomial = FindInterpolatingPolynomial(samples);
-  EXPECT_NEAR((true_polynomial - polynomial).norm(), 0.0, 1e-14);
+  EXPECT_THAT(polynomial, MatrixNear(true_polynomial, 1e-14));
 }
 
 TEST(Polynomial, CubicInterpolatingPolynomialFromValuesAndOneGradient) {
@@ -482,7 +478,7 @@ TEST(Polynomial, CubicInterpolatingPolynomialFromValuesAndOneGradient) {
   }
 
   const Vector polynomial = FindInterpolatingPolynomial(samples);
-  EXPECT_NEAR((true_polynomial - polynomial).norm(), 0.0, 1e-14);
+  EXPECT_THAT(polynomial, MatrixNear(true_polynomial, 1e-14));
 }
 
 TEST(Polynomial, CubicInterpolatingPolynomialFromValuesAndGradients) {
@@ -513,7 +509,7 @@ TEST(Polynomial, CubicInterpolatingPolynomialFromValuesAndGradients) {
   }
 
   const Vector polynomial = FindInterpolatingPolynomial(samples);
-  EXPECT_NEAR((true_polynomial - polynomial).norm(), 0.0, 1e-14);
+  EXPECT_THAT(polynomial, MatrixNear(true_polynomial, 1e-14));
 }
 
 }  // namespace ceres::internal

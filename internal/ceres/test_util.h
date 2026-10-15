@@ -40,7 +40,6 @@
 #include <tuple>
 #include <vector>
 
-#include "absl/log/check.h"
 #include "absl/strings/str_format.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/eigen.h"
@@ -53,34 +52,6 @@
 
 namespace ceres {
 namespace internal {
-
-// Expects that x and y have a relative difference of no more than
-// max_abs_relative_difference. If either x or y is zero, then the relative
-// difference is interpreted as an absolute difference.
-// If x and y have the same non-finite value (inf or nan) we treat them as being
-// close. In such a case no error is thrown and true is returned.
-CERES_NO_EXPORT bool ExpectClose(double x,
-                                 double y,
-                                 double max_abs_relative_difference);
-
-// Expects that for all i = 1,.., n - 1
-//
-//   |p[i] - q[i]| / max(|p[i]|, |q[i]|) < tolerance
-CERES_NO_EXPORT void ExpectArraysClose(int n,
-                                       const double* p,
-                                       const double* q,
-                                       double tolerance);
-
-// Expects that for all i = 1,.., n - 1
-//
-//   |p[i] / max_norm_p - q[i] / max_norm_q| < tolerance
-//
-// where max_norm_p and max_norm_q are the max norms of the arrays p
-// and q respectively.
-CERES_NO_EXPORT void ExpectArraysCloseUptoScale(int n,
-                                                const double* p,
-                                                const double* q,
-                                                double tolerance);
 
 // √2/2, i.e., the sine and cosine of π/4. Halving is exact in binary
 // floating-point arithmetic, so the value is correctly rounded.
@@ -289,29 +260,27 @@ class CERES_NO_EXPORT SystemTest : public ::testing::Test {
  protected:
   void SetUp() final {
     SystemTestProblem system_test_problem;
-    SolveAndEvaluateFinalResiduals(
+    ASSERT_NO_FATAL_FAILURE(SolveAndEvaluateFinalResiduals(
         *system_test_problem.mutable_solver_options(),
         system_test_problem.mutable_problem(),
-        &expected_final_residuals_);
+        &expected_final_residuals_));
   }
 
   void RunSolverForConfigAndExpectResidualsMatch(const Solver::Options& options,
                                                  Problem* problem) {
     std::vector<double> final_residuals;
-    SolveAndEvaluateFinalResiduals(options, problem, &final_residuals);
+    ASSERT_NO_FATAL_FAILURE(
+        SolveAndEvaluateFinalResiduals(options, problem, &final_residuals));
 
     // We compare solutions by comparing their residual vectors. We do
     // not compare parameter vectors because it is much more brittle
     // and error prone to do so, since the same problem can have
     // nearly the same residuals at two completely different positions
     // in parameter space.
-    CHECK_EQ(expected_final_residuals_.size(), final_residuals.size());
-    for (int i = 0; i < final_residuals.size(); ++i) {
-      EXPECT_NEAR(final_residuals[i],
-                  expected_final_residuals_[i],
-                  SystemTestProblem::kResidualTolerance)
-          << "Not close enough residual:" << i;
-    }
+    EXPECT_THAT(final_residuals,
+                ::testing::Pointwise(::testing::DoubleNear(
+                                         SystemTestProblem::kResidualTolerance),
+                                     expected_final_residuals_));
   }
 
   void SolveAndEvaluateFinalResiduals(const Solver::Options& options,
@@ -319,9 +288,12 @@ class CERES_NO_EXPORT SystemTest : public ::testing::Test {
                                       std::vector<double>* final_residuals) {
     Solver::Summary summary;
     Solve(options, problem, &summary);
-    CHECK_NE(summary.termination_type, ceres::FAILURE);
-    problem->Evaluate(
-        Problem::EvaluateOptions(), nullptr, final_residuals, nullptr, nullptr);
+    ASSERT_NE(summary.termination_type, ceres::FAILURE) << summary.message;
+    ASSERT_TRUE(problem->Evaluate(Problem::EvaluateOptions(),
+                                  nullptr,
+                                  final_residuals,
+                                  nullptr,
+                                  nullptr));
   }
 
   std::vector<double> expected_final_residuals_;

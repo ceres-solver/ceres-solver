@@ -42,11 +42,11 @@
 #include "Eigen/Core"
 #include "absl/log/log.h"
 #include "absl/strings/str_format.h"
+#include "absl/types/span.h"
 #include "ceres/constants.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/euler_angles.h"
 #include "ceres/internal/export.h"
-#include "ceres/is_close.h"
 #include "ceres/jet.h"
 #include "ceres/test_util.h"
 #include "gmock/gmock.h"
@@ -54,6 +54,10 @@
 
 namespace ceres {
 namespace internal {
+
+using ::testing::DoubleNear;
+using ::testing::ElementsAreArray;
+using ::testing::Pointwise;
 
 inline constexpr double kPi = constants::pi;
 
@@ -980,48 +984,6 @@ J4 MakeJ4(double a, double v0, double v1, double v2, double v3) {
 
 }  // namespace
 
-// Use EXPECT_THAT(x, testing::PointWise(JetClose(prec), y); to achieve Jet
-// array comparison
-MATCHER_P(JetClose, relative_precision, "") {
-  using internal::IsClose;
-  using LHSJetType = std::remove_reference_t<std::tuple_element_t<0, arg_type>>;
-  using RHSJetType = std::remove_reference_t<std::tuple_element_t<1, arg_type>>;
-
-  constexpr int kDualPartDimension = LHSJetType::DIMENSION;
-  static_assert(
-      kDualPartDimension == RHSJetType::DIMENSION,
-      "Can only compare Jets with dual parts having equal dimensions");
-  auto&& [x, y] = arg;
-  double relative_error;
-  double absolute_error;
-  if (!IsClose(
-          x.a, y.a, relative_precision, &relative_error, &absolute_error)) {
-    *result_listener << "Real part mismatch: x.a = " << x.a
-                     << " and y.a = " << y.a
-                     << " where the relative error between them is "
-                     << relative_error
-                     << " and the absolute error between them is "
-                     << absolute_error;
-    return false;
-  }
-  for (int i = 0; i < kDualPartDimension; i++) {
-    if (!IsClose(x.v[i],
-                 y.v[i],
-                 relative_precision,
-                 &relative_error,
-                 &absolute_error)) {
-      *result_listener << "Dual part mismatch: x.v[" << i << "] = " << x.v[i]
-                       << " and y.v[" << i << "] = " << y.v[i]
-                       << " where the relative error between them is "
-                       << relative_error
-                       << " and the absolute error between them is "
-                       << absolute_error;
-      return false;
-    }
-  }
-  return true;
-}
-
 // Log-10 of a value well below machine precision.
 static const int kSmallTinyCutoff = static_cast<int>(
     2 * log(std::numeric_limits<double>::epsilon()) / log(10.0));
@@ -1045,7 +1007,8 @@ TYPED_TEST(QuaternionTest, SmallAngleAxisToQuaternionForJets) {
                               MakeJ3(0, 0, sin(theta / 2) / theta, 0),
                               MakeJ3(0, 0, 0, sin(theta / 2) / theta));
     AngleAxisToQuaternion<Order>(axis_angle, quaternion);
-    EXPECT_THAT(quaternion, testing::Pointwise(JetClose(kTolerance), expected));
+    EXPECT_THAT(quaternion,
+                testing::Pointwise(JetIsClose(kTolerance), expected));
   }
 }
 
@@ -1067,7 +1030,8 @@ TYPED_TEST(QuaternionTest, TinyAngleAxisToQuaternionForJets) {
                               MakeJ3(0, 0, 0.5, 0),
                               MakeJ3(0, 0, 0, 0.5));
     AngleAxisToQuaternion<Order>(axis_angle, quaternion);
-    EXPECT_THAT(quaternion, testing::Pointwise(JetClose(kTolerance), expected));
+    EXPECT_THAT(quaternion,
+                testing::Pointwise(JetIsClose(kTolerance), expected));
   }
 }
 
@@ -1082,7 +1046,7 @@ TYPED_TEST(QuaternionTest, ZeroAngleAxisToQuaternionForJets) {
                             MakeJ3(0, 0, 0.5, 0),
                             MakeJ3(0, 0, 0, 0.5));
   AngleAxisToQuaternion<Order>(axis_angle, quaternion);
-  EXPECT_THAT(quaternion, testing::Pointwise(JetClose(kTolerance), expected));
+  EXPECT_THAT(quaternion, testing::Pointwise(JetIsClose(kTolerance), expected));
 }
 
 // Test that exact conversion works for small angles.
@@ -1105,7 +1069,8 @@ TYPED_TEST(QuaternionTest, SmallQuaternionToAngleAxisForJets) {
     };
     // clang-format on
     QuaternionToAngleAxis<Order>(quaternion.data(), axis_angle);
-    EXPECT_THAT(axis_angle, testing::Pointwise(JetClose(kTolerance), expected));
+    EXPECT_THAT(axis_angle,
+                testing::Pointwise(JetIsClose(kTolerance), expected));
   }
 }
 
@@ -1132,7 +1097,8 @@ TYPED_TEST(QuaternionTest, TinyQuaternionToAngleAxisForJets) {
     };
     // clang-format on
     QuaternionToAngleAxis<Order>(quaternion.data(), axis_angle);
-    EXPECT_THAT(axis_angle, testing::Pointwise(JetClose(kTolerance), expected));
+    EXPECT_THAT(axis_angle,
+                testing::Pointwise(JetIsClose(kTolerance), expected));
   }
 }
 
@@ -1148,7 +1114,7 @@ TYPED_TEST(QuaternionTest, ZeroQuaternionToAngleAxisForJets) {
       MakeJ4(0, 0, 0, 0, 2.0),
   };
   QuaternionToAngleAxis<Order>(quaternion.data(), axis_angle);
-  EXPECT_THAT(axis_angle, testing::Pointwise(JetClose(kTolerance), expected));
+  EXPECT_THAT(axis_angle, testing::Pointwise(JetIsClose(kTolerance), expected));
 }
 
 // The following 4 test cases cover the conversion of Euler Angles to rotation
@@ -1186,7 +1152,7 @@ TEST(EulerAngles, Intrinsic312EulerSequenceToRotationMatrixForJets) {
     };
     // clang-format on
     EXPECT_THAT(rotation_matrix,
-                testing::Pointwise(JetClose(kLooseTolerance), expected));
+                testing::Pointwise(JetIsClose(kLooseTolerance), expected));
   }
 
   ArrayToArrayOfJets(sample_euler[1], euler_angles);
@@ -1206,7 +1172,7 @@ TEST(EulerAngles, Intrinsic312EulerSequenceToRotationMatrixForJets) {
     };
     // clang-format on
     EXPECT_THAT(rotation_matrix,
-                testing::Pointwise(JetClose(kLooseTolerance), expected));
+                testing::Pointwise(JetIsClose(kLooseTolerance), expected));
   }
 
   ArrayToArrayOfJets(sample_euler[2], euler_angles);
@@ -1226,7 +1192,7 @@ TEST(EulerAngles, Intrinsic312EulerSequenceToRotationMatrixForJets) {
     };
     // clang-format on
     EXPECT_THAT(rotation_matrix,
-                testing::Pointwise(JetClose(kLooseTolerance), expected));
+                testing::Pointwise(JetIsClose(kLooseTolerance), expected));
   }
 }
 
@@ -1252,7 +1218,7 @@ TEST(EulerAngles, Extrinsic312EulerSequenceToRotationMatrixForJets) {
     };
     // clang-format on
     EXPECT_THAT(rotation_matrix,
-                testing::Pointwise(JetClose(kLooseTolerance), expected));
+                testing::Pointwise(JetIsClose(kLooseTolerance), expected));
   }
 
   ArrayToArrayOfJets(sample_euler[1], euler_angles);
@@ -1272,7 +1238,7 @@ TEST(EulerAngles, Extrinsic312EulerSequenceToRotationMatrixForJets) {
     };
     // clang-format on
     EXPECT_THAT(rotation_matrix,
-                testing::Pointwise(JetClose(kLooseTolerance), expected));
+                testing::Pointwise(JetIsClose(kLooseTolerance), expected));
   }
 
   ArrayToArrayOfJets(sample_euler[2], euler_angles);
@@ -1292,7 +1258,7 @@ TEST(EulerAngles, Extrinsic312EulerSequenceToRotationMatrixForJets) {
     };
     // clang-format on
     EXPECT_THAT(rotation_matrix,
-                testing::Pointwise(JetClose(kLooseTolerance), expected));
+                testing::Pointwise(JetIsClose(kLooseTolerance), expected));
   }
 }
 
@@ -1320,7 +1286,7 @@ TEST(EulerAngles, Intrinsic313EulerSequenceToRotationMatrixForJets) {
     };
     // clang-format on
     EXPECT_THAT(rotation_matrix,
-                testing::Pointwise(JetClose(kLooseTolerance), expected));
+                testing::Pointwise(JetIsClose(kLooseTolerance), expected));
   }
 
   ArrayToArrayOfJets(sample_euler[1], euler_angles);
@@ -1340,7 +1306,7 @@ TEST(EulerAngles, Intrinsic313EulerSequenceToRotationMatrixForJets) {
     };
     // clang-format on
     EXPECT_THAT(rotation_matrix,
-                testing::Pointwise(JetClose(kLooseTolerance), expected));
+                testing::Pointwise(JetIsClose(kLooseTolerance), expected));
   }
 
   ArrayToArrayOfJets(sample_euler[2], euler_angles);
@@ -1360,7 +1326,7 @@ TEST(EulerAngles, Intrinsic313EulerSequenceToRotationMatrixForJets) {
     };
     // clang-format on
     EXPECT_THAT(rotation_matrix,
-                testing::Pointwise(JetClose(kLooseTolerance), expected));
+                testing::Pointwise(JetIsClose(kLooseTolerance), expected));
   }
 }
 
@@ -1386,7 +1352,7 @@ TEST(EulerAngles, Extrinsic313EulerSequenceToRotationMatrixForJets) {
     };
     // clang-format on
     EXPECT_THAT(rotation_matrix,
-                testing::Pointwise(JetClose(kLooseTolerance), expected));
+                testing::Pointwise(JetIsClose(kLooseTolerance), expected));
   }
 
   ArrayToArrayOfJets(sample_euler[1], euler_angles);
@@ -1406,7 +1372,7 @@ TEST(EulerAngles, Extrinsic313EulerSequenceToRotationMatrixForJets) {
     };
     // clang-format on
     EXPECT_THAT(rotation_matrix,
-                testing::Pointwise(JetClose(kLooseTolerance), expected));
+                testing::Pointwise(JetIsClose(kLooseTolerance), expected));
   }
 
   ArrayToArrayOfJets(sample_euler[2], euler_angles);
@@ -1426,7 +1392,7 @@ TEST(EulerAngles, Extrinsic313EulerSequenceToRotationMatrixForJets) {
     };
     // clang-format on
     EXPECT_THAT(rotation_matrix,
-                testing::Pointwise(JetClose(kLooseTolerance), expected));
+                testing::Pointwise(JetIsClose(kLooseTolerance), expected));
   }
 }
 
@@ -1488,15 +1454,16 @@ TEST(EulerAngles, RotationMatrixToEulerAnglesAtGimbalLockForJets) {
   J expected_identity[3] = {J(0.0), J(0.0), J(0.0)};
   expected_identity[2].v[1] = -1.0;
   EXPECT_THAT(angles,
-              testing::Pointwise(JetClose(kTolerance), expected_identity));
+              testing::Pointwise(JetIsClose(kTolerance), expected_identity));
 
   make_matrix(kQuarterTurnAboutY, matrix);
   RotationMatrixToEulerAngles<IntrinsicZYX>(matrix.data(), angles);
   // The axes of the ZYX sequence are (0, 1, 2), i.e., R(j, k) = R(1, 2).
   J expected_quarter_turn[3] = {J(0.0), J(kPi / 2), J(0.0)};
   expected_quarter_turn[2].v[5] = -1.0;
-  EXPECT_THAT(angles,
-              testing::Pointwise(JetClose(kTolerance), expected_quarter_turn));
+  EXPECT_THAT(
+      angles,
+      testing::Pointwise(JetIsClose(kTolerance), expected_quarter_turn));
 }
 
 // Differentiating the norm at gimbal lock divides zero by zero, even if the
@@ -1545,7 +1512,7 @@ TEST(EulerAngles, RotationMatrixToIntrinsic312EulerSequenceForJets) {
     };
     // clang-format on
     EXPECT_THAT(euler_angles,
-                testing::Pointwise(JetClose(kLooseTolerance), expected));
+                testing::Pointwise(JetIsClose(kLooseTolerance), expected));
   }
 
   ArrayToArrayOfJets(sample_matrices[1], rotation_matrix);
@@ -1559,7 +1526,7 @@ TEST(EulerAngles, RotationMatrixToIntrinsic312EulerSequenceForJets) {
     };
     // clang-format on
     EXPECT_THAT(euler_angles,
-                testing::Pointwise(JetClose(kLooseTolerance), expected));
+                testing::Pointwise(JetIsClose(kLooseTolerance), expected));
   }
 
   ArrayToArrayOfJets(sample_matrices[2], rotation_matrix);
@@ -1573,7 +1540,7 @@ TEST(EulerAngles, RotationMatrixToIntrinsic312EulerSequenceForJets) {
     };
     // clang-format on
     EXPECT_THAT(euler_angles,
-                testing::Pointwise(JetClose(kLooseTolerance), expected));
+                testing::Pointwise(JetIsClose(kLooseTolerance), expected));
   }
 }
 
@@ -1593,7 +1560,7 @@ TEST(EulerAngles, RotationMatrixToExtrinsic312EulerSequenceForJets) {
     };
     // clang-format on
     EXPECT_THAT(euler_angles,
-                testing::Pointwise(JetClose(kLooseTolerance), expected));
+                testing::Pointwise(JetIsClose(kLooseTolerance), expected));
   }
 
   ArrayToArrayOfJets(sample_matrices[1], rotation_matrix);
@@ -1607,7 +1574,7 @@ TEST(EulerAngles, RotationMatrixToExtrinsic312EulerSequenceForJets) {
     };
     // clang-format on
     EXPECT_THAT(euler_angles,
-                testing::Pointwise(JetClose(kLooseTolerance), expected));
+                testing::Pointwise(JetIsClose(kLooseTolerance), expected));
   }
 
   ArrayToArrayOfJets(sample_matrices[2], rotation_matrix);
@@ -1621,7 +1588,7 @@ TEST(EulerAngles, RotationMatrixToExtrinsic312EulerSequenceForJets) {
     };
     // clang-format on
     EXPECT_THAT(euler_angles,
-                testing::Pointwise(JetClose(kLooseTolerance), expected));
+                testing::Pointwise(JetIsClose(kLooseTolerance), expected));
   }
 }
 
@@ -1644,7 +1611,7 @@ TEST(EulerAngles, RotationMatrixToIntrinsic313EulerSequenceForJets) {
     };
     // clang-format on
     EXPECT_THAT(euler_angles,
-                testing::Pointwise(JetClose(kLooseTolerance), expected));
+                testing::Pointwise(JetIsClose(kLooseTolerance), expected));
   }
 
   ArrayToArrayOfJets(sample_matrices[1], rotation_matrix);
@@ -1658,7 +1625,7 @@ TEST(EulerAngles, RotationMatrixToIntrinsic313EulerSequenceForJets) {
     };
     // clang-format on
     EXPECT_THAT(euler_angles,
-                testing::Pointwise(JetClose(kLooseTolerance), expected));
+                testing::Pointwise(JetIsClose(kLooseTolerance), expected));
   }
 
   ArrayToArrayOfJets(sample_matrices[2], rotation_matrix);
@@ -1672,7 +1639,7 @@ TEST(EulerAngles, RotationMatrixToIntrinsic313EulerSequenceForJets) {
     };
     // clang-format on
     EXPECT_THAT(euler_angles,
-                testing::Pointwise(JetClose(kLooseTolerance), expected));
+                testing::Pointwise(JetIsClose(kLooseTolerance), expected));
   }
 }
 
@@ -1692,7 +1659,7 @@ TEST(EulerAngles, RotationMatrixToExtrinsic313EulerSequenceForJets) {
     };
     // clang-format on
     EXPECT_THAT(euler_angles,
-                testing::Pointwise(JetClose(kLooseTolerance), expected));
+                testing::Pointwise(JetIsClose(kLooseTolerance), expected));
   }
 
   ArrayToArrayOfJets(sample_matrices[1], rotation_matrix);
@@ -1706,7 +1673,7 @@ TEST(EulerAngles, RotationMatrixToExtrinsic313EulerSequenceForJets) {
     };
     // clang-format on
     EXPECT_THAT(euler_angles,
-                testing::Pointwise(JetClose(kLooseTolerance), expected));
+                testing::Pointwise(JetIsClose(kLooseTolerance), expected));
   }
 
   ArrayToArrayOfJets(sample_matrices[2], rotation_matrix);
@@ -1720,7 +1687,7 @@ TEST(EulerAngles, RotationMatrixToExtrinsic313EulerSequenceForJets) {
     };
     // clang-format on
     EXPECT_THAT(euler_angles,
-                testing::Pointwise(JetClose(kLooseTolerance), expected));
+                testing::Pointwise(JetIsClose(kLooseTolerance), expected));
   }
 }
 
@@ -1747,11 +1714,15 @@ TYPED_TEST(QuaternionTest, RotatePointGivesSameAnswerAsRotationByMatrixCanned) {
   // Compute R from q and compare to known answer.
   double Rq[3][3];
   QuaternionToScaledRotation<Order>(q.data(), Rq[0]);
-  ExpectArraysClose(9, Q[0], Rq[0], kTolerance);
+  EXPECT_THAT(
+      absl::MakeConstSpan(Rq[0], 9),
+      Pointwise(RelativelyNear(kTolerance), absl::MakeConstSpan(Q[0], 9)));
 
   // Now do the same but compute R with normalization.
   QuaternionToRotation<Order>(q.data(), Rq[0]);
-  ExpectArraysClose(9, R[0], Rq[0], kTolerance);
+  EXPECT_THAT(
+      absl::MakeConstSpan(Rq[0], 9),
+      Pointwise(RelativelyNear(kTolerance), absl::MakeConstSpan(R[0], 9)));
 }
 
 TEST(Quaternion, RotatePointGivesSameAnswerForDifferentQuaternionOrders) {
@@ -1776,7 +1747,7 @@ TEST(Quaternion, RotatePointGivesSameAnswerForDifferentQuaternionOrders) {
   double result2[3];
   QuaternionRotatePoint<EigenQuaternionOrder>(q2.data(), p, result2);
 
-  ExpectArraysClose(3, result1, result2, kTolerance);
+  EXPECT_THAT(result1, Pointwise(RelativelyNear(kTolerance), result2));
 }
 
 TEST(Quaternion, RotatePointGivesSameAnswerForDifferentUnitQuaternionOrders) {
@@ -1801,7 +1772,7 @@ TEST(Quaternion, RotatePointGivesSameAnswerForDifferentUnitQuaternionOrders) {
   double result2[3];
   UnitQuaternionRotatePoint<EigenQuaternionOrder>(q2.data(), p, result2);
 
-  ExpectArraysClose(3, result1, result2, kTolerance);
+  EXPECT_THAT(result1, Pointwise(RelativelyNear(kTolerance), result2));
 }
 
 TYPED_TEST(QuaternionTest, RotatePointGivesSameAnswerAsRotationByMatrix) {
@@ -1825,7 +1796,7 @@ TYPED_TEST(QuaternionTest, RotatePointGivesSameAnswerAsRotationByMatrix) {
 
   double result2[3];
   VectorRef(result2, 3) = ConstMatrixRef(R, 3, 3) * ConstVectorRef(p, 3);
-  ExpectArraysClose(3, result1, result2, kTolerance);
+  EXPECT_THAT(result1, Pointwise(RelativelyNear(kTolerance), result2));
 }
 
 // Verify that (a * b) * c == a * (b * c).
