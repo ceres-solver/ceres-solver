@@ -36,13 +36,18 @@
 
 #include <algorithm>
 #include <cmath>
+#include <limits>
+#include <ostream>
+#include <sstream>
+#include <string>
+#include <utility>
 
 #include "absl/log/check.h"
 #include "absl/log/log.h"
 #include "absl/strings/str_format.h"
 #include "ceres/file.h"
-#include "ceres/internal/port.h"
-#include "ceres/types.h"
+#include "ceres/is_close.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 
@@ -136,6 +141,176 @@ void ExpectArraysClose(int n, const double* p, const double* q, double tol) {
                                               << "q[" << i << "]" << q[i] << " "
                                               << "tol: " << tol;
   }
+}
+
+double RelativeDifference(double x, double y) {
+  if (std::isnan(x) || std::isnan(y)) {
+    return std::isnan(x) && std::isnan(y)
+               ? 0.0
+               : std::numeric_limits<double>::quiet_NaN();
+  }
+
+  if (std::isinf(x) || std::isinf(y)) {
+    return x == y ? 0.0 : std::numeric_limits<double>::infinity();
+  }
+
+  const FloatEnvironmentScope float_environment_scope;
+  double relative_difference;
+  IsClose(x, y, 0.0, &relative_difference, nullptr);
+  return relative_difference;
+}
+
+namespace {
+
+// Explains the dimensions of actual if they differ from those of expected.
+bool MatchDimensions(const Matrix& actual,
+                     const Matrix& expected,
+                     ::testing::MatchResultListener* listener) {
+  if (actual.rows() == expected.rows() && actual.cols() == expected.cols()) {
+    return true;
+  }
+
+  *listener << absl::StrFormat(
+      "which has %d rows and %d columns instead of %d rows and %d columns",
+      actual.rows(),
+      actual.cols(),
+      expected.rows(),
+      expected.cols());
+  return false;
+}
+
+// Printing large matrices obscures the failure message.
+constexpr Eigen::Index kMaxDescribedCoefficients = 64;
+
+bool IsDescribedByCoefficients(const Matrix& expected) {
+  return expected.size() <= kMaxDescribedCoefficients;
+}
+
+// Prints the coefficients of the expected matrix on separate lines.
+std::string PrintCoefficients(const Matrix& expected) {
+  std::ostringstream stream;
+  stream << "\n" << expected;
+  return stream.str();
+}
+
+}  // namespace
+
+MatrixNearMatcher::MatrixNearMatcher(Matrix expected,
+                                     double tolerance,
+                                     bool relative)
+    : expected_(std::move(expected)),
+      tolerance_(tolerance),
+      relative_(relative) {}
+
+bool MatrixNearMatcher::MatchAndExplainMatrix(
+    const Matrix& actual, ::testing::MatchResultListener* listener) const {
+  if (!MatchDimensions(actual, expected_, listener)) {
+    return false;
+  }
+
+  const Matrix difference = actual - expected_;
+  double distance = difference.norm();
+  const double actual_norm = actual.norm();
+  const double expected_norm = expected_.norm();
+  // Relative to the zero matrix, the distance is absolute.
+  if (relative_ && std::fpclassify(actual_norm) != FP_ZERO &&
+      std::fpclassify(expected_norm) != FP_ZERO) {
+    distance /= std::max(actual_norm, expected_norm);
+  }
+
+  *listener << absl::StrFormat("which is at a %sdistance of %s",
+                               relative_ ? "relative " : "",
+                               ::testing::PrintToString(distance));
+  if (difference.size() > 0 && difference.cwiseAbs().maxCoeff() > 0) {
+    Eigen::Index row;
+    Eigen::Index col;
+    difference.cwiseAbs().maxCoeff(&row, &col);
+    *listener << absl::StrFormat(
+        " with the largest difference of %s at (%d, %d)",
+        ::testing::PrintToString(difference(row, col)),
+        row,
+        col);
+  }
+
+  return std::islessequal(distance, tolerance_);
+}
+
+void MatrixNearMatcher::DescribeTo(std::ostream* os) const {
+  Describe(os, /*negation=*/false);
+}
+
+void MatrixNearMatcher::DescribeNegationTo(std::ostream* os) const {
+  Describe(os, /*negation=*/true);
+}
+
+void MatrixNearMatcher::Describe(std::ostream* os, bool negation) const {
+  *os << absl::StrFormat("%s within a %sdistance of %s of%s",
+                         negation ? "isn't" : "is",
+                         relative_ ? "relative " : "",
+                         ::testing::PrintToString(tolerance_),
+                         IsDescribedByCoefficients(expected_)
+                             ? PrintCoefficients(expected_)
+                             : absl::StrFormat(" the %dx%d expected matrix",
+                                               expected_.rows(),
+                                               expected_.cols()));
+}
+
+MatrixPointwiseMatcher::MatrixPointwiseMatcher(TupleMatcher tuple_matcher,
+                                               Matrix expected)
+    : tuple_matcher_(std::move(tuple_matcher)),
+      expected_(std::move(expected)) {}
+
+bool MatrixPointwiseMatcher::MatchAndExplainMatrix(
+    const Matrix& actual, ::testing::MatchResultListener* listener) const {
+  if (!MatchDimensions(actual, expected_, listener)) {
+    return false;
+  }
+
+  for (Eigen::Index row = 0; row < actual.rows(); ++row) {
+    for (Eigen::Index col = 0; col < actual.cols(); ++col) {
+      ::testing::StringMatchResultListener inner_listener;
+      if (!tuple_matcher_.MatchAndExplain(
+              std::make_tuple(actual(row, col), expected_(row, col)),
+              &inner_listener)) {
+        *listener << absl::StrFormat(
+            "where the value pair (%s, %s) at (%d, %d) doesn't match",
+            ::testing::PrintToString(actual(row, col)),
+            ::testing::PrintToString(expected_(row, col)),
+            row,
+            col);
+        if (!inner_listener.str().empty()) {
+          *listener << ", " << inner_listener.str();
+        }
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+void MatrixPointwiseMatcher::DescribeTo(std::ostream* os) const {
+  *os << absl::StrFormat(
+      "is a %dx%d matrix whose coefficients and the corresponding "
+      "coefficients of%s",
+      expected_.rows(),
+      expected_.cols(),
+      IsDescribedByCoefficients(expected_)
+          ? PrintCoefficients(expected_) + "\n"
+          : std::string(" the expected matrix "));
+  tuple_matcher_.DescribeTo(os);
+}
+
+void MatrixPointwiseMatcher::DescribeNegationTo(std::ostream* os) const {
+  *os << absl::StrFormat(
+      "isn't a %dx%d matrix or has a coefficient that and the corresponding "
+      "coefficient of%s",
+      expected_.rows(),
+      expected_.cols(),
+      IsDescribedByCoefficients(expected_)
+          ? PrintCoefficients(expected_) + "\n"
+          : std::string(" the expected matrix "));
+  tuple_matcher_.DescribeNegationTo(os);
 }
 
 std::string TestFileAbsolutePath(const std::string& filename) {

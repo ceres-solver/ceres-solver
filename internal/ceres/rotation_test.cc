@@ -56,7 +56,6 @@ namespace ceres {
 namespace internal {
 
 inline constexpr double kPi = constants::pi;
-const double kHalfSqrt2 = 0.707106781186547524401;
 
 // A tolerance value for floating-point comparisons.
 static double const kTolerance = std::numeric_limits<double>::epsilon() * 10;

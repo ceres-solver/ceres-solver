@@ -33,13 +33,22 @@
 #ifndef CERES_INTERNAL_TEST_UTIL_H_
 #define CERES_INTERNAL_TEST_UTIL_H_
 
+#include <cfenv>
+#include <cmath>
+#include <ostream>
 #include <string>
+#include <tuple>
+#include <vector>
 
 #include "absl/log/check.h"
+#include "absl/strings/str_format.h"
 #include "ceres/internal/disable_warnings.h"
+#include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
+#include "ceres/jet.h"
 #include "ceres/problem.h"
 #include "ceres/solver.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -72,6 +81,198 @@ CERES_NO_EXPORT void ExpectArraysCloseUptoScale(int n,
                                                 const double* p,
                                                 const double* q,
                                                 double tolerance);
+
+// √2/2, i.e., the sine and cosine of π/4. Halving is exact in binary
+// floating-point arithmetic, so the value is correctly rounded.
+//
+// The constant is computed using mpmath by the following shell command:
+//
+// python3 - <<EOF
+// from mpmath import mp
+// mp.dps = 64
+// print(mp.sqrt(2) / 2)
+// EOF
+template <typename T>
+inline constexpr T kHalfSqrt2_v(
+    0.707106781186547524400844362104849039284835937688474036588339869L);
+inline constexpr double kHalfSqrt2 = kHalfSqrt2_v<double>;
+
+// Stores the floating-point environment including the raised floating-point
+// exceptions and the rounding mode, and restores it on destruction. Use it to
+// keep computations from leaking floating-point exceptions to the caller.
+class CERES_NO_EXPORT FloatEnvironmentScope {
+ public:
+  FloatEnvironmentScope() { std::fegetenv(&environment_); }
+  ~FloatEnvironmentScope() { std::fesetenv(&environment_); }
+
+  FloatEnvironmentScope(const FloatEnvironmentScope&) = delete;
+  FloatEnvironmentScope& operator=(const FloatEnvironmentScope&) = delete;
+
+ private:
+  std::fenv_t environment_;
+};
+
+// Returns the absolute difference between x and y divided by the larger of
+// their magnitudes. If either x or y is zero, the relative difference is the
+// absolute difference. Two equal infinities and two NaNs have a relative
+// difference of zero. Otherwise, an infinity yields an infinite and a single
+// NaN a NaN relative difference. The floating-point environment of the caller
+// is left unchanged.
+CERES_NO_EXPORT double RelativeDifference(double x, double y);
+
+// Matches a double whose RelativeDifference to expected does not exceed
+// tolerance.
+MATCHER_P2(RelativelyNear,
+           expected,
+           tolerance,
+           absl::StrFormat("%s within a relative difference of %s of %s",
+                           negation ? "isn't" : "is",
+                           ::testing::PrintToString(tolerance),
+                           ::testing::PrintToString(expected))) {
+  const double relative_difference = RelativeDifference(arg, expected);
+  *result_listener << "which is a relative difference of "
+                   << relative_difference;
+  return std::islessequal(relative_difference, tolerance);
+}
+
+// Matches a 2-tuple of doubles whose RelativeDifference does not exceed
+// tolerance. Use as
+//
+//   EXPECT_THAT(actual, Pointwise(RelativelyNear(tolerance), expected));
+MATCHER_P(RelativelyNear,
+          tolerance,
+          absl::StrFormat("%s within a relative difference of %s",
+                          negation ? "aren't" : "are",
+                          ::testing::PrintToString(tolerance))) {
+  const double relative_difference =
+      RelativeDifference(std::get<0>(arg), std::get<1>(arg));
+  *result_listener << "which is a relative difference of "
+                   << relative_difference;
+  return std::islessequal(relative_difference, tolerance);
+}
+
+// Polymorphic matcher comparing an Eigen matrix or vector to the expected one
+// by the Frobenius norm of their difference. Use the MatrixNear and
+// MatrixRelativelyNear factory functions to create it.
+class CERES_NO_EXPORT MatrixNearMatcher {
+ public:
+  MatrixNearMatcher(Matrix expected, double tolerance, bool relative);
+
+  template <typename Derived>
+  bool MatchAndExplain(const Eigen::DenseBase<Derived>& actual,
+                       ::testing::MatchResultListener* listener) const {
+    return MatchAndExplainMatrix(actual.template cast<double>(), listener);
+  }
+
+  void DescribeTo(std::ostream* os) const;
+  void DescribeNegationTo(std::ostream* os) const;
+
+ private:
+  bool MatchAndExplainMatrix(const Matrix& actual,
+                             ::testing::MatchResultListener* listener) const;
+  void Describe(std::ostream* os, bool negation) const;
+
+  Matrix expected_;
+  double tolerance_;
+  bool relative_;
+};
+
+// Matches a matrix of the same dimensions as expected with
+//
+//   ||actual - expected||_F <= tolerance.
+template <typename Derived>
+::testing::PolymorphicMatcher<MatrixNearMatcher> MatrixNear(
+    const Eigen::DenseBase<Derived>& expected, double tolerance) {
+  return ::testing::MakePolymorphicMatcher(MatrixNearMatcher(
+      expected.template cast<double>(), tolerance, /*relative=*/false));
+}
+
+// Matches a matrix of the same dimensions as expected with
+//
+//   ||actual - expected||_F <= tolerance * max(||actual||_F, ||expected||_F).
+//
+// If either matrix is zero, the distance is absolute as in MatrixNear.
+template <typename Derived>
+::testing::PolymorphicMatcher<MatrixNearMatcher> MatrixRelativelyNear(
+    const Eigen::DenseBase<Derived>& expected, double tolerance) {
+  return ::testing::MakePolymorphicMatcher(MatrixNearMatcher(
+      expected.template cast<double>(), tolerance, /*relative=*/true));
+}
+
+// Polymorphic matcher comparing each coefficient of an Eigen matrix or vector
+// to the corresponding coefficient of the expected one using a matcher of
+// 2-tuples. Use the MatrixPointwise factory function to create it.
+class CERES_NO_EXPORT MatrixPointwiseMatcher {
+ public:
+  using TupleMatcher = ::testing::Matcher<std::tuple<double, double>>;
+
+  MatrixPointwiseMatcher(TupleMatcher tuple_matcher, Matrix expected);
+
+  template <typename Derived>
+  bool MatchAndExplain(const Eigen::DenseBase<Derived>& actual,
+                       ::testing::MatchResultListener* listener) const {
+    return MatchAndExplainMatrix(actual.template cast<double>(), listener);
+  }
+
+  void DescribeTo(std::ostream* os) const;
+  void DescribeNegationTo(std::ostream* os) const;
+
+ private:
+  bool MatchAndExplainMatrix(const Matrix& actual,
+                             ::testing::MatchResultListener* listener) const;
+
+  TupleMatcher tuple_matcher_;
+  Matrix expected_;
+};
+
+// Matches a matrix of the same dimensions as expected whose coefficients and
+// the corresponding expected coefficients satisfy the 2-tuple matcher. Unlike
+// ::testing::Pointwise, it reports the row and the column of the first
+// mismatch. Use as
+//
+//   EXPECT_THAT(actual, MatrixPointwise(DoubleNear(tolerance), expected));
+//   EXPECT_THAT(actual, MatrixPointwise(RelativelyNear(tolerance), expected));
+template <typename TupleMatcher, typename Derived>
+::testing::PolymorphicMatcher<MatrixPointwiseMatcher> MatrixPointwise(
+    const TupleMatcher& tuple_matcher,
+    const Eigen::DenseBase<Derived>& expected) {
+  return ::testing::MakePolymorphicMatcher(MatrixPointwiseMatcher(
+      ::testing::MatcherCast<std::tuple<double, double>>(tuple_matcher),
+      expected.template cast<double>()));
+}
+
+// Matches a matrix of the same dimensions as expected whose coefficients are
+// equal to the corresponding expected coefficients.
+template <typename Derived>
+::testing::PolymorphicMatcher<MatrixPointwiseMatcher> MatrixEq(
+    const Eigen::DenseBase<Derived>& expected) {
+  return MatrixPointwise(::testing::Eq(), expected);
+}
+
+// Matches a Jet whose scalar part and each coefficient of whose dual part are
+// RelativelyNear the corresponding parts of expected.
+template <typename T, int N>
+auto JetIsClose(const Jet<T, N>& expected, double tolerance) {
+  return ::testing::AllOf(
+      ::testing::Field(
+          "a", &Jet<T, N>::a, RelativelyNear(expected.a, tolerance)),
+      ::testing::Field("v",
+                       &Jet<T, N>::v,
+                       MatrixPointwise(RelativelyNear(tolerance), expected.v)));
+}
+
+// Matches a 2-tuple of Jets satisfying JetIsClose. Use as
+//
+//   EXPECT_THAT(actual, Pointwise(JetIsClose(tolerance), expected));
+MATCHER_P(JetIsClose,
+          tolerance,
+          absl::StrFormat("%s within a relative difference of %s",
+                          negation ? "aren't" : "are",
+                          ::testing::PrintToString(tolerance))) {
+  return ::testing::ExplainMatchResult(JetIsClose(std::get<1>(arg), tolerance),
+                                       std::get<0>(arg),
+                                       result_listener);
+}
 
 // Construct a fully qualified path for the test file depending on the
 // local build/testing environment.
