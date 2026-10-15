@@ -22,6 +22,30 @@
       },
       "revId": "de09e3e4fbab66c05e6ea3a2ad762d027b0c92cd",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8057d5f_be81b03d",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 5241380
+      },
+      "writtenOn": "2026-10-15T04:13:37Z",
+      "side": 1,
+      "message": "For a tall Jacobian, max(num_rows, num_cols) - null_space_rank keeps up to num_rows - num_cols more modes than requested. In TruncatedRank (8x6 J, null_space_rank \u003d 1) it gives 7, so all six modes are kept and the expected covariance, which drops the smallest eigenvector, no longer matches. J\u0027J is num_cols x num_cols whatever the number of rows, so its null space counts against num_cols, and for square and wide Jacobians max(num_rows, num_cols) is num_cols anyway.",
+      "parentUuid": "e5336860_fbb3034a",
+      "range": {
+        "startLine": 752,
+        "startChar": 41,
+        "endLine": 752,
+        "endChar": 49
+      },
+      "revId": "de09e3e4fbab66c05e6ea3a2ad762d027b0c92cd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
