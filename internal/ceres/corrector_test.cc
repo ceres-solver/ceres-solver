@@ -35,7 +35,10 @@
 #include <cstring>
 #include <random>
 
+#include "absl/strings/str_format.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/test_util.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -162,6 +165,7 @@ TEST(Corrector, MultidimensionalGaussNewtonApproximation) {
   std::mt19937 prng;
   std::uniform_real_distribution<double> uniform01(0.0, 1.0);
   for (int iter = 0; iter < 10000; ++iter) {
+    SCOPED_TRACE(absl::StrFormat("iteration %d", iter));
     // Initialize the jacobian and residual.
     for (double& jacobian_entry : jacobian) jacobian_entry = uniform01(prng);
     for (double& residual : residuals) residual = uniform01(prng);
@@ -197,10 +201,10 @@ TEST(Corrector, MultidimensionalGaussNewtonApproximation) {
     c_grad = jac.transpose() * res;
     c_hess = jac.transpose() * jac;
 
-    ASSERT_NEAR((g_res - res).norm(), 0.0, 1e-10);
-    ASSERT_NEAR((g_jac - jac).norm(), 0.0, 1e-10);
+    ASSERT_THAT(res, MatrixNear(g_res, 1e-10));
+    ASSERT_THAT(jac, MatrixNear(g_jac, 1e-10));
 
-    ASSERT_NEAR((g_grad - c_grad).norm(), 0.0, 1e-10);
+    ASSERT_THAT(c_grad, MatrixNear(g_grad, 1e-10));
   }
 }
 
@@ -230,6 +234,7 @@ TEST(Corrector, MultidimensionalGaussNewtonApproximationZeroResidual) {
   std::mt19937 prng;
   std::uniform_real_distribution<double> uniform01(0.0, 1.0);
   for (int iter = 0; iter < 10000; ++iter) {
+    SCOPED_TRACE(absl::StrFormat("iteration %d", iter));
     // Initialize the jacobian.
     for (double& jacobian_entry : jacobian) jacobian_entry = uniform01(prng);
 
@@ -259,11 +264,11 @@ TEST(Corrector, MultidimensionalGaussNewtonApproximationZeroResidual) {
     c_grad = jac.transpose() * res;
     c_hess = jac.transpose() * jac;
 
-    ASSERT_NEAR((g_res - res).norm(), 0.0, 1e-10);
-    ASSERT_NEAR((g_jac - jac).norm(), 0.0, 1e-10);
+    ASSERT_THAT(res, MatrixNear(g_res, 1e-10));
+    ASSERT_THAT(jac, MatrixNear(g_jac, 1e-10));
 
-    ASSERT_NEAR((g_grad - c_grad).norm(), 0.0, 1e-10);
-    ASSERT_NEAR((g_hess - c_hess).norm(), 0.0, 1e-10);
+    ASSERT_THAT(c_grad, MatrixNear(g_grad, 1e-10));
+    ASSERT_THAT(c_hess, MatrixNear(g_hess, 1e-10));
   }
 }
 

@@ -35,9 +35,13 @@
 #include "ceres/array_utils.h"
 #include "ceres/first_order_function.h"
 #include "ceres/types.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
+
+using ::testing::DoubleNear;
+using ::testing::Pointwise;
 
 class QuadraticCostFunctor {
  public:
@@ -68,10 +72,10 @@ TEST(NumericDiffFirstOrderFunction, BilinearDifferentiationTestStatic) {
   EXPECT_EQ(cost, 13.0);
 
   const double kTolerance = 1e-9;
-  EXPECT_NEAR(gradient[0], parameters[1], kTolerance);
-  EXPECT_NEAR(gradient[1], parameters[0], kTolerance);
-  EXPECT_NEAR(gradient[2], parameters[3], kTolerance);
-  EXPECT_NEAR(gradient[3], parameters[2], kTolerance);
+  EXPECT_THAT(
+      gradient,
+      Pointwise(DoubleNear(kTolerance),
+                {parameters[1], parameters[0], parameters[3], parameters[2]}));
 }
 
 TEST(NumericDiffFirstOrderFunction, BilinearDifferentiationTestDynamic) {
@@ -92,10 +96,10 @@ TEST(NumericDiffFirstOrderFunction, BilinearDifferentiationTestDynamic) {
   EXPECT_EQ(cost, 13.0);
 
   const double kTolerance = 1e-9;
-  EXPECT_NEAR(gradient[0], parameters[1], kTolerance);
-  EXPECT_NEAR(gradient[1], parameters[0], kTolerance);
-  EXPECT_NEAR(gradient[2], parameters[3], kTolerance);
-  EXPECT_NEAR(gradient[3], parameters[2], kTolerance);
+  EXPECT_THAT(
+      gradient,
+      Pointwise(DoubleNear(kTolerance),
+                {parameters[1], parameters[0], parameters[3], parameters[2]}));
 }
 
 TEST(NumericDiffFirstOrderFunction, OwnershipTest) {

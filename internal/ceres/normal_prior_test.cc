@@ -34,11 +34,16 @@
 #include <cstddef>
 #include <random>
 
+#include "absl/strings/str_format.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/test_util.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {
+
+constexpr double kTolerance = 1e-10;
 
 TEST(NormalPriorTest, ResidualAtRandomPosition) {
   std::mt19937 prng;
@@ -46,6 +51,7 @@ TEST(NormalPriorTest, ResidualAtRandomPosition) {
   auto randu = [&distribution, &prng] { return distribution(prng); };
   for (int num_rows = 1; num_rows < 5; ++num_rows) {
     for (int num_cols = 1; num_cols < 5; ++num_cols) {
+      SCOPED_TRACE(absl::StrFormat("%d rows, %d columns", num_rows, num_cols));
       Vector b(num_cols);
       b.setRandom();
       Matrix A(num_rows, num_cols);
@@ -58,17 +64,12 @@ TEST(NormalPriorTest, ResidualAtRandomPosition) {
       Vector residuals(num_rows);
 
       NormalPrior prior(A, b);
-      prior.Evaluate(&x, residuals.data(), &jacobian);
+      ASSERT_TRUE(prior.Evaluate(&x, residuals.data(), &jacobian));
 
-      // Compare the norm of the residual
-      double residual_diff_norm =
-          (residuals - A * (VectorRef(x, num_cols) - b)).squaredNorm();
-      EXPECT_NEAR(residual_diff_norm, 0, 1e-10);
-
-      // Compare the jacobians
-      MatrixRef J(jacobian, num_rows, num_cols);
-      double jacobian_diff_norm = (J - A).norm();
-      EXPECT_NEAR(jacobian_diff_norm, 0.0, 1e-10);
+      EXPECT_THAT(residuals,
+                  MatrixNear(A * (VectorRef(x, num_cols) - b), kTolerance));
+      EXPECT_THAT(MatrixRef(jacobian, num_rows, num_cols),
+                  MatrixNear(A, kTolerance));
 
       delete[] x;
       delete[] jacobian;
@@ -82,6 +83,7 @@ TEST(NormalPriorTest, ResidualAtRandomPositionNullJacobians) {
   auto randu = [&distribution, &prng] { return distribution(prng); };
   for (int num_rows = 1; num_rows < 5; ++num_rows) {
     for (int num_cols = 1; num_cols < 5; ++num_cols) {
+      SCOPED_TRACE(absl::StrFormat("%d rows, %d columns", num_rows, num_cols));
       Vector b(num_cols);
       b.setRandom();
       Matrix A(num_rows, num_cols);
@@ -96,18 +98,13 @@ TEST(NormalPriorTest, ResidualAtRandomPositionNullJacobians) {
       Vector residuals(num_rows);
 
       NormalPrior prior(A, b);
-      prior.Evaluate(&x, residuals.data(), jacobians);
+      ASSERT_TRUE(prior.Evaluate(&x, residuals.data(), jacobians));
+      EXPECT_THAT(residuals,
+                  MatrixNear(A * (VectorRef(x, num_cols) - b), kTolerance));
 
-      // Compare the norm of the residual
-      double residual_diff_norm =
-          (residuals - A * (VectorRef(x, num_cols) - b)).squaredNorm();
-      EXPECT_NEAR(residual_diff_norm, 0, 1e-10);
-
-      prior.Evaluate(&x, residuals.data(), nullptr);
-      // Compare the norm of the residual
-      residual_diff_norm =
-          (residuals - A * (VectorRef(x, num_cols) - b)).squaredNorm();
-      EXPECT_NEAR(residual_diff_norm, 0, 1e-10);
+      ASSERT_TRUE(prior.Evaluate(&x, residuals.data(), nullptr));
+      EXPECT_THAT(residuals,
+                  MatrixNear(A * (VectorRef(x, num_cols) - b), kTolerance));
 
       delete[] x;
     }

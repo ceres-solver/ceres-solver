@@ -588,9 +588,7 @@ TEST(Rotation, AngleAxisToRotationMatrixAndBack) {
     ASSERT_THAT(matrix, IsOrthonormal());
     RotationMatrixToAngleAxis(matrix, round_trip);
 
-    for (int i = 0; i < 3; ++i) {
-      EXPECT_NEAR(round_trip[i], axis_angle[i], kLooseTolerance);
-    }
+    EXPECT_THAT(round_trip, Pointwise(DoubleNear(kLooseTolerance), axis_angle));
   }
 }
 
@@ -626,10 +624,9 @@ TEST(Rotation, AngleAxisToRotationMatrixAndBackNearZero) {
     ASSERT_THAT(matrix, IsOrthonormal());
     RotationMatrixToAngleAxis(matrix, round_trip);
 
-    for (int i = 0; i < 3; ++i) {
-      EXPECT_NEAR(
-          round_trip[i], axis_angle[i], std::numeric_limits<double>::epsilon());
-    }
+    EXPECT_THAT(round_trip,
+                Pointwise(DoubleNear(std::numeric_limits<double>::epsilon()),
+                          axis_angle));
   }
 }
 
@@ -1843,10 +1840,10 @@ TYPED_TEST(QuaternionTest, UnitConjugationIdentity) {
   double c[4];
   QuaternionProduct<Order>(a, b, c);
 
-  EXPECT_NEAR(c[Order::kW], 1, kTolerance);
-  EXPECT_NEAR(c[Order::kX], 0, kTolerance);
-  EXPECT_NEAR(c[Order::kY], 0, kTolerance);
-  EXPECT_NEAR(c[Order::kZ], 0, kTolerance);
+  // The product of a unit quaternion and its conjugate is the identity.
+  const std::array<double, 4> identity =
+      MakeQuaternion<Order>(1.0, 0.0, 0.0, 0.0);
+  EXPECT_THAT(c, Pointwise(DoubleNear(kTolerance), identity));
 }
 
 TEST(AngleAxis, RotatePointGivesSameAnswerAsRotationMatrix) {
@@ -1881,18 +1878,11 @@ TEST(AngleAxis, RotatePointGivesSameAnswerAsRotationMatrix) {
       // destination
       for (double* const dst : {angle_axis_rotated_p, angle_axis}) {
         AngleAxisRotatePoint(angle_axis, p, dst);
-        for (int k = 0; k < 3; ++k) {
-          // clang-format off
-          EXPECT_NEAR(rotation_matrix_rotated_p[k],
-                      dst[k],
-                      kTolerance) << "p: " << p[0]
-                                  << " " << p[1]
-                                  << " " << p[2]
-                                  << " angle_axis: " << angle_axis[0]
-                                  << " " << angle_axis[1]
-                                  << " " << angle_axis[2];
-          // clang-format on
-        }
+        EXPECT_THAT(
+            absl::MakeConstSpan(dst, 3),
+            Pointwise(DoubleNear(kTolerance), rotation_matrix_rotated_p))
+            << "p: " << ::testing::PrintToString(p)
+            << " angle_axis: " << ::testing::PrintToString(angle_axis);
       }
     }
   }
@@ -1946,18 +1936,10 @@ TEST(AngleAxis, NearZeroRotatePointGivesSameAnswerAsRotationMatrix) {
     // destination
     for (double* const dst : {angle_axis_rotated_p, angle_axis}) {
       AngleAxisRotatePoint(angle_axis, p, dst);
-      for (int k = 0; k < 3; ++k) {
-        // clang-format off
-        EXPECT_NEAR(rotation_matrix_rotated_p[k],
-                    dst[k],
-                    kTolerance) << "p: " << p[0]
-                                << " " << p[1]
-                                << " " << p[2]
-                                << " angle_axis: " << angle_axis[0]
-                                << " " << angle_axis[1]
-                                << " " << angle_axis[2];
-        // clang-format on
-      }
+      EXPECT_THAT(absl::MakeConstSpan(dst, 3),
+                  Pointwise(DoubleNear(kTolerance), rotation_matrix_rotated_p))
+          << "p: " << ::testing::PrintToString(p)
+          << " angle_axis: " << ::testing::PrintToString(angle_axis);
     }
   }
 }
@@ -2004,9 +1986,7 @@ TEST(MatrixAdapter, RowMajor2x4IsCorrect) {
   M(0, 0) = 1; M(0, 1) = 2; M(0, 2) = 3; M(0, 3) = 4;
   M(1, 0) = 5; M(1, 1) = 6; M(1, 2) = 7; M(1, 3) = 8;
   // clang-format on
-  for (int k = 0; k < 8; ++k) {
-    EXPECT_EQ(array[k], expected[k]);
-  }
+  EXPECT_THAT(array, ElementsAreArray(expected));
 }
 
 TEST(MatrixAdapter, ColumnMajor2x4IsCorrect) {
@@ -2017,9 +1997,7 @@ TEST(MatrixAdapter, ColumnMajor2x4IsCorrect) {
   M(0, 0) = 1; M(0, 1) = 2; M(0, 2) = 3; M(0, 3) = 4;
   M(1, 0) = 5; M(1, 1) = 6; M(1, 2) = 7; M(1, 3) = 8;
   // clang-format on
-  for (int k = 0; k < 8; ++k) {
-    EXPECT_EQ(array[k], expected[k]);
-  }
+  EXPECT_THAT(array, ElementsAreArray(expected));
 }
 
 TEST(RotationMatrixToAngleAxis, NearPiExampleOneFromTobiasStrauss) {

@@ -32,11 +32,15 @@
 
 #include <memory>
 
+#include "absl/types/span.h"
 #include "ceres/array_utils.h"
 #include "ceres/cost_function.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
+
+using ::testing::ElementsAre;
 
 class BinaryScalarCost {
  public:
@@ -72,16 +76,14 @@ TEST(AutodiffCostFunction, BilinearDifferentiationTest) {
 
   double residuals = 0.0;
 
-  cost_function->Evaluate(parameters, &residuals, nullptr);
-  EXPECT_EQ(10.0, residuals);
+  ASSERT_TRUE(cost_function->Evaluate(parameters, &residuals, nullptr));
+  EXPECT_EQ(residuals, 10.0);
 
-  cost_function->Evaluate(parameters, &residuals, jacobians);
-  EXPECT_EQ(10.0, residuals);
+  ASSERT_TRUE(cost_function->Evaluate(parameters, &residuals, jacobians));
+  EXPECT_EQ(residuals, 10.0);
 
-  EXPECT_EQ(3, jacobians[0][0]);
-  EXPECT_EQ(4, jacobians[0][1]);
-  EXPECT_EQ(1, jacobians[1][0]);
-  EXPECT_EQ(2, jacobians[1][1]);
+  EXPECT_THAT(absl::MakeConstSpan(jacobians[0], 2), ElementsAre(3, 4));
+  EXPECT_THAT(absl::MakeConstSpan(jacobians[1], 2), ElementsAre(1, 2));
 
   delete[] jacobians[0];
   delete[] jacobians[1];
@@ -100,7 +102,7 @@ TEST(AutodiffCostFunction, OwnershipTest) {
     double parameters_data[4] = {1.0, 2.0, 3.0, 4.0};
     double* parameters[2] = {parameters_data, parameters_data + 2};
     double residuals;
-    cost_function.Evaluate(parameters, &residuals, nullptr);
+    ASSERT_TRUE(cost_function.Evaluate(parameters, &residuals, nullptr));
     EXPECT_EQ(residuals, 10.0);
   }
 }
@@ -112,7 +114,7 @@ TEST(AutodiffCostFunction, UniquePtrTest) {
   double parameters_data[4] = {1.0, 2.0, 3.0, 4.0};
   double* parameters[2] = {parameters_data, parameters_data + 2};
   double residuals;
-  cost_function->Evaluate(parameters, &residuals, nullptr);
+  ASSERT_TRUE(cost_function->Evaluate(parameters, &residuals, nullptr));
   EXPECT_EQ(residuals, 10.0);
 }
 
@@ -159,13 +161,13 @@ TEST(AutodiffCostFunction, ManyParameterAutodiffInstantiates) {
 
   double residuals = 0.0;
 
-  cost_function->Evaluate(parameters, &residuals, nullptr);
-  EXPECT_EQ(45.0, residuals);
+  ASSERT_TRUE(cost_function->Evaluate(parameters, &residuals, nullptr));
+  EXPECT_EQ(residuals, 45.0);
 
-  cost_function->Evaluate(parameters, &residuals, jacobians);
+  ASSERT_TRUE(cost_function->Evaluate(parameters, &residuals, jacobians));
   EXPECT_EQ(residuals, 45.0);
   for (int i = 0; i < 10; ++i) {
-    EXPECT_EQ(1.0, jacobians[i][0]);
+    EXPECT_EQ(jacobians[i][0], 1.0) << "jacobian " << i;
   }
 
   for (int i = 0; i < 10; ++i) {

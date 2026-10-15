@@ -32,10 +32,12 @@
 
 #include <cfloat>
 #include <cmath>
-#include <cstring>
+#include <cstdint>
 #include <limits>
 #include <type_traits>
 
+#include "absl/base/casts.h"
+#include "absl/strings/str_format.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
@@ -51,9 +53,17 @@ template <typename T>
 inline constexpr T kSqrt3(
     1.732050807568877293527446341505872366942805253810380628055806979L);
 
+using ::testing::IsNan;
+
 // Matches if the argument is at most n floating-point values away from the
 // expected value.
-MATCHER_P2(MaxNumUlp, expected, n, "") {
+MATCHER_P2(MaxNumUlp,
+           expected,
+           n,
+           absl::StrFormat("%s within %d ULP of %s",
+                           negation ? "isn't" : "is",
+                           n,
+                           ::testing::PrintToString(expected))) {
   using Scalar = std::decay_t<decltype(arg)>;
   const Scalar target = static_cast<Scalar>(expected);
   Scalar value = arg;
@@ -62,8 +72,6 @@ MATCHER_P2(MaxNumUlp, expected, n, "") {
     value = std::nextafter(value, target);
   }
 
-  *result_listener << "actual " << arg << " is not within " << n
-                   << " ULP of expected " << target;
   return value == target;
 }
 
@@ -159,20 +167,20 @@ TYPED_TEST(AccurateNormTest, Norm) {
   EXPECT_THAT(ceres::AccurateNorm(Scalar{0}, Scalar{0}),
               MaxNumUlp(Scalar{0}, 0));
 
-  EXPECT_TRUE(std::isinf(
-      ceres::AccurateNorm(+std::numeric_limits<Scalar>::infinity(), 0)));
-  EXPECT_TRUE(std::isinf(
-      ceres::AccurateNorm(-std::numeric_limits<Scalar>::infinity(), 0)));
+  EXPECT_EQ(ceres::AccurateNorm(+std::numeric_limits<Scalar>::infinity(), 0),
+            std::numeric_limits<Scalar>::infinity());
+  EXPECT_EQ(ceres::AccurateNorm(-std::numeric_limits<Scalar>::infinity(), 0),
+            std::numeric_limits<Scalar>::infinity());
 
-  EXPECT_TRUE(std::isinf(
-      ceres::AccurateNorm(0, +std::numeric_limits<Scalar>::infinity())));
-  EXPECT_TRUE(std::isinf(
-      ceres::AccurateNorm(0, -std::numeric_limits<Scalar>::infinity())));
+  EXPECT_EQ(ceres::AccurateNorm(0, +std::numeric_limits<Scalar>::infinity()),
+            std::numeric_limits<Scalar>::infinity());
+  EXPECT_EQ(ceres::AccurateNorm(0, -std::numeric_limits<Scalar>::infinity()),
+            std::numeric_limits<Scalar>::infinity());
 
-  EXPECT_TRUE(std::isnan(
-      ceres::AccurateNorm(std::numeric_limits<Scalar>::quiet_NaN(), 0)));
-  EXPECT_TRUE(std::isnan(
-      ceres::AccurateNorm(0, std::numeric_limits<Scalar>::quiet_NaN())));
+  EXPECT_THAT(ceres::AccurateNorm(std::numeric_limits<Scalar>::quiet_NaN(), 0),
+              IsNan());
+  EXPECT_THAT(ceres::AccurateNorm(0, std::numeric_limits<Scalar>::quiet_NaN()),
+              IsNan());
 }
 
 TYPED_TEST(AccurateNormTest, RNorm) {
@@ -207,7 +215,7 @@ TYPED_TEST(AccurateNormTest, RNorm) {
   EXPECT_THAT(ceres::AccurateRNorm(Scalar{0}, Scalar{0}, this->kHuge),
               MaxNumUlp(1 / this->kHuge, 0));
 
-  EXPECT_TRUE(std::isnan(ceres::AccurateRNorm(0, 0)));
+  EXPECT_THAT(ceres::AccurateRNorm(0, 0), IsNan());
 
   const auto large = std::sqrt(this->kHuge / 2);
   EXPECT_THAT(ceres::AccurateRNorm(large, large),
@@ -230,10 +238,10 @@ TYPED_TEST(AccurateNormTest, RNorm) {
   EXPECT_EQ(ceres::AccurateRNorm(nan, infinity, Scalar{1}), Scalar{0});
   EXPECT_EQ(ceres::AccurateRNorm(infinity, nan, Scalar{1}), Scalar{0});
 
-  EXPECT_TRUE(std::isnan(
-      ceres::AccurateRNorm(std::numeric_limits<Scalar>::quiet_NaN(), 0)));
-  EXPECT_TRUE(std::isnan(
-      ceres::AccurateRNorm(0, std::numeric_limits<Scalar>::quiet_NaN())));
+  EXPECT_THAT(ceres::AccurateRNorm(std::numeric_limits<Scalar>::quiet_NaN(), 0),
+              IsNan());
+  EXPECT_THAT(ceres::AccurateRNorm(0, std::numeric_limits<Scalar>::quiet_NaN()),
+              IsNan());
 }
 
 TEST(AccurateNorm, ReciprocalNormSmallArguments) {
@@ -653,9 +661,9 @@ TEST(AccurateNorm, NonfiniteArgumentHandling) {
   EXPECT_EQ(ceres::AccurateNorm(kNaN, kInfinity, 1.0), kInfinity);
   EXPECT_EQ(ceres::AccurateNorm(kInfinity, kNaN, 1.0), kInfinity);
 
-  EXPECT_TRUE(std::isnan(ceres::AccurateNorm(kNaN, kNaN, 1.0)));
-  EXPECT_TRUE(std::isnan(ceres::AccurateNorm(1.0, kNaN, kNaN)));
-  EXPECT_TRUE(std::isnan(ceres::AccurateNorm(kNaN, 1.0, kNaN)));
+  EXPECT_THAT(ceres::AccurateNorm(kNaN, kNaN, 1.0), IsNan());
+  EXPECT_THAT(ceres::AccurateNorm(1.0, kNaN, kNaN), IsNan());
+  EXPECT_THAT(ceres::AccurateNorm(kNaN, 1.0, kNaN), IsNan());
 }
 
 TEST(AccurateNorm, PreservesNaNPayloadAcrossArity) {
@@ -663,11 +671,13 @@ TEST(AccurateNorm, PreservesNaNPayloadAcrossArity) {
 
   const double norm = ceres::AccurateNorm(nan, 1.0);
   const double variadic_norm = ceres::AccurateNorm(nan, 1.0, 2.0);
-  EXPECT_EQ(std::memcmp(&variadic_norm, &norm, sizeof(double)), 0);
+  EXPECT_EQ(absl::bit_cast<std::uint64_t>(variadic_norm),
+            absl::bit_cast<std::uint64_t>(norm));
 
   const double rnorm = ceres::AccurateRNorm(nan, 1.0);
   const double variadic_rnorm = ceres::AccurateRNorm(nan, 1.0, 2.0);
-  EXPECT_EQ(std::memcmp(&variadic_rnorm, &rnorm, sizeof(double)), 0);
+  EXPECT_EQ(absl::bit_cast<std::uint64_t>(variadic_rnorm),
+            absl::bit_cast<std::uint64_t>(rnorm));
 }
 
 TEST(AccurateNorm, PreservesNaNPayloadOfAnyArgument) {
@@ -676,8 +686,10 @@ TEST(AccurateNorm, PreservesNaNPayloadOfAnyArgument) {
 
   const double first = ceres::AccurateNorm(nan, 1.0, 2.0);
   const double last = ceres::AccurateNorm(1.0, 2.0, nan);
-  EXPECT_EQ(std::memcmp(&first, &expected, sizeof(double)), 0);
-  EXPECT_EQ(std::memcmp(&last, &expected, sizeof(double)), 0);
+  EXPECT_EQ(absl::bit_cast<std::uint64_t>(first),
+            absl::bit_cast<std::uint64_t>(expected));
+  EXPECT_EQ(absl::bit_cast<std::uint64_t>(last),
+            absl::bit_cast<std::uint64_t>(expected));
 }
 
 #endif
