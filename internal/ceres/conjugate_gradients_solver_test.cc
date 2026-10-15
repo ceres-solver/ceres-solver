@@ -38,11 +38,15 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
 #include "ceres/preconditioner.h"
+#include "ceres/test_util.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
+
+using ::testing::DoubleEq;
 
 TEST(ConjugateGradientTest, Solves3x3IdentitySystem) {
   double diagonal[] = {1.0, 1.0, 1.0};
@@ -82,9 +86,7 @@ TEST(ConjugateGradientTest, Solves3x3IdentitySystem) {
   EXPECT_EQ(summary.termination_type, LinearSolverTerminationType::SUCCESS);
   ASSERT_EQ(summary.num_iterations, 1);
 
-  ASSERT_DOUBLE_EQ(1, x(0));
-  ASSERT_DOUBLE_EQ(2, x(1));
-  ASSERT_DOUBLE_EQ(3, x(2));
+  EXPECT_THAT(x, MatrixPointwise(DoubleEq(), Eigen::Vector3d(1.0, 2.0, 3.0)));
 }
 
 TEST(ConjugateGradientTest, Solves3x3SymmetricSystem) {
@@ -147,9 +149,7 @@ TEST(ConjugateGradientTest, Solves3x3SymmetricSystem) {
 
   EXPECT_EQ(summary.termination_type, LinearSolverTerminationType::SUCCESS);
 
-  ASSERT_DOUBLE_EQ(0, x(0));
-  ASSERT_DOUBLE_EQ(1, x(1));
-  ASSERT_DOUBLE_EQ(2, x(2));
+  EXPECT_THAT(x, MatrixPointwise(DoubleEq(), Eigen::Vector3d(0.0, 1.0, 2.0)));
 }
 
 }  // namespace ceres::internal

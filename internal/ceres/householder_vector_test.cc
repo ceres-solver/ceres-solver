@@ -31,9 +31,13 @@
 #include "ceres/internal/householder_vector.h"
 
 #include "ceres/internal/eigen.h"
+#include "ceres/test_util.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
+
+using ::testing::DoubleNear;
 
 static void HouseholderTestHelper(const Vector& x) {
   const double kTolerance = 1e-14;
@@ -53,9 +57,7 @@ static void HouseholderTestHelper(const Vector& x) {
   expected_result(x.rows() - 1) = 1;
   expected_result *= x.norm();
 
-  for (int i = 0; i < x.rows(); ++i) {
-    EXPECT_NEAR(expected_result[i], result[i], kTolerance);
-  }
+  EXPECT_THAT(result, MatrixPointwise(DoubleNear(kTolerance), expected_result));
 }
 
 TEST(HouseholderVector, ZeroPositive) {

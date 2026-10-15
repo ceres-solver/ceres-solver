@@ -41,8 +41,10 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/linear_solver.h"
+#include "ceres/test_util.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
@@ -101,15 +103,10 @@ TEST_P(DenseLinearSolverTest, SolvesNormalEquations) {
     normal_lhs += diagonal.array().square().matrix().asDiagonal();
   }
 
-  Vector actual_normal_rhs = normal_lhs * solution;
-
-  const double normalized_residual =
-      (normal_rhs - actual_normal_rhs).norm() / normal_rhs.norm();
-
-  EXPECT_NEAR(
-      normalized_residual, 0.0, 10 * std::numeric_limits<double>::epsilon())
-      << "\nexpected: " << normal_rhs.transpose()
-      << "\nactual: " << actual_normal_rhs.transpose();
+  const Vector actual_normal_rhs = normal_lhs * solution;
+  EXPECT_THAT(actual_normal_rhs,
+              MatrixRelativelyNear(
+                  normal_rhs, 10 * std::numeric_limits<double>::epsilon()));
 }
 
 namespace {

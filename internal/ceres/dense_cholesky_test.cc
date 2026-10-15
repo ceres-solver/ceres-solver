@@ -39,11 +39,13 @@
 
 #include "Eigen/Core"
 #include "Eigen/Dense"
+#include "absl/strings/str_format.h"
 #include "ceres/context_impl.h"
 #include "ceres/internal/config.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/iterative_refiner.h"
 #include "ceres/linear_solver.h"
+#include "ceres/test_util.h"
 #include "ceres/types.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
@@ -95,6 +97,7 @@ TEST_P(DenseCholeskyTest, FactorAndSolve) {
   const int kMaxNumCols = 10;
   for (int num_cols = kMinNumCols; num_cols < kMaxNumCols; ++num_cols) {
     for (int trial = 0; trial < kNumTrials; ++trial) {
+      SCOPED_TRACE(absl::StrFormat("%d columns, trial %d", num_cols, trial));
       const MatrixType a = MatrixType::Random(num_cols, num_cols);
       MatrixType lhs = a.transpose() * a;
       lhs += VectorType::Ones(num_cols).asDiagonal();
@@ -107,11 +110,9 @@ TEST_P(DenseCholeskyTest, FactorAndSolve) {
       summary.termination_type = dense_cholesky->FactorAndSolve(
           num_cols, lhs.data(), rhs.data(), actual.data(), &summary.message);
       EXPECT_EQ(summary.termination_type, LinearSolverTerminationType::SUCCESS);
-      EXPECT_NEAR((x - actual).norm() / x.norm(),
-                  0.0,
-                  std::numeric_limits<double>::epsilon() * 10)
-          << "\nexpected: " << x.transpose()
-          << "\nactual  : " << actual.transpose();
+      EXPECT_THAT(
+          actual,
+          MatrixRelativelyNear(x, std::numeric_limits<double>::epsilon() * 10));
     }
   }
 }

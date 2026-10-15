@@ -39,12 +39,16 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/linear_solver.h"
+#include "ceres/test_util.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {
+
+using ::testing::DoubleNear;
 
 // TODO(sameeragarwal): These tests needs to be re-written to be more
 // thorough, they do not really test the dynamic nature of the
@@ -86,11 +90,8 @@ class DynamicSparseNormalCholeskySolverTest : public ::testing::Test {
 
     EXPECT_EQ(summary.termination_type, LinearSolverTerminationType::SUCCESS);
 
-    for (int i = 0; i < A_->num_cols(); ++i) {
-      EXPECT_NEAR(expected_solution(i), actual_solution(i), 1e-8)
-          << "\nExpected: " << expected_solution.transpose()
-          << "\nActual: " << actual_solution.transpose();
-    }
+    EXPECT_THAT(actual_solution,
+                MatrixPointwise(DoubleNear(1e-8), expected_solution));
   }
 
   void TestSolver(

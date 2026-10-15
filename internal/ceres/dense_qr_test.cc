@@ -37,8 +37,10 @@
 #include <vector>
 
 #include "Eigen/Dense"
+#include "absl/strings/str_format.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
+#include "ceres/test_util.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
@@ -85,6 +87,8 @@ TEST_P(DenseQRTest, FactorAndSolve) {
          num_rows < kMaxRowsFactor * num_cols;
          ++num_rows) {
       for (int trial = 0; trial < kNumTrials; ++trial) {
+        SCOPED_TRACE(absl::StrFormat(
+            "%d rows, %d columns, trial %d", num_rows, num_cols, trial));
         MatrixType lhs = MatrixType::Random(num_rows, num_cols);
         Vector x = VectorType::Random(num_cols);
         Vector rhs = lhs * x;
@@ -98,9 +102,7 @@ TEST_P(DenseQRTest, FactorAndSolve) {
                                                             &summary.message);
         ASSERT_EQ(summary.termination_type,
                   LinearSolverTerminationType::SUCCESS);
-        ASSERT_NEAR((x - actual).norm() / x.norm(), 0.0, kEpsilon)
-            << "\nexpected: " << x.transpose()
-            << "\nactual  : " << actual.transpose();
+        ASSERT_THAT(actual, MatrixRelativelyNear(x, kEpsilon));
       }
     }
   }
@@ -124,6 +126,6 @@ decltype(auto) MakeValues() {
 
 }  // namespace
 
-INSTANTIATE_TEST_SUITE_P(_, DenseQRTest, MakeValues(), ParamInfoToString);
+INSTANTIATE_TEST_SUITE_P(DenseQR, DenseQRTest, MakeValues(), ParamInfoToString);
 
 }  // namespace ceres::internal
