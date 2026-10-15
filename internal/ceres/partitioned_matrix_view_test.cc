@@ -34,6 +34,7 @@
 #include <random>
 #include <sstream>
 #include <string>
+#include <tuple>
 #include <vector>
 
 #include "absl/log/check.h"
@@ -50,20 +51,20 @@ namespace internal {
 const double kEpsilon = 1e-14;
 
 // Param = <problem_id, num_threads>
-using Param = ::testing::tuple<int, int>;
+using Param = std::tuple<int, int>;
 
 static std::string ParamInfoToString(testing::TestParamInfo<Param> info) {
   Param param = info.param;
   std::stringstream ss;
-  ss << ::testing::get<0>(param) << "_" << ::testing::get<1>(param);
+  ss << std::get<0>(param) << "_" << std::get<1>(param);
   return ss.str();
 }
 
 class PartitionedMatrixViewTest : public ::testing::TestWithParam<Param> {
  protected:
   void SetUp() final {
-    const int problem_id = ::testing::get<0>(GetParam());
-    const int num_threads = ::testing::get<1>(GetParam());
+    const int problem_id = std::get<0>(GetParam());
+    const int num_threads = std::get<1>(GetParam());
     auto problem = CreateLinearLeastSquaresProblemFromId(problem_id);
     ASSERT_TRUE(problem != nullptr);
     A_ = std::move(problem->A);

@@ -42,7 +42,7 @@
 
 namespace ceres::internal {
 
-TEST(BlockSparseJacobiPreconditioner, _) {
+TEST(BlockSparseJacobiPreconditioner, InvertsDiagonalBlocksOfHessian) {
   constexpr int kNumtrials = 10;
   BlockSparseMatrix::RandomMatrixOptions options;
   options.num_col_blocks = 3;
@@ -95,7 +95,7 @@ TEST(BlockSparseJacobiPreconditioner, _) {
   }
 }
 
-TEST(CompressedRowSparseJacobiPreconditioner, _) {
+TEST(CompressedRowSparseJacobiPreconditioner, InvertsDiagonalBlocksOfHessian) {
   constexpr int kNumtrials = 10;
   CompressedRowSparseMatrix::RandomMatrixOptions options;
   options.num_col_blocks = 3;
