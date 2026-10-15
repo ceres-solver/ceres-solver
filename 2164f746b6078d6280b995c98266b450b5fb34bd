@@ -1,0 +1,239 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "674dd40e_7e343282",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 20
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-15T17:43:52Z",
+      "side": 1,
+      "message": "Hardening is optional or maybe for a follow-up.",
+      "revId": "2164f746b6078d6280b995c98266b450b5fb34bd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89d768ae_6e211006",
+        "filename": "internal/ceres/benchmark_cost_functions.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-15T17:43:52Z",
+      "side": 1,
+      "message": "Is there a good reason to have concrete (non-template) functions inline? Every benchmark will need to compile these repeatedly.",
+      "revId": "2164f746b6078d6280b995c98266b450b5fb34bd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "187474ad_d5dd90a2",
+        "filename": "internal/ceres/benchmark_cost_functions.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-15T17:43:52Z",
+      "side": 1,
+      "message": "```suggestion\n  std::array pose{qx, qy, qz, qw, tx, ty, tz};\n```\nUse CTAD?",
+      "revId": "2164f746b6078d6280b995c98266b450b5fb34bd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30e0d8f9_aa1cc3ba",
+        "filename": "internal/ceres/benchmark_cost_functions.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-15T17:43:52Z",
+      "side": 1,
+      "message": "Shouldn\u0027t the cost function return `false` if projection is not possible?",
+      "range": {
+        "startLine": 324,
+        "startChar": 25,
+        "endLine": 324,
+        "endChar": 29
+      },
+      "revId": "2164f746b6078d6280b995c98266b450b5fb34bd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a2a086a_156f4650",
+        "filename": "internal/ceres/benchmark_cost_functions.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-15T17:43:52Z",
+      "side": 1,
+      "message": "```suggestion\n    const T rho \u003d hypot(p.x(), p.y(), p.z());\n```\n`rho2` is not used anywhere else.\n\nAlternatively, `AccurateNorm` or `p.norm()`.",
+      "range": {
+        "startLine": 444,
+        "startChar": 23,
+        "endLine": 444,
+        "endChar": 27
+      },
+      "revId": "2164f746b6078d6280b995c98266b450b5fb34bd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fddbe51d_96a0df36",
+        "filename": "internal/ceres/benchmark_cost_functions.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-15T17:43:52Z",
+      "side": 1,
+      "message": "Use true division to avoid unnecessary rounding when multiplying by a reciprocal?",
+      "range": {
+        "startLine": 458,
+        "startChar": 23,
+        "endLine": 458,
+        "endChar": 24
+      },
+      "revId": "2164f746b6078d6280b995c98266b450b5fb34bd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40aa03a3_0422a994",
+        "filename": "internal/ceres/benchmark_cost_functions.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-15T17:43:52Z",
+      "side": 1,
+      "message": "Return `false` if zero?",
+      "range": {
+        "startLine": 922,
+        "startChar": 25,
+        "endLine": 922,
+        "endChar": 31
+      },
+      "revId": "2164f746b6078d6280b995c98266b450b5fb34bd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c00ebb78_bdb758d1",
+        "filename": "internal/ceres/benchmark_cost_functions.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 1103,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-15T17:43:52Z",
+      "side": 1,
+      "message": "Return `false` on zero?",
+      "range": {
+        "startLine": 1103,
+        "startChar": 25,
+        "endLine": 1103,
+        "endChar": 37
+      },
+      "revId": "2164f746b6078d6280b995c98266b450b5fb34bd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c42dd96_48c7d87f",
+        "filename": "internal/ceres/benchmark_cost_functions.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-15T17:43:52Z",
+      "side": 1,
+      "message": "Check for zero?",
+      "range": {
+        "startLine": 1147,
+        "startChar": 25,
+        "endLine": 1147,
+        "endChar": 31
+      },
+      "revId": "2164f746b6078d6280b995c98266b450b5fb34bd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "afca5b28_0b9111ec",
+        "filename": "internal/ceres/benchmark_cost_functions.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 1152,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-15T17:43:52Z",
+      "side": 1,
+      "message": "The threshold seems arbitrary. Use zero?",
+      "range": {
+        "startLine": 1152,
+        "startChar": 12,
+        "endLine": 1152,
+        "endChar": 19
+      },
+      "revId": "2164f746b6078d6280b995c98266b450b5fb34bd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e6133b7_4cba9499",
+        "filename": "internal/ceres/benchmark_cost_functions.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 1204,
+      "author": {
+        "id": 6612
+      },
+      "writtenOn": "2026-10-15T17:43:52Z",
+      "side": 1,
+      "message": "use `constants::pi`",
+      "range": {
+        "startLine": 1204,
+        "startChar": 36,
+        "endLine": 1204,
+        "endChar": 40
+      },
+      "revId": "2164f746b6078d6280b995c98266b450b5fb34bd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
