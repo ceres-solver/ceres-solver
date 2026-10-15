@@ -37,9 +37,14 @@
 #include "absl/container/btree_set.h"
 #include "ceres/block_structure.h"
 #include "ceres/graph.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
+
+using ::testing::Each;
+using ::testing::IsEmpty;
+using ::testing::SizeIs;
 
 class VisibilityTest : public ::testing::Test {};
 
@@ -97,15 +102,13 @@ TEST(VisibilityTest, SimpleMatrix) {
   std::vector<absl::btree_set<int>> visibility;
   ComputeVisibility(bs, num_eliminate_blocks, &visibility);
   ASSERT_EQ(visibility.size(), num_cols - num_eliminate_blocks);
-  for (const auto& visible : visibility) {
-    ASSERT_EQ(visible.size(), 1);
-  }
+  ASSERT_THAT(visibility, Each(SizeIs(1)));
 
   std::unique_ptr<WeightedGraph<int>> graph(
       CreateSchurComplementGraph(visibility));
   EXPECT_EQ(graph->vertices().size(), visibility.size());
   for (int i = 0; i < visibility.size(); ++i) {
-    EXPECT_EQ(graph->VertexWeight(i), 1.0);
+    EXPECT_EQ(graph->VertexWeight(i), 1.0) << "vertex " << i;
   }
 
   for (int i = 0; i < visibility.size(); ++i) {
@@ -116,8 +119,7 @@ TEST(VisibilityTest, SimpleMatrix) {
       }
 
       EXPECT_EQ(graph->EdgeWeight(i, j), edge_weight)
-          << "Edge: " << i << " " << j << " weight: " << graph->EdgeWeight(i, j)
-          << " expected weight: " << edge_weight;
+          << "edge (" << i << ", " << j << ")";
     }
   }
 }
@@ -172,15 +174,13 @@ TEST(VisibilityTest, NoEBlocks) {
   std::vector<absl::btree_set<int>> visibility;
   ComputeVisibility(bs, num_eliminate_blocks, &visibility);
   ASSERT_EQ(visibility.size(), num_cols - num_eliminate_blocks);
-  for (const auto& visible : visibility) {
-    ASSERT_EQ(visible.size(), 0);
-  }
+  ASSERT_THAT(visibility, Each(IsEmpty()));
 
   std::unique_ptr<WeightedGraph<int>> graph(
       CreateSchurComplementGraph(visibility));
   EXPECT_EQ(graph->vertices().size(), visibility.size());
   for (int i = 0; i < visibility.size(); ++i) {
-    EXPECT_EQ(graph->VertexWeight(i), 1.0);
+    EXPECT_EQ(graph->VertexWeight(i), 1.0) << "vertex " << i;
   }
 
   for (int i = 0; i < visibility.size(); ++i) {
@@ -190,8 +190,7 @@ TEST(VisibilityTest, NoEBlocks) {
         edge_weight = 1.0;
       }
       EXPECT_EQ(graph->EdgeWeight(i, j), edge_weight)
-          << "Edge: " << i << " " << j << " weight: " << graph->EdgeWeight(i, j)
-          << " expected weight: " << edge_weight;
+          << "edge (" << i << ", " << j << ")";
     }
   }
 }

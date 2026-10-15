@@ -34,9 +34,12 @@
 #include <limits>
 #include <vector>
 
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
+
+using ::testing::ElementsAre;
 
 TEST(ArrayUtils, IsArrayValid) {
   double x[3];
@@ -73,49 +76,25 @@ TEST(ArrayUtils, FindInvalidIndex) {
 }
 
 TEST(MapValuesToContiguousRange, ContiguousEntries) {
-  std::vector<int> array;
-  array.push_back(0);
-  array.push_back(1);
-  std::vector<int> expected = array;
-  MapValuesToContiguousRange(array.size(), &array[0]);
-  EXPECT_EQ(array, expected);
-  array.clear();
+  std::vector<int> array{0, 1};
+  MapValuesToContiguousRange(array.size(), array.data());
+  EXPECT_THAT(array, ElementsAre(0, 1));
 
-  array.push_back(1);
-  array.push_back(0);
-  expected = array;
-  MapValuesToContiguousRange(array.size(), &array[0]);
-  EXPECT_EQ(array, expected);
+  array = {1, 0};
+  MapValuesToContiguousRange(array.size(), array.data());
+  EXPECT_THAT(array, ElementsAre(1, 0));
 }
 
 TEST(MapValuesToContiguousRange, NonContiguousEntries) {
-  std::vector<int> array;
-  array.push_back(0);
-  array.push_back(2);
-  std::vector<int> expected;
-  expected.push_back(0);
-  expected.push_back(1);
-  MapValuesToContiguousRange(array.size(), &array[0]);
-  EXPECT_EQ(array, expected);
+  std::vector<int> array{0, 2};
+  MapValuesToContiguousRange(array.size(), array.data());
+  EXPECT_THAT(array, ElementsAre(0, 1));
 }
 
 TEST(MapValuesToContiguousRange, NonContiguousRepeatingEntries) {
-  std::vector<int> array;
-  array.push_back(3);
-  array.push_back(1);
-  array.push_back(0);
-  array.push_back(0);
-  array.push_back(0);
-  array.push_back(5);
-  std::vector<int> expected;
-  expected.push_back(2);
-  expected.push_back(1);
-  expected.push_back(0);
-  expected.push_back(0);
-  expected.push_back(0);
-  expected.push_back(3);
-  MapValuesToContiguousRange(array.size(), &array[0]);
-  EXPECT_EQ(array, expected);
+  std::vector<int> array{3, 1, 0, 0, 0, 5};
+  MapValuesToContiguousRange(array.size(), array.data());
+  EXPECT_THAT(array, ElementsAre(2, 1, 0, 0, 0, 3));
 }
 
 }  // namespace ceres::internal

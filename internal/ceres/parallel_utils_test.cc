@@ -34,9 +34,12 @@
 #include <utility>
 
 #include "ceres/internal/config.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
+
+using ::testing::SizeIs;
 
 // Tests that unfolding linear iterations to triangular iterations produces
 // indices that are in-range and unique.
@@ -53,7 +56,7 @@ TEST(LinearIndexToUpperTriangularIndexTest, UniqueAndValid) {
       EXPECT_LT(j, n);
       seen_pairs.insert(std::make_pair(i, j));
     }
-    EXPECT_EQ(actual_work_items, seen_pairs.size());
+    EXPECT_THAT(seen_pairs, SizeIs(actual_work_items)) << "n = " << n;
   }
 }
 

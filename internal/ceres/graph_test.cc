@@ -31,13 +31,17 @@
 #include "ceres/graph.h"
 
 #include "absl/container/flat_hash_set.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
 
+using ::testing::IsEmpty;
+using ::testing::UnorderedElementsAre;
+
 TEST(Graph, EmptyGraph) {
   Graph<int> graph;
-  EXPECT_EQ(graph.vertices().size(), 0);
+  EXPECT_THAT(graph.vertices(), IsEmpty());
 }
 
 TEST(Graph, AddVertexAndEdge) {
@@ -47,9 +51,9 @@ TEST(Graph, AddVertexAndEdge) {
   graph.AddEdge(0, 1);
 
   const absl::flat_hash_set<int>& vertices = graph.vertices();
-  EXPECT_EQ(vertices.size(), 2);
-  EXPECT_EQ(graph.Neighbors(0).size(), 1);
-  EXPECT_EQ(graph.Neighbors(1).size(), 1);
+  EXPECT_THAT(vertices, UnorderedElementsAre(0, 1));
+  EXPECT_THAT(graph.Neighbors(0), UnorderedElementsAre(1));
+  EXPECT_THAT(graph.Neighbors(1), UnorderedElementsAre(0));
 }
 
 TEST(Graph, AddVertexIdempotence) {
@@ -60,15 +64,15 @@ TEST(Graph, AddVertexIdempotence) {
 
   const absl::flat_hash_set<int>& vertices = graph.vertices();
 
-  EXPECT_EQ(vertices.size(), 2);
+  EXPECT_THAT(vertices, UnorderedElementsAre(0, 1));
 
   // Try adding the vertex again with a new weight.
   graph.AddVertex(0);
-  EXPECT_EQ(vertices.size(), 2);
+  EXPECT_THAT(vertices, UnorderedElementsAre(0, 1));
 
   // Rest of the graph remains the same.
-  EXPECT_EQ(graph.Neighbors(0).size(), 1);
-  EXPECT_EQ(graph.Neighbors(1).size(), 1);
+  EXPECT_THAT(graph.Neighbors(0), UnorderedElementsAre(1));
+  EXPECT_THAT(graph.Neighbors(1), UnorderedElementsAre(0));
 }
 
 TEST(Graph, DieOnNonExistentVertex) {
@@ -82,7 +86,7 @@ TEST(Graph, DieOnNonExistentVertex) {
 
 TEST(WeightedGraph, EmptyGraph) {
   WeightedGraph<int> graph;
-  EXPECT_EQ(graph.vertices().size(), 0);
+  EXPECT_THAT(graph.vertices(), IsEmpty());
 }
 
 TEST(WeightedGraph, AddVertexAndEdge) {
@@ -92,11 +96,11 @@ TEST(WeightedGraph, AddVertexAndEdge) {
   graph.AddEdge(0, 1, 0.5);
 
   const absl::flat_hash_set<int>& vertices = graph.vertices();
-  EXPECT_EQ(vertices.size(), 2);
+  EXPECT_THAT(vertices, UnorderedElementsAre(0, 1));
   EXPECT_EQ(graph.VertexWeight(0), 1.0);
   EXPECT_EQ(graph.VertexWeight(1), 2.0);
-  EXPECT_EQ(graph.Neighbors(0).size(), 1);
-  EXPECT_EQ(graph.Neighbors(1).size(), 1);
+  EXPECT_THAT(graph.Neighbors(0), UnorderedElementsAre(1));
+  EXPECT_THAT(graph.Neighbors(1), UnorderedElementsAre(0));
   EXPECT_EQ(graph.EdgeWeight(0, 1), 0.5);
   EXPECT_EQ(graph.EdgeWeight(1, 0), 0.5);
 }
@@ -109,19 +113,19 @@ TEST(WeightedGraph, AddVertexIdempotence) {
 
   const absl::flat_hash_set<int>& vertices = graph.vertices();
 
-  EXPECT_EQ(vertices.size(), 2);
+  EXPECT_THAT(vertices, UnorderedElementsAre(0, 1));
 
   // Try adding the vertex again with a new weight.
   graph.AddVertex(0, 3.0);
-  EXPECT_EQ(vertices.size(), 2);
+  EXPECT_THAT(vertices, UnorderedElementsAre(0, 1));
 
   // The vertex weight is reset.
   EXPECT_EQ(graph.VertexWeight(0), 3.0);
 
   // Rest of the graph remains the same.
   EXPECT_EQ(graph.VertexWeight(1), 2.0);
-  EXPECT_EQ(graph.Neighbors(0).size(), 1);
-  EXPECT_EQ(graph.Neighbors(1).size(), 1);
+  EXPECT_THAT(graph.Neighbors(0), UnorderedElementsAre(1));
+  EXPECT_THAT(graph.Neighbors(1), UnorderedElementsAre(0));
   EXPECT_EQ(graph.EdgeWeight(0, 1), 0.5);
   EXPECT_EQ(graph.EdgeWeight(1, 0), 0.5);
 }

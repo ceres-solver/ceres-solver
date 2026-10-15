@@ -32,9 +32,12 @@
 
 #include "absl/container/flat_hash_map.h"
 #include "ceres/graph.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
+
+using ::testing::SizeIs;
 
 TEST(SingleLinkageClustering, GraphHasTwoComponents) {
   WeightedGraph<int> graph;
@@ -53,7 +56,7 @@ TEST(SingleLinkageClustering, GraphHasTwoComponents) {
   SingleLinkageClusteringOptions options;
   absl::flat_hash_map<int, int> membership;
   ComputeSingleLinkageClustering(options, graph, &membership);
-  EXPECT_EQ(membership.size(), kNumVertices);
+  ASSERT_THAT(membership, SizeIs(kNumVertices));
 
   EXPECT_EQ(membership[1], membership[0]);
   EXPECT_EQ(membership[2], membership[0]);
@@ -82,7 +85,7 @@ TEST(SingleLinkageClustering, ComponentWithWeakLink) {
   SingleLinkageClusteringOptions options;
   absl::flat_hash_map<int, int> membership;
   ComputeSingleLinkageClustering(options, graph, &membership);
-  EXPECT_EQ(membership.size(), kNumVertices);
+  ASSERT_THAT(membership, SizeIs(kNumVertices));
 
   EXPECT_EQ(membership[1], membership[0]);
   EXPECT_EQ(membership[2], membership[0]);
@@ -112,7 +115,7 @@ TEST(SingleLinkageClustering, ComponentWithWeakLinkAndStrongLink) {
   SingleLinkageClusteringOptions options;
   absl::flat_hash_map<int, int> membership;
   ComputeSingleLinkageClustering(options, graph, &membership);
-  EXPECT_EQ(membership.size(), kNumVertices);
+  ASSERT_THAT(membership, SizeIs(kNumVertices));
 
   EXPECT_EQ(membership[1], membership[0]);
   EXPECT_EQ(membership[2], membership[0]);

@@ -35,11 +35,16 @@
 #include <vector>
 
 #include "Eigen/SparseCore"
+#include "absl/types/span.h"
 #include "ceres/internal/export.h"
 #include "ceres/triplet_sparse_matrix.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
+
+using ::testing::DoubleNear;
+using ::testing::Pointwise;
 
 TEST(CompressedColSparseMatrixUtils, BlockPermutationToScalarPermutation) {
   //  Block structure
@@ -56,10 +61,7 @@ TEST(CompressedColSparseMatrixUtils, BlockPermutationToScalarPermutation) {
 
   std::vector<int> scalar_ordering;
   BlockOrderingToScalarOrdering(blocks, block_ordering, &scalar_ordering);
-  EXPECT_EQ(scalar_ordering.size(), expected_scalar_ordering.size());
-  for (int i = 0; i < expected_scalar_ordering.size(); ++i) {
-    EXPECT_EQ(scalar_ordering[i], expected_scalar_ordering[i]);
-  }
+  EXPECT_EQ(scalar_ordering, expected_scalar_ordering);
 }
 
 static void FillBlock(const std::vector<Block>& row_blocks,
@@ -141,9 +143,7 @@ TEST_F(SolveUpperTriangularTest, SolveInPlace) {
                                    values().data(),
                                    rhs_and_solution);
 
-  for (int i = 0; i < 4; ++i) {
-    EXPECT_NEAR(rhs_and_solution[i], expected[i], 1e-4) << i;
-  }
+  EXPECT_THAT(rhs_and_solution, Pointwise(DoubleNear(1e-4), expected));
 }
 
 TEST_F(SolveUpperTriangularTest, TransposeSolveInPlace) {
@@ -156,9 +156,7 @@ TEST_F(SolveUpperTriangularTest, TransposeSolveInPlace) {
                                             values().data(),
                                             rhs_and_solution);
 
-  for (int i = 0; i < 4; ++i) {
-    EXPECT_NEAR(rhs_and_solution[i], expected[i], 1e-4) << i;
-  }
+  EXPECT_THAT(rhs_and_solution, Pointwise(DoubleNear(1e-4), expected));
 }
 
 TEST_F(SolveUpperTriangularTest, RTRSolveWithSparseRHS) {
@@ -177,9 +175,10 @@ TEST_F(SolveUpperTriangularTest, RTRSolveWithSparseRHS) {
                                values().data(),
                                i,
                                solution);
-    for (int j = 0; j < 4; ++j) {
-      EXPECT_NEAR(solution[j], expected[4 * i + j], 1e-3) << i;
-    }
+    EXPECT_THAT(
+        solution,
+        Pointwise(DoubleNear(1e-3), absl::MakeConstSpan(expected + 4 * i, 4)))
+        << "column " << i;
   }
 }
 

@@ -30,16 +30,21 @@
 
 #include "ceres/graph_algorithms.h"
 
-#include <algorithm>
 #include <memory>
 #include <vector>
 
 #include "absl/container/flat_hash_set.h"
+#include "absl/types/span.h"
 #include "ceres/graph.h"
 #include "ceres/internal/export.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
+
+using ::testing::IsEmpty;
+using ::testing::SizeIs;
+using ::testing::UnorderedElementsAre;
 
 TEST(IndependentSetOrdering, Chain) {
   Graph<int> graph;
@@ -59,16 +64,12 @@ TEST(IndependentSetOrdering, Chain) {
   std::vector<int> ordering;
   int independent_set_size = IndependentSetOrdering(graph, &ordering);
 
-  sort(ordering.begin(), ordering.begin() + 3);
-  sort(ordering.begin() + 3, ordering.end());
-
   EXPECT_EQ(independent_set_size, 3);
-  EXPECT_EQ(ordering.size(), 5);
-  EXPECT_EQ(ordering[0], 0);
-  EXPECT_EQ(ordering[1], 2);
-  EXPECT_EQ(ordering[2], 4);
-  EXPECT_EQ(ordering[3], 1);
-  EXPECT_EQ(ordering[4], 3);
+  ASSERT_THAT(ordering, SizeIs(5));
+  EXPECT_THAT(absl::MakeConstSpan(ordering).first(3),
+              UnorderedElementsAre(0, 2, 4));
+  EXPECT_THAT(absl::MakeConstSpan(ordering).subspan(3),
+              UnorderedElementsAre(1, 3));
 }
 
 TEST(IndependentSetOrdering, Star) {
@@ -93,13 +94,10 @@ TEST(IndependentSetOrdering, Star) {
   std::vector<int> ordering;
   int independent_set_size = IndependentSetOrdering(graph, &ordering);
   EXPECT_EQ(independent_set_size, 4);
-  EXPECT_EQ(ordering.size(), 5);
+  ASSERT_THAT(ordering, SizeIs(5));
+  EXPECT_THAT(absl::MakeConstSpan(ordering).first(4),
+              UnorderedElementsAre(1, 2, 3, 4));
   EXPECT_EQ(ordering[4], 0);
-  sort(ordering.begin(), ordering.begin() + 4);
-  EXPECT_EQ(ordering[0], 1);
-  EXPECT_EQ(ordering[1], 2);
-  EXPECT_EQ(ordering[2], 3);
-  EXPECT_EQ(ordering[3], 4);
 }
 
 TEST(Degree2MaximumSpanningForest, PreserveWeights) {
@@ -113,10 +111,10 @@ TEST(Degree2MaximumSpanningForest, PreserveWeights) {
       Degree2MaximumSpanningForest(graph));
 
   const absl::flat_hash_set<int>& vertices = forest->vertices();
-  EXPECT_EQ(vertices.size(), 2);
+  EXPECT_THAT(vertices, UnorderedElementsAre(0, 1));
   EXPECT_EQ(forest->VertexWeight(0), 1.0);
   EXPECT_EQ(forest->VertexWeight(1), 2.0);
-  EXPECT_EQ(forest->Neighbors(0).size(), 1.0);
+  EXPECT_THAT(forest->Neighbors(0), UnorderedElementsAre(1));
   EXPECT_EQ(forest->EdgeWeight(0, 1), 0.5);
 }
 
@@ -136,36 +134,12 @@ TEST(Degree2MaximumSpanningForest, StarGraph) {
   std::unique_ptr<WeightedGraph<int>> forest(
       Degree2MaximumSpanningForest(graph));
   const absl::flat_hash_set<int>& vertices = forest->vertices();
-  EXPECT_EQ(vertices.size(), 5);
-
-  {
-    const absl::flat_hash_set<int>& neighbors = forest->Neighbors(0);
-    EXPECT_EQ(neighbors.size(), 2);
-    EXPECT_TRUE(neighbors.find(4) != neighbors.end());
-    EXPECT_TRUE(neighbors.find(3) != neighbors.end());
-  }
-
-  {
-    const absl::flat_hash_set<int>& neighbors = forest->Neighbors(3);
-    EXPECT_EQ(neighbors.size(), 1);
-    EXPECT_TRUE(neighbors.find(0) != neighbors.end());
-  }
-
-  {
-    const absl::flat_hash_set<int>& neighbors = forest->Neighbors(4);
-    EXPECT_EQ(neighbors.size(), 1);
-    EXPECT_TRUE(neighbors.find(0) != neighbors.end());
-  }
-
-  {
-    const absl::flat_hash_set<int>& neighbors = forest->Neighbors(1);
-    EXPECT_EQ(neighbors.size(), 0);
-  }
-
-  {
-    const absl::flat_hash_set<int>& neighbors = forest->Neighbors(2);
-    EXPECT_EQ(neighbors.size(), 0);
-  }
+  EXPECT_THAT(vertices, UnorderedElementsAre(0, 1, 2, 3, 4));
+  EXPECT_THAT(forest->Neighbors(0), UnorderedElementsAre(4, 3));
+  EXPECT_THAT(forest->Neighbors(3), UnorderedElementsAre(0));
+  EXPECT_THAT(forest->Neighbors(4), UnorderedElementsAre(0));
+  EXPECT_THAT(forest->Neighbors(1), IsEmpty());
+  EXPECT_THAT(forest->Neighbors(2), IsEmpty());
 }
 
 TEST(VertexTotalOrdering, TotalOrdering) {
