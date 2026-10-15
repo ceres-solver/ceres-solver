@@ -68,7 +68,7 @@ class UnaryCostFunction : public MockCostFunctionBase<2, 1> {};
 class BinaryCostFunction : public MockCostFunctionBase<2, 1, 1> {};
 class TernaryCostFunction : public MockCostFunctionBase<2, 1, 1, 1> {};
 
-TEST(_, ReorderResidualBlockNormalFunction) {
+TEST(ReorderProgram, ReorderResidualBlockNormalFunction) {
   ProblemImpl problem;
   double x;
   double y;
@@ -122,7 +122,7 @@ TEST(_, ReorderResidualBlockNormalFunction) {
   }
 }
 
-TEST(_, ApplyOrderingOrderingTooSmall) {
+TEST(ReorderProgram, ApplyOrderingOrderingTooSmall) {
   ProblemImpl problem;
   double x;
   double y;
@@ -142,7 +142,7 @@ TEST(_, ApplyOrderingOrderingTooSmall) {
       problem.parameter_map(), linear_solver_ordering, &program, &message));
 }
 
-TEST(_, ApplyOrderingNormal) {
+TEST(ReorderProgram, ApplyOrderingNormal) {
   ProblemImpl problem;
   double x;
   double y;
@@ -175,7 +175,7 @@ TEST(_, ApplyOrderingNormal) {
 // group. This is essential for deterministic behavior - without preserving
 // the original order, the ordering would depend on pointer addresses which
 // can vary between runs due to ASLR or different memory allocation patterns.
-TEST(_, ApplyOrderingPreservesOrderWithinGroups) {
+TEST(ReorderProgram, ApplyOrderingPreservesOrderWithinGroups) {
   // Use heap-allocated parameter blocks to ensure pointer addresses are
   // not in any predictable order (simulating what happens in real usage).
   std::vector<std::unique_ptr<double[]>> params;
@@ -318,7 +318,7 @@ TEST_F(ReorderProgramForSparseCholeskyUsingSuiteSparseTest,
 }
 #endif  // CERES_NO_SUITESPARSE
 
-TEST(_, ReorderResidualBlocksbyPartition) {
+TEST(ReorderProgram, ReorderResidualBlocksbyPartition) {
   ProblemImpl problem;
   double x;
   double y;

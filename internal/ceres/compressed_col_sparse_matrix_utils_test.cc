@@ -41,7 +41,7 @@
 
 namespace ceres::internal {
 
-TEST(_, BlockPermutationToScalarPermutation) {
+TEST(CompressedColSparseMatrixUtils, BlockPermutationToScalarPermutation) {
   //  Block structure
   //  0  --1-  ---2---  ---3---  4
   // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -77,7 +77,7 @@ static void FillBlock(const std::vector<Block>& row_blocks,
   }
 }
 
-TEST(_, ScalarMatrixToBlockMatrix) {
+TEST(CompressedColSparseMatrixUtils, ScalarMatrixToBlockMatrix) {
   // Block sparsity.
   //
   //     [1 2 3 2]

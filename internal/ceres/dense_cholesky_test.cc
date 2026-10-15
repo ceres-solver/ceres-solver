@@ -34,6 +34,7 @@
 #include <memory>
 #include <sstream>
 #include <string>
+#include <tuple>
 #include <utility>
 
 #include "Eigen/Core"
@@ -49,7 +50,7 @@
 
 namespace ceres::internal {
 
-using Param = ::testing::tuple<DenseLinearAlgebraLibraryType, bool>;
+using Param = std::tuple<DenseLinearAlgebraLibraryType, bool>;
 constexpr bool kMixedPrecision = true;
 constexpr bool kFullPrecision = false;
 
@@ -58,8 +59,8 @@ namespace {
 std::string ParamInfoToString(testing::TestParamInfo<Param> info) {
   Param param = info.param;
   std::stringstream ss;
-  ss << DenseLinearAlgebraLibraryTypeToString(::testing::get<0>(param)) << "_"
-     << (::testing::get<1>(param) ? "MixedPrecision" : "FullPrecision");
+  ss << DenseLinearAlgebraLibraryTypeToString(std::get<0>(param)) << "_"
+     << (std::get<1>(param) ? "MixedPrecision" : "FullPrecision");
   return ss.str();
 }
 }  // namespace
@@ -81,8 +82,8 @@ TEST_P(DenseCholeskyTest, FactorAndSolve) {
   std::string error;
   ASSERT_TRUE(context.InitCuda(&error)) << error;
 #endif  // CERES_NO_CUDA
-  options.dense_linear_algebra_library_type = ::testing::get<0>(GetParam());
-  options.use_mixed_precision_solves = ::testing::get<1>(GetParam());
+  options.dense_linear_algebra_library_type = std::get<0>(GetParam());
+  options.use_mixed_precision_solves = std::get<1>(GetParam());
   const int kNumRefinementSteps = 4;
   if (options.use_mixed_precision_solves) {
     options.max_num_refinement_iterations = kNumRefinementSteps;

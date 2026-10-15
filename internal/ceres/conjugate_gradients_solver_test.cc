@@ -87,7 +87,7 @@ TEST(ConjugateGradientTest, Solves3x3IdentitySystem) {
   ASSERT_DOUBLE_EQ(3, x(2));
 }
 
-TEST(ConjuateGradientTest, Solves3x3SymmetricSystem) {
+TEST(ConjugateGradientTest, Solves3x3SymmetricSystem) {
   std::unique_ptr<TripletSparseMatrix> A(new TripletSparseMatrix(3, 3, 9));
   Vector b(3);
   Vector x(3);
