@@ -39,6 +39,7 @@
 #include <vector>
 
 #include "absl/log/log.h"
+#include "absl/types/span.h"
 #include "ceres/autodiff_cost_function.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/cost_function.h"
@@ -48,11 +49,15 @@
 #include "ceres/manifold.h"
 #include "ceres/map_util.h"
 #include "ceres/problem_impl.h"
+#include "ceres/test_util.h"
 #include "ceres/types.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {
+
+using ::testing::ElementsAreArray;
 
 class UnaryCostFunction : public CostFunction {
  public:
@@ -193,7 +198,7 @@ TEST(CovarianceImpl, ComputeCovarianceSparsity) {
 
   Covariance::Options options;
   CovarianceImpl covariance_impl(options);
-  EXPECT_TRUE(
+  ASSERT_TRUE(
       covariance_impl.ComputeCovarianceSparsity(covariance_blocks, &problem));
 
   const CompressedRowSparseMatrix* crsm = covariance_impl.covariance_matrix();
@@ -202,17 +207,10 @@ TEST(CovarianceImpl, ComputeCovarianceSparsity) {
   EXPECT_EQ(crsm->num_cols(), 10);
   EXPECT_EQ(crsm->num_nonzeros(), 40);
 
-  const int* rows = crsm->rows();
-  for (int r = 0; r < crsm->num_rows() + 1; ++r) {
-    EXPECT_EQ(rows[r], expected_rows[r])
-        << r << " " << rows[r] << " " << expected_rows[r];
-  }
-
-  const int* cols = crsm->cols();
-  for (int c = 0; c < crsm->num_nonzeros(); ++c) {
-    EXPECT_EQ(cols[c], expected_cols[c])
-        << c << " " << cols[c] << " " << expected_cols[c];
-  }
+  EXPECT_THAT(absl::MakeConstSpan(crsm->rows(), crsm->num_rows() + 1),
+              ElementsAreArray(expected_rows));
+  EXPECT_THAT(absl::MakeConstSpan(crsm->cols(), crsm->num_nonzeros()),
+              ElementsAreArray(expected_cols));
 }
 
 TEST(CovarianceImpl, ComputeCovarianceSparsityWithConstantParameterBlock) {
@@ -274,7 +272,7 @@ TEST(CovarianceImpl, ComputeCovarianceSparsityWithConstantParameterBlock) {
 
   Covariance::Options options;
   CovarianceImpl covariance_impl(options);
-  EXPECT_TRUE(
+  ASSERT_TRUE(
       covariance_impl.ComputeCovarianceSparsity(covariance_blocks, &problem));
 
   const CompressedRowSparseMatrix* crsm = covariance_impl.covariance_matrix();
@@ -283,17 +281,10 @@ TEST(CovarianceImpl, ComputeCovarianceSparsityWithConstantParameterBlock) {
   EXPECT_EQ(crsm->num_cols(), 7);
   EXPECT_EQ(crsm->num_nonzeros(), 25);
 
-  const int* rows = crsm->rows();
-  for (int r = 0; r < crsm->num_rows() + 1; ++r) {
-    EXPECT_EQ(rows[r], expected_rows[r])
-        << r << " " << rows[r] << " " << expected_rows[r];
-  }
-
-  const int* cols = crsm->cols();
-  for (int c = 0; c < crsm->num_nonzeros(); ++c) {
-    EXPECT_EQ(cols[c], expected_cols[c])
-        << c << " " << cols[c] << " " << expected_cols[c];
-  }
+  EXPECT_THAT(absl::MakeConstSpan(crsm->rows(), crsm->num_rows() + 1),
+              ElementsAreArray(expected_rows));
+  EXPECT_THAT(absl::MakeConstSpan(crsm->cols(), crsm->num_nonzeros()),
+              ElementsAreArray(expected_cols));
 }
 
 TEST(CovarianceImpl, ComputeCovarianceSparsityWithFreeParameterBlock) {
@@ -353,7 +344,7 @@ TEST(CovarianceImpl, ComputeCovarianceSparsityWithFreeParameterBlock) {
 
   Covariance::Options options;
   CovarianceImpl covariance_impl(options);
-  EXPECT_TRUE(
+  ASSERT_TRUE(
       covariance_impl.ComputeCovarianceSparsity(covariance_blocks, &problem));
 
   const CompressedRowSparseMatrix* crsm = covariance_impl.covariance_matrix();
@@ -362,17 +353,10 @@ TEST(CovarianceImpl, ComputeCovarianceSparsityWithFreeParameterBlock) {
   EXPECT_EQ(crsm->num_cols(), 7);
   EXPECT_EQ(crsm->num_nonzeros(), 25);
 
-  const int* rows = crsm->rows();
-  for (int r = 0; r < crsm->num_rows() + 1; ++r) {
-    EXPECT_EQ(rows[r], expected_rows[r])
-        << r << " " << rows[r] << " " << expected_rows[r];
-  }
-
-  const int* cols = crsm->cols();
-  for (int c = 0; c < crsm->num_nonzeros(); ++c) {
-    EXPECT_EQ(cols[c], expected_cols[c])
-        << c << " " << cols[c] << " " << expected_cols[c];
-  }
+  EXPECT_THAT(absl::MakeConstSpan(crsm->rows(), crsm->num_rows() + 1),
+              ElementsAreArray(expected_rows));
+  EXPECT_THAT(absl::MakeConstSpan(crsm->cols(), crsm->num_nonzeros()),
+              ElementsAreArray(expected_cols));
 }
 
 // x_plus_delta = delta * x;
@@ -519,7 +503,7 @@ class CovarianceTest : public ::testing::Test {
       }
 
       Covariance covariance(options);
-      EXPECT_TRUE(covariance.Compute(covariance_blocks, &problem_));
+      ASSERT_TRUE(covariance.Compute(covariance_blocks, &problem_));
 
       for (auto& covariance_block : covariance_blocks) {
         const double* block1 = covariance_block.first;
@@ -555,9 +539,9 @@ class CovarianceTest : public ::testing::Test {
 
     Matrix actual(row_end - row_begin, col_end - col_begin);
     if (lift_covariance_to_ambient_space) {
-      EXPECT_TRUE(covariance.GetCovarianceBlock(block1, block2, actual.data()));
+      ASSERT_TRUE(covariance.GetCovarianceBlock(block1, block2, actual.data()));
     } else {
-      EXPECT_TRUE(covariance.GetCovarianceBlockInTangentSpace(
+      ASSERT_TRUE(covariance.GetCovarianceBlockInTangentSpace(
           block1, block2, actual.data()));
     }
 
@@ -566,22 +550,18 @@ class CovarianceTest : public ::testing::Test {
       dof = std::max(dof, bound.second.second);
     }
     ConstMatrixRef expected(expected_covariance, dof, dof);
-    double diff_norm =
-        (expected.block(
-             row_begin, col_begin, row_end - row_begin, col_end - col_begin) -
-         actual)
-            .norm();
-    diff_norm /= (row_end - row_begin) * (col_end - col_begin);
 
+    // The tolerance applies to the norm of the difference averaged over the
+    // entries of the block.
     const double kTolerance = 1e-5;
-    EXPECT_NEAR(diff_norm, 0.0, kTolerance)
+    EXPECT_THAT(
+        actual,
+        MatrixNear(
+            expected.block(
+                row_begin, col_begin, row_end - row_begin, col_end - col_begin),
+            kTolerance * actual.size()))
         << "rows: " << row_begin << " " << row_end << "  "
-        << "cols: " << col_begin << " " << col_end << "  "
-        << "\n\n expected: \n "
-        << expected.block(
-               row_begin, col_begin, row_end - row_begin, col_end - col_begin)
-        << "\n\n actual: \n " << actual << "\n\n full expected: \n"
-        << expected;
+        << "cols: " << col_begin << " " << col_end;
   }
 
   double parameters_[6];
@@ -1223,22 +1203,22 @@ TEST(Covariance, ZeroSizedManifoldGetCovariance) {
   covariance_blocks.emplace_back(&x, &y);
   covariance_blocks.emplace_back(&y, &x);
   covariance_blocks.emplace_back(&y, &y);
-  EXPECT_TRUE(covariance.Compute(covariance_blocks, &problem));
+  ASSERT_TRUE(covariance.Compute(covariance_blocks, &problem));
 
   double value = -1;
-  covariance.GetCovarianceBlock(&x, &x, &value);
+  EXPECT_TRUE(covariance.GetCovarianceBlock(&x, &x, &value));
   EXPECT_NEAR(value, 1.0, std::numeric_limits<double>::epsilon());
 
   value = -1;
-  covariance.GetCovarianceBlock(&x, &y, &value);
+  EXPECT_TRUE(covariance.GetCovarianceBlock(&x, &y, &value));
   EXPECT_NEAR(value, 0.0, std::numeric_limits<double>::epsilon());
 
   value = -1;
-  covariance.GetCovarianceBlock(&y, &x, &value);
+  EXPECT_TRUE(covariance.GetCovarianceBlock(&y, &x, &value));
   EXPECT_NEAR(value, 0.0, std::numeric_limits<double>::epsilon());
 
   value = -1;
-  covariance.GetCovarianceBlock(&y, &y, &value);
+  EXPECT_TRUE(covariance.GetCovarianceBlock(&y, &y, &value));
   EXPECT_NEAR(value, 0.0, std::numeric_limits<double>::epsilon());
 }
 
@@ -1258,20 +1238,20 @@ TEST(Covariance, ZeroSizedManifoldGetCovarianceInTangentSpace) {
   covariance_blocks.emplace_back(&x, &y);
   covariance_blocks.emplace_back(&y, &x);
   covariance_blocks.emplace_back(&y, &y);
-  EXPECT_TRUE(covariance.Compute(covariance_blocks, &problem));
+  ASSERT_TRUE(covariance.Compute(covariance_blocks, &problem));
 
   double value = -1;
-  covariance.GetCovarianceBlockInTangentSpace(&x, &x, &value);
+  EXPECT_TRUE(covariance.GetCovarianceBlockInTangentSpace(&x, &x, &value));
   EXPECT_NEAR(value, 1.0, std::numeric_limits<double>::epsilon());
 
   value = -1;
   // The following three calls, should not touch this value, since the
   // tangent space is of size zero
-  covariance.GetCovarianceBlockInTangentSpace(&x, &y, &value);
+  EXPECT_TRUE(covariance.GetCovarianceBlockInTangentSpace(&x, &y, &value));
   EXPECT_EQ(value, -1);
-  covariance.GetCovarianceBlockInTangentSpace(&y, &x, &value);
+  EXPECT_TRUE(covariance.GetCovarianceBlockInTangentSpace(&y, &x, &value));
   EXPECT_EQ(value, -1);
-  covariance.GetCovarianceBlockInTangentSpace(&y, &y, &value);
+  EXPECT_TRUE(covariance.GetCovarianceBlockInTangentSpace(&y, &y, &value));
   EXPECT_EQ(value, -1);
 }
 
@@ -1311,7 +1291,7 @@ class LargeScaleCovarianceTest : public ::testing::Test {
         sparse_linear_algebra_library_type;
     options.num_threads = num_threads;
     Covariance covariance(options);
-    EXPECT_TRUE(covariance.Compute(all_covariance_blocks_, &problem_));
+    ASSERT_TRUE(covariance.Compute(all_covariance_blocks_, &problem_));
 
     Matrix expected(parameter_block_size_, parameter_block_size_);
     Matrix actual(parameter_block_size_, parameter_block_size_);
@@ -1322,24 +1302,18 @@ class LargeScaleCovarianceTest : public ::testing::Test {
       expected /= (i + 1.0) * (i + 1.0);
 
       double* block_i = parameters_.get() + i * parameter_block_size_;
-      covariance.GetCovarianceBlock(block_i, block_i, actual.data());
-      EXPECT_NEAR((expected - actual).norm(), 0.0, kTolerance)
-          << "block: " << i << ", " << i << "\n"
-          << "expected: \n"
-          << expected << "\n"
-          << "actual: \n"
-          << actual;
+      ASSERT_TRUE(
+          covariance.GetCovarianceBlock(block_i, block_i, actual.data()));
+      EXPECT_THAT(actual, MatrixNear(expected, kTolerance))
+          << "block: " << i << ", " << i;
 
       expected.setZero();
       for (int j = i + 1; j < num_parameter_blocks_; ++j) {
         double* block_j = parameters_.get() + j * parameter_block_size_;
-        covariance.GetCovarianceBlock(block_i, block_j, actual.data());
-        EXPECT_NEAR((expected - actual).norm(), 0.0, kTolerance)
-            << "block: " << i << ", " << j << "\n"
-            << "expected: \n"
-            << expected << "\n"
-            << "actual: \n"
-            << actual;
+        ASSERT_TRUE(
+            covariance.GetCovarianceBlock(block_i, block_j, actual.data()));
+        EXPECT_THAT(actual, MatrixNear(expected, kTolerance))
+            << "block: " << i << ", " << j;
       }
     }
   }

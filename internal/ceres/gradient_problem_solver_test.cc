@@ -33,9 +33,13 @@
 #include <memory>
 
 #include "ceres/gradient_problem.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
+
+using ::testing::DoubleNear;
+using ::testing::Each;
 
 // Rosenbrock function; see http://en.wikipedia.org/wiki/Rosenbrock_function .
 class Rosenbrock : public ceres::FirstOrderFunction {
@@ -67,8 +71,7 @@ TEST(GradientProblemSolver, SolvesRosenbrockWithDefaultOptions) {
   ceres::Solve(options, problem, parameters, &summary);
 
   EXPECT_EQ(CONVERGENCE, summary.termination_type);
-  EXPECT_NEAR(1.0, parameters[0], expected_tolerance);
-  EXPECT_NEAR(1.0, parameters[1], expected_tolerance);
+  EXPECT_THAT(parameters, Each(DoubleNear(1.0, expected_tolerance)));
 }
 
 class QuadraticFunction : public ceres::FirstOrderFunction {
@@ -113,9 +116,7 @@ TEST(Solver, UpdateStateEveryIterationOption) {
   ceres::Solve(options, problem, &x, &summary);
   num_iterations = summary.iterations.size() - 1;
   EXPECT_GT(num_iterations, 1);
-  for (double value : callback.x_values) {
-    EXPECT_EQ(50.0, value);
-  }
+  EXPECT_THAT(callback.x_values, Each(50.0));
 
   // Second try: with updating
   x = 50.0;
@@ -124,8 +125,9 @@ TEST(Solver, UpdateStateEveryIterationOption) {
   ceres::Solve(options, problem, &x, &summary);
   num_iterations = summary.iterations.size() - 1;
   EXPECT_GT(num_iterations, 1);
-  EXPECT_EQ(original_x, callback.x_values[0]);
-  EXPECT_NE(original_x, callback.x_values[1]);
+  ASSERT_GE(callback.x_values.size(), 2);
+  EXPECT_EQ(callback.x_values[0], original_x);
+  EXPECT_NE(callback.x_values[1], original_x);
 }
 
 }  // namespace ceres::internal

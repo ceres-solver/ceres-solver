@@ -51,9 +51,13 @@
 #include "ceres/minimizer.h"
 #include "ceres/problem.h"
 #include "ceres/trust_region_strategy.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {
+
+using ::testing::DoubleNear;
+using ::testing::Each;
 
 // Templated Evaluator for Powell's function. The template parameters
 // indicate which of the four variables/columns of the jacobian are
@@ -260,10 +264,7 @@ void IsTrustRegionSolveSuccessful(TrustRegionStrategyType strategy_type) {
   minimizer.Minimize(minimizer_options, parameters, &summary);
 
   // The minimum is at x1 = x2 = x3 = x4 = 0.
-  EXPECT_NEAR(0.0, parameters[0], 0.001);
-  EXPECT_NEAR(0.0, parameters[1], 0.001);
-  EXPECT_NEAR(0.0, parameters[2], 0.001);
-  EXPECT_NEAR(0.0, parameters[3], 0.001);
+  EXPECT_THAT(parameters, Each(DoubleNear(0.0, 0.001)));
 }
 
 TEST(TrustRegionMinimizer, PowellsSingularFunctionUsingLevenbergMarquardt) {
