@@ -70,6 +70,30 @@
       },
       "revId": "de09e3e4fbab66c05e6ea3a2ad762d027b0c92cd",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a52dfea3_51afe5df",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 5241380
+      },
+      "writtenOn": "2026-10-16T00:29:59Z",
+      "side": 1,
+      "message": "Done. Patch set 2 adds a comment explaining how max_rank is computed.",
+      "parentUuid": "68193886_106de27e",
+      "range": {
+        "startLine": 752,
+        "startChar": 41,
+        "endLine": 752,
+        "endChar": 49
+      },
+      "revId": "de09e3e4fbab66c05e6ea3a2ad762d027b0c92cd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
