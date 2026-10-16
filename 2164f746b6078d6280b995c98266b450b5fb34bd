@@ -35,6 +35,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2bbafce7_2a9fb925",
+        "filename": "internal/ceres/benchmark_cost_functions.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-16T14:50:49Z",
+      "side": 1,
+      "message": "Only two benchmark targets (cost_function_differentiation_benchmark and evaluation_benchmark) include this header, and keeping these short setup helpers inline keeps all the benchmark cost functors self-contained in one header without needing a separate library target.",
+      "parentUuid": "89d768ae_6e211006",
+      "revId": "2164f746b6078d6280b995c98266b450b5fb34bd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "187474ad_d5dd90a2",
@@ -52,6 +70,24 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "458b7304_edb2af6b",
+        "filename": "internal/ceres/benchmark_cost_functions.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-16T14:50:49Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "187474ad_d5dd90a2",
+      "revId": "2164f746b6078d6280b995c98266b450b5fb34bd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "30e0d8f9_aa1cc3ba",
@@ -65,6 +101,30 @@
       "writtenOn": "2026-10-15T17:43:52Z",
       "side": 1,
       "message": "Shouldn\u0027t the cost function return `false` if projection is not possible?",
+      "range": {
+        "startLine": 324,
+        "startChar": 25,
+        "endLine": 324,
+        "endChar": 29
+      },
+      "revId": "2164f746b6078d6280b995c98266b450b5fb34bd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6e27afe_418ab224",
+        "filename": "internal/ceres/benchmark_cost_functions.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-16T14:50:49Z",
+      "side": 1,
+      "message": "Kept as-is to match examples/snavely_reprojection_error.h and the original benchmark functor without adding a branch to the measured code path.",
+      "parentUuid": "30e0d8f9_aa1cc3ba",
       "range": {
         "startLine": 324,
         "startChar": 25,
@@ -98,6 +158,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "82f44d55_761d0a84",
+        "filename": "internal/ceres/benchmark_cost_functions.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-16T14:50:49Z",
+      "side": 1,
+      "message": "Kept as-is to match the original PhotometricError benchmark (rho2 scales x^2 + y^2 by beta in the Enhanced Unified Camera Model rather than computing an unweighted Euclidean norm).",
+      "parentUuid": "7a2a086a_156f4650",
+      "range": {
+        "startLine": 444,
+        "startChar": 23,
+        "endLine": 444,
+        "endChar": 27
+      },
+      "revId": "2164f746b6078d6280b995c98266b450b5fb34bd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fddbe51d_96a0df36",
@@ -111,6 +195,30 @@
       "writtenOn": "2026-10-15T17:43:52Z",
       "side": 1,
       "message": "Use true division to avoid unnecessary rounding when multiplying by a reciprocal?",
+      "range": {
+        "startLine": 458,
+        "startChar": 23,
+        "endLine": 458,
+        "endChar": 24
+      },
+      "revId": "2164f746b6078d6280b995c98266b450b5fb34bd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a739562a_2b7760d3",
+        "filename": "internal/ceres/benchmark_cost_functions.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-16T14:50:49Z",
+      "side": 1,
+      "message": "Kept as-is to preserve the exact arithmetic of the original PhotometricError benchmark.",
+      "parentUuid": "fddbe51d_96a0df36",
       "range": {
         "startLine": 458,
         "startChar": 23,
@@ -144,6 +252,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "360ef505_ee9a93c6",
+        "filename": "internal/ceres/benchmark_cost_functions.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-16T14:50:49Z",
+      "side": 1,
+      "message": "Kept as-is to match upstream COLMAP ReprojErrorCostFunctor\u003cOpenCVCameraModel\u003e.",
+      "parentUuid": "40aa03a3_0422a994",
+      "range": {
+        "startLine": 922,
+        "startChar": 25,
+        "endLine": 922,
+        "endChar": 31
+      },
+      "revId": "2164f746b6078d6280b995c98266b450b5fb34bd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c00ebb78_bdb758d1",
@@ -157,6 +289,30 @@
       "writtenOn": "2026-10-15T17:43:52Z",
       "side": 1,
       "message": "Return `false` on zero?",
+      "range": {
+        "startLine": 1103,
+        "startChar": 25,
+        "endLine": 1103,
+        "endChar": 37
+      },
+      "revId": "2164f746b6078d6280b995c98266b450b5fb34bd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c28030c4_5450912f",
+        "filename": "internal/ceres/benchmark_cost_functions.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 1103,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-16T14:50:49Z",
+      "side": 1,
+      "message": "Kept as-is to match upstream COLMAP SampsonErrorCostFunctor.",
+      "parentUuid": "c00ebb78_bdb758d1",
       "range": {
         "startLine": 1103,
         "startChar": 25,
@@ -190,6 +346,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "65d8c526_ce3b90c6",
+        "filename": "internal/ceres/benchmark_cost_functions.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-16T14:50:49Z",
+      "side": 1,
+      "message": "Kept as-is to match upstream COLMAP OpenCVFisheyeCameraModel::ImgFromCam.",
+      "parentUuid": "5c42dd96_48c7d87f",
+      "range": {
+        "startLine": 1147,
+        "startChar": 25,
+        "endLine": 1147,
+        "endChar": 31
+      },
+      "revId": "2164f746b6078d6280b995c98266b450b5fb34bd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "afca5b28_0b9111ec",
@@ -213,6 +393,30 @@
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "31e81b78_9c29958a",
+        "filename": "internal/ceres/benchmark_cost_functions.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 1152,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-16T14:50:49Z",
+      "side": 1,
+      "message": "Kept as-is to match upstream COLMAP OpenCVFisheyeCameraModel::ImgFromCam, which uses 1e-8.",
+      "parentUuid": "afca5b28_0b9111ec",
+      "range": {
+        "startLine": 1152,
+        "startChar": 12,
+        "endLine": 1152,
+        "endChar": 19
+      },
+      "revId": "2164f746b6078d6280b995c98266b450b5fb34bd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0e6133b7_4cba9499",
@@ -226,6 +430,30 @@
       "writtenOn": "2026-10-15T17:43:52Z",
       "side": 1,
       "message": "use `constants::pi`",
+      "range": {
+        "startLine": 1204,
+        "startChar": 36,
+        "endLine": 1204,
+        "endChar": 40
+      },
+      "revId": "2164f746b6078d6280b995c98266b450b5fb34bd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8db63bb4_8b757bb4",
+        "filename": "internal/ceres/benchmark_cost_functions.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 1204,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-16T14:50:49Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "0e6133b7_4cba9499",
       "range": {
         "startLine": 1204,
         "startChar": 36,

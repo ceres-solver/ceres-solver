@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c1920be_2361151e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 22
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-16T14:50:49Z",
+      "side": 1,
+      "message": "the cost function code has potential divide by zeros, but it is what the code is upstream so I am keeping it as is.",
+      "revId": "acfcdd42d75e581002e3827d7691c75db9fdfed9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
