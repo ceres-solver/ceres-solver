@@ -46,6 +46,30 @@
       },
       "revId": "de09e3e4fbab66c05e6ea3a2ad762d027b0c92cd",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68193886_106de27e",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2026-10-16T00:13:24Z",
+      "side": 1,
+      "message": "fair, sorry I had a brain burp.\n\nI think it is worth adding a comment here explaining the max_rank calculation, the current comment is too cryptic.",
+      "parentUuid": "e8057d5f_be81b03d",
+      "range": {
+        "startLine": 752,
+        "startChar": 41,
+        "endLine": 752,
+        "endChar": 49
+      },
+      "revId": "de09e3e4fbab66c05e6ea3a2ad762d027b0c92cd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
