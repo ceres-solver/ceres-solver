@@ -36,7 +36,7 @@
 #include <vector>
 
 #include "absl/container/btree_set.h"
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {

@@ -38,8 +38,8 @@
 #include <vector>
 
 #include "absl/time/time.h"
+#include "ceres/eigen.h"
 #include "ceres/function_sample.h"
-#include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/types.h"
 

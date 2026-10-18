@@ -39,7 +39,7 @@
 
 #include "Eigen/Core"
 #include "ceres/dynamic_numeric_diff_cost_function.h"
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/manifold.h"
 #include "ceres/numeric_diff_options.h"
 #include "ceres/types.h"

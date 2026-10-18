@@ -35,7 +35,7 @@
 
 #include "ceres/casts.h"
 #include "ceres/compressed_row_sparse_matrix.h"
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "gtest/gtest.h"

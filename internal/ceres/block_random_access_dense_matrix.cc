@@ -33,7 +33,7 @@
 #include <utility>
 #include <vector>
 
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/parallel_vector_ops.h"
 
 namespace ceres::internal {

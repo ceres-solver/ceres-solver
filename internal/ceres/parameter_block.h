@@ -43,8 +43,8 @@
 #include "absl/log/log.h"
 #include "absl/strings/str_format.h"
 #include "ceres/array_utils.h"
+#include "ceres/eigen.h"
 #include "ceres/internal/disable_warnings.h"
-#include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/manifold.h"
 

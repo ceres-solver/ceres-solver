@@ -34,7 +34,7 @@
 #include <cstddef>
 
 #include "absl/log/check.h"
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 
 namespace ceres::internal {
 

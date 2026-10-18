@@ -35,7 +35,7 @@
 
 #include <memory>
 
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/linear_solver.h"
 #include "ceres/preconditioner.h"
 #include "ceres/triplet_sparse_matrix.h"

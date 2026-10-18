@@ -35,7 +35,7 @@
 #include <vector>
 
 #include "absl/log/check.h"
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/types.h"
 
 namespace ceres {

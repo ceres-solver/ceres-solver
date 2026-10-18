@@ -42,7 +42,7 @@
 #include "absl/strings/str_format.h"
 #include "ceres/block_structure.h"
 #include "ceres/crs_matrix.h"
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/parallel_for.h"
 #include "ceres/parallel_vector_ops.h"
 #include "ceres/small_blas.h"

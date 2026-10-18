@@ -36,7 +36,7 @@
 #include "absl/log/check.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/parallel_for.h"
 #include "ceres/partition_range_for_parallel_for.h"
 #include "ceres/partitioned_matrix_view.h"

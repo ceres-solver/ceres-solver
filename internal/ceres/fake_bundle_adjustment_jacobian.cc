@@ -37,7 +37,7 @@
 
 #include "Eigen/Dense"
 #include "ceres/block_sparse_matrix.h"
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 
 namespace ceres::internal {
 

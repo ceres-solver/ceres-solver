@@ -49,6 +49,7 @@
 #include "ceres/dynamic_cost_function.h"
 #include "ceres/dynamic_cost_function_to_functor.h"
 #include "ceres/dynamic_numeric_diff_cost_function.h"
+#include "ceres/eigen.h"
 #include "ceres/evaluation_callback.h"
 #include "ceres/first_order_function.h"
 #include "ceres/gradient_checker.h"

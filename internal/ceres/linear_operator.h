@@ -33,7 +33,7 @@
 #ifndef CERES_INTERNAL_LINEAR_OPERATOR_H_
 #define CERES_INTERNAL_LINEAR_OPERATOR_H_
 
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/types.h"
 

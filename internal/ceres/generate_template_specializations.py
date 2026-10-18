@@ -186,7 +186,7 @@ QUERY_HEADER = """// Ceres Solver - A fast non-linear least squares minimizer
 """
 
 QUERY_FILE_HEADER = """
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/schur_templates.h"
 
 namespace ceres {

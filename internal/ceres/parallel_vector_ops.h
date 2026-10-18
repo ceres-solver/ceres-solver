@@ -37,7 +37,7 @@
 
 #include "absl/log/check.h"
 #include "ceres/context_impl.h"
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/parallel_for.h"
 

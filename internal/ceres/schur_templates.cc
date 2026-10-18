@@ -41,7 +41,7 @@
 
 #include "ceres/schur_templates.h"
 
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 
 namespace ceres {
 namespace internal {

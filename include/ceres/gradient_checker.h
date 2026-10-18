@@ -39,8 +39,8 @@
 
 #include "ceres/cost_function.h"
 #include "ceres/dynamic_numeric_diff_cost_function.h"
+#include "ceres/eigen.h"
 #include "ceres/internal/disable_warnings.h"
-#include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/manifold.h"
 

@@ -34,7 +34,7 @@
 #include "Eigen/Core"
 #include "Eigen/Dense"
 #include "Eigen/SVD"
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 
 namespace ceres::internal {
 

@@ -43,7 +43,7 @@
 #include <utility>
 
 #include "absl/container/fixed_array.h"
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/internal/port.h"
 #include "ceres/manifold.h"
 

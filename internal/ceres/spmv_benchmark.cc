@@ -40,9 +40,9 @@
 #include "ceres/context_impl.h"
 #include "ceres/cuda_sparse_matrix.h"
 #include "ceres/cuda_vector.h"
+#include "ceres/eigen.h"
 #include "ceres/fake_bundle_adjustment_jacobian.h"
 #include "ceres/internal/config.h"
-#include "ceres/internal/eigen.h"
 
 #ifndef CERES_NO_CUDA
 #include "cuda_runtime.h"

@@ -35,9 +35,9 @@
 #include "benchmark/benchmark.h"
 #include "ceres/block_jacobi_preconditioner.h"
 #include "ceres/block_sparse_matrix.h"
+#include "ceres/eigen.h"
 #include "ceres/fake_bundle_adjustment_jacobian.h"
 #include "ceres/internal/config.h"
-#include "ceres/internal/eigen.h"
 
 namespace ceres::internal {
 

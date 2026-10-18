@@ -31,8 +31,8 @@
 #include "ceres/cuda_vector.h"
 
 #include "ceres/context_impl.h"
+#include "ceres/eigen.h"
 #include "ceres/internal/config.h"
-#include "ceres/internal/eigen.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 

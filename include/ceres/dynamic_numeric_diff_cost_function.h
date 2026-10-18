@@ -43,7 +43,7 @@
 #include "absl/container/fixed_array.h"
 #include "absl/log/check.h"
 #include "ceres/dynamic_cost_function.h"
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/internal/numeric_diff.h"
 #include "ceres/internal/parameter_dims.h"
 #include "ceres/numeric_diff_options.h"

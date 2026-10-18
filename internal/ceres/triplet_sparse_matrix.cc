@@ -39,7 +39,7 @@
 #include "absl/strings/str_format.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/crs_matrix.h"
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/types.h"
 

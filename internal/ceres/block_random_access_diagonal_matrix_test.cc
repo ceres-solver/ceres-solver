@@ -38,7 +38,7 @@
 #include "ceres/block_random_access_matrix.h"
 #include "ceres/block_structure.h"
 #include "ceres/context_impl.h"
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {

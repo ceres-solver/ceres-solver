@@ -31,8 +31,8 @@
 #ifndef CERES_INTERNAL_POWER_SERIES_EXPANSION_PRECONDITIONER_H_
 #define CERES_INTERNAL_POWER_SERIES_EXPANSION_PRECONDITIONER_H_
 
+#include "ceres/eigen.h"
 #include "ceres/implicit_schur_complement.h"
-#include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/preconditioner.h"
 

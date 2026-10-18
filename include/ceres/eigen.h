@@ -28,8 +28,8 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#ifndef CERES_INTERNAL_EIGEN_H_
-#define CERES_INTERNAL_EIGEN_H_
+#ifndef CERES_PUBLIC_EIGEN_H_
+#define CERES_PUBLIC_EIGEN_H_
 
 #include "Eigen/Core"
 
@@ -72,4 +72,4 @@ struct EigenTypes {
 
 }  // namespace ceres
 
-#endif  // CERES_INTERNAL_EIGEN_H_
+#endif  // CERES_PUBLIC_EIGEN_H_

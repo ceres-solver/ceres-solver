@@ -34,8 +34,8 @@
 #include <memory>
 
 #include "absl/time/time.h"
+#include "ceres/eigen.h"
 #include "ceres/internal/disable_warnings.h"
-#include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/minimizer.h"
 #include "ceres/solver.h"

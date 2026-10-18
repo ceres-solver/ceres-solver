@@ -39,7 +39,7 @@
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_format.h"
 #include "ceres/array_utils.h"
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/parameter_block.h"
 #include "ceres/residual_block.h"

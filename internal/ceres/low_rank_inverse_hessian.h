@@ -36,7 +36,7 @@
 
 #include <list>
 
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/linear_operator.h"
 

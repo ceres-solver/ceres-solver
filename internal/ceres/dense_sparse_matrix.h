@@ -33,8 +33,8 @@
 #ifndef CERES_INTERNAL_DENSE_SPARSE_MATRIX_H_
 #define CERES_INTERNAL_DENSE_SPARSE_MATRIX_H_
 
+#include "ceres/eigen.h"
 #include "ceres/internal/disable_warnings.h"
-#include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/sparse_matrix.h"
 #include "ceres/types.h"

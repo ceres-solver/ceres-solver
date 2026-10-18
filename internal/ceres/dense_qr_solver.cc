@@ -35,8 +35,8 @@
 #include "Eigen/Dense"
 #include "ceres/dense_qr.h"
 #include "ceres/dense_sparse_matrix.h"
+#include "ceres/eigen.h"
 #include "ceres/event_logger.h"
-#include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
 #include "ceres/types.h"
 

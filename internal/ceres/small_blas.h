@@ -37,7 +37,7 @@
 
 #include "Eigen/Core"
 #include "absl/log/check.h"
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/internal/export.h"
 #include "small_blas_generic.h"
 

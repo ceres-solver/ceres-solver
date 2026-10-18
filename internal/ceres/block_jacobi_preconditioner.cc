@@ -41,7 +41,7 @@
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
 #include "ceres/casts.h"
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/parallel_for.h"
 #include "ceres/small_blas.h"
 

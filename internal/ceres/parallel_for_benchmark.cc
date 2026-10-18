@@ -29,7 +29,7 @@
 #include "absl/log/check.h"
 #include "benchmark/benchmark.h"
 #include "ceres/context_impl.h"
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/parallel_for.h"
 
 namespace ceres::internal {

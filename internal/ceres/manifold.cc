@@ -4,7 +4,7 @@
 #include <cmath>
 
 #include "absl/log/check.h"
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/rotation.h"
 
 namespace ceres {

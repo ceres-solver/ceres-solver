@@ -93,10 +93,10 @@
 #include <vector>
 
 #include "absl/log/log.h"
+#include "ceres/eigen.h"
 #include "ceres/evaluation_callback.h"
 #include "ceres/evaluator.h"
 #include "ceres/execution_summary.h"
-#include "ceres/internal/eigen.h"
 #include "ceres/parallel_for.h"
 #include "ceres/parallel_vector_ops.h"
 #include "ceres/parameter_block.h"

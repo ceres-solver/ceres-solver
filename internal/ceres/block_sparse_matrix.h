@@ -40,8 +40,8 @@
 #include "ceres/block_structure.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/context_impl.h"
+#include "ceres/eigen.h"
 #include "ceres/internal/disable_warnings.h"
-#include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/sparse_matrix.h"
 

@@ -41,9 +41,9 @@
 #include "ceres/block_random_access_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
+#include "ceres/eigen.h"
 #include "ceres/internal/config.h"
 #include "ceres/internal/disable_warnings.h"
-#include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/linear_solver.h"
 

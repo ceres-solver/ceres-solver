@@ -37,9 +37,9 @@
 #include "Eigen/SparseCore"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/compressed_row_sparse_matrix.h"
+#include "ceres/eigen.h"
 #include "ceres/inner_product_computer.h"
 #include "ceres/internal/config.h"
-#include "ceres/internal/eigen.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {

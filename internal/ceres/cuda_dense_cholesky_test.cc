@@ -31,8 +31,8 @@
 #include <string>
 
 #include "ceres/dense_cholesky.h"
+#include "ceres/eigen.h"
 #include "ceres/internal/config.h"
-#include "ceres/internal/eigen.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {

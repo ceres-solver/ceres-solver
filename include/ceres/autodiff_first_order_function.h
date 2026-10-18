@@ -35,8 +35,8 @@
 #include <type_traits>
 
 #include "absl/container/fixed_array.h"
+#include "ceres/eigen.h"
 #include "ceres/first_order_function.h"
-#include "ceres/internal/eigen.h"
 #include "ceres/jet.h"
 #include "ceres/types.h"
 

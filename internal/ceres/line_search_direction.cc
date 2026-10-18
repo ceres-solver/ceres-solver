@@ -34,7 +34,7 @@
 
 #include "absl/log/check.h"
 #include "absl/log/log.h"
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/line_search_minimizer.h"
 #include "ceres/low_rank_inverse_hessian.h"

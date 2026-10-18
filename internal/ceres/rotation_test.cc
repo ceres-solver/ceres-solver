@@ -43,7 +43,7 @@
 #include "absl/log/log.h"
 #include "absl/strings/str_format.h"
 #include "ceres/constants.h"
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/internal/euler_angles.h"
 #include "ceres/internal/export.h"
 #include "ceres/is_close.h"

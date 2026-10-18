@@ -37,7 +37,7 @@
 #include "absl/log/check.h"
 #include "absl/log/log.h"
 #include "ceres/array_utils.h"
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/linear_solver.h"
 #include "ceres/parallel_vector_ops.h"

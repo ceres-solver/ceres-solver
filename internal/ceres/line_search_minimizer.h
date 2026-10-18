@@ -31,7 +31,7 @@
 #ifndef CERES_INTERNAL_LINE_SEARCH_MINIMIZER_H_
 #define CERES_INTERNAL_LINE_SEARCH_MINIMIZER_H_
 
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/minimizer.h"
 #include "ceres/solver.h"

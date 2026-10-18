@@ -34,7 +34,7 @@
 #include <string>
 #include <vector>
 
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/manifold.h"
 #include "ceres/parameter_block.h"
 #include "ceres/sized_cost_function.h"

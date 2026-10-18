@@ -36,7 +36,7 @@
 #include "ceres/internal/config.h"
 // clang-format on
 
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/internal/export.h"
 
 namespace ceres::internal {

@@ -37,7 +37,7 @@
 #include <vector>
 
 #include "Eigen/Dense"
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/linear_solver.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"

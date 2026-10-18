@@ -38,8 +38,8 @@
 
 #include "ceres/context_impl.h"
 #include "ceres/cuda_buffer.h"
+#include "ceres/eigen.h"
 #include "ceres/internal/config.h"
-#include "ceres/internal/eigen.h"
 #include "gtest/gtest.h"
 
 namespace ceres {

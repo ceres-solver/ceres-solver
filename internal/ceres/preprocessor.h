@@ -36,9 +36,9 @@
 #include <vector>
 
 #include "ceres/coordinate_descent_minimizer.h"
+#include "ceres/eigen.h"
 #include "ceres/evaluator.h"
 #include "ceres/internal/disable_warnings.h"
-#include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/iteration_callback.h"
 #include "ceres/linear_solver.h"

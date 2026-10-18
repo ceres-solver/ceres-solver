@@ -36,7 +36,7 @@
 #include "absl/log/check.h"
 #include "absl/log/log.h"
 #include "ceres/dense_cholesky.h"
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/sparse_cholesky.h"
 #include "ceres/sparse_matrix.h"
 #include "gtest/gtest.h"

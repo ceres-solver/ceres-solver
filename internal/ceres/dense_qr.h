@@ -41,8 +41,8 @@
 
 #include "Eigen/Dense"
 #include "ceres/context_impl.h"
+#include "ceres/eigen.h"
 #include "ceres/internal/disable_warnings.h"
-#include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/linear_solver.h"
 

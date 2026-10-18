@@ -34,8 +34,8 @@
 
 #include <vector>
 
+#include "ceres/eigen.h"
 #include "ceres/internal/disable_warnings.h"
-#include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
 
 namespace ceres::internal {

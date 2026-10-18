@@ -32,7 +32,7 @@
 
 #include <vector>
 
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "gtest/gtest.h"
 
 namespace ceres::internal {

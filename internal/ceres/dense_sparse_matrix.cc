@@ -35,7 +35,7 @@
 
 #include "absl/log/check.h"
 #include "absl/strings/str_format.h"
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/triplet_sparse_matrix.h"
 

@@ -33,7 +33,7 @@
 
 #include <memory>
 
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/line_search_minimizer.h"
 #include "ceres/types.h"

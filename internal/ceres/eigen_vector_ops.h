@@ -34,7 +34,7 @@
 #include <numeric>
 
 #include "absl/container/fixed_array.h"
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/parallel_for.h"
 #include "ceres/parallel_vector_ops.h"
 

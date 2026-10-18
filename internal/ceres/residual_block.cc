@@ -40,7 +40,7 @@
 #include "absl/log/log.h"
 #include "ceres/corrector.h"
 #include "ceres/cost_function.h"
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/loss_function.h"
 #include "ceres/manifold.h"
 #include "ceres/parameter_block.h"

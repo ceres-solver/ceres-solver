@@ -38,7 +38,7 @@
 #include "Eigen/Core"
 #include "Eigen/Geometry"
 #include "ceres/constants.h"
-#include "ceres/internal/eigen.h"
+#include "ceres/eigen.h"
 #include "ceres/internal/port.h"
 #include "ceres/line_manifold.h"
 #include "ceres/manifold_test_utils.h"

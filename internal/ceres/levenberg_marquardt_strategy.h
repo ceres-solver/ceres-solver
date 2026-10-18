@@ -31,8 +31,8 @@
 #ifndef CERES_INTERNAL_LEVENBERG_MARQUARDT_STRATEGY_H_
 #define CERES_INTERNAL_LEVENBERG_MARQUARDT_STRATEGY_H_
 
+#include "ceres/eigen.h"
 #include "ceres/internal/disable_warnings.h"
-#include "ceres/internal/eigen.h"
 #include "ceres/internal/export.h"
 #include "ceres/trust_region_strategy.h"
 
