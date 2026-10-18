@@ -31,6 +31,8 @@
 #ifndef CERES_PUBLIC_INTERNAL_PORT_H_
 #define CERES_PUBLIC_INTERNAL_PORT_H_
 
+// IWYU pragma: private
+
 #include <cmath>  // Necessary for __cpp_lib_math_special_functions feature test
 
 // A macro to mark a function/variable/class as deprecated.

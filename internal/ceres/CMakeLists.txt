@@ -336,10 +336,14 @@ target_include_directories(ceres
 # results in all compiler warnings from them being suppressed.
 target_link_libraries(ceres PUBLIC Eigen3::Eigen)
 
-# Generate an export header for annotating symbols visibility
+# Generate an export header for annotating symbols visibility. The header is
+# an implementation detail that must not be included directly by users.
 include(GenerateExportHeader)
+set(_Ceres_EXPORT_HEADER_CONTENT "// IWYU pragma: private")
 generate_export_header(ceres EXPORT_FILE_NAME
-  ${Ceres_BINARY_DIR}/${CMAKE_INSTALL_INCLUDEDIR}/ceres/internal/export.h)
+  ${Ceres_BINARY_DIR}/${CMAKE_INSTALL_INCLUDEDIR}/ceres/internal/export.h
+  CUSTOM_CONTENT_FROM_VARIABLE _Ceres_EXPORT_HEADER_CONTENT)
+unset(_Ceres_EXPORT_HEADER_CONTENT)
 
 if (_Ceres_FEATURE_CUDA)
   install(TARGETS ceres_cuda_kernels

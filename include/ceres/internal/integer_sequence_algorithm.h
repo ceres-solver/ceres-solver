@@ -36,6 +36,8 @@
 #ifndef CERES_PUBLIC_INTERNAL_INTEGER_SEQUENCE_ALGORITHM_H_
 #define CERES_PUBLIC_INTERNAL_INTEGER_SEQUENCE_ALGORITHM_H_
 
+// IWYU pragma: private
+
 #include <utility>
 
 #include "ceres/jet_fwd.h"

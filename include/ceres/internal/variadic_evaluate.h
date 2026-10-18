@@ -33,6 +33,8 @@
 #ifndef CERES_PUBLIC_INTERNAL_VARIADIC_EVALUATE_H_
 #define CERES_PUBLIC_INTERNAL_VARIADIC_EVALUATE_H_
 
+// IWYU pragma: private
+
 #include <algorithm>
 #include <array>
 #include <cstddef>

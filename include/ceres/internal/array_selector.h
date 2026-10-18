@@ -32,6 +32,8 @@
 #ifndef CERES_PUBLIC_INTERNAL_ARRAY_SELECTOR_H_
 #define CERES_PUBLIC_INTERNAL_ARRAY_SELECTOR_H_
 
+// IWYU pragma: private
+
 #include <array>
 #include <vector>
 

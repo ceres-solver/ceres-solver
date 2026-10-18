@@ -31,6 +31,8 @@
 // NOTE: An include guard is not necessary and in fact counterproductive because
 // #pragma warning(push) will depend on the inclusion order.
 
+// IWYU pragma: private
+
 #ifdef _MSC_VER
 #pragma warning(push)
 // Disable the warning C4251 which is triggered by stl classes in

@@ -53,7 +53,7 @@
 #include "absl/log/check.h"
 #include "ceres/accurate_norm.h"
 #include "ceres/constants.h"
-#include "ceres/internal/euler_angles.h"
+#include "ceres/internal/euler_angles.h"  // IWYU pragma: export
 
 namespace ceres {
 

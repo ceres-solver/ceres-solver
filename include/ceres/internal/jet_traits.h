@@ -32,6 +32,8 @@
 #ifndef CERES_PUBLIC_INTERNAL_JET_TRAITS_H_
 #define CERES_PUBLIC_INTERNAL_JET_TRAITS_H_
 
+// IWYU pragma: private, include "ceres/jet.h"
+
 #include <tuple>
 #include <type_traits>
 #include <utility>

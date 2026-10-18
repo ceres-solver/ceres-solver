@@ -41,6 +41,8 @@
 #ifndef CERES_PUBLIC_INTERNAL_CONFIG_H_
 #define CERES_PUBLIC_INTERNAL_CONFIG_H_
 
+// IWYU pragma: private
+
 // If defined, use the LGPL code in Eigen.
 @CERES_USE_EIGEN_SPARSE@
 

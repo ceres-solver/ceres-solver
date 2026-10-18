@@ -29,6 +29,8 @@
 #ifndef CERES_PUBLIC_INTERNAL_EULER_ANGLES_H_
 #define CERES_PUBLIC_INTERNAL_EULER_ANGLES_H_
 
+// IWYU pragma: private, include "ceres/rotation.h"
+
 #include <type_traits>
 
 namespace ceres {

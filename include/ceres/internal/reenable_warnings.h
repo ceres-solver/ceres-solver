@@ -27,6 +27,8 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 
+// IWYU pragma: private
+
 #ifdef _MSC_VER
 #pragma warning(pop)
 #endif

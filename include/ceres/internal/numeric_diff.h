@@ -35,6 +35,8 @@
 #ifndef CERES_PUBLIC_INTERNAL_NUMERIC_DIFF_H_
 #define CERES_PUBLIC_INTERNAL_NUMERIC_DIFF_H_
 
+// IWYU pragma: private
+
 #include <cstring>
 #include <utility>
 

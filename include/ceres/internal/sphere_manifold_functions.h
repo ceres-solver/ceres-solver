@@ -32,6 +32,8 @@
 #ifndef CERES_PUBLIC_INTERNAL_SPHERE_MANIFOLD_HELPERS_H_
 #define CERES_PUBLIC_INTERNAL_SPHERE_MANIFOLD_HELPERS_H_
 
+// IWYU pragma: private
+
 #include "ceres/constants.h"
 #include "ceres/internal/householder_vector.h"
 

@@ -31,6 +31,8 @@
 #ifndef CERES_PUBLIC_INTERNAL_HOUSEHOLDER_VECTOR_H_
 #define CERES_PUBLIC_INTERNAL_HOUSEHOLDER_VECTOR_H_
 
+// IWYU pragma: private
+
 #include "Eigen/Core"
 #include "absl/log/check.h"
 

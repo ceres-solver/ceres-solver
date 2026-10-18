@@ -31,6 +31,8 @@
 #ifndef CERES_PUBLIC_INTERNAL_PARAMETER_DIMS_H_
 #define CERES_PUBLIC_INTERNAL_PARAMETER_DIMS_H_
 
+// IWYU pragma: private
+
 #include <array>
 #include <utility>
 
