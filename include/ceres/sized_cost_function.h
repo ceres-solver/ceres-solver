@@ -38,6 +38,7 @@
 #ifndef CERES_PUBLIC_SIZED_COST_FUNCTION_H_
 #define CERES_PUBLIC_SIZED_COST_FUNCTION_H_
 
+#include <cstdint>
 #include <initializer_list>
 
 #include "ceres/cost_function.h"

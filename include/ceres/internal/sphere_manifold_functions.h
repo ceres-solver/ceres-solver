@@ -34,6 +34,9 @@
 
 // IWYU pragma: private
 
+#include <cmath>
+
+#include "Eigen/Core"
 #include "ceres/constants.h"
 #include "ceres/internal/householder_vector.h"
 

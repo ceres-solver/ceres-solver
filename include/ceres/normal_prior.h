@@ -34,9 +34,11 @@
 #ifndef CERES_PUBLIC_NORMAL_PRIOR_H_
 #define CERES_PUBLIC_NORMAL_PRIOR_H_
 
+#include "Eigen/Core"
 #include "ceres/cost_function.h"
 #include "ceres/eigen.h"
 #include "ceres/internal/disable_warnings.h"
+#include "ceres/internal/export.h"
 
 namespace ceres {
 

@@ -32,13 +32,13 @@
 #ifndef CERES_PUBLIC_DYNAMIC_COST_FUNCTION_TO_FUNCTOR_H_
 #define CERES_PUBLIC_DYNAMIC_COST_FUNCTION_TO_FUNCTOR_H_
 
+#include <cstdint>
 #include <memory>
 #include <numeric>
 #include <vector>
 
 #include "absl/container/fixed_array.h"
-#include "absl/log/check.h"
-#include "ceres/dynamic_cost_function.h"
+#include "ceres/cost_function.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
 

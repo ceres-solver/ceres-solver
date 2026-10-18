@@ -47,6 +47,7 @@
 #include "ceres/dynamic_numeric_diff_cost_function.h"
 #include "ceres/eigen.h"
 #include "ceres/gradient_checker.h"
+#include "ceres/numeric_diff_options.h"
 #include "ceres/parameter_block.h"
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"

@@ -37,14 +37,16 @@
 #include <string>
 #include <vector>
 
+#include "Eigen/Core"
 #include "ceres/cost_function.h"
-#include "ceres/dynamic_numeric_diff_cost_function.h"
 #include "ceres/eigen.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
-#include "ceres/manifold.h"
 
 namespace ceres {
+
+class Manifold;
+struct NumericDiffOptions;
 
 // GradientChecker compares the Jacobians returned by a cost function against
 // derivatives estimated using finite differencing.

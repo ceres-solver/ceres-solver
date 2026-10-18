@@ -33,9 +33,6 @@
 
 #include <Eigen/Core>
 #include <algorithm>
-#include <array>
-#include <memory>
-#include <utility>
 #include <vector>
 
 #include "absl/log/check.h"

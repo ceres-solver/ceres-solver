@@ -163,7 +163,6 @@
 #include <iostream>  // NOLINT
 #include <limits>
 #include <numeric>
-#include <string>
 #include <type_traits>
 
 #include "Eigen/Core"

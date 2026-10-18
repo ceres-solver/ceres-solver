@@ -64,6 +64,7 @@ struct CRSMatrix;
 
 namespace internal {
 
+class ParameterBlock;
 class Program;
 class ResidualBlock;
 

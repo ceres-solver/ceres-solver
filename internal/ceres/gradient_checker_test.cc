@@ -41,6 +41,8 @@
 #include "absl/log/check.h"
 #include "absl/log/log.h"
 #include "ceres/cost_function.h"
+#include "ceres/manifold.h"
+#include "ceres/numeric_diff_options.h"
 #include "ceres/problem.h"
 #include "ceres/solver.h"
 #include "ceres/test_util.h"

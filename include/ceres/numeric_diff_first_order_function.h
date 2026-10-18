@@ -38,7 +38,6 @@
 
 #include "absl/container/fixed_array.h"
 #include "absl/log/check.h"
-#include "ceres/eigen.h"
 #include "ceres/first_order_function.h"
 #include "ceres/internal/numeric_diff.h"
 #include "ceres/internal/parameter_dims.h"

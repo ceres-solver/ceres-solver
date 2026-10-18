@@ -39,6 +39,7 @@
 
 #include "ceres/cost_function.h"
 #include "ceres/internal/disable_warnings.h"
+#include "ceres/internal/export.h"
 #include "ceres/types.h"
 
 namespace ceres {

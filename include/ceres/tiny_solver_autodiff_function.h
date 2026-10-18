@@ -35,9 +35,6 @@
 #ifndef CERES_PUBLIC_TINY_SOLVER_AUTODIFF_FUNCTION_H_
 #define CERES_PUBLIC_TINY_SOLVER_AUTODIFF_FUNCTION_H_
 
-#include <memory>
-#include <type_traits>
-
 #include "Eigen/Core"
 #include "ceres/jet.h"
 #include "ceres/types.h"  // For kImpossibleValue.

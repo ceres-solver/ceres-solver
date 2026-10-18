@@ -38,6 +38,7 @@
 
 // IWYU pragma: private
 
+#include <type_traits>
 #include <utility>
 
 #include "ceres/jet_fwd.h"

@@ -34,18 +34,21 @@
 #ifndef CERES_PUBLIC_DYNAMIC_NUMERIC_DIFF_COST_FUNCTION_H_
 #define CERES_PUBLIC_DYNAMIC_NUMERIC_DIFF_COST_FUNCTION_H_
 
-#include <cmath>
+#include <algorithm>
+#include <cstddef>
+#include <cstdint>
 #include <memory>
 #include <numeric>
 #include <type_traits>
+#include <utility>
 #include <vector>
 
 #include "absl/container/fixed_array.h"
 #include "absl/log/check.h"
 #include "ceres/dynamic_cost_function.h"
-#include "ceres/eigen.h"
 #include "ceres/internal/numeric_diff.h"
 #include "ceres/internal/parameter_dims.h"
+#include "ceres/internal/variadic_evaluate.h"
 #include "ceres/numeric_diff_options.h"
 #include "ceres/types.h"
 

@@ -31,7 +31,6 @@
 #ifndef CERES_PUBLIC_GRADIENT_PROBLEM_SOLVER_H_
 #define CERES_PUBLIC_GRADIENT_PROBLEM_SOLVER_H_
 
-#include <cmath>
 #include <string>
 #include <vector>
 

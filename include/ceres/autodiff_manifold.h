@@ -34,6 +34,7 @@
 #include <memory>
 
 #include "ceres/internal/autodiff.h"
+#include "ceres/internal/parameter_dims.h"
 #include "ceres/manifold.h"
 
 namespace ceres {

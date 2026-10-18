@@ -130,8 +130,11 @@
 
 #include <memory>
 #include <type_traits>
+#include <utility>
 
+#include "absl/log/check.h"
 #include "ceres/internal/autodiff.h"
+#include "ceres/internal/variadic_evaluate.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/types.h"
 

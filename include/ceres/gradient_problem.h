@@ -40,8 +40,6 @@
 
 namespace ceres {
 
-class FirstOrderFunction;
-
 // Instances of GradientProblem represent general non-linear
 // optimization problems that must be solved using just the value of
 // the objective function and its gradient.

@@ -165,11 +165,13 @@
 #include <array>
 #include <memory>
 #include <type_traits>
+#include <utility>
 
-#include "Eigen/Dense"
-#include "ceres/cost_function.h"
+#include "absl/container/fixed_array.h"
+#include "absl/log/check.h"
 #include "ceres/internal/numeric_diff.h"
 #include "ceres/internal/parameter_dims.h"
+#include "ceres/internal/variadic_evaluate.h"
 #include "ceres/numeric_diff_options.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/types.h"

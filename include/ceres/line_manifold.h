@@ -33,10 +33,6 @@
 #define CERES_PUBLIC_LINE_MANIFOLD_H_
 
 #include <Eigen/Core>
-#include <algorithm>
-#include <array>
-#include <memory>
-#include <vector>
 
 #include "absl/log/check.h"
 #include "ceres/internal/disable_warnings.h"

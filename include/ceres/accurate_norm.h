@@ -59,7 +59,6 @@
 #ifndef CERES_PUBLIC_ACCURATE_NORM_H_
 #define CERES_PUBLIC_ACCURATE_NORM_H_
 
-#include <algorithm>
 #include <cmath>
 #include <limits>
 #include <type_traits>

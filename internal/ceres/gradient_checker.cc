@@ -43,7 +43,10 @@
 #include "absl/log/log.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_format.h"
+#include "ceres/dynamic_numeric_diff_cost_function.h"
 #include "ceres/is_close.h"
+#include "ceres/manifold.h"
+#include "ceres/numeric_diff_options.h"
 #include "ceres/types.h"
 
 namespace ceres {

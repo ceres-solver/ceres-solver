@@ -33,6 +33,8 @@
 
 // IWYU pragma: private
 
+#include <limits>
+
 #include "Eigen/Core"
 #include "absl/log/check.h"
 

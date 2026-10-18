@@ -86,9 +86,10 @@
 #ifndef CERES_PUBLIC_COST_FUNCTION_TO_FUNCTOR_H_
 #define CERES_PUBLIC_COST_FUNCTION_TO_FUNCTOR_H_
 
+#include <array>
 #include <cstdint>
+#include <memory>
 #include <numeric>
-#include <tuple>
 #include <utility>
 #include <vector>
 

@@ -45,7 +45,6 @@
 #ifndef CERES_PUBLIC_ROTATION_H_
 #define CERES_PUBLIC_ROTATION_H_
 
-#include <algorithm>
 #include <array>
 #include <cmath>
 #include <type_traits>

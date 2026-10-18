@@ -42,6 +42,7 @@
 #include <type_traits>
 #include <utility>
 
+#include "Eigen/Core"
 #include "absl/container/fixed_array.h"
 #include "ceres/eigen.h"
 #include "ceres/internal/port.h"

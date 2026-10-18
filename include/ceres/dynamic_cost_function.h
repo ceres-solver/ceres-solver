@@ -31,8 +31,11 @@
 #ifndef CERES_PUBLIC_DYNAMIC_COST_FUNCTION_H_
 #define CERES_PUBLIC_DYNAMIC_COST_FUNCTION_H_
 
+#include <vector>
+
 #include "ceres/cost_function.h"
 #include "ceres/internal/disable_warnings.h"
+#include "ceres/internal/export.h"
 
 namespace ceres {
 

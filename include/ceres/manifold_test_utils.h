@@ -32,9 +32,6 @@
 #define CERES_PUBLIC_MANIFOLD_TEST_UTILS_H_
 
 #include <algorithm>
-#include <cmath>
-#include <limits>
-#include <memory>
 #include <type_traits>
 
 #include "Eigen/Core"

@@ -31,6 +31,8 @@
 #ifndef CERES_PUBLIC_TINY_SOLVER_COST_FUNCTION_ADAPTER_H_
 #define CERES_PUBLIC_TINY_SOLVER_COST_FUNCTION_ADAPTER_H_
 
+#include <vector>
+
 #include "Eigen/Core"
 #include "absl/log/check.h"
 #include "ceres/cost_function.h"

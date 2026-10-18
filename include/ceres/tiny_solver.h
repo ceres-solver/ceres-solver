@@ -54,9 +54,10 @@
 #include <algorithm>
 #include <cassert>
 #include <cmath>
+#include <limits>
 
+#include "Eigen/Cholesky"
 #include "Eigen/Core"
-#include "Eigen/Dense"
 
 namespace ceres {
 

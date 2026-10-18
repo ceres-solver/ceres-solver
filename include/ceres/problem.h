@@ -35,13 +35,9 @@
 #define CERES_PUBLIC_PROBLEM_H_
 
 #include <array>
-#include <cstddef>
-#include <map>
 #include <memory>
-#include <set>
 #include <vector>
 
-#include "ceres/context.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/export.h"
 #include "ceres/internal/port.h"
@@ -49,17 +45,15 @@
 
 namespace ceres {
 
+class Context;
 class CostFunction;
 class EvaluationCallback;
 class LossFunction;
 class Manifold;
-class Solver;
 struct CRSMatrix;
 
 namespace internal {
-class Preprocessor;
 class ProblemImpl;
-class ParameterBlock;
 class ResidualBlock;
 }  // namespace internal
 
