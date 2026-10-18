@@ -119,8 +119,13 @@ class CERES_NO_EXPORT SystemTest : public ::testing::Test {
     Solver::Summary summary;
     Solve(options, problem, &summary);
     CHECK_NE(summary.termination_type, ceres::FAILURE);
-    problem->Evaluate(
-        Problem::EvaluateOptions(), nullptr, final_residuals, nullptr, nullptr);
+    EXPECT_EQ(summary.mixed_precision_solves_used,
+              options.use_mixed_precision_solves);
+    CHECK(problem->Evaluate(Problem::EvaluateOptions(),
+                            nullptr,
+                            final_residuals,
+                            nullptr,
+                            nullptr));
   }
 
   std::vector<double> expected_final_residuals_;

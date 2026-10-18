@@ -34,8 +34,6 @@
 # easier to parallelize in continuous integration systems, and makes local
 # processing on multi-core workstations much faster.
 
-# Product of ORDERINGS, THREAD_CONFIGS, and SOLVER_CONFIGS is the full set of
-# tests to generate.
 ORDERINGS = ["kAutomaticOrdering", "kUserOrdering"]
 SINGLE_THREADED = "1"
 MULTI_THREADED = "4"
@@ -158,7 +156,7 @@ TEST_F(BundleAdjustmentTest,
   options->dense_linear_algebra_library_type = %(dense_backend)s;
   options->sparse_linear_algebra_library_type = %(sparse_backend)s;
   options->preconditioner_type = %(preconditioner)s;
-  if (%(ordering)s) {
+%(mixed_precision_options)s  if (%(ordering)s) {
     options->linear_solver_ordering = nullptr;
   }
   Problem* problem = bundle_adjustment_problem.mutable_problem();
@@ -178,7 +176,8 @@ def generate_bundle_test(linear_solver,
                          sparse_backend,
                          preconditioner,
                          ordering,
-                         thread_config):
+                         thread_config,
+                         mixed_precision=False):
   """Generate a bundle adjustment test executable configured appropriately"""
 
   # Preconditioner only makes sense for iterative schur; drop it otherwise.
@@ -204,6 +203,9 @@ def generate_bundle_test(linear_solver,
       ordering[1:],  # Strip 'k'
       'Threads' if thread_config == MULTI_THREADED else '']))
 
+  if mixed_precision:
+    test_class_name += '_MixedPrecision'
+
   # Initial template parameters (augmented more below).
   template_parameters = dict(
           linear_solver=linear_solver,
@@ -212,7 +214,13 @@ def generate_bundle_test(linear_solver,
           preconditioner=preconditioner,
           ordering=ordering,
           num_threads=thread_config,
-          test_class_name=test_class_name)
+          test_class_name=test_class_name,
+          mixed_precision_options='')
+
+  if mixed_precision:
+    template_parameters['mixed_precision_options'] = (
+        '  options->use_mixed_precision_solves = true;\n'
+        '  options->max_num_refinement_iterations = 2;\n')
 
   # Accumulate appropriate #ifdef/#ifndefs for the solver's sparse backend.
   preprocessor_conditions_begin = []
@@ -242,6 +250,10 @@ def generate_bundle_test(linear_solver,
     preprocessor_conditions_begin.append('#ifndef CERES_NO_CUDA')
     preprocessor_conditions_end.insert(0, '#endif  // CERES_NO_CUDA')
 
+  if mixed_precision and sparse_backend == 'SUITE_SPARSE':
+    preprocessor_conditions_begin.append('#ifndef CERES_NO_CHOLMOD_FLOAT')
+    preprocessor_conditions_end.insert(0, '#endif  // CERES_NO_CHOLMOD_FLOAT')
+
   # If there are #ifdefs, put newlines around them.
   if preprocessor_conditions_begin:
     preprocessor_conditions_begin.insert(0, '')
@@ -266,6 +278,9 @@ def generate_bundle_test(linear_solver,
 
   if (thread_config == MULTI_THREADED):
     filename_tag += '_threads'
+
+  if mixed_precision:
+    filename_tag += '_mixed'
 
   filename = ('generated_bundle_adjustment_tests/ba_%s_test.cc' %
                 filename_tag.lower())
@@ -310,6 +325,26 @@ if __name__ == '__main__':
                                  preconditioner,
                                  ordering,
                                  thread_config))
+
+      for linear_solver, dense_backend in DENSE_SOLVER_CONFIGS:
+        generated_files.append(
+            generate_bundle_test(linear_solver,
+                                 dense_backend,
+                                 'NO_SPARSE',
+                                 'IDENTITY',
+                                 ordering,
+                                 thread_config,
+                                 mixed_precision=True))
+
+      for linear_solver, sparse_backend in SPARSE_SOLVER_CONFIGS:
+        generated_files.append(
+            generate_bundle_test(linear_solver,
+                                 'EIGEN',
+                                 sparse_backend,
+                                 'IDENTITY',
+                                 ordering,
+                                 thread_config,
+                                 mixed_precision=True))
 
 
   # Generate the CMakeLists.txt as well.
