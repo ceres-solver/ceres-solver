@@ -234,7 +234,7 @@ std::unique_ptr<SparseMatrix> BlockJacobianWriter::CreateJacobian() const {
     const int num_parameter_blocks = residual_block->NumParameterBlocks();
     int num_active_parameter_blocks = 0;
     for (int j = 0; j < num_parameter_blocks; ++j) {
-      if (residual_block->parameter_blocks()[j]->index() != -1) {
+      if (!residual_block->parameter_blocks()[j]->IsConstant()) {
         num_active_parameter_blocks++;
       }
     }
