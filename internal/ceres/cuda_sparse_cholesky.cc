@@ -441,7 +441,7 @@ class CERES_NO_EXPORT CudaSparseCholeskyImpl final : public SparseCholesky {
 
   void ConvertAndCopyToDevice(const double* source,
                               Scalar* intermediate,
-                              CudaBuffer<Scalar>& destination) {
+                              CudaDeviceBuffer<Scalar>& destination) {
     const auto size = destination.size();
     if constexpr (std::is_same_v<Scalar, double>) {
       destination.CopyFromCpu(source, size);
@@ -451,7 +451,7 @@ class CERES_NO_EXPORT CudaSparseCholeskyImpl final : public SparseCholesky {
     }
   }
 
-  void ConvertAndCopyToHost(const CudaBuffer<Scalar>& source,
+  void ConvertAndCopyToHost(const CudaDeviceBuffer<Scalar>& source,
                             Scalar* intermediate,
                             double* destination) {
     const auto size = source.size();
@@ -472,11 +472,11 @@ class CERES_NO_EXPORT CudaSparseCholeskyImpl final : public SparseCholesky {
   CudaPinnedHostBuffer<Scalar> lhs_values_h_;
   CudaPinnedHostBuffer<Scalar> rhs_h_;
   CudaPinnedHostBuffer<Scalar> x_h_;
-  CudaBuffer<int> lhs_rows_d_;
-  CudaBuffer<int> lhs_cols_d_;
-  CudaBuffer<Scalar> lhs_values_d_;
-  CudaBuffer<Scalar> rhs_d_;
-  CudaBuffer<Scalar> x_d_;
+  CudaDeviceBuffer<int> lhs_rows_d_;
+  CudaDeviceBuffer<int> lhs_cols_d_;
+  CudaDeviceBuffer<Scalar> lhs_values_d_;
+  CudaDeviceBuffer<Scalar> rhs_d_;
+  CudaDeviceBuffer<Scalar> x_d_;
 
   LinearSolverTerminationType analyze_result_ =
       LinearSolverTerminationType::FATAL_ERROR;

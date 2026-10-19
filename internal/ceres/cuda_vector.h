@@ -119,7 +119,7 @@ class CERES_NO_EXPORT CudaVector {
 
   int num_rows_ = 0;
   ContextImpl* context_ = nullptr;
-  CudaBuffer<double> data_;
+  CudaDeviceBuffer<double> data_;
   // CuSparse object that describes this dense vector.
   cusparseDnVecDescr_t descr_ = nullptr;
 };

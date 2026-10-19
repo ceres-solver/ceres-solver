@@ -174,15 +174,15 @@ class CERES_NO_EXPORT CUDADenseQR final : public DenseQR {
   // and *Solve.
   size_t num_cols_ = 0;
   // GPU memory allocated for the A matrix (lhs matrix).
-  CudaBuffer<double> lhs_;
+  CudaDeviceBuffer<double> lhs_;
   // GPU memory allocated for the B matrix (rhs vector).
-  CudaBuffer<double> rhs_;
+  CudaDeviceBuffer<double> rhs_;
   // GPU memory allocated for the TAU matrix (scaling of householder vectors).
-  CudaBuffer<double> tau_;
+  CudaDeviceBuffer<double> tau_;
   // Scratch space for cuSOLVER on the GPU.
-  CudaBuffer<double> device_workspace_;
+  CudaDeviceBuffer<double> device_workspace_;
   // Required for error handling with cuSOLVER.
-  CudaBuffer<int> error_;
+  CudaDeviceBuffer<int> error_;
   // Cache the result of Factorize to ensure that when Solve is called, the
   // factiorization of lhs is valid.
   LinearSolverTerminationType factorize_result_ =

@@ -51,23 +51,23 @@ namespace ceres::internal {
 // threads, since active Cuda devices are determined by the cuda runtime on a
 // per-thread basis.
 template <typename T>
-class CudaBuffer {
+class CudaDeviceBuffer {
  public:
-  explicit CudaBuffer(ContextImpl* context) : context_(context) {}
-  CudaBuffer(ContextImpl* context, int size) : context_(context) {
+  explicit CudaDeviceBuffer(ContextImpl* context) : context_(context) {}
+  CudaDeviceBuffer(ContextImpl* context, int size) : context_(context) {
     Reserve(size);
   }
 
-  CudaBuffer(CudaBuffer&& other)
+  CudaDeviceBuffer(CudaDeviceBuffer&& other)
       : data_(other.data_), size_(other.size_), context_(other.context_) {
     other.data_ = nullptr;
     other.size_ = 0;
   }
 
-  CudaBuffer(const CudaBuffer&) = delete;
-  CudaBuffer& operator=(const CudaBuffer&) = delete;
+  CudaDeviceBuffer(const CudaDeviceBuffer&) = delete;
+  CudaDeviceBuffer& operator=(const CudaDeviceBuffer&) = delete;
 
-  ~CudaBuffer() {
+  ~CudaDeviceBuffer() {
     if (data_ != nullptr) {
       CHECK_EQ(cudaFree(data_), cudaSuccess);
     }
@@ -88,7 +88,7 @@ class CudaBuffer {
   }
 
   // Perform an asynchronous copy from CPU memory to GPU memory managed by this
-  // CudaBuffer instance using the stream provided.
+  // CudaDeviceBuffer instance using the stream provided.
   void CopyFromCpu(const T* data, const size_t size) {
     Reserve(size);
     CHECK_EQ(cudaMemcpyAsync(data_,
@@ -100,7 +100,7 @@ class CudaBuffer {
   }
 
   // Perform an asynchronous copy from a vector in CPU memory to GPU memory
-  // managed by this CudaBuffer instance.
+  // managed by this CudaDeviceBuffer instance.
   void CopyFromCpuVector(const std::vector<T>& data) {
     Reserve(data.size());
     CHECK_EQ(cudaMemcpyAsync(data_,
@@ -112,7 +112,7 @@ class CudaBuffer {
   }
 
   // Perform an asynchronous copy from another GPU memory array to the GPU
-  // memory managed by this CudaBuffer instance using the stream provided.
+  // memory managed by this CudaDeviceBuffer instance using the stream provided.
   void CopyFromGPUArray(const T* data, const size_t size) {
     Reserve(size);
     CHECK_EQ(cudaMemcpyAsync(data_,
@@ -123,7 +123,7 @@ class CudaBuffer {
              cudaSuccess);
   }
 
-  // Copy data from the GPU memory managed by this CudaBuffer instance to CPU
+  // Copy data from the GPU memory managed by this CudaDeviceBuffer instance to CPU
   // memory. It is the caller's responsibility to ensure that the CPU memory
   // pointer is valid, i.e. it is not null, and that it points to memory of
   // at least this->size() size. This method ensures all previously dispatched
@@ -141,9 +141,9 @@ class CudaBuffer {
   }
 
   // Copy N items from another GPU memory array to the GPU memory managed by
-  // this CudaBuffer instance, growing this buffer's size if needed. This copy
+  // this CudaDeviceBuffer instance, growing this buffer's size if needed. This copy
   // is asynchronous, and operates on the stream provided.
-  void CopyNItemsFrom(int n, const CudaBuffer<T>& other) {
+  void CopyNItemsFrom(int n, const CudaDeviceBuffer<T>& other) {
     Reserve(n);
     CHECK(other.data_ != nullptr);
     CHECK(data_ != nullptr);
@@ -155,11 +155,11 @@ class CudaBuffer {
              cudaSuccess);
   }
 
-  // Return a pointer to the GPU memory managed by this CudaBuffer instance.
+  // Return a pointer to the GPU memory managed by this CudaDeviceBuffer instance.
   T* data() { return data_; }
   const T* data() const { return data_; }
   // Return the number of items of type T that can fit in the GPU memory
-  // allocated so far by this CudaBuffer instance.
+  // allocated so far by this CudaDeviceBuffer instance.
   size_t size() const { return size_; }
 
  private:

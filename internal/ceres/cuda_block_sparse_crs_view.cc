@@ -43,8 +43,8 @@ CudaBlockSparseCRSView::CudaBlockSparseCRSView(const BlockSparseMatrix& bsm,
     : context_(context) {
   block_structure_ = std::make_unique<CudaBlockSparseStructure>(
       *bsm.block_structure(), context);
-  CudaBuffer<int32_t> rows(context, bsm.num_rows() + 1);
-  CudaBuffer<int32_t> cols(context, bsm.num_nonzeros());
+  CudaDeviceBuffer<int32_t> rows(context, bsm.num_rows() + 1);
+  CudaDeviceBuffer<int32_t> cols(context, bsm.num_nonzeros());
   FillCRSStructure(block_structure_->num_row_blocks(),
                    bsm.num_rows(),
                    block_structure_->first_cell_in_row_block(),
