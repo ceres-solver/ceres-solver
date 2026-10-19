@@ -82,7 +82,7 @@ void BuildOptimizationProblem(const std::vector<Constraint2d>& constraints,
         << "Pose with ID: " << constraint.id_end << " not found.";
 
     const Eigen::Matrix3d sqrt_information =
-        constraint.information.llt().matrixL();
+        constraint.information.llt().matrixU();
     // Ceres will take ownership of the pointer.
     ceres::CostFunction* cost_function = PoseGraph2dErrorTerm::Create(
         constraint.x, constraint.y, constraint.yaw_radians, sqrt_information);
@@ -153,7 +153,7 @@ int main(int argc, char** argv) {
   absl::ParseCommandLine(argc, argv);
 
   if (absl::GetFlag(FLAGS_input).empty()) {
-    LOG(ERROR) << "Usage pose_graph_3d --input=<filename>";
+    LOG(ERROR) << "Usage pose_graph_2d --input=<filename>";
     return 1;
   }
 
@@ -176,7 +176,7 @@ int main(int argc, char** argv) {
       << "The solve was not successful, exiting.";
 
   CHECK(ceres::examples::OutputPoses("poses_optimized.txt", poses))
-      << "Error outputting to poses_original.txt";
+      << "Error outputting to poses_optimized.txt";
 
   return 0;
 }
