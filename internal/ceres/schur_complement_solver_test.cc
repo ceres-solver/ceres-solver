@@ -193,6 +193,48 @@ TEST_F(SchurComplementSolverTest, ExplicitSchurVaryingFBlockSize) {
       4, true, ITERATIVE_SCHUR, EIGEN, NO_SPARSE, OrderingType::NATURAL);
 }
 
+TEST_F(SchurComplementSolverTest,
+       ExplicitIterativeSchurBackSubstitutesOnNoConvergence) {
+  SetUpFromProblemId(2);
+  LinearSolver::Options options;
+  options.elimination_groups.push_back(num_eliminate_blocks);
+  options.elimination_groups.push_back(A->block_structure()->cols.size() -
+                                       num_eliminate_blocks);
+  options.type = ITERATIVE_SCHUR;
+  options.preconditioner_type = SCHUR_JACOBI;
+  options.max_num_iterations = 1;
+  ContextImpl context;
+  options.context = &context;
+  DetectStructure(*A->block_structure(),
+                  num_eliminate_blocks,
+                  &options.row_block_size,
+                  &options.e_block_size,
+                  &options.f_block_size);
+
+  LinearSolver::PerSolveOptions per_solve_options;
+  per_solve_options.r_tolerance = 0.0;
+  per_solve_options.q_tolerance = 0.0;
+  per_solve_options.D = D.get();
+
+  options.use_explicit_schur_complement = false;
+  std::unique_ptr<LinearSolver> implicit_solver(LinearSolver::Create(options));
+  Vector x_implicit(num_cols);
+  LinearSolver::Summary implicit_summary = implicit_solver->Solve(
+      A.get(), b.get(), per_solve_options, x_implicit.data());
+  ASSERT_EQ(implicit_summary.termination_type,
+            LinearSolverTerminationType::NO_CONVERGENCE);
+
+  options.use_explicit_schur_complement = true;
+  std::unique_ptr<LinearSolver> explicit_solver(LinearSolver::Create(options));
+  Vector x_explicit(num_cols);
+  LinearSolver::Summary explicit_summary = explicit_solver->Solve(
+      A.get(), b.get(), per_solve_options, x_explicit.data());
+  ASSERT_EQ(explicit_summary.termination_type,
+            LinearSolverTerminationType::NO_CONVERGENCE);
+
+  EXPECT_NEAR((x_implicit - x_explicit).norm() / num_cols, 0.0, 1e-10);
+}
+
 #ifndef CERES_NO_LAPACK
 TEST_F(SchurComplementSolverTest, DenseSchurWithLAPACKSmallProblem) {
   ComputeAndCompareSolutions(
