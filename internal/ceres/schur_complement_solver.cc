@@ -149,7 +149,8 @@ LinearSolver::Summary SchurComplementSolver::SolveImpl(
       SolveReducedLinearSystem(per_solve_options, reduced_solution);
   event_logger.AddEvent("ReducedSolve");
 
-  if (summary.termination_type == LinearSolverTerminationType::SUCCESS) {
+  if (summary.termination_type == LinearSolverTerminationType::SUCCESS ||
+      summary.termination_type == LinearSolverTerminationType::NO_CONVERGENCE) {
     eliminator_->BackSubstitute(
         BlockSparseMatrixData(*A), b, per_solve_options.D, reduced_solution, x);
     event_logger.AddEvent("BackSubstitute");
