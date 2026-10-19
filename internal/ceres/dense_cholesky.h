@@ -216,13 +216,13 @@ class CERES_NO_EXPORT CUDADenseCholesky final : public DenseCholesky {
   // and *Solve.
   size_t num_cols_ = 0;
   // GPU memory allocated for the A matrix (lhs matrix).
-  CudaBuffer<double> lhs_;
+  CudaDeviceBuffer<double> lhs_;
   // GPU memory allocated for the B matrix (rhs vector).
-  CudaBuffer<double> rhs_;
+  CudaDeviceBuffer<double> rhs_;
   // Scratch space for cuSOLVER on the GPU.
-  CudaBuffer<double> device_workspace_;
+  CudaDeviceBuffer<double> device_workspace_;
   // Required for error handling with cuSOLVER.
-  CudaBuffer<int> error_;
+  CudaDeviceBuffer<int> error_;
   // Cache the result of Factorize to ensure that when Solve is called, the
   // factorization of lhs is valid.
   LinearSolverTerminationType factorize_result_ =
@@ -277,21 +277,21 @@ class CERES_NO_EXPORT CUDADenseCholeskyMixedPrecision final
   // Number of columns in the A matrix, to be cached between calls to *Factorize
   // and *Solve.
   size_t num_cols_ = 0;
-  CudaBuffer<double> lhs_fp64_;
-  CudaBuffer<double> rhs_fp64_;
-  CudaBuffer<float> lhs_fp32_;
+  CudaDeviceBuffer<double> lhs_fp64_;
+  CudaDeviceBuffer<double> rhs_fp64_;
+  CudaDeviceBuffer<float> lhs_fp32_;
   // Scratch space for cuSOLVER on the GPU.
-  CudaBuffer<float> device_workspace_;
+  CudaDeviceBuffer<float> device_workspace_;
   // Required for error handling with cuSOLVER.
-  CudaBuffer<int> error_;
+  CudaDeviceBuffer<int> error_;
 
   // Solution to lhs * x = rhs.
-  CudaBuffer<double> x_fp64_;
+  CudaDeviceBuffer<double> x_fp64_;
   // Incremental correction to x.
-  CudaBuffer<float> correction_fp32_;
+  CudaDeviceBuffer<float> correction_fp32_;
   // Residual to iterative refinement.
-  CudaBuffer<float> residual_fp32_;
-  CudaBuffer<double> residual_fp64_;
+  CudaDeviceBuffer<float> residual_fp32_;
+  CudaDeviceBuffer<double> residual_fp64_;
 
   // Number of inner refinement iterations to perform.
   int max_num_refinement_iterations_ = 0;

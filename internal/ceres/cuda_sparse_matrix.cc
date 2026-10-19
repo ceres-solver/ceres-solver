@@ -102,8 +102,8 @@ size_t GetTempBufferSize(const cusparseHandle_t& handle,
 }  // namespace
 
 CudaSparseMatrix::CudaSparseMatrix(int num_cols,
-                                   CudaBuffer<int32_t>&& rows,
-                                   CudaBuffer<int32_t>&& cols,
+                                   CudaDeviceBuffer<int32_t>&& rows,
+                                   CudaDeviceBuffer<int32_t>&& cols,
                                    ContextImpl* context)
     : num_rows_(rows.size() - 1),
       num_cols_(num_cols),

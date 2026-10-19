@@ -90,7 +90,7 @@ class CERES_NO_EXPORT ContextImpl final : public Context {
   //  - Only use default stream
   //  - Return control to the callee without synchronization whenever possible
   //  - Stream synchronization occurs only after GPU to CPU transfers, and is
-  //  handled by CudaBuffer
+  //  handled by CudaDeviceBuffer
   //
   // b. Multi-stream workloads
   // Multi-stream workloads are more restricted in order to make it harder to

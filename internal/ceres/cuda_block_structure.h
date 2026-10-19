@@ -107,11 +107,11 @@ class CERES_NO_EXPORT CudaBlockSparseStructure {
   int num_row_blocks_e_;
   int num_col_blocks_;
   bool is_crs_compatible_;
-  CudaBuffer<int> first_cell_in_row_block_;
-  CudaBuffer<int> value_offset_row_block_f_;
-  CudaBuffer<Cell> cells_;
-  CudaBuffer<Block> row_blocks_;
-  CudaBuffer<Block> col_blocks_;
+  CudaDeviceBuffer<int> first_cell_in_row_block_;
+  CudaDeviceBuffer<int> value_offset_row_block_f_;
+  CudaDeviceBuffer<Cell> cells_;
+  CudaDeviceBuffer<Block> row_blocks_;
+  CudaDeviceBuffer<Block> col_blocks_;
   friend class CudaBlockStructureTest;
 };
 }  // namespace ceres::internal

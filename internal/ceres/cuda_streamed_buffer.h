@@ -328,7 +328,7 @@ class CERES_NO_EXPORT CudaStreamedBuffer {
 
   const int kValuesPerBatch;
   ContextImpl* context_ = nullptr;
-  CudaBuffer<T> values_gpu_;
+  CudaDeviceBuffer<T> values_gpu_;
   T* values_cpu_pinned_ = nullptr;
   cudaEvent_t copy_finished_[kNumBatches] = {nullptr};
 };

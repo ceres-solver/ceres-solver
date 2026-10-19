@@ -67,8 +67,8 @@ class CERES_NO_EXPORT CudaSparseMatrix {
   // Create matrix from existing row and column index buffers.
   // Values are left uninitialized.
   CudaSparseMatrix(int num_cols,
-                   CudaBuffer<int32_t>&& rows,
-                   CudaBuffer<int32_t>&& cols,
+                   CudaDeviceBuffer<int32_t>&& rows,
+                   CudaDeviceBuffer<int32_t>&& cols,
                    ContextImpl* context);
 
   ~CudaSparseMatrix();
@@ -121,11 +121,11 @@ class CERES_NO_EXPORT CudaSparseMatrix {
 
   ContextImpl* context_ = nullptr;
   // CSR row indices.
-  CudaBuffer<int32_t> rows_;
+  CudaDeviceBuffer<int32_t> rows_;
   // CSR column indices.
-  CudaBuffer<int32_t> cols_;
+  CudaDeviceBuffer<int32_t> cols_;
   // CSR values.
-  CudaBuffer<double> values_;
+  CudaDeviceBuffer<double> values_;
 
   // CuSparse object that describes this matrix.
   cusparseSpMatDescr_t descr_ = nullptr;
@@ -134,7 +134,7 @@ class CERES_NO_EXPORT CudaSparseMatrix {
   cusparseDnVecDescr_t descr_vec_left_ = nullptr;
   cusparseDnVecDescr_t descr_vec_right_ = nullptr;
 
-  mutable CudaBuffer<uint8_t> spmv_buffer_;
+  mutable CudaDeviceBuffer<uint8_t> spmv_buffer_;
 };
 
 }  // namespace ceres::internal

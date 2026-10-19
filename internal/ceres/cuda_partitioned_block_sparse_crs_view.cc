@@ -61,10 +61,10 @@ CudaPartitionedBlockSparseCRSView::CudaPartitionedBlockSparseCRSView(
                              : bsm.num_cols();
   const int num_cols_f = bsm.num_cols() - num_cols_e;
 
-  CudaBuffer<int32_t> rows_e(context, num_rows + 1);
-  CudaBuffer<int32_t> cols_e(context, num_nonzeros_e);
-  CudaBuffer<int32_t> rows_f(context, num_rows + 1);
-  CudaBuffer<int32_t> cols_f(context, num_nonzeros_f);
+  CudaDeviceBuffer<int32_t> rows_e(context, num_rows + 1);
+  CudaDeviceBuffer<int32_t> cols_e(context, num_nonzeros_e);
+  CudaDeviceBuffer<int32_t> rows_f(context, num_rows + 1);
+  CudaDeviceBuffer<int32_t> cols_f(context, num_nonzeros_f);
 
   num_row_blocks_e_ = block_structure_->num_row_blocks_e();
   FillCRSStructurePartitioned(block_structure_->num_row_blocks(),
