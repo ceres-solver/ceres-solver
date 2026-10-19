@@ -34,6 +34,28 @@ differentiated.
 To this end, Ceres has extensive support for mixing analytic, automatic and
 numeric differentiation. See :class:`CostFunctionToFunctor`.
 
+Do not return the norm or squared norm of a residual vector from a :class:`CostFunction`
+========================================================================================
+
+A :class:`CostFunction` should output the signed components of the residual
+vector :math:`r(x) \in \mathbb{R}^k` directly, never its Euclidean norm
+:math:`\|r(x)\|` or squared norm :math:`\|r(x)\|^2`. Ceres already forms the
+sum of squared components :math:`\frac{1}{2} \|r(x)\|^2 = \frac{1}{2} \sum_{i=1}^k r_i(x)^2`
+internally.
+
+Collapsing a :math:`k`-dimensional residual vector into a scalar :math:`\tilde{r}(x) = \|r(x)\|`
+leaves the objective value unchanged, but replaces the :math:`k \times n`
+Jacobian :math:`J(x)` with the single row :math:`\frac{r(x)^\top}{\|r(x)\|} J(x)`.
+The Gauss-Newton Hessian approximation then drops from :math:`J(x)^\top J(x)` to
+the rank-1 matrix :math:`\frac{1}{\|r(x)\|^2} J(x)^\top r(x) r(x)^\top J(x)`,
+discarding curvature information in all directions orthogonal to :math:`r(x)`
+and stalling convergence. Worse, :math:`\|r(x)\|` is not differentiable at
+:math:`r(x) = 0`, producing ``NaN`` Jacobians at the exact point the solver is
+trying to reach. Returning :math:`\|r(x)\|^2` avoids the ``NaN`` but changes the
+objective to :math:`\frac{1}{2}\|r(x)\|^4`, whose Jacobian :math:`2 r(x)^\top J(x)`
+vanishes as :math:`r(x) \to 0`, making the Gauss-Newton system singular near the
+solution.
+
 When using Quaternions, consider using :class:`QuaternionManifold`
 ==================================================================
 
