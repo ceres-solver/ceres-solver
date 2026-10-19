@@ -159,7 +159,7 @@ std::unique_ptr<CostFunction> CreateGradientCheckingCostFunction(
     const std::string& extra_info,
     GradientCheckingIterationCallback* callback) {
   NumericDiffOptions numeric_diff_options;
-  numeric_diff_options.relative_step_size = relative_step_size;
+  numeric_diff_options.ridders_relative_initial_step_size = relative_step_size;
 
   return std::make_unique<GradientCheckingCostFunction>(cost_function,
                                                         manifolds,
@@ -188,7 +188,7 @@ std::unique_ptr<ProblemImpl> CreateGradientCheckingProblemImpl(
   gradient_checking_problem_options.context = problem_impl->context();
 
   NumericDiffOptions numeric_diff_options;
-  numeric_diff_options.relative_step_size = relative_step_size;
+  numeric_diff_options.ridders_relative_initial_step_size = relative_step_size;
 
   auto gradient_checking_problem_impl =
       std::make_unique<ProblemImpl>(gradient_checking_problem_options);

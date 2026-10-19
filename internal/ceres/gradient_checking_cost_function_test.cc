@@ -41,6 +41,7 @@
 #include "ceres/cost_function.h"
 #include "ceres/loss_function.h"
 #include "ceres/manifold.h"
+#include "ceres/numeric_diff_options.h"
 #include "ceres/parameter_block.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
@@ -447,6 +448,60 @@ TEST(GradientCheckingProblemImpl, ConstrainedProblemBoundsArePropagated) {
     EXPECT_EQ(problem_impl.GetParameterUpperBound(x, i),
               gradient_checking_problem_impl->GetParameterUpperBound(x, i));
   }
+}
+
+class StepSizeRecordingCostFunction : public SizedCostFunction<1, 1> {
+ public:
+  explicit StepSizeRecordingCostFunction(double x0, double* max_step)
+      : x0_(x0), max_step_(max_step) {}
+
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const override {
+    const double x = parameters[0][0];
+    residuals[0] = x * x;
+    if (jacobians != nullptr && jacobians[0] != nullptr) {
+      jacobians[0][0] = 2.0 * x;
+    } else {
+      *max_step_ = std::max(*max_step_, std::abs(x - x0_));
+    }
+    return true;
+  }
+
+ private:
+  double x0_;
+  double* max_step_;
+};
+
+TEST(GradientCheckingCostFunction, RelativeStepSizeIsForwardedToRidders) {
+  double x = 1.0;
+  double max_step = 0.0;
+  StepSizeRecordingCostFunction cost_function(x, &max_step);
+
+  const double kRelativeStepSize = 1e-4;
+  const double kRelativePrecision = 1e-6;
+  GradientCheckingIterationCallback callback;
+  auto gradient_checking_cost_function =
+      CreateGradientCheckingCostFunction(&cost_function,
+                                         nullptr,
+                                         kRelativeStepSize,
+                                         kRelativePrecision,
+                                         "StepSizeTest",
+                                         &callback);
+
+  double residual = 0.0;
+  double jacobian = 0.0;
+  double* parameters[] = {&x};
+  double* jacobians[] = {&jacobian};
+  EXPECT_TRUE(gradient_checking_cost_function->Evaluate(
+      parameters, &residual, jacobians));
+  EXPECT_FALSE(callback.gradient_error_detected());
+  NumericDiffOptions default_options;
+  const double expected_initial_step =
+      kRelativeStepSize *
+      std::pow(default_options.ridders_step_shrink_factor,
+               default_options.max_num_ridders_extrapolations / 2);
+  EXPECT_NEAR(max_step, expected_initial_step, 1e-12);
 }
 
 }  // namespace ceres::internal
