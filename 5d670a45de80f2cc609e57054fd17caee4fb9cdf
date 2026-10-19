@@ -16,6 +16,23 @@
       "message": "this did not address my comment.",
       "revId": "5d670a45de80f2cc609e57054fd17caee4fb9cdf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "edd23e6d_3e7b8f82",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2026-10-19T00:05:48Z",
+      "side": 1,
+      "message": "Sorry I got confused by the commit message. I understand what is going on. This CL is good.",
+      "revId": "5d670a45de80f2cc609e57054fd17caee4fb9cdf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
     }
   ]
 }
