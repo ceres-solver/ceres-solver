@@ -449,4 +449,47 @@ TEST(GradientCheckingProblemImpl, ConstrainedProblemBoundsArePropagated) {
   }
 }
 
+TEST(GradientCheckingCostFunction, RelativeStepSizeIsRespected) {
+  struct HighFrequencyCostFunction : SizedCostFunction<1, 1> {
+    bool Evaluate(double const* const* parameters,
+                  double* residuals,
+                  double** jacobians) const override {
+      const double x = parameters[0][0];
+      residuals[0] = std::sin(1000.0 * x);
+      if (jacobians != nullptr && jacobians[0] != nullptr) {
+        jacobians[0][0] = 1000.0 * std::cos(1000.0 * x);
+      }
+      return true;
+    }
+  };
+
+  HighFrequencyCostFunction cost_function;
+  double x = 1.0;
+  double residual = 0.0;
+  double jacobian = 0.0;
+  double* parameters[] = {&x};
+  double* jacobians[] = {&jacobian};
+
+  // At the default step size (1e-2), 1000 * x shifts by 10 radians (> 2*pi),
+  // so Ridders' extrapolation aliases across periods and rejects the exact
+  // analytic derivative.
+  {
+    GradientCheckingIterationCallback callback;
+    auto checker = CreateGradientCheckingCostFunction(
+        &cost_function, nullptr, 1e-2, 1e-6, "", &callback);
+    EXPECT_TRUE(checker->Evaluate(parameters, &residual, jacobians));
+    EXPECT_TRUE(callback.gradient_error_detected());
+  }
+
+  // With a smaller relative_step_size (1e-5), Ridders' extrapolation resolves
+  // the derivative and the check passes.
+  {
+    GradientCheckingIterationCallback callback;
+    auto checker = CreateGradientCheckingCostFunction(
+        &cost_function, nullptr, 1e-5, 1e-6, "", &callback);
+    EXPECT_TRUE(checker->Evaluate(parameters, &residual, jacobians));
+    EXPECT_FALSE(callback.gradient_error_detected());
+  }
+}
+
 }  // namespace ceres::internal

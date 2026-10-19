@@ -2042,36 +2042,26 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
 
 .. member:: double Solver::Options::gradient_check_numeric_derivative_relative_step_size
 
-   Default: ``1e-6``
+   Default: ``1e-2``
 
    .. NOTE::
 
       This option only applies to the numeric differentiation used for
-      checking the user provided derivatives when when
+      checking the user provided derivatives when
       `Solver::Options::check_gradients` is true. If you are using
       :class:`NumericDiffCostFunction` and are interested in changing
       the step size for numeric differentiation in your cost function,
       please have a look at :class:`NumericDiffOptions`.
 
-   Relative shift used for taking numeric derivatives when
-   `Solver::Options::check_gradients` is `true`.
+   Relative initial step size used for taking numeric derivatives (via
+   Ridders' adaptive extrapolation method; see
+   :member:`NumericDiffOptions::ridders_relative_initial_step_size`)
+   when `Solver::Options::check_gradients` is `true`.
 
-   For finite differencing, each dimension is evaluated at slightly
-   shifted values, e.g., for forward differences, the numerical
-   derivative is
-
-   .. math::
-
-     \delta &= gradient\_check\_numeric\_derivative\_relative\_step\_size\\
-     \Delta f &= \frac{f((1 + \delta)  x) - f(x)}{\delta x}
-
-   The finite differencing is done along each dimension. The reason to
-   use a relative (rather than absolute) step size is that this way,
-   numeric differentiation works for functions where the arguments are
-   typically large (e.g. :math:`10^9`) and when the values are small
-   (e.g. :math:`10^{-5}`). It is possible to construct *torture cases*
-   which break this finite difference heuristic, but they do not come
-   up often in practice.
+   If parameters are close to zero, Ridders' method sets the initial
+   step size directly to this value; otherwise it is multiplied by the
+   parameter's magnitude. As the derivative is estimated across
+   Romberg extrapolations, the step size decreases.
 
 .. member:: bool Solver::Options::update_state_every_iteration
 

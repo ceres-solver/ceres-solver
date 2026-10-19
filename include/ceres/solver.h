@@ -756,31 +756,17 @@ class CERES_EXPORT Solver {
     // function, please have a look at
     // include/ceres/numeric_diff_options.h.
     //
-    // Relative shift used for taking numeric derivatives when
+    // Relative initial step size used for taking numeric derivatives
+    // (via Ridders' adaptive extrapolation method; see
+    // NumericDiffOptions::ridders_relative_initial_step_size) when
     // Solver::Options::check_gradients is true.
     //
-    // For finite differencing, each dimension is evaluated at
-    // slightly shifted values; for the case of central difference,
-    // this is what gets evaluated:
-    //
-    //   delta = gradient_check_numeric_derivative_relative_step_size;
-    //   f_initial  = f(x)
-    //   f_forward  = f((1 + delta) * x)
-    //   f_backward = f((1 - delta) * x)
-    //
-    // The finite differencing is done along each dimension. The
-    // reason to use a relative (rather than absolute) step size is
-    // that this way, numeric differentiation works for functions where
-    // the arguments are typically large (e.g. 1e9) and when the
-    // values are small (e.g. 1e-5). It is possible to construct
-    // "torture cases" which break this finite difference heuristic,
-    // but they do not come up often in practice.
-    //
-    // TODO(keir): Pick a smarter number than the default above! In
-    // theory a good choice is sqrt(eps) * x, which for doubles means
-    // about 1e-8 * x. However, I have found this number too
-    // optimistic. This number should be exposed for users to change.
-    double gradient_check_numeric_derivative_relative_step_size = 1e-6;
+    // If parameters are close to zero, Ridders' method sets the
+    // initial step size directly to this value; otherwise it is
+    // multiplied by the parameter's magnitude. As the derivative is
+    // estimated across Romberg extrapolations, the step size
+    // decreases.
+    double gradient_check_numeric_derivative_relative_step_size = 1e-2;
 
     // If update_state_every_iteration is true, then Ceres Solver will
     // guarantee that at the end of every iteration and before any

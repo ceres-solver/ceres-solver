@@ -160,7 +160,7 @@ std::unique_ptr<CostFunction> CreateGradientCheckingCostFunction(
     const std::string& extra_info,
     GradientCheckingIterationCallback* callback) {
   NumericDiffOptions numeric_diff_options;
-  numeric_diff_options.relative_step_size = relative_step_size;
+  numeric_diff_options.ridders_relative_initial_step_size = relative_step_size;
 
   return std::make_unique<GradientCheckingCostFunction>(cost_function,
                                                         manifolds,
@@ -187,9 +187,6 @@ std::unique_ptr<ProblemImpl> CreateGradientCheckingProblemImpl(
       DO_NOT_TAKE_OWNERSHIP;
   gradient_checking_problem_options.manifold_ownership = DO_NOT_TAKE_OWNERSHIP;
   gradient_checking_problem_options.context = problem_impl->context();
-
-  NumericDiffOptions numeric_diff_options;
-  numeric_diff_options.relative_step_size = relative_step_size;
 
   auto gradient_checking_problem_impl =
       std::make_unique<ProblemImpl>(gradient_checking_problem_options);
@@ -253,20 +250,18 @@ std::unique_ptr<ProblemImpl> CreateGradientCheckingProblemImpl(
     }
 
     // Wrap the original CostFunction in a GradientCheckingCostFunction.
-    CostFunction* gradient_checking_cost_function =
-        new GradientCheckingCostFunction(residual_block->cost_function(),
-                                         &manifolds,
-                                         numeric_diff_options,
-                                         relative_precision,
-                                         extra_info,
-                                         callback);
-
     // The const_cast is necessary because
     // ProblemImpl::AddResidualBlock can potentially take ownership of
     // the LossFunction, but in this case we are guaranteed that this
     // will not be the case, so this const_cast is harmless.
     gradient_checking_problem_impl->AddResidualBlock(
-        gradient_checking_cost_function,
+        CreateGradientCheckingCostFunction(residual_block->cost_function(),
+                                           &manifolds,
+                                           relative_step_size,
+                                           relative_precision,
+                                           extra_info,
+                                           callback)
+            .release(),
         const_cast<LossFunction*>(residual_block->loss_function()),
         parameter_blocks.data(),
         static_cast<int>(parameter_blocks.size()));
