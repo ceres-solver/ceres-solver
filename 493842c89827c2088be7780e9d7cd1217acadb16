@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc3a1dfa_4fe3697c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2026-10-19T00:40:57Z",
+      "side": 1,
+      "message": "I seem to be missing something in the design/matcher construction here. but happy to get a better understanding.",
+      "revId": "493842c89827c2088be7780e9d7cd1217acadb16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ef3ea70_3a13f819",
+        "filename": "internal/ceres/test_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2026-10-19T00:40:57Z",
+      "side": 1,
+      "message": "This class needs a lot more documentation.\nWhy do we need this class? it is worth explaining that and an example of how we should use it.",
+      "range": {
+        "startLine": 103,
+        "startChar": 22,
+        "endLine": 103,
+        "endChar": 43
+      },
+      "revId": "493842c89827c2088be7780e9d7cd1217acadb16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c488b34_21348650",
+        "filename": "internal/ceres/test_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2026-10-19T00:40:57Z",
+      "side": 1,
+      "message": "The name and the comment are both confusing.\ninstead of x and y we should make clear what is the reference value, so how about\n\nRelativeDifference(actual, expected);\n\nI recommend starting by saying we compute \n\n|actual - expected|/|expected|\n\nand then discuss the exceptional cases.\n\nIf expected is zero, then the function returns |actual|\n\nAs for infinities, if reference is inf, then the output value is nan.\nIf either of of the values is nan, the result should be nan,\nand if actual is inf, and expected is finite, the output should be inf.\n\nWDYT?\nif",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 15
+      },
+      "revId": "493842c89827c2088be7780e9d7cd1217acadb16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c161273_34c780f7",
+        "filename": "internal/ceres/test_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2026-10-19T00:40:57Z",
+      "side": 1,
+      "message": "we populate the listener regardless of failure?",
+      "range": {
+        "startLine": 133,
+        "startChar": 3,
+        "endLine": 133,
+        "endChar": 18
+      },
+      "revId": "493842c89827c2088be7780e9d7cd1217acadb16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f8cac8d_f790e2f3",
+        "filename": "internal/ceres/test_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2026-10-19T00:40:57Z",
+      "side": 1,
+      "message": "the negation stuff is weird. you pay attention to it when constructing the message, but not when doing the test? I am confused.",
+      "range": {
+        "startLine": 135,
+        "startChar": 26,
+        "endLine": 135,
+        "endChar": 45
+      },
+      "revId": "493842c89827c2088be7780e9d7cd1217acadb16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af15a29b_e68f4018",
+        "filename": "internal/ceres/test_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2026-10-19T00:40:57Z",
+      "side": 1,
+      "message": "I am confused by this documentation. The example seems to apply to the previous case. \nalso why do we need this, this just seems odd to me.",
+      "range": {
+        "startLine": 138,
+        "startChar": 3,
+        "endLine": 138,
+        "endChar": 10
+      },
+      "revId": "493842c89827c2088be7780e9d7cd1217acadb16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21b18c56_c43af27c",
+        "filename": "internal/ceres/test_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2026-10-19T00:40:57Z",
+      "side": 1,
+      "message": "I think it should use of the word Frobenius in the name, or better still this matcher should take the norm as input?",
+      "range": {
+        "startLine": 157,
+        "startChar": 22,
+        "endLine": 157,
+        "endChar": 39
+      },
+      "revId": "493842c89827c2088be7780e9d7cd1217acadb16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c20a9300_8d7c4d9e",
+        "filename": "internal/ceres/test_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2026-10-19T00:40:57Z",
+      "side": 1,
+      "message": "The name should mention the norm used, or should take the norm as an input.",
+      "range": {
+        "startLine": 184,
+        "startChar": 49,
+        "endLine": 184,
+        "endChar": 59
+      },
+      "revId": "493842c89827c2088be7780e9d7cd1217acadb16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26a1480e_23faee5b",
+        "filename": "internal/ceres/test_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2026-10-19T00:40:57Z",
+      "side": 1,
+      "message": "I do not think this is right, it should be norm of expected no? why are you taking the max of expected and actual?",
+      "range": {
+        "startLine": 196,
+        "startChar": 11,
+        "endLine": 196,
+        "endChar": 29
+      },
+      "revId": "493842c89827c2088be7780e9d7cd1217acadb16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab5044e9_76074a7f",
+        "filename": "internal/ceres/test_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2026-10-19T00:40:57Z",
+      "side": 1,
+      "message": "why does this involve making 2-tuples, I am confused.",
+      "range": {
+        "startLine": 205,
+        "startChar": 22,
+        "endLine": 205,
+        "endChar": 44
+      },
+      "revId": "493842c89827c2088be7780e9d7cd1217acadb16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c05e80f3_06be8ec5",
+        "filename": "internal/ceres/test_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2026-10-19T00:40:57Z",
+      "side": 1,
+      "message": "why does this involve the 2-tuple matcher?",
+      "range": {
+        "startLine": 229,
+        "startChar": 57,
+        "endLine": 229,
+        "endChar": 62
+      },
+      "revId": "493842c89827c2088be7780e9d7cd1217acadb16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "069d3739_fe6068c6",
+        "filename": "internal/ceres/test_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2026-10-19T00:40:57Z",
+      "side": 1,
+      "message": "I seem to be missing something basic here, why are we doing all this 2-tuple dance?",
+      "range": {
+        "startLine": 267,
+        "startChar": 10,
+        "endLine": 267,
+        "endChar": 20
+      },
+      "revId": "493842c89827c2088be7780e9d7cd1217acadb16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329"
+    }
+  ]
+}
