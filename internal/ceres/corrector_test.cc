@@ -186,8 +186,12 @@ TEST(Corrector, MultidimensionalGaussNewtonApproximation) {
         sqrt(rho[1]) * (jac - kAlpha / sq_norm * res * res.transpose() * jac);
 
     g_grad = rho[1] * jac.transpose() * res;
-    g_hess = rho[1] * jac.transpose() * jac +
-             2.0 * rho[2] * jac.transpose() * res * res.transpose() * jac;
+    if (rho[2] > 0.0) {
+      g_hess = rho[1] * jac.transpose() * jac +
+               2.0 * rho[2] * jac.transpose() * res * res.transpose() * jac;
+    } else {
+      g_hess = rho[1] * jac.transpose() * jac;
+    }
 
     Corrector c(sq_norm, rho);
     c.CorrectJacobian(3, 2, residuals, jacobian);
@@ -201,6 +205,7 @@ TEST(Corrector, MultidimensionalGaussNewtonApproximation) {
     ASSERT_NEAR((g_jac - jac).norm(), 0.0, 1e-10);
 
     ASSERT_NEAR((g_grad - c_grad).norm(), 0.0, 1e-10);
+    ASSERT_NEAR((g_hess - c_hess).norm(), 0.0, 1e-10);
   }
 }
 
