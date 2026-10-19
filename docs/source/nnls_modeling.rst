@@ -1005,9 +1005,10 @@ Numeric Differentiation & Manifolds
 
    Here the convention is that the contribution of a term to the cost
    function is given by :math:`\frac{1}{2}\rho(s)`, where :math:`s
-   =\|f_i\|^2`. Calling the method with a negative value of :math:`s`
-   is an error and the implementations are not required to handle that
-   case.
+   =\|f_i\|^2` is the squared norm of the entire residual block (not of
+   its individual scalar components). Calling the method with a negative
+   value of :math:`s` is an error and the implementations are not
+   required to handle that case.
 
    Most sane choices of :math:`\rho` satisfy:
 

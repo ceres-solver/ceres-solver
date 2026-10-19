@@ -56,6 +56,24 @@ objective to :math:`\frac{1}{2}\|r(x)\|^4`, whose Jacobian :math:`2 r(x)^\top J(
 vanishes as :math:`r(x) \to 0`, making the Gauss-Newton system singular near the
 solution.
 
+Do not pack multiple independent measurements into a single residual block when using a :class:`LossFunction`
+=============================================================================================================
+
+A :class:`LossFunction` operates on the squared norm
+:math:`s = \|f_i(x)\|^2 = \sum_{j=1}^{k_i} f_{ij}(x)^2` of an entire residual
+block, not on its individual scalar components :math:`f_{ij}(x)` separately.
+For a multi-dimensional measurement such as a 2D image reprojection error, this
+is desirable: :math:`\rho(\|f_i(x)\|^2)` is isotropic (rotationally invariant
+in measurement space) and down-weights both coordinates together whenever the
+feature match is an outlier.
+
+Conversely, you should not pack multiple independent measurements into a single
+:class:`CostFunction` if you intend to use a non-trivial :class:`LossFunction`.
+A single outlier component will inflate :math:`\|f_i(x)\|^2` and cause the
+:class:`LossFunction` to down-weight every other inlier measurement in the same
+residual block. Independent measurements that can fail independently should be
+added as separate residual blocks.
+
 When using Quaternions, consider using :class:`QuaternionManifold`
 ==================================================================
 
