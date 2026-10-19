@@ -1144,11 +1144,12 @@ their shape graphically. More details can be found in
 Theory
 ------
 
-Let us consider a problem with a single parameter block.
+Let us consider a problem with a single residual block and a single
+parameter block.
 
 .. math::
 
- \min_x \frac{1}{2}\rho(f^2(x))
+ \min_x \frac{1}{2}\rho(\left\|f(x)\right\|^2)
 
 
 Then, the robustified gradient and the Gauss-Newton Hessian are
@@ -1156,7 +1157,7 @@ Then, the robustified gradient and the Gauss-Newton Hessian are
 .. math::
 
         g(x) &= \rho'J^\top(x)f(x)\\
-        H(x) &= J^\top(x)\left(\rho' + 2 \rho''f(x)f^\top(x)\right)J(x)
+        H(x) &= J^\top(x)\left(\rho' I + 2 \rho''f(x)f^\top(x)\right)J(x)
 
 where the terms involving the second derivatives of :math:`f(x)` have
 been ignored. Note that :math:`H(x)` is indefinite if
@@ -1175,7 +1176,7 @@ Then, define the rescaled residual and Jacobian as
 .. math::
 
         \tilde{f}(x) &= \frac{\sqrt{\rho'}}{1 - \alpha} f(x)\\
-        \tilde{J}(x) &= \sqrt{\rho'}\left(1 - \alpha
+        \tilde{J}(x) &= \sqrt{\rho'}\left(I - \alpha
                         \frac{f(x)f^\top(x)}{\left\|f(x)\right\|^2} \right)J(x)
 
 
@@ -1189,8 +1190,9 @@ problems.
 
 
 While the theory described above is elegant, in practice we observe
-that using the Triggs correction when :math:`\rho'' > 0` leads to poor
-performance, so we upper bound it by zero. For more details see
+that using the Triggs correction when :math:`\rho'' < 0` leads to poor
+performance, so we lower bound :math:`\rho''` by zero (equivalently,
+upper bound :math:`\alpha` by zero). For more details see
 `corrector.cc <https://github.com/ceres-solver/ceres-solver/blob/master/internal/ceres/corrector.cc#L51>`_
 
 
