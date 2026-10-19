@@ -75,7 +75,7 @@ void BuildOptimizationProblem(const VectorOfConstraints& constraints,
         << "Pose with ID: " << constraint.id_end << " not found.";
 
     const Eigen::Matrix<double, 6, 6> sqrt_information =
-        constraint.information.llt().matrixL();
+        constraint.information.llt().matrixU();
     // Ceres will take ownership of the pointer.
     ceres::CostFunction* cost_function =
         PoseGraph3dErrorTerm::Create(constraint.t_be, sqrt_information);
@@ -169,7 +169,7 @@ int main(int argc, char** argv) {
       << "The solve was not successful, exiting.";
 
   CHECK(ceres::examples::OutputPoses("poses_optimized.txt", poses))
-      << "Error outputting to poses_original.txt";
+      << "Error outputting to poses_optimized.txt";
 
   return 0;
 }
