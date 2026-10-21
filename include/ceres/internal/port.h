@@ -99,8 +99,15 @@
 // including any standard library headers. Standard library Bessel functions are
 // preferred over any other implementation.
 #define CERES_HAS_CPP17_BESSEL_FUNCTIONS
-#elif defined(_SVID_SOURCE) || defined(_BSD_SOURCE) || defined(_XOPEN_SOURCE)
+#elif defined(_SVID_SOURCE) || defined(_BSD_SOURCE) || \
+    defined(_DEFAULT_SOURCE) || defined(_XOPEN_SOURCE) || \
+    (defined(__DARWIN_C_LEVEL) && __DARWIN_C_LEVEL >= 199506L)
 // If defined, indicates that j0, j1, and jn from <math.h> are available.
+// On glibc, these POSIX XSI extensions are exposed when _SVID_SOURCE,
+// _BSD_SOURCE, _DEFAULT_SOURCE, or _XOPEN_SOURCE is defined. On Apple
+// platforms (macOS, iOS), <math.h> does not use glibc feature-test macros
+// and instead exposes j0, j1, and jn whenever __DARWIN_C_LEVEL >= 199506L
+// (which holds by default under __DARWIN_C_FULL).
 #define CERES_HAS_POSIX_BESSEL_FUNCTIONS
 #endif
 
