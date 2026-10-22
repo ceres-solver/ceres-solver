@@ -71,10 +71,8 @@
 #include "ceres/map_util.h"
 #include "ceres/parallel_for.h"
 #include "ceres/schur_eliminator.h"
-#include "ceres/scoped_thread_token.h"
 #include "ceres/small_blas.h"
 #include "ceres/stl_util.h"
-#include "ceres/thread_token_provider.h"
 
 namespace ceres::internal {
 
