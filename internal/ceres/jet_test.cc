@@ -1040,6 +1040,22 @@ TEST(Jet, CopySign) {
   }
 }
 
+TEST(Jet, CbrtExtremeMagnitudes) {
+  // Verify cbrt avoids f.a * f.a overflow and underflow.
+  {
+    J z = cbrt(MakeJet(1e200, 1.0, -2.0));
+    const double r = std::cbrt(1e200);
+    const double d = 3.0 * r * r;
+    EXPECT_THAT(z, IsAlmostEqualTo(MakeJet(r, 1.0 / d, -2.0 / d)));
+  }
+  {
+    J z = cbrt(MakeJet(-1e-200, 1.0, -2.0));
+    const double r = std::cbrt(-1e-200);
+    const double d = 3.0 * r * r;
+    EXPECT_THAT(z, IsAlmostEqualTo(MakeJet(r, 1.0 / d, -2.0 / d)));
+  }
+}
+
 TEST(Jet, JetsInEigenMatrices) {
   J x = MakeJet(2.3, -2.7, 1e-3);
   J y = MakeJet(1.7, 0.5, 1e+2);

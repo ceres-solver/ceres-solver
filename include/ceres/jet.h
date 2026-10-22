@@ -167,6 +167,7 @@
 
 #include "Eigen/Core"
 #include "ceres/accurate_norm.h"
+#include "ceres/constants.h"
 #include "ceres/internal/jet_traits.h"
 #include "ceres/internal/port.h"
 #include "ceres/jet_fwd.h"
@@ -532,7 +533,7 @@ inline bool IsNormal(double x)   { return std::isnormal(x); }
 // abs(x + h) ~= abs(x) + sgn(x)h
 template <typename T, int N>
 EIGEN_STRONG_INLINE Jet<T, N> abs(const Jet<T, N>& f) {
-  return Jet<T, N>(abs(f.a), copysign(T(1), f.a) * f.v);
+  return Jet<T, N>(abs(f.a), copysign(T(1.0), f.a) * f.v);
 }
 
 // AccurateNorm(x, y, ...) computes the Euclidean norm of its arguments while
@@ -640,22 +641,25 @@ EIGEN_STRONG_INLINE Jet<T, N> copysign(const Jet<T, N>& f, const Jet<T, N> g) {
 template <typename T, int N>
 EIGEN_STRONG_INLINE Jet<T, N> log(const Jet<T, N>& f) {
   const T a_inverse = T(1.0) / f.a;
-  return Jet<T, N>(log(f.a), f.v * a_inverse);
+  return Jet<T, N>(log(f.a), a_inverse * f.v);
 }
 
 // log10(a + h) ~= log10(a) + h / (a log(10))
 template <typename T, int N>
 EIGEN_STRONG_INLINE Jet<T, N> log10(const Jet<T, N>& f) {
-  // Most compilers will expand log(10) to a constant.
-  const T a_inverse = T(1.0) / (f.a * log(T(10.0)));
-  return Jet<T, N>(log10(f.a), f.v * a_inverse);
+  // Parenthesizing (1 / log(10)) allows the compiler to fold the reciprocal
+  // constant at compile time and execute a single division at runtime instead
+  // of a runtime multiplication and division (which IEEE 754 rules forbid
+  // reassociating).
+  const T a_inverse = (T(1.0) / log(T(10.0))) / f.a;
+  return Jet<T, N>(log10(f.a), a_inverse * f.v);
 }
 
 // log1p(a + h) ~= log1p(a) + h / (1 + a)
 template <typename T, int N>
 EIGEN_STRONG_INLINE Jet<T, N> log1p(const Jet<T, N>& f) {
   const T a_inverse = T(1.0) / (T(1.0) + f.a);
-  return Jet<T, N>(log1p(f.a), f.v * a_inverse);
+  return Jet<T, N>(log1p(f.a), a_inverse * f.v);
 }
 
 // exp(a + h) ~= exp(a) + exp(a) h
@@ -677,8 +681,10 @@ EIGEN_STRONG_INLINE Jet<T, N> expm1(const Jet<T, N>& f) {
 template <typename T, int N>
 EIGEN_STRONG_INLINE Jet<T, N> sqrt(const Jet<T, N>& f) {
   const T tmp = sqrt(f.a);
-  const T two_a_inverse = T(1.0) / (T(2.0) * tmp);
-  return Jet<T, N>(tmp, f.v * two_a_inverse);
+  // Dividing 0.5 by tmp avoids a runtime multiplication by 2 before the
+  // division.
+  const T two_a_inverse = T(0.5) / tmp;
+  return Jet<T, N>(tmp, two_a_inverse * f.v);
 }
 
 // cos(a + h) ~= cos(a) - sin(a) h
@@ -765,23 +771,28 @@ EIGEN_STRONG_INLINE Jet<T, N> ceil(const Jet<T, N>& f) {
 // cbrt(a + h) ~= cbrt(a) + h / (3 a ^ (2/3))
 template <typename T, int N>
 EIGEN_STRONG_INLINE Jet<T, N> cbrt(const Jet<T, N>& f) {
-  const T derivative = T(1.0) / (T(3.0) * cbrt(f.a * f.a));
-  return Jet<T, N>(cbrt(f.a), f.v * derivative);
+  // Since a^(2/3) = cbrt(a)^2 for all real a, reusing r = cbrt(f.a) avoids a
+  // second cbrt evaluation as well as intermediate overflow or underflow of
+  // f.a * f.a when |f.a| > sqrt(max) or |f.a| < sqrt(min).
+  const T r = cbrt(f.a);
+  return Jet<T, N>(r, f.v / (T(3.0) * r * r));
 }
 
 // exp2(x + h) = 2^(x+h) ~= 2^x + h*2^x*log(2)
 template <typename T, int N>
 EIGEN_STRONG_INLINE Jet<T, N> exp2(const Jet<T, N>& f) {
   const T tmp = exp2(f.a);
-  const T derivative = tmp * log(T(2));
-  return Jet<T, N>(tmp, f.v * derivative);
+  const T derivative = tmp * log(T(2.0));
+  return Jet<T, N>(tmp, derivative * f.v);
 }
 
 // log2(x + h) ~= log2(x) + h / (x * log(2))
 template <typename T, int N>
 EIGEN_STRONG_INLINE Jet<T, N> log2(const Jet<T, N>& f) {
-  const T derivative = T(1.0) / (f.a * log(T(2)));
-  return Jet<T, N>(log2(f.a), f.v * derivative);
+  // Parenthesizing (1 / log(2)) folds the reciprocal constant at compile time
+  // and replaces a runtime multiplication and division with a single division.
+  const T derivative = (T(1.0) / log(T(2.0))) / f.a;
+  return Jet<T, N>(log2(f.a), derivative * f.v);
 }
 
 // Like sqrt(x^2 + y^2),
@@ -923,23 +934,18 @@ EIGEN_STRONG_INLINE decltype(auto) fdim(const Lhs& f, const Rhs& g) {
 // erf(x + h) = erf(x) + h * 2*exp(-x^2)/sqrt(pi)
 template <typename T, int N>
 EIGEN_STRONG_INLINE Jet<T, N> erf(const Jet<T, N>& x) {
-  // We evaluate the constant as follows:
-  //   2 / sqrt(pi) = 1 / sqrt(atan(1.))
-  // On POSIX systems it is defined as M_2_SQRTPI, but this is not
-  // portable and the type may not be T.  The above expression
-  // evaluates to full precision with IEEE arithmetic and, since it's
-  // constant, the compiler can generate exactly the same code.  gcc
-  // does so even at -O0.
-  return Jet<T, N>(erf(x.a), x.v * exp(-x.a * x.a) * (T(1) / sqrt(atan(T(1)))));
+  // Precompute the scalar derivative before multiplying x.v so Eigen evaluates
+  // a single scalar-vector product instead of scaling x.v twice.
+  const T derivative = exp(-x.a * x.a) * constants::two_over_sqrt_pi_v<T>;
+  return Jet<T, N>(erf(x.a), derivative * x.v);
 }
 
 // erfc(x) = 1-erf(x)
 // erfc(x + h) = erfc(x) + h * (-2*exp(-x^2)/sqrt(pi))
 template <typename T, int N>
 EIGEN_STRONG_INLINE Jet<T, N> erfc(const Jet<T, N>& x) {
-  // See in erf() above for the evaluation of the constant in the derivative.
-  return Jet<T, N>(erfc(x.a),
-                   -x.v * exp(-x.a * x.a) * (T(1) / sqrt(atan(T(1)))));
+  const T derivative = -exp(-x.a * x.a) * constants::two_over_sqrt_pi_v<T>;
+  return Jet<T, N>(erfc(x.a), derivative * x.v);
 }
 
 #if defined(CERES_HAS_CPP17_BESSEL_FUNCTIONS) || \
@@ -1224,7 +1230,7 @@ EIGEN_STRONG_INLINE Jet<T, N> lerp(const Jet<T, N>& a,
                                    const Jet<T, N>& b,
                                    const Jet<T, N>& t) {
   return Jet<T, N>{lerp(a.a, b.a, t.a),
-                   (T(1) - t.a) * a.v + t.a * b.v + (b.a - a.a) * t.v};
+                   (T(1.0) - t.a) * a.v + t.a * b.v + (b.a - a.a) * t.v};
 }
 
 // Computes the midpoint a + (b - a) / 2.
@@ -1260,7 +1266,7 @@ EIGEN_STRONG_INLINE Jet<T, N> atan2(const Jet<T, N>& g, const Jet<T, N>& f) {
   //   f = a + da
   //   g = b + db
 
-  T const tmp = T(1.0) / (f.a * f.a + g.a * g.a);
+  const T tmp = T(1.0) / (f.a * f.a + g.a * g.a);
   return Jet<T, N>(atan2(g.a, f.a), tmp * (-g.a * f.v + f.a * g.v));
 }
 
@@ -1277,7 +1283,7 @@ EIGEN_STRONG_INLINE Jet<T, N> atan2(const Jet<T, N>& g, const Jet<T, N>& f) {
 // norm(x + h) ~= norm(x) + 2x h
 template <typename T, int N>
 EIGEN_STRONG_INLINE Jet<T, N> norm(const Jet<T, N>& f) {
-  return Jet<T, N>(norm(f.a), T(2) * f.a * f.v);
+  return Jet<T, N>(norm(f.a), (T(2.0) * f.a) * f.v);
 }
 
 // pow -- base is a differentiable function, exponent is a constant.
