@@ -623,18 +623,19 @@ EIGEN_STRONG_INLINE auto AccurateRNorm(const Jet<T, N>& x,
 //
 // where δ(b) is the Dirac delta function.
 template <typename T, int N>
-EIGEN_STRONG_INLINE Jet<T, N> copysign(const Jet<T, N>& f, const Jet<T, N> g) {
-  // The Dirac delta function  δ(b) is undefined at b=0 (here it's
-  // infinite) and 0 everywhere else.
-  T d = fpclassify(g) == FP_ZERO ? std::numeric_limits<T>::infinity() : T(0);
-  T sa = copysign(T(1), f.a);  // sgn(a)
-  T sb = copysign(T(1), g.a);  // sgn(b)
-  // The second part of the infinitesimal is 2|a|δ(b) which is either infinity
-  // or 0 unless a or any of the values of the b infinitesimal are 0. In the
-  // latter case, the corresponding values become NaNs (multiplying 0 by
-  // infinity gives NaN). We drop the constant factor 2 since it does not change
-  // the result (its values will still be either 0, infinity or NaN).
-  return Jet<T, N>(copysign(f.a, g.a), sa * sb * f.v + abs(f.a) * d * g.v);
+EIGEN_STRONG_INLINE Jet<T, N> copysign(const Jet<T, N>& f,
+                                       const Jet<T, N>& g) {
+  const T sa = copysign(T(1.0), f.a);  // sgn(a)
+  const T sb = copysign(T(1.0), g.a);  // sgn(b)
+  if (fpclassify(g) != FP_ZERO) {
+    return Jet<T, N>(copysign(f.a, g.a), (sa * sb) * f.v);
+  }
+  // The Dirac delta function δ(b) is undefined at b=0 (here it's infinite) and
+  // 0 everywhere else. When a or any of the values of the b infinitesimal are
+  // 0, the corresponding values become NaNs (multiplying 0 by infinity gives
+  // NaN). We drop the constant factor 2 since it does not change the result.
+  const T d = std::numeric_limits<T>::infinity();
+  return Jet<T, N>(copysign(f.a, g.a), (sa * sb) * f.v + (abs(f.a) * d) * g.v);
 }
 
 // log(a + h) ~= log(a) + h / a
@@ -923,10 +924,15 @@ template <typename Lhs,
           std::enable_if_t<CompatibleJetOperands_v<Lhs, Rhs>>* = nullptr>
 EIGEN_STRONG_INLINE decltype(auto) fdim(const Lhs& f, const Rhs& g) {
   using J = std::common_type_t<Lhs, Rhs>;
+  // Check isgreater first (which is quiet on NaNs) so that the common f > g
+  // case returns immediately without checking isnan(f) or isnan(g).
+  if (isgreater(f, g)) {
+    return J{f - g};
+  }
   if (isnan(f) || isnan(g)) {
     return std::numeric_limits<J>::quiet_NaN();
   }
-  return isgreater(f, g) ? J{f - g} : J{};
+  return J{};
 }
 
 // erf is defined as an integral that cannot be expressed analytically
