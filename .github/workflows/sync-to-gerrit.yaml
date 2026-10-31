@@ -1,0 +1,27 @@
+name: Sync Ceres Solver from Gerrit
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout GitHub Mirror
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Pull from Gerrit and Push to GitHub
+        env:
+          GERRIT_URL: https://ceres-solver.googlesource.com/ceres-solver
+        run: |
+          git remote add gerrit "$GERRIT_URL"
+          git fetch gerrit --prune --tags
+
+          git push origin "+refs/remotes/gerrit/*:refs/heads/*"
+          git push origin --tags --force
