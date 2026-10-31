@@ -21,8 +21,7 @@ jobs:
         env:
           GERRIT_URL: https://ceres-solver.googlesource.com/ceres-solver
         run: |
-          git remote add gerrit "$GERRIT_URL"
-          git fetch gerrit --prune --tags
+          git fetch "$GERRIT_URL" "+refs/heads/*:refs/gerrit/heads/*" --prune --tags
 
-          git push origin "+refs/remotes/gerrit/*:refs/heads/*"
+          git push origin "+refs/gerrit/heads/*:refs/heads/*" :refs/heads/HEAD
           git push origin --tags --force
