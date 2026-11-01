@@ -9,8 +9,6 @@ jobs:
     defaults:
       run:
         shell: bash -e -o pipefail {0}
-    env:
-      BAZEL_CACHE_DIR: ${{runner.temp}}/bazel-cache
 
     steps:
       - uses: actions/checkout@v4
@@ -19,7 +17,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            ${{env.BAZEL_CACHE_DIR}}
+            ${{runner.temp}}/bazel-cache
             ~/.cache/bazelisk
           key: bazel-${{runner.os}}-${{hashFiles('MODULE.bazel', 'WORKSPACE', 'BUILD', 'examples/BUILD', 'bazel/**')}}
           restore-keys: |
@@ -31,6 +29,6 @@ jobs:
             --compilation_mode=opt \
             --cxxopt=-std=c++17 \
             --host_cxxopt=-std=c++17 \
-            --disk_cache="${BAZEL_CACHE_DIR}/disk" \
-            --repository_cache="${BAZEL_CACHE_DIR}/repo" \
+            --disk_cache="${RUNNER_TEMP}/bazel-cache/disk" \
+            --repository_cache="${RUNNER_TEMP}/bazel-cache/repo" \
             --test_output=errors
