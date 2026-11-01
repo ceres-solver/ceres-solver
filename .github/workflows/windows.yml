@@ -83,7 +83,6 @@ jobs:
         shell: powershell
     env:
       CCACHE_DIR: ${{github.workspace}}/ccache
-      CL: /MP
       CMAKE_GENERATOR: ${{matrix.generator}}
       CMAKE_GENERATOR_PLATFORM: ${{matrix.arch}}
     strategy:
