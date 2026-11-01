@@ -238,7 +238,7 @@ function is not differentiable at the sample points.
 
 A simple (well behaved) differentiable interpolation is the `Cubic
 Hermite Spline
-<http://en.wikipedia.org/wiki/Cubic_Hermite_spline>`_. Ceres Solver
+<https://en.wikipedia.org/wiki/Cubic_Hermite_spline>`_. Ceres Solver
 ships with routines to perform Cubic & Bi-Cubic interpolation that is
 automatic differentiation friendly.
 

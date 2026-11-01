@@ -9,7 +9,7 @@ Analytic Derivatives
 ====================
 
 Consider the problem of fitting the following curve (`Rat43
-<http://www.itl.nist.gov/div898/strd/nls/data/ratkowsky3.shtml>`_) to
+<https://www.itl.nist.gov/div898/strd/nls/data/ratkowsky3.shtml>`_) to
 data:
 
 .. math::
@@ -149,7 +149,7 @@ When should you use analytical derivatives?
 #. A computer algebra system like `Maple
    <https://www.maplesoft.com/products/maple/>`_ , `Mathematica
    <https://www.wolfram.com/mathematica/>`_, or `SymPy
-   <http://www.sympy.org/en/index.html>`_ can be used to symbolically
+   <https://www.sympy.org/en/index.html>`_ can be used to symbolically
    differentiate the objective function and generate the C++ to
    evaluate them.
 

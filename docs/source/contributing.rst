@@ -68,8 +68,8 @@ Setting up your Environment
 5. Configure your Gerrit password with a ``.gitcookies`` which allows pushing
    to Gerrit without having to enter a very long random password every time:
 
-   * Sign into `http://ceres-solver-review.googlesource.com
-     <http://ceres-solver-review.googlesource.com>`_.
+   * Sign into `https://ceres-solver-review.googlesource.com
+     <https://ceres-solver-review.googlesource.com>`_.
 
    * Click ``Settings -> HTTP Credentials -> Obtain Password``.
 
@@ -107,7 +107,7 @@ Submitting a change
    line of the commit.
 
    Make sure that your commit message is formatted in the `50/72 style
-   <http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html>`_.
+   <https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html>`_.
 
 2. Push your changes to the Ceres Gerrit instance:
 

@@ -38,7 +38,7 @@ reports and feature requests.
    bibliography
    license
 
-.. _Non-linear Least Squares: http://en.wikipedia.org/wiki/Non-linear_least_squares
+.. _Non-linear Least Squares: https://en.wikipedia.org/wiki/Non-linear_least_squares
 
 
 Cite Us
@@ -63,10 +63,10 @@ If you use Ceres Solver for a publication, please cite it as:
 .. [#f1] While there is some debate as to who invented the method of
          Least Squares [Stigler]_, there is no questioning the fact
          that it was `Carl Friedrich Gauss
-         <http://www-groups.dcs.st-and.ac.uk/~history/Biographies/Gauss.html>`_
+         <https://mathshistory.st-andrews.ac.uk/Biographies/Gauss/>`_
          who brought it to the attention of the world. Using just 22
          observations of the newly discovered asteroid `Ceres
-         <http://en.wikipedia.org/wiki/Ceres_(dwarf_planet)>`_, Gauss
+         <https://en.wikipedia.org/wiki/Ceres_(dwarf_planet)>`_, Gauss
          used the method of least squares to correctly predict when
          and where the asteroid will emerge from behind the Sun
          [TenenbaumDirector]_. We named our solver after Ceres to

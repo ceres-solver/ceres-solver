@@ -14,7 +14,7 @@ effort from the user as is needed to use numerical differentiation.
 
 Don't believe me? Well here goes. The following code fragment
 implements an automatically differentiated ``CostFunction`` for `Rat43
-<http://www.itl.nist.gov/div898/strd/nls/data/ratkowsky3.shtml>`_.
+<https://www.itl.nist.gov/div898/strd/nls/data/ratkowsky3.shtml>`_.
 
 .. code-block:: c++
 

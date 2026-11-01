@@ -1257,7 +1257,7 @@ New Features
    build and use Ceres Solver.
 #. Simpler and more informative solver termination type
    reporting. (See below for more details)
-#. New `website <http://www.ceres-solver.org>`_ based entirely on
+#. New `website <https://ceres-solver.org>`_ based entirely on
    Sphinx.
 #. ``AutoDiffLocalParameterization`` allows the use of automatic
    differentiation for defining ``LocalParameterization`` objects

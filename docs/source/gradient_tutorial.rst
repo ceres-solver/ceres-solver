@@ -19,7 +19,7 @@ Rosenbrock's Function
 =====================
 
 Consider minimizing the famous `Rosenbrock's function
-<http://en.wikipedia.org/wiki/Rosenbrock_function>`_ [#f1]_.
+<https://en.wikipedia.org/wiki/Rosenbrock_function>`_ [#f1]_.
 
 The simplest way to minimize is to define a templated functor to
 evaluate the objective value of this function and then use Ceres
@@ -71,7 +71,7 @@ Minimizing it then is a straightforward matter of constructing a
 
 Executing this code results, solve the problem using limited memory
 `BFGS
-<http://en.wikipedia.org/wiki/Broyden%E2%80%93Fletcher%E2%80%93Goldfarb%E2%80%93Shanno_algorithm>`_
+<https://en.wikipedia.org/wiki/Broyden%E2%80%93Fletcher%E2%80%93Goldfarb%E2%80%93Shanno_algorithm>`_
 algorithm.
 
 .. code-block:: bash

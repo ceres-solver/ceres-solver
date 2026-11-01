@@ -33,7 +33,7 @@ differentiation. It is known as the *Forward Difference* formula.
 
 So how would one go about constructing a numerically differentiated
 version of ``Rat43Analytic`` (`Rat43
-<http://www.itl.nist.gov/div898/strd/nls/data/ratkowsky3.shtml>`_) in
+<https://www.itl.nist.gov/div898/strd/nls/data/ratkowsky3.shtml>`_) in
 Ceres Solver. This is done in two steps:
 
   1. Define *Functor* that given the parameter values will evaluate the

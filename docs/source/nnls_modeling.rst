@@ -53,7 +53,7 @@ parameter block :math:`x_j`.
 As a special case, when :math:`\rho_i(x) = x`, i.e., the identity
 function, and :math:`l_j = -\infty` and :math:`u_j = \infty` we get
 the usual unconstrained `non-linear least squares problem
-<http://en.wikipedia.org/wiki/Non-linear_least_squares>`_.
+<https://en.wikipedia.org/wiki/Non-linear_least_squares>`_.
 
 .. math:: :label: ceresproblemunconstrained
 
@@ -171,7 +171,7 @@ the corresponding accessors. This information will be verified by the
    Defining a :class:`CostFunction` or a :class:`SizedCostFunction`
    can be a tedious and error prone especially when computing
    derivatives.  To this end Ceres provides `automatic differentiation
-   <http://en.wikipedia.org/wiki/Automatic_differentiation>`_.
+   <https://en.wikipedia.org/wiki/Automatic_differentiation>`_.
 
    .. code-block:: c++
 
@@ -372,7 +372,7 @@ the corresponding accessors. This information will be verified by the
   for example when the evaluation of the residual involves a call to a
   library function that you do not have control over.  In such a
   situation, `numerical differentiation
-  <http://en.wikipedia.org/wiki/Numerical_differentiation>`_ can be
+  <https://en.wikipedia.org/wiki/Numerical_differentiation>`_ can be
   used.
 
   .. NOTE ::
@@ -2679,7 +2679,7 @@ where the interpolating function is assumed to be separable in the two
 dimensions,
 
 More details of the construction can be found `Linear Methods for
-Image Interpolation <http://www.ipol.im/pub/art/2011/g_lmii/>`_ by
+Image Interpolation <https://www.ipol.im/pub/art/2011/g_lmii/>`_ by
 Pascal Getreuer.
 
 .. class:: CubicInterpolator

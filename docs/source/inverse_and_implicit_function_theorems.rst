@@ -27,7 +27,7 @@ expensive.
 
 In some cases we get lucky, and computing the inverse of :math:`f(x)`
 is an easy operation. In these cases, we can use the `Inverse Function
-Theorem <http://en.wikipedia.org/wiki/Inverse_function_theorem>`_ to
+Theorem <https://en.wikipedia.org/wiki/Inverse_function_theorem>`_ to
 compute the derivative exactly. Here is the key idea:
 
 Assuming that :math:`y=f(x)` is continuously differentiable in a
@@ -60,7 +60,7 @@ Geodetic Coordinate System Conversion
 When working with data related to the Earth, one can use two different
 coordinate systems. The familiar (latitude, longitude, height)
 Latitude-Longitude-Altitude coordinate system or the `ECEF
-<http://en.wikipedia.org/wiki/ECEF>`_ coordinate systems. The former
+<https://en.wikipedia.org/wiki/Earth-centered,_Earth-fixed_coordinate_system>`_ coordinate systems. The former
 is familiar but is not terribly convenient analytically. The latter is
 a Cartesian system but not particularly intuitive. So systems that
 process earth related data have to go back and forth between these

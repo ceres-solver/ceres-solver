@@ -25,8 +25,8 @@ Problems of this form comes up in a broad range of areas across
 science and engineering - from `fitting curves`_ in statistics, to
 constructing `3D models from photographs`_ in computer vision.
 
-.. _fitting curves: http://en.wikipedia.org/wiki/Nonlinear_regression
-.. _3D models from photographs: http://en.wikipedia.org/wiki/Bundle_adjustment
+.. _fitting curves: https://en.wikipedia.org/wiki/Nonlinear_regression
+.. _3D models from photographs: https://en.wikipedia.org/wiki/Bundle_adjustment
 
 In this chapter we will learn how to solve :eq:`ceresproblem` using
 Ceres Solver. Full working code for all the examples described in this
@@ -53,7 +53,7 @@ the solution of non-linear least squares problems.
 As a special case, when :math:`\rho_i(x) = x`, i.e., the identity
 function, and :math:`l_j = -\infty` and :math:`u_j = \infty` we get
 the more familiar `non-linear least squares problem
-<http://en.wikipedia.org/wiki/Non-linear_least_squares>`_.
+<https://en.wikipedia.org/wiki/Non-linear_least_squares>`_.
 
 .. math:: \frac{1}{2}\sum_{i} \left\|f_i\left(x_{i_1}, ... ,x_{i_k}\right)\right\|^2.
    :label: ceresproblemnonrobust
@@ -794,7 +794,7 @@ directory contains a number of other examples:
 
 #. `libmv_bundle_adjuster.cc
    <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/libmv_bundle_adjuster.cc>`_
-   is the bundle adjustment algorithm used by `Blender <www.blender.org>`_/libmv.
+   is the bundle adjustment algorithm used by `Blender <https://www.blender.org>`_/libmv.
 
 #. `libmv_homography.cc
    <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/libmv_homography.cc>`_
