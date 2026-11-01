@@ -22,6 +22,13 @@ author = 'Sameer Agarwal, Keir Mierle & Others'
 version = f'{_major}.{_minor}'
 release = f'{_major}.{_minor}.{_patch}'
 
+# Verify that package.xml matches include/ceres/version.h.
+_package_xml = (_repo_root / 'package.xml').read_text(encoding='utf-8')
+if f'<version>{release}</version>' not in _package_xml:
+    raise RuntimeError(
+        f'package.xml version does not match version.h ({release})'
+    )
+
 # Parse the latest stable release metadata from CITATION.cff for index.rst.
 _citation_cff = (_repo_root / 'CITATION.cff').read_text(encoding='utf-8')
 _stable_version = re.search(
