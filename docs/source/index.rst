@@ -44,16 +44,18 @@ reports and feature requests.
 Cite Us
 =======
 
-If you use Ceres Solver for a publication, please cite it as::
+If you use Ceres Solver for a publication, please cite it as:
+
+.. parsed-literal::
 
   @software{Agarwal_Ceres_Solver_2022,
     author = {Agarwal, Sameer and Mierle, Keir and The Ceres Solver Team},
     title = {{Ceres Solver}},
     license = {BSD-3-Clause},
     url = {https://github.com/ceres-solver/ceres-solver},
-    version = {2.3},
-    year = {2026},
-    month = {10}
+    version = {|stable_version|},
+    year = {|stable_year|},
+    month = {|stable_month|}
   }
 
 .. rubric:: Footnotes

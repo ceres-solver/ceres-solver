@@ -2,9 +2,10 @@ from pathlib import Path
 import re
 
 # Parse version from include/ceres/version.h so it stays in sync automatically.
-_version_header = (
-    Path(__file__).resolve().parents[2] / 'include' / 'ceres' / 'version.h'
-).read_text(encoding='utf-8')
+_repo_root = Path(__file__).resolve().parents[2]
+_version_header = (_repo_root / 'include' / 'ceres' / 'version.h').read_text(
+    encoding='utf-8'
+)
 _major = re.search(
     r'#define\s+CERES_VERSION_MAJOR\s+(\d+)', _version_header
 ).group(1)
@@ -20,6 +21,23 @@ copyright = '2026 Google Inc'
 author = 'Sameer Agarwal, Keir Mierle & Others'
 version = f'{_major}.{_minor}'
 release = f'{_major}.{_minor}.{_patch}'
+
+# Parse the latest stable release metadata from CITATION.cff for index.rst.
+_citation_cff = (_repo_root / 'CITATION.cff').read_text(encoding='utf-8')
+_stable_version = re.search(
+    r'^version:\s*(\S+)', _citation_cff, re.MULTILINE
+).group(1)
+_stable_date = re.search(
+    r'^date-released:\s*(\d{4})-(\d{2})-\d{2}', _citation_cff, re.MULTILINE
+)
+_stable_year = _stable_date.group(1)
+_stable_month = str(int(_stable_date.group(2)))
+
+rst_epilog = f"""
+.. |stable_version| replace:: {_stable_version}
+.. |stable_year| replace:: {_stable_year}
+.. |stable_month| replace:: {_stable_month}
+"""
 
 extensions = [
     'sphinx.ext.todo',
