@@ -1304,7 +1304,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
   low-sensitivity parameters. It can also reduce the robustness of the
   solution to errors in the Jacobians.
 
-.. member:: LineSearchIterpolationType Solver::Options::line_search_interpolation_type
+.. member:: LineSearchInterpolationType Solver::Options::line_search_interpolation_type
 
    Default: ``CUBIC``
 
@@ -1638,7 +1638,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    If ``Solver::Options::preconditioner_type == SUBSET``, then
    ``residual_blocks_for_subset_preconditioner`` must be non-empty.
 
-.. member:: DenseLinearAlgebraLibrary Solver::Options::dense_linear_algebra_library_type
+.. member:: DenseLinearAlgebraLibraryType Solver::Options::dense_linear_algebra_library_type
 
    Default: ``EIGEN``
 
@@ -1655,7 +1655,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    ``LAPACK + BLAS`` or ``CUDA`` implementation can make a substantial
    difference in performance.
 
-.. member:: SparseLinearAlgebraLibrary Solver::Options::sparse_linear_algebra_library_type
+.. member:: SparseLinearAlgebraLibraryType Solver::Options::sparse_linear_algebra_library_type
 
    Default: The highest available according to: ``SUITE_SPARSE`` >
    ``ACCELERATE_SPARSE`` > ``EIGEN_SPARSE`` > ``NO_SPARSE``

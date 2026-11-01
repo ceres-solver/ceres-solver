@@ -94,8 +94,8 @@ Then, given :math:`\left[x_{1}, ... , x_{k}\right]`,
 
 The signature of the :class:`CostFunction` (number and sizes of input
 parameter blocks and number of outputs) is stored in
-:member:`CostFunction::parameter_block_sizes_` and
-:member:`CostFunction::num_residuals_` respectively. User code
+``CostFunction::parameter_block_sizes_`` and
+``CostFunction::num_residuals_`` respectively. User code
 inheriting from this class is expected to set these two members with
 the corresponding accessors. This information will be verified by the
 :class:`Problem` when added with :func:`Problem::AddResidualBlock`.
@@ -148,7 +148,7 @@ the corresponding accessors. This information will be verified by the
 
    If the size of the parameter blocks and the size of the residual
    vector is known at compile time (this is the common case),
-   :class:`SizeCostFunction` can be used where these values can be
+   :class:`SizedCostFunction` can be used where these values can be
    specified as template parameters and the user only needs to
    implement :func:`CostFunction::Evaluate`.
 
@@ -272,7 +272,7 @@ the corresponding accessors. This information will be verified by the
    functor pointer passed to it, ie. will call `delete` on the cost functor
    when the :class:`AutoDiffCostFunction` itself is deleted. However, this may
    be undesirable in certain cases, therefore it is also possible to specify
-   :class:`DO_NOT_TAKE_OWNERSHIP` as a second argument in the constructor,
+   ``DO_NOT_TAKE_OWNERSHIP`` as a second argument in the constructor,
    while passing a pointer to a cost functor which does not need to be deleted
    by the AutoDiffCostFunction. For example:
 
@@ -417,7 +417,7 @@ the corresponding accessors. This information will be verified by the
   expectation for a series of measurements, where there is an instance
   of the cost function for each measurement :math:`k`.
 
-  To write an numerically-differentiable class:`CostFunction` for the
+  To write a numerically-differentiable :class:`CostFunction` for the
   above model, first define the object
 
   .. code-block::  c++
@@ -511,6 +511,47 @@ the corresponding accessors. This information will be verified by the
   Consider using ``CENTRAL`` differences to begin with. Based on the
   results, either try forward difference to improve performance or
   Ridders' method to improve accuracy.
+
+.. class:: NumericDiffOptions
+
+   Options pertaining to numeric differentiation (e.g., step sizes and
+   extrapolation parameters).
+
+.. member:: double NumericDiffOptions::relative_step_size
+
+   Default: ``1e-6``
+
+   Numeric differentiation step size (multiplied by parameter block's order of
+   magnitude) for ``FORWARD`` and ``CENTRAL`` finite differences. If parameters
+   are close to zero, the step size is set to ``sqrt(machine_epsilon)``.
+
+.. member:: double NumericDiffOptions::ridders_relative_initial_step_size
+
+   Default: ``1e-2``
+
+   Initial step size for ``RIDDERS`` adaptive numeric differentiation
+   (multiplied by parameter block's order of magnitude). If parameters are
+   close to zero, Ridders' method sets the step size directly to this value.
+
+.. member:: int NumericDiffOptions::max_num_ridders_extrapolations
+
+   Default: ``10``
+
+   Maximal number of adaptive extrapolations (sampling) in Ridders' method.
+
+.. member:: double NumericDiffOptions::ridders_epsilon
+
+   Default: ``1e-12``
+
+   Convergence criterion on extrapolation error for Ridders' adaptive
+   differentiation.
+
+.. member:: double NumericDiffOptions::ridders_step_shrink_factor
+
+   Default: ``2.0``
+
+   The factor by which to shrink the step size with each extrapolation in
+   Ridders' method.
 
   .. warning::
       A common beginner's error when first using
@@ -997,6 +1038,7 @@ Numeric Differentiation & Manifolds
       virtual void Evaluate(double s, double out[3]) const = 0;
     };
 
+.. function:: void LossFunction::Evaluate(double s, double out[3]) const
 
    The key method is :func:`LossFunction::Evaluate`, which given a
    non-negative scalar ``s``, computes
@@ -1373,15 +1415,15 @@ operations and their derivatives (corresponding naturally to
   };
 
 
-.. function:: int Manifold::AmbientSize() const;
+.. function:: int Manifold::AmbientSize() const
 
    Dimension of the ambient space in which the manifold is embedded.
 
-.. function:: int Manifold::TangentSize() const;
+.. function:: int Manifold::TangentSize() const
 
    Dimension of the manifold/tangent space.
 
-.. function:: bool Plus(const double* x, const double* delta, double* x_plus_delta) const;
+.. function:: bool Manifold::Plus(const double* x, const double* delta, double* x_plus_delta) const
 
    Implements the :math:`\boxplus(x,\Delta)` operation for the manifold.
 
@@ -1395,7 +1437,7 @@ operations and their derivatives (corresponding naturally to
 
    Return value indicates if the operation was successful or not.
 
-.. function:: bool PlusJacobian(const double* x, double* jacobian) const;
+.. function:: bool Manifold::PlusJacobian(const double* x, double* jacobian) const
 
    Compute the derivative of :math:`\boxplus(x, \Delta)` w.r.t
    :math:`\Delta` at :math:`\Delta = 0`, i.e. :math:`(D_2
@@ -1406,7 +1448,7 @@ operations and their derivatives (corresponding naturally to
 
    Return value indicates whether the operation was successful or not.
 
-.. function:: bool RightMultiplyByPlusJacobian(const double* x, const int num_rows, const double* ambient_matrix, double* tangent_matrix) const;
+.. function:: bool Manifold::RightMultiplyByPlusJacobian(const double* x, const int num_rows, const double* ambient_matrix, double* tangent_matrix) const
 
    ``tangent_matrix`` = ``ambient_matrix`` :math:`\times` plus_jacobian.
 
@@ -1429,7 +1471,7 @@ operations and their derivatives (corresponding naturally to
    implementation for convenience. If performance becomes an issue
    then the user should consider implementing a specialization.
 
-.. function:: bool Minus(const double* y, const double* x, double* y_minus_x) const;
+.. function:: bool Manifold::Minus(const double* y, const double* x, double* y_minus_x) const
 
    Implements :math:`\boxminus(y,x)` operation for the manifold.
 
@@ -1439,11 +1481,11 @@ operations and their derivatives (corresponding naturally to
    ``y``.
 
    ``x`` and ``y`` are :func:`Manifold::AmbientSize` vectors.
-   ``y_minus_x`` is a ::func:`Manifold::TangentSize` vector.
+   ``y_minus_x`` is a :func:`Manifold::TangentSize` vector.
 
    Return value indicates if the operation was successful or not.
 
-.. function:: bool MinusJacobian(const double* x, double* jacobian) const = 0;
+.. function:: bool Manifold::MinusJacobian(const double* x, double* jacobian) const
 
    Compute the derivative of :math:`\boxminus(y, x)` w.r.t :math:`y`
    at :math:`y = x`, i.e :math:`(D_1 \boxminus) (x, x)`.
@@ -1836,7 +1878,7 @@ be constructed as
    :class:`Problem` holds the robustified bounds constrained
    non-linear least squares problem :eq:`ceresproblem_modeling`. To
    create a least squares problem, use the
-   :func:`Problem::AddResidalBlock` and
+   :func:`Problem::AddResidualBlock` and
    :func:`Problem::AddParameterBlock` methods.
 
    For example a problem containing 3 parameter blocks of sizes 3, 4
@@ -1880,7 +1922,7 @@ be constructed as
 
    You can set any parameter block to be constant using
    :func:`Problem::SetParameterBlockConstant` and undo this using
-   :func:`SetParameterBlockVariable`.
+   :func:`Problem::SetParameterBlockVariable`.
 
    In fact you can set any number of parameter blocks to be constant,
    and Ceres is smart enough to figure out what part of the problem
@@ -2021,7 +2063,7 @@ be constructed as
 
 .. function:: ResidualBlockId Problem::AddResidualBlock(CostFunction* cost_function, LossFunction* loss_function, const std::vector<double*> parameter_blocks)
 
-.. function:: template <typename Ts...> ResidualBlockId Problem::AddResidualBlock(CostFunction* cost_function, LossFunction* loss_function, double* x0, Ts... xs)
+.. function:: template <typename... Ts> ResidualBlockId Problem::AddResidualBlock(CostFunction* cost_function, LossFunction* loss_function, double* x0, Ts... xs)
 
    Add a residual block to the overall cost function. The cost
    function carries with it information about the sizes of the
@@ -2080,7 +2122,7 @@ be constructed as
 
    Repeated calls with the same arguments are ignored. Repeated calls
    with the same double pointer but a different size results in a crash
-   (unless :member:`Solver::Options::disable_all_safety_checks` is set to true).
+   (unless :member:`Problem::Options::disable_all_safety_checks` is set to true).
 
    Repeated calls with the same double pointer and size but different
    :class:`Manifold` is equivalent to calling `SetManifold(manifold)`,
@@ -2122,7 +2164,7 @@ be constructed as
 
    Remove a parameter block from the problem. Any residual blocks that
    depend on the parameter are also removed, as described above in
-   :func:`RemoveResidualBlock()`.
+   :func:`Problem::RemoveResidualBlock`.
 
    The manifold of the parameter block, if it exists, will persist until the
    deletion of the problem.
@@ -2152,7 +2194,7 @@ be constructed as
    either by calling ``SetParameterBlockConstant`` or by associating a
    :class:`Manifold` with a zero dimensional tangent space with it.
 
-.. function:: void SetManifold(double* values, Manifold* manifold);
+.. function:: void Problem::SetManifold(double* values, Manifold* manifold)
 
    Set the :class:`Manifold` for the parameter block. Calling
    :func:`Problem::SetManifold` with ``nullptr`` will clear any
@@ -2167,14 +2209,14 @@ be constructed as
    It is acceptable to set the same :class:`Manifold` for multiple
    parameter blocks.
 
-.. function:: const Manifold* GetManifold(const double* values) const;
+.. function:: const Manifold* Problem::GetManifold(const double* values) const
 
    Get the :class:`Manifold` object associated with this parameter block.
 
    If there is no :class:`Manifold` object associated with the parameter block,
    then ``nullptr`` is returned.
 
-.. function:: bool HasManifold(const double* values) const;
+.. function:: bool Problem::HasManifold(const double* values) const
 
    Returns ``true`` if a :class:`Manifold` is associated with this parameter
    block, ``false`` otherwise.
@@ -2274,7 +2316,7 @@ be constructed as
 
    Get the :class:`LossFunction` for the given residual block.
 
-.. function::  bool EvaluateResidualBlock(ResidualBlockId residual_block_id, bool apply_loss_function, double* cost,double* residuals, double** jacobians) const
+.. function:: bool Problem::EvaluateResidualBlock(ResidualBlockId residual_block_id, bool apply_loss_function, double* cost, double* residuals, double** jacobians) const
 
    Evaluates the residual block, storing the scalar cost in ``cost``, the
    residual components in ``residuals``, and the jacobians between the
@@ -2312,7 +2354,7 @@ be constructed as
       :func:`Problem::EvaluateResidualBlockAssumingParametersUnchanged`.
 
 
-.. function::  bool EvaluateResidualBlockAssumingParametersUnchanged(ResidualBlockId residual_block_id, bool apply_loss_function, double* cost,double* residuals, double** jacobians) const
+.. function:: bool Problem::EvaluateResidualBlockAssumingParametersUnchanged(ResidualBlockId residual_block_id, bool apply_loss_function, double* cost, double* residuals, double** jacobians) const
 
     Same as :func:`Problem::EvaluateResidualBlock` except that if an
     :class:`EvaluationCallback` is associated with the problem, then
@@ -2504,6 +2546,8 @@ quaternion and matrix) we provide a handy set of templated
 functions. These functions are templated so that the user can use them
 within Ceres Solver's automatic differentiation framework.
 
+.. class:: template <typename T, int row_stride = 1, int col_stride = 1> MatrixAdapter
+
 .. function:: template <typename T> void AngleAxisToQuaternion(T const* angle_axis, T* quaternion)
 
    Convert a value in combined axis-angle representation to a
@@ -2576,7 +2620,7 @@ within Ceres Solver's automatic differentiation framework.
    such that :math:`\det(Q) = 1` and :math:`QQ' = I`.
 
 
-.. function:: template <typename T> void QuaternionToRotation(const T q[4], const MatrixAdapter<T, row_stride, col_stride>& R)
+.. function:: template <typename T, int row_stride, int col_stride> void QuaternionToRotation(const T q[4], const MatrixAdapter<T, row_stride, col_stride>& R)
 .. function:: template <typename T> void QuaternionToRotation(const T q[4], T R[3 * 3])
 
    Same as above except that the rotation matrix is normalized by the
@@ -2671,11 +2715,13 @@ numbers.
   interpolator.Evaluate(1.5, &f, &dfdx);
 
 
-In the above code we use ``Grid1D`` a templated helper class that
+.. class:: Grid1D
+
+In the above code we use :class:`Grid1D`, a templated helper class that
 allows easy interfacing between ``C++`` arrays and
 :class:`CubicInterpolator`.
 
-``Grid1D`` supports vector valued functions where the various
+:class:`Grid1D` supports vector valued functions where the various
 coordinates of the function can be interleaved or stacked. It also
 allows the use of any numeric type as input, as long as it can be
 safely cast to a double.
@@ -2717,11 +2763,13 @@ For example the following code interpolates a two dimensional array.
    double f, dfdr, dfdc;
    interpolator.Evaluate(1.2, 2.5, &f, &dfdr, &dfdc);
 
-In the above code, the templated helper class ``Grid2D`` is used to
+.. class:: Grid2D
+
+In the above code, the templated helper class :class:`Grid2D` is used to
 make a ``C++`` array look like a two dimensional table to
 :class:`BiCubicInterpolator`.
 
-``Grid2D`` supports row or column major layouts. It also supports
+:class:`Grid2D` supports row or column major layouts. It also supports
 vector valued functions where the individual coordinates of the
 function may be interleaved or stacked. It also allows the use of any
 numeric type as input, as long as it can be safely cast to double.

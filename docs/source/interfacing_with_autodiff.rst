@@ -165,7 +165,7 @@ is a two step process:
 1. Wrap :code:`ComputeDistortionValueAndJacobian` into a
    :class:`CostFunction` object which we call
    :code:`ComputeDistortionFunction`.
-2. Wrap the resulting :class:`ComputeDistortionFunction` object using
+2. Wrap the resulting :code:`ComputeDistortionFunction` object using
    :class:`CostFunctionToFunctor`. The resulting object is a functor
    with a templated :code:`operator()` method, which pipes the
    Jacobian computed by :class:`NumericDiffCostFunction` into the

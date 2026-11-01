@@ -56,6 +56,32 @@ extensions = [
 master_doc = 'index'
 exclude_patterns = []
 pygments_style = 'sphinx'
+nitpicky = True
+
+# Enum and typedef identifiers used in member/function declarations whose
+# values are documented inline rather than in standalone directives.
+nitpick_ignore = [
+    ('cpp:identifier', 'Context'),
+    ('cpp:identifier', 'CovarianceAlgorithmType'),
+    ('cpp:identifier', 'DenseLinearAlgebraLibraryType'),
+    ('cpp:identifier', 'DoglegType'),
+    ('cpp:identifier', 'DumpFormatType'),
+    ('cpp:identifier', 'LineSearchDirectionType'),
+    ('cpp:identifier', 'LineSearchInterpolationType'),
+    ('cpp:identifier', 'LineSearchType'),
+    ('cpp:identifier', 'LinearSolverOrderingType'),
+    ('cpp:identifier', 'LinearSolverType'),
+    ('cpp:identifier', 'LoggingType'),
+    ('cpp:identifier', 'MinimizerType'),
+    ('cpp:identifier', 'NonlinearConjugateGradientType'),
+    ('cpp:identifier', 'Ownership'),
+    ('cpp:identifier', 'PreconditionerType'),
+    ('cpp:identifier', 'ResidualBlockId'),
+    ('cpp:identifier', 'SparseLinearAlgebraLibraryType'),
+    ('cpp:identifier', 'TerminationType'),
+    ('cpp:identifier', 'TrustRegionStrategyType'),
+    ('cpp:identifier', 'VisibilityClusteringType'),
+]
 
 html_theme = 'sphinx_rtd_theme'
 html_title = 'Ceres Solver'

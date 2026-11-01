@@ -29,14 +29,14 @@ New Features
    two-argument norms. (Sergiu Deitsch)
 #. Simplify instantiation of cost functions and their functors by forwarding
    functor constructor arguments directly, and add ``std::unique_ptr`` and
-   :enum:`Ownership` constructors across cost and first-order functions.
+   ``Ownership`` constructors across cost and first-order functions.
    (Sergiu Deitsch & Sameer Agarwal)
 #. Add support for maximum matrix sizes (``kMaxResiduals`` and
-   ``kMaxParameters``) to :class:`TinySolver`,
-   :class:`TinySolverAutoDiffFunction`, and
-   :class:`TinySolverCostFunctionAdapter` to support zero dynamic memory
+   ``kMaxParameters``) to ``TinySolver``,
+   ``TinySolverAutoDiffFunction``, and
+   ``TinySolverCostFunctionAdapter`` to support zero dynamic memory
    allocation when dimensions are ``Eigen::Dynamic``. (Pez Firoozfam)
-#. Add ``Residuals()`` and ``Jacobian()`` getters to :class:`TinySolver`.
+#. Add ``Residuals()`` and ``Jacobian()`` getters to ``TinySolver``.
    (connorlee77)
 #. Do not restrict :class:`Grid1D` and :class:`Grid2D` output to ``double``.
    (Sergiu Deitsch)
@@ -47,7 +47,7 @@ New Features
    :class:`QuaternionManifold` and :class:`EigenQuaternionManifold`. (Sergiu
    Deitsch)
 #. Provide ``Eigen::NumTraits`` ``quiet_NaN`` and ``infinity`` for
-   :class:`Jet`. (Sergiu Deitsch)
+   ``Jet``. (Sergiu Deitsch)
 #. Move C++17 Bessel functions availability checks from configuration time to
    inclusion time, with fallback to POSIX implementations on ``libc++``.
    (Sergiu Deitsch)
@@ -202,7 +202,7 @@ New Features
 Backward Incompatible API Changes
 ---------------------------------
 
-#. :class:`LocalParameterization` has been removed, use
+#. ``LocalParameterization`` has been removed, use
    :class:`Manifold` instead.
 #. Ceres Solver now requires a C++17 compliant compiler.
 #. Ceres Solver now requires CMake version 3.16 or later.
@@ -296,7 +296,7 @@ Bug Fixes & Minor Changes
 #. Improve the code in small_blas to be more compiler friendly (Sameer
    Agarwal)
 #. Add the ability to specify the pivot threshold in
-   ::class::`Covariance::Options` (Sameer Agarwal)
+   :class:`Covariance::Options` (Sameer Agarwal)
 #. Modernize the internals to use C++17 (Sameer Agarwal)
 #. Choose SPMV algorithm based on the CUDA SDK Version (Joydeep
    Biswas)
@@ -336,17 +336,17 @@ New Features
    Agarwal)
 
 #. :class:`Manifold` is the new
-   :class:`LocalParameterization`. Version 2.1 is the transition
-   release where users can use both :class:`LocalParameterization` as
+   ``LocalParameterization``. Version 2.1 is the transition
+   release where users can use both ``LocalParameterization`` as
    well as :class:`Manifold` objects as they transition from the
-   former to the latter. :class:`LocalParameterization` will be
+   former to the latter. ``LocalParameterization`` will be
    removed in version 2.2. There should be no numerical change to the
    results as a result of this change. (Sameer Agarwal, Johannes Beck,
    Sergiu Deitsch)
 
-#. A number of changes to :class:`Jet` s (Sergiu Deitsch)
+#. A number of changes to ``Jet`` s (Sergiu Deitsch)
 
-   * :class:`Jet` gained support for, ``copysign``, ``fma`` (fused
+   * ``Jet`` gained support for, ``copysign``, ``fma`` (fused
      multiply-add), ``midpoint`` (C++20 and above), ``lerp`` (C++20
      and above), 3-argument ``hypot`` (C++17 and above), ``log10``,
      ``log1p``, ``exp1m``, ``norm`` (squared :math:`L^2` norm).
@@ -360,8 +360,8 @@ New Features
      ``isinf``, ``isnormal``, ``isfinite``, ``fpclassify`` (new),
      ``fmin``, ``fmax``
 
-   * It is now possible to safely compare a :class:`Jet` against a scalar
-     (or literal) without constructing a :class:`Jet` first (even if it's
+   * It is now possible to safely compare a ``Jet`` against a scalar
+     (or literal) without constructing a ``Jet`` first (even if it's
      nested):
 
      .. code-block:: c++
@@ -380,13 +380,13 @@ New Features
 Backward Incompatible API Changes
 ---------------------------------
 
-#. :class:`LocalParameterization` is deprecated. It will be removed in
+#. ``LocalParameterization`` is deprecated. It will be removed in
    version 2.2. Use :class:`Manifold` instead.
 #. Classification functions like ``IsFinite`` are deprecated. Use the
    ``C++11`` functions (``isfinite``, ``isnan`` etc) going
    forward. However to maintain consistent behaviour with comparison
    operators, these functions only inspect the scalar part of the
-   :class:`Jet`.
+   ``Jet``.
 
 Bug Fixes & Minor Changes
 -------------------------
@@ -490,7 +490,7 @@ New Features
    version >= 3.3 & CMake version >= 3.5, XCode version >= 11.2 (Sameer
    Agarwal, Alex Stewart & Keir Mierle)
 #. C++ threading based multi-threading support. (Mike Vitus)
-#. :func:`Problem::AddResidualBlock`, :class:`SizedFunction`,
+#. :func:`Problem::AddResidualBlock`, :class:`SizedCostFunction`,
    :class:`AutoDiffCostFunction`, :class:`NumericDiffCostFunction`
    support an arbitrary number of parameter blocks using variadic
    templates (Johannes Beck)
@@ -546,7 +546,7 @@ Bug Fixes & Minor Changes
 #. Huge number of build system simplification & cleanups (Alex
    Stewart, NeroBurner, Alastair Harrison, Linus Mårtensson, Nikolaus Demmel)
 #. Intel TBB based threading removed (Mike Vitus)
-#. Allow :class:`SubsetParameterization` to accept an empty vector of
+#. Allow ``SubsetParameterization`` to accept an empty vector of
    constant parameters. (Sameer Agarwal & Frédéric Devernay)
 #. Fix a bug in DynamicAutoDiffCostFunction when all parameters are
    constant (Ky Waegel & Sameer Agarwal)

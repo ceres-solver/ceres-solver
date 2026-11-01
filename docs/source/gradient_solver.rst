@@ -45,6 +45,47 @@ Modeling
    Number of parameters in the domain of the function.
 
 
+:class:`AutoDiffFirstOrderFunction`
+-----------------------------------
+
+.. class:: AutoDiffFirstOrderFunction
+
+   Creates :class:`FirstOrderFunction` instances with gradients computed via
+   automatic differentiation. To get an automatically differentiated function,
+   define a functor with a templated ``operator()`` that takes
+   ``const T* const parameters`` and writes the scalar objective to ``T* cost``.
+
+   .. code-block:: c++
+
+      template <typename FirstOrderFunctor, int kNumParameters>
+      class AutoDiffFirstOrderFunction : public FirstOrderFunction {
+       public:
+        template <class... Args>
+        explicit AutoDiffFirstOrderFunction(Args&&... args);
+        explicit AutoDiffFirstOrderFunction(
+            std::unique_ptr<FirstOrderFunctor> functor);
+        explicit AutoDiffFirstOrderFunction(FirstOrderFunctor* functor,
+                                            Ownership ownership = TAKE_OWNERSHIP);
+      };
+
+
+:class:`NumericDiffFirstOrderFunction`
+--------------------------------------
+
+.. class:: NumericDiffFirstOrderFunction
+
+   Creates :class:`FirstOrderFunction` instances with gradients computed via
+   numeric differentiation. The number of parameters can be specified either
+   at compile time or at runtime using ``DYNAMIC``.
+
+   .. code-block:: c++
+
+      template <typename FirstOrderFunctor,
+                NumericDiffMethodType method = CENTRAL,
+                int kNumParameters = DYNAMIC>
+      class NumericDiffFirstOrderFunction : public FirstOrderFunction {};
+
+
 :class:`GradientProblem`
 ------------------------
 
@@ -55,7 +96,7 @@ Modeling
   class GradientProblem {
    public:
     explicit GradientProblem(std::unique_ptr<FirstOrderFunction> function);
-    GradientProblem(std::unique_ptr<FirstOrderFunction function,
+    GradientProblem(std::unique_ptr<FirstOrderFunction> function,
                     std::unique_ptr<Manifold> manifold);
     int NumParameters() const;
     int NumTangentParameters() const;
@@ -85,14 +126,16 @@ The constructor takes ownership of the :class:`FirstOrderFunction` and
 :class:`Manifold` objects passed to it.
 
 
+Solving
+=======
+
+.. class:: GradientProblemSolver
+
 .. function:: void Solve(const GradientProblemSolver::Options& options, const GradientProblem& problem, double* parameters, GradientProblemSolver::Summary* summary)
 
    Solve the given :class:`GradientProblem` using the values in
    ``parameters`` as the initial guess of the solution.
 
-
-Solving
-=======
 
 :class:`GradientProblemSolver::Options`
 ---------------------------------------
@@ -132,7 +175,7 @@ Solving
    Choices are ``FLETCHER_REEVES``, ``POLAK_RIBIERE`` and
    ``HESTENES_STIEFEL``.
 
-.. member:: int GradientProblemSolver::Options::max_lbfs_rank
+.. member:: int GradientProblemSolver::Options::max_lbfgs_rank
 
    Default: 20
 
@@ -364,7 +407,7 @@ Solving
 
    Default: ``false``
 
-   By default the :class:`Minimizer` progress is logged to ``STDERR``
+   By default the minimizer progress is logged to ``STDERR``
    depending on the ``vlog`` level. If this flag is set to true, and
    :member:`GradientProblemSolver::Options::logging_type` is not
    ``SILENT``, the logging output is sent to ``STDOUT``.
@@ -388,13 +431,13 @@ Solving
    #. ``it`` is the time take by the current iteration.
    #. ``tt`` is the total time taken by the minimizer.
 
-.. member:: std::vector<IterationCallback> GradientProblemSolver::Options::callbacks
+.. member:: std::vector<IterationCallback*> GradientProblemSolver::Options::callbacks
 
    Callbacks that are executed at the end of each iteration of the
-   :class:`Minimizer`. They are executed in the order that they are
+   minimizer. They are executed in the order that they are
    specified in this vector. By default, parameter blocks are updated
    only at the end of the optimization, i.e., when the
-   :class:`Minimizer` terminates. This behavior is controlled by
+   minimizer terminates. This behavior is controlled by
    :member:`GradientProblemSolver::Options::update_state_every_iteration`. If
    the user wishes to have access to the update parameter blocks when
    his/her callbacks are executed, then set
@@ -462,11 +505,11 @@ Solving
 
    :class:`IterationSummary` for each minimizer iteration in order.
 
-.. member:: int num_cost_evaluations
+.. member:: int GradientProblemSolver::Summary::num_cost_evaluations
 
    Number of times the cost (and not the gradient) was evaluated.
 
-.. member:: int num_gradient_evaluations
+.. member:: int GradientProblemSolver::Summary::num_gradient_evaluations
 
    Number of times the gradient (and the cost) were evaluated.
 

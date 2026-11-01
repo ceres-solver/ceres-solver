@@ -294,7 +294,7 @@ scratches the surface of how derivatives can be supplied to
 Ceres. Once you are comfortable with using
 :class:`NumericDiffCostFunction` and :class:`AutoDiffCostFunction` we
 recommend taking a look at :class:`DynamicAutoDiffCostFunction`,
-:class:`CostFunctionToFunctor`, :class:`NumericDiffFunctor` and
+:class:`CostFunctionToFunctor`, and
 :class:`ConditionedCostFunction` for more advanced ways of
 constructing and computing cost functions.
 
@@ -887,16 +887,16 @@ directory contains a number of other examples:
 
    Lastly, we use a manifold to normalize the orientation in the range
    :math:`[-\pi,\pi)`.  Specially, we define the
-   :member:`AngleManifold::Plus()` function to be:
+   ``AngleManifold::Plus()`` function to be:
    :math:`\mathrm{Normalize}(\psi + \Delta)` and
-   :member:`AngleManifold::Minus()` function to be
+   ``AngleManifold::Minus()`` function to be
    :math:`\mathrm{Normalize}(y) - \mathrm{Normalize}(x)`.
 
-   This package includes an executable :member:`pose_graph_2d` that will read a
+   This package includes an executable ``pose_graph_2d`` that will read a
    problem definition file. This executable can work with any 2D problem
    definition that uses the g2o format. It would be relatively straightforward
    to implement a new reader for a different format such as TORO or
-   others. :member:`pose_graph_2d` will print the Ceres solver full summary and
+   others. ``pose_graph_2d`` will print the Ceres solver full summary and
    then output to disk the original and optimized poses (``poses_original.txt``
    and ``poses_optimized.txt``, respectively) of the robot in the following
    format:
@@ -911,7 +911,7 @@ directory contains a number of other examples:
    definition. Note, the file will be sorted in ascending order for the
    ``pose_id``.
 
-   The executable :member:`pose_graph_2d` expects the first argument to be
+   The executable ``pose_graph_2d`` expects the first argument to be
    the path to the problem definition. To run the executable,
 
    .. code-block:: bash
@@ -994,11 +994,11 @@ directory contains a number of other examples:
    parameter blocks which are raw double pointers this difference is
    important and requires a different parameterization.
 
-   This package includes an executable :member:`pose_graph_3d` that will read a
+   This package includes an executable ``pose_graph_3d`` that will read a
    problem definition file. This executable can work with any 3D problem
    definition that uses the g2o format with quaternions used for the orientation
    representation. It would be relatively straightforward to implement a new
-   reader for a different format such as TORO or others. :member:`pose_graph_3d`
+   reader for a different format such as TORO or others. ``pose_graph_3d``
    will print the Ceres solver full summary and then output to disk the original
    and optimized poses (``poses_original.txt`` and ``poses_optimized.txt``,
    respectively) of the robot in the following format:
@@ -1014,7 +1014,7 @@ directory contains a number of other examples:
    definition. Note, the file will be sorted in ascending order for the
    ``pose_id``.
 
-   The executable :member:`pose_graph_3d` expects the first argument to be the
+   The executable ``pose_graph_3d`` expects the first argument to be the
    path to the problem definition. The executable can be run via
 
    .. code-block:: bash
