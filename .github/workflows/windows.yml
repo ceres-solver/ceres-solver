@@ -236,7 +236,8 @@ jobs:
                 -DBUILD_SHARED_LIBS=${{matrix.lib == 'shared'}} `
                 -DCMAKE_CONFIGURATION_TYPES=${{matrix.build_type}} `
                 -DCMAKE_INSTALL_PREFIX:PATH=${{github.workspace}}/install `
-                -DCMAKE_VS_GLOBALS="CLToolExe=cl.exe;CLToolPath=${{github.workspace}}/ccache-4.10.2-windows-x86_64;TrackFileAccess=false;UseMultiToolTask=true" `
+                "-DCMAKE_VS_GLOBALS=CLToolExe=cl.exe;CLToolPath=${{github.workspace}}\ccache-4.10.2-windows-x86_64;TrackFileAccess=false;UseMultiToolTask=true;DebugInformationFormat=OldStyle" `
+                -DCMAKE_MSVC_DEBUG_INFORMATION_FORMAT=Embedded `
                 -DLAPACK_lapack_LIBRARY=${{github.workspace}}/suitesparse/lib/liblapack.lib `
                 -DWITH_SUITESPARSE=ON
 
