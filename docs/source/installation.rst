@@ -107,7 +107,14 @@ optional. For details on customizing the build process, see
   Additionally, if ``cuDSS`` is also available (controlled by
   ``WITH_CUDSS``), then GPU acceleration can be used for
   ``SPARSE_NORMAL_CHOLESKY`` and ``SPARSE_SCHUR`` via the
-  ``CUDA_SPARSE`` sparse linear algebra library.
+  ``CUDA_SPARSE`` sparse linear algebra library. Because ``cuDSS`` is
+  commonly installed into a CUDA-versioned directory outside CMake's
+  default search paths (for example,
+  ``/usr/lib/x86_64-linux-gnu/libcudss/12`` when installed via ``apt`` on
+  Ubuntu) or extracted from a redistributable archive, pass its prefix via
+  ``cudss_ROOT`` or ``CMAKE_PREFIX_PATH`` (e.g.,
+  ``-Dcudss_ROOT=/usr/lib/x86_64-linux-gnu/libcudss/12``) or set
+  ``cudss_DIR`` to the directory containing ``cudss-config.cmake``.
 
 .. _section-source:
 
@@ -731,6 +738,7 @@ command to find all of its dependencies.
      to search (e.g., ``-DCMAKE_PREFIX_PATH="/opt/local;/custom/prefix"``).
    - ``<PackageName>_ROOT``: The installation prefix for a specific package
      (e.g., ``-DEigen3_ROOT=/path/to/eigen``, ``-Dabsl_ROOT=/path/to/abseil``,
+     ``-Dcudss_ROOT=/usr/lib/x86_64-linux-gnu/libcudss/12``,
      ``-DTBB_ROOT=/path/to/tbb``).
    - ``<PackageName>_DIR``: The exact directory containing the package's
      ``<PackageName>Config.cmake`` file (e.g., ``-DEigen3_DIR=...``,

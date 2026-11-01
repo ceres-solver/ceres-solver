@@ -122,6 +122,8 @@ cmake_dependent_option(WITH_BITCODE
   IOS OFF)
 set(WITH_CUDA "default" CACHE STRING
   "Enable use of CUDA linear algebra solvers.")
+cmake_dependent_option(WITH_CUDSS "Enable cuDSS support." ON
+  "WITH_CUDA" OFF)
 option(WITH_CUSTOM_BLAS
   "Use handcoded BLAS routines (usually faster) instead of Eigen." ON)
 cmake_dependent_option(WITH_EIGENMETIS "Enable Eigen METIS support." ON
@@ -333,7 +335,7 @@ if (WITH_CUDA AND CUDAToolkit_FOUND)
 endif()
 
 set(_Ceres_FEATURE_CUDSS OFF)
-if (_Ceres_FEATURE_CUDA AND cudss_FOUND)
+if (_Ceres_FEATURE_CUDA AND WITH_CUDSS AND cudss_FOUND)
   set(_Ceres_FEATURE_CUDSS ON)
 endif()
 
