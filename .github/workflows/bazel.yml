@@ -10,7 +10,7 @@ jobs:
       run:
         shell: bash -e -o pipefail {0}
     env:
-      BAZEL_CACHE_DIR: ${{github.workspace}}/bazel-cache
+      BAZEL_CACHE_DIR: ${{runner.temp}}/bazel-cache
 
     steps:
       - uses: actions/checkout@v4
