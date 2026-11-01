@@ -48,23 +48,6 @@
 
 namespace ceres::internal {
 
-// cuDSS 0.8 replaced cudaDataType_t with cudssDataType_t in the matrix
-// creation APIs. The enumerators of cudssDataType_t mirror the values of
-// their cudaDataType_t counterparts, but the two enum types are not
-// implicitly convertible, so pick the right type and enumerators at compile
-// time to stay compatible with both versions of the API.
-#if CUDSS_VERSION >= 800
-using CuDSSDataType = cudssDataType_t;
-constexpr CuDSSDataType kCuDSSR32I = CUDSS_R_32I;
-constexpr CuDSSDataType kCuDSSR32F = CUDSS_R_32F;
-constexpr CuDSSDataType kCuDSSR64F = CUDSS_R_64F;
-#else
-using CuDSSDataType = cudaDataType_t;
-constexpr CuDSSDataType kCuDSSR32I = CUDA_R_32I;
-constexpr CuDSSDataType kCuDSSR32F = CUDA_R_32F;
-constexpr CuDSSDataType kCuDSSR64F = CUDA_R_64F;
-#endif  // CUDSS_VERSION >= 800
-
 inline std::string cuDSSStatusToString(cudssStatus_t status) {
   switch (status) {
     case CUDSS_STATUS_SUCCESS:
@@ -81,10 +64,8 @@ inline std::string cuDSSStatusToString(cudssStatus_t status) {
       return "CUDSS_STATUS_EXECUTION_FAILED";
     case CUDSS_STATUS_INTERNAL_ERROR:
       return "CUDSS_STATUS_INTERNAL_ERROR";
-#if CUDSS_VERSION >= 800
     case CUDSS_STATUS_IR_FAILED:
       return "CUDSS_STATUS_IR_FAILED";
-#endif  // CUDSS_VERSION >= 800
     default:
       return "unknown cuDSS status: " + std::to_string(status);
   }
@@ -141,8 +122,8 @@ class CERES_NO_EXPORT CuDSSMatrixCSR : public CuDSSMatrixBase {
                       void* rows_end,
                       void* cols,
                       void* values,
-                      CuDSSDataType index_type,
-                      CuDSSDataType value_type,
+                      cudaDataType_t index_type,
+                      cudaDataType_t value_type,
                       cudssMatrixType_t matrix_type,
                       cudssMatrixViewType_t matrix_storage_type,
                       cudssIndexBase_t index_base) {
@@ -156,12 +137,7 @@ class CERES_NO_EXPORT CuDSSMatrixCSR : public CuDSSMatrixBase {
                                 rows_end,
                                 cols,
                                 values,
-#if CUDSS_VERSION >= 800
-                                // cuDSS 0.8 takes the type of the row offsets
-                                // separately from the type of the column
-                                // indices; Ceres uses the same type for both.
                                 index_type,
-#endif  // CUDSS_VERSION >= 800
                                 index_type,
                                 value_type,
                                 matrix_type,
@@ -176,7 +152,7 @@ class CERES_NO_EXPORT CuDSSMatrixDense : public CuDSSMatrixBase {
                       int64_t num_cols,
                       int64_t leading_dimension_size,
                       void* values,
-                      CuDSSDataType value_type,
+                      cudaDataType_t value_type,
                       cudssLayout_t layout) {
     CUDSS_STATUS_OK_OR_RETURN_CUDSS_STATUS(Free());
 
@@ -214,8 +190,8 @@ class CERES_NO_EXPORT CudaSparseCholeskyImpl final : public SparseCholesky {
  public:
   static_assert(std::is_same_v<Scalar, float> || std::is_same_v<Scalar, double>,
                 "Scalar type is unsupported by cuDSS");
-  static constexpr CuDSSDataType kCuDSSScalar =
-      std::is_same_v<Scalar, float> ? kCuDSSR32F : kCuDSSR64F;
+  static constexpr cudaDataType_t kCuDSSScalar =
+      std::is_same_v<Scalar, float> ? CUDA_R_32F : CUDA_R_64F;
 
   CudaSparseCholeskyImpl(ContextImpl* context)
       : context_(context),
@@ -404,7 +380,7 @@ class CERES_NO_EXPORT CudaSparseCholeskyImpl final : public SparseCholesky {
                                                            nullptr,
                                                            lhs_cols_d_.data(),
                                                            lhs_values_d_.data(),
-                                                           kCuDSSR32I,
+                                                           CUDA_R_32I,
                                                            kCuDSSScalar,
                                                            CUDSS_MTYPE_SPD,
                                                            CUDSS_MVIEW_LOWER,

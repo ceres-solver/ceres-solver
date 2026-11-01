@@ -156,7 +156,7 @@ find_package(benchmark 1.3)
 find_package(BLAS)
 find_package(LAPACK)
 find_package(CUDAToolkit)
-find_package(cudss NO_MODULE)
+find_package(cudss 1.0.0 NO_MODULE)
 
 # Eigen3's CMake package prior to version 5.0.0 does not support version
 # ranges with different major version components.

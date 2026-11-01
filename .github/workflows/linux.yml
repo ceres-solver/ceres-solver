@@ -30,9 +30,9 @@ jobs:
           - no-cuda
         include:
           - os: ubuntu:24.04
-            cudss: 0.3.0.9_cuda12
+            cudss: 1.0.0.35_cuda12
           - os: ubuntu:26.04
-            cudss: 0.8.0.10_cuda13
+            cudss: 1.0.0.35_cuda13
 
     steps:
       - name: Setup Dependencies

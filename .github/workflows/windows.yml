@@ -140,21 +140,21 @@ jobs:
         id: cache-cudss
         uses: actions/cache@v4
         with:
-          path: ${{github.workspace}}/libcudss-windows-x86_64-0.8.0.10_cuda13-archive
-          key: ${{runner.os}}-${{matrix.msvc}}-cudss-0.8.0.10-cuda13-v1
+          path: ${{github.workspace}}/libcudss-windows-x86_64-1.0.0.35_cuda13-archive
+          key: ${{runner.os}}-${{matrix.msvc}}-cudss-1.0.0.35-cuda13-v1
 
       - name: Download and extract cuDSS
         if: matrix.gpu == 'cuda' && steps.cache-cudss.outputs.cache-hit != 'true'
         run: |
-          $CUDSS_ARCHIVE = "${{github.workspace}}/libcudss-windows-x86_64-0.8.0.10_cuda13-archive.zip"
-          Invoke-WebRequest https://developer.download.nvidia.com/compute/cudss/redist/libcudss/windows-x86_64/libcudss-windows-x86_64-0.8.0.10_cuda13-archive.zip -OutFile $CUDSS_ARCHIVE
+          $CUDSS_ARCHIVE = "${{github.workspace}}/libcudss-windows-x86_64-1.0.0.35_cuda13-archive.zip"
+          Invoke-WebRequest https://developer.download.nvidia.com/compute/cudss/redist/libcudss/windows-x86_64/libcudss-windows-x86_64-1.0.0.35_cuda13-archive.zip -OutFile $CUDSS_ARCHIVE
           Expand-Archive -Path $CUDSS_ARCHIVE -DestinationPath "${{github.workspace}}"
           Remove-Item $CUDSS_ARCHIVE
 
       - name: Setup cuDSS environment
         if: matrix.gpu == 'cuda'
         run: |
-          $CUDSS_PATH = "${{github.workspace}}/libcudss-windows-x86_64-0.8.0.10_cuda13-archive/"
+          $CUDSS_PATH = "${{github.workspace}}/libcudss-windows-x86_64-1.0.0.35_cuda13-archive/"
           echo "cudss_DIR=$CUDSS_PATH/lib/cmake/cudss" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           echo "$CUDSS_PATH/bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
