@@ -85,18 +85,12 @@ if (Sphinx_BUILD_EXECUTABLE)
   find_package (Python COMPONENTS Interpreter)
 
   if (Python_Interpreter_FOUND)
-    # Check for Sphinx theme dependency for documentation
+    # Check for Sphinx theme/extension dependencies for documentation
     foreach (component IN LISTS Sphinx_FIND_COMPONENTS)
-      string (REGEX MATCH "^(.+_theme)$" theme_component "${component}")
-
-      if (NOT theme_component STREQUAL component)
-        continue ()
-      endif (NOT theme_component STREQUAL component)
-
       execute_process (
         # Report only the reason of a failed import instead of a traceback.
         COMMAND ${Python_EXECUTABLE} -c
-          "import sys\ntry:\n  import ${theme_component}\nexcept ImportError as e:\n  sys.exit(str(e))"
+          "import sys\ntry:\n  import ${component}\nexcept ImportError as e:\n  sys.exit(str(e))"
         ERROR_STRIP_TRAILING_WHITESPACE
         ERROR_VARIABLE _Sphinx_BUILD_ERROR
         OUTPUT_QUIET
@@ -107,7 +101,7 @@ if (Sphinx_BUILD_EXECUTABLE)
         set (Sphinx_${component}_FOUND TRUE)
       else (_Sphinx_BUILD_RESULT EQUAL 0)
         if (NOT Sphinx_FIND_QUIETLY)
-          message (STATUS "Sphinx component '${theme_component}' is not available: ${_Sphinx_BUILD_ERROR}")
+          message (STATUS "Sphinx component '${component}' is not available: ${_Sphinx_BUILD_ERROR}")
         endif (NOT Sphinx_FIND_QUIETLY)
         set (Sphinx_${component}_FOUND FALSE)
       endif (_Sphinx_BUILD_RESULT EQUAL 0)
@@ -115,8 +109,6 @@ if (Sphinx_BUILD_EXECUTABLE)
       unset (_Sphinx_BUILD_ERROR)
       unset (_Sphinx_BUILD_RESULT)
     endforeach (component)
-
-    unset (theme_component)
   endif (Python_Interpreter_FOUND)
 endif (Sphinx_BUILD_EXECUTABLE)
 

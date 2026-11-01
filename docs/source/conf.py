@@ -50,12 +50,10 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.mathjax',
     'sphinx.ext.ifconfig',
-    'sphinxcontrib.jquery',
 ]
 
 master_doc = 'index'
 exclude_patterns = []
-pygments_style = 'sphinx'
 nitpicky = True
 
 # Enum and typedef identifiers used in member/function declarations whose
@@ -83,7 +81,7 @@ nitpick_ignore = [
     ('cpp:identifier', 'VisibilityClusteringType'),
 ]
 
-html_theme = 'sphinx_rtd_theme'
+html_theme = 'furo'
 html_title = 'Ceres Solver'
 html_domain_indices = True
 html_use_index = True
@@ -92,10 +90,3 @@ html_show_sourcelink = False
 html_show_sphinx = False
 html_show_copyright = True
 htmlhelp_basename = 'CeresSolverdoc'
-
-mathjax3_config = {
-    'HTML-CSS': {
-        'availableFonts': ['TeX'],
-        'scale': 90,
-    },
-}

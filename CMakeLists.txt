@@ -181,7 +181,7 @@ if (NOT EXISTS "${Ceres_SOURCE_DIR}/third_party/googletest/CMakeLists.txt")
 endif()
 
 find_package(METIS)
-find_package(Sphinx COMPONENTS sphinx_rtd_theme)
+find_package(Sphinx COMPONENTS furo)
 # Ubuntu 22.04 provides SuiteSparse 5.10.1, which remains supported.
 find_package(SuiteSparse 4.5.6 COMPONENTS CHOLMOD SPQR
   OPTIONAL_COMPONENTS Partition)

@@ -623,8 +623,7 @@ An unavailable optional package does not change the corresponding cache option.
 
 #. ``BUILD_DOCUMENTATION [Default: OFF]``: Use this to enable building
    the documentation. This requires `Sphinx <https://www.sphinx-doc.org/>`_ and
-   the `sphinx-rtd-theme
-   <https://pypi.org/project/sphinx-rtd-theme/>`_ package
+   the `furo <https://pypi.org/project/furo/>`_ package
    available from the Python package index. In addition, ``make ceres_docs``
    can be used to build only the documentation.
 
