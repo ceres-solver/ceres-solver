@@ -12,6 +12,8 @@ jobs:
     env:
       CCACHE_DIR: ${{github.workspace}}/ccache
       CMAKE_GENERATOR: Ninja
+      HOMEBREW_NO_AUTO_UPDATE: 1
+      HOMEBREW_NO_INSTALL_CLEANUP: 1
     strategy:
       fail-fast: true
       matrix:

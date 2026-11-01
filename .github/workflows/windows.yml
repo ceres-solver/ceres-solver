@@ -88,6 +88,7 @@ jobs:
       run:
         shell: powershell
     env:
+      CCACHE_DIR: ${{github.workspace}}/ccache
       CL: /MP
       CMAKE_GENERATOR: ${{matrix.generator}}
       CMAKE_GENERATOR_PLATFORM: ${{matrix.arch}}
@@ -211,6 +212,29 @@ jobs:
         run: |
           echo '${{github.workspace}}\suitesparse\bin' | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
+      - name: Cache ccache binary
+        id: cache-ccache-bin
+        uses: actions/cache@v4
+        with:
+          path: ccache-4.10.2-windows-x86_64/
+          key: ${{runner.os}}-ccache-bin-4.10.2
+
+      - name: Download ccache
+        if: steps.cache-ccache-bin.outputs.cache-hit != 'true'
+        run: |
+          Invoke-WebRequest https://github.com/ccache/ccache/releases/download/v4.10.2/ccache-4.10.2-windows-x86_64.zip -OutFile ccache.zip
+          Expand-Archive -Path ccache.zip -DestinationPath .
+          Copy-Item ccache-4.10.2-windows-x86_64/ccache.exe ccache-4.10.2-windows-x86_64/cl.exe
+          Remove-Item ccache.zip
+
+      - name: Cache Build
+        id: cache-build
+        uses: actions/cache@v4
+        with:
+          path: ${{env.CCACHE_DIR}}
+          key: ${{runner.os}}-${{matrix.msvc}}-${{matrix.arch}}-${{matrix.build_type}}-${{matrix.lib}}-${{matrix.gpu}}-ccache-${{github.run_id}}
+          restore-keys: ${{runner.os}}-${{matrix.msvc}}-${{matrix.arch}}-${{matrix.build_type}}-${{matrix.lib}}-${{matrix.gpu}}-ccache-
+
       - name: Configure
         run: |
           cmake -S . -B build_${{matrix.build_type}}/ `
@@ -218,6 +242,7 @@ jobs:
                 -DBUILD_SHARED_LIBS=${{matrix.lib == 'shared'}} `
                 -DCMAKE_CONFIGURATION_TYPES=${{matrix.build_type}} `
                 -DCMAKE_INSTALL_PREFIX:PATH=${{github.workspace}}/install `
+                -DCMAKE_VS_GLOBALS="CLToolExe=cl.exe;CLToolPath=${{github.workspace}}/ccache-4.10.2-windows-x86_64;TrackFileAccess=false;UseMultiToolTask=true" `
                 -DLAPACK_lapack_LIBRARY=${{github.workspace}}/suitesparse/lib/liblapack.lib `
                 -DWITH_SUITESPARSE=ON
 

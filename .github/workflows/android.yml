@@ -59,7 +59,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: eigen/
-          key: NDK-${{matrix.os}}-eigen-3.4.0-${{matrix.abi}}
+          key: NDK-${{matrix.os}}-eigen-3.4.0
 
       - name: Download Eigen
         if: steps.cache-eigen.outputs.cache-hit != 'true'
