@@ -81,9 +81,12 @@ jobs:
           apt-get update
           apt-get install -y \
             cuda-minimal-build-13-3 \
+            cuda-nvrtc-dev-13-3 \
             libcublas-dev-13-3 \
             libcusolver-dev-13-3 \
-            libcusparse-dev-13-3
+            libcusparse-dev-13-3 \
+            libnvjitlink-dev-13-3
+          ldconfig
           echo "CUDACXX=/usr/local/cuda-13.3/bin/nvcc" >> $GITHUB_ENV
 
       - name: Cache cuDSS
