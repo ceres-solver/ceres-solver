@@ -1,3 +1,5 @@
+.. title:: A Large Scale Non-linear Optimization Library
+
 ============
 Ceres Solver
 ============
