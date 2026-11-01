@@ -31,7 +31,7 @@ constructing `3D models from photographs`_ in computer vision.
 In this chapter we will learn how to solve :eq:`ceresproblem` using
 Ceres Solver. Full working code for all the examples described in this
 chapter and more can be found in the `examples
-<https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/>`_
+<https://github.com/ceres-solver/ceres-solver/tree/master/examples>`_
 directory.
 
 The expression
@@ -102,9 +102,10 @@ Ceres solve it.
    int main(int argc, char** argv) {
      absl::InitializeLog();
 
-     // The variable to solve for with its initial value.
-     double initial_x = 5.0;
-     double x = initial_x;
+     // The variable to solve for with its initial value. It will be
+     // mutated in place by the solver.
+     double x = 0.5;
+     const double initial_x = x;
 
      // Build the problem.
      Problem problem;
@@ -117,14 +118,12 @@ Ceres solve it.
 
      // Run the solver!
      Solver::Options options;
-     options.linear_solver_type = ceres::DENSE_QR;
      options.minimizer_progress_to_stdout = true;
      Solver::Summary summary;
      Solve(options, &problem, &summary);
 
      std::cout << summary.BriefReport() << "\n";
-     std::cout << "x : " << initial_x
-               << " -> " << x << "\n";
+     std::cout << "x : " << initial_x << " -> " << x << "\n";
      return 0;
    }
 
@@ -133,7 +132,7 @@ automatically differentiates it and gives it a :class:`CostFunction`
 interface.
 
 Compiling and running `examples/helloworld.cc
-<https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/helloworld.cc>`_
+<https://github.com/ceres-solver/ceres-solver/blob/master/examples/helloworld.cc>`_
 gives us
 
 .. code-block:: bash
@@ -145,7 +144,7 @@ gives us
    Ceres Solver Report: Iterations: 2, Initial cost: 4.512500e+01, Final cost: 5.012552e-16, Termination: CONVERGENCE
    x : 0.5 -> 10
 
-Starting from a :math:`x=5`, the solver in two iterations goes to 10
+Starting from :math:`x=0.5`, the solver in two iterations goes to 10
 [#f2]_. The careful reader will note that this is a linear problem and
 one linear solve should be enough to get the optimal value.  The
 default configuration of the solver is aimed at non-linear problems,
@@ -159,7 +158,7 @@ and parameter settings for Ceres.
 .. rubric:: Footnotes
 
 .. [#f1] `examples/helloworld.cc
-   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/helloworld.cc>`_
+   <https://github.com/ceres-solver/ceres-solver/blob/master/examples/helloworld.cc>`_
 .. [#f2] Actually the solver ran for three iterations, and it was
    by looking at the value returned by the linear solver in the third
    iteration, it observed that the update to the parameter block was too
@@ -181,7 +180,7 @@ efficiently is essential to getting good results.  Ceres Solver
 provides a number of ways of doing so. You have already seen one of
 them in action --
 Automatic Differentiation in `examples/helloworld.cc
-<https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/helloworld.cc>`_
+<https://github.com/ceres-solver/ceres-solver/blob/master/examples/helloworld.cc>`_
 
 We now consider the other two possibilities. Analytic and numeric
 derivatives.
@@ -247,7 +246,7 @@ In such cases, it is possible to supply your own residual and jacobian
 computation code. To do this, define a subclass of
 :class:`CostFunction` or :class:`SizedCostFunction` if you know the
 sizes of the parameters and residuals at compile time. Here for
-example is ``SimpleCostFunction`` that implements :math:`f(x) = 10 -
+example is ``QuadraticCostFunction`` that implements :math:`f(x) = 10 -
 x`.
 
 .. code-block:: c++
@@ -270,7 +269,7 @@ x`.
   };
 
 
-``SimpleCostFunction::Evaluate`` is provided with an input array of
+``QuadraticCostFunction::Evaluate`` is provided with an input array of
 ``parameters``, an output array ``residuals`` for residuals and an
 output array ``jacobians`` for Jacobians. The ``jacobians`` array is
 optional, ``Evaluate`` is expected to check when it is non-null, and
@@ -301,9 +300,9 @@ constructing and computing cost functions.
 .. rubric:: Footnotes
 
 .. [#f3] `examples/helloworld_numeric_diff.cc
-   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/helloworld_numeric_diff.cc>`_.
+   <https://github.com/ceres-solver/ceres-solver/blob/master/examples/helloworld_numeric_diff.cc>`_.
 .. [#f4] `examples/helloworld_analytic_diff.cc
-   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/helloworld_analytic_diff.cc>`_.
+   <https://github.com/ceres-solver/ceres-solver/blob/master/examples/helloworld_analytic_diff.cc>`_.
 
 
 .. _section-powell:
@@ -371,7 +370,7 @@ respectively. Using these, the problem can be constructed as follows:
 Note that each ``ResidualBlock`` only depends on the two parameters
 that the corresponding residual object depends on and not on all four
 parameters. Compiling and running `examples/powell.cc
-<https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/powell.cc>`_
+<https://github.com/ceres-solver/ceres-solver/blob/master/examples/powell.cc>`_
 gives us:
 
 .. code-block:: bash
@@ -440,8 +439,8 @@ gives us:
 
 It is easy to see that the optimal solution to this problem is at
 :math:`x_1=0, x_2=0, x_3=0, x_4=0` with an objective function value of
-:math:`0`. In 10 iterations, Ceres finds a solution with an objective
-function value of :math:`4\times 10^{-12}`.
+:math:`0`. In 14 iterations, Ceres finds a solution with an objective
+function value of :math:`1.12\times 10^{-15}`.
 
 
 .. _section-fitting:
@@ -499,7 +498,7 @@ Assuming the observations are in a :math:`2n` sized array called
  }
 
 Compiling and running `examples/curve_fitting.cc
-<https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/curve_fitting.cc>`_
+<https://github.com/ceres-solver/ceres-solver/blob/master/examples/curve_fitting.cc>`_
 gives us:
 
 .. code-block:: bash
@@ -544,7 +543,7 @@ function value of :math:`1.082425`.  The figure below illustrates the fit.
 .. rubric:: Footnotes
 
 .. [#f6] `examples/curve_fitting.cc
-   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/curve_fitting.cc>`_
+   <https://github.com/ceres-solver/ceres-solver/blob/master/examples/curve_fitting.cc>`_
 
 
 Robust Curve Fitting
@@ -592,7 +591,7 @@ fitted curve moves back closer to the ground truth curve.
 .. rubric:: Footnotes
 
 .. [#f7] `examples/robust_curve_fitting.cc
-   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/robust_curve_fitting.cc>`_
+   <https://github.com/ceres-solver/ceres-solver/blob/master/examples/robust_curve_fitting.cc>`_
 
 
 Bundle Adjustment
@@ -729,32 +728,32 @@ For a more sophisticated bundle adjustment example which demonstrates
 the use of Ceres' more advanced features including its various linear
 solvers, robust loss functions and manifolds see
 `examples/bundle_adjuster.cc
-<https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/bundle_adjuster.cc>`_
+<https://github.com/ceres-solver/ceres-solver/blob/master/examples/bundle_adjuster.cc>`_
 
 
 .. rubric:: Footnotes
 
 .. [#f8] `examples/simple_bundle_adjuster.cc
-   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/simple_bundle_adjuster.cc>`_
+   <https://github.com/ceres-solver/ceres-solver/blob/master/examples/simple_bundle_adjuster.cc>`_
 
 Other Examples
 ==============
 
 Besides the examples in this chapter, the  `example
-<https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/>`_
+<https://github.com/ceres-solver/ceres-solver/tree/master/examples>`_
 directory contains a number of other examples:
 
 #. `bundle_adjuster.cc
-   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/bundle_adjuster.cc>`_
+   <https://github.com/ceres-solver/ceres-solver/blob/master/examples/bundle_adjuster.cc>`_
    shows how to use the various features of Ceres to solve bundle
    adjustment problems.
 
 #. `circle_fit.cc
-   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/circle_fit.cc>`_
+   <https://github.com/ceres-solver/ceres-solver/blob/master/examples/circle_fit.cc>`_
    shows how to fit data to a circle.
 
 #. `ellipse_approximation.cc
-   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/ellipse_approximation.cc>`_
+   <https://github.com/ceres-solver/ceres-solver/blob/master/examples/ellipse_approximation.cc>`_
    fits points randomly distributed on an ellipse with an approximate
    line segment contour. This is done by jointly optimizing the
    control points of the line segment contour along with the preimage
@@ -764,19 +763,19 @@ directory contains a number of other examples:
    dynamically sparse.
 
 #. `denoising.cc
-   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/denoising.cc>`_
+   <https://github.com/ceres-solver/ceres-solver/blob/master/examples/denoising.cc>`_
    implements image denoising using the `Fields of Experts
    <https://doi.org/10.1007/s11263-008-0197-6>`_
    model.
 
 #. `nist.cc
-   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/nist.cc>`_
+   <https://github.com/ceres-solver/ceres-solver/blob/master/examples/nist.cc>`_
    implements and attempts to solves the `NIST
    <https://www.itl.nist.gov/div898/strd/nls/nls_main.shtml>`_
    non-linear regression problems.
 
 #. `more_garbow_hillstrom.cc
-   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/more_garbow_hillstrom.cc>`_
+   <https://github.com/ceres-solver/ceres-solver/blob/master/examples/more_garbow_hillstrom.cc>`_
    A subset of the test problems from the paper
 
    Testing Unconstrained Optimization Software
@@ -793,17 +792,17 @@ directory contains a number of other examples:
 
 
 #. `libmv_bundle_adjuster.cc
-   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/libmv_bundle_adjuster.cc>`_
+   <https://github.com/ceres-solver/ceres-solver/blob/master/examples/libmv_bundle_adjuster.cc>`_
    is the bundle adjustment algorithm used by `Blender <https://www.blender.org>`_/libmv.
 
 #. `libmv_homography.cc
-   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/libmv_homography.cc>`_
+   <https://github.com/ceres-solver/ceres-solver/blob/master/examples/libmv_homography.cc>`_
    This file demonstrates solving for a homography between two sets of
    points and using a custom exit criterion by having a callback check
    for image-space error.
 
 #. `robot_pose_mle.cc
-   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/robot_pose_mle.cc>`_
+   <https://github.com/ceres-solver/ceres-solver/blob/master/examples/robot_pose_mle.cc>`_
    This example demonstrates how to use the ``DynamicAutoDiffCostFunction``
    variant of CostFunction. The ``DynamicAutoDiffCostFunction`` is meant to
    be used in cases where the number of parameter blocks or the sizes are not
@@ -816,7 +815,7 @@ directory contains a number of other examples:
    each timestep.
 
 #. `slam/pose_graph_2d/pose_graph_2d.cc
-   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/slam/pose_graph_2d/pose_graph_2d.cc>`_
+   <https://github.com/ceres-solver/ceres-solver/blob/master/examples/slam/pose_graph_2d/pose_graph_2d.cc>`_
    The Simultaneous Localization and Mapping (SLAM) problem consists of building
    a map of an unknown environment while simultaneously localizing against this
    map. The main difficulty of this problem stems from not having any additional
@@ -949,7 +948,7 @@ directory contains a number of other examples:
       (ICRA), IEEE International Conference on, 2006, pp. 2262-2269.
 
 #. `slam/pose_graph_3d/pose_graph_3d.cc
-   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/slam/pose_graph_3d/pose_graph_3d.cc>`_
+   <https://github.com/ceres-solver/ceres-solver/blob/master/examples/slam/pose_graph_3d/pose_graph_3d.cc>`_
    The following explains how to formulate the pose graph based SLAM problem in
    3-Dimensions with relative pose constraints. The example also illustrates how
    to use Eigen's geometry module with Ceres's automatic differentiation

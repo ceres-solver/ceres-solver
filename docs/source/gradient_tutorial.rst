@@ -197,10 +197,10 @@ non-linear least squares problems [#f3]_.
 .. rubric:: Footnotes
 
 .. [#f1] `examples/rosenbrock.cc
-   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/rosenbrock.cc>`_
+   <https://github.com/ceres-solver/ceres-solver/blob/master/examples/rosenbrock.cc>`_
 
 .. [#f2] `examples/rosenbrock_numeric_diff.cc
-   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/rosenbrock_numeric_diff.cc>`_
+   <https://github.com/ceres-solver/ceres-solver/blob/master/examples/rosenbrock_numeric_diff.cc>`_
 
 .. [#f3] `examples/rosenbrock_analytic_diff.cc
-   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/rosenbrock_analytic_diff.cc>`_
+   <https://github.com/ceres-solver/ceres-solver/blob/master/examples/rosenbrock_analytic_diff.cc>`_

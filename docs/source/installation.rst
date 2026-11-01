@@ -833,7 +833,7 @@ then either:
 
 
 As an example of how to use Ceres, to compile `examples/helloworld.cc
-<https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/helloworld.cc>`_
+<https://github.com/ceres-solver/ceres-solver/blob/master/examples/helloworld.cc>`_
 in a separate standalone project, the following CMakeList.txt can be
 used:
 

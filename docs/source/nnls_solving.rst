@@ -2099,7 +2099,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    ``true``.
 
    See `examples/iteration_callback_example.cc
-   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/iteration_callback_example.cc>`_
+   <https://github.com/ceres-solver/ceres-solver/blob/master/examples/iteration_callback_example.cc>`_
    for an example of an :class:`IterationCallback` that uses
    :member:`Solver::Options::update_state_every_iteration` to log
    changes to the parameter blocks over the course of the
@@ -2364,8 +2364,8 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
     };
 
 
-  See `examples/evaluation_callback_example.cc
-  <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/iteration_callback_example.cc>`_
+  See `examples/iteration_callback_example.cc
+  <https://github.com/ceres-solver/ceres-solver/blob/master/examples/iteration_callback_example.cc>`_
   for another example that uses
   :member:`Solver::Options::update_state_every_iteration` to log
   changes to the parameter blocks over the course of the optimization.
