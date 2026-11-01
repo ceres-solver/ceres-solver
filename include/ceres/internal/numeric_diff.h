@@ -45,7 +45,6 @@
 #include <utility>
 
 #include "Eigen/Dense"
-#include "Eigen/StdVector"
 #include "absl/container/fixed_array.h"
 #include "absl/log/check.h"
 #include "ceres/cost_function.h"
@@ -261,7 +260,6 @@ struct NumericDiff {
       double* x_plus_delta_ptr,
       double* temp_residuals_ptr,
       double* residuals_ptr) {
-    using Eigen::aligned_allocator;
     using Eigen::Map;
     using Eigen::Matrix;
 
