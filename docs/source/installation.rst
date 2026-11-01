@@ -123,7 +123,7 @@ Getting the source code
 
 
 You can start with the `latest stable release
-<http://ceres-solver.org/ceres-solver-2.3.0.tar.gz>`_ . Or if you want
+<https://github.com/ceres-solver/ceres-solver/releases/latest>`_ or, if you want
 the latest version, you can clone the git repository
 
 .. code-block:: bash
@@ -140,9 +140,10 @@ command
 
    git clone --recurse-submodules https://github.com/ceres-solver/ceres-solver
 
-The build instructions below use ``ceres-solver-2.3.0`` as the source
-directory because they assume a release archive. If you build from a Git
-checkout, replace it with the name of your checkout, usually ``ceres-solver``.
+The build instructions below use ``ceres-solver`` as the source
+directory. If you downloaded and extracted a release archive instead of
+cloning the Git repository, replace ``ceres-solver`` with the extracted
+archive directory name.
 
 
 .. _section-linux:
@@ -189,8 +190,7 @@ We are now ready to build, test, and install Ceres.
 
 .. code-block:: bash
 
- tar zxf ceres-solver-2.3.0.tar.gz
- cmake -S ceres-solver-2.3.0 -B ceres-bin -DWITH_SUITESPARSE=ON
+ cmake -S ceres-solver -B ceres-bin -DWITH_SUITESPARSE=ON
  cmake --build ceres-bin -j
  ctest --test-dir ceres-bin --output-on-failure
  # Optionally install Ceres system-wide (or use ceres-bin directly via Ceres_DIR;
@@ -203,7 +203,7 @@ dataset [Agarwal]_.
 
 .. code-block:: bash
 
- ceres-bin/bin/simple_bundle_adjuster ceres-solver-2.3.0/data/problem-16-22106-pre.txt
+ ceres-bin/bin/simple_bundle_adjuster ceres-solver/data/problem-16-22106-pre.txt
 
 This runs Ceres for a maximum of 10 iterations using the
 ``DENSE_SCHUR`` linear solver. The output should look something like
@@ -315,8 +315,7 @@ We are now ready to build, test, and install Ceres.
 
 .. code-block:: bash
 
-   tar zxf ceres-solver-2.3.0.tar.gz
-   cmake -S ceres-solver-2.3.0 -B ceres-bin -DWITH_SUITESPARSE=ON
+   cmake -S ceres-solver -B ceres-bin -DWITH_SUITESPARSE=ON
    cmake --build ceres-bin -j
    ctest --test-dir ceres-bin --output-on-failure
    # Optionally install Ceres (or use ceres-bin directly via Ceres_DIR;
