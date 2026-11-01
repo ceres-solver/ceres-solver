@@ -21,11 +21,16 @@ important decision. It affects solution quality and runtime. Here is a simple
 way to reason about it.
 
 1. For small (a few hundred parameters) or dense problems use
-   ``DENSE_QR``.
+   ``DENSE_QR`` (or ``DENSE_NORMAL_CHOLESKY``). On systems with an
+   NVIDIA GPU, setting
+   :member:`Solver::Options::dense_linear_algebra_library_type` to
+   ``CUDA`` can accelerate larger dense problems.
 
 2. For general sparse problems (i.e., the Jacobian matrix has a
    substantial number of zeros) use
-   ``SPARSE_NORMAL_CHOLESKY``.
+   ``SPARSE_NORMAL_CHOLESKY`` (backed by ``SUITE_SPARSE``,
+   ``ACCELERATE_SPARSE``, ``EIGEN_SPARSE``, or ``CUDA_SPARSE`` via
+   NVIDIA ``cuDSS``).
 
 3. For bundle adjustment problems with up to a hundred or so
    cameras, use ``DENSE_SCHUR``.
@@ -33,13 +38,14 @@ way to reason about it.
 4. For larger bundle adjustment problems with sparse Schur
    Complement/Reduced camera matrices use ``SPARSE_SCHUR``.
 
-   If you do not have access to these libraries for whatever
+   If you do not have access to a sparse Cholesky library for whatever
    reason, ``ITERATIVE_SCHUR`` with ``SCHUR_JACOBI`` is an
    excellent alternative.
 
 5. For large bundle adjustment problems (a few thousand cameras or
    more) use the ``ITERATIVE_SCHUR`` solver. There are a number of
-   preconditioner choices here. ``SCHUR_JACOBI`` offers an
+   preconditioner choices here. ``SCHUR_JACOBI`` (or
+   ``SCHUR_POWER_SERIES_EXPANSION``) offers an
    excellent balance of speed and accuracy. This is also the
    recommended option if you are solving medium sized problems for
    which ``DENSE_SCHUR`` is too slow but ``SuiteSparse`` is not
@@ -53,9 +59,10 @@ way to reason about it.
 
    If you are not satisfied with ``SCHUR_JACOBI``'s performance try
    ``CLUSTER_JACOBI`` and ``CLUSTER_TRIDIAGONAL`` in that
-   order. They require that you have ``SuiteSparse``
-   installed. Both of these preconditioners use a clustering
-   algorithm. Use ``SINGLE_LINKAGE`` before ``CANONICAL_VIEWS``.
+   order. They require that you have a sparse Cholesky library such as
+   ``SuiteSparse`` installed. Both of these preconditioners use a
+   clustering algorithm. Use ``SINGLE_LINKAGE`` before
+   ``CANONICAL_VIEWS``.
 
 Use :func:`Solver::Summary::FullReport` to diagnose performance problems
 =========================================================================
@@ -76,13 +83,13 @@ Here is an example
       4  1.803857e+04    5.58e+02    2.69e+04   8.66e+01   9.93e-01  3.69e+05       1    1.61e-01    1.03e+00
       5  1.803391e+04    4.66e+00    3.11e+02   1.02e+01   1.00e+00  1.11e+06       1    1.49e-01    1.18e+00
 
-   Ceres Solver v1.12.0 Solve Report
+   Solver Summary (v 2.3.0-eigen-(3.4.0)-lapack-suitesparse-(7.1.0)-metis-(5.1.0)-acceleratesparse-eigensparse)
    ----------------------------------
                                         Original                  Reduced
    Parameter blocks                        22122                    22122
    Parameters                              66462                    66462
    Residual blocks                         83718                    83718
-   Residual                               167436                   167436
+   Residuals                              167436                   167436
 
    Minimizer                        TRUST_REGION
 
@@ -92,7 +99,6 @@ Here is an example
                                            Given                     Used
    Linear solver                    SPARSE_SCHUR             SPARSE_SCHUR
    Threads                                     1                        1
-   Linear solver threads                       1                        1
    Linear solver ordering              AUTOMATIC                22106, 16
 
    Cost:
@@ -107,9 +113,9 @@ Here is an example
    Time (in seconds):
    Preprocessor                            0.283
 
-     Residual evaluation                   0.061
-     Jacobian evaluation                   0.361
-     Linear solver                         0.382
+     Residual only evaluation              0.061 (5)
+     Jacobian & residual evaluation        0.361 (6)
+     Linear solver                         0.382 (5)
    Minimizer                               0.895
 
    Postprocessor                           0.002
@@ -125,9 +131,9 @@ Let us focus on run-time performance. The relevant lines to look at are
    Time (in seconds):
    Preprocessor                            0.283
 
-     Residual evaluation                   0.061
-     Jacobian evaluation                   0.361
-     Linear solver                         0.382
+     Residual only evaluation              0.061 (5)
+     Jacobian & residual evaluation        0.361 (6)
+     Linear solver                         0.382 (5)
    Minimizer                               0.895
 
    Postprocessor                           0.002
@@ -148,7 +154,7 @@ observe
 Which indicates that we are using automatic ordering for the ``SPARSE_SCHUR``
 solver. This can be expensive at times. A straight forward way to deal with this
 is to give the ordering manually. For ``bundle_adjuster`` this can be done by
-passing the flag ``-ordering=user``. Doing so and looking at the timing block of
+passing the flag ``-ordering_type=user``. Doing so and looking at the timing block of
 the full report gives us
 
 .. code-block:: console
@@ -156,9 +162,9 @@ the full report gives us
    Time (in seconds):
    Preprocessor                            0.051
 
-     Residual evaluation                   0.053
-     Jacobian evaluation                   0.344
-     Linear solver                         0.372
+     Residual only evaluation              0.053 (5)
+     Jacobian & residual evaluation        0.344 (6)
+     Linear solver                         0.372 (5)
    Minimizer                               0.854
 
    Postprocessor                           0.002
