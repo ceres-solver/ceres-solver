@@ -84,10 +84,20 @@ CERES_TESTS = [
     "concurrent_queue",
     "conditioned_cost_function",
     "conjugate_gradients_solver",
+    "coordinate_descent_minimizer",
     "corrector",
     "cost_function_to_functor",
     "covariance",
     "cubic_interpolation",
+    "cuda_block_sparse_crs_view",
+    "cuda_block_structure",
+    "cuda_dense_cholesky",
+    "cuda_dense_qr",
+    "cuda_kernels_vector_ops",
+    "cuda_partitioned_block_sparse_crs_view",
+    "cuda_sparse_matrix",
+    "cuda_streamed_buffer",
+    "cuda_vector",
     "dense_cholesky",
     "dense_linear_solver",
     "dense_qr",
@@ -193,10 +203,18 @@ TEST_DEPS = [
 ])]
 
 # Build the benchmarks.
+BENCHMARK_COPTS = select({
+    "@rules_cc//cc/compiler:clang": [
+        "-mllvm -inlinehint-threshold=1000000",
+        "-mno-outline",
+    ],
+    "//conditions:default": [],
+})
+
 [cc_binary(
     name = benchmark_name,
     srcs = ["internal/ceres/" + benchmark_name + ".cc"],
-    copts = ["-mllvm -inlinehint-threshold=1000000"],
+    copts = BENCHMARK_COPTS,
     deps = TEST_DEPS + ["@google_benchmark//:benchmark"],
 ) for benchmark_name in [
     "autodiff_manifold_benchmark",
@@ -220,6 +238,6 @@ cc_binary(
         "internal/ceres/benchmark_cost_functions.h",
         "internal/ceres/cost_function_differentiation_benchmark.cc",
     ],
-    copts = ["-mllvm -inlinehint-threshold=1000000"],
+    copts = BENCHMARK_COPTS,
     deps = TEST_DEPS + ["@google_benchmark//:benchmark"],
 )

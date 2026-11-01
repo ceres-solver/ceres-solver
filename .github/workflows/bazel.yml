@@ -1,0 +1,36 @@
+name: Bazel
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: ubuntu-26.04-Release
+    runs-on: ubuntu-26.04
+    defaults:
+      run:
+        shell: bash -e -o pipefail {0}
+    env:
+      BAZEL_CACHE_DIR: ${{github.workspace}}/bazel-cache
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache Bazel
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{env.BAZEL_CACHE_DIR}}
+            ~/.cache/bazelisk
+          key: bazel-${{runner.os}}-${{hashFiles('MODULE.bazel', 'WORKSPACE', 'BUILD', 'examples/BUILD', 'bazel/**')}}
+          restore-keys: |
+            bazel-${{runner.os}}-
+
+      - name: Build and Test
+        run: |
+          bazelisk test //... \
+            --compilation_mode=opt \
+            --cxxopt=-std=c++17 \
+            --host_cxxopt=-std=c++17 \
+            --disk_cache="${BAZEL_CACHE_DIR}/disk" \
+            --repository_cache="${BAZEL_CACHE_DIR}/repo" \
+            --test_output=errors
