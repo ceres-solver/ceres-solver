@@ -60,11 +60,6 @@ jobs:
           key: ${{matrix.os}}-ccache-${{matrix.build_type}}-${{matrix.lib}}-${{matrix.target}}-${{github.run_id}}
           restore-keys: ${{matrix.os}}-ccache-${{matrix.build_type}}-${{matrix.lib}}-${{matrix.target}}-
 
-      - name: Setup Environment
-        if: matrix.build_type == 'Release'
-        run: |
-          echo 'CXXFLAGS=-flto=auto' >> $GITHUB_ENV
-
       - name: Configure (iOS)
         if: matrix.target == 'ios'
         run: |

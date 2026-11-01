@@ -39,12 +39,6 @@ jobs:
           mingw-w64-${{matrix.env}}-ninja
           mingw-w64-${{matrix.env}}-suitesparse
 
-    - name: Setup Environment
-      if: ${{matrix.build_type == 'Release'}}
-      run: |
-        echo 'CFLAGS=-flto=auto' >> ~/.bash_profile
-        echo 'CXXFLAGS=-flto=auto' >> ~/.bash_profile
-
     - name: Cache Build
       id: cache-build
       uses: actions/cache@v4

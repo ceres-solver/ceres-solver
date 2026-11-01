@@ -91,11 +91,6 @@ jobs:
           key: NDK-${{matrix.os}}-ccache-${{matrix.abi}}-${{matrix.build_type}}-${{matrix.lib}}-${{github.run_id}}
           restore-keys: NDK-${{matrix.os}}-ccache-${{matrix.abi}}-${{matrix.build_type}}-${{matrix.lib}}-
 
-      - name: Setup Environment
-        if: matrix.build_type == 'Release'
-        run: |
-          echo 'CXXFLAGS=-flto=auto' >> $GITHUB_ENV
-
       - name: Configure
         run: |
           cmake -S . -B build_${{matrix.abi}} \
