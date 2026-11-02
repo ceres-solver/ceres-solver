@@ -1,0 +1,73 @@
+name: Documentation
+
+on:
+  push:
+    branches: [master]
+    tags: ['[0-9]*.[0-9]*.[0-9]*']
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build Sphinx Documentation
+    runs-on: ubuntu-26.04
+    defaults:
+      run:
+        shell: bash -e -o pipefail {0}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.15'
+          cache: 'pip'
+          cache-dependency-path: docs/requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r docs/requirements.txt
+
+      - name: Build stable release documentation (default)
+        run: |
+          STABLE_TAG=$(git tag --list '[0-9]*.[0-9]*.[0-9]*' --sort=-v:refname | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | head -n1)
+          mkdir -p "${RUNNER_TEMP}/stable-src"
+          git archive "${STABLE_TAG}" | tar -x -C "${RUNNER_TEMP}/stable-src"
+          cp docs/source/conf.py docs/source/CNAME "${RUNNER_TEMP}/stable-src/docs/source/"
+          rm -rf "${RUNNER_TEMP}/stable-src/docs/source/_templates"
+          sphinx-build -D nitpicky=0 \
+            -D "html_theme_options.announcement=Viewing documentation for the latest stable release (${STABLE_TAG}). For unreleased features on master, see the <a href=\"/dev/\">development documentation</a>." \
+            -b html "${RUNNER_TEMP}/stable-src/docs/source" _site
+
+      - name: Build development (HEAD) documentation
+        run: |
+          sphinx-build -W -n \
+            -D 'html_theme_options.announcement=Viewing development documentation for the master branch. For the latest stable release, see the <a href="/">stable documentation</a>.' \
+            -b html docs/source _site/dev
+
+      - name: Upload Pages artifact
+        if: github.event_name != 'pull_request' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/'))
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    name: Deploy to GitHub Pages
+    if: github.event_name != 'pull_request' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/'))
+    needs: build
+    runs-on: ubuntu-26.04
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

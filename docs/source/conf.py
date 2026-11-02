@@ -91,6 +91,7 @@ html_theme_options = {
     'source_branch': 'master',
     'source_directory': 'docs/source/',
 }
+html_extra_path = ['CNAME']
 html_domain_indices = True
 html_use_index = True
 html_split_index = False
