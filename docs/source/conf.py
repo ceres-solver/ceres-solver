@@ -1,3 +1,4 @@
+import importlib.util
 from pathlib import Path
 import re
 
@@ -51,6 +52,8 @@ extensions = [
     'sphinx.ext.mathjax',
     'sphinx.ext.ifconfig',
 ]
+if importlib.util.find_spec('sphinx_copybutton') is not None:
+    extensions.append('sphinx_copybutton')
 
 master_doc = 'index'
 exclude_patterns = []
@@ -83,6 +86,11 @@ nitpick_ignore = [
 
 html_theme = 'furo'
 html_title = 'Ceres Solver'
+html_theme_options = {
+    'source_repository': 'https://github.com/ceres-solver/ceres-solver',
+    'source_branch': 'master',
+    'source_directory': 'docs/source/',
+}
 html_domain_indices = True
 html_use_index = True
 html_split_index = False
