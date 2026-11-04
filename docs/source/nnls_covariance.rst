@@ -112,23 +112,24 @@ predicted by its sparsity structure and requires looking at its
 numerical values is more complicated. Here again there are two
 cases.
 
-  a. The rank deficiency arises from overparameterization. e.g., a
-     four dimensional quaternion used to parameterize :math:`SO(3)`,
-     which is a three dimensional manifold. In cases like this, the
-     user should use an appropriate
-     :class:`Manifold`. Not only will this lead to better
-     numerical behaviour of the Solver, it will also expose the rank
-     deficiency to the :class:`Covariance` object so that it can
-     handle it correctly.
+a. The rank deficiency arises from overparameterization. e.g., a
+   four dimensional quaternion used to parameterize :math:`SO(3)`,
+   which is a three dimensional manifold. In cases like this, the
+   user should use an appropriate
+   :class:`Manifold`. Not only will this lead to better
+   numerical behaviour of the Solver, it will also expose the rank
+   deficiency to the :class:`Covariance` object so that it can
+   handle it correctly.
 
-  b. More general numerical rank deficiency in the Jacobian requires
-     the computation of the so called Singular Value Decomposition
-     (SVD) of :math:`J'J`. We do not know how to do this for large
-     sparse matrices efficiently. For small and moderate sized
-     problems this is done using dense linear algebra.
+b. More general numerical rank deficiency in the Jacobian requires
+   the computation of the so called Singular Value Decomposition
+   (SVD) of :math:`J'J`. We do not know how to do this for large
+   sparse matrices efficiently. For small and moderate sized
+   problems this is done using dense linear algebra.
 
 
 :class:`Covariance::Options`
+============================
 
 .. class:: Covariance::Options
 
@@ -157,10 +158,10 @@ cases.
    1. ``SPARSE_QR`` uses the sparse QR factorization algorithm to
       compute the decomposition
 
-       .. math::
+      .. math::
 
-          QR &= J\\
-          \left(J^\top J\right)^{-1} &= \left(R^\top R\right)^{-1}
+         QR &= J\\
+         \left(J^\top J\right)^{-1} &= \left(R^\top R\right)^{-1}
 
       The speed of this algorithm depends on the sparse linear algebra
       library being used. ``Eigen``'s sparse QR factorization is a
@@ -192,17 +193,17 @@ cases.
 
    Default: :math:`-1`
 
-    During QR factorization, if a column with Euclidean norm less than
-    ``column_pivot_threshold`` is encountered it is treated as zero.
+   During QR factorization, if a column with Euclidean norm less than
+   ``column_pivot_threshold`` is encountered it is treated as zero.
 
-    If ``column_pivot_threshold < 0``, then an automatic default value
-    of `20*(m+n)*eps*sqrt(max(diag(J’*J)))` is used.  Here `m` and `n`
-    are the number of rows and columns of the Jacobian (`J`)
-    respectively.
+   If ``column_pivot_threshold < 0``, then an automatic default value
+   of ``20*(m+n)*eps*sqrt(max(diag(J'*J)))`` is used.  Here :math:`m` and :math:`n`
+   are the number of rows and columns of the Jacobian (:math:`J`)
+   respectively.
 
-    This is an advanced option meant for users who know enough about
-    their Jacobian matrices that they can determine a value better
-    than the default.
+   This is an advanced option meant for users who know enough about
+   their Jacobian matrices that they can determine a value better
+   than the default.
 
 
 .. member:: int Covariance::Options::min_reciprocal_condition_number
@@ -236,7 +237,7 @@ cases.
 
    1. ``DENSE_SVD``
 
-      .. math:: \frac{\sigma_{\text{min}}}{\sigma_{\text{max}}}  < \sqrt{\text{min_reciprocal_condition_number}}
+      .. math:: \frac{\sigma_{\text{min}}}{\sigma_{\text{max}}}  < \sqrt{\text{min\_reciprocal\_condition\_number}}
 
       where :math:`\sigma_{\text{min}}` and
       :math:`\sigma_{\text{max}}` are the minimum and maximum
@@ -244,51 +245,51 @@ cases.
 
    2. ``SPARSE_QR``
 
-       .. math:: \operatorname{rank}(J) < \operatorname{num\_col}(J)
+      .. math:: \operatorname{rank}(J) < \operatorname{num\_col}(J)
 
-       Here :math:`\operatorname{rank}(J)` is the estimate of the rank
-       of :math:`J` returned by the sparse QR factorization
-       algorithm. It is a fairly reliable indication of rank
-       deficiency.
+      Here :math:`\operatorname{rank}(J)` is the estimate of the rank
+      of :math:`J` returned by the sparse QR factorization
+      algorithm. It is a fairly reliable indication of rank
+      deficiency.
 
 .. member:: int Covariance::Options::null_space_rank
 
-    When using ``DENSE_SVD``, the user has more control in dealing
-    with singular and near singular covariance matrices.
+   When using ``DENSE_SVD``, the user has more control in dealing
+   with singular and near singular covariance matrices.
 
-    As mentioned above, when the covariance matrix is near singular,
-    instead of computing the inverse of :math:`J'J`, the Moore-Penrose
-    pseudoinverse of :math:`J'J` should be computed.
+   As mentioned above, when the covariance matrix is near singular,
+   instead of computing the inverse of :math:`J'J`, the Moore-Penrose
+   pseudoinverse of :math:`J'J` should be computed.
 
-    If :math:`J'J` has the eigen decomposition :math:`(\lambda_i,
-    e_i)`, where :math:`\lambda_i` is the :math:`i^\textrm{th}`
-    eigenvalue and :math:`e_i` is the corresponding eigenvector, then
-    the inverse of :math:`J'J` is
+   If :math:`J'J` has the eigen decomposition :math:`(\lambda_i,
+   e_i)`, where :math:`\lambda_i` is the :math:`i^\textrm{th}`
+   eigenvalue and :math:`e_i` is the corresponding eigenvector, then
+   the inverse of :math:`J'J` is
 
-    .. math:: (J'J)^{-1} = \sum_i \frac{1}{\lambda_i} e_i e_i'
+   .. math:: (J'J)^{-1} = \sum_i \frac{1}{\lambda_i} e_i e_i'
 
-    and computing the pseudo inverse involves dropping terms from this
-    sum that correspond to small eigenvalues.
+   and computing the pseudo inverse involves dropping terms from this
+   sum that correspond to small eigenvalues.
 
-    How terms are dropped is controlled by
-    `min_reciprocal_condition_number` and `null_space_rank`.
+   How terms are dropped is controlled by
+   ``min_reciprocal_condition_number`` and ``null_space_rank``.
 
-    If `null_space_rank` is non-negative, then the smallest
-    `null_space_rank` eigenvalue/eigenvectors are dropped irrespective
-    of the magnitude of :math:`\lambda_i`. If the ratio of the
-    smallest non-zero eigenvalue to the largest eigenvalue in the
-    truncated matrix is still below min_reciprocal_condition_number,
-    then the `Covariance::Compute()` will fail and return `false`.
+   If ``null_space_rank`` is non-negative, then the smallest
+   ``null_space_rank`` eigenvalue/eigenvectors are dropped irrespective
+   of the magnitude of :math:`\lambda_i`. If the ratio of the
+   smallest non-zero eigenvalue to the largest eigenvalue in the
+   truncated matrix is still below ``min_reciprocal_condition_number``,
+   then :func:`Covariance::Compute` will fail and return ``false``.
 
-    Setting `null_space_rank = -1` drops all terms for which
+   Setting ``null_space_rank = -1`` drops all terms for which
 
-    .. math::  \frac{\lambda_i}{\lambda_{\textrm{max}}} < \textrm{min_reciprocal_condition_number}
+   .. math::  \frac{\lambda_i}{\lambda_{\textrm{max}}} < \textrm{min\_reciprocal\_condition\_number}
 
-    This option has no effect on ``SPARSE_QR``.
+   This option has no effect on ``SPARSE_QR``.
 
 .. member:: bool Covariance::Options::apply_loss_function
 
-   Default: `true`
+   Default: ``true``
 
    Even though the residual blocks in the problem may contain loss
    functions, setting ``apply_loss_function`` to false will turn off
@@ -329,7 +330,7 @@ cases.
    :class:`Covariance::Options` for more on the conditions under which
    this function returns ``false``.
 
-.. function:: bool GetCovarianceBlock(const double* parameter_block1, const double* parameter_block2, double* covariance_block) const
+.. function:: bool Covariance::GetCovarianceBlock(const double* parameter_block1, const double* parameter_block2, double* covariance_block) const
 
    Return the block of the cross-covariance matrix corresponding to
    ``parameter_block1`` and ``parameter_block2``.
@@ -344,12 +345,12 @@ cases.
    a ``parameter_block1_size x parameter_block2_size`` matrix. The
    returned covariance will be a row-major matrix.
 
-.. function:: bool GetCovarianceBlockInTangentSpace(const double* parameter_block1, const double* parameter_block2, double* covariance_block) const
+.. function:: bool Covariance::GetCovarianceBlockInTangentSpace(const double* parameter_block1, const double* parameter_block2, double* covariance_block) const
 
    Return the block of the cross-covariance matrix corresponding to
    ``parameter_block1`` and ``parameter_block2``.
-   Returns cross-covariance in the tangent space if a local
-   parameterization is associated with either parameter block;
+   Returns cross-covariance in the tangent space if a :class:`Manifold`
+   is associated with either parameter block;
    else returns cross-covariance in the ambient space.
 
    Compute must be called before the first call to ``GetCovarianceBlock``

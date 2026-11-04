@@ -269,7 +269,7 @@ the corresponding accessors. This information will be verified by the
    2-dimensional.
 
    By default :class:`AutoDiffCostFunction` will take ownership of the cost
-   functor pointer passed to it, ie. will call `delete` on the cost functor
+   functor pointer passed to it, ie. will call ``delete`` on the cost functor
    when the :class:`AutoDiffCostFunction` itself is deleted. However, this may
    be undesirable in certain cases, therefore it is also possible to specify
    ``DO_NOT_TAKE_OWNERSHIP`` as a second argument in the constructor,
@@ -320,7 +320,7 @@ the corresponding accessors. This information will be verified by the
    applications, this is not enough e.g., Bezier curve fitting, Neural
    Network training etc.
 
-     .. code-block:: c++
+   .. code-block:: c++
 
       template <typename CostFunctor, int Stride = 4>
       class DynamicAutoDiffCostFunction : public CostFunction {
@@ -331,24 +331,24 @@ the corresponding accessors. This information will be verified by the
    templated functor, but the signature of the functor differs
    slightly. The expected interface for the cost functors is:
 
-     .. code-block:: c++
+   .. code-block:: c++
 
-       struct MyCostFunctor {
-         template<typename T>
-         bool operator()(T const* const* parameters, T* residuals) const {
-         }
-       }
+      struct MyCostFunctor {
+        template<typename T>
+        bool operator()(T const* const* parameters, T* residuals) const {
+        }
+      }
 
    Since the sizing of the parameters is done at runtime, you must
    also specify the sizes after creating the dynamic autodiff cost
    function. For example:
 
-     .. code-block:: c++
+   .. code-block:: c++
 
-       auto* cost_function = new DynamicAutoDiffCostFunction<MyCostFunctor, 4>();
-       cost_function->AddParameterBlock(5);
-       cost_function->AddParameterBlock(10);
-       cost_function->SetNumResiduals(21);
+      auto* cost_function = new DynamicAutoDiffCostFunction<MyCostFunctor, 4>();
+      cost_function->AddParameterBlock(5);
+      cost_function->AddParameterBlock(10);
+      cost_function->SetNumResiduals(21);
 
    Under the hood, the implementation evaluates the cost function
    multiple times, computing a small set of the derivatives (four by
@@ -460,7 +460,7 @@ the corresponding accessors. This information will be verified by the
                                   Dimension of y -------------------------+
 
   In this example, there is usually an instance for each measurement
-  of `k`.
+  of ``k``.
 
   In the instantiation above, the template parameters following
   ``MyScalarCostFunctor``, ``1, 2, 2``, describe the functor as
@@ -470,7 +470,7 @@ the corresponding accessors. This information will be verified by the
   NumericDiffCostFunction also supports cost functions with a
   runtime-determined number of residuals. For example:
 
-   .. code-block:: c++
+  .. code-block:: c++
 
      auto functor = std::make_unique<CostFunctorWithDynamicNumResiduals>(1.0);
      auto* cost_function
@@ -498,7 +498,7 @@ the corresponding accessors. This information will be verified by the
   estimating :math:`f'(x)` by computing
   :math:`\frac{f(x+h)-f(x-h)}{2h}`.
 
-  The ``RIDDERS`` difference method[Ridders]_ is an adaptive scheme
+  The ``RIDDERS`` difference method [Ridders]_ is an adaptive scheme
   that estimates derivatives by performing multiple central
   differences at varying scales. Specifically, the algorithm starts at
   a certain :math:`h` and as the derivative is estimated, this step
@@ -511,6 +511,15 @@ the corresponding accessors. This information will be verified by the
   Consider using ``CENTRAL`` differences to begin with. Based on the
   results, either try forward difference to improve performance or
   Ridders' method to improve accuracy.
+
+  .. warning::
+      A common beginner's error when first using
+      :class:`NumericDiffCostFunction` is to get the sizing wrong. In
+      particular, there is a tendency to set the template parameters to
+      (dimension of residual, number of parameters) instead of passing a
+      dimension parameter for *every parameter*. In the example above, that
+      would be ``<MyScalarCostFunctor, 1, 2>``, which is missing the last ``2``
+      argument. Please be careful when setting the size parameters.
 
 .. class:: NumericDiffOptions
 
@@ -553,77 +562,68 @@ the corresponding accessors. This information will be verified by the
    The factor by which to shrink the step size with each extrapolation in
    Ridders' method.
 
-  .. warning::
-      A common beginner's error when first using
-      :class:`NumericDiffCostFunction` is to get the sizing wrong. In
-      particular, there is a tendency to set the template parameters to
-      (dimension of residual, number of parameters) instead of passing a
-      dimension parameter for *every parameter*. In the example above, that
-      would be ``<MyScalarCostFunctor, 1, 2>``, which is missing the last ``2``
-      argument. Please be careful when setting the size parameters.
-
 
 Numeric Differentiation & Manifolds
 -----------------------------------
 
-   If your cost function depends on a parameter block that must lie on
-   a manifold and the functor cannot be evaluated for values of that
-   parameter block not on the manifold then you may have problems
-   numerically differentiating such functors.
+If your cost function depends on a parameter block that must lie on
+a manifold and the functor cannot be evaluated for values of that
+parameter block not on the manifold then you may have problems
+numerically differentiating such functors.
 
-   This is because numeric differentiation in Ceres is performed by
-   perturbing the individual coordinates of the parameter blocks that
-   a cost functor depends on. This perturbation assumes that the
-   parameter block lives on a Euclidean Manifold rather than the
-   actual manifold associated with the parameter block. As a result
-   some of the perturbed points may not lie on the manifold anymore.
+This is because numeric differentiation in Ceres is performed by
+perturbing the individual coordinates of the parameter blocks that
+a cost functor depends on. This perturbation assumes that the
+parameter block lives on a Euclidean Manifold rather than the
+actual manifold associated with the parameter block. As a result
+some of the perturbed points may not lie on the manifold anymore.
 
-   For example consider a four dimensional parameter block that is
-   interpreted as a unit Quaternion. Perturbing the coordinates of
-   this parameter block will violate the unit norm property of the
-   parameter block.
+For example consider a four dimensional parameter block that is
+interpreted as a unit Quaternion. Perturbing the coordinates of
+this parameter block will violate the unit norm property of the
+parameter block.
 
-   Fixing this problem requires that :class:`NumericDiffCostFunction`
-   be aware of the :class:`Manifold` associated with each
-   parameter block and only generate perturbations in the local
-   tangent space of each parameter block.
+Fixing this problem requires that :class:`NumericDiffCostFunction`
+be aware of the :class:`Manifold` associated with each
+parameter block and only generate perturbations in the local
+tangent space of each parameter block.
 
-   For now this is not considered to be a serious enough problem to
-   warrant changing the :class:`NumericDiffCostFunction` API. Further,
-   in most cases it is relatively straightforward to project a point
-   off the manifold back onto the manifold before using it in the
-   functor. For example in case of the Quaternion, normalizing the
-   4-vector before using it does the trick.
+For now this is not considered to be a serious enough problem to
+warrant changing the :class:`NumericDiffCostFunction` API. Further,
+in most cases it is relatively straightforward to project a point
+off the manifold back onto the manifold before using it in the
+functor. For example in case of the Quaternion, normalizing the
+4-vector before using it does the trick.
 
-   **Alternate Interface**
+**Alternate Interface**
 
-   For a variety of reasons, including compatibility with legacy code,
-   :class:`NumericDiffCostFunction` can also take
-   :class:`CostFunction` objects as input. The following describes
-   how.
+For a variety of reasons, including compatibility with legacy code,
+:class:`NumericDiffCostFunction` can also take
+:class:`CostFunction` objects as input. The following describes
+how.
 
-   To get a numerically differentiated cost function, define a
-   subclass of :class:`CostFunction` such that the
-   :func:`CostFunction::Evaluate` function ignores the ``jacobians``
-   parameter. The numeric differentiation wrapper will fill in the
-   jacobian parameter if necessary by repeatedly calling the
-   :func:`CostFunction::Evaluate` with small changes to the
-   appropriate parameters, and computing the slope. For performance,
-   the numeric differentiation wrapper class is templated on the
-   concrete cost function, even though it could be implemented only in
-   terms of the :class:`CostFunction` interface.
+To get a numerically differentiated cost function, define a
+subclass of :class:`CostFunction` such that the
+:func:`CostFunction::Evaluate` function ignores the ``jacobians``
+parameter. The numeric differentiation wrapper will fill in the
+jacobian parameter if necessary by repeatedly calling the
+:func:`CostFunction::Evaluate` with small changes to the
+appropriate parameters, and computing the slope. For performance,
+the numeric differentiation wrapper class is templated on the
+concrete cost function, even though it could be implemented only in
+terms of the :class:`CostFunction` interface.
 
-   The numerically differentiated version of a cost function for a
-   cost function can be constructed as follows:
+The numerically differentiated version of a cost function for a
+cost function can be constructed as follows:
 
-   .. code-block:: c++
+.. code-block:: c++
 
-     auto* cost_function
-         = new NumericDiffCostFunction<MyCostFunction, CENTRAL, 1, 4, 8>(...);
+   auto* cost_function
+       = new NumericDiffCostFunction<MyCostFunction, CENTRAL, 1, 4, 8>(...);
 
-   where ``MyCostFunction`` has 1 residual and 2 parameter blocks with
-   sizes 4 and 8 respectively. Look at the tests for a more detailed
-   example.
+where ``MyCostFunction`` has 1 residual and 2 parameter blocks with
+sizes 4 and 8 respectively. Look at the tests for a more detailed
+example.
 
 :class:`DynamicNumericDiffCostFunction`
 =======================================
@@ -634,7 +634,7 @@ Numeric Differentiation & Manifolds
    requires that the number of parameter blocks and their sizes be
    known at compile time. In a number of applications, this is not enough.
 
-     .. code-block:: c++
+   .. code-block:: c++
 
       template <typename CostFunctor, NumericDiffMethodType method = CENTRAL>
       class DynamicNumericDiffCostFunction : public CostFunction {
@@ -647,23 +647,23 @@ Numeric Differentiation & Manifolds
    functor, but the signature of the functor differs slightly. The
    expected interface for the cost functors is:
 
-     .. code-block:: c++
+   .. code-block:: c++
 
-       struct MyCostFunctor {
-         bool operator()(double const* const* parameters, double* residuals) const {
-         }
-       }
+      struct MyCostFunctor {
+        bool operator()(double const* const* parameters, double* residuals) const {
+        }
+      }
 
    Since the sizing of the parameters is done at runtime, you must
    also specify the sizes after creating the dynamic numeric diff cost
    function. For example:
 
-     .. code-block:: c++
+   .. code-block:: c++
 
-       auto cost_function = std::make_unique<DynamicNumericDiffCostFunction<MyCostFunctor>>();
-       cost_function->AddParameterBlock(5);
-       cost_function->AddParameterBlock(10);
-       cost_function->SetNumResiduals(21);
+      auto cost_function = std::make_unique<DynamicNumericDiffCostFunction<MyCostFunctor>>();
+      cost_function->AddParameterBlock(5);
+      cost_function->AddParameterBlock(10);
+      cost_function->SetNumResiduals(21);
 
    As a rule of thumb, try using :class:`NumericDiffCostFunction` before
    you use :class:`DynamicNumericDiffCostFunction`.
@@ -770,34 +770,34 @@ Numeric Differentiation & Manifolds
     };
 
 
-  Here ``ThirdPartyProjectionFunction`` is some third party library
-  function that we have no control over. So this function can compute
-  its value and we would like to use numeric differentiation to
-  compute its derivatives. In this case we can use a combination of
-  ``NumericDiffCostFunction`` and ``CostFunctionToFunctor`` to get the
-  job done.
+   Here ``ThirdPartyProjectionFunction`` is some third party library
+   function that we have no control over. So this function can compute
+   its value and we would like to use numeric differentiation to
+   compute its derivatives. In this case we can use a combination of
+   ``NumericDiffCostFunction`` and ``CostFunctionToFunctor`` to get the
+   job done.
 
-  .. code-block:: c++
+   .. code-block:: c++
 
-   struct CameraProjection {
-     explicit CameraProjection(double* observation)
-        : intrinsic_projection_(
-              std::make_unique<NumericDiffCostFunction<IntrinsicProjection, CENTRAL, 2, 5, 3>>()) {}
+    struct CameraProjection {
+      explicit CameraProjection(double* observation)
+         : intrinsic_projection_(
+               std::make_unique<NumericDiffCostFunction<IntrinsicProjection, CENTRAL, 2, 5, 3>>()) {}
 
-     template <typename T>
-     bool operator()(const T* rotation,
-                     const T* translation,
-                     const T* intrinsics,
-                     const T* point,
-                     T* residuals) const {
-       T transformed_point[3];
-       RotateAndTranslatePoint(rotation, translation, point, transformed_point);
-       return intrinsic_projection_(intrinsics, transformed_point, residuals);
-     }
+      template <typename T>
+      bool operator()(const T* rotation,
+                      const T* translation,
+                      const T* intrinsics,
+                      const T* point,
+                      T* residuals) const {
+        T transformed_point[3];
+        RotateAndTranslatePoint(rotation, translation, point, transformed_point);
+        return intrinsic_projection_(intrinsics, transformed_point, residuals);
+      }
 
-    private:
-     CostFunctionToFunctor<2, 5, 3> intrinsic_projection_;
-   };
+     private:
+      CostFunctionToFunctor<2, 5, 3> intrinsic_projection_;
+    };
 
 
 :class:`DynamicCostFunctionToFunctor`
@@ -915,20 +915,20 @@ Numeric Differentiation & Manifolds
 
 .. class:: GradientChecker
 
-    This class compares the Jacobians returned by a cost function
-    against derivatives estimated using finite differencing. It is
-    meant as a tool for unit testing, giving you more fine-grained
-    control than the check_gradients option in the solver options.
+   This class compares the Jacobians returned by a cost function
+   against derivatives estimated using finite differencing. It is
+   meant as a tool for unit testing, giving you more fine-grained
+   control than the check_gradients option in the solver options.
 
-    The condition enforced is that
+   The condition enforced is that
 
-    .. math:: \forall{i,j}: \frac{J_{ij} - J'_{ij}}{max_{ij}(J_{ij} - J'_{ij})} < r
+   .. math:: \forall{i,j}: \frac{J_{ij} - J'_{ij}}{max_{ij}(J_{ij} - J'_{ij})} < r
 
-    where :math:`J_{ij}` is the jacobian as computed by the supplied
-    cost function multiplied by the `Manifold::PlusJacobian`,
-    :math:`J'_{ij}` is the jacobian as computed by finite differences,
-    multiplied by the `Manifold::PlusJacobian` as well, and :math:`r`
-    is the relative precision.
+   where :math:`J_{ij}` is the jacobian as computed by the supplied
+   cost function multiplied by the :func:`Manifold::PlusJacobian`,
+   :math:`J'_{ij}` is the jacobian as computed by finite differences,
+   multiplied by the :func:`Manifold::PlusJacobian` as well, and :math:`r`
+   is the relative precision.
 
    Usage:
 
@@ -988,14 +988,14 @@ Numeric Differentiation & Manifolds
    is the variable. In case the user is interested in implementing a cost
    function of the form
 
-  .. math::  cost(x) = (x - \mu)^T S^{-1} (x - \mu)
+   .. math::  cost(x) = (x - \mu)^T S^{-1} (x - \mu)
 
-  where, :math:`\mu` is a vector and :math:`S` is a covariance matrix,
-  then, :math:`A = S^{-1/2}`, i.e the matrix :math:`A` is the square
-  root of the inverse of the covariance, also known as the stiffness
-  matrix. There are however no restrictions on the shape of
-  :math:`A`. It is free to be rectangular, which would be the case if
-  the covariance matrix :math:`S` is rank deficient.
+   where, :math:`\mu` is a vector and :math:`S` is a covariance matrix,
+   then, :math:`A = S^{-1/2}`, i.e the matrix :math:`A` is the square
+   root of the inverse of the covariance, also known as the stiffness
+   matrix. There are however no restrictions on the shape of
+   :math:`A`. It is free to be rectangular, which would be the case if
+   the covariance matrix :math:`S` is rank deficient.
 
 
 
@@ -1532,7 +1532,7 @@ the ambient space dimensions is known at compile time use
    EuclideanManifold<3> manifold;
 
 If the ambient space dimensions is not known at compile time the
-template parameter needs to be set to `ceres::DYNAMIC` and the actual
+template parameter needs to be set to ``ceres::DYNAMIC`` and the actual
 dimension needs to be provided as a constructor argument:
 
 .. code-block:: c++
@@ -1712,7 +1712,7 @@ the ambient space dimensions is known at compile time use
    SphereManifold<3> manifold;
 
 If the ambient space dimensions is not known at compile time the
-template parameter needs to be set to `ceres::DYNAMIC` and the actual
+template parameter needs to be set to ``ceres::DYNAMIC`` and the actual
 dimension needs to be provided as a constructor argument:
 
 .. code-block:: c++
@@ -2010,7 +2010,7 @@ be constructed as
 
 .. member:: bool Problem::Options::disable_all_safety_checks
 
-    Default: `false`
+    Default: ``false``
 
     By default, Ceres performs a variety of safety checks when
     constructing the problem. There is a small but measurable
@@ -2030,7 +2030,7 @@ be constructed as
 
     A Ceres global context to use for solving this problem. This may
     help to reduce computation time as Ceres can reuse expensive
-    objects to create.  The context object can be `nullptr`, in which
+    objects to create.  The context object can be ``nullptr``, in which
     case Ceres may create one.
 
     Ceres does NOT take ownership of the pointer.
@@ -2125,9 +2125,9 @@ be constructed as
    (unless :member:`Problem::Options::disable_all_safety_checks` is set to true).
 
    Repeated calls with the same double pointer and size but different
-   :class:`Manifold` is equivalent to calling `SetManifold(manifold)`,
+   :class:`Manifold` is equivalent to calling ``SetManifold(manifold)``,
    i.e., any previously associated :class:`Manifold` object will be replaced
-   with the `manifold`.
+   with the ``manifold``.
 
 .. function:: void Problem::AddParameterBlock(double* values, int size)
 
@@ -2223,27 +2223,27 @@ be constructed as
 
 .. function:: void Problem::SetParameterLowerBound(double* values, int index, double lower_bound)
 
-   Set the lower bound for the parameter at position `index` in the
-   parameter block corresponding to `values`. By default the lower
+   Set the lower bound for the parameter at position ``index`` in the
+   parameter block corresponding to ``values``. By default the lower
    bound is ``-std::numeric_limits<double>::max()``, which is treated
    by the solver as the same as :math:`-\infty`.
 
 .. function:: void Problem::SetParameterUpperBound(double* values, int index, double upper_bound)
 
-   Set the upper bound for the parameter at position `index` in the
-   parameter block corresponding to `values`. By default the value is
+   Set the upper bound for the parameter at position ``index`` in the
+   parameter block corresponding to ``values``. By default the value is
    ``std::numeric_limits<double>::max()``, which is treated by the
    solver as the same as :math:`\infty`.
 
 .. function:: double Problem::GetParameterLowerBound(const double* values, int index)
 
-   Get the lower bound for the parameter with position `index`. If the
+   Get the lower bound for the parameter with position ``index``. If the
    parameter is not bounded by the user, then its lower bound is
    ``-std::numeric_limits<double>::max()``.
 
 .. function:: double Problem::GetParameterUpperBound(const double* values, int index)
 
-   Get the upper bound for the parameter with position `index`. If the
+   Get the upper bound for the parameter with position ``index``. If the
    parameter is not bounded by the user, then its upper bound is
    ``std::numeric_limits<double>::max()``.
 
@@ -2289,9 +2289,9 @@ be constructed as
 
 .. function:: void Problem::GetResidualBlocks(std::vector<ResidualBlockId>* residual_blocks) const
 
-   Fills the passed `residual_blocks` vector with pointers to the
+   Fills the passed ``residual_blocks`` vector with pointers to the
    residual blocks currently in the problem. After this call,
-   `residual_blocks.size() == NumResidualBlocks`.
+   ``residual_blocks.size() == NumResidualBlocks``.
 
 .. function:: void Problem::GetParameterBlocksForResidualBlock(const ResidualBlockId residual_block, std::vector<double*>* parameter_blocks) const
 
@@ -2346,8 +2346,8 @@ be constructed as
    .. NOTE:: If an :class:`EvaluationCallback` is associated with the
       problem, then its
       :func:`EvaluationCallback::PrepareForEvaluation` method will be
-      called every time this method is called with `new_point =
-      true`. This conservatively assumes that the user may have
+      called every time this method is called with ``new_point =
+      true``. This conservatively assumes that the user may have
       changed the parameter values since the previous call to evaluate
       / solve.  For improved efficiency, and only if you know that the
       parameter values have not changed between calls, see
@@ -2396,8 +2396,8 @@ be constructed as
         double cost = 0.0;
         problem.Evaluate(Problem::EvaluateOptions(), &cost, nullptr, nullptr, nullptr);
 
-      The cost is evaluated at `x = 1`. If you wish to evaluate the
-      problem at `x = 2`, then
+      The cost is evaluated at ``x = 1``. If you wish to evaluate the
+      problem at ``x = 2``, then
 
       .. code-block:: c++
 
@@ -2651,11 +2651,11 @@ within Ceres Solver's automatic differentiation framework.
 
 .. function:: template <typename T> void CrossProduct(const T x[3], const T y[3], T x_cross_y[3])
 
-   .. math:: \text{x_cross_y} = x \times y
+   .. math:: \text{x\_cross\_y} = x \times y
 
 .. function:: template <typename T> void AngleAxisRotatePoint(const T angle_axis[3], const T pt[3], T result[3])
 
-   .. math:: y = R(\text{angle_axis}) x
+   .. math:: y = R(\text{angle\_axis}) x
 
 
 Cubic Interpolation

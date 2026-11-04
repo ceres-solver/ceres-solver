@@ -86,21 +86,21 @@ Trust Region Methods
 
 The basic trust region algorithm looks something like this.
 
-   1. Given an initial point :math:`x` and a trust region radius :math:`\mu`.
-   2. Solve
+1. Given an initial point :math:`x` and a trust region radius :math:`\mu`.
+2. Solve
 
-      .. math::
-         \arg \min_{\Delta x}& \frac{1}{2}\|J(x)\Delta x + F(x)\|^2 \\
-         \text{such that} &\|D(x)\Delta x\|^2 \le \mu\\
-         &L \le x + \Delta x \le U.
+   .. math::
+      \arg \min_{\Delta x}& \frac{1}{2}\|J(x)\Delta x + F(x)\|^2 \\
+      \text{such that} &\|D(x)\Delta x\|^2 \le \mu\\
+      &L \le x + \Delta x \le U.
 
-   3. :math:`\rho = \frac{\displaystyle \|F(x + \Delta x)\|^2 -
-      \|F(x)\|^2}{\displaystyle \|J(x)\Delta x + F(x)\|^2 -
-      \|F(x)\|^2}`
-   4. if :math:`\rho > \epsilon` then  :math:`x = x + \Delta x`.
-   5. if :math:`\rho > \eta_1` then :math:`\mu = 2  \mu`
-   6. else if :math:`\rho < \eta_2` then :math:`\mu = 0.5 * \mu`
-   7. Go to 2.
+3. :math:`\rho = \frac{\displaystyle \|F(x + \Delta x)\|^2 -
+   \|F(x)\|^2}{\displaystyle \|J(x)\Delta x + F(x)\|^2 -
+   \|F(x)\|^2}`
+4. if :math:`\rho > \epsilon` then  :math:`x = x + \Delta x`.
+5. if :math:`\rho > \eta_1` then :math:`\mu = 2  \mu`
+6. else if :math:`\rho < \eta_2` then :math:`\mu = 0.5 * \mu`
+7. Go to 2.
 
 Here, :math:`\mu` is the trust region radius, :math:`D(x)` is some
 matrix used to define a metric on the domain of :math:`F(x)` and
@@ -322,8 +322,8 @@ linear in :math:`a_1` and :math:`a_2`, i.e.,
 .. math:: y = f_1(a_1, e^{b_1 x}) + f_2(a_2, e^{b_3 x^2 + c_1})
 
 In this case, we solve for the trust region step for the full problem,
-and then use it as the starting point to further optimize just `a_1`
-and `a_2`. For the linear case, this amounts to doing a single linear
+and then use it as the starting point to further optimize just :math:`a_1`
+and :math:`a_2`. For the linear case, this amounts to doing a single linear
 least squares solve. For non-linear problems, any method for solving
 the :math:`a_1` and :math:`a_2` optimization problems will do. The
 only constraint on :math:`a_1` and :math:`a_2` (if they are two
@@ -389,18 +389,18 @@ Line Search Methods
 
 The basic line search algorithm looks something like this:
 
-   1. Given an initial point :math:`x`
-   2. :math:`\Delta x = -H^{-1}(x) g(x)`
-   3. :math:`\arg \min_\mu \frac{1}{2} \| F(x + \mu \Delta x) \|^2`
-   4. :math:`x = x + \mu \Delta x`
-   5. Goto 2.
+1. Given an initial point :math:`x`
+2. :math:`\Delta x = -H^{-1}(x) g(x)`
+3. :math:`\arg \min_\mu \frac{1}{2} \| F(x + \mu \Delta x) \|^2`
+4. :math:`x = x + \mu \Delta x`
+5. Goto 2.
 
 Here :math:`H(x)` is some approximation to the Hessian of the
 objective function, and :math:`g(x)` is the gradient at
 :math:`x`. Depending on the choice of :math:`H(x)` we get a variety of
 different search directions :math:`\Delta x`.
 
-Step 4, which is a one dimensional optimization or `Line Search` along
+Step 4, which is a one dimensional optimization or *Line Search* along
 :math:`\Delta x` is what gives this class of methods its name.
 
 Different line search algorithms differ in their choice of the search
@@ -429,7 +429,7 @@ directions, all aimed at large scale problems.
    are currently the best known general quasi-Newton algorithm.
 
 4. ``LBFGS`` A limited memory approximation to the full ``BFGS``
-   method in which the last `M` iterations are used to approximate the
+   method in which the last :math:`M` iterations are used to approximate the
    inverse Hessian used to compute a quasi-Newton step [Nocedal]_,
    [ByrdNocedal]_.
 
@@ -493,7 +493,7 @@ If Ceres Solver has been built with an optimized LAPACK
 implementation, then the user can also choose to use LAPACK's
 `DGEQRF`_ routine by setting
 :member:`Solver::Options::dense_linear_algebra_library_type` to
-``LAPACK``. Depending on the `LAPACK` and the underlying `BLAS`
+``LAPACK``. Depending on the ``LAPACK`` and the underlying ``BLAS``
 implementation this may perform better than using Eigen's Householder
 QR factorization.
 
@@ -560,7 +560,7 @@ If Ceres Solver has been built with an optimized LAPACK
 implementation, then the user can also choose to use LAPACK's
 `DPOTRF`_ routine by setting
 :member:`Solver::Options::dense_linear_algebra_library_type` to
-``LAPACK``. Depending on the `LAPACK` and the underlying `BLAS`
+``LAPACK``. Depending on the ``LAPACK`` and the underlying ``BLAS``
 implementation this may perform better than using Eigen's Cholesky
 factorization.
 
@@ -599,16 +599,16 @@ You can use dense Cholesky factorization by setting
 The use of this linear solver requires that Ceres is compiled with
 support for at least one of:
 
- 1. `SuiteSparse <https://people.engr.tamu.edu/davis/suitesparse.html>`_ (``SUITE_SPARSE``).
- 2. `Apple's Accelerate framework
-    <https://developer.apple.com/documentation/accelerate/sparse-solvers-library?language=objc>`_
-    (``ACCELERATE_SPARSE``).
- 3. `Eigen's sparse linear solvers
-    <https://libeigen.gitlab.io/eigen/docs-nightly/group__SparseCholesky__Module.html>`_
-    (``EIGEN_SPARSE``).
- 4. `NVIDIA's cuDSS library
-    <https://developer.nvidia.com/cudss>`_
-    (``CUDA_SPARSE``).
+1. `SuiteSparse <https://people.engr.tamu.edu/davis/suitesparse.html>`_ (``SUITE_SPARSE``).
+2. `Apple's Accelerate framework
+   <https://developer.apple.com/documentation/accelerate/sparse-solvers-library?language=objc>`_
+   (``ACCELERATE_SPARSE``).
+3. `Eigen's sparse linear solvers
+   <https://libeigen.gitlab.io/eigen/docs-nightly/group__SparseCholesky__Module.html>`_
+   (``EIGEN_SPARSE``).
+4. `NVIDIA's cuDSS library
+   <https://developer.nvidia.com/cudss>`_
+   (``CUDA_SPARSE``).
 
 SuiteSparse, Accelerate, and cuDSS offer high performance sparse Cholesky
 factorization routines (using level-3 BLAS routines on the CPU or GPU
@@ -636,7 +636,7 @@ For general sparse problems, if the problem is too large for sparse
 Cholesky factorization or a sparse linear algebra library is not
 linked into Ceres, another option is the ``CGNR`` solver. This solver
 uses the `Conjugate Gradients
-<https://en.wikipedia.org/wiki/Conjugate_gradient_method>_` method on
+<https://en.wikipedia.org/wiki/Conjugate_gradient_method>`_ method on
 the *normal equations*, but without forming the normal equations
 explicitly. It exploits the relation
 
@@ -681,7 +681,7 @@ block structure :math:`x = [y_{1}, ... ,y_{p},z_{1},
 ... ,z_{q}]`. Where, :math:`y` and :math:`z` correspond to camera and
 point parameters respectively.  Further, let the camera blocks be of
 size :math:`c` and the point blocks be of size :math:`s` (for most
-problems :math:`c` = :math:`6`--`9` and :math:`s = 3`). Ceres does not
+problems :math:`c` = :math:`6`--:math:`9` and :math:`s = 3`). Ceres does not
 impose any constancy requirement on these block sizes, but choosing
 them to be constant simplifies the exposition.
 
@@ -1004,7 +1004,7 @@ The key idea is to cluster the cameras based on the visibility
 structure of the scene. The similarity between a pair of cameras
 :math:`i` and :math:`j` is given by:
 
-  .. math:: S_{ij} = \frac{|V_i \cap V_j|}{|V_i| |V_j|}
+.. math:: S_{ij} = \frac{|V_i \cap V_j|}{|V_i| |V_j|}
 
 Here :math:`V_i` is the set of scene points visible in camera
 :math:`i`. This idea was first exploited by [KushalAgarwal]_ to create
@@ -1045,7 +1045,7 @@ subset  of the  rows of  the  Jacobian to  construct a  preconditioner
 
 Suppose the Jacobian :math:`J` has been horizontally partitioned as
 
-  .. math:: J = \begin{bmatrix} P \\ Q \end{bmatrix}
+.. math:: J = \begin{bmatrix} P \\ Q \end{bmatrix}
 
 Where, :math:`Q` is the set of rows corresponding to the residual
 blocks in
@@ -1287,22 +1287,22 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
 
    With:
 
-  .. math:: y_k = \nabla f_{k+1} - \nabla f_k
-  .. math:: s_k = x_{k+1} - x_k
+   .. math:: y_k = \nabla f_{k+1} - \nabla f_k
+   .. math:: s_k = x_{k+1} - x_k
 
-  Where :math:`f()` is the line search objective and :math:`x` the
-  vector of parameter values [NocedalWright]_.
+   Where :math:`f()` is the line search objective and :math:`x` the
+   vector of parameter values [NocedalWright]_.
 
-  It is important to note that approximate eigenvalue scaling does
-  **not** *always* improve convergence, and that it can in fact
-  *significantly* degrade performance for certain classes of problem,
-  which is why it is disabled by default.  In particular it can
-  degrade performance when the sensitivity of the problem to different
-  parameters varies significantly, as in this case a single scalar
-  factor fails to capture this variation and detrimentally downscales
-  parts of the Jacobian approximation which correspond to
-  low-sensitivity parameters. It can also reduce the robustness of the
-  solution to errors in the Jacobians.
+   It is important to note that approximate eigenvalue scaling does
+   **not** *always* improve convergence, and that it can in fact
+   *significantly* degrade performance for certain classes of problem,
+   which is why it is disabled by default.  In particular it can
+   degrade performance when the sensitivity of the problem to different
+   parameters varies significantly, as in this case a single scalar
+   factor fails to capture this variation and detrimentally downscales
+   parts of the Jacobian approximation which correspond to
+   low-sensitivity parameters. It can also reduce the robustness of the
+   solution to errors in the Jacobians.
 
 .. member:: LineSearchInterpolationType Solver::Options::line_search_interpolation_type
 
@@ -1318,7 +1318,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
 
    The line search terminates if:
 
-   .. math:: \|\Delta x_k\|_\infty < \text{min_line_search_step_size}
+   .. math:: \|\Delta x_k\|_\infty < \text{min\_line\_search\_step\_size}
 
    where :math:`\|\cdot\|_\infty` refers to the max norm, and
    :math:`\Delta x_k` is the step change in the parameter values at
@@ -1335,7 +1335,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    value of the objective function sufficiently. More precisely, we
    are looking for a step size s.t.
 
-   .. math:: f(\text{step_size}) \le f(0) + \text{sufficient_decrease} * [f'(0) * \text{step_size}]
+   .. math:: f(\text{step\_size}) \le f(0) + \text{sufficient\_decrease} * [f'(0) * \text{step\_size}]
 
    This condition is known as the Armijo condition.
 
@@ -1345,11 +1345,11 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
 
    In each iteration of the line search,
 
-   .. math:: \text{new_step_size} >= \text{max_line_search_step_contraction} * \text{step_size}
+   .. math:: \text{new\_step\_size} \ge \text{max\_line\_search\_step\_contraction} * \text{step\_size}
 
    Note that by definition, for contraction:
 
-   .. math:: 0 < \text{max_step_contraction} < \text{min_step_contraction} < 1
+   .. math:: 0 < \text{max\_step\_contraction} < \text{min\_step\_contraction} < 1
 
 .. member:: double Solver::Options::min_line_search_step_contraction
 
@@ -1357,11 +1357,11 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
 
    In each iteration of the line search,
 
-   .. math:: \text{new_step_size} <= \text{min_line_search_step_contraction} * \text{step_size}
+   .. math:: \text{new\_step\_size} \le \text{min\_line\_search\_step\_contraction} * \text{step\_size}
 
    Note that by definition, for contraction:
 
-   .. math:: 0 < \text{max_step_contraction} < \text{min_step_contraction} < 1
+   .. math:: 0 < \text{max\_step\_contraction} < \text{min\_step\_contraction} < 1
 
 .. member:: int Solver::Options::max_num_line_search_step_size_iterations
 
@@ -1379,7 +1379,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    As this is an 'artificial' constraint (one imposed by the user, not
    the underlying math), if ``WOLFE`` line search is being used, *and*
    points satisfying the Armijo sufficient (function) decrease
-   condition have been found during the current search (in :math:`<=`
+   condition have been found during the current search (in :math:`\le`
    ``max_num_line_search_step_size_iterations``).  Then, the step size
    with the lowest function value which satisfies the Armijo condition
    will be returned as the new valid step, even though it does *not*
@@ -1408,7 +1408,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    decreases sufficiently. Precisely, this second condition
    is that we seek a step size s.t.
 
-   .. math:: \|f'(\text{step_size})\| <= \text{sufficient_curvature_decrease} * \|f'(0)\|
+   .. math:: \|f'(\text{step\_size})\| \le \text{sufficient\_curvature\_decrease} * \|f'(0)\|
 
    Where :math:`f()` is the line search objective and :math:`f'()` is the derivative
    of :math:`f` with respect to the step size: :math:`\frac{d f}{d~\text{step size}}`.
@@ -1423,11 +1423,11 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    satisfying the conditions is found.  Precisely, at each iteration
    of the expansion:
 
-   .. math:: \text{new_step_size} <= \text{max_step_expansion} * \text{step_size}
+   .. math:: \text{new\_step\_size} \le \text{max\_step\_expansion} * \text{step\_size}
 
    By definition for expansion
 
-   .. math:: \text{max_step_expansion} > 1.0
+   .. math:: \text{max\_step\_expansion} > 1.0
 
 .. member:: TrustRegionStrategyType Solver::Options::trust_region_strategy_type
 
@@ -1541,7 +1541,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
 
    Solver terminates if
 
-   .. math:: \frac{|\Delta \text{cost}|}{\text{cost}} <= \text{function_tolerance}
+   .. math:: \frac{|\Delta \text{cost}|}{\text{cost}} \le \text{function\_tolerance}
 
    where, :math:`\Delta \text{cost}` is the change in objective
    function value (up or down) in the current iteration of
@@ -1553,7 +1553,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
 
    Solver terminates if
 
-   .. math:: \|x - \Pi \boxplus(x, -g(x))\|_\infty <= \text{gradient_tolerance}
+   .. math:: \|x - \Pi \boxplus(x, -g(x))\|_\infty \le \text{gradient\_tolerance}
 
    where :math:`\|\cdot\|_\infty` refers to the max norm, :math:`\Pi`
    is projection onto the bounds constraints and :math:`\boxplus` is
@@ -1566,7 +1566,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
 
    Solver terminates if
 
-   .. math:: \|\Delta x\| <= (\|x\| + \text{parameter_tolerance}) * \text{parameter_tolerance}
+   .. math:: \|\Delta x\| \le (\|x\| + \text{parameter\_tolerance}) * \text{parameter\_tolerance}
 
    where :math:`\Delta x` is the step computed by the linear solver in
    the current iteration.
@@ -1624,7 +1624,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
 
    Suppose the Jacobian :math:`J` has been horizontally partitioned as
 
-       .. math:: J = \begin{bmatrix} P \\ Q \end{bmatrix}
+   .. math:: J = \begin{bmatrix} P \\ Q \end{bmatrix}
 
    Where, :math:`Q` is the set of rows corresponding to the residual
    blocks in
@@ -1687,22 +1687,22 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
 
    Default: ``AMD``
 
-    The order in which variables are eliminated in a linear solver can
-    have a significant impact on the efficiency and accuracy of the
-    method. e.g., when doing sparse Cholesky factorization, there are
-    matrices for which a good ordering will give a Cholesky factor
-    with :math:`O(n)` storage, where as a bad ordering will result in
-    an completely dense factor.
+   The order in which variables are eliminated in a linear solver can
+   have a significant impact on the efficiency and accuracy of the
+   method. e.g., when doing sparse Cholesky factorization, there are
+   matrices for which a good ordering will give a Cholesky factor
+   with :math:`O(n)` storage, where as a bad ordering will result in
+   an completely dense factor.
 
-    Sparse direct solvers like ``SPARSE_NORMAL_CHOLESKY`` and
-    ``SPARSE_SCHUR`` use a fill reducing ordering of the columns and
-    rows of the matrix being factorized before computing the numeric
-    factorization.
+   Sparse direct solvers like ``SPARSE_NORMAL_CHOLESKY`` and
+   ``SPARSE_SCHUR`` use a fill reducing ordering of the columns and
+   rows of the matrix being factorized before computing the numeric
+   factorization.
 
-    This enum controls the type of algorithm used to compute this fill
-    reducing ordering. There is no single algorithm that works on all
-    matrices, so determining which algorithm works better is a matter
-    of empirical experimentation.
+   This enum controls the type of algorithm used to compute this fill
+   reducing ordering. There is no single algorithm that works on all
+   matrices, so determining which algorithm works better is a matter
+   of empirical experimentation.
 
 .. member:: std::shared_ptr<ParameterBlockOrdering> Solver::Options::linear_solver_ordering
 
@@ -1758,7 +1758,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    then it is probably best to keep this false, otherwise it will
    likely lead to worse performance.
 
-   This setting only affects the `SPARSE_NORMAL_CHOLESKY` solver.
+   This setting only affects the ``SPARSE_NORMAL_CHOLESKY`` solver.
 
 .. member:: bool Solver::Options::use_mixed_precision_solves
 
@@ -1801,7 +1801,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
 
 .. member:: int Solver::Options::max_num_spse_iterations
 
-   Default: `5`
+   Default: ``5``
 
    Maximum number of iterations performed by
    ``SCHUR_POWER_SERIES_EXPANSION``. Each iteration corresponds to one
@@ -1810,7 +1810,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    whether it is used as a preconditioner or just to initialize the
    solution for ``ITERATIVE_SCHUR``.
 
-.. member:: bool Solver:Options::use_spse_initialization
+.. member:: bool Solver::Options::use_spse_initialization
 
    Default: ``false``
 
@@ -1820,7 +1820,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
 
 .. member:: double Solver::Options::spse_tolerance
 
-   Default: `0.1`
+   Default: ``0.1``
 
    When ``use_spse_initialization`` is ``true``, this parameter along
    with ``max_num_spse_iterations`` controls the number of
@@ -1968,12 +1968,12 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
 
    Default: ``/tmp``
 
-    Directory to which the problems should be written to. Should be
-    non-empty if
-    :member:`Solver::Options::trust_region_minimizer_iterations_to_dump` is
-    non-empty and
-    :member:`Solver::Options::trust_region_problem_dump_format_type` is not
-    ``CONSOLE``.
+   Directory to which the problems should be written to. Should be
+   non-empty if
+   :member:`Solver::Options::trust_region_minimizer_iterations_to_dump` is
+   non-empty and
+   :member:`Solver::Options::trust_region_problem_dump_format_type` is not
+   ``CONSOLE``.
 
 .. member:: DumpFormatType Solver::Options::trust_region_problem_dump_format_type
 
@@ -1984,10 +1984,10 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    is non-empty.  There are three options:
 
    * ``CONSOLE`` prints the linear least squares problem in a human
-      readable format to ``stderr``. The Jacobian is printed as a
-      dense matrix. The vectors :math:`D`, :math:`x` and :math:`f` are
-      printed as dense vectors. This should only be used for small
-      problems.
+     readable format to ``stderr``. The Jacobian is printed as a
+     dense matrix. The vectors :math:`D`, :math:`x` and :math:`f` are
+     printed as dense vectors. This should only be used for small
+     problems.
 
    * ``TEXTFILE`` Write out the linear least squares problem to the
      directory pointed to by
@@ -2005,7 +2005,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
      used to parse and load the problem into memory.
 
      .. NOTE::
-        **Understanding the dumped ``x.txt`` vector:**
+        **Understanding the dumped** ``x.txt`` **vector:**
 
         The content of ``x.txt`` depends on the
         :member:`Solver::Options::trust_region_strategy_type` being
@@ -2014,12 +2014,12 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
         matrix:
 
         * If the strategy is ``LEVENBERG_MARQUARDT``, ``x.txt``
-            contains the **damped trust region step** (the solution
-            to the scaled problem).
+          contains the **damped trust region step** (the solution
+          to the scaled problem).
         * If the strategy is ``DOGLEG``, ``x.txt`` contains the
-            **pure, un-damped Gauss-Newton step**. This is *not*
-            necessarily the final step taken by the optimizer, as it
-            has not yet been limited by the trust region radius.
+          **pure, un-damped Gauss-Newton step**. This is *not*
+          necessarily the final step taken by the optimizer, as it
+          has not yet been limited by the trust region radius.
 
 .. member:: bool Solver::Options::check_gradients
 
@@ -2048,7 +2048,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
 
       This option only applies to the numeric differentiation used for
       checking the user provided derivatives when
-      `Solver::Options::check_gradients` is true. If you are using
+      :member:`Solver::Options::check_gradients` is ``true``. If you are using
       :class:`NumericDiffCostFunction` and are interested in changing
       the step size for numeric differentiation in your cost function,
       please have a look at :class:`NumericDiffOptions`.
@@ -2056,7 +2056,7 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    Relative initial step size used for taking numeric derivatives (via
    Ridders' adaptive extrapolation method; see
    :member:`NumericDiffOptions::ridders_relative_initial_step_size`)
-   when `Solver::Options::check_gradients` is `true`.
+   when :member:`Solver::Options::check_gradients` is ``true``.
 
    If parameters are close to zero, Ridders' method sets the initial
    step size directly to this value; otherwise it is multiplied by the
@@ -2183,18 +2183,18 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    Step was numerically valid, i.e., all values are finite and the
    step reduces the value of the linearized model.
 
-    **Note**: :member:`IterationSummary::step_is_valid` is `false`
-    when :member:`IterationSummary::iteration` = 0.
+   **Note**: :member:`IterationSummary::step_is_valid` is ``false``
+   when :member:`IterationSummary::iteration` = 0.
 
 .. member::  bool IterationSummary::step_is_nonmonotonic
 
-    Step did not reduce the value of the objective function
-    sufficiently, but it was accepted because of the relaxed
-    acceptance criterion used by the non-monotonic trust region
-    algorithm.
+   Step did not reduce the value of the objective function
+   sufficiently, but it was accepted because of the relaxed
+   acceptance criterion used by the non-monotonic trust region
+   algorithm.
 
-    **Note**: :member:`IterationSummary::step_is_nonmonotonic` is
-    `false` when when :member:`IterationSummary::iteration` = 0.
+   **Note**: :member:`IterationSummary::step_is_nonmonotonic` is
+   ``false`` when :member:`IterationSummary::iteration` = 0.
 
 .. member:: bool IterationSummary::step_is_successful
 
@@ -2204,12 +2204,12 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
    relative reduction in the objective function value was greater than
    :member:`Solver::Options::min_relative_decrease`. However, if the
    non-monotonic trust region algorithm is used
-   (:member:`Solver::Options::use_nonmonotonic_steps` = `true`), then
+   (:member:`Solver::Options::use_nonmonotonic_steps` = ``true``), then
    even if the relative decrease is not sufficient, the algorithm may
    accept the step and the step is declared successful.
 
-   **Note**: :member:`IterationSummary::step_is_successful` is `false`
-   when when :member:`IterationSummary::iteration` = 0.
+   **Note**: :member:`IterationSummary::step_is_successful` is ``false``
+   when :member:`IterationSummary::iteration` = 0.
 
 .. member:: double IterationSummary::cost
 
@@ -2303,72 +2303,72 @@ b. ``linear_solver_type = SPARSE_SCHUR/DENSE_SCHUR/ITERATIVE_SCHUR``
       };
 
 
-  The solver uses the return value of ``operator()`` to decide whether
-  to continue solving or to terminate. The user can return three
-  values.
+   The solver uses the return value of ``operator()`` to decide whether
+   to continue solving or to terminate. The user can return three
+   values.
 
-  #. ``SOLVER_ABORT`` indicates that the callback detected an abnormal
-     situation. The solver returns without updating the parameter
-     blocks (unless ``Solver::Options::update_state_every_iteration`` is
-     set true). Solver returns with ``Solver::Summary::termination_type``
-     set to ``USER_FAILURE``.
+   #. ``SOLVER_ABORT`` indicates that the callback detected an abnormal
+      situation. The solver returns without updating the parameter
+      blocks (unless ``Solver::Options::update_state_every_iteration`` is
+      set true). Solver returns with ``Solver::Summary::termination_type``
+      set to ``USER_FAILURE``.
 
-  #. ``SOLVER_TERMINATE_SUCCESSFULLY`` indicates that there is no need
-     to optimize anymore (some user specified termination criterion
-     has been met). Solver returns with
-     ``Solver::Summary::termination_type``` set to ``USER_SUCCESS``.
+   #. ``SOLVER_TERMINATE_SUCCESSFULLY`` indicates that there is no need
+      to optimize anymore (some user specified termination criterion
+      has been met). Solver returns with
+      ``Solver::Summary::termination_type`` set to ``USER_SUCCESS``.
 
-  #. ``SOLVER_CONTINUE`` indicates that the solver should continue
-     optimizing.
+   #. ``SOLVER_CONTINUE`` indicates that the solver should continue
+      optimizing.
 
-  The return values can be used to implement custom termination
-  criterion that supercede the iteration/time/tolerance based
-  termination implemented by Ceres.
+   The return values can be used to implement custom termination
+   criterion that supercede the iteration/time/tolerance based
+   termination implemented by Ceres.
 
-  For example, the following :class:`IterationCallback` is used
-  internally by Ceres to log the progress of the optimization.
+   For example, the following :class:`IterationCallback` is used
+   internally by Ceres to log the progress of the optimization.
 
-  .. code-block:: c++
+   .. code-block:: c++
 
-    class LoggingCallback : public IterationCallback {
-     public:
-      explicit LoggingCallback(bool log_to_stdout)
-          : log_to_stdout_(log_to_stdout) {}
+     class LoggingCallback : public IterationCallback {
+      public:
+       explicit LoggingCallback(bool log_to_stdout)
+           : log_to_stdout_(log_to_stdout) {}
 
-      ~LoggingCallback() {}
+       ~LoggingCallback() {}
 
-      CallbackReturnType operator()(const IterationSummary& summary) {
-        const char* kReportRowFormat =
-            "% 4d: f:% 8e d:% 3.2e g:% 3.2e h:% 3.2e "
-            "rho:% 3.2e mu:% 3.2e eta:% 3.2e li:% 3d";
-        string output = StringPrintf(kReportRowFormat,
-                                     summary.iteration,
-                                     summary.cost,
-                                     summary.cost_change,
-                                     summary.gradient_max_norm,
-                                     summary.step_norm,
-                                     summary.relative_decrease,
-                                     summary.trust_region_radius,
-                                     summary.eta,
-                                     summary.linear_solver_iterations);
-        if (log_to_stdout_) {
-          cout << output << endl;
-        } else {
-          VLOG(1) << output;
-        }
-        return SOLVER_CONTINUE;
-      }
+       CallbackReturnType operator()(const IterationSummary& summary) {
+         const char* kReportRowFormat =
+             "% 4d: f:% 8e d:% 3.2e g:% 3.2e h:% 3.2e "
+             "rho:% 3.2e mu:% 3.2e eta:% 3.2e li:% 3d";
+         string output = StringPrintf(kReportRowFormat,
+                                      summary.iteration,
+                                      summary.cost,
+                                      summary.cost_change,
+                                      summary.gradient_max_norm,
+                                      summary.step_norm,
+                                      summary.relative_decrease,
+                                      summary.trust_region_radius,
+                                      summary.eta,
+                                      summary.linear_solver_iterations);
+         if (log_to_stdout_) {
+           cout << output << endl;
+         } else {
+           VLOG(1) << output;
+         }
+         return SOLVER_CONTINUE;
+       }
 
-     private:
-      const bool log_to_stdout_;
-    };
+      private:
+       const bool log_to_stdout_;
+     };
 
 
-  See `examples/iteration_callback_example.cc
-  <https://github.com/ceres-solver/ceres-solver/blob/master/examples/iteration_callback_example.cc>`_
-  for another example that uses
-  :member:`Solver::Options::update_state_every_iteration` to log
-  changes to the parameter blocks over the course of the optimization.
+   See `examples/iteration_callback_example.cc
+   <https://github.com/ceres-solver/ceres-solver/blob/master/examples/iteration_callback_example.cc>`_
+   for another example that uses
+   :member:`Solver::Options::update_state_every_iteration` to log
+   changes to the parameter blocks over the course of the optimization.
 
 
 :class:`CRSMatrix`
@@ -2449,8 +2449,8 @@ The three arrays will be:
 
    Whether the solution returned by the optimization algorithm can be
    relied on to be numerically sane. This will be the case if
-   `Solver::Summary:termination_type` is set to `CONVERGENCE`,
-   `USER_SUCCESS` or `NO_CONVERGENCE`, i.e., either the solver
+   :member:`Solver::Summary::termination_type` is set to ``CONVERGENCE``,
+   ``USER_SUCCESS`` or ``NO_CONVERGENCE``, i.e., either the solver
    converged by meeting one of the convergence tolerances or because
    the user indicated that it had converged or it ran to the maximum
    number of iterations or time.
@@ -2491,7 +2491,7 @@ The three arrays will be:
 
    Number of minimizer iterations in which the step was
    accepted. Unless :member:`Solver::Options::use_nonmonotonic_steps`
-   is `true` this is also the number of steps in which the objective
+   is ``true`` this is also the number of steps in which the objective
    function value/cost went down.
 
 .. member:: int Solver::Summary::num_unsuccessful_steps
@@ -2629,7 +2629,7 @@ The three arrays will be:
    determines that the problem structure is not compatible with the
    linear solver requested or if the linear solver requested by the
    user is not available, e.g. The user requested
-   `SPARSE_NORMAL_CHOLESKY` but no sparse linear algebra library was
+   ``SPARSE_NORMAL_CHOLESKY`` but no sparse linear algebra library was
    available.
 
 .. member:: std::vector<int> Solver::Summary::linear_solver_ordering_given
@@ -2665,12 +2665,12 @@ The three arrays will be:
 
 .. member:: bool Solver::Summary::inner_iterations_given
 
-   `True` if the user asked for inner iterations to be used as part of
+   ``true`` if the user asked for inner iterations to be used as part of
    the optimization.
 
 .. member:: bool Solver::Summary::inner_iterations_used
 
-   `True` if the user asked for inner iterations to be used as part of
+   ``true`` if the user asked for inner iterations to be used as part of
    the optimization and the problem structure was such that they were
    actually performed. For example, in a problem with just one parameter
    block, inner iterations are not performed.
@@ -2739,11 +2739,11 @@ The three arrays will be:
 
 .. member:: NonlinearConjugateGradientType Solver::Summary::nonlinear_conjugate_gradient_type
 
-   If the line search direction is `NONLINEAR_CONJUGATE_GRADIENT`,
+   If the line search direction is ``NONLINEAR_CONJUGATE_GRADIENT``,
    then this indicates the particular variant of non-linear conjugate
    gradient used.
 
 .. member:: int Solver::Summary::max_lbfgs_rank
 
-   If the type of the line search direction is `LBFGS`, then this
+   If the type of the line search direction is ``LBFGS``, then this
    indicates the rank of the Hessian approximation.

@@ -109,7 +109,7 @@ Consider now the problem where we have two variables :math:`x \in
 \mathbb{R}^m` and :math:`y \in \mathbb{R}^n` and a function
 :math:`F:\mathbb{R}^m \times \mathbb{R}^n \rightarrow \mathbb{R}^n`
 such that :math:`F(x,y) = 0` and we wish to calculate the Jacobian of
-:math:`y` with respect to `x`. How do we do this?
+:math:`y` with respect to :math:`x`. How do we do this?
 
 If for a given value of :math:`(x,y)`, the partial Jacobian
 :math:`D_2F(x,y)` is full rank, then the `Implicit Function Theorem

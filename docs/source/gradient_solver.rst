@@ -186,11 +186,11 @@ Solving
    approximation. The increase in quality is however is bounded for a
    number of reasons.
 
-     1. The method only uses secant information and not actual
-        derivatives.
+   1. The method only uses secant information and not actual
+      derivatives.
 
-     2. The Hessian approximation is constrained to be positive
-        definite.
+   2. The Hessian approximation is constrained to be positive
+      definite.
 
    So increasing this rank to a large number will cost time and space
    complexity without the corresponding increase in solution
@@ -218,22 +218,22 @@ Solving
 
    With:
 
-  .. math:: y_k = \nabla f_{k+1} - \nabla f_k
-  .. math:: s_k = x_{k+1} - x_k
+   .. math:: y_k = \nabla f_{k+1} - \nabla f_k
+   .. math:: s_k = x_{k+1} - x_k
 
-  Where :math:`f()` is the line search objective and :math:`x` the
-  vector of parameter values [NocedalWright]_.
+   Where :math:`f()` is the line search objective and :math:`x` the
+   vector of parameter values [NocedalWright]_.
 
-  It is important to note that approximate eigenvalue scaling does
-  **not** *always* improve convergence, and that it can in fact
-  *significantly* degrade performance for certain classes of problem,
-  which is why it is disabled by default.  In particular it can
-  degrade performance when the sensitivity of the problem to different
-  parameters varies significantly, as in this case a single scalar
-  factor fails to capture this variation and detrimentally downscales
-  parts of the Jacobian approximation which correspond to
-  low-sensitivity parameters. It can also reduce the robustness of the
-  solution to errors in the Jacobians.
+   It is important to note that approximate eigenvalue scaling does
+   **not** *always* improve convergence, and that it can in fact
+   *significantly* degrade performance for certain classes of problem,
+   which is why it is disabled by default.  In particular it can
+   degrade performance when the sensitivity of the problem to different
+   parameters varies significantly, as in this case a single scalar
+   factor fails to capture this variation and detrimentally downscales
+   parts of the Jacobian approximation which correspond to
+   low-sensitivity parameters. It can also reduce the robustness of the
+   solution to errors in the Jacobians.
 
 .. member:: LineSearchInterpolationType GradientProblemSolver::Options::line_search_interpolation_type
 
@@ -247,7 +247,7 @@ Solving
 
    The line search terminates if:
 
-   .. math:: \|\Delta x_k\|_\infty < \text{min_line_search_step_size}
+   .. math:: \|\Delta x_k\|_\infty < \text{min\_line\_search\_step\_size}
 
    where :math:`\|\cdot\|_\infty` refers to the max norm, and
    :math:`\Delta x_k` is the step change in the parameter values at
@@ -264,7 +264,7 @@ Solving
    value of the objective function sufficiently. More precisely, we
    are looking for a step size s.t.
 
-   .. math:: f(\text{step_size}) \le f(0) + \text{sufficient_decrease} * [f'(0) * \text{step_size}]
+   .. math:: f(\text{step\_size}) \le f(0) + \text{sufficient\_decrease} * [f'(0) * \text{step\_size}]
 
    This condition is known as the Armijo condition.
 
@@ -274,11 +274,11 @@ Solving
 
    In each iteration of the line search,
 
-   .. math:: \text{new_step_size} \geq \text{max_line_search_step_contraction} * \text{step_size}
+   .. math:: \text{new\_step\_size} \geq \text{max\_line\_search\_step\_contraction} * \text{step\_size}
 
    Note that by definition, for contraction:
 
-   .. math:: 0 < \text{max_step_contraction} < \text{min_step_contraction} < 1
+   .. math:: 0 < \text{max\_step\_contraction} < \text{min\_step\_contraction} < 1
 
 .. member:: double GradientProblemSolver::Options::min_line_search_step_contraction
 
@@ -286,11 +286,11 @@ Solving
 
    In each iteration of the line search,
 
-   .. math:: \text{new_step_size} \leq \text{min_line_search_step_contraction} * \text{step_size}
+   .. math:: \text{new\_step\_size} \leq \text{min\_line\_search\_step\_contraction} * \text{step\_size}
 
    Note that by definition, for contraction:
 
-   .. math:: 0 < \text{max_step_contraction} < \text{min_step_contraction} < 1
+   .. math:: 0 < \text{max\_step\_contraction} < \text{min\_step\_contraction} < 1
 
 .. member:: int GradientProblemSolver::Options::max_num_line_search_step_size_iterations
 
@@ -332,7 +332,7 @@ Solving
    decreases sufficiently. Precisely, this second condition
    is that we seek a step size s.t.
 
-   .. math:: \|f'(\text{step_size})\| \leq \text{sufficient_curvature_decrease} * \|f'(0)\|
+   .. math:: \|f'(\text{step\_size})\| \leq \text{sufficient\_curvature\_decrease} * \|f'(0)\|
 
    Where :math:`f()` is the line search objective and :math:`f'()` is the derivative
    of :math:`f` with respect to the step size: :math:`\frac{d f}{d~\text{step size}}`.
@@ -347,11 +347,11 @@ Solving
    satisfying the conditions is found.  Precisely, at each iteration
    of the expansion:
 
-   .. math:: \text{new_step_size} \leq \text{max_step_expansion} * \text{step_size}
+   .. math:: \text{new\_step\_size} \leq \text{max\_step\_expansion} * \text{step\_size}
 
    By definition for expansion
 
-   .. math:: \text{max_step_expansion} > 1.0
+   .. math:: \text{max\_step\_expansion} > 1.0
 
 .. member:: int GradientProblemSolver::Options::max_num_iterations
 
@@ -370,7 +370,7 @@ Solving
 
    Solver terminates if
 
-   .. math:: \frac{|\Delta \text{cost}|}{\text{cost}} \leq \text{function_tolerance}
+   .. math:: \frac{|\Delta \text{cost}|}{\text{cost}} \leq \text{function\_tolerance}
 
    where, :math:`\Delta \text{cost}` is the change in objective
    function value (up or down) in the current iteration of the line search.
@@ -381,7 +381,7 @@ Solving
 
    Solver terminates if
 
-   .. math:: \|x - \Pi \boxplus(x, -g(x))\|_\infty \leq \text{gradient_tolerance}
+   .. math:: \|x - \Pi \boxplus(x, -g(x))\|_\infty \leq \text{gradient\_tolerance}
 
    where :math:`\|\cdot\|_\infty` refers to the max norm, :math:`\Pi`
    is projection onto the bounds constraints and :math:`\boxplus` is
@@ -394,7 +394,7 @@ Solving
 
    Solver terminates if
 
-   .. math:: \|\Delta x\| \leq (\|x\| + \text{parameter_tolerance}) * \text{parameter_tolerance}
+   .. math:: \|\Delta x\| \leq (\|x\| + \text{parameter\_tolerance}) * \text{parameter\_tolerance}
 
    where :math:`\Delta x` is the step computed by the linear solver in
    the current iteration of the line search.
@@ -477,8 +477,8 @@ Solving
 
    Whether the solution returned by the optimization algorithm can be
    relied on to be numerically sane. This will be the case if
-   `GradientProblemSolver::Summary:termination_type` is set to `CONVERGENCE`,
-   `USER_SUCCESS` or `NO_CONVERGENCE`, i.e., either the solver
+   :member:`GradientProblemSolver::Summary::termination_type` is set to ``CONVERGENCE``,
+   ``USER_SUCCESS`` or ``NO_CONVERGENCE``, i.e., either the solver
    converged by meeting one of the convergence tolerances or because
    the user indicated that it had converged or it ran to the maximum
    number of iterations or time.
@@ -550,11 +550,11 @@ Solving
 
 .. member:: NonlinearConjugateGradientType GradientProblemSolver::Summary::nonlinear_conjugate_gradient_type
 
-   If the line search direction is `NONLINEAR_CONJUGATE_GRADIENT`,
+   If the line search direction is ``NONLINEAR_CONJUGATE_GRADIENT``,
    then this indicates the particular variant of non-linear conjugate
    gradient used.
 
 .. member:: int GradientProblemSolver::Summary::max_lbfgs_rank
 
-   If the type of the line search direction is `LBFGS`, then this
+   If the type of the line search direction is ``LBFGS``, then this
    indicates the rank of the Hessian approximation.

@@ -59,7 +59,7 @@ form
 
 So what does this small change buy us? The following table compares
 the time it takes to evaluate the residual and the Jacobian for
-`Rat43` using various methods.
+``Rat43`` using various methods.
 
 ==========================   =========
 CostFunction                 Time (ns)

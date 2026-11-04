@@ -9,10 +9,10 @@ Installation
 Dependencies
 ============
 
- .. note ::
+.. note::
 
-    Starting with version 2.2, Ceres Solver requires a **fully
-    C++17-compliant** compiler.
+   Starting with version 2.2, Ceres Solver requires a **fully
+   C++17-compliant** compiler.
 
 Ceres relies on a number of open source libraries, some of which are
 optional. For details on customizing the build process, see
@@ -338,12 +338,12 @@ Windows that can be used to install Ceres Solver and all its dependencies.
    <https://github.com/microsoft/vcpkg#quick-start-windows>`_, e.g., using
    Visual Studio 2022 community edition, or simply run
 
-    .. code:: bat
+   .. code:: bat
 
-        git clone https://github.com/Microsoft/vcpkg.git
-        cd vcpkg
-        .\bootstrap-vcpkg.bat
-        .\vcpkg integrate install
+      git clone https://github.com/Microsoft/vcpkg.git
+      cd vcpkg
+      .\bootstrap-vcpkg.bat
+      .\vcpkg integrate install
 
 #. Use vcpkg to install and build Ceres and all its dependencies, e.g., for 64
    bit Windows
@@ -856,13 +856,13 @@ directory containing the installed ``CeresConfig.cmake`` file
 ``Ceres_DIR`` should be the path to the exported Ceres build
 directory.
 
-  .. NOTE ::
+.. note::
 
-     You do not need to call include_directories(${CERES_INCLUDE_DIRS})
-     as the exported Ceres CMake target already contains the definitions
-     of its public include directories which will be automatically
-     included by CMake when compiling a target that links against Ceres.
-     In fact, since v2.0 ``CERES_INCLUDE_DIRS`` is not even set.
+   You do not need to call ``include_directories(${CERES_INCLUDE_DIRS})``
+   as the exported Ceres CMake target already contains the definitions
+   of its public include directories which will be automatically
+   included by CMake when compiling a target that links against Ceres.
+   In fact, since v2.0 ``CERES_INCLUDE_DIRS`` is not even set.
 
 Specify Ceres components
 -------------------------------------
@@ -961,30 +961,30 @@ following references are very useful:
 
 - The `official CMake tutorial <https://cmake.org/cmake/help/latest/guide/tutorial/index.html>`_
 
-   Provides a tour of the core features of CMake.
+  Provides a tour of the core features of CMake.
 
 - `cmake-packages documentation
   <https://cmake.org/cmake/help/latest/manual/cmake-packages.7.html>`_
 
-   Covers how to write a ``ProjectConfig.cmake`` file, discussed below,
-   for your own project when installing or exporting it using CMake,
-   and how these processes in conjunction with ``find_package()`` are
-   handled by CMake.
+  Covers how to write a ``ProjectConfig.cmake`` file, discussed below,
+  for your own project when installing or exporting it using CMake,
+  and how these processes in conjunction with ``find_package()`` are
+  handled by CMake.
 
-  .. NOTE :: **Targets in CMake.**
+.. note:: **Targets in CMake.**
 
-    All libraries and executables built using CMake are represented as
-    *targets* created using `add_library()
-    <https://cmake.org/cmake/help/latest/command/add_library.html>`_
-    and `add_executable()
-    <https://cmake.org/cmake/help/latest/command/add_executable.html>`_.
-    Targets encapsulate the rules and dependencies (which can be other
-    targets) required to build or link against an object.  This allows
-    CMake to implicitly manage dependency chains.  Thus it is
-    sufficient to tell CMake that a library target: ``B`` depends on a
-    previously declared library target ``A``, and CMake will
-    understand that this means that ``B`` also depends on all of the
-    public dependencies of ``A``.
+   All libraries and executables built using CMake are represented as
+   *targets* created using `add_library()
+   <https://cmake.org/cmake/help/latest/command/add_library.html>`_
+   and `add_executable()
+   <https://cmake.org/cmake/help/latest/command/add_executable.html>`_.
+   Targets encapsulate the rules and dependencies (which can be other
+   targets) required to build or link against an object.  This allows
+   CMake to implicitly manage dependency chains.  Thus it is
+   sufficient to tell CMake that a library target: ``B`` depends on a
+   previously declared library target ``A``, and CMake will
+   understand that this means that ``B`` also depends on all of the
+   public dependencies of ``A``.
 
 When a project like Ceres is installed using CMake, or its build
 directory is exported (see :ref:`section-install-vs-export`), in addition to
@@ -1002,19 +1002,19 @@ looks for:
 - ``<PROJECT_NAME>Config.cmake`` (or
   ``<lower_case_project_name>-config.cmake``)
 
-   Which is written by the developers of the project, and is
-   configured with the selected options and installed locations when
-   the project is built and imports the project targets and/or defines
-   the legacy CMake variables: ``<PROJECT_NAME>_INCLUDE_DIRS`` &
-   ``<PROJECT_NAME>_LIBRARIES`` which are used by the caller.
+  Which is written by the developers of the project, and is
+  configured with the selected options and installed locations when
+  the project is built and imports the project targets and/or defines
+  the legacy CMake variables: ``<PROJECT_NAME>_INCLUDE_DIRS`` &
+  ``<PROJECT_NAME>_LIBRARIES`` which are used by the caller.
 
 The ``<PROJECT_NAME>Config.cmake`` typically includes a second file
 installed to the same location:
 
 - ``<PROJECT_NAME>Targets.cmake``
 
-   Which is autogenerated by CMake as part of the install process and defines
-   **imported targets** for the project in the caller's CMake scope.
+  Which is autogenerated by CMake as part of the install process and defines
+  **imported targets** for the project in the caller's CMake scope.
 
 An **imported target** contains the same information about a library
 as a CMake target that was declared locally in the current CMake
@@ -1126,7 +1126,7 @@ Version 2.3
   ``git clone --recurse-submodules`` so that CMake automatically builds the
   bundled submodules in ``third_party/``.
 - **CMake minimum version**: Building Ceres now requires CMake 3.22 or later.
-- **CMake feature options use the ``WITH_`` prefix**:
+- **CMake feature options use the** ``WITH_`` **prefix**:
   The Ceres-specific CMake options have been standardized to use the ``WITH_``
   prefix:
 
@@ -1144,7 +1144,7 @@ Version 2.3
     ``WITH_STRIPPED_DEBUG_SYMBOLS``
   - ``PROVIDE_UNINSTALL_TARGET`` :math:`\rightarrow` ``WITH_UNINSTALL_TARGET``
 
-- **SuiteSparse is now opt-in (``WITH_SUITESPARSE=OFF`` by default)**:
+- **SuiteSparse is now opt-in** (``WITH_SUITESPARSE=OFF`` **by default**):
   Because ``SuiteSparse``'s supernodal ``CHOLMOD`` and ``SPQR`` components are
   licensed under the GPL, ``WITH_SUITESPARSE`` now defaults to ``OFF``. Pass
   ``-DWITH_SUITESPARSE=ON`` to CMake to build Ceres with ``SuiteSparse``

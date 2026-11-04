@@ -36,11 +36,11 @@ version of ``Rat43Analytic`` (`Rat43
 <https://www.itl.nist.gov/div898/strd/nls/data/ratkowsky3.shtml>`_) in
 Ceres Solver. This is done in two steps:
 
-  1. Define *Functor* that given the parameter values will evaluate the
-     residual for a given :math:`(x,y)`.
-  2. Construct a :class:`CostFunction` by using
-     :class:`NumericDiffCostFunction` to wrap an instance of
-     ``Rat43CostFunctor``.
+1. Define *Functor* that given the parameter values will evaluate the
+   residual for a given :math:`(x,y)`.
+2. Construct a :class:`CostFunction` by using
+   :class:`NumericDiffCostFunction` to wrap an instance of
+   ``Rat43CostFunctor``.
 
 .. code-block:: c++
 
@@ -204,22 +204,22 @@ function of the absolute step size and plot them.
 Reading the graph from right to left, a number of things stand out in
 the above graph:
 
- 1. The graph for both formulae have two distinct regions. At first,
-    starting from a large value of :math:`h` the error goes down as
-    the effect of truncating the Taylor series dominates, but as the
-    value of :math:`h` continues to decrease, the error starts
-    increasing again as roundoff error starts to dominate the
-    computation. So we cannot just keep on reducing the value of
-    :math:`h` to get better estimates of :math:`Df`. The fact that we
-    are using finite precision arithmetic becomes a limiting factor.
- 2. Forward Difference formula is not a great method for evaluating
-    derivatives. Central Difference formula converges much more
-    quickly to a more accurate estimate of the derivative with
-    decreasing step size. So unless the evaluation of :math:`f(x)` is
-    so expensive that you absolutely cannot afford the extra
-    evaluation required by central differences, **do not use the
-    Forward Difference formula**.
- 3. Neither formula works well for a poorly chosen value of :math:`h`.
+1. The graph for both formulae have two distinct regions. At first,
+   starting from a large value of :math:`h` the error goes down as
+   the effect of truncating the Taylor series dominates, but as the
+   value of :math:`h` continues to decrease, the error starts
+   increasing again as roundoff error starts to dominate the
+   computation. So we cannot just keep on reducing the value of
+   :math:`h` to get better estimates of :math:`Df`. The fact that we
+   are using finite precision arithmetic becomes a limiting factor.
+2. Forward Difference formula is not a great method for evaluating
+   derivatives. Central Difference formula converges much more
+   quickly to a more accurate estimate of the derivative with
+   decreasing step size. So unless the evaluation of :math:`f(x)` is
+   so expensive that you absolutely cannot afford the extra
+   evaluation required by central differences, **do not use the
+   Forward Difference formula**.
+3. Neither formula works well for a poorly chosen value of :math:`h`.
 
 
 Ridders' Method

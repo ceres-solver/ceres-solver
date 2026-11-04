@@ -79,6 +79,7 @@ nitpick_ignore = [
     ('cpp:identifier', 'Ownership'),
     ('cpp:identifier', 'PreconditionerType'),
     ('cpp:identifier', 'ResidualBlockId'),
+    ('cpp:identifier', 'Solver'),
     ('cpp:identifier', 'SparseLinearAlgebraLibraryType'),
     ('cpp:identifier', 'TerminationType'),
     ('cpp:identifier', 'TrustRegionStrategyType'),

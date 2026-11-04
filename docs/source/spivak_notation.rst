@@ -31,7 +31,7 @@ is equivalent to saying:
    D_1 g = \frac{\partial}{\partial x}g(x,y) \text{ and }  D_2 g  = \frac{\partial}{\partial y}g(x,y).
 
 
-:math:`Dg` denotes the Jacobian of `g`, i.e.,
+:math:`Dg` denotes the Jacobian of :math:`g`, i.e.,
 
 .. math::
 

@@ -403,7 +403,7 @@ Bug Fixes & Minor Changes
 #. Fix unused arguments of ``Make1stOrderPerturbation`` (Dmitriy
    Korchemkin)
 #. Fix ``SuiteSparse`` path and version reporting (Sergiu Deitsch)
-#. Enable `GitHub` workflows and deprecate ``TravisCI`` (Sergiu
+#. Enable ``GitHub`` workflows and deprecate ``TravisCI`` (Sergiu
    Deitsch)
 #. Add missing includes (Sergiu Deitsch, Sameer Agarwal)
 #. Fix path for ``cuda-memcheck`` tests (Joydeep Biswas)
@@ -1304,7 +1304,7 @@ Backward Incompatible API Changes
 #. ``Solver::Options::gradient_tolerance`` used to be a relative
    gradient tolerance. i.e., The solver converged when
 
-   .. math:: \|g(x)\|_\infty < \text{gradient_tolerance} *
+   .. math:: \|g(x)\|_\infty < \text{gradient\_tolerance} *
       \|g(x_0)\|_\infty
 
    where :math:`g(x)` is the gradient of the objective function at
@@ -1314,7 +1314,7 @@ Backward Incompatible API Changes
    This has changed to an absolute tolerance, i.e. the solver
    converges when
 
-   .. math:: \|g(x)\|_\infty < \text{gradient_tolerance}
+   .. math:: \|g(x)\|_\infty < \text{gradient\_tolerance}
 
 #. Ceres cannot be built without the line search minimizer
    anymore. Thus the preprocessor define
@@ -1324,7 +1324,7 @@ Bug Fixes
 ---------
 #. Disabled warning C4251. (Björn Piltz)
 #. Do not propagate 3d party libs through
-   `IMPORTED_LINK_INTERFACE_LIBRARIES_[DEBUG/RELEASE]` mechanism when
+   ``IMPORTED_LINK_INTERFACE_LIBRARIES_[DEBUG/RELEASE]`` mechanism when
    building shared libraries. (Björn Piltz)
 #. Fixed errant verbose levels (Björn Piltz)
 #. Variety of code cleanups, optimizations and bug fixes to the line
@@ -1336,8 +1336,8 @@ Bug Fixes
 #. Fixed a memory leak in ``SchurComplementSolver``.
 #. Added ``epsilon()`` method to ``NumTraits<ceres::Jet<T, N>
    >``. (Filippo Basso)
-#. Fixed a bug in `CompressedRowSparseMatrix::AppendRows`` and
-   ``DeleteRows``.q
+#. Fixed a bug in ``CompressedRowSparseMatrix::AppendRows`` and
+   ``DeleteRows``.
 #. Handle empty problems consistently.
 #. Restore the state of the ``Problem`` after a call to
    ``Problem::Evaluate``. (Stefan Leutenegger)
@@ -1865,7 +1865,7 @@ Bug Fixes
 #. Diagonal scaling allows for equal upper and lower bounds. (Markus Moll)
 #. TrustRegionStrategy does not misuse LinearSolver:Summary anymore.
 #. Fix Eigen3 Row/Column Major storage issue. (Lena Gieseke)
-#. QuaternionToAngleAxis now guarantees an angle in $[-\pi, \pi]$. (Guoxuan Zhang)
+#. QuaternionToAngleAxis now guarantees an angle in :math:`[-\pi, \pi]`. (Guoxuan Zhang)
 #. Added a workaround for a compiler bug in the Android NDK to the
    Schur eliminator.
 #. The sparse linear algebra library is only logged in
