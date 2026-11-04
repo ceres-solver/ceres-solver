@@ -55,6 +55,7 @@ extensions = [
 if importlib.util.find_spec('sphinx_copybutton') is not None:
     extensions.append('sphinx_copybutton')
 
+templates_path = ['_templates']
 master_doc = 'index'
 exclude_patterns = []
 nitpicky = True
@@ -90,6 +91,10 @@ html_theme_options = {
     'source_repository': 'https://github.com/ceres-solver/ceres-solver',
     'source_branch': 'master',
     'source_directory': 'docs/source/',
+}
+html_context = {
+    'ceres_doc_variant': 'dev',
+    'stable_version': _stable_version,
 }
 html_extra_path = ['CNAME']
 html_domain_indices = True

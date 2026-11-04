@@ -1,0 +1,58 @@
+{% include "!sidebar/brand.html" %}
+{%- set is_stable = (ceres_doc_variant == 'stable') -%}
+{%- set target_file = (pagename if pagename else master_doc) + (file_suffix if file_suffix else '.html') -%}
+{%- set stable_href = pathto(target_file, 1) if is_stable else pathto('../' + target_file, 1) -%}
+{%- set dev_href = pathto('dev/' + target_file, 1) if is_stable else pathto(target_file, 1) -%}
+<style>
+  .sidebar-version-switch {
+    padding: 0 var(--sidebar-item-spacing-horizontal) var(--sidebar-item-spacing-vertical);
+  }
+  .sidebar-version-pills {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    padding: 3px;
+    border-radius: 6px;
+    background: var(--color-background-hover);
+    border: 1px solid var(--color-background-border);
+  }
+  .sidebar-version-pill {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.3rem 0.4rem;
+    border-radius: 4px;
+    font-size: var(--font-size--small--3);
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--color-foreground-secondary);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+  .sidebar-version-pill:hover {
+    color: var(--color-foreground-primary);
+    background: var(--color-background-primary);
+    text-decoration: none;
+  }
+  .sidebar-version-pill.is-active,
+  .sidebar-version-pill.is-active:hover {
+    background: var(--color-brand-primary);
+    color: #ffffff;
+    font-weight: 600;
+  }
+</style>
+<div class="sidebar-version-switch" role="navigation" aria-label="Documentation version">
+  <div class="sidebar-version-pills">
+    <a class="sidebar-version-pill{% if is_stable %} is-active{% endif %}"
+       href="{{ stable_href }}"
+       {% if is_stable %}aria-current="page"{% endif %}>
+      Stable ({{ stable_version }})
+    </a>
+    <a class="sidebar-version-pill{% if not is_stable %} is-active{% endif %}"
+       href="{{ dev_href }}"
+       {% if not is_stable %}aria-current="page"{% endif %}>
+      Dev (master)
+    </a>
+  </div>
+</div>

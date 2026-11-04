@@ -40,14 +40,19 @@ jobs:
           git archive "${STABLE_TAG}" | tar -x -C "${RUNNER_TEMP}/stable-src"
           cp docs/source/conf.py docs/source/CNAME "${RUNNER_TEMP}/stable-src/docs/source/"
           rm -rf "${RUNNER_TEMP}/stable-src/docs/source/_templates"
+          cp -r docs/source/_templates "${RUNNER_TEMP}/stable-src/docs/source/_templates"
           sphinx-build -D nitpicky=0 \
-            -D "html_theme_options.announcement=Viewing documentation for the latest stable release (${STABLE_TAG}). For unreleased features on master, see the <a href=\"/dev/\">development documentation</a>." \
+            -A ceres_doc_variant=stable \
+            -A "stable_version=${STABLE_TAG}" \
+            -D "html_theme_options.source_branch=${STABLE_TAG}" \
             -b html "${RUNNER_TEMP}/stable-src/docs/source" _site
 
       - name: Build development (HEAD) documentation
         run: |
+          STABLE_TAG=$(git tag --list '[0-9]*.[0-9]*.[0-9]*' --sort=-v:refname | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | head -n1)
           sphinx-build -W -n \
-            -D 'html_theme_options.announcement=Viewing development documentation for the master branch. For the latest stable release, see the <a href="/">stable documentation</a>.' \
+            -A ceres_doc_variant=dev \
+            -A "stable_version=${STABLE_TAG}" \
             -b html docs/source _site/dev
 
       - name: Upload Pages artifact
