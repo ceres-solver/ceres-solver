@@ -11,23 +11,23 @@ Solving
 How do I evaluate the Jacobian for a solved problem?
 ====================================================
 
-Using :func:`Problem::Evaluate`.
+Call :func:`Problem::Evaluate` after solving to compute the residuals, gradient,
+and Jacobian at the solution.
 
 How do I choose the right linear solver?
 ========================================
 
-When using the ``TRUST_REGION`` minimizer, the choice of linear solver is an
-important decision. It affects solution quality and runtime. Here is a simple
-way to reason about it.
+When using the ``TRUST_REGION`` minimizer, the choice of linear solver strongly
+affects both solution quality and runtime:
 
-1. For small (a few hundred parameters) or dense problems use
-   ``DENSE_QR`` (or ``DENSE_NORMAL_CHOLESKY``). On systems with an
+1. For small problems (a few hundred parameters) or dense problems, use
+   ``DENSE_QR`` or ``DENSE_NORMAL_CHOLESKY``. On systems with an
    NVIDIA GPU, setting
    :member:`Solver::Options::dense_linear_algebra_library_type` to
    ``CUDA`` can accelerate larger dense problems.
 
-2. For general sparse problems (i.e., the Jacobian matrix has a
-   substantial number of zeros) use
+2. For general sparse problems (where the Jacobian matrix has a
+   substantial number of zeros), use
    ``SPARSE_NORMAL_CHOLESKY`` (backed by ``SUITE_SPARSE``,
    ``ACCELERATE_SPARSE``, ``EIGEN_SPARSE``, or ``CUDA_SPARSE`` via
    NVIDIA ``cuDSS``).
@@ -36,40 +36,36 @@ way to reason about it.
    cameras, use ``DENSE_SCHUR``.
 
 4. For larger bundle adjustment problems with sparse Schur
-   Complement/Reduced camera matrices use ``SPARSE_SCHUR``.
+   complement (reduced camera) matrices, use ``SPARSE_SCHUR``.
 
-   If you do not have access to a sparse Cholesky library for whatever
-   reason, ``ITERATIVE_SCHUR`` with ``SCHUR_JACOBI`` is an
+   If you do not have access to a sparse Cholesky library,
+   ``ITERATIVE_SCHUR`` with ``SCHUR_JACOBI`` is an
    excellent alternative.
 
 5. For large bundle adjustment problems (a few thousand cameras or
-   more) use the ``ITERATIVE_SCHUR`` solver. There are a number of
-   preconditioner choices here. ``SCHUR_JACOBI`` (or
-   ``SCHUR_POWER_SERIES_EXPANSION``) offers an
-   excellent balance of speed and accuracy. This is also the
-   recommended option if you are solving medium sized problems for
-   which ``DENSE_SCHUR`` is too slow but ``SuiteSparse`` is not
-   available.
+   more), use the ``ITERATIVE_SCHUR`` solver. Among its preconditioners,
+   ``SCHUR_JACOBI`` and ``SCHUR_POWER_SERIES_EXPANSION`` offer an
+   excellent balance of speed and accuracy. They are also recommended for
+   medium-sized problems when ``DENSE_SCHUR`` is too slow and
+   ``SuiteSparse`` is unavailable.
 
    .. NOTE::
 
-     If you are solving small to medium sized problems, consider
-     setting ``Solver::Options::use_explicit_schur_complement`` to
-     ``true``, it can result in a substantial performance boost.
+     For small to medium-sized problems, setting
+     ``Solver::Options::use_explicit_schur_complement`` to ``true`` can
+     substantially improve performance.
 
-   If you are not satisfied with ``SCHUR_JACOBI``'s performance try
+   If ``SCHUR_JACOBI`` is not fast enough, try
    ``CLUSTER_JACOBI`` and ``CLUSTER_TRIDIAGONAL`` in that
-   order. They require that you have a sparse Cholesky library such as
-   ``SuiteSparse`` installed. Both of these preconditioners use a
-   clustering algorithm. Use ``SINGLE_LINKAGE`` before
-   ``CANONICAL_VIEWS``.
+   order. Both require a sparse Cholesky library such as
+   ``SuiteSparse`` and a clustering algorithm; try ``SINGLE_LINKAGE``
+   before ``CANONICAL_VIEWS``.
 
 Use :func:`Solver::Summary::FullReport` to diagnose performance problems
 =========================================================================
 
-When diagnosing Ceres performance issues - runtime and convergence, the first
-place to start is by looking at the output of ``Solver::Summary::FullReport``.
-Here is an example
+When diagnosing Ceres runtime or convergence issues, start by inspecting the
+output of :func:`Solver::Summary::FullReport`. Here is an example:
 
 .. code-block:: console
 
@@ -123,8 +119,7 @@ Here is an example
 
    Termination:                   NO_CONVERGENCE (Maximum number of iterations reached.)
 
-Let us focus on run-time performance. The relevant lines to look at are
-
+Let us focus on runtime performance. The timing breakdown is:
 
 .. code-block:: console
 
@@ -139,23 +134,19 @@ Let us focus on run-time performance. The relevant lines to look at are
    Postprocessor                           0.002
    Total                                   1.220
 
+Of the total 1.220 seconds, 0.382 seconds was spent in the linear solver, while
+most of the remaining time went to preprocessing and Jacobian evaluation.
 
-Which tell us that of the total 1.2 seconds, about .3 seconds was spent in the
-linear solver and the rest was mostly spent in preprocessing and jacobian
-evaluation.
-
-The preprocessing seems particularly expensive. Looking back at the report, we
-observe
+Preprocessing is particularly expensive here. Looking back at the report, we see:
 
 .. code-block:: console
 
    Linear solver ordering              AUTOMATIC                22106, 16
 
-Which indicates that we are using automatic ordering for the ``SPARSE_SCHUR``
-solver. This can be expensive at times. A straight forward way to deal with this
-is to give the ordering manually. For ``bundle_adjuster`` this can be done by
-passing the flag ``-ordering_type=user``. Doing so and looking at the timing block of
-the full report gives us
+This line shows that ``SPARSE_SCHUR`` is computing the elimination ordering
+automatically, which can be expensive. Supplying the ordering manually avoids
+this overhead; in ``bundle_adjuster``, pass ``-ordering_type=user``. The timing
+block then becomes:
 
 .. code-block:: console
 
@@ -170,5 +161,4 @@ the full report gives us
    Postprocessor                           0.002
    Total                                   0.935
 
-
-The preprocessor time has gone down by more than 5.5x!
+The preprocessor time drops by a factor of more than 5.5.
