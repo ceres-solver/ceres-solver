@@ -803,25 +803,21 @@ using Bzlmod (``MODULE.bazel``), which builds Ceres with ``Eigen`` and
 Using Ceres with CMake
 ======================
 
-In order to use Ceres in client code with CMake using `find_package()
-<https://cmake.org/cmake/help/latest/command/find_package.html>`_
-then either:
+To use Ceres in client code with CMake via `find_package()
+<https://cmake.org/cmake/help/latest/command/find_package.html>`_, either:
 
-#. Ceres must have been installed with ``cmake --install`` (or
-   ``make install``). If the install location is non-standard (i.e. is not in
-   CMake's default search paths) then it will not be detected by default; see
+#. Install Ceres with ``cmake --install`` (or ``make install``). If the
+   installation prefix is outside CMake's default search paths, see
    :ref:`section-local-installations`.
 
-#. Or Ceres' build directory can be used directly without installing (see
-   :ref:`section-install-vs-export`) by setting ``Ceres_DIR`` to the Ceres
-   build directory (or by enabling ``CMAKE_EXPORT_PACKAGE_REGISTRY=ON`` when
+#. Use the Ceres build directory directly without installing (see
+   :ref:`section-install-vs-export`) by setting ``Ceres_DIR`` to the build
+   directory (or by enabling ``CMAKE_EXPORT_PACKAGE_REGISTRY=ON`` when
    configuring Ceres).
 
-
-As an example of how to use Ceres, to compile `examples/helloworld.cc
+For example, to compile `examples/helloworld.cc
 <https://github.com/ceres-solver/ceres-solver/blob/master/examples/helloworld.cc>`_
-in a separate standalone project, the following CMakeList.txt can be
-used:
+in a standalone project, use the following ``CMakeLists.txt``:
 
 .. code-block:: cmake
 
@@ -835,35 +831,30 @@ used:
     add_executable(helloworld helloworld.cc)
     target_link_libraries(helloworld Ceres::ceres)
 
-Irrespective of whether Ceres was installed or exported, if multiple
-versions are detected, set: ``Ceres_DIR`` to control which is used.
-If Ceres was installed ``Ceres_DIR`` should be the path to the
-directory containing the installed ``CeresConfig.cmake`` file
-(e.g. ``/usr/local/lib/cmake/Ceres``).  If Ceres was exported, then
-``Ceres_DIR`` should be the path to the exported Ceres build
-directory.
+Whether Ceres was installed or exported, if multiple versions are present on
+the system, set ``Ceres_DIR`` to select which one to use. For an installed
+Ceres package, set ``Ceres_DIR`` to the directory containing
+``CeresConfig.cmake`` (for example, ``/usr/local/lib/cmake/Ceres``). For an
+exported build tree, set ``Ceres_DIR`` to the Ceres build directory.
 
 .. note::
 
    You do not need to call ``include_directories(${CERES_INCLUDE_DIRS})``
-   as the exported Ceres CMake target already contains the definitions
-   of its public include directories which will be automatically
-   included by CMake when compiling a target that links against Ceres.
-   In fact, since v2.0 ``CERES_INCLUDE_DIRS`` is not even set.
+   because the exported ``Ceres::ceres`` target carries its public include
+   directories as usage requirements, which CMake propagates automatically to
+   any target that links against ``Ceres::ceres``. Since version 2.0,
+   ``CERES_INCLUDE_DIRS`` is no longer defined.
 
-Specify Ceres components
--------------------------------------
+Specify Ceres Components
+------------------------
 
-You can specify particular Ceres components that you require (in order
-for Ceres to be reported as found) when invoking
-``find_package(Ceres)``.  This allows you to specify, for example,
-that you require a version of Ceres built with SuiteSparse support.
-By definition, if you do not specify any components when calling
-``find_package(Ceres)`` (the default) any version of Ceres detected
-will be reported as found, irrespective of which components it was
-built with.
+You can require specific Ceres components when invoking ``find_package(Ceres)``
+so that the package is reported as found only if it was built with those
+components (for example, ``SuiteSparse`` support). If you do not specify any
+components, ``find_package(Ceres)`` accepts any detected Ceres build regardless
+of its enabled components.
 
-The Ceres components which can be specified are:
+The available Ceres components are:
 
 #. ``LAPACK``: Ceres built with direct LAPACK support (``WITH_LAPACK=ON``).
 
@@ -882,9 +873,8 @@ The Ceres components which can be specified are:
    (``WITH_CUDA`` and ``WITH_CUDSS=ON``).
 
 #. ``SparseLinearAlgebraLibrary``: Ceres built with *at least one*
-   sparse linear algebra library.  This is equivalent to
-   ``SuiteSparse`` **OR** ``AccelerateSparse`` **OR** ``EigenSparse`` **OR**
-   ``cuDSS``.
+   sparse linear algebra library (equivalent to
+   ``SuiteSparse``, ``AccelerateSparse``, ``EigenSparse``, or ``cuDSS``).
 
 #. ``SchurSpecializations``: Ceres built with Schur specializations
    (``WITH_SCHUR_SPECIALIZATIONS=ON``).
@@ -892,9 +882,9 @@ The Ceres components which can be specified are:
 #. ``Multithreading``: Ceres built with multithreading support, which is
    always available.
 
-To specify one/multiple Ceres components use the ``COMPONENTS`` argument to
+To require one or more components, pass the ``COMPONENTS`` keyword to
 `find_package()
-<https://cmake.org/cmake/help/latest/command/find_package.html>`_ like so:
+<https://cmake.org/cmake/help/latest/command/find_package.html>`_:
 
 .. code-block:: cmake
 
@@ -907,13 +897,11 @@ To specify one/multiple Ceres components use the ``COMPONENTS`` argument to
     find_package(Ceres REQUIRED COMPONENTS SuiteSparse EigenSparse)
 
 
-Specify Ceres version
+Specify Ceres Version
 ---------------------
 
-Additionally, when CMake has found Ceres it can optionally check the package
-version, if it has been specified in the `find_package()
-<https://cmake.org/cmake/help/latest/command/find_package.html>`_
-call.  For example:
+You can also require a minimum or exact Ceres version in the `find_package()
+<https://cmake.org/cmake/help/latest/command/find_package.html>`_ call:
 
 .. code-block:: cmake
 
@@ -921,21 +909,21 @@ call.  For example:
 
 .. _section-local-installations:
 
-Local installations
+Local Installations
 -------------------
 
-If Ceres was installed in a non-standard path by specifying
-``-DCMAKE_INSTALL_PREFIX="/some/where/local"``, you can either pass
+If Ceres was installed to a non-standard prefix via
+``-DCMAKE_INSTALL_PREFIX="/some/where/local"``, pass
 ``-DCMAKE_PREFIX_PATH="/some/where/local"`` (or
-``-DCeres_DIR="/some/where/local/lib/cmake/Ceres"``) when running CMake to
-configure your project, or add the **PATHS** option to the ``find_package()``
-command in your ``CMakeLists.txt``:
+``-DCeres_DIR="/some/where/local/lib/cmake/Ceres"``) when configuring your
+client project, or add the ``PATHS`` argument to ``find_package()`` in your
+``CMakeLists.txt``:
 
 .. code-block:: cmake
 
    find_package(Ceres REQUIRED PATHS "/some/where/local/")
 
-If you do not wish to install Ceres to a system location, you can also use
+If you do not want to install Ceres to a system directory, you can also use
 Ceres directly from its build directory (see :ref:`section-install-vs-export`).
 
 Understanding the CMake Package System
