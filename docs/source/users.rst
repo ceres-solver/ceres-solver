@@ -6,7 +6,7 @@ Users
 
 * At `Google <https://www.google.com>`_, Ceres is used to:
 
-  * Estimate the pose of `Street View`_ cars, aircrafts, and satellites.
+  * Estimate the pose of `Street View`_ cars, aircraft, and satellites.
   * Build 3D models for `PhotoTours`_.
   * Estimate satellite image sensor characteristics.
   * Stitch `panoramas`_ on Android and iOS.
@@ -18,42 +18,41 @@ Users
   `calibrating robot-camera systems`_.
 * `Blender <https://www.blender.org>`_ uses Ceres for `planar
   tracking`_ and `bundle adjustment`_.
-* `OpenMVG <https://github.com/openMVG/openMVG>`_ an open source
-  multi-view geometry library uses Ceres for `bundle adjustment`_.
+* `OpenMVG <https://github.com/openMVG/openMVG>`_, an open-source
+  multi-view geometry library, uses Ceres for `bundle adjustment`_.
 * `Microsoft Research <https://www.microsoft.com/en-us/research/>`_ uses
-  Ceres for nonlinear optimization of objectives involving subdivision
+  Ceres for non-linear optimization of objectives involving subdivision
   surfaces under `skinned control meshes`_.
-* `Matterport <https://matterport.com/>`_, uses Ceres for global
+* `Matterport <https://matterport.com/>`_ uses Ceres for global
   alignment of 3D point clouds and for pose graph optimization.
 * The `Autonomous Systems Lab <https://asl.ethz.ch/>`_ at ETH
-  Zurich uses Ceres for
+  Zurich uses Ceres for:
 
-  * Camera and Camera/IMU Calibration.
-  * Large scale optimization of visual, inertial, gps and
-    wheel-odometry data for long term autonomy.
+  * Camera and camera-IMU calibration.
+  * Large-scale optimization of visual, inertial, GPS, and
+    wheel-odometry data for long-term autonomy.
 
 * `OpenPTrack <https://github.com/OpenPTrack/open_ptrack>`_ uses Ceres for camera
   calibration.
-* The `Intelligent Autonomous System Lab <https://robotics.dei.unipd.it/>`_
-  at University of Padova, Italy, uses Ceres for
+* The `Intelligent Autonomous Systems Lab <https://robotics.dei.unipd.it/>`_
+  at the University of Padova, Italy, uses Ceres for:
 
-  * Camera/depth sensors network calibration.
+  * Camera and depth-sensor network calibration.
   * Depth sensor distortion map estimation.
 
-* `Theia <https://github.com/sweeneychris/TheiaSfM>`_ is an open source
+* `Theia <https://github.com/sweeneychris/TheiaSfM>`_ is an open-source
   Structure from Motion library that uses Ceres for `bundle adjustment`_
   and camera pose estimation.
 
 * The `Applied Research Laboratory <https://www.arl.psu.edu/>`_ at
-  Pennsylvania State University uses in their synthetic aperture Sonar
-  beamforming engine, called ASASIN , for estimating platform
-  kinematics.
+  Pennsylvania State University uses Ceres in its synthetic aperture
+  sonar beamforming engine, ASASIN, to estimate platform kinematics.
 
-* `Colmap <https://github.com/colmap/colmap>`_ is an open source
-  structure from motion library that makes heavy use of Ceres for
+* `COLMAP <https://github.com/colmap/colmap>`_ is an open-source
+  Structure from Motion library that makes heavy use of Ceres for
   bundle adjustment with support for many camera models and for other
-  non-linear least-squares problems (relative, absolute pose
-  refinement, etc.).
+  non-linear least squares problems (such as relative and absolute pose
+  refinement).
 
 
 
