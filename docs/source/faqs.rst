@@ -8,8 +8,8 @@
 FAQs, Tips & Tricks
 ===================
 
-Answers to frequently asked questions, tricks of the trade and general
-wisdom.
+This chapter collects answers to frequently asked questions and practical advice
+for modeling and solving optimization problems with Ceres Solver.
 
 .. toctree::
    :maxdepth: 2
