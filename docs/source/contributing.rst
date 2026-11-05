@@ -5,141 +5,129 @@ Contributing
 ============
 
 We welcome contributions to Ceres, whether they are new features, bug
-fixes or tests. The Ceres `mailing
-<https://groups.google.com/g/ceres-solver>`_ list is the best place
-for all development related discussions. Please consider joining
-it. If you have ideas on how you would like to contribute to Ceres, it
-is a good idea to let us know on the mailing list before you start
-development. We may have suggestions that will save effort when trying
-to merge your work into the main branch. If you are looking for ideas,
-please let us know about your interest and skills and we will be happy
-to make a suggestion or three.
+fixes, or tests. The `Ceres mailing list
+<https://groups.google.com/g/ceres-solver>`_ is the best place for
+development discussions. If you plan to contribute a new feature or
+significant change, please post your proposal on the mailing list
+before starting development; early feedback often saves effort during
+code review. If you are looking for a project, tell us about your
+interests and background on the mailing list and we will be glad to
+suggest open problems.
 
 We follow Google's `C++ Style Guide
-<https://google.github.io/styleguide/cppguide.html>`_ and
-use `git <https://git-scm.com/>`_ for version control. We use
-`Gerrit <https://ceres-solver-review.googlesource.com/>`_ to collaborate and
-review changes to Ceres. Gerrit enables pre-commit reviews so that
-Ceres can maintain a linear history with clean, reviewed commits, and
-no merges.
+<https://google.github.io/styleguide/cppguide.html>`_ and use `git
+<https://git-scm.com/>`_ for version control. Code review takes place
+on `Gerrit <https://ceres-solver-review.googlesource.com/>`_, which
+enables pre-commit review so that Ceres maintains a linear history of
+clean, reviewed commits without merge commits.
 
-We now describe how to set up your development environment and submit
-a change list for review via Gerrit.
+The sections below describe how to set up your development environment
+and submit a change list for review on Gerrit.
 
-Setting up your Environment
+Setting up Your Environment
 ===========================
 
-1. Download and configure ``git``.
+1. Download and configure ``git``:
 
-   * Mac ``brew install git``.
-   * Linux ``sudo apt-get install git``.
-   * Windows. Download `Git for Windows
+   * macOS: ``brew install git``
+   * Linux: ``sudo apt-get install git``
+   * Windows: Download `Git for Windows
      <https://git-scm.com/download/win>`__.
 
 2. Sign up for `Gerrit
-   <https://ceres-solver-review.googlesource.com/>`_. You will also need to
-   `sign the Contributor License Agreement (CLA)
-   <https://opensource.google/documentation/reference/cla>`_ with Google, which gives
-   Google a royalty-free unlimited license to use your contributions. You
-   retain copyright.
+   <https://ceres-solver-review.googlesource.com/>`_ and `sign the
+   Google Contributor License Agreement (CLA)
+   <https://opensource.google/documentation/reference/cla>`_, which
+   grants Google a royalty-free, unlimited license to use your
+   contributions while you retain copyright.
 
-3. Clone the Ceres Solver ``git`` repository from Gerrit.
+3. Clone the Ceres Solver ``git`` repository from Gerrit:
 
    .. code-block:: bash
 
       git clone https://ceres-solver.googlesource.com/ceres-solver
 
 
-4. Build Ceres, following the instructions in
+4. Build Ceres following the instructions in
    :ref:`chapter-installation`.
 
-   On Mac and Linux, the ``CMake`` build will download and enable
-   the Gerrit pre-commit hook automatically. This pre-submit hook
-   creates ``Change-Id: ...`` lines in your commits.
+   On macOS and Linux, the ``CMake`` build automatically downloads and
+   installs the Gerrit ``commit-msg`` hook, which appends a
+   ``Change-Id: ...`` line to each commit message.
 
-   If this does not work OR you are on Windows, execute the
-   following in the root directory of the local ``git`` repository:
+   If the hook is not installed automatically, or if you are on
+   Windows, run the following commands in the root directory of your
+   local ``git`` repository:
 
    .. code-block:: bash
 
       curl -o .git/hooks/commit-msg https://ceres-solver-review.googlesource.com/tools/hooks/commit-msg
       chmod +x .git/hooks/commit-msg
 
-5. Configure your Gerrit password with a ``.gitcookies`` which allows pushing
-   to Gerrit without having to enter a very long random password every time:
+5. Configure a ``.gitcookies`` file so that you can push to Gerrit
+   without entering a generated password each time:
 
-   * Sign into `https://ceres-solver-review.googlesource.com
+   * Sign in to `https://ceres-solver-review.googlesource.com
      <https://ceres-solver-review.googlesource.com>`_.
 
    * Click ``Settings -> HTTP Credentials -> Obtain Password``.
 
-   * (maybe) Select an account for multi-login. This should be the
-     same as your Gerrit login.
+   * If prompted by multi-login, select the account associated with
+     your Gerrit login.
 
-   * Click ``Allow access`` when the page requests access to your
+   * Click ``Allow access`` when prompted to grant access to your
      ``git`` repositories.
 
-   * Follow the instructions from Gerrit to create a ``.gitcookies`` file on
-     your system, either in ``$HOME/.gitcookies`` (Mac and Linux) or
-     ``%USERPROFILE%\.gitcookies`` (Windows). Note that for Windows, please get
-     a recent `Git for Windows <https://git-scm.com/download/win>`_ install to
-     enable automatic lookup in the ``%USERPROFILE%\.gitcookies``.
+   * Follow the instructions on the page to create a ``.gitcookies``
+     file in ``$HOME/.gitcookies`` (macOS and Linux) or
+     ``%USERPROFILE%\.gitcookies`` (Windows). On Windows, use a recent
+     release of `Git for Windows <https://git-scm.com/download/win>`_
+     so that ``%USERPROFILE%\.gitcookies`` is detected automatically.
 
-6. Install ``clang-format``.
+6. Install ``clang-format``:
 
-   * Mac ``brew install clang-format``.
-   * Linux ``sudo apt-get install clang-format``.
-   * Windows. You can get clang-format with `clang or stand-alone via
-     npm <https://superuser.com/a/1505297/1141693>`_.
+   * macOS: ``brew install clang-format``
+   * Linux: ``sudo apt-get install clang-format``
+   * Windows: Install ``clang-format`` via Visual Studio, LLVM, or
+     `npm <https://superuser.com/a/1505297/1141693>`_.
 
-   You can ensure all sources files are correctly formatted before
-   committing by manually running ``clang-format -i FILENAME``, by
-   running the script ``./scripts/format_all.sh``, or by configuring
-   your editor to format upon saving.
+   Format all modified source files before committing by running
+   ``clang-format -i FILENAME``, executing ``./scripts/format_all.sh``,
+   or configuring your editor to run ``clang-format`` on save.
 
-Submitting a change
+Submitting a Change
 ===================
 
-1. Make your changes against master or whatever branch you
-   like. Ensure that the changes are formatted according to
-   ``clang-format``. Commit your changes as one patch. When you
-   commit, the Gerrit hook will add a ``Change-Id:`` line as the last
-   line of the commit.
+1. Make your changes against ``master`` (or a local branch) and format
+   them with ``clang-format``. Commit your changes as a single logical
+   patch; the Gerrit hook will append a ``Change-Id:`` footer to the
+   commit message.
 
-   Make sure that your commit message is formatted in the `50/72 style
+   Format your commit message in the standard `50/72 style
    <https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html>`_.
 
-2. Push your changes to the Ceres Gerrit instance:
+2. Push your commit to Gerrit for review:
 
    .. code-block:: bash
 
       git push origin HEAD:refs/for/master
 
-   When the push succeeds, the console will display a URL showing the
-   address of the review. Go to the URL and add at least one of the
-   maintainers (Sameer Agarwal, Keir Mierle, Alex Stewart, William
-   Rucklidge or Sergiu Deitsch) as reviewers.
+   When the push succeeds, ``git`` prints the URL of the Gerrit review.
+   Open that URL and add at least one maintainer (Sameer Agarwal, Keir
+   Mierle, Alex Stewart, William Rucklidge, or Sergiu Deitsch) as a
+   reviewer.
 
-3. Wait for a review.
+3. Wait for review feedback.
 
-4. Once review comments come in, address them. Please reply to each
-   comment in Gerrit, which makes the re-review process easier. After
-   modifying the code in your ``git`` instance, *don't make a new
-   commit*. Instead, update the last commit using a command like the
-   following:
+4. Address any review comments and reply to each comment thread in
+   Gerrit. Instead of creating a second commit, amend your existing
+   commit so that the ``Change-Id:`` line is preserved:
 
    .. code-block:: bash
 
       git commit --amend -a
 
-   This will update the last commit, so that it has both the original
-   patch and your updates as a single commit. You will have a chance
-   to edit the commit message as well. Push the new commit to Gerrit
-   as before.
-
-   Gerrit will use the ``Change-Id:`` to match the previous commit
-   with the new one. The review interface retains your original patch,
-   but also shows the new patch.
-
-   Publish your responses to the comments, and wait for a new round
-   of reviews.
+   Push the amended commit to ``HEAD:refs/for/master`` again. Gerrit
+   uses the ``Change-Id:`` footer to attach the new patch set to the
+   existing review while preserving earlier patch sets for comparison.
+   Publish your replies on Gerrit to notify the reviewers.
