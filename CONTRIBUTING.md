@@ -10,5 +10,5 @@ This GitHub Repository is a continuously updated mirror which is
 primarily meant for issue tracking.
 
 Please see our
-[Contributing to Ceres Guide](http://ceres-solver.org/contributing.html)
+[Contributing to Ceres Guide](https://ceres-solver.github.io/ceres-solver/contributing.html)
 for more details.

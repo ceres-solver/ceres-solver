@@ -38,13 +38,25 @@ jobs:
           STABLE_TAG=$(git tag --list '[0-9]*.[0-9]*.[0-9]*' --sort=-v:refname | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | head -n1)
           mkdir -p "${RUNNER_TEMP}/stable-src"
           git archive "${STABLE_TAG}" | tar -x -C "${RUNNER_TEMP}/stable-src"
-          cp docs/source/conf.py docs/source/CNAME "${RUNNER_TEMP}/stable-src/docs/source/"
+          cp docs/source/conf.py "${RUNNER_TEMP}/stable-src/docs/source/"
           rm -rf "${RUNNER_TEMP}/stable-src/docs/source/_templates"
           cp -r docs/source/_templates "${RUNNER_TEMP}/stable-src/docs/source/_templates"
+          python3 -c '
+          import pathlib, re, sys
+          path = pathlib.Path(sys.argv[1])
+          text = path.read_text(encoding="utf-8")
+          text = re.sub(
+              r"https?://ceres-solver\.org/ceres-solver-[^>\s]+\.tar\.gz",
+              "https://github.com/ceres-solver/ceres-solver/releases/latest",
+              text,
+          )
+          path.write_text(text, encoding="utf-8")
+          ' "${RUNNER_TEMP}/stable-src/docs/source/installation.rst"
           sphinx-build -D nitpicky=0 \
             -A ceres_doc_variant=stable \
             -A "stable_version=${STABLE_TAG}" \
             -D "html_theme_options.source_branch=${STABLE_TAG}" \
+            -D html_baseurl=https://ceres-solver.github.io/ceres-solver/ \
             -b html "${RUNNER_TEMP}/stable-src/docs/source" _site
 
       - name: Build development (HEAD) documentation
@@ -53,6 +65,7 @@ jobs:
           sphinx-build -W -n \
             -A ceres_doc_variant=dev \
             -A "stable_version=${STABLE_TAG}" \
+            -D html_baseurl=https://ceres-solver.github.io/ceres-solver/dev/ \
             -b html docs/source _site/dev
 
       - name: Upload Pages artifact

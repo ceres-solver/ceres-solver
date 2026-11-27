@@ -97,7 +97,6 @@ html_context = {
     'ceres_doc_variant': 'dev',
     'stable_version': _stable_version,
 }
-html_extra_path = ['CNAME']
 html_domain_indices = True
 html_use_index = True
 html_split_index = False

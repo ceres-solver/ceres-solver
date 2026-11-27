@@ -36,7 +36,7 @@
     The Ceres Solver Authors
   </maintainer>
   <license>New BSD</license>
-  <url type="website">http://ceres-solver.org/</url>
+  <url type="website">https://ceres-solver.github.io/ceres-solver/</url>
 
   <buildtool_depend>cmake</buildtool_depend>
 

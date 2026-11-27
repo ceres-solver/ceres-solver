@@ -76,7 +76,7 @@ read_ceres_version_from_source(${CMAKE_CURRENT_SOURCE_DIR})
 
 project(Ceres
   DESCRIPTION "A large scale non-linear optimization library"
-  HOMEPAGE_URL http://ceres-solver.org/
+  HOMEPAGE_URL https://ceres-solver.github.io/ceres-solver/
   LANGUAGES C CXX
   VERSION ${CERES_VERSION}
 )
